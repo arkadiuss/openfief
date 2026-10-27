@@ -67,6 +67,8 @@ v0 means milestones M0 to M3 (§7). The split below is a proposal, pending autho
 
 Format: ID, statement, then **Traces to:**. SHOULD requirements are *pending author approval*.
 
+**Frozen 2026-10-27 (D-33).** New and changed requirements live in kibi (`.kb/`, docs/dev/kibi.md). This section stays as the derivation record.
+
 ### 2.1 Functional
 
 **Portfolio tracking**

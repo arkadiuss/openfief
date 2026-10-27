@@ -155,6 +155,7 @@ Added in the 2026-10-27 design review, all not decided:
 - **[P-CC-30] Operator as the only DNS resolver.** *Withdrawn 2026-10-27:* proposed to make D-32's first version (plain IP allow-lists) reliable; superseded when the author revised D-32 to an egress proxy.
 - **[P-CC-31] The operator never touches money.** The operator manages plugin workloads only. Fiefs, intents, the ledger and approvals live in Postgres behind the core, never in custom resources or etcd: etcd is not a transactional ledger, and GR-6's guarantee must not depend on who holds Kubernetes API access.
 - **[P-CC-32] Bootstrap.** One small Helm chart or plain manifest installs the CRDs, the operator and the egress proxy. Everything after that is a `Plugin` and its `PluginGrant`.
+- **[P-CC-33] Development rules marked (P).** Every rule marked **(P)** in `docs/dev/*.md` is a Claude Code proposal pending the author's approval. Notable ones: Taskfile targets as the command contract; lefthook as the hook manager; testcontainers-go for Postgres tests; go-cmp and no assertion framework; the golangci-lint v2 linter set; Conventional Commits; release tags without a `v` prefix (Go would read a root `v2026.11.0` as major version 2026 of the module); SDK tags `sdk/go/vX.Y.Z`; the bounded-context layout and the Go names in the ubiquitous language.
 
 ### 5.3 Component diagram
 
@@ -524,6 +525,17 @@ The author made these in a design review with Claude Code, run one question at a
 **Built-in UI**
 
 - **[D-30]** The built-in UI draws two charts in M0: allocation (by asset class, currency, broker or sleeve) and value over time (which starts at go-live, because of D-23). *Note: against Claude Code's recommendation (allocation plus drift against targets). See OQ-25.*
+
+**Development process (2026-10-27)**
+
+- **[D-33]** DESIGN.md keeps the rationale and provenance; kibi's `.kb/` is the enforced requirements model that code links to. The kibi bootstrap imports GR- and D-backed requirements as `firm`, citing their DESIGN.md IDs. After that, requirements change only through kibi, and SPEC.md §2 is frozen. See docs/dev/kibi.md.
+- **[D-34]** kibi, pfranczyk's requirements layer for agents (github.com/Looted/kibi), is installed now: exact-pinned dev dependencies with the Go tree-sitter plugin, and git hooks off until the project's hook manager exists. *Note: the author asked for it; installing now rather than at M0 was Claude Code's recommendation.*
+- **[D-35]** Tests: domain logic as pure functions with small, table-driven tests; integration tests with hypert record and replay; end-to-end tests running the full flow on a local k3s. Most tests are stable and runnable locally. See docs/dev/testing.md. *Note: the author's own rules.*
+- **[D-36]** A local pipeline of tests, lint and vulnerability check runs on the pre-commit hook, matching CI. CI runs the tests and deploys to a demo and test environment on a Hetzner machine the author will provide. Releases are tagged through a separate release workflow. See docs/dev/sdlc.md. *Note: the author's own rules.*
+- **[D-37]** Releases follow OpenClaw's model: calendar versions `YYYY.M.N` with `-beta.N`; a `beta` channel (deployed to demo) and a `stable` channel (GitHub release with signed images); a manually started release workflow with a dry-run step. Contracts and SDKs use SemVer.
+- **[D-38]** Lint is strict, aimed at agents. See docs/dev/lint.md. *Note: the author's own rule.*
+- **[D-39]** Code is organized by domain following DDD, with a defined ubiquitous language. See docs/dev/code-organization.md and docs/dev/ubiquitous-language.md. *Note: the author's own rule.*
+- **[D-40]** Agent context is agent-native and cheap: the always-loaded files (`AGENTS.md`, `CLAUDE.md`) stay minimal and everything else is referenced lazily, by path or skill. The rules name no private projects. *Note: the author's own rule.*
 
 ### 10.2 M0 architecture (decided)
 
