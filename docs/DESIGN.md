@@ -3,19 +3,21 @@
 | | |
 |---|---|
 | Status | Draft. Design phase, no code. |
-| Date | 2026-10-25 |
+| Date | 2026-10-25; M0 decisions added 2026-10-27 |
 | Ground rules | Arek (the author) |
 | Drafted by | Claude Code, from the author's brief and a research session with Claude (AI assistant) on 2026-10-25 |
+| Decisions | Arek, in a design review with Claude Code on 2026-10-27 (§10) |
 
-This document keeps its sources visibly separate. Only ground rules are decided. Everything else is evidence, a proposal or a question until the author accepts it.
+This document keeps its sources visibly separate. Only ground rules and author decisions are decided. Everything else is evidence, a proposal or a question until the author accepts it.
 
 ## 1. Tag legend
 
 | Tag | Source | Status |
 |---|---|---|
 | **[GR-n]** | Ground rule written by the author. | Decided. Highest authority. Only the author edits these; conflicts are recorded in §7. |
+| **[D-n]** | Decision the author made in the 2026-10-27 design review (§10). | Decided. Below ground rules, above everything else. A decision never edits a ground rule. |
 | **[AC-n]** | Author context: facts about the author that inform proposals. | Not a rule. |
-| **[R-n]** | Research finding: an external fact gathered on 2026-10-25 in a research session with Claude (AI assistant). Source URL kept where one was recorded. | As of 2026-10-25, re-verify before relying. |
+| **[R-n]** | Research finding: an external fact. R-1 to R-9 were gathered on 2026-10-25 in a research session with Claude (AI assistant); R-10 onward were gathered by Claude Code on 2026-10-27. Source URL kept where one was recorded. | As of the date on each item, re-verify before relying. |
 | **[P-n]** | Proposal: an inference or recommendation Claude made in that research session. | Not decided. The author may accept or reject it. |
 | **[P-CC-n]** | Proposal added by Claude Code while writing these documents. | Not decided. |
 | **[T-n]** | Tension between items, or an interpretation that needs the author's confirmation. T-1 to T-5 come from the author's brief. T-6 onward were added by Claude Code and each carries an [OQ-n] tag. | Unresolved. |
@@ -74,6 +76,22 @@ Every item below was gathered on 2026-10-25 in a research session with Claude. N
   - Foreign brokers (IBKR, Trading 212, Revolut) do not issue PIT-8C. Investors compute PIT-38 themselves: 19% "Belka" tax, FIFO (first in, first out), NBP (National Bank of Poland) table A exchange rate from the day before. They also file PIT/ZG per country.
   - Open-source references: https://github.com/volodymyr-kovtun/Pitly and https://klopit.co.pl/
 
+Gathered by Claude Code on 2026-10-27 during the design review, through web search only. wealthfolio.app and ghostfol.io were unreachable from the session's network, so these rest on secondary sources.
+
+- **[R-10]** *As of 2026-10-27, re-verify before relying.* Wealthfolio has a self-hosted web edition: one Rust service serves the React UI and a REST API on one origin, with embedded SQLite on a volume. Image `wealthfolio/wealthfolio`, port 8088, a `/data` volume, settings `WF_LISTEN_ADDR` and `WF_DB_PATH`. CSV import is documented only as a UI feature; no documented, stable HTTP API for writing activities was found. Community MCP servers write straight into its SQLite database and warn that the app may need a restart or recalculation afterwards.
+  - https://railway.com/deploy/wealthfolio-tracker
+  - https://dev.co/devops/open-source/wealthfolio
+  - https://glama.ai/mcp/servers/@datamoc/WFmcp/blob/811e011a3a13a81f175a8907da99d1fe00cf6b2c/docs/WRITE_OPERATIONS.md
+- **[R-11]** *As of 2026-10-27, re-verify before relying.* Ghostfolio: a user's security token is exchanged for a bearer token via `POST /api/v1/auth/anonymous` with `accessToken`, and activities are imported via `POST /api/v1/import` with an `activities` array (account, date, type, symbol, `dataSource`, quantity, unit price, fee, currency, comment). A community guide says the bearer token lasts about 6 months. Its `MANUAL` data source supports custom assets priced by a scraper that extracts values from HTML or, via JSONPath, from JSON (third-party summary). Prior art: `agusalex/ghostfolio-sync` syncs IBKR Flex Queries into Ghostfolio, maps symbols in a `mapping.yaml`, and warns that data outside the Flex date window is lost if it was never synced.
+  - https://github.com/ghostfolio/ghostfolio
+  - https://gethomepage.dev/widgets/services/ghostfolio/
+  - https://deepwiki.com/ghostfolio/ghostfolio/5.2-market-data-sources
+  - https://hub.docker.com/r/agusalex/ghostfolio-sync
+- **[R-12]** *As of 2026-10-27, re-verify before relying.* OpenClaw plugins declare an `openclaw.plugin.json` manifest whose JSON Schema config is validated without running plugin code; the plugin itself is TypeScript loaded in-process via jiti and registers tools, channels, RPC methods, HTTP handlers, CLI commands and services through `register(api)`. Its docs say to treat plugins as trusted code. Its open skill registry, ClawHub, was hit by malware: Koi Security flagged 341 of 2,857 skills as malicious in late January 2026 (mostly the "ClawHavoc" campaign delivering the AMOS macOS stealer); later counts ranged from about 900 to over 1,100.
+  - https://docs.openclaw.ai/plugins
+  - https://thehackernews.com/2026/02/researchers-find-341-malicious-clawhub.html
+  - https://www.bitdoze.com/openclaw-security-guide/
+
 ## 5. Proposed architecture
 
 Nothing in this section is decided.
@@ -81,7 +99,9 @@ Nothing in this section is decided.
 ### 5.1 Proposals from the research session
 
 - **[P-1]** Do not fork a tracker. Run Wealthfolio (local-first) or Ghostfolio (multi-user) as a separate service and talk to it over its API/MCP. This contains AGPL obligations and avoids fork drift.
+  - *Status 2026-10-27: rejected as written by D-2. OpenFief's own core is the system of record; Wealthfolio and Ghostfolio become one-way view plugins. The "do not fork" intent is kept.*
 - **[P-2]** Plugin types: connectors (brokers/data), agents, jurisdiction packs (tax, reporting, local limits) and model providers. IBKR's own AI counts as an agent choice; IBKR itself is a connector.
+  - *Status 2026-10-27: extended by D-2 with a fifth plugin type, the view plugin.*
 - **[P-3]** Agents run out-of-process and sandboxed, and see only data scoped to their lease. Use A2A (the Agent2Agent protocol) for agent to orchestrator, and MCP for the tools the orchestrator exposes. Agents send order intents plus a thesis plus invalidation conditions, never raw broker orders. Interpretation of GR-7: the "tool to make transactions" is the gateway API, gated by a capability token (see T-5).
 - **[P-4]** Layered enforcement for GR-6:
   - (a) Broker wall: one IBKR linked cash account (no margin) per offensive sleeve.
@@ -98,7 +118,9 @@ Nothing in this section is decided.
 - **[P-7]** Show a guarantee level per agent: "gateway + broker" or "broker wall only". An IBKR-native agent bypasses the gateway, so it only gets the broker wall.
 - **[P-8]** Allocate capital by track record: paper trading, then a small live lease, then scale up or cut. This is the multi-manager "pod" model.
 - **[P-9]** Control plane in Go, with NATS JetStream for events and KV (key-value store) CAS (compare-and-set) for the ledger. Basis: the author's stack (AC-1).
+  - *Status 2026-10-27: Go core decided (D-11). M0 uses Postgres and no NATS (D-14); where the M1 ledger lives is revisited at M1.*
 - **[P-10]** Execution venues: IBKR primary, Trading 212 optional. XTB, mBank, Revolut and bonds are read-only via import.
+  - *Status 2026-10-27: read-only import for XTB and bonds decided (D-7, D-9). Execution venues not yet decided.*
 - **[P-11]** A hosted subscription covers tracking, valuation, analytics and tax only. Agent execution is self-hosted on the user's own account (see R-7).
 - **[P-12]** Polish jurisdiction pack v1: PIT-38 and PIT/ZG, bond valuation (COI/EDO etc.), IKE/IKZE rules.
 - **[P-13]** Tagline: "Give your AI agents a fief, not the kingdom." Vocabulary: a "fief" is a revocable capital lease granted to an agent.
@@ -109,15 +131,25 @@ Nothing in this section is decided.
 - **[P-CC-2] Reserve before approval.** The ledger reserves an intent's notional as soon as the policy engine allows it, before any human approval, and releases it on denial, expiry, cancellation or kill. Why: the human only ever approves a trade that is already funded within the lease, and two approvals cannot race past it.
 - **[P-CC-3] Fail closed.** If the ledger, the policy engine, the audit log or the reconciliation state is unavailable or stale, the gateway rejects every new intent. Cancellations still go through. Why: GR-6 has to hold during partial outages, not only on the happy path.
 - **[P-CC-4] Reconciliation.** The gateway compares the ledger with the broker's cash, positions and open orders after every fill and on a schedule. Any unexplained difference (a manual trade, a corporate action, a fee, a missed fill) suspends the affected fief and emits a lease-breach event. Why: the ledger is a guarantee only while it matches the broker.
-- **[P-CC-5] Authentic approvals.** Approvals happen in OpenFief's web UI, installable on a phone as a PWA (progressive web app), and need a passkey (WebAuthn) signature bound to the hash of the specific intent. Push, e-mail or chat notifications carry only a link, never an approve action. Approvals expire. Why: the approval channel is itself an attack surface (spoofed or replayed approvals, approval fatigue).
+- **[P-CC-5] Authentic approvals.** Approvals happen in OpenFief's web UI, installable on a phone as a PWA (progressive web app), and need a passkey (WebAuthn) signature bound to the hash of the specific intent. Push, e-mail or chat notifications carry only a link, never an approve action. Approvals expire. Why: the approval channel is itself an attack surface (spoofed or replayed approvals, approval fatigue). *Status 2026-10-27: passkeys for login decided (D-26); approvals themselves are M1.*
 - **[P-CC-6] Kill freezes, never liquidates.** A kill revokes capability tokens, cancels working orders and suspends every fief in its scope. Selling positions is a separate, explicit user action. Why: automatic liquidation, triggered in a panic or by an attacker, can do more damage than a freeze. Open: OQ-16.
 - **[P-CC-7] Audit log.** An append-only, hash-chained log (each event carries the hash of the previous one) of every intent, policy decision with policy version, approval, order, fill, lease change and kill. Each decision also records the thesis version, input source tags, model and provider per role, and prompt and response hashes. Why: R-8 describes what regulators expect of investment firms. OpenFief used on one's own account is not one (R-7), but the same record is what the author needs to debug, or stop trusting, an agent.
-- **[P-CC-8] Credentials at rest.** Broker credentials are encrypted at rest. Only the gateway can decrypt trading credentials and only connectors can decrypt read-only ones. Agents, models and the UI never see either.
+- **[P-CC-8] Credentials at rest.** Broker credentials are encrypted at rest. Only the gateway can decrypt trading credentials and only connectors can decrypt read-only ones. Agents, models and the UI never see either. *Status 2026-10-27: the M0 mechanism is Kubernetes Secrets plus documented platform encryption (D-29), scoped per plugin by grants (D-16).*
 - **[P-CC-9] Agents reach the world only through OpenFief.** Agent sandboxes have no direct network egress. Models are reached through the model router, which enforces P-6 tiers and meters model spend per agent. News and filings arrive through OpenFief's reader (P-5). Trades go through the gateway. Why: without this, P-5 and P-6 are advice to agent authors, not controls OpenFief can enforce.
+
+Added in the 2026-10-27 design review, all not decided:
+
+- **[P-CC-23] One contract language.** Define D-6's public read API in protobuf too, with HTTP annotations, and serve it as REST with a generated OpenAPI spec through transcoding (e.g. Buf's Vanguard). Plugins and the public API then share one source of truth.
+- **[P-CC-24] Signature verification in the operator.** D-12 (any cluster) means no admission controller such as Kyverno or Sigstore's policy-controller can be assumed, so the operator verifies image signatures itself before creating any Deployment: `sigstore-go`, keyless signatures from the project's GitHub Actions identity, and a bundled trust root so verification also works offline.
+- **[P-CC-25] Label each PLN figure's basis.** *Withdrawn 2026-10-27:* moot after D-20 (revised) made NBP the only basis in M0.
+- **[P-CC-26] After-tax liquidation value.** D-25 puts bonds in totals net of tax while stocks are gross, so the total mixes two bases. When the tax pack arrives, "net" should become a portfolio-wide after-tax liquidation value: stocks also lose Belka tax on their unrealized PLN gain, per lot at NBP rates. Until then the UI marks the total as mixed.
+- **[P-CC-27] Built-in UI stack.** Server-rendered Go templates with htmx, a small chart library served locally (no CDN), a strict CSP (Content Security Policy), and no JavaScript build chain.
+- **[P-CC-28] Any Postgres.** Besides CloudNativePG (D-14), accept any PostgreSQL through a connection string, so D-12's "any conformant cluster" holds for managed databases too.
+- **[P-CC-29] Canonical origin set at install.** WebAuthn binds each passkey to a domain (the RP ID, relying-party ID). The installer requires the canonical hostname up front; `localhost` (D-28's port-forward) is used only for bootstrap, and the docs warn that passkeys do not carry over between hostnames. See OQ-24.
 
 ### 5.3 Component diagram
 
-Claude Code's rendering of P-1 to P-10 and P-CC-1 to P-CC-9. Nothing in it is decided.
+Claude Code's rendering of P-1 to P-10 and P-CC-1 to P-CC-9, from 2026-10-25. Nothing in it is decided. For M0, the decided architecture in §10.2 supersedes it; in particular, the tracker is no longer an external service of record (D-2).
 
 ```mermaid
 flowchart TB
@@ -225,6 +257,7 @@ Only the broker wall survives a compromise of the OpenFief host. Every other lay
 - **Allowed models:** None needed. AI summaries belong to UC-1.
 - **Threats:** Theft of the T0 dataset from the host or its backups. Leak of read-only credentials, which still expose the full account history. Malicious statement files (imports are untrusted input). Wrong valuations leading to wrong decisions.
 - **Controls:** Data stays on the user's host (GR-1). Credentials encrypted at rest (P-CC-8). Import parsers treat files as untrusted and run without network access [P-CC-10]. Bond valuations cross-checked against the open-source valuers in R-5. The holdings API requires authentication and listens locally by default [P-CC-10].
+- **Decided for M0 (2026-10-27):** plugin isolation through per-plugin containers, manifests, grants and signed, digest-pinned images (D-11, D-15 to D-17); passkey login (D-26); plugin identity via ServiceAccount tokens (D-27); no Ingress or tunnel shipped (D-28); Kubernetes Secrets plus documented platform encryption (D-29).
 - **Traces to:** GR-1, GR-3, GR-12, R-5, P-1, P-10, P-CC-8, P-CC-10.
 
 #### UC-1 Model-portfolio maintainer
@@ -279,24 +312,25 @@ Only the broker wall survives a compromise of the OpenFief host. Every other lay
 
 None of these is resolved. Ground rules stay as written; the author decides.
 
-- **[T-1] GR-3 (XTB via API) vs R-2.** XTB disabled its public API on 2025-03-14; the only compliant path left is statement import. Proposed (not decided): XTB is import-only (P-10).
-- **[T-2] GR-3 (bonds via API) vs R-5.** Neither obligacjeskarbowe.pl nor PKO BP offers an API. Proposed (not decided): holdings via import, valuation computed from series terms and CPI (P-10, P-12).
-  - *Note on T-1 and T-2* **[OQ-10]**: GR-3's phrase "giving typical API access to what you hold" can also be read as OpenFief exposing an API over the consolidated holdings, not as connectors reaching brokers through broker APIs. Under that reading, import-based connectors already satisfy GR-3 and T-1 and T-2 mostly dissolve.
+- **[T-1] GR-3 (XTB via API) vs R-2.** XTB disabled its public API on 2025-03-14; the only compliant path left is statement import. Proposed (not decided): XTB is import-only (P-10). *Resolved 2026-10-27 by D-7 and D-9.*
+- **[T-2] GR-3 (bonds via API) vs R-5.** Neither obligacjeskarbowe.pl nor PKO BP offers an API. Proposed (not decided): holdings via import, valuation computed from series terms and CPI (P-10, P-12). *Resolved 2026-10-27 by D-7 and D-9.*
+  - *Note on T-1 and T-2* **[OQ-10]**: GR-3's phrase "giving typical API access to what you hold" can also be read as OpenFief exposing an API over the consolidated holdings, not as connectors reaching brokers through broker APIs. Under that reading, import-based connectors already satisfy GR-3 and T-1 and T-2 mostly dissolve. *Answered 2026-10-27 by D-7: connectors use broker APIs where they exist and any other working means where they don't; OpenFief also exposes its own read API.*
 - **[T-3] GR-6 (strong guarantees) vs GR-10 (user may pick IBKR's agents).** An IBKR-native agent bypasses the gateway, ledger and policy engine. Proposed (not decided): P-7, showing the weaker guarantee level. See also T-7 and P-CC-13: under P-4(a) the broker wall bounds a sleeve, not an agent.
 - **[T-4] GR-1 (hosted subscription) vs R-7.** Executing agents for other people, or giving them personalised recommendations, needs a KNF permit. Proposed (not decided): P-11, plus a legal opinion before launch (OQ-7).
 - **[T-5] GR-7 (agents make transactions) vs P-3 (agents send intents only).** This is an interpretation that needs the author's confirmation: P-3 reads "tools to make transactions" as the gateway's intent API, gated by a capability token, so agents never hold broker credentials or send raw broker orders. If GR-7 instead means agents place broker orders directly, P-4(b) to (d) no longer apply and only the broker wall remains.
 - **[T-6] P-6 vs GR-8 and GR-11** **[OQ-14]**. *(Added by Claude Code.)* P-6 keeps "holdings and amounts" on local models only. A thesis agent on a cloud model (GR-8) needs at least its own budget and positions to size an order. Separately, if P-6 is a hard rule, it limits GR-11's "the user chooses which model sees what". Proposed (not decided): P-CC-12.
 - **[T-7] P-4(a) vs GR-6 per agent** **[OQ-20]**. *(Added by Claude Code.)* P-4(a) puts one linked account per offensive sleeve. If several fiefs share that account, the broker caps the sleeve, not each agent; the per-agent guarantee then rests on the gateway and ledger alone, and a "broker wall only" agent (P-7) has no per-agent bound at all. Proposed (not decided): P-CC-13. Depends on OQ-3.
 - **[T-8] Measuring GR-6 under price moves** **[OQ-11]**. *(Added by Claude Code.)* "Can never get more of the portfolio than its lease": if a position rises, its market value exceeds the lease without any new capital. Is that a breach? Proposed (not decided): P-CC-1 counts committed cost and sweeps proceeds above the lease.
-- **[T-9] GR-9 vs GR-3 on project scope** **[OQ-15]**. *(Added by Claude Code.)* GR-9 says the orchestration layer "is exactly what this project is". GR-3 says the project "starts as a typical portfolio summarizer", the README description in the author's brief says "portfolio tracker and orchestrator", and P-1 puts the tracker in a separate service. Related: OQ-2.
+- **[T-9] GR-9 vs GR-3 on project scope** **[OQ-15]**. *(Added by Claude Code.)* GR-9 says the orchestration layer "is exactly what this project is". GR-3 says the project "starts as a typical portfolio summarizer", the README description in the author's brief says "portfolio tracker and orchestrator", and P-1 puts the tracker in a separate service. Related: OQ-2. *Resolved 2026-10-27 by D-2: tracking is in scope as OpenFief's own core; external trackers are view plugins.*
 - **[T-10] GR-10 vs R-3 on "Interactive Brokers' agents"** **[OQ-13]**. *(Added by Claude Code.)* GR-10 names IBKR's agents as an option. R-3 says IBKR's official MCP server only drafts orders and the client submits them on IBKR's platform. As of 2026-10-25 there may be no IBKR agent that executes by itself; if so, a human submits every IBKR-native order and T-3 is narrower than it looks.
+- **[T-11] D-28 vs D-26 and P-CC-5** **[OQ-24]**. *(Added by Claude Code, 2026-10-27.)* D-28's default access is a local `kubectl port-forward`, so the UI's origin is `localhost`. WebAuthn binds passkeys (D-26) to the origin's domain, so passkeys registered on `localhost` stop working once the user adds an Ingress with a real hostname. P-CC-5's phone approvals (M1) also need an HTTPS origin the phone can reach, which a port-forward is not. Proposed (not decided): P-CC-29.
 
 ## 8. Open questions
 
 From the author's brief:
 
-- **[OQ-1]** License: AGPL-3.0 vs Apache-2.0/MIT, given the AGPL trackers and a future hosted offering.
-- **[OQ-2]** Base tracker: Wealthfolio, Ghostfolio, or our own.
+- **[OQ-1]** License: AGPL-3.0 vs Apache-2.0/MIT, given the AGPL trackers and a future hosted offering. *Answered by D-5.*
+- **[OQ-2]** Base tracker: Wealthfolio, Ghostfolio, or our own. *Answered by D-2: our own core; Ghostfolio (and later Wealthfolio) as view plugins.*
 - **[OQ-3]** IBKR linked-account availability and behaviour for Polish residents (served by IB Ireland).
 - **[OQ-4]** Default agent: the author's or pfranczyk's? Should the agent contract be co-designed with pfranczyk?
 - **[OQ-5]** Do short-term strategies need a dedicated execution engine (e.g. NautilusTrader)?
@@ -306,18 +340,27 @@ From the author's brief:
 
 Added by Claude Code:
 
-- **[OQ-9]** The repository's initial commit already contains an Apache-2.0 `LICENSE` file. Is that the answer to OQ-1, or a placeholder?
-- **[OQ-10]** How should GR-3's "giving typical API access to what you hold" be read: connectors reach brokers through broker APIs, or OpenFief exposes an API over what you hold? (Affects T-1, T-2.)
+- **[OQ-9]** The repository's initial commit already contains an Apache-2.0 `LICENSE` file. Is that the answer to OQ-1, or a placeholder? *Answered by D-5: a placeholder; the file is replaced when the author says so.*
+- **[OQ-10]** How should GR-3's "giving typical API access to what you hold" be read: connectors reach brokers through broker APIs, or OpenFief exposes an API over what you hold? (Affects T-1, T-2.) *Answered by D-7: both.*
 - **[OQ-11]** How is "more of the portfolio than its lease" (GR-6) measured: committed cost, current market value, or both? What happens to gains and losses: swept back to the sleeve, or kept by the fief? (T-8, P-CC-1.)
 - **[OQ-12]** What authority does the GR-4 maintainer have? Does "maintains" include placing trades (for example rebalancing the defensive part), or only maintaining the model portfolio? Who sets the size of the offensive part: the user, the model portfolio, or the maintainer? (P-CC-11.)
 - **[OQ-13]** What exactly are "Interactive Brokers' agents" in GR-10, given R-3? (T-10.)
 - **[OQ-14]** May a cloud-hosted thesis agent see its own fief's amounts and positions? Is P-6 a hard rule or a default the user can override under GR-11? (T-6, P-CC-12.)
-- **[OQ-15]** Is the portfolio tracker part of OpenFief's scope, or an integrated external dependency? (T-9; related to OQ-2.)
+- **[OQ-15]** Is the portfolio tracker part of OpenFief's scope, or an integrated external dependency? (T-9; related to OQ-2.) *Answered by D-2: in scope.*
 - **[OQ-16]** What does a kill do to open positions: freeze them, or liquidate? P-4(f) does not say. (P-CC-6.)
 - **[OQ-17]** Does publishing a default agent (GR-10) that other people run on their own accounts raise investment-advice questions under R-7? Should the legal opinion in OQ-7 cover it?
 - **[OQ-18]** What hardware is available for local models? OQ-6 depends on it.
 - **[OQ-19]** Which IBKR path should execution use: TWS API / IB Gateway, or the Client Portal Web API? Flex Queries cover reporting only (R-3).
 - **[OQ-20]** Broker-wall granularity: one linked account per offensive sleeve (P-4(a)) or per fief? Is there one offensive sleeve or several? (T-7, P-CC-13.)
+
+Added by Claude Code in the 2026-10-27 design review:
+
+- **[OQ-21]** Which market-data vendor (D-22)? Candidates: Twelve Data, EODHD, Alpha Vantage, and Stooq only if its terms allow automated use (D-8). Check Warsaw Stock Exchange coverage, end-of-day FX, terms of use and price.
+- **[OQ-22]** Verify the assumptions behind D-9, D-23 and D-24 against real accounts: IBKR Flex open positions report lots with open date and cost basis; the author's IBKR lot-matching method is FIFO; how far back one Flex request reaches; the xStation export's columns, and whether it separates CFDs from stocks; whether obligacjeskarbowe.pl offers any CSV export.
+- **[OQ-23]** Verify the Ghostfolio API details D-4 relies on, which are from memory or third-party summaries: creating accounts, listing activities per account, deleting activities, an import dry-run flag, the `MANUAL` scraper fields, and whether the import endpoint is meant to be stable.
+- **[OQ-24]** What is OpenFief's canonical hostname, given that passkeys are bound to it and M1's phone approvals need it reachable over HTTPS? (T-11, P-CC-29.)
+- **[OQ-25]** GR-4's model portfolio is a MUST (FR-10), but D-30 drops the drift chart from M0. Are model-portfolio targets entered in M0 anyway, or does the model portfolio arrive with the maintainer in M2?
+- **[OQ-26]** D-9 includes uploading files in the UI, and bond lots are entered by hand, but D-2 says views never write back and D-7 says data enters only through connector ingest paths. Is the built-in UI more than a view (it forwards uploads and bond-lot forms to the connectors), or does each connector serve its own small form, with the UI only linking to it?
 
 ## 9. Glossary
 
@@ -377,3 +420,149 @@ Explanations written by Claude Code. They define terms; they decide nothing and 
 | WebAuthn / passkey | The web standard for public-key authentication; a passkey is a WebAuthn credential stored on a device. |
 | xAPI | XTB's former public trading API, disabled on 2025-03-14 (R-2). |
 | XTB | X-Trade Brokers, a Polish broker. |
+
+Terms added with the M0 decisions (2026-10-27):
+
+| Term | Meaning |
+|---|---|
+| Balance assertion | A statement that an account held a given balance on a given date, checked against the balance derived from transactions; a mismatch is an error. The idea comes from plain-text accounting tools such as Beancount (D-18). |
+| CFD | Contract for difference: a leveraged derivative that pays the price change of an instrument without ownership. XTB's main product (D-24). |
+| ClusterIP / port-forward | A ClusterIP Service is reachable only inside the Kubernetes cluster; `kubectl port-forward` tunnels it to the user's own machine (D-28). |
+| CloudNativePG (CNPG) | A Kubernetes operator that runs PostgreSQL, including backups to object storage (D-14). |
+| CNI | Container Network Interface: the cluster's network plugin. NetworkPolicy works only if the CNI enforces it. |
+| Connect RPC | A protocol by Buf: the same protobuf service can be called as gRPC or as plain HTTP with JSON (D-11). |
+| cosign / Sigstore | Sigstore is an open project for signing software; cosign is its tool for signing and verifying container images. "Keyless" signing ties a signature to a CI identity instead of a long-lived key (D-17, P-CC-24). |
+| CRD / operator | A CustomResourceDefinition adds a new resource type (here `Plugin`, `PluginGrant`) to Kubernetes; an operator is a controller that turns those resources into running workloads (D-13). |
+| CSP | Content Security Policy: a browser header that restricts where a page may load scripts and data from (P-CC-27). |
+| DCO | Developer Certificate of Origin: contributors certify they may submit their change by adding a `Signed-off-by` line, instead of signing a contributor license agreement (D-5). |
+| Digest pinning | Referring to a container image by the hash of its content (`image@sha256:...`) rather than a mutable tag such as `:latest` (D-17). |
+| Double-entry bookkeeping | Every transaction is recorded as postings that sum to zero across accounts, so money never appears or vanishes; documented by Luca Pacioli in 1494 (D-19). |
+| End of day (EOD) | Prices or rates as of each trading day's close (D-21). |
+| etcd | The key-value store that holds a Kubernetes cluster's state, including Secrets; it must be encrypted at rest (D-29). |
+| htmx | A small JavaScript library that lets server-rendered HTML pages update parts of themselves without a front-end framework (P-CC-27). |
+| Ingress | The Kubernetes resource that exposes an HTTP service outside the cluster. OpenFief ships none (D-28). |
+| kind / k3d / k3s | kind and k3d run Kubernetes clusters in containers for testing; k3s is a lightweight Kubernetes distribution (D-12). |
+| NetworkPolicy | A Kubernetes resource restricting which pods a pod may talk to and be reached from (D-11). |
+| Opening lot | A tax lot seeded from a broker's current positions (open date, quantity, cost) instead of being rebuilt from full transaction history (D-23). |
+| Projected ServiceAccount token | A short-lived token that Kubernetes mounts into a pod, scoped to one audience and verifiable against the cluster's issuer (D-27). |
+| RBAC | Role-based access control: in Kubernetes, Roles and ClusterRoles define what an identity may do (D-15). |
+| Reconcile loop | The Kubernetes controller pattern: repeatedly compare desired state with actual state and act to remove the difference (D-4). |
+| RP ID | Relying-party ID: the domain a WebAuthn passkey is bound to (P-CC-29, OQ-24). |
+| View plugin | A plugin that presents OpenFief's canonical record somewhere else (the built-in UI, Ghostfolio) and never writes back (D-2). |
+
+## 10. Decisions (M0 design review, 2026-10-27)
+
+The author made these in a design review with Claude Code, run one question at a time with a recommendation on each, in the style of Matt Pocock's "grill-me" skill. Each decision paraphrases the option the author chose. A note marks where the author went against Claude Code's recommendation or gave their own answer. Decisions sit below ground rules; none of them edits one.
+
+### 10.1 Decision log
+
+**Scope**
+
+- **[D-1]** Iteration 1 is M0 only: tracker and Polish imports, no models, no agents. Amended by D-31 (no time-box).
+- **[D-31]** M0 has no time-box. Its scope is everything decided in this section. *Note: the author's choice among options with no recommendation.*
+
+**System of record and views**
+
+- **[D-2]** OpenFief's own core is the system of record for transactions, tax lots and valuations. Trackers are plugins that show a one-way *view* of it, a new plugin type next to P-2's four. *Settles:* OQ-2, OQ-15, T-9. *Rejects:* P-1 as written. *Note: the view-plugin idea is the author's refinement.*
+- **[D-3]** M0 ships two view plugins: a very simple built-in UI as the default, and Ghostfolio auto-push. *Note: the author's own answer.*
+- **[D-4]** The Ghostfolio plugin runs a reconcile loop. It owns only the Ghostfolio accounts it created, puts OpenFief's transaction ID in each activity's comment, deletes stale activities and imports missing ones. Manual edits inside its accounts are reverted on the next sync.
+
+**License**
+
+- **[D-5]** AGPL-3.0 for the core, Apache-2.0 for the plugin contracts and SDK, and DCO sign-off for contributions. *Settles:* OQ-1, OQ-9. The `LICENSE` file is replaced when the author gives the go.
+
+**API and connectors**
+
+- **[D-6]** OpenFief's public API is read-only REST/JSON with an OpenAPI spec, versioned `/v1`, covering accounts, transactions, tax lots, holdings and valuations. Every view plugin, the built-in UI included, uses it. MCP waits for M2's model router.
+- **[D-7]** GR-3 reading: connectors get data from each institution by whatever works (a broker API where one exists, files or other means otherwise; not necessarily REST), and OpenFief exposes its own read API. Data enters only through each connector's ingest path (upload, CLI, watched folder), never through the public API. *Settles:* OQ-10, T-1, T-2. *Note: the author's own wording.*
+- **[D-8]** The core project ships only connectors that comply with the institution's terms. Third parties may build others; OpenFief does not ship or endorse them.
+- **[D-9]** M0 data paths: XTB through uploaded xStation export files; treasury bonds through manual lot entry (series, quantity, purchase date) with valuation computed; an import of the bond service's own export is added if one exists (OQ-22).
+- **[D-22]** Prices come from a market-data connector plugin where the user brings the API key. The vendor is chosen after checking Warsaw coverage and terms (OQ-21); IBKR Flex prices serve as a cross-check.
+- **[D-23]** Accounts are seeded from each broker's current lot-level positions (opening lots), with transactions from go-live. Full history backfill arrives with the tax pack.
+- **[D-24]** XTB in M0 covers real stocks and ETFs only. Closed CFD results are imported as cash profit or loss so cash reconciles; open CFD positions are flagged as unsupported.
+
+**Runtime and plugins**
+
+- **[D-10]** Kubernetes-oriented. *Supersedes:* P-CC-16. *Note: the author's own direction.*
+- **[D-11]** The core is written in Go. Each plugin runs in its own container and speaks protobuf contracts over Connect RPC. Each plugin ships a manifest (in the style of OpenClaw's, R-12) that OpenFief compiles into NetworkPolicy, Secret mounts and RBAC. SDKs come in TypeScript and Go.
+- **[D-12]** Any conformant Kubernetes cluster; no reference platform. Tested on kind and k3d, with documented requirements: a CNI that enforces NetworkPolicy, and a storage class. *Note: against Claude Code's recommendation (single-node k3s on a home box).*
+- **[D-13]** An operator with a `Plugin` CRD from M0. *Note: against Claude Code's recommendation (Helm in M0, operator in M2).*
+- **[D-14]** PostgreSQL via CloudNativePG, and no NATS in M0.
+- **[D-15]** The operator is namespace-scoped: a Role in the `openfief` namespace only. The CRDs are installed once by a cluster admin. Namespace-per-agent is revisited at M2.
+- **[D-16]** Plugin permissions are split into the `Plugin` resource (what the vendor requests) and a `PluginGrant` (what the user approved). The operator enforces only what is in both. An upgrade that requests more waits for approval.
+- **[D-17]** Plugin images must be pinned by digest, and their signatures are verified with cosign from M0. *Note: against Claude Code's recommendation (cosign once third-party plugins exist).*
+
+**Data model**
+
+- **[D-18]** The source of truth is an append-only, versioned transaction log. Holdings and tax lots are derived from it. Re-imports are idempotent, keyed by source plus the institution's own ID; a changed row creates a new version and supersedes the old one, which is never deleted. Broker position snapshots are stored as balance assertions; a mismatch is a flagged error.
+- **[D-19]** Double-entry postings across cash, position, fee, withholding-tax and FX accounts.
+- **[D-20]** NBP table A rates convert every amount to PLN in M0, behind a swappable rate-provider interface; NBP is the default FX data plugin. The Polish jurisdiction pack pins NBP for tax whatever the UI uses. Original currencies are always kept. *Note: first decided as "NBP for tax, market rates for the UI", then revised by the author.*
+- **[D-21]** End-of-day prices in M0. *Note: implied by the author's revision of D-20.*
+- **[D-25]** Which bond value counts in totals is configurable; the default is net-if-redeemed-today (after the early-redemption fee and Belka tax, no tax inside IKE). *Note: against Claude Code's recommendation (gross in totals). See P-CC-26.*
+
+**Security (UC-0)**
+
+- **[D-26]** People log in with passkeys (WebAuthn), built in. No external identity provider.
+- **[D-27]** Plugins authenticate to the core with projected ServiceAccount tokens (audience `openfief-core`). Scripts get separate, scoped, expiring, read-only personal tokens.
+- **[D-28]** OpenFief ships no Ingress and no tunnel. The core and UI are ClusterIP services; the default way in is `kubectl port-forward`; anything else is the user's own Ingress, and the docs explain what it exposes. *Note: the author's own answer, rejecting Claude Code's suggested opt-in tunnel.*
+- **[D-29]** Credentials are Kubernetes Secrets, fed by whatever the user already runs (External Secrets Operator, Vault, SOPS and so on). The docs require etcd encryption at rest, encrypted disks and encrypted backups. No home-grown cryptography in M0.
+
+**Built-in UI**
+
+- **[D-30]** The built-in UI draws two charts in M0: allocation (by asset class, currency, broker or sleeve) and value over time (which starts at go-live, because of D-23). *Note: against Claude Code's recommendation (allocation plus drift against targets). See OQ-25.*
+
+### 10.2 M0 architecture (decided)
+
+Drawn from D-2 to D-30. Arrows show data flow, not which side starts the call.
+
+```mermaid
+flowchart LR
+  you(["You: browser via kubectl port-forward<br/>or your own Ingress"])
+
+  subgraph ns["namespace openfief"]
+    op["Operator<br/>Plugin + PluginGrant CRDs<br/>digest + cosign checks"]
+    core["Core (Go)<br/>double-entry log, lots, valuations<br/>read API: REST /v1"]
+    pg[("PostgreSQL<br/>CloudNativePG")]
+    subgraph plugins["Plugins: one container each, own NetworkPolicy and Secrets"]
+      ui["View: built-in UI<br/>passkey login, 2 charts"]
+      gfp["View: Ghostfolio<br/>reconcile loop"]
+      ibkr["Connector: IBKR Flex<br/>opening lots + daily pull"]
+      xtb["Connector: XTB export parser<br/>no egress"]
+      bonds["Connector: treasury bonds<br/>manual lots, CPI + NBP ref. rate"]
+      md["Connector: market data<br/>vendor per OQ-21"]
+      nbp["Connector: NBP FX"]
+    end
+  end
+
+  gf["Ghostfolio<br/>(your separate install)"]
+  ext["External: IBKR Flex service,<br/>NBP, GUS, market-data vendor"]
+
+  op -. "creates and constrains" .-> plugins
+  core --> pg
+  you --> ui
+  core -- "read API" --> ui
+  core -- "read API" --> gfp
+  gfp -- "import + reconcile" --> gf
+  ibkr -- "transactions, lots, assertions" --> core
+  xtb -- "parsed transactions" --> core
+  bonds -- "lots + valuations" --> core
+  md -- "EOD prices" --> core
+  nbp -- "EOD FX" --> core
+  ext --> ibkr
+  ext --> bonds
+  ext --> md
+  ext --> nbp
+```
+
+### 10.3 Still open before M0 can be built
+
+- **OQ-21**: market-data vendor.
+- **OQ-22**: verify broker export formats and IBKR lot data against real accounts.
+- **OQ-23**: verify the Ghostfolio API calls D-4 needs.
+- **OQ-24**: canonical hostname for passkeys (T-11, P-CC-29).
+- **OQ-25**: whether model-portfolio targets exist in M0.
+- **OQ-26**: where uploads and manual bond-lot entry live.
+- The author's go-ahead to replace the `LICENSE` file (D-5).
+- The pending proposals touching M0: P-CC-23, P-CC-24, P-CC-26 to P-CC-29.
+
+Not needed for M0: OQ-3, OQ-11, OQ-14, OQ-16, OQ-19, OQ-20 and T-5 (M1 onward); OQ-6 and OQ-18 (M2).
