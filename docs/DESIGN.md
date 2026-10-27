@@ -91,6 +91,12 @@ Gathered by Claude Code on 2026-10-27 during the design review, through web sear
   - https://docs.openclaw.ai/plugins
   - https://thehackernews.com/2026/02/researchers-find-341-malicious-clawhub.html
   - https://www.bitdoze.com/openclaw-security-guide/
+- **[R-13]** *As of 2026-10-27, re-verify before relying.* Hostname-based egress control for pods. Standard Kubernetes NetworkPolicy matches IP blocks, pods and namespaces, never hostnames. The upstream standard for domain names (`AdminNetworkPolicy` `domainNames`, NPEP-133) is still provisional, with few implementations. Domain policies exist in Cilium (`toFQDNs`), in GKE (`FQDNNetworkPolicy`, whose docs say it can't distinguish between multiple domains served by the same IP) and in Calico's commercial editions. Options independent of the CNI: `nais/fqdn-policy`, a fork of Google's controller that resolves DNS and writes standard NetworkPolicy `ipBlock`s; and Stripe's Smokescreen, a Go HTTP CONNECT proxy with per-client allow-lists that identifies clients by mTLS certificate or a role header through a replaceable function.
+  - https://network-policy-api.sigs.k8s.io/npeps/npep-133/
+  - https://docs.cloud.google.com/kubernetes-engine/docs/how-to/fqdn-network-policies
+  - https://docs.tigera.io/calico-cloud/network-policy/domain-based-policy
+  - https://github.com/nais/fqdn-policy
+  - https://github.com/stripe/smokescreen
 
 ## 5. Proposed architecture
 
@@ -146,6 +152,9 @@ Added in the 2026-10-27 design review, all not decided:
 - **[P-CC-27] Built-in UI stack.** Server-rendered Go templates with htmx, a small chart library served locally (no CDN), a strict CSP (Content Security Policy), and no JavaScript build chain.
 - **[P-CC-28] Any Postgres.** Besides CloudNativePG (D-14), accept any PostgreSQL through a connection string, so D-12's "any conformant cluster" holds for managed databases too.
 - **[P-CC-29] Canonical origin set at install.** WebAuthn binds each passkey to a domain (the RP ID, relying-party ID). The installer requires the canonical hostname up front; `localhost` (D-28's port-forward) is used only for bootstrap, and the docs warn that passkeys do not carry over between hostnames. See OQ-24.
+- **[P-CC-30] Operator as the only DNS resolver.** *Withdrawn 2026-10-27:* proposed to make D-32's first version (plain IP allow-lists) reliable; superseded when the author revised D-32 to an egress proxy.
+- **[P-CC-31] The operator never touches money.** The operator manages plugin workloads only. Fiefs, intents, the ledger and approvals live in Postgres behind the core, never in custom resources or etcd: etcd is not a transactional ledger, and GR-6's guarantee must not depend on who holds Kubernetes API access.
+- **[P-CC-32] Bootstrap.** One small Helm chart or plain manifest installs the CRDs, the operator and the egress proxy. Everything after that is a `Plugin` and its `PluginGrant`.
 
 ### 5.3 Component diagram
 
@@ -361,6 +370,7 @@ Added by Claude Code in the 2026-10-27 design review:
 - **[OQ-24]** What is OpenFief's canonical hostname, given that passkeys are bound to it and M1's phone approvals need it reachable over HTTPS? (T-11, P-CC-29.)
 - **[OQ-25]** GR-4's model portfolio is a MUST (FR-10), but D-30 drops the drift chart from M0. Are model-portfolio targets entered in M0 anyway, or does the model portfolio arrive with the maintainer in M2?
 - **[OQ-26]** D-9 includes uploading files in the UI, and bond lots are entered by hand, but D-2 says views never write back and D-7 says data enters only through connector ingest paths. Is the built-in UI more than a view (it forwards uploads and bond-lot forms to the connectors), or does each connector serve its own small form, with the UI only linking to it?
+- **[OQ-27]** Verify Smokescreen before building on D-32: its license, its maintenance status, and its library API for a custom role function and per-role allow-lists.
 
 ## 9. Glossary
 
@@ -437,8 +447,10 @@ Terms added with the M0 decisions (2026-10-27):
 | DCO | Developer Certificate of Origin: contributors certify they may submit their change by adding a `Signed-off-by` line, instead of signing a contributor license agreement (D-5). |
 | Digest pinning | Referring to a container image by the hash of its content (`image@sha256:...`) rather than a mutable tag such as `:latest` (D-17). |
 | Double-entry bookkeeping | Every transaction is recorded as postings that sum to zero across accounts, so money never appears or vanishes; documented by Luca Pacioli in 1494 (D-19). |
+| Egress proxy | A proxy that all outbound traffic from a set of pods must pass through, so destinations can be allowed by hostname rather than IP (D-32). |
 | End of day (EOD) | Prices or rates as of each trading day's close (D-21). |
 | etcd | The key-value store that holds a Kubernetes cluster's state, including Secrets; it must be encrypted at rest (D-29). |
+| HTTP CONNECT | The HTTP method a client uses to ask a proxy to open a tunnel to a named host and port; HTTPS then runs inside the tunnel, so the proxy sees the hostname but not the content. |
 | htmx | A small JavaScript library that lets server-rendered HTML pages update parts of themselves without a front-end framework (P-CC-27). |
 | Ingress | The Kubernetes resource that exposes an HTTP service outside the cluster. OpenFief ships none (D-28). |
 | kind / k3d / k3s | kind and k3d run Kubernetes clusters in containers for testing; k3s is a lightweight Kubernetes distribution (D-12). |
@@ -448,6 +460,7 @@ Terms added with the M0 decisions (2026-10-27):
 | RBAC | Role-based access control: in Kubernetes, Roles and ClusterRoles define what an identity may do (D-15). |
 | Reconcile loop | The Kubernetes controller pattern: repeatedly compare desired state with actual state and act to remove the difference (D-4). |
 | RP ID | Relying-party ID: the domain a WebAuthn passkey is bound to (P-CC-29, OQ-24). |
+| Smokescreen | Stripe's open-source egress proxy, written in Go, which checks each client's HTTP CONNECT destinations against a per-client allow-list (D-32, R-13). |
 | View plugin | A plugin that presents OpenFief's canonical record somewhere else (the built-in UI, Ghostfolio) and never writes back (D-2). |
 
 ## 10. Decisions (M0 design review, 2026-10-27)
@@ -484,13 +497,14 @@ The author made these in a design review with Claude Code, run one question at a
 **Runtime and plugins**
 
 - **[D-10]** Kubernetes-oriented. *Supersedes:* P-CC-16. *Note: the author's own direction.*
-- **[D-11]** The core is written in Go. Each plugin runs in its own container and speaks protobuf contracts over Connect RPC. Each plugin ships a manifest (in the style of OpenClaw's, R-12) that OpenFief compiles into NetworkPolicy, Secret mounts and RBAC. SDKs come in TypeScript and Go.
+- **[D-11]** The core is written in Go. Each plugin runs in its own container and speaks protobuf contracts over Connect RPC. Each plugin ships a manifest (in the style of OpenClaw's, R-12) that OpenFief compiles into NetworkPolicy, Secret mounts and RBAC. SDKs come in TypeScript and Go. Egress hostnames are enforced by the egress proxy (D-32), because NetworkPolicy has no hostnames.
 - **[D-12]** Any conformant Kubernetes cluster; no reference platform. Tested on kind and k3d, with documented requirements: a CNI that enforces NetworkPolicy, and a storage class. *Note: against Claude Code's recommendation (single-node k3s on a home box).*
 - **[D-13]** An operator with a `Plugin` CRD from M0. *Note: against Claude Code's recommendation (Helm in M0, operator in M2).*
 - **[D-14]** PostgreSQL via CloudNativePG, and no NATS in M0.
 - **[D-15]** The operator is namespace-scoped: a Role in the `openfief` namespace only. The CRDs are installed once by a cluster admin. Namespace-per-agent is revisited at M2.
 - **[D-16]** Plugin permissions are split into the `Plugin` resource (what the vendor requests) and a `PluginGrant` (what the user approved). The operator enforces only what is in both. An upgrade that requests more waits for approval.
 - **[D-17]** Plugin images must be pinned by digest, and their signatures are verified with cosign from M0. *Note: against Claude Code's recommendation (cosign once third-party plugins exist).*
+- **[D-32]** Plugin egress goes through an egress proxy built on Stripe's Smokescreen, embedded as a Go library. The operator compiles each `PluginGrant`'s hostnames into that plugin's allow-list. Plugins identify themselves with their projected ServiceAccount token, through a custom role function. NetworkPolicy lets plugins reach only the core and the proxy, with no DNS, and the proxy refuses private and internal address ranges. Plugins reach external hosts through `HTTPS_PROXY`. *Note: first decided as plain NetworkPolicy IP allow-lists; revised by the author after a check of existing solutions (R-13).*
 
 **Data model**
 
@@ -513,7 +527,7 @@ The author made these in a design review with Claude Code, run one question at a
 
 ### 10.2 M0 architecture (decided)
 
-Drawn from D-2 to D-30. Arrows show data flow, not which side starts the call.
+Drawn from D-2 to D-32. Arrows show data flow, not which side starts the call.
 
 ```mermaid
 flowchart LR
@@ -523,6 +537,7 @@ flowchart LR
     op["Operator<br/>Plugin + PluginGrant CRDs<br/>digest + cosign checks"]
     core["Core (Go)<br/>double-entry log, lots, valuations<br/>read API: REST /v1"]
     pg[("PostgreSQL<br/>CloudNativePG")]
+    egress["Egress proxy (Smokescreen)<br/>per-plugin hostname allow-list"]
     subgraph plugins["Plugins: one container each, own NetworkPolicy and Secrets"]
       ui["View: built-in UI<br/>passkey login, 2 charts"]
       gfp["View: Ghostfolio<br/>reconcile loop"]
@@ -542,16 +557,18 @@ flowchart LR
   you --> ui
   core -- "read API" --> ui
   core -- "read API" --> gfp
-  gfp -- "import + reconcile" --> gf
+  gfp -- "import + reconcile" --> egress
+  egress --> gf
   ibkr -- "transactions, lots, assertions" --> core
   xtb -- "parsed transactions" --> core
   bonds -- "lots + valuations" --> core
   md -- "EOD prices" --> core
   nbp -- "EOD FX" --> core
-  ext --> ibkr
-  ext --> bonds
-  ext --> md
-  ext --> nbp
+  ext --> egress
+  egress -- "granted hosts only" --> ibkr
+  egress --> bonds
+  egress --> md
+  egress --> nbp
 ```
 
 ### 10.3 Still open before M0 can be built
@@ -562,6 +579,7 @@ flowchart LR
 - **OQ-24**: canonical hostname for passkeys (T-11, P-CC-29).
 - **OQ-25**: whether model-portfolio targets exist in M0.
 - **OQ-26**: where uploads and manual bond-lot entry live.
+- **OQ-27**: verify Smokescreen (license, maintenance, library API).
 - The author's go-ahead to replace the `LICENSE` file (D-5).
 - The pending proposals touching M0: P-CC-23, P-CC-24, P-CC-26 to P-CC-29.
 

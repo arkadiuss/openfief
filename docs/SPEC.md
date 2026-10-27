@@ -185,7 +185,7 @@ Plain statements, as explained in §0. Each one is the author's decision, not a 
 
 **Security**
 
-- **SEC-16** Each plugin ships a manifest declaring its capabilities, egress hosts, secrets, data tiers and a JSON Schema for its config. The operator compiles the granted part into NetworkPolicy, Secret mounts and RBAC, so a plugin reaches only what its grant allows. **Traces to:** D-11, D-13 (context: R-12).
+- **SEC-16** Each plugin ships a manifest declaring its capabilities, egress hosts, secrets, data tiers and a JSON Schema for its config. The operator compiles the granted part into NetworkPolicy, Secret mounts, RBAC and egress-proxy allow-list entries, so a plugin reaches only what its grant allows. **Traces to:** D-11, D-13, D-32 (context: R-12).
 - **SEC-17** The operator is namespace-scoped: a Role in the `openfief` namespace only. The CRDs are installed once by a cluster admin. **Traces to:** D-13, D-15.
 - **SEC-18** A `Plugin` resource holds what a plugin requests and a `PluginGrant` what the user approved. The operator enforces only what is in both, and an upgrade that requests more waits for approval. **Traces to:** D-16.
 - **SEC-19** Plugin images are referenced by digest; tags are rejected. The operator verifies each image's cosign signature before deploying it. **Traces to:** D-17 (context: P-CC-24).
@@ -193,6 +193,7 @@ Plain statements, as explained in §0. Each one is the author's decision, not a 
 - **SEC-21** Plugins authenticate to the core with projected ServiceAccount tokens (audience `openfief-core`). Scripts use scoped, expiring, read-only personal tokens. **Traces to:** D-27.
 - **SEC-22** OpenFief ships no Ingress and no tunnel. Its services are ClusterIP; the default access path is `kubectl port-forward`; the documentation explains what a user-added Ingress exposes. **Traces to:** D-28.
 - **SEC-23** Credentials are stored as Kubernetes Secrets. The documentation requires etcd encryption at rest, encrypted disks and encrypted backups. M0 contains no home-grown cryptography. **Traces to:** D-29.
+- **SEC-24** Plugins reach external hosts only through the egress proxy (Smokescreen, embedded as a Go library). It allows each plugin only the hostnames in its grant, identifies plugins by their ServiceAccount token, and refuses private and internal address ranges. NetworkPolicy lets plugins reach only the core and the proxy, with no DNS. **Traces to:** D-32 (context: R-13, OQ-27).
 
 ## 3. Domain model
 
@@ -324,7 +325,7 @@ Each fill, partial or final, moves its notional from reserved to committed in th
 
 Plugin types come from P-2, plus the view plugin added by D-2. The operations below are interface outlines, not code, and are **[P-CC-20]**, pending author approval.
 
-Decided for every plugin type: each plugin runs in its own container and speaks protobuf contracts over Connect RPC (D-11). It ships a manifest that the operator compiles into NetworkPolicy, Secret mounts and RBAC (D-11, D-13). It is deployed only within its `PluginGrant` (D-16), from a digest-pinned, cosign-verified image (D-17), and it authenticates to the core with a projected ServiceAccount token (D-27).
+Decided for every plugin type: each plugin runs in its own container and speaks protobuf contracts over Connect RPC (D-11). It ships a manifest that the operator compiles into NetworkPolicy, Secret mounts and RBAC, and its external hostnames into the egress proxy's allow-list (D-11, D-13, D-32). It is deployed only within its `PluginGrant` (D-16), from a digest-pinned, cosign-verified image (D-17), and it authenticates to the core with a projected ServiceAccount token (D-27).
 
 ### 5.1 Connector
 
@@ -426,13 +427,13 @@ Acceptance criteria (revised 2026-10-27 to match the decisions; still **[P-CC-22
 7. **Read API.** `/v1` serves accounts, transactions, tax lots, holdings and valuations as its OpenAPI spec describes, rejects unauthenticated calls, and has no write endpoint (D-6, D-27).
 8. **Built-in UI.** Passkey login works. The allocation and value-over-time charts are drawn using only the read API (D-6, D-26, D-30).
 9. **Ghostfolio.** After a sync, Ghostfolio's OpenFief-owned accounts hold exactly the projected activities. A second sync changes nothing. A manually edited activity in an owned account is reverted, and accounts OpenFief did not create are untouched (D-4).
-10. **Plugin isolation.** Each plugin runs in its own pod. The XTB parser has no egress at all. A test plugin's attempt to reach a host outside its grant fails (D-11, D-16).
+10. **Plugin isolation.** Each plugin runs in its own pod. The XTB parser has no egress at all. Through the proxy, a test plugin's request for a host outside its grant is refused; attempts to bypass the proxy (a direct connection, a DNS lookup) fail (D-11, D-16, D-32).
 11. **Operator.** A `Plugin` without a matching `PluginGrant` is not deployed. An upgrade requesting a new egress host stays on the old version until granted. An image referenced by tag, or without a valid cosign signature, is rejected (D-13, D-16, D-17).
 12. **Operator scope.** `kubectl auth can-i` shows the operator's ServiceAccount cannot create or change anything outside the `openfief` namespace (D-15).
 13. **Exposure.** The installation creates no Ingress, no LoadBalancer or NodePort Service and no tunnel; the UI is reachable through `kubectl port-forward` (D-28).
 14. **Secrets.** Credentials exist only as Kubernetes Secrets, mounted only into plugins granted them. The documentation lists etcd encryption, encrypted disks and encrypted backups as requirements (D-29).
 15. **Portability.** The whole acceptance suite passes on both kind and k3d (D-12).
-16. **Egress.** Outbound traffic goes only to configured destinations (IBKR's Flex service, NBP, GUS, the market-data vendor, the user's Ghostfolio), verified from egress logs.
+16. **Egress.** Outbound traffic goes only to configured destinations (IBKR's Flex service, NBP, GUS, the market-data vendor, the user's Ghostfolio), verified from the egress proxy's logs (D-32).
 
 ### M1: Control plane on paper trading
 
