@@ -1,0 +1,26 @@
+{
+  "name": "openfief-devtools",
+  "private": true,
+  "description": "Developer tooling only (kibi requirements layer). Not part of the OpenFief product.",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "kibi-cli": "2.36.0",
+    "kibi-core": "0.26.1",
+    "kibi-mcp": "3.21.0",
+    "kibi-plugin-treesitter": "2.0.2"
+  },
+  "kibi": {
+    "plugins": [
+      {
+        "package": "kibi-plugin-treesitter",
+        "capabilities": {
+          "kibi.symbol-extractor.v2": {
+            "mode": "augment"
+          }
+        }
+      }
+    ]
+  }
+}

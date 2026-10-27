@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-180439467119
+    type: constrains
+    from: REQ-AUTO-8EA5542EFA92FFCD
+    to: FACT-SUBJECT-60D89A948A654996
+    created_at: "2026-10-27T20:12:30.660Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-AUTO-8EA5542EFA92FFCD
+    to: FACT-PROP-481A47825EF0C57C
+    created_at: 2026-10-27T20:12:30.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2afe1d9c1bec
+  - type: constrains
+    from: REQ-AUTO-718AA30AAFD0E6E8
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-27T20:12:51.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20330e534e78
+  - type: requires_property
+    from: REQ-AUTO-718AA30AAFD0E6E8
+    to: FACT-PROP-9FF114D216A08151
+    created_at: 2026-10-27T20:12:51.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01b6de38c7b6

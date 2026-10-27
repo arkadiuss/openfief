@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-75a1bd415dc0
+    type: constrains
+    from: REQ-AUTO-15828B9727AFA488
+    to: FACT-SUBJECT-A197B520E58C9AE3
+    created_at: "2026-10-27T20:12:53.170Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-AUTO-15828B9727AFA488
+    to: FACT-PROP-B7976F5DAC647953
+    created_at: 2026-10-27T20:12:53.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7d3f0d897ea

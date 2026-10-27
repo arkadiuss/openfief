@@ -1,0 +1,11 @@
+.kb/branches/
+.kb/recovery/
+.kb/proof/runs/
+.kb/briefs/
+.kb/migrations/
+.kb/symbol-coordinates.yaml
+.kb/usage.log
+.env.kibi
+
+# Node dev tooling (kibi)
+node_modules/
