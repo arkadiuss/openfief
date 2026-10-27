@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d22a9ee69229
+  - type: implements
+    from: SYM-vulncheck-unreachable
+    to: REQ-tooling-vuln-offline
+    created_at: 2026-10-27T20:33:27.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faad018350e7
+  - type: covered_by
+    from: SYM-vulncheck-unreachable
+    to: TEST-tooling-vuln-offline
+    created_at: 2026-10-27T20:36:02.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-154aad90160c

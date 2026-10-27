@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-917fff8955ec
+    type: constrains
+    from: REQ-tooling-vuln-findings-fail
+    to: FACT-SUBJECT-0330811A17979FDD
+    created_at: "2026-10-27T20:32:34.813Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-tooling-vuln-findings-fail
+    to: FACT-PROP-0572A90307FC2C5D
+    created_at: 2026-10-27T20:32:34.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4d7277f0166
+  - type: specified_by
+    from: REQ-tooling-vuln-findings-fail
+    to: SCEN-tooling-vuln-finding
+    created_at: 2026-10-27T20:32:41.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf8b6c3996e5

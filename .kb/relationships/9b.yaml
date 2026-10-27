@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d38b97f7d8a
+  - type: implements
+    from: SYM-check-docs-referenced
+    to: REQ-tooling-docs-undefined-tag
+    created_at: 2026-10-27T20:33:22.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05e447e3841d
+  - type: covered_by
+    from: SYM-check-docs-referenced
+    to: TEST-tooling-docs-check
+    created_at: 2026-10-27T20:35:50.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3d10fd9c431

@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7eef4eb243d
+  - type: constrains
+    from: REQ-tooling-docs-undefined-tag
+    to: FACT-SUBJECT-5D453510BEDCD3C6
+    created_at: 2026-10-27T20:32:02.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba6486a76265
+  - type: requires_property
+    from: REQ-tooling-docs-undefined-tag
+    to: FACT-PROP-493B1C92A6105E98
+    created_at: 2026-10-27T20:32:02.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-895ddddf92dd
+  - type: specified_by
+    from: REQ-tooling-docs-undefined-tag
+    to: SCEN-tooling-docs-undefined-tag
+    created_at: 2026-10-27T20:32:09.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7a43aac7866

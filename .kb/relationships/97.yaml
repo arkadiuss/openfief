@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-dbff6543a6e0
+    type: constrains
+    from: REQ-tooling-e2e-local-only
+    to: FACT-SUBJECT-FCD6D4751918D149
+    created_at: "2026-10-27T20:33:06.568Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-tooling-e2e-local-only
+    to: FACT-PROP-4EE3464346CA93FE
+    created_at: 2026-10-27T20:33:06.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abcd1e2d1592
+  - type: specified_by
+    from: REQ-tooling-e2e-local-only
+    to: SCEN-tooling-e2e-remote-context
+    created_at: 2026-10-27T20:33:12.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f77f95c4f6d6

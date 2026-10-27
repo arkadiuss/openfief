@@ -1,6 +1,6 @@
 # Development lifecycle
 
-Rules without a marker are the author's; **(P)** marks a Claude Code proposal pending approval. Tooling isn't written yet: the commands below are the contract. If a target doesn't exist yet, say so; don't improvise a substitute.
+Rules without a marker are the author's; **(P)** marks a Claude Code proposal pending approval (some are already implemented; implemented doesn't mean approved). The Taskfile and hooks exist (D-41). CI and the release workflow aren't written yet.
 
 ## Flow
 
@@ -12,24 +12,29 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal pe
 6. **`main`** deploys to the demo environment automatically.
 7. **Release** through the separate release workflow.
 
-## Commands (contract)
+## Commands
 
-All entry points are [Taskfile](https://taskfile.dev) targets **(P)**:
+All entry points are [Taskfile](https://taskfile.dev) targets (D-41). Hooks and CI call targets, never tools directly. First time in a clone: install Task, then run `task setup`.
 
 | Target | Does | Where |
 |---|---|---|
-| `task check` | fmt check, lint, `govulncheck`, unit and replay-integration tests, `kibi check --staged` | pre-commit hook, CI |
-| `task test` | unit and replay-integration tests | local, CI |
-| `task e2e` | full flow on a local k3s | local, CI |
-| `task fmt` / `task lint` / `task vuln` | the individual steps | local |
-| `task gen` | protobuf and other generated code | local |
-| `task kibi` | `kibi check` and `kibi status` | local, CI |
+| `task setup` | Installs the pinned tools into `.bin/`, kibi (`npm ci`) and the git hooks | once per clone |
+| `task check` | fmt check, lint, `govulncheck` + `npm audit`, tests, docs provenance check, full `kibi check` | local, CI |
+| `task check:commit` | The same, but with kibi checking staged changes only | pre-commit hook |
+| `task test` | Unit and replay-integration tests (offline) | local, CI |
+| `task e2e` | Full flow on a local k3s; refuses non-local clusters | local, CI |
+| `task fmt` / `task lint` / `task vuln` / `task docs:check` | The individual steps | local |
+| `task kibi:*` | `check`, `staged`, `sync`, `status`, `doctor`, `search -- <topic>`, `report` | local, hooks, CI |
 
-**Hooks (P).** Managed by lefthook, which calls `task`. Kibi's hooks are delegated into lefthook (`kibi init --print-hook <hook>`); never let two tools own `.git/hooks`.
-- `pre-commit`: `task check`.
-- `post-checkout`, `post-merge`, `post-rewrite`: `kibi sync`.
+Go steps skip cleanly until a `go.mod` exists. Tool versions are pinned in `Taskfile.yml`.
 
-**`govulncheck` offline (P).** It needs the vulnerability database. The hook uses a cached copy; if offline, it warns locally and CI enforces.
+**Hooks.** lefthook (`lefthook.yml`) only calls task targets:
+- `pre-commit`: `task check:commit`.
+- `post-checkout` (branch switch), `post-merge`, `post-rewrite` (rebase): `task kibi:sync`.
+
+kibi's own hooks stay uninstalled (`kibi init --no-hooks`); its hook commands live in `kibi:staged` and `kibi:sync`. Never let two tools own `.git/hooks`.
+
+**Offline (P).** If a vulnerability database is unreachable, `task vuln` warns locally and fails in CI (`CI=true`). Findings always fail.
 
 ## Commits and PRs
 

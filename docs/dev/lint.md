@@ -1,6 +1,6 @@
 # Lint
 
-Strict on purpose: lint is how agents get fast, unambiguous feedback. Rules without a marker are the author's; **(P)** marks a Claude Code proposal pending approval. Tool configs aren't written yet; this is their contract.
+Strict on purpose: lint is how agents get fast, unambiguous feedback. Rules without a marker are the author's; **(P)** marks a Claude Code proposal pending approval. The Go config is `.golangci.yml` (run it with `task lint`); configs for other languages come with their code.
 
 ## Go (golangci-lint v2) (P)
 
@@ -11,8 +11,8 @@ Strict on purpose: lint is how agents get fast, unambiguous feedback. Rules with
   - `gocritic`, `revive`, `gocognit`, `cyclop`, `funlen`, `paralleltest`, `thelper`, `tparallel`, `usetesting`;
   - `gochecknoglobals`, `nolintlint`, `depguard`, `forbidigo`.
 - **Formatters:** `gofumpt` and `goimports`.
-- **`depguard`** enforces the layering in [code-organization.md](code-organization.md): domain packages import only the standard library, `internal/kernel` and approved pure libraries; no context imports another's adapters.
-- **`forbidigo`** bans in domain packages: `time.Now`, `math/rand`, `fmt.Print*`, `log.*`, `os.Getenv`, and `float64` for money fields (where expressible).
+- **`depguard`** keeps domain packages pure ([code-organization.md](code-organization.md)): no `context`, `database/sql`, `log`, `math/rand`, `net`, `os`, `runtime`, `sync`, `syscall` or `unsafe`. depguard matches import prefixes only, so "no context imports another's adapters" can't be expressed there; that needs go-arch-lint once code exists **(P)**.
+- **`forbidigo`** bans `time.Now`, `time.Since`, `time.Until`, `fmt.Print*` and `panic` in domain packages. `float64` for money isn't expressible in a linter; reviews catch it.
 - **`nolintlint`:** every `//nolint` names the linter and gives a reason (`//nolint:gosec // reason`). Bare `//nolint` fails.
 
 ## Other languages (P)

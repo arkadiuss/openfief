@@ -156,6 +156,7 @@ Added in the 2026-10-27 design review, all not decided:
 - **[P-CC-31] The operator never touches money.** The operator manages plugin workloads only. Fiefs, intents, the ledger and approvals live in Postgres behind the core, never in custom resources or etcd: etcd is not a transactional ledger, and GR-6's guarantee must not depend on who holds Kubernetes API access.
 - **[P-CC-32] Bootstrap.** One small Helm chart or plain manifest installs the CRDs, the operator and the egress proxy. Everything after that is a `Plugin` and its `PluginGrant`.
 - **[P-CC-33] Development rules marked (P).** Every rule marked **(P)** in `docs/dev/*.md` is a Claude Code proposal pending the author's approval. Notable ones: Taskfile targets as the command contract; lefthook as the hook manager; testcontainers-go for Postgres tests; go-cmp and no assertion framework; the golangci-lint v2 linter set; Conventional Commits; release tags without a `v` prefix (Go would read a root `v2026.11.0` as major version 2026 of the module); SDK tags `sdk/go/vX.Y.Z`; the bounded-context layout and the Go names in the ubiquitous language.
+  - *Status 2026-10-27: the Taskfile is accepted by D-41. lefthook, the golangci-lint linter set and the vulnerability-check behaviour are implemented as proposed and still await the author's review.*
 
 ### 5.3 Component diagram
 
@@ -536,6 +537,7 @@ The author made these in a design review with Claude Code, run one question at a
 - **[D-38]** Lint is strict, aimed at agents. See docs/dev/lint.md. *Note: the author's own rule.*
 - **[D-39]** Code is organized by domain following DDD, with a defined ubiquitous language. See docs/dev/code-organization.md and docs/dev/ubiquitous-language.md. *Note: the author's own rule.*
 - **[D-40]** Agent context is agent-native and cheap: the always-loaded files (`AGENTS.md`, `CLAUDE.md`) stay minimal and everything else is referenced lazily, by path or skill. The rules name no private projects. *Note: the author's own rule.*
+- **[D-41]** `Taskfile.yml` is the single entry point for all tooling, kibi included, and everything is connected: git hooks and CI only call task targets. See docs/dev/sdlc.md. *Note: the author's own rule. The hook manager (lefthook), the pinned tool versions and the contents of `.golangci.yml` are Claude Code's choices within it (P-CC-33).*
 
 ### 10.2 M0 architecture (decided)
 

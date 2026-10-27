@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-05f118192cc0
+    type: verified_by
+    from: SCEN-tooling-vuln-offline
+    to: TEST-tooling-vuln-offline
+    created_at: "2026-10-27T20:35:57.738Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

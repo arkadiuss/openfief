@@ -23,14 +23,4 @@ DESIGN.md §1 holds the tag legend. These rules keep provenance intact.
 
 ## Checks after editing
 
-Run these from the repo root.
-
-1. **Every referenced tag is defined.** The output must be empty:
-   ```bash
-   cd docs && for k in D OQ T R; do comm -23 <(grep -ohE "\b$k-[0-9]+\b" DESIGN.md SPEC.md | sort -u) <(grep -oE "^- \*\*\[$k-[0-9]+\]" DESIGN.md | grep -oE "$k-[0-9]+" | sort -u); done
-   ```
-2. **No ground-rule line changed.** The output must be empty:
-   ```bash
-   git diff -U0 docs/DESIGN.md | grep -E '^[-+]- \*\*\[GR-'
-   ```
-3. **Mermaid blocks still parse,** if you touched one. Check it in GitHub's preview or with mermaid-cli.
+Run `task docs:check`; the pre-commit hook runs it too. It fails on any referenced tag that isn't defined, and on any changed ground-rule line (compared against `HEAD`, or against `DOCS_BASE` in CI). If you touched a Mermaid block, check it in GitHub's preview or with mermaid-cli.

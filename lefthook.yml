@@ -1,0 +1,21 @@
+# Git hooks only call task targets; all logic lives in Taskfile.yml (docs/dev/sdlc.md).
+# The pinned task in .bin/ wins over a global one.
+pre-commit:
+  commands:
+    check:
+      run: PATH="$PWD/.bin:$PATH" task check:commit
+
+post-checkout:
+  commands:
+    kibi-sync:
+      run: if [ "{3}" = "1" ]; then PATH="$PWD/.bin:$PATH" task kibi:sync; fi
+
+post-merge:
+  commands:
+    kibi-sync:
+      run: PATH="$PWD/.bin:$PATH" task kibi:sync
+
+post-rewrite:
+  commands:
+    kibi-sync:
+      run: if [ "{1}" = "rebase" ]; then PATH="$PWD/.bin:$PATH" task kibi:sync; fi

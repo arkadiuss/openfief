@@ -9,3 +9,8 @@
 
 # Node dev tooling (kibi)
 node_modules/
+
+# Pinned dev tools and generated reports
+.bin/
+kibi-report/
+.task/

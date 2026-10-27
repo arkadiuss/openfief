@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-ede8af8db356
+    type: verified_by
+    from: SCEN-tooling-docs-ground-rule-edited
+    to: TEST-tooling-docs-check
+    created_at: "2026-10-27T20:35:41.413Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

@@ -30,4 +30,4 @@ Everything else (P, P-CC, R, T, OQ) is undecided: don't treat it as a rule.
 - Use the ubiquitous-language names exactly.
 - Never weaken lint, tests or hooks to get green, and never use `--no-verify`. Fix the cause or ask.
 - Never commit to `main`.
-- Tooling isn't written yet. The `task` targets in docs/dev/sdlc.md are the contract; if one is missing, say so instead of improvising.
+- Use `task` for everything: `task check` before handing work back (the pre-commit hook runs `task check:commit`), `task --list` for all targets, and `task setup` once per clone. Don't call tools directly when a target exists.

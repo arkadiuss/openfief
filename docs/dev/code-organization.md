@@ -61,6 +61,6 @@ test/e2e/                end-to-end suites (local k3s)
 - Never log amounts, holdings, account numbers or tokens. Log internal IDs only (GR-12, UC-0).
 - Fixtures use synthetic data only.
 
-**Requirements.** Production code that implements a requirement carries `// implements REQ-<id>` above it ([kibi.md](kibi.md)).
+**Requirements.** Every behavioral function is owned by a requirement through a kibi `symbol` entity with an `implements` link, not a code comment ([kibi.md](kibi.md)). The pre-commit gate blocks unowned behavioral symbols.
 
 **New context.** Add it to the table above and to the ubiquitous language, and get the author's OK. Contexts are design decisions, not refactors.

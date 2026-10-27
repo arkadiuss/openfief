@@ -1,0 +1,94 @@
+# Strict by design (docs/dev/lint.md). Never weaken without the author's OK.
+version: "2"
+
+linters:
+  default: all
+  disable:
+    - exhaustruct     # deprecated; exhaustruct_v5 replaces it
+    - exhaustruct_v5  # forces every field to be set; value types rely on useful zero values
+    - gomodguard      # deprecated; gomodguard_v2 stays on
+    - wsl             # deprecated; wsl_v5 replaces it
+    - wsl_v5          # blank-line style churn, no correctness value
+    - nlreturn        # blank-line style churn, no correctness value
+    - varnamelen      # short names are idiomatic Go in small scopes
+    - lll             # line length is left to the formatter and review
+    - noinlineerr     # `if err := f(); err != nil` is idiomatic Go
+    - testpackage     # table tests of pure functions may live in the same package
+    - goheader        # no header policy yet: the SPDX identifier waits for the license swap (D-5)
+
+  settings:
+    depguard:
+      rules:
+        domain:
+          # Domain packages are pure: no I/O, no clock, no concurrency (code-organization.md).
+          list-mode: lax
+          files:
+            - "**/internal/*/*.go"
+            - "**/internal/jurisdiction/*/*.go"
+            - "!$test"
+          deny:
+            - { pkg: context, desc: "domain functions are pure; context belongs in app or adapters" }
+            - { pkg: database/sql, desc: "I/O belongs in adapters" }
+            - { pkg: log, desc: "no logging in the domain" }
+            - { pkg: math/rand, desc: "pass randomness in as a parameter" }
+            - { pkg: net, desc: "I/O belongs in adapters" }
+            - { pkg: os, desc: "I/O and environment belong in adapters or cmd" }
+            - { pkg: runtime, desc: "no runtime coupling in the domain" }
+            - { pkg: sync, desc: "no concurrency in the domain" }
+            - { pkg: syscall, desc: "I/O belongs in adapters" }
+            - { pkg: unsafe, desc: "never in the domain" }
+            - { pkg: github.com/arkadiuss/openfief/cmd, desc: "only cmd wires adapters" }
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+    exhaustive:
+      default-signifies-exhaustive: false
+    forbidigo:
+      analyze-types: true
+      forbid:
+        - { pattern: '^time\.(Now|Since|Until)$', msg: "inject the date or clock" }
+        - { pattern: '^fmt\.Print.*$', msg: "no printing in the domain" }
+        - { pattern: '^panic$', msg: "return a typed error for business failures" }
+    funlen:
+      lines: 60
+      statements: 40
+    gocognit:
+      min-complexity: 15
+    cyclop:
+      max-complexity: 10
+    nestif:
+      min-complexity: 4
+    gocritic:
+      enabled-tags: [diagnostic, performance, style]
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment  # memory layout over readability; not worth it for domain types
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+      allow-unused: false
+
+  exclusions:
+    generated: strict
+    paths:
+      - (^|/)gen/
+    rules:
+      # forbidigo's bans apply to domain packages only.
+      - path-except: '(^|/)internal/([^/]+|jurisdiction/[^/]+)/[^/]+\.go$'
+        linters: [forbidigo]
+      # Table tests are long and repetitive by nature.
+      - path: _test\.go$
+        linters: [funlen, dupl, goconst, maintidx]
+
+formatters:
+  enable: [gofumpt, goimports]
+  settings:
+    gofumpt:
+      extra-rules: true
+    goimports:
+      local-prefixes: [github.com/arkadiuss/openfief]
+  exclusions:
+    generated: strict
+    paths:
+      - (^|/)gen/
