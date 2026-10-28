@@ -58236,3 +58236,185 @@ symbols:
         target: TEST-ingest-delivery
       - type: implements
         target: REQ-ingest-delivery-market-data
+  - id: SYM-plugins-install-source
+    title: InstallSource
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:19.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install-source
+  - id: SYM-plugins-resolve-install-source
+    title: ResolveInstallSource
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:23.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-source
+  - id: SYM-plugins-default-instance-name
+    title: DefaultInstanceName
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:27.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install-source
+      - type: implements
+        target: REQ-plugins-instance-per-install
+  - id: SYM-plugins-valid-instance-name
+    title: validInstanceName
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:31.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install-source
+  - id: SYM-plugins-plan-install
+    title: PlanInstall
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:36.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-plan
+  - id: SYM-plugins-secrets-to-delete
+    title: SecretsToDelete
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:40.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall-secrets
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-unique-sorted
+    title: uniqueSorted
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:45.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall-secrets
+  - id: SYM-plugins-test-install-install-catalog
+    title: installCatalog
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:49.131Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-install-outcome
+    title: installOutcome
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:53.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-test-resolve-install-source
+    title: TestResolveInstallSource
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:57.494Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-test-plan-install
+    title: TestPlanInstall
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:25:01.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-test-secrets-to-delete
+    title: TestSecretsToDelete
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:25:05.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-signed-sample
+    title: signedSample
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:29:53.453Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-test-plan-install-refuses
+    title: TestPlanInstallRefuses
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:29:57.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-uninstall-secrets
+    title: UninstallSecrets
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:31:15.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall-secrets

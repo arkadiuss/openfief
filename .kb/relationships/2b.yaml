@@ -272,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcda35b2c378
+  - type: constrains
+    from: REQ-plugins-cli-install-source
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-10-28T22:24:04.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4d877dd9e03
+  - type: requires_property
+    from: REQ-plugins-cli-install-source
+    to: FACT-PROP-FF2109D7BECBB423
+    created_at: 2026-10-28T22:24:04.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07699e732e1e
+  - type: specified_by
+    from: REQ-plugins-cli-install-source
+    to: SCEN-plugins-cli-install-source
+    created_at: 2026-10-28T22:24:04.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a98087bc639a

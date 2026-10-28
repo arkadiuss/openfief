@@ -300,3 +300,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ef82e294c48
+  - type: implements
+    from: SYM-plugins-uninstall-secrets
+    to: REQ-plugins-cli-uninstall-secrets
+    created_at: 2026-10-28T22:31:16.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5b255701a75
+  - type: covered_by
+    from: SYM-plugins-uninstall-secrets
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:31:16.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a5a23e25bb5

@@ -223,3 +223,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-381b74a49cce
+  - type: constrains
+    from: REQ-plugins-cli-uninstall-secrets
+    to: FACT-SUBJECT-9AB58EABFF93421D
+    created_at: 2026-10-28T22:24:17.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a25413e30135
+  - type: requires_property
+    from: REQ-plugins-cli-uninstall-secrets
+    to: FACT-PROP-8C24FB3C400B8510
+    created_at: 2026-10-28T22:24:17.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdabe266deba
+  - type: specified_by
+    from: REQ-plugins-cli-uninstall-secrets
+    to: SCEN-plugins-cli-uninstall-shared-secrets
+    created_at: 2026-10-28T22:24:17.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bae87999587f

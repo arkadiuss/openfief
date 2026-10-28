@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d775c0dcfd7f
+  - type: implements
+    from: SYM-plugins-secrets-to-delete
+    to: REQ-plugins-cli-uninstall-secrets
+    created_at: 2026-10-28T22:24:42.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8af5b71b656
+  - type: implements
+    from: SYM-plugins-secrets-to-delete
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-28T22:24:42.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c5ff7c8e488
+  - type: covered_by
+    from: SYM-plugins-secrets-to-delete
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:24:42.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7bafb403e28

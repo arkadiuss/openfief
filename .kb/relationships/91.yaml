@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4d2ba2992c9
+  - type: implements
+    from: SYM-plugins-unique-sorted
+    to: REQ-plugins-cli-uninstall-secrets
+    created_at: 2026-10-28T22:24:46.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e466c9a6406
+  - type: covered_by
+    from: SYM-plugins-unique-sorted
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:24:46.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebb6e93eaa1b

@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9352eb06b629
+  - type: implements
+    from: SYM-plugins-valid-instance-name
+    to: REQ-plugins-cli-install-source
+    created_at: 2026-10-28T22:24:33.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d9b9df8c1a0
+  - type: covered_by
+    from: SYM-plugins-valid-instance-name
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:24:33.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cab0a7c16adc
