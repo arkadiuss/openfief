@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-119539ccb243
+  - id: rel-28263923c811
+    type: executable_for
+    from: SYM-valuation-test-tax-rate-uses-the-table-before-the-event
+    to: TEST-valuation-fx
+    created_at: "2026-10-28T05:31:16.346Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-valuation-nbp-test-rates-table-a
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:58:13.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee9af4f94c30

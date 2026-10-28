@@ -10,7 +10,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 |---|---|---|---|---|
 | Institution | ingest | `ingest.Institution` | A broker, bank or registry that holds assets: IBKR, XTB, the treasury bond registry. | broker (for the registry) |
 | Account | ledger | `ledger.Account` | One account at an institution, such as one IBKR linked account. Belongs to one sleeve. | portfolio |
-| Ledger account | ledger | `ledger.LedgerAccount` | A double-entry account inside an account: cash per currency, a holding per instrument, fees, withholding tax, FX. | "account" alone |
+| Ledger account | ledger | `ledger.Book` | A double-entry account inside an account: cash per currency, a holding per instrument, fees, withholding tax, FX, and equity: the counterpart of what enters or leaves the account from outside (deposits, withdrawals, opening lots). The Go name avoids the `ledger.LedgerAccount` stutter that lint rejects. | "account" alone |
 | Transaction | ledger | `ledger.Transaction` | One economic event from a source. Append-only and versioned; keyed by source plus the institution's own ID. | trade, activity, operation |
 | Posting | ledger | `ledger.Posting` | One leg of a transaction. A transaction's postings sum to zero per currency. | entry, leg |
 | Instrument | ledger | `ledger.Instrument` | Something that can be held, identified by ISIN plus a venue symbol. A bond series is an instrument. | security, ticker, asset |
@@ -26,11 +26,20 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
 | Index | valuation | `valuation.Index` | A market index, such as WIG20 or MSCI World, with an end-of-day level series from the market-data connector. It can be a target, but it can't be held. | benchmark |
-| FX rate | valuation | `valuation.FXRate` | A rate to PLN; NBP table A in M0. | |
+| FX rate | valuation | `valuation.FXRate` | The value in PLN of one unit of a currency on a date, from a source; NBP table A in M0. The rate for a date is the latest one dated on or before it. | |
 | Reporting currency | valuation | `valuation.ReportingCurrency` | The currency totals, charts and the model comparison are shown in. A setting whose default comes from the jurisdiction pack: PLN for the Polish pack. | base currency, home currency |
 | Valuation | valuation | `valuation.Valuation` | The value of a holding on a date, with its basis and source. | |
 | Valuation basis | valuation | `valuation.Basis` | `market`, `gross_accrued` or `net_if_redeemed`. | |
-| Bond series | valuation | `valuation.Series` | A Polish treasury bond series code, such as EDO0536, with its terms. | bond (ambiguous) |
+| Bond series | jurisdiction/pl | `pl.Series` | A Polish retail treasury bond series code, such as EDO0536 (EDO maturing in May 2036). Valuation uses it through jurisdiction/pl's rules. | bond (ambiguous) |
+| Bond type | jurisdiction/pl | `pl.BondType` | The product a bond series belongs to, named by the code's first three letters: OTS, ROR, DOR, TOS, COI, EDO, ROS, ROD. Fixes the term, interest period, indexation and payout. | series (for the type) |
+| Series terms | jurisdiction/pl | `pl.Terms` | What one series' issue letter fixes: first-period rate, margin and early-redemption fee. Data supplied per series, never hard-coded. | |
+| Interest period | jurisdiction/pl | `pl.PeriodStart` | One period of a bond's interest, counted from its own purchase date: a month (ROR, DOR), three months (OTS) or a year. | coupon period (for capitalized types) |
+| Period index | jurisdiction/pl | `pl.Indices` | The published reading that sets an interest period's rate after the first: CPI year on year for inflation-indexed types, the NBP reference rate for ROR and DOR. | |
+| Margin | jurisdiction/pl | `pl.Terms.Margin` | The fixed rate a series adds to its period index. | spread |
+| Early-redemption fee | jurisdiction/pl | `pl.Terms.EarlyRedemptionFee` | The per-bond fee for redeeming before maturity, capped at the bond's accrued interest except for coupon types after their first interest period, and not charged on a withdrawal from IKE or IKZE. OTS has none: redeemed early, it earns no interest. | penalty |
+| Exchange price | jurisdiction/pl | `pl.Purchase.Price` | The price per bond of a series bought by exchanging (zamiana) maturing bonds, set in its issue letter: usually 99.90 PLN, 100 PLN for OTS. The discount below the nominal is taxed with the interest. | rollover price |
+| Tax wrapper | jurisdiction/pl | `pl.TaxWrapper` | The tax regime of the account a lot is held in: taxable, IKE or IKZE. | account type |
+| Lot value | jurisdiction/pl | `pl.LotValue` | A bond lot's statutory value on a date: gross accrued value, and net-if-redeemed value after the early-redemption fee and Belka tax on interest minus the fee plus any purchase discount. | |
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
 | Read API | views | `views` + `connectapi` | The public, read-only `/v1` API. | |
@@ -41,8 +50,19 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Trusted signer | plugins | `plugins.Signer` | An identity whose image signatures the operator accepts: OpenFief's CI, a catalog publisher, or one the owner added. | |
 | Manifest | plugins | `plugins.Manifest` | A plugin's declared capabilities, egress hosts, secrets, data tiers and config schema. | |
 | Egress allow-list | plugins | `plugins.EgressAllowList` | The hostnames a plugin may reach through the egress proxy. | whitelist |
+| Capability | plugins | `plugins.Capability` | What a plugin may act as: `connector` or `view` in M0. Declared in its manifest and approved in its grant. | kind, role |
+| Egress host | plugins | `plugins.EgressHost` | One hostname and port in a manifest, grant or egress allow-list. Never an IP address or a wildcard. | domain, URL |
+| Data tier | plugins | `plugins.DataTier` | A named class of data a plugin asks to see. Only a name in M0; what each tier holds is undecided (P-33). | |
+| Image reference | plugins | `plugins.ImageRef` | A plugin's container image, pinned by digest (`repository@sha256:...`), never by tag. | image tag |
+| Effective permissions | plugins | `plugins.EffectivePermissions` | What OpenFief enforces for a plugin: only what its Plugin requests and its Grant approves. | |
+| Workload | plugins | `plugins.Workload` | What the operator creates for one plugin, compiled from its effective permissions: identity, token, Secret mounts, environment, NetworkPolicy and egress allow-list. | deployment (the Kubernetes object is one part) |
+| Plugin identity | identity | `plugins.ServiceAccountName` | The ServiceAccount `plugin-<name>` in the `openfief` namespace, proven by its projected token with audience `openfief-core`. | |
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |
+| Currency | kernel | `kernel.Currency` | An ISO 4217 alphabetic code, such as PLN or USD. | |
+| Money | kernel | `kernel.Money` | An exact decimal amount in one currency. It keeps its original currency; arithmetic across currencies is an error, and conversion is an explicit FX step in valuation. | |
+| Quantity | kernel | `kernel.Quantity` | An exact, possibly fractional number of units of an instrument. | |
+| Date | kernel | `kernel.Date` | A calendar date with no time of day or time zone, written YYYY-MM-DD. | timestamp |
 
 ### Later milestones
 
@@ -83,7 +103,7 @@ Don't create code for these before their milestone.
 | CloudNativePG (CNPG) | A Kubernetes operator that runs PostgreSQL, including backups to object storage. |
 | ClusterIP / port-forward | A ClusterIP Service is reachable only inside the Kubernetes cluster; `kubectl port-forward` tunnels it to your own machine. |
 | CNI | Container Network Interface: the cluster's network plugin. NetworkPolicy works only if the CNI enforces it. |
-| COI / EDO | Polish retail treasury bond series: COI 4-year and EDO 10-year, both inflation-indexed after the first year. |
+| COI / EDO / ROS / ROD | Polish retail treasury bond types indexed to inflation after the first year: COI 4-year with yearly coupons, EDO 10-year, and the family bonds ROS 6-year and ROD 12-year, all three capitalized yearly. |
 | Connect RPC | A protocol by Buf: the same protobuf service can be called as gRPC or as plain HTTP with JSON. |
 | cosign / Sigstore | Sigstore is an open project for signing software; cosign is its tool for signing and verifying container images. Keyless signing ties a signature to a CI identity instead of a long-lived key. |
 | CPI | Consumer price index; the inflation measure published by GUS. |
@@ -107,6 +127,7 @@ Don't create code for these before their milestone.
 | HTTP CONNECT | The HTTP method a client uses to ask a proxy to open a tunnel to a named host and port; HTTPS runs inside the tunnel, so the proxy sees the hostname but not the content. |
 | IB Gateway / TWS | Trader Workstation (TWS) is IBKR's desktop trading platform; IB Gateway is its headless variant. Both expose the TWS API. |
 | IBKR | Interactive Brokers. |
+| Issue letter (list emisyjny) | The Minister of Finance's document that sets one bond series' terms and how its interest and value are computed. |
 | IKE / IKZE | Polish tax-advantaged retirement accounts with annual contribution limits. IKE: gains tax-exempt if withdrawal conditions are met. IKZE: contributions deductible, withdrawals taxed at a reduced flat rate. |
 | Ingress | The Kubernetes resource that exposes an HTTP service outside the cluster. |
 | kind / k3d / k3s | kind and k3d run Kubernetes clusters in containers for testing; k3s is a lightweight Kubernetes distribution. |
@@ -119,12 +140,14 @@ Don't create code for these before their milestone.
 | MiFID II | The EU Markets in Financial Instruments Directive (second version), which defines investment advice and portfolio management. |
 | Model router | The component that decides which model serves each role and which data tiers it may receive. |
 | NATS / JetStream | NATS is an open-source messaging system; JetStream is its persistence layer (streams, KV, object store). |
+| NBP reference rate | The National Bank of Poland's main policy interest rate, which sets ROR and DOR interest. |
 | NBP table A | The National Bank of Poland's daily table of average exchange rates, used to convert foreign income for tax. |
 | NetworkPolicy | A Kubernetes resource restricting which pods a pod may talk to and be reached from. |
 | Notional | The money value of an order or position (quantity times price). |
 | OMS | Order management system: the component that validates, routes and tracks orders. |
 | OPA / Rego | Open Policy Agent, a CNCF policy engine; Rego is its Datalog-inspired policy language. |
 | Paper trading | Trading against a simulated account with fake money. |
+| OTS / ROR / DOR / TOS | Polish retail treasury bond types: OTS 3-month fixed, ROR 1-year and DOR 2-year with monthly coupons at the NBP reference rate plus a margin, TOS 3-year fixed and capitalized yearly. |
 | PIT-8C | The annual statement of capital income that Polish brokers issue to clients and the tax office. |
 | PIT-38 | The Polish annual tax return for capital gains (securities, derivatives). |
 | PIT/ZG | The PIT attachment that declares foreign income, one per country. |

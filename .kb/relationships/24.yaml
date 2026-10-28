@@ -27,3 +27,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15a9d79f0e07
+  - type: implements
+    from: SYM-kernel-date-midnight
+    to: REQ-kernel-calendar-date
+    created_at: 2026-10-28T04:50:05.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae4abef1f29f
+  - type: covered_by
+    from: SYM-kernel-date-midnight
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:50:05.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1bebf2dc86c
+  - type: implements
+    from: SYM-valuation-price
+    to: REQ-valuation-market-value
+    created_at: 2026-10-28T05:30:49.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69cabec1c855
+  - type: covered_by
+    from: SYM-valuation-price
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:30:49.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36397442e2a8
+  - type: implements
+    from: SYM-valuation-nbp-rate
+    to: REQ-valuation-nbp-decimal-exact
+    created_at: 2026-10-28T05:57:51.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-114aeb90a124
+  - type: covered_by
+    from: SYM-valuation-nbp-rate
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:57:51.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a60df34fe8f5

@@ -13,3 +13,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f163b4fb30b0
+  - id: rel-a2ffb3474189
+    type: executable_for
+    from: SYM-kernel-test-parse-decimal
+    to: TEST-kernel-decimal
+    created_at: "2026-10-28T04:50:49.340Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-kernel-test-helper-money
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:00.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b43887c1f36
+  - type: executable_for
+    from: SYM-kernel-test-money-equal-needs-same-currency
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:57.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a48bff43f1e
+  - type: implements
+    from: SYM-kernel-quantity-cmp
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:52:17.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-965c3a43ff2c
+  - type: covered_by
+    from: SYM-kernel-quantity-cmp
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:17.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15904c9c0c5d
+  - type: constrains
+    from: REQ-pl-series-code
+    to: FACT-SUBJECT-D53FC2954C60B518
+    created_at: 2026-10-28T05:21:41.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ee368f32d84
+  - type: requires_property
+    from: REQ-pl-series-code
+    to: FACT-PROP-77E6E675778BFDF6
+    created_at: 2026-10-28T05:21:41.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-015bcf13b781
+  - type: specified_by
+    from: REQ-pl-series-code
+    to: SCEN-pl-series-code
+    created_at: 2026-10-28T05:21:41.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f369a2cc201
+  - type: validates
+    from: TEST-plugins-plugin-grant
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T05:21:07.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dae61f2c0abe
+  - type: validates
+    from: TEST-plugins-plugin-grant
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T05:21:07.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7574989d6cf7
+  - type: executable_for
+    from: SYM-ledger-test-lots-on
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:22.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aff0c522936

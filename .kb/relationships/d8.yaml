@@ -27,3 +27,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bd9f851e951
+  - type: implements
+    from: SYM-pl-bond-type-string
+    to: REQ-pl-series-code
+    created_at: 2026-10-28T05:22:47.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c71ee116759
+  - type: covered_by
+    from: SYM-pl-bond-type-string
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:22:47.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c1d5f24ebf
+  - type: implements
+    from: SYM-plugins-egress-allow-list-allows
+    to: REQ-plugins-allow-list-exact-match
+    created_at: 2026-10-28T05:29:17.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e3a6d0f1b86
+  - type: implements
+    from: SYM-plugins-egress-allow-list-allows
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:29:17.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17dd1758cdb7
+  - type: covered_by
+    from: SYM-plugins-egress-allow-list-allows
+    to: TEST-plugins-allow-list
+    created_at: 2026-10-28T05:29:17.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-503a5de488c2
+  - type: verified_by
+    from: SCEN-ledger-postings-zero-sum
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:24:01.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a42b39afa3
+  - type: verified_by
+    from: SCEN-ledger-postings-zero-sum
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:24:01.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56dd0b2646a0

@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-623c2f1c5f2e
+    type: executable_for
+    from: SYM-ledger-test-decide-import
+    to: TEST-ledger-version
+    created_at: "2026-10-28T05:33:09.146Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-provider
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:55:12.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff170daa5531

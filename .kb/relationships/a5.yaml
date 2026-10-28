@@ -1,0 +1,57 @@
+relationships:
+  - id: rel-897134c5067d
+    type: implements
+    from: SYM-kernel-currency-mismatch-error-error
+    to: REQ-kernel-money-currency-mismatch
+    created_at: "2026-10-28T04:51:08.119Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-kernel-currency-mismatch-error-error
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:08.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d910f9fd78ed
+  - type: covered_by
+    from: SYM-kernel-currency-mismatch-error-error
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:08.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-600969646b30
+  - type: implements
+    from: SYM-ledger-validated
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-28T05:26:00.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5999786947b0
+  - type: implements
+    from: SYM-ledger-validated
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:26:00.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4933e36a59bb
+  - type: covered_by
+    from: SYM-ledger-validated
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:00.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-155296e649a8
+  - type: executable_for
+    from: SYM-ledger-test-lots-on-oversell
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:24.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef21e2b507d1
+  - type: executable_for
+    from: SYM-valuation-nbp-test-rates-no-data
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:58:17.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4084b70e1280

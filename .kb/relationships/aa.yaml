@@ -1,0 +1,99 @@
+relationships:
+  - id: rel-27ff80134a61
+    type: executable_for
+    from: SYM-kernel-test-decimal-compare
+    to: TEST-kernel-decimal
+    created_at: "2026-10-28T04:50:55.077Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-kernel-test-money-rejects-bad-input
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:59.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22a175a5b578
+  - type: implements
+    from: SYM-kernel-parse-quantity
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:52:06.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ac55e8285db
+  - type: covered_by
+    from: SYM-kernel-parse-quantity
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:06.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bef02a2e57cc
+  - type: implements
+    from: SYM-plugins-validate-registry-host
+    to: REQ-plugins-image-digest-only
+    created_at: 2026-10-28T05:24:24.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7413d0b15b30
+  - type: implements
+    from: SYM-plugins-validate-registry-host
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T05:24:24.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e8c59abc4bb
+  - type: covered_by
+    from: SYM-plugins-validate-registry-host
+    to: TEST-plugins-image
+    created_at: 2026-10-28T05:24:24.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28646ec04cab
+  - type: implements
+    from: SYM-plugins-topology-validate
+    to: REQ-plugins-proxy-env-and-allow-list
+    created_at: 2026-10-28T05:29:50.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6069c07a726c
+  - type: implements
+    from: SYM-plugins-topology-validate
+    to: REQ-AUTO-8CBFBD6A12E0865B
+    created_at: 2026-10-28T05:29:50.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f16beff2a711
+  - type: covered_by
+    from: SYM-plugins-topology-validate
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:50.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30eeda11da3f
+  - type: executable_for
+    from: SYM-plugins-test-compile-identity-parts
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:30:00.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-620ea54d16c0
+  - type: implements
+    from: SYM-ledger-sums-by-currency
+    to: REQ-ledger-postings-zero-sum
+    created_at: 2026-10-28T05:28:04.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b9320a3f112
+  - type: implements
+    from: SYM-ledger-sums-by-currency
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:28:04.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0a7b586a0e4
+  - type: covered_by
+    from: SYM-ledger-sums-by-currency
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:28:04.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd94df2f2677

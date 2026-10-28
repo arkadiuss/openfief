@@ -1,0 +1,57 @@
+relationships:
+  - id: rel-d9e62c8c192c
+    type: constrains
+    from: REQ-plugins-image-digest-only
+    to: FACT-SUBJECT-3C2FC1DC62221CB6
+    created_at: "2026-10-28T05:21:31.423Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-plugins-image-digest-only
+    to: FACT-PROP-AD4B63D43EAA0220
+    created_at: 2026-10-28T05:21:31.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b008b0a6f20
+  - type: specified_by
+    from: REQ-plugins-image-digest-only
+    to: SCEN-plugins-image-tag-rejected
+    created_at: 2026-10-28T05:21:31.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaecf38e3755
+  - id: rel-26a50acb23d1
+    type: implements
+    from: SYM-ledger-account
+    to: REQ-ledger-account-sleeve
+    created_at: "2026-10-28T05:25:08.483Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-account
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:08.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7681c4c2d05
+  - type: implements
+    from: SYM-ledger-sorted-lots
+    to: REQ-ledger-fifo
+    created_at: 2026-10-28T05:40:01.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d348885e1aa
+  - type: implements
+    from: SYM-ledger-sorted-lots
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T05:40:01.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3bf9eba2fb6
+  - type: covered_by
+    from: SYM-ledger-sorted-lots
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:01.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b291f95cabff

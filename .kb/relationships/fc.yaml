@@ -13,3 +13,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3eaaad7c5401
+  - type: constrains
+    from: REQ-kernel-decimal-exact
+    to: FACT-SUBJECT-5B059AD005311BC7
+    created_at: 2026-10-28T04:48:45.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a198dcaf9b87
+  - type: requires_property
+    from: REQ-kernel-decimal-exact
+    to: FACT-PROP-F36799C1EB92855B
+    created_at: 2026-10-28T04:48:45.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d31500baa66
+  - type: specified_by
+    from: REQ-kernel-decimal-exact
+    to: SCEN-kernel-decimal-exact
+    created_at: 2026-10-28T04:48:45.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d42d3dafac76
+  - type: executable_for
+    from: SYM-kernel-test-money-keeps-original-currency
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:53.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e18595886beb
+  - type: implements
+    from: SYM-kernel-quantity-equal
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:52:19.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6951b9513d30
+  - type: covered_by
+    from: SYM-kernel-quantity-equal
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:19.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c04ed723294c
+  - type: executable_for
+    from: SYM-release-notes-test-commit
+    to: TEST-tooling-release-notes
+    created_at: 2026-10-28T04:52:07.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee28ad1310be
+  - type: implements
+    from: SYM-ledger-oversell-error-error
+    to: REQ-ledger-oversell
+    created_at: 2026-10-28T05:39:52.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16529d4d903f
+  - type: covered_by
+    from: SYM-ledger-oversell-error-error
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:39:52.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dafec516ea3d

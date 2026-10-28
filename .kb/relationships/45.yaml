@@ -13,3 +13,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bef836ad255
+  - type: verified_by
+    from: SCEN-kernel-decimal-exact
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T04:48:27.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-898fccb56be7
+  - type: verified_by
+    from: SCEN-kernel-decimal-exact
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:48:27.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1abef1ea1ee9
+  - type: verified_by
+    from: SCEN-kernel-decimal-exact
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:48:27.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8b8565aa3ea
+  - type: implements
+    from: SYM-plugins-egress-allow-list
+    to: REQ-plugins-allow-list-exact-match
+    created_at: 2026-10-28T05:29:15.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9892d90586c
+  - type: implements
+    from: SYM-plugins-egress-allow-list
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:29:15.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4769dfb3448
+  - type: covered_by
+    from: SYM-plugins-egress-allow-list
+    to: TEST-plugins-allow-list
+    created_at: 2026-10-28T05:29:15.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057a79b9e2f3
+  - type: implements
+    from: SYM-plugins-effective-permissions-egress
+    to: REQ-plugins-effective-intersection
+    created_at: 2026-10-28T05:30:29.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dcd96f9f5e5
+  - type: implements
+    from: SYM-plugins-effective-permissions-egress
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T05:30:29.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1588e15f9f8
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-egress
+    to: TEST-plugins-effective
+    created_at: 2026-10-28T05:30:29.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d53686e9e19
+  - type: implements
+    from: SYM-ledger-isin-is-zero
+    to: REQ-ledger-isin
+    created_at: 2026-10-28T05:27:07.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80a3f16f4766
+  - type: covered_by
+    from: SYM-ledger-isin-is-zero
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:27:07.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56173a783c1e
+  - type: constrains
+    from: REQ-valuation-fx-range-splitting
+    to: FACT-SUBJECT-D433B5FCB6CC2162
+    created_at: 2026-10-28T05:54:24.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b1c550f2e9e
+  - type: requires_property
+    from: REQ-valuation-fx-range-splitting
+    to: FACT-PROP-56B089ABF6615550
+    created_at: 2026-10-28T05:54:24.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab6b1db998cf
+  - type: specified_by
+    from: REQ-valuation-fx-range-splitting
+    to: SCEN-valuation-fx-range-splitting
+    created_at: 2026-10-28T05:54:24.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f2c92f5c54d

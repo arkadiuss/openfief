@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-81ad33a3eda5
+    type: verified_by
+    from: SCEN-valuation-fx-rate-lookup
+    to: TEST-valuation-fx
+    created_at: "2026-10-28T05:29:50.691Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - id: rel-18b8a71e506c
+    type: implements
+    from: SYM-plugins-is-lower-alnum
+    to: REQ-plugins-egress-host-canonical
+    created_at: "2026-10-28T05:23:10.656Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-is-lower-alnum
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:23:10.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10c8f410442c
+  - type: covered_by
+    from: SYM-plugins-is-lower-alnum
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:23:10.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbd442862fd6

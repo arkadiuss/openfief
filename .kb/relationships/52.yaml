@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-fb5f119cc3d7
+    type: implements
+    from: SYM-ledger-unbalanced-error
+    to: REQ-ledger-postings-zero-sum
+    created_at: "2026-10-28T05:27:54.028Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-ledger-unbalanced-error
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:27:54.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e33d30fef39d
+  - type: covered_by
+    from: SYM-ledger-unbalanced-error
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:27:54.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-607052bf2bef

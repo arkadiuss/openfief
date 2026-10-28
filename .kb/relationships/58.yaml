@@ -13,3 +13,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70a8e646a145
+  - type: implements
+    from: SYM-plugins-peer
+    to: REQ-plugins-network-policy-core-and-proxy
+    created_at: 2026-10-28T05:29:25.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a81a2a6b856
+  - type: implements
+    from: SYM-plugins-peer
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-28T05:29:25.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da63975560b3
+  - type: covered_by
+    from: SYM-plugins-peer
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:25.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cb75d984c8f
+  - type: implements
+    from: SYM-ledger-isin
+    to: REQ-ledger-isin
+    created_at: 2026-10-28T05:26:56.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1597cb15b38a
+  - type: covered_by
+    from: SYM-ledger-isin
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:56.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a497b137e95d
+  - type: executable_for
+    from: SYM-ledger-test-helper-rng-decimal
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:27:34.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3846b7845ec3

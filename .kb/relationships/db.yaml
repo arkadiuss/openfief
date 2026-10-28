@@ -1,0 +1,43 @@
+relationships:
+  - id: rel-e8a0f3d19239
+    type: executable_for
+    from: SYM-kernel-test-helper-date
+    to: TEST-kernel-date
+    created_at: "2026-10-28T04:51:03.867Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-pl-period
+    to: REQ-pl-bond-accrual
+    created_at: 2026-10-28T05:24:19.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27f3759a336
+  - type: covered_by
+    from: SYM-pl-period
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:24:19.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d097495bce94
+  - type: executable_for
+    from: SYM-valuation-test-convert-to-pln
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:31:22.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89b36da19052
+  - type: executable_for
+    from: SYM-plugins-test-helper-sample-plugin
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:23:40.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad486c8ca3ba
+  - type: executable_for
+    from: SYM-plugins-test-helper-sample-plugin
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:23:40.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b507af8c137

@@ -27,3 +27,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3d10fd9c431
+  - type: verified_by
+    from: SCEN-valuation-pln-conversion
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:29:52.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fae901e4abbb
+  - type: constrains
+    from: REQ-plugins-egress-forbidden-addresses
+    to: FACT-SUBJECT-339B4D0C660B3313
+    created_at: 2026-10-28T05:32:04.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12bf31bbae43
+  - type: requires_property
+    from: REQ-plugins-egress-forbidden-addresses
+    to: FACT-PROP-2BFA6A97F8BED4CE
+    created_at: 2026-10-28T05:32:04.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2414ed2920d3
+  - type: specified_by
+    from: REQ-plugins-egress-forbidden-addresses
+    to: SCEN-plugins-egress-metadata-refused
+    created_at: 2026-10-28T05:32:04.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a18173670c3c
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:39.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1f3d28d96a1
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:26:39.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f614bdf4edd4
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:26:39.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-901a496e6704
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:39.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ce224b07dde
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:26:39.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e52a47c33ed6

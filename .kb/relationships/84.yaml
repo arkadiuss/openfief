@@ -1,0 +1,92 @@
+relationships:
+  - type: implements
+    from: SYM-kernel-money-string
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:43.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e78c91103fb6
+  - type: covered_by
+    from: SYM-kernel-money-string
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:43.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4d68862161b
+  - type: implements
+    from: SYM-plugins-field-error-error
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:23:26.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc532bca5573
+  - type: covered_by
+    from: SYM-plugins-field-error-error
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:23:26.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-099fb96be2f0
+  - type: implements
+    from: SYM-ledger-new-fx-conversion
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-28T05:26:13.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f535fb2fd449
+  - type: implements
+    from: SYM-ledger-new-fx-conversion
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:26:13.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-360f2686828d
+  - type: covered_by
+    from: SYM-ledger-new-fx-conversion
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:13.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe133bb1d32e
+  - type: constrains
+    from: REQ-ledger-import-supersede
+    to: FACT-SUBJECT-5AAB42074DC95646
+    created_at: 2026-10-28T05:32:25.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6525deb6b5da
+  - type: requires_property
+    from: REQ-ledger-import-supersede
+    to: FACT-PROP-69742B6CBA51C1EF
+    created_at: 2026-10-28T05:32:25.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001cde297a96
+  - type: specified_by
+    from: REQ-ledger-import-supersede
+    to: SCEN-ledger-changed-row-supersedes
+    created_at: 2026-10-28T05:32:25.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b79918125e2b
+  - type: implements
+    from: SYM-valuation-app-rate-provider
+    to: REQ-AUTO-D1568676DF81CAF7
+    created_at: 2026-10-28T05:54:33.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ec47f65de11
+  - type: implements
+    from: SYM-valuation-app-rate-provider
+    to: REQ-valuation-fx-no-data
+    created_at: 2026-10-28T05:54:33.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6da76b7924a0
+  - type: covered_by
+    from: SYM-valuation-app-rate-provider
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:54:33.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-801bab00f8b1

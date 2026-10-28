@@ -27,3 +27,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40fa73d3a552
+  - type: executable_for
+    from: SYM-kernel-test-new-date
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:50:11.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d67354718d0a
+  - type: implements
+    from: SYM-kernel-decimal
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:50:20.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f70eb5b7e07
+  - type: covered_by
+    from: SYM-kernel-decimal
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T04:50:20.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-443f5a6b74a7
+  - type: implements
+    from: SYM-pl-validate-lot
+    to: REQ-pl-bond-accrual
+    created_at: 2026-10-28T06:05:06.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ea20dda9ee9
+  - type: covered_by
+    from: SYM-pl-validate-lot
+    to: TEST-pl-value
+    created_at: 2026-10-28T06:05:06.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e528044590e

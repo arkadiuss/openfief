@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-145188e12fed
+    type: constrains
+    from: REQ-plugins-allow-list-exact-match
+    to: FACT-SUBJECT-CBE5237E6B3B40B6
+    created_at: "2026-10-28T05:28:48.603Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-plugins-allow-list-exact-match
+    to: FACT-PROP-5531B9942F9CB4EB
+    created_at: 2026-10-28T05:28:48.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a090c7760da
+  - type: specified_by
+    from: REQ-plugins-allow-list-exact-match
+    to: SCEN-plugins-allow-list-exact
+    created_at: 2026-10-28T05:28:48.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0b3076c0f45

@@ -1,0 +1,36 @@
+relationships:
+  - id: rel-8682b23fc5cc
+    type: implements
+    from: SYM-kernel-decimal-mul
+    to: REQ-kernel-decimal-exact
+    created_at: "2026-10-28T04:50:34.369Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-decimal-mul
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T04:50:34.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c7fb7a36a0d
+  - type: constrains
+    from: REQ-pl-cpi-indexation
+    to: FACT-SUBJECT-F735E9B48801B8D5
+    created_at: 2026-10-28T05:21:54.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9615533789cc
+  - type: requires_property
+    from: REQ-pl-cpi-indexation
+    to: FACT-PROP-B326EF7E2849A6D2
+    created_at: 2026-10-28T05:21:54.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c68110526fd
+  - type: specified_by
+    from: REQ-pl-cpi-indexation
+    to: SCEN-pl-cpi-indexation
+    created_at: 2026-10-28T05:21:54.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1440c755c5a

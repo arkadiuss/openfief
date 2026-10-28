@@ -34,3 +34,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aef57c8ee750
+  - type: constrains
+    from: REQ-plugins-identity-service-account
+    to: FACT-SUBJECT-3D3B43A3E650E58A
+    created_at: 2026-10-28T05:28:55.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd51fe50d64
+  - type: requires_property
+    from: REQ-plugins-identity-service-account
+    to: FACT-PROP-96F5F62C970F964D
+    created_at: 2026-10-28T05:28:55.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae30bbfd5abf
+  - type: specified_by
+    from: REQ-plugins-identity-service-account
+    to: SCEN-plugins-identity-namespace
+    created_at: 2026-10-28T05:28:55.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d051c7d224d
+  - type: implements
+    from: SYM-plugins-projected-token
+    to: REQ-plugins-workload-identity-secrets
+    created_at: 2026-10-28T05:29:35.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d265018dfffa
+  - type: implements
+    from: SYM-plugins-projected-token
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T05:29:35.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a23df9f4612e
+  - type: covered_by
+    from: SYM-plugins-projected-token
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:35.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8450b435b5b
+  - type: constrains
+    from: REQ-ledger-account-sleeve
+    to: FACT-SUBJECT-DC19372821FB6174
+    created_at: 2026-10-28T05:24:28.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-381204bb4f7c
+  - type: requires_property
+    from: REQ-ledger-account-sleeve
+    to: FACT-PROP-D176061EE8CAD0BC
+    created_at: 2026-10-28T05:24:28.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc4b8a666afc
+  - type: specified_by
+    from: REQ-ledger-account-sleeve
+    to: SCEN-ledger-account-sleeve
+    created_at: 2026-10-28T05:24:28.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c46b8c6b7838
+  - type: implements
+    from: SYM-ledger-need-not-negative
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-28T05:26:28.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fe892d3ce8b
+  - type: implements
+    from: SYM-ledger-need-not-negative
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:26:28.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f2cf5d6725e
+  - type: covered_by
+    from: SYM-ledger-need-not-negative
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:28.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c136851200d
+  - type: executable_for
+    from: SYM-valuation-nbp-test-helper-date
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:58:39.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d0d03675970

@@ -1,0 +1,5 @@
+GET https://api.nbp.pl/api/exchangerates/tables/A/2025-01-04/2025-01-06/?format=json HTTP/1.1
+Host: api.nbp.pl
+User-Agent: openfief
+Accept: application/json
+

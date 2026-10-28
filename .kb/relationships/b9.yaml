@@ -13,3 +13,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2d1055cab92
+  - type: constrains
+    from: REQ-kernel-money-currency-mismatch
+    to: FACT-SUBJECT-3372881DDFB29A8D
+    created_at: 2026-10-28T04:48:38.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c34ffce6390
+  - type: requires_property
+    from: REQ-kernel-money-currency-mismatch
+    to: FACT-PROP-EF1AD7F1969362F3
+    created_at: 2026-10-28T04:48:38.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7ea4fffd82f
+  - type: specified_by
+    from: REQ-kernel-money-currency-mismatch
+    to: SCEN-kernel-money-mixed-currencies
+    created_at: 2026-10-28T04:48:38.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-091761c8fc69
+  - type: implements
+    from: SYM-plugins-image-ref-is-zero
+    to: REQ-plugins-image-digest-only
+    created_at: 2026-10-28T05:24:07.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22dfe1401f53
+  - type: implements
+    from: SYM-plugins-image-ref-is-zero
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T05:24:08.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7526b981fc5c
+  - type: covered_by
+    from: SYM-plugins-image-ref-is-zero
+    to: TEST-plugins-image
+    created_at: 2026-10-28T05:24:08.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43dd597d9405
+  - type: implements
+    from: SYM-plugins-manifest-validate
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:24:56.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7688e40ecaa
+  - type: implements
+    from: SYM-plugins-manifest-validate
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:24:56.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b0482a07744
+  - type: covered_by
+    from: SYM-plugins-manifest-validate
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:24:56.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fe264741425
+  - type: verified_by
+    from: SCEN-ledger-fx-conversion
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:24:06.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-624b36316135
+  - type: verified_by
+    from: SCEN-ledger-fx-conversion
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:24:06.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f40eea870b7
+  - type: executable_for
+    from: SYM-ledger-test-book-constructors
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:49.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70bdd9d19e57
+  - type: verified_by
+    from: SCEN-ledger-changed-row-supersedes
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:32:10.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f2a87c39f9f

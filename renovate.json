@@ -1,0 +1,56 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Exact pins everywhere (docs/dev/sdlc.md#dependencies-p): Go modules, the kibi npm packages, GitHub Actions by commit SHA, and the tool versions in Taskfile.yml and the workflows marked with a `# renovate:` comment.",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigestsToSemver"],
+  "enabledManagers": ["gomod", "npm", "github-actions", "custom.regex"],
+  "rangeStrategy": "pin",
+  "semanticCommits": "enabled",
+  "semanticCommitType": "build",
+  "semanticCommitScope": "deps",
+  "gitAuthor": "renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+  "commitBody": "Signed-off-by: {{{gitAuthor}}}",
+  "postUpdateOptions": ["gomodTidy", "gomodUpdateImportPaths"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "description": "GitHub Actions: one PR for non-major updates",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "description": "kibi packages move together",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["kibi-*"],
+      "groupName": "kibi"
+    },
+    {
+      "description": "Dev tools pinned in Taskfile.yml",
+      "matchManagers": ["custom.regex"],
+      "matchFileNames": ["Taskfile.yml"],
+      "groupName": "Taskfile tools"
+    },
+    {
+      "description": "Toolchains and local clusters used by CI",
+      "matchManagers": ["custom.regex"],
+      "matchFileNames": [".github/**"],
+      "groupName": "CI toolchains"
+    },
+    {
+      "description": "Go modules: one PR for non-major updates",
+      "matchManagers": ["gomod"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "groupName": "Go modules"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Versions preceded by `# renovate: datasource=... depName=...` in Taskfile.yml and .github/",
+      "managerFilePatterns": ["/^Taskfile\\.yml$/", "/^\\.github/(workflows|actions)/.+\\.ya?ml$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+[A-Za-z0-9_-]+: ['\"]?(?<currentValue>[^'\"\\s]+)['\"]?"
+      ]
+    }
+  ]
+}

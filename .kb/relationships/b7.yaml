@@ -1,0 +1,36 @@
+relationships:
+  - id: rel-93927e23526b
+    type: implements
+    from: SYM-kernel-money-cmp
+    to: REQ-kernel-money-currency-mismatch
+    created_at: "2026-10-28T04:51:33.076Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-kernel-money-cmp
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:33.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f15ba6c43c47
+  - type: covered_by
+    from: SYM-kernel-money-cmp
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:33.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e1421840c6f
+  - type: executable_for
+    from: SYM-valuation-test-market-valuation
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:31:26.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f6ae07c7868
+  - type: executable_for
+    from: SYM-plugins-test-effective-view-of
+    to: TEST-plugins-effective
+    created_at: 2026-10-28T05:30:45.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44f47738ac67

@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-eda6d52cf86f
+    type: executable_for
+    from: SYM-plugins-test-egress-allow-list-allows
+    to: TEST-plugins-allow-list
+    created_at: "2026-10-28T05:29:19.548Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-plugin-for-service-account
+    to: REQ-plugins-identity-service-account
+    created_at: 2026-10-28T05:30:59.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46325e570b51
+  - type: implements
+    from: SYM-plugins-plugin-for-service-account
+    to: REQ-AUTO-15828B9727AFA488
+    created_at: 2026-10-28T05:30:59.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd4499a72c65
+  - type: covered_by
+    from: SYM-plugins-plugin-for-service-account
+    to: TEST-plugins-identity
+    created_at: 2026-10-28T05:30:59.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a5daac64a8f

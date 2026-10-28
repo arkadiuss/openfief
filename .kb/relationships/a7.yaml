@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-93c91335c120
+    type: implements
+    from: SYM-plugins-image-ref-equal
+    to: REQ-plugins-image-digest-only
+    created_at: "2026-10-28T05:24:11.233Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-image-ref-equal
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T05:24:11.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec35f74a547c
+  - type: covered_by
+    from: SYM-plugins-image-ref-equal
+    to: TEST-plugins-image
+    created_at: 2026-10-28T05:24:11.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2d3a616599c

@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-af38b8e4ea03
+    type: implements
+    from: SYM-kernel-parse-currency
+    to: REQ-kernel-currency-code
+    created_at: "2026-10-28T04:49:25.873Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-parse-currency
+    to: TEST-kernel-currency
+    created_at: 2026-10-28T04:49:25.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65df170baabc
+  - type: implements
+    from: SYM-plugins-plugin-validate
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:25:55.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-040cfaef3c07
+  - type: covered_by
+    from: SYM-plugins-plugin-validate
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:25:55.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69db12c4d709

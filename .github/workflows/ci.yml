@@ -1,0 +1,119 @@
+# CI for pull requests and main (docs/dev/sdlc.md). Every step calls a task target; see Taskfile.yml.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  # A newer push supersedes a PR run; runs on main always finish, so every merge is built and deployed.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    name: task check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # docs:check compares ground rules against the base revision, so it needs history.
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - name: task check
+        run: task check
+        env:
+          DOCS_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+
+  dco:
+    name: DCO sign-off
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: task dco
+        run: task dco BASE="$BASE_SHA" HEAD="$HEAD_SHA"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+
+  e2e:
+    # D-12: tested on kind and k3d. Both give a kubeconfig on 127.0.0.1, which task e2e accepts.
+    name: e2e (${{ matrix.cluster }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        cluster: [k3d, kind]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: Create a k3d cluster
+        if: matrix.cluster == 'k3d'
+        uses: AbsaOSS/k3d-action@4e8b3239042be1dc0aed6c5eb80c13b18200fc79 # v2.4.0
+        with:
+          cluster-name: openfief-e2e
+          args: --api-port 127.0.0.1:6550
+          # renovate: datasource=github-releases depName=k3d-io/k3d
+          k3d-version: v5.9.0
+      - name: Create a kind cluster
+        if: matrix.cluster == 'kind'
+        uses: helm/kind-action@1544676c07bb3570fcb70166beaa07c4528fd4aa # v1.15.1
+        with:
+          cluster_name: openfief-e2e
+          # renovate: datasource=github-releases depName=kubernetes-sigs/kind
+          version: v0.33.0
+      - name: task e2e
+        run: task e2e
+
+  images:
+    # Multi-arch images with an SBOM, pushed and cosign-signed on main (D-17). Skipped while there is
+    # no cmd/<name>/Dockerfile or plugins/<name>/Dockerfile; see images.yml.
+    name: images
+    needs: check
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    uses: ./.github/workflows/images.yml
+    with:
+      push: ${{ github.event_name == 'push' }}
+
+  deploy-demo:
+    # Deploys main to the Hetzner k3s demo environment (synthetic data only, GR-12).
+    # SKIPPED until the demo machine exists. To enable it, the owner:
+    #   1. creates the GitHub Environment `demo` (Settings > Environments) with a required reviewer
+    #      and deployment branches limited to main and release tags,
+    #   2. adds the environment secret DEMO_KUBECONFIG (a kubeconfig for a deploy-only service account),
+    #   3. sets the repository variable DEMO_ENABLED=true.
+    # Credentials live only in that environment, never in the repository.
+    name: deploy demo
+    if: github.event_name == 'push' && vars.DEMO_ENABLED == 'true'
+    needs: [check, e2e, images]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-demo.yml

@@ -1,0 +1,43 @@
+relationships:
+  - id: rel-d82a483adc9f
+    type: implements
+    from: SYM-kernel-quantity-decimal
+    to: REQ-kernel-decimal-exact
+    created_at: "2026-10-28T04:52:08.816Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-quantity-decimal
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:08.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3488c16f6541
+  - type: implements
+    from: SYM-pl-series
+    to: REQ-pl-series-code
+    created_at: 2026-10-28T05:23:02.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce453e8cada0
+  - type: covered_by
+    from: SYM-pl-series
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:23:02.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e70874af806a
+  - type: executable_for
+    from: SYM-plugins-test-image-ref-equal
+    to: TEST-plugins-image
+    created_at: 2026-10-28T05:24:38.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd35a6a1918a
+  - type: validates
+    from: TEST-plugins-egress-address
+    to: REQ-AUTO-79189DB32149E23F
+    created_at: 2026-10-28T05:31:54.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3783210c4524

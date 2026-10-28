@@ -27,3 +27,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f238c7b2f7c
+  - type: implements
+    from: SYM-kernel-currency-string
+    to: REQ-kernel-currency-code
+    created_at: 2026-10-28T04:49:32.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ada191bef9e
+  - type: covered_by
+    from: SYM-kernel-currency-string
+    to: TEST-kernel-currency
+    created_at: 2026-10-28T04:49:32.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfd08188e82f
+  - type: implements
+    from: SYM-kernel-money-equal
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:35.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdffba1b0f39
+  - type: covered_by
+    from: SYM-kernel-money-equal
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:35.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b92455aa097a
+  - type: implements
+    from: SYM-pl-belka-tax
+    to: REQ-pl-belka-tax
+    created_at: 2026-10-28T05:23:52.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dbd5cfe82ee
+  - type: implements
+    from: SYM-pl-belka-tax
+    to: REQ-pl-tax-wrapper-exempt
+    created_at: 2026-10-28T05:23:52.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac8f84695cd
+  - type: covered_by
+    from: SYM-pl-belka-tax
+    to: TEST-pl-tax
+    created_at: 2026-10-28T05:23:52.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4f4c007ec43
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:44.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b39844284fc8
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:26:44.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7252278e1fe
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:26:44.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-113d12a70619
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:44.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-141541c20bd5
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:26:44.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6177bce97f88
+  - type: executable_for
+    from: SYM-ledger-test-property-lots-match-holding
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:40:51.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a84e94d4b5b9

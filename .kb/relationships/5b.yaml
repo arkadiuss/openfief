@@ -13,3 +13,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb74b561b460
+  - id: rel-c2d2519b69ec
+    type: executable_for
+    from: SYM-valuation-test-helper-dec
+    to: TEST-valuation-fx
+    created_at: "2026-10-28T05:31:32.797Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-valuation-test-helper-dec
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:31:32.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-264b0771825c
+  - id: rel-33cad738b59c
+    type: executable_for
+    from: SYM-plugins-test-effective
+    to: TEST-plugins-effective
+    created_at: "2026-10-28T05:30:47.955Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - id: rel-70561f0bbf70
+    type: implements
+    from: SYM-portfolio-parse-role
+    to: REQ-portfolio-sleeve-role
+    created_at: "2026-10-28T05:13:41.120Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-portfolio-parse-role
+    to: TEST-portfolio-sleeve
+    created_at: 2026-10-28T05:13:41.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15337433da11
+  - type: executable_for
+    from: SYM-valuation-app-test-fetch-rates
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:55:00.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d7e10c75c9a

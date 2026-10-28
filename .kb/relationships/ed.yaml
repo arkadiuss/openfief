@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-88ec7794549a
+    type: implements
+    from: SYM-plugins-data-tier-valid
+    to: REQ-plugins-manifest-validation
+    created_at: "2026-10-28T05:24:49.080Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-data-tier-valid
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:24:49.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-495260b482c3
+  - type: covered_by
+    from: SYM-plugins-data-tier-valid
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:24:49.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34ecd0065e6b
+  - id: rel-2e3bf5af0226
+    type: executable_for
+    from: SYM-ledger-test-check-balance-assertion
+    to: TEST-ledger-assertion
+    created_at: "2026-10-28T05:44:34.214Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

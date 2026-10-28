@@ -13,3 +13,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e79868a2d877
+  - type: executable_for
+    from: SYM-valuation-test-bond-valuation
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:31:30.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e17590ae528
+  - type: verified_by
+    from: SCEN-plugins-egress-host-canonical
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:21:09.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fffe8d6029f4
+  - type: constrains
+    from: REQ-plugins-manifest-validation
+    to: FACT-SUBJECT-777F1580F1EE5686
+    created_at: 2026-10-28T05:21:39.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31cc59db27b0
+  - type: requires_property
+    from: REQ-plugins-manifest-validation
+    to: FACT-PROP-03CC0ADB176473D0
+    created_at: 2026-10-28T05:21:39.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-312c4c102b6b
+  - type: specified_by
+    from: REQ-plugins-manifest-validation
+    to: SCEN-plugins-manifest-invalid-fields
+    created_at: 2026-10-28T05:21:39.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cb22302d434
+  - type: implements
+    from: SYM-ledger-transaction
+    to: REQ-ledger-postings-zero-sum
+    created_at: 2026-10-28T05:27:52.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75fe51b3d9fe
+  - type: implements
+    from: SYM-ledger-transaction
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:27:52.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfb0d5284246
+  - type: covered_by
+    from: SYM-ledger-transaction
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:27:52.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2a9e65605fb

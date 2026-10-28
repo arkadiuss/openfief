@@ -20,3 +20,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4ae2104805f
+  - type: implements
+    from: SYM-valuation-bond-valuation
+    to: REQ-valuation-bond-basis
+    created_at: 2026-10-28T05:31:08.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2cf79229976
+  - type: covered_by
+    from: SYM-valuation-bond-valuation
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:31:08.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e5c82f23b5c
+  - type: executable_for
+    from: SYM-valuation-test-rate-on-or-before
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:31:12.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6807f766682
+  - type: executable_for
+    from: SYM-plugins-test-compile-deterministic
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:30:08.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b973bb84221e
+  - type: executable_for
+    from: SYM-pl-test-helper-run-lot-cases
+    to: TEST-pl-value
+    created_at: 2026-10-28T06:05:09.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03bf57eb0df1
+  - type: executable_for
+    from: SYM-pl-test-helper-run-lot-cases
+    to: TEST-pl-official
+    created_at: 2026-10-28T06:05:09.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b7c6141b8d8

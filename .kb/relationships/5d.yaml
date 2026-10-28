@@ -1,0 +1,64 @@
+relationships:
+  - id: rel-6067601326e3
+    type: executable_for
+    from: SYM-ci-images-test-expect-fail
+    to: TEST-tooling-ci-images
+    created_at: "2026-10-28T04:51:40.736Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-service-validate
+    to: REQ-plugins-proxy-env-and-allow-list
+    created_at: 2026-10-28T05:29:53.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d552e353e332
+  - type: implements
+    from: SYM-plugins-service-validate
+    to: REQ-AUTO-8CBFBD6A12E0865B
+    created_at: 2026-10-28T05:29:53.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64d387687951
+  - type: covered_by
+    from: SYM-plugins-service-validate
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:53.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb08792b2ceb
+  - type: implements
+    from: SYM-plugins-effective-permissions-plugin
+    to: REQ-plugins-effective-intersection
+    created_at: 2026-10-28T05:30:21.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d38e670f8e64
+  - type: implements
+    from: SYM-plugins-effective-permissions-plugin
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T05:30:21.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f76ecb05e1da
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-plugin
+    to: TEST-plugins-effective
+    created_at: 2026-10-28T05:30:21.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b116c3841189
+  - type: implements
+    from: SYM-valuation-app-split-range
+    to: REQ-valuation-fx-range-splitting
+    created_at: 2026-10-28T05:54:42.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8339fec117b0
+  - type: covered_by
+    from: SYM-valuation-app-split-range
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:54:42.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca2cca28df85

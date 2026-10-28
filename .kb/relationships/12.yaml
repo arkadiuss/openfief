@@ -27,3 +27,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0036e0447559
+  - type: implements
+    from: SYM-pl-missing-index-error-error
+    to: REQ-pl-cpi-indexation
+    created_at: 2026-10-28T05:23:36.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-771056e3fec6
+  - type: covered_by
+    from: SYM-pl-missing-index-error-error
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:23:36.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a78c69bf2049
+  - type: verified_by
+    from: SCEN-ledger-lot-cost-split
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:39:05.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5c4d8c1d5da
+  - type: verified_by
+    from: SCEN-ledger-lot-cost-split
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:39:05.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a007fcc78fda

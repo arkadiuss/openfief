@@ -1,0 +1,99 @@
+relationships:
+  - id: rel-59e0e6777cee
+    type: verified_by
+    from: SCEN-pl-belka-tax
+    to: TEST-pl-tax
+    created_at: "2026-10-28T05:21:29.517Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-pl-belka-tax
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:21:29.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-360be06e13be
+  - type: constrains
+    from: REQ-pl-tax-fx-rate-date
+    to: FACT-SUBJECT-A569CA092DC19A95
+    created_at: 2026-10-28T05:22:23.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50f05dde816f
+  - type: requires_property
+    from: REQ-pl-tax-fx-rate-date
+    to: FACT-PROP-6D48A4E49E687FAC
+    created_at: 2026-10-28T05:22:23.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12d4bf98c17d
+  - type: specified_by
+    from: REQ-pl-tax-fx-rate-date
+    to: SCEN-pl-tax-fx-rate-date
+    created_at: 2026-10-28T05:22:23.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a67db043716
+  - type: validates
+    from: TEST-valuation-fx
+    to: REQ-AUTO-5769411DB9663682
+    created_at: 2026-10-28T05:29:45.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16d1cf7b502
+  - type: validates
+    from: TEST-valuation-fx
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T05:29:45.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-759b978f6954
+  - id: rel-6ae48de6fd48
+    type: implements
+    from: SYM-plugins-effective-permissions-image
+    to: REQ-plugins-effective-intersection
+    created_at: "2026-10-28T05:30:24.093Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-effective-permissions-image
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T05:30:24.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db553e354a33
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-image
+    to: TEST-plugins-effective
+    created_at: 2026-10-28T05:30:24.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fb763cb8945
+  - id: rel-ea8fe31f8c47
+    type: implements
+    from: SYM-ledger-lots-on
+    to: REQ-ledger-fifo
+    created_at: "2026-10-28T05:40:04.077Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-ledger-lots-on
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T05:40:04.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d84b63142319
+  - type: covered_by
+    from: SYM-ledger-lots-on
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:04.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7023efa2dd3e
+  - type: verified_by
+    from: SCEN-pl-belka-tax
+    to: TEST-pl-official
+    created_at: 2026-10-28T06:04:26.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42f1048f50c8
