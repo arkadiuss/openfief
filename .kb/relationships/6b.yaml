@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33cdb853cc0e
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-check-seed-refused
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-28T08:42:11.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c40be2a0ddc

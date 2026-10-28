@@ -18,6 +18,11 @@ import (
 // ErrUnknownInstitution reports an institution with no mapper.
 var ErrUnknownInstitution = errors.New("no connector for institution")
 
+// ErrSeedingOutsideOpening reports a mapping in transactions mode that
+// holds opening lots or opening cash: only an opening batch seeds an
+// account (D-23).
+var ErrSeedingOutsideOpening = errors.New("seeding transaction outside an opening batch")
+
 // The ingest paths a batch records as its source.
 const (
 	// SourceFile is a statement file, whether uploaded, passed to the CLI or
@@ -32,6 +37,12 @@ const (
 // assertion against the derived balance (D-18).
 type LedgerImporter interface {
 	Import(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error)
+	// Seed imports an opening batch like Import, in one database
+	// transaction that refuses, with an error wrapping a
+	// *ledger.AlreadySeededError, to seed an account that is already
+	// seeded, unless the seeding changes nothing for it: then the summary
+	// lists it in AlreadySeeded (D-23).
+	Seed(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error)
 }
 
 // Mapper translates one institution's statement into the ledger in a mode.
@@ -93,10 +104,33 @@ func (s *Service) ingest(ctx context.Context, institution ingest.InstitutionID, 
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("ingest %s batch %s: %w", institution, batch.ID, err)
 	}
-	imported, err := s.Ledger.Import(ctx, m.Transactions, m.Assertions)
+	imported, err := s.importMapping(ctx, mode, &m)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("ingest %s batch %s: %w", institution, batch.ID, err)
 	}
 	batch.Complete(&m, imported)
 	return batch, nil
+}
+
+// importMapping imports m into the ledger: an opening batch through Seed,
+// which refuses to seed an account twice, and a transactions batch through
+// Import, after refusing any seeding transaction in it (D-23).
+func (s *Service) importMapping(ctx context.Context, mode ingest.Mode, m *ingest.Mapping) (ingest.ImportSummary, error) {
+	if mode == ingest.ModeOpening {
+		sum, err := s.Ledger.Seed(ctx, m.Transactions, m.Assertions)
+		if err != nil {
+			return ingest.ImportSummary{}, fmt.Errorf("seeding: %w", err)
+		}
+		return sum, nil
+	}
+	for i := range m.Transactions {
+		if t := &m.Transactions[i]; ledger.IsSeeding(t) {
+			return ingest.ImportSummary{}, fmt.Errorf("%w: %s", ErrSeedingOutsideOpening, t.Key)
+		}
+	}
+	sum, err := s.Ledger.Import(ctx, m.Transactions, m.Assertions)
+	if err != nil {
+		return ingest.ImportSummary{}, fmt.Errorf("importing: %w", err)
+	}
+	return sum, nil
 }

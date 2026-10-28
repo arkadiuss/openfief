@@ -174,3 +174,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1452e0c8b8d1
+  - type: implements
+    from: SYM-ingest-app-service-import-mapping
+    to: REQ-ingest-app-seed-opening-only
+    created_at: 2026-10-28T08:44:01.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8f5110f91df
+  - type: covered_by
+    from: SYM-ingest-app-service-import-mapping
+    to: TEST-ingest-app
+    created_at: 2026-10-28T08:44:01.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a7a2d17fb2d

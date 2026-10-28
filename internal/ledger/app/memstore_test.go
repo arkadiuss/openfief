@@ -18,6 +18,9 @@ import (
 // errVersionGap reports an append that skips a version number.
 var errVersionGap = errors.New("previous version missing")
 
+// errNoTx reports a LockAccount outside InTx.
+var errNoTx = errors.New("not in a transaction")
+
 // memStore is an in-memory app.Store with the same rules as the Postgres
 // one: versions are only appended, numbered 1..n per key with no repeat.
 type memStore struct {
@@ -32,6 +35,19 @@ type memStore struct {
 	// outside are versions that another import committed, which a rollback
 	// of this one keeps.
 	outside []ledger.VersionedTransaction
+	// locks holds each account's LockAccount lock.
+	locks map[ledger.AccountID]*sync.Mutex
+}
+
+// memTx is the app.Store that memStore.InTx passes in: the store itself,
+// the state a rollback restores, and the account locks it holds until InTx
+// returns.
+type memTx struct {
+	*memStore
+
+	versions map[ledger.TransactionKey][]ledger.VersionedTransaction
+	checks   map[checkKey]*app.AssertionCheck
+	held     []*sync.Mutex
 }
 
 // checkKey identifies a stored balance assertion check.
@@ -47,6 +63,7 @@ func newMemStore() *memStore {
 		sleeves:  map[portfolio.SleeveID]portfolio.Sleeve{},
 		accounts: map[ledger.AccountID]ledger.Account{},
 		checks:   map[checkKey]*app.AssertionCheck{},
+		locks:    map[ledger.AccountID]*sync.Mutex{},
 	}
 }
 
@@ -61,14 +78,15 @@ func (s *memStore) Append(_ context.Context, v *ledger.VersionedTransaction) err
 
 // InTx runs fn on s itself and, if fn fails, restores what s held before,
 // keeping versions appended outside. Unlike a database it does not isolate
-// fn from concurrent calls, so tests that roll back run alone.
+// fn from concurrent calls, so tests that roll back run alone, except for
+// transactions serialized by LockAccount.
 func (s *memStore) InTx(_ context.Context, fn func(tx app.Store) error) error {
-	s.mu.Lock()
-	versions, checks := maps.Clone(s.versions), maps.Clone(s.checks)
-	s.mu.Unlock()
-	if err := fn(s); err != nil {
+	tx := &memTx{memStore: s}
+	tx.snapshot()
+	defer tx.unlock()
+	if err := fn(tx); err != nil {
 		s.mu.Lock()
-		s.versions, s.checks = versions, checks
+		s.versions, s.checks = tx.versions, tx.checks
 		outside := s.outside
 		s.mu.Unlock()
 		for i := range outside {
@@ -81,6 +99,51 @@ func (s *memStore) InTx(_ context.Context, fn func(tx app.Store) error) error {
 		return err
 	}
 	return nil
+}
+
+// LockAccount fails outside InTx, like the Postgres store.
+func (s *memStore) LockAccount(_ context.Context, id ledger.AccountID) error {
+	return fmt.Errorf("locking account %s: %w", id, errNoTx)
+}
+
+// InTx runs fn in tx's own transaction.
+func (tx *memTx) InTx(_ context.Context, fn func(tx app.Store) error) error {
+	return fn(tx)
+}
+
+// LockAccount waits for and holds id's lock until InTx returns. Then it
+// retakes the rollback snapshot, so that a rollback keeps what the
+// transaction it waited for committed; that is right only for a lock taken
+// before the transaction's first write, as Seed takes it.
+func (tx *memTx) LockAccount(ctx context.Context, id ledger.AccountID) error {
+	if _, err := tx.Account(ctx, id); err != nil {
+		return err
+	}
+	tx.mu.Lock()
+	m, ok := tx.locks[id]
+	if !ok {
+		m = &sync.Mutex{}
+		tx.locks[id] = m
+	}
+	tx.mu.Unlock()
+	m.Lock()
+	tx.held = append(tx.held, m)
+	tx.snapshot()
+	return nil
+}
+
+// snapshot records the state a rollback of tx restores.
+func (tx *memTx) snapshot() {
+	tx.mu.Lock()
+	defer tx.mu.Unlock()
+	tx.versions, tx.checks = maps.Clone(tx.memStore.versions), maps.Clone(tx.memStore.checks)
+}
+
+// unlock releases the account locks tx holds.
+func (tx *memTx) unlock() {
+	for _, m := range tx.held {
+		m.Unlock()
+	}
 }
 
 func (s *memStore) Versions(_ context.Context, key ledger.TransactionKey) ([]ledger.VersionedTransaction, error) {

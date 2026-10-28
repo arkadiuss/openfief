@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f354d1d67aa
+  - type: implements
+    from: SYM-ledger-new-opening-cash
+    to: REQ-ledger-seed-opening-cash
+    created_at: 2026-10-28T08:39:47.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbd7272a72f4
+  - type: implements
+    from: SYM-ledger-new-opening-cash
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T08:39:47.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ec8c62ba438
+  - type: covered_by
+    from: SYM-ledger-new-opening-cash
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:39:47.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61f5d2d4c85f

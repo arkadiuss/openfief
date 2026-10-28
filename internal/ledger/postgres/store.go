@@ -138,6 +138,24 @@ func (s *Store) Account(ctx context.Context, id ledger.AccountID) (ledger.Accoun
 	return a, nil
 }
 
+// LockAccount locks the account's row until the transaction ends, with FOR
+// NO KEY UPDATE: two seedings of the account wait for each other, while
+// imports that only reference it don't. Outside InTx it fails with ErrNoTx;
+// for an account that is not stored, with an error wrapping app.ErrNotFound.
+func (s *Store) LockAccount(ctx context.Context, id ledger.AccountID) error {
+	if s.tx == nil {
+		return fmt.Errorf("locking account %s: %w", id, ErrNoTx)
+	}
+	tag, err := s.db.Exec(ctx, `SELECT 1 FROM ledger.accounts WHERE id = $1 FOR NO KEY UPDATE`, string(id))
+	if err != nil {
+		return fmt.Errorf("locking account %s: %w", id, err)
+	}
+	if tag.RowsAffected() == 0 {
+		return fmt.Errorf("account %s: %w", id, app.ErrNotFound)
+	}
+	return nil
+}
+
 // Accounts returns every account, in ID order.
 func (s *Store) Accounts(ctx context.Context) ([]ledger.Account, error) {
 	rows, err := s.db.Query(ctx, selectAccounts+` ORDER BY id COLLATE "C"`)

@@ -68,4 +68,10 @@ type Store interface {
 	// It is the seam for work that must commit with an import, such as
 	// enqueueing a revaluation (D-36).
 	InTx(ctx context.Context, fn func(tx Store) error) error
+	// LockAccount locks the account id until the database transaction of a
+	// Store that InTx passed in ends, so that one transaction at a time
+	// decides whether to seed it (D-23). It fails with an error wrapping
+	// ErrNotFound for an account that is not stored, and on a Store that
+	// InTx did not pass in.
+	LockAccount(ctx context.Context, id ledger.AccountID) error
 }

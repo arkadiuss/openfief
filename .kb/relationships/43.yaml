@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdd6ade8daaf
+  - type: executable_for
+    from: SYM-ingest-app-test-ingest-seeds-only-in-opening-mode
+    to: TEST-ingest-app
+    created_at: 2026-10-28T08:44:30.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43207150868d

@@ -34,3 +34,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d80bda7c915
+  - type: executable_for
+    from: SYM-ledger-pg-test-lock-account
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-28T08:43:53.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6085e2e2b0
