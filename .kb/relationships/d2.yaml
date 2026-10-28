@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cb2c33aafd5
+  - type: implements
+    from: SYM-demo-demo-cidrs
+    to: REQ-tooling-demo-access
+    created_at: 2026-10-28T09:35:22.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-304cb3c9ed2f
+  - type: covered_by
+    from: SYM-demo-demo-cidrs
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:35:23.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30b9c4039ed9

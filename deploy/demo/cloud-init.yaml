@@ -1,0 +1,117 @@
+#cloud-config
+# Bootstrap of a demo machine (docs/dev/demo.md). This is a TEMPLATE: scripts/demo/demo.sh renders it with the
+# versions and checksums pinned in Taskfile.yml (task demo:up) and refuses to send it while a placeholder is left unfilled.
+# It holds no secrets: Flux pulls the public repository, and the database credentials are generated in the cluster.
+# Synthetic data only (GR-12).
+#
+# What it does:
+#   - SSH: keys only (Hetzner injects the keys labelled openfief-ssh=true), no root password, no password logins.
+#   - unattended-upgrades for security updates, with an automatic reboot at 04:00 UTC when one needs it.
+#   - k3s @@K3S_VERSION@@: the release binary and install script, each checked against a pinned sha256.
+#     Flannel with k3s's NetworkPolicy controller (D-12), local-path storage, and the bundled Traefik and
+#     servicelb stay on: the demo takes HTTP(S) on the machine's own IPv4, with no paid load balancer. The product
+#     bases still ship Services only (D-28); deploy/demo adds the demo's routes. Secrets are encrypted at rest (D-29).
+#   - The ConfigMap flux-system/demo-settings, which Flux substitutes into deploy/demo: DEMO_HOST, the machine's
+#     <ipv4-with-dashes>.sslip.io name read from Hetzner's metadata service, and DEMO_ACME_SERVER (@@ACME_SERVER@@).
+#   - Flux @@FLUX_VERSION@@ (install.yaml checked against a pinned sha256) and a GitRepository plus Kustomization on
+#     @@GIT_URL@@ (@@GIT_BRANCH@@, ./deploy/demo), dropped into k3s's auto-deploy manifests directory, so the
+#     cluster is declared, not applied by hand. Everything else comes from deploy/demo through Flux.
+ssh_pwauth: false
+disable_root: false
+package_update: true
+package_upgrade: true
+packages:
+  - ca-certificates
+  - curl
+  - unattended-upgrades
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/10-openfief.conf
+    permissions: '0644'
+    content: |
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PermitRootLogin prohibit-password
+      PermitEmptyPasswords no
+      X11Forwarding no
+      AllowAgentForwarding no
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    permissions: '0644'
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+  - path: /etc/apt/apt.conf.d/52openfief-unattended-upgrades
+    permissions: '0644'
+    content: |
+      Unattended-Upgrade::Automatic-Reboot "true";
+      Unattended-Upgrade::Automatic-Reboot-Time "04:00";
+  - path: /etc/rancher/k3s/config.yaml
+    permissions: '0600'
+    content: |
+      write-kubeconfig-mode: "0600"
+      secrets-encryption: true
+  - path: /var/lib/rancher/k3s/server/manifests/openfief-demo-sync.yaml
+    permissions: '0600'
+    content: |
+      # The demo's only imperative-free entry point: Flux pulls deploy/demo from the public repository.
+      apiVersion: source.toolkit.fluxcd.io/v1
+      kind: GitRepository
+      metadata:
+        name: openfief
+        namespace: flux-system
+      spec:
+        interval: 5m
+        url: @@GIT_URL@@
+        ref:
+          branch: @@GIT_BRANCH@@
+      ---
+      apiVersion: kustomize.toolkit.fluxcd.io/v1
+      kind: Kustomization
+      metadata:
+        name: openfief-demo
+        namespace: flux-system
+      spec:
+        interval: 10m
+        path: ./deploy/demo
+        prune: true
+        sourceRef:
+          kind: GitRepository
+          name: openfief
+  - path: /usr/local/sbin/openfief-bootstrap
+    permissions: '0700'
+    content: |
+      #!/bin/sh
+      # Writes the demo settings, then installs the pinned k3s and Flux; stops at the first checksum mismatch.
+      set -eu
+      ipv4="$(curl -fsS --retry 5 http://169.254.169.254/hetzner/v1/metadata/public-ipv4)"
+      if ! printf '%s' "$ipv4" | grep -Eqx '([0-9]{1,3}\.){3}[0-9]{1,3}'; then
+        echo "openfief-bootstrap: no public IPv4 from the metadata service" >&2
+        exit 1
+      fi
+      settings=/var/lib/rancher/k3s/server/manifests/openfief-demo-settings.yaml
+      mkdir -p "$(dirname "$settings")"
+      printf '%s\n' \
+        'apiVersion: v1' 'kind: ConfigMap' 'metadata:' '  name: demo-settings' '  namespace: flux-system' 'data:' \
+        "  DEMO_HOST: $(printf '%s' "$ipv4" | tr . -).sslip.io" \
+        '  DEMO_ACME_SERVER: @@ACME_SERVER@@' >"$settings"
+      chmod 0600 "$settings"
+      k3s_version='@@K3S_VERSION@@'
+      k3s_asset='@@K3S_ASSET@@'
+      k3s_url_version="$(printf '%s' "$k3s_version" | sed 's/+/%2B/g')"
+      work="$(mktemp -d)"
+      trap 'rm -rf "$work"' EXIT
+      fetch() { curl -fsSL --retry 5 --retry-connrefused -o "$1" "$2"; }
+      fetch "$work/k3s" "https://github.com/k3s-io/k3s/releases/download/$k3s_url_version/$k3s_asset"
+      echo "@@K3S_SHA256@@  $work/k3s" | sha256sum -c -
+      fetch "$work/install.sh" "https://raw.githubusercontent.com/k3s-io/k3s/$k3s_url_version/install.sh"
+      echo "@@K3S_INSTALL_SHA256@@  $work/install.sh" | sha256sum -c -
+      fetch "$work/flux.yaml" "https://github.com/fluxcd/flux2/releases/download/@@FLUX_VERSION@@/install.yaml"
+      echo "@@FLUX_INSTALL_SHA256@@  $work/flux.yaml" | sha256sum -c -
+      install -m 0755 "$work/k3s" /usr/local/bin/k3s
+      install -D -m 0600 "$work/flux.yaml" /var/lib/rancher/k3s/server/manifests/flux-system.yaml
+      INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_VERSION="$k3s_version" sh "$work/install.sh"
+
+runcmd:
+  - [passwd, --lock, root]
+  - [systemctl, restart, ssh]
+  - [/usr/local/sbin/openfief-bootstrap]

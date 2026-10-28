@@ -1,0 +1,7 @@
+# The demo environment (docs/dev/demo.md): what Flux applies from ./deploy/demo on the Hetzner k3s machine.
+# The machine's cloud-init (cloud-init.yaml, not a resource here) points a Flux Kustomization at this directory;
+# stack.yaml then declares one Flux Kustomization per layer, in dependency order. Synthetic data only (GR-12).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - stack.yaml

@@ -22505,3 +22505,466 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-connectrpc-mapping
+  - id: SYM-demo-demo-fail
+    title: demo_fail
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:07:47.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-budget
+  - id: SYM-demo-demo-check-env
+    title: demo_check_env
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:07:55.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-labels
+  - id: SYM-demo-demo-to-micro
+    title: demo_to_micro
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:08:04.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-budget
+  - id: SYM-demo-demo-format-micro
+    title: demo_format_micro
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:08:14.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-budget
+  - id: SYM-demo-demo-cost-lines
+    title: demo_cost_lines
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:08:23.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-budget
+  - id: SYM-demo-demo-budget-check
+    title: demo_budget_check
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:08:33.614Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-budget
+  - id: SYM-demo-demo-arch
+    title: demo_arch
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:08:41.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-bootstrap
+  - id: SYM-demo-demo-firewall-rules
+    title: demo_firewall_rules
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:08:51.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-access
+  - id: SYM-demo-demo-ssh-keys
+    title: demo_ssh_keys
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:09:01.677Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-access
+  - id: SYM-demo-demo-render-cloud-init
+    title: demo_render_cloud_init
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:09:11.755Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-bootstrap
+  - id: SYM-demo-demo-prepare
+    title: demo_prepare
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:11:54.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-token
+  - id: SYM-demo-demo-snapshot
+    title: demo_snapshot
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:01.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-labels
+  - id: SYM-demo-demo-has
+    title: demo_has
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:08.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-labels
+  - id: SYM-demo-demo-plan
+    title: demo_plan
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:14.397Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-budget
+  - id: SYM-demo-demo-up
+    title: demo_up
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:19.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-access
+      - type: implements
+        target: REQ-tooling-demo-labels
+  - id: SYM-demo-demo-down
+    title: demo_down
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:25.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-labels
+  - id: SYM-demo-demo-status
+    title: demo_status
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:30.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-labels
+  - id: SYM-demo-demo-main
+    title: demo_main
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:35.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-labels
+  - id: SYM-demo-image-names
+    title: image_names
+    sourceFile: scripts/demo/pin-images.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:40.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-pin-images
+      - type: implements
+        target: REQ-tooling-demo-signed-deploy
+  - id: SYM-demo-verified-digest
+    title: verified_digest
+    sourceFile: scripts/demo/pin-images.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:48.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-pin-images
+      - type: implements
+        target: REQ-tooling-demo-signed-deploy
+  - id: SYM-demo-set-digest
+    title: set_digest
+    sourceFile: scripts/demo/pin-images.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:55.646Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-pin-images
+      - type: implements
+        target: REQ-tooling-demo-signed-deploy
+  - id: SYM-demo-pin-images
+    title: pin_images
+    sourceFile: scripts/demo/pin-images.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:12:59.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-pin-images
+      - type: implements
+        target: REQ-tooling-demo-signed-deploy
+  - id: SYM-demo-stack-paths
+    title: stack_paths
+    sourceFile: scripts/demo/validate.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:13:04.106Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-tooling-demo-manifests
+  - id: SYM-demo-unpinned-images
+    title: unpinned_images
+    sourceFile: scripts/demo/validate.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:13:08.537Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-tooling-demo-manifests
+  - id: SYM-demo-validate-demo
+    title: validate_demo
+    sourceFile: scripts/demo/validate.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:13:14.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-tooling-demo-manifests
+  - id: SYM-demo-test-helper-run-demo
+    title: run_demo
+    sourceFile: scripts/tests/demo.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:13:24.412Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo
+  - id: SYM-demo-test-helper-check
+    title: check
+    sourceFile: scripts/tests/demo.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:13:36.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo
+  - id: SYM-demo-test-helper-yes-if
+    title: yes_if
+    sourceFile: scripts/tests/demo.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:13:45.471Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo
+  - id: SYM-demo-test-helper-helper
+    title: helper
+    sourceFile: scripts/tests/demo.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:13:54.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo
+  - id: SYM-demo-test-helper-render
+    title: render
+    sourceFile: scripts/tests/demo.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:14:03.326Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo
+  - id: SYM-demo-pin-test-helper-pin
+    title: pin
+    sourceFile: scripts/tests/demo-pin-images.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:14:09.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-pin-images
+  - id: SYM-demo-pin-test-helper-check
+    title: check
+    sourceFile: scripts/tests/demo-pin-images.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:14:17.176Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-pin-images
+  - id: SYM-demo-pin-test-helper-yes-if
+    title: yes_if
+    sourceFile: scripts/tests/demo-pin-images.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:14:26.961Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-pin-images
+  - id: SYM-demo-validate-test-helper-fresh
+    title: fresh
+    sourceFile: scripts/tests/demo-validate.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:14:32.915Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-validate
+  - id: SYM-demo-validate-test-helper-validate
+    title: validate
+    sourceFile: scripts/tests/demo-validate.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:14:38.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-validate
+  - id: SYM-demo-validate-test-helper-expect
+    title: expect
+    sourceFile: scripts/tests/demo-validate.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:14:44.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-validate
+  - id: SYM-demo-demo-cidrs
+    title: demo_cidrs
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:21.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-access
+  - id: SYM-demo-unknown-variables
+    title: unknown_variables
+    sourceFile: scripts/demo/validate.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:27.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-tooling-demo-manifests

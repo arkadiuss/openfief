@@ -26,6 +26,28 @@ vars:
   PROTOC_GEN_GO_VERSION: v1.36.12
   # renovate: datasource=go depName=connectrpc.com/connect
   PROTOC_GEN_CONNECT_GO_VERSION: v1.21.1
+  # Demo machine automation (docs/dev/demo.md): the Hetzner Cloud CLI, kustomize for the GitOps manifests,
+  # and gojq for JSON and YAML in the scripts.
+  # renovate: datasource=go depName=github.com/hetznercloud/cli
+  HCLOUD_VERSION: v1.70.1
+  # renovate: datasource=go depName=sigs.k8s.io/kustomize/kustomize/v5
+  KUSTOMIZE_VERSION: v5.8.3
+  # renovate: datasource=go depName=github.com/itchyny/gojq
+  GOJQ_VERSION: v0.12.19
+  # What a demo machine's cloud-init (deploy/demo/cloud-init.yaml) installs. A version bump needs the new
+  # checksums too, or the machine stops at the first mismatch: docs/dev/demo.md#update-the-pinned-versions.
+  # renovate: datasource=github-releases depName=k3s-io/k3s
+  K3S_VERSION: v1.36.5+k3s1
+  K3S_SHA256_ARM64: 135e34cb9e8a1cfae3cb55577789e93501efe7edc080a8b2630458a85b07721e
+  K3S_SHA256_AMD64: d73847bcd3c5fccef0115b372e2f9a91f3032dc84bbf71518a4617565294d313
+  K3S_INSTALL_SHA256: 46177d4c99440b4c0311b67233823a8e8a2fc09693f6c89af1a7161e152fbfad
+  # renovate: datasource=github-releases depName=fluxcd/flux2
+  FLUX_VERSION: v2.9.6
+  FLUX_INSTALL_SHA256: 9c1fda7e401429531ed1478f67ba06b3edff6513b75da7ee47bde9f1c4d4251c
+  # The flux CLI (same release) publishes the demo's signed manifests artifact (task deploy:demo). Its module has
+  # replace directives, so `go install` can't build it: the release archive is checked against these sha256s.
+  FLUX_CLI_SHA256_LINUX_AMD64: b4d22673e9246cbd628881f1a9ef3b090085dced291e42d804555cee8e8d42c5
+  FLUX_CLI_SHA256_LINUX_ARM64: 6663c154755b732f43dc993d72321f71c2fc1ff0bcb94b2696e0a8638fa562b4
   # Every Go module in the repository (go.work lists the same): the core, then the Apache-2.0 Go SDK (D-5).
   GO_MODULES: . sdk/go
   GO_GUARD: 'if [ ! -f go.mod ]; then echo "no Go module yet, skipping"; exit 0; fi;'
@@ -61,11 +83,53 @@ tasks:
 
   tools:
     desc: Install the pinned Go tools into .bin/
-    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task, tool:controller-gen, tool:envtest, tool:proto]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:hcloud, tool:kustomize, tool:gojq]
 
   tools:ci:
     internal: true
-    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task, tool:controller-gen, tool:envtest, tool:proto]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:kustomize, tool:gojq]
+
+  tool:hcloud:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/hetznercloud/cli/cmd/hcloud@{{.HCLOUD_VERSION}}
+    status:
+      - '{{.BIN}}/hcloud version 2>&1 | grep -q "^hcloud {{trimPrefix "v" .HCLOUD_VERSION}}"'
+
+  tool:kustomize:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install sigs.k8s.io/kustomize/kustomize/v5@{{.KUSTOMIZE_VERSION}}
+    status:
+      - '{{.BIN}}/kustomize version 2>&1 | grep -qx "{{.KUSTOMIZE_VERSION}}"'
+
+  tool:flux:
+    internal: true
+    cmds:
+      - |
+        set -e
+        case "$(uname -s)/$(uname -m)" in
+          Linux/x86_64) arch=amd64; sum='{{.FLUX_CLI_SHA256_LINUX_AMD64}}' ;;
+          Linux/aarch64 | Linux/arm64) arch=arm64; sum='{{.FLUX_CLI_SHA256_LINUX_ARM64}}' ;;
+          *) echo "tool:flux: only linux/amd64 and linux/arm64 are pinned (CI uses it)" >&2; exit 1 ;;
+        esac
+        version='{{trimPrefix "v" .FLUX_VERSION}}'
+        work="$(mktemp -d)"
+        trap 'rm -rf "$work"' EXIT
+        curl -fsSL --retry 3 -o "$work/flux.tar.gz" "https://github.com/fluxcd/flux2/releases/download/v${version}/flux_${version}_linux_${arch}.tar.gz"
+        echo "$sum  $work/flux.tar.gz" | sha256sum -c -
+        tar -xzf "$work/flux.tar.gz" -C "$work" flux
+        mkdir -p '{{.BIN}}'
+        install -m 0755 "$work/flux" '{{.BIN}}/flux'
+    status:
+      - '{{.BIN}}/flux version --client 2>&1 | grep -q "{{trimPrefix "v" .FLUX_VERSION}}"'
+
+  tool:gojq:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/itchyny/gojq/cmd/gojq@{{.GOJQ_VERSION}}
+    status:
+      - '{{.BIN}}/gojq --version 2>&1 | grep -q "^gojq {{trimPrefix "v" .GOJQ_VERSION}} "'
 
   tool:golangci-lint:
     internal: true
@@ -166,6 +230,7 @@ tasks:
       - task: vuln
       - task: test
       - task: docs:check
+      - task: demo:validate
       - task: kibi:check
 
   check:commit:
@@ -179,6 +244,7 @@ tasks:
       - task: vuln
       - task: test
       - task: docs:check
+      - task: demo:validate
       - task: kibi:staged
 
   gen:
@@ -260,7 +326,7 @@ tasks:
 
   test:
     desc: Unit, replay-integration, envtest and tooling tests (offline once `task tools` has run)
-    deps: [tool:envtest]
+    deps: [tool:envtest, tool:kustomize, tool:gojq]
     cmds:
       - for: {var: GO_MODULES}
         cmd: '{{.GO_GUARD}} cd {{.ITEM}} && KUBEBUILDER_ASSETS="{{.BIN}}/envtest/{{.ENVTEST_K8S_VERSION}}" go test ./...'
@@ -271,6 +337,9 @@ tasks:
       - bash scripts/tests/release-version.test.sh
       - bash scripts/tests/release-notes.test.sh
       - PATH='{{.BIN}}':"$PATH" bash scripts/tests/proto-breaking.test.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo.test.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo-pin-images.test.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo-validate.test.sh
 
   test:pg:
     desc: 'PostgreSQL integration tests on a disposable server (OPENFIEF_PG_DSN, or local PostgreSQL binaries), e.g. task test:pg -- -run TestAppend'
@@ -304,16 +373,99 @@ tasks:
       - cosign sign --yes '{{.IMAGE}}'
 
   deploy:demo:
-    desc: Deploy to the demo k3s (CI only; DEMO_KUBECONFIG comes from the protected `demo` environment, VERSION is empty for main)
+    desc: 'Publish deploy/demo/openfief, pinned to the signed digests of TAG, as the signed artifact Flux on the demo follows (CI only; needs cosign and a GHCR login), e.g. task deploy:demo TAG=sha-1a2b3c4 REPO=owner/openfief'
+    deps: [tool:gojq, tool:kustomize, tool:flux]
+    requires:
+      vars: [TAG, REPO]
+    env:
+      TAG: '{{.TAG}}'
+      REPO: '{{.REPO}}'
     cmds:
       - |
-        if [ ! -d deploy/demo ]; then echo "no deploy/demo manifests yet, skipping"; exit 0; fi
-        echo "deploy: ${VERSION:-main} to demo"
-        if [ -z "${DEMO_KUBECONFIG:-}" ]; then echo "deploy: DEMO_KUBECONFIG is not set" >&2; exit 1; fi
-        kubeconfig="$(mktemp)"
-        trap 'rm -f "$kubeconfig"' EXIT
-        printf '%s\n' "$DEMO_KUBECONFIG" >"$kubeconfig"
-        KUBECONFIG="$kubeconfig" kubectl apply -k deploy/demo
+        set -e
+        PATH='{{.BIN}}':"$PATH" bash scripts/demo/pin-images.sh "$TAG" "$REPO"
+        PATH='{{.BIN}}':"$PATH" bash scripts/demo/validate.sh
+        mkdir -p dist/demo-manifests
+        '{{.BIN}}/kustomize' build deploy/demo/openfief >dist/demo-manifests/openfief.yaml
+        artifact="oci://ghcr.io/$(printf '%s' "$REPO" | tr '[:upper:]' '[:lower:]')/demo-manifests"
+        pushed="$('{{.BIN}}/flux' push artifact "$artifact:$TAG" --path=dist/demo-manifests \
+          --source="https://github.com/$REPO" --revision="$TAG@sha1:$(git rev-parse HEAD)" --output json)"
+        ref="$(printf '%s' "$pushed" | '{{.BIN}}/gojq' -r '.repository + "@" + .digest')"
+        cosign sign --yes "$ref"
+        '{{.BIN}}/flux' tag artifact "$artifact:$TAG" --tag demo
+        echo "deploy: $ref is the demo's app layer; Flux on the demo machine applies it within minutes"
+
+  demo:plan:
+    desc: 'What `task demo:up` would create in Hetzner Cloud and the monthly cost against DEMO_BUDGET_EUR, without changing anything, e.g. task demo:plan ENV=demo'
+    requires:
+      vars: [ENV]
+    cmds:
+      - task: demo:run
+        vars: {ACTION: plan}
+
+  demo:up:
+    desc: 'Create the demo machine ENV in Hetzner Cloud, or what is missing of it, within DEMO_BUDGET_EUR (HCLOUD_TOKEN), e.g. task demo:up ENV=demo'
+    requires:
+      vars: [ENV]
+    cmds:
+      - task: demo:run
+        vars: {ACTION: up}
+
+  demo:status:
+    desc: 'Show the demo machine ENV and the monthly cost of all OpenFief resources in the project, e.g. task demo:status ENV=demo'
+    requires:
+      vars: [ENV]
+    cmds:
+      - task: demo:run
+        vars: {ACTION: status}
+
+  demo:down:
+    desc: 'Delete every resource of the demo ENV; needs CONFIRM=<ENV>, e.g. task demo:down ENV=demo CONFIRM=demo'
+    requires:
+      vars: [ENV]
+    cmds:
+      - task: demo:run
+        vars: {ACTION: down}
+
+  demo:recreate:
+    desc: 'Delete and create the demo machine ENV again from the current cloud-init; needs CONFIRM=<ENV>, e.g. task demo:recreate ENV=demo CONFIRM=demo'
+    requires:
+      vars: [ENV]
+    cmds:
+      - task: demo:run
+        vars: {ACTION: recreate}
+
+  demo:run:
+    internal: true
+    deps: [tool:hcloud, tool:gojq]
+    # HCLOUD_TOKEN is inherited from the environment and never templated here, so Task never prints it.
+    env:
+      ENV: '{{.ENV}}'
+      CONFIRM: '{{.CONFIRM}}'
+      # Settings from the shell or the command line; empty means the default in scripts/demo/demo.sh.
+      DEMO_SERVER_TYPE: '{{.DEMO_SERVER_TYPE}}'
+      DEMO_LOCATION: '{{.DEMO_LOCATION}}'
+      DEMO_IMAGE: '{{.DEMO_IMAGE}}'
+      DEMO_BUDGET_EUR: '{{.DEMO_BUDGET_EUR}}'
+      DEMO_SSH_CIDRS: '{{.DEMO_SSH_CIDRS}}'
+      DEMO_HTTP_CIDRS: '{{.DEMO_HTTP_CIDRS}}'
+      DEMO_ACME: '{{.DEMO_ACME}}'
+      DEMO_GIT_URL: '{{.DEMO_GIT_URL}}'
+      DEMO_GIT_BRANCH: '{{.DEMO_GIT_BRANCH}}'
+      K3S_VERSION: '{{.K3S_VERSION}}'
+      K3S_SHA256_ARM64: '{{.K3S_SHA256_ARM64}}'
+      K3S_SHA256_AMD64: '{{.K3S_SHA256_AMD64}}'
+      K3S_INSTALL_SHA256: '{{.K3S_INSTALL_SHA256}}'
+      FLUX_VERSION: '{{.FLUX_VERSION}}'
+      FLUX_INSTALL_SHA256: '{{.FLUX_INSTALL_SHA256}}'
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh '{{.ACTION}}'
+
+  demo:validate:
+    desc: Build the demo's GitOps manifests (deploy/demo) offline and check that every image is pinned by digest
+    deps: [tool:kustomize, tool:gojq]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/demo/validate.sh
 
   release:check:
     desc: 'Validate a release version for its channel, e.g. task release:check CHANNEL=beta VERSION=2026.11.0-beta.1'

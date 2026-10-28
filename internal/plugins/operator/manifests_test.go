@@ -56,21 +56,25 @@ func TestManifests(t *testing.T) {
 	if len(all) == 0 {
 		t.Fatalf("no manifests under %s", deploy)
 	}
+	// The product's install bases. deploy/demo is not one: the demo installation exposes them over HTTP itself.
+	product := []string{"crds/", "operator/", "egress-proxy/", "core/"}
 	tests := []struct {
 		name      string
-		dir       string // under deploy/; "" for all of it
+		dirs      []string // under deploy/
 		forbidden []string
 	}{
 		// D-28: no Ingress and no tunnel; the core and UI are reached by port-forward.
-		{name: "no Ingress or Gateway", forbidden: []string{"Ingress", "IngressClass", "Gateway", "HTTPRoute"}},
+		{name: "no Ingress or Gateway", dirs: product, forbidden: []string{"Ingress", "IngressClass", "Gateway", "HTTPRoute"}},
 		// D-15: the operator holds a Role in the openfief namespace only.
-		{name: "no cluster-wide RBAC for the operator", dir: "operator/", forbidden: []string{"ClusterRole", "ClusterRoleBinding"}},
+		{name: "no cluster-wide RBAC for the operator", dirs: []string{"operator/"}, forbidden: []string{"ClusterRole", "ClusterRoleBinding"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			for _, found := range declared(all, tt.dir, tt.forbidden) {
-				t.Errorf("%s", found)
+			for _, dir := range tt.dirs {
+				for _, found := range declared(all, dir, tt.forbidden) {
+					t.Errorf("%s", found)
+				}
 			}
 		})
 	}

@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52dac2cc45a2
+  - type: implements
+    from: SYM-demo-demo-prepare
+    to: REQ-tooling-demo-token
+    created_at: 2026-10-28T09:11:55.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4cb9dcadc5b
+  - type: covered_by
+    from: SYM-demo-demo-prepare
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:11:55.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8657887c5384

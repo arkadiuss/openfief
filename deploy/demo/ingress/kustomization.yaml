@@ -1,0 +1,6 @@
+# The demo's Let's Encrypt issuer (docs/dev/demo.md#url-and-tls). Flux substitutes ${DEMO_ACME_SERVER} from the
+# ConfigMap flux-system/demo-settings, which the machine's cloud-init writes (production or staging, DEMO_ACME).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - clusterissuer.yaml

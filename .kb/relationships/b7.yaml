@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72f14fd6e906
+  - type: executable_for
+    from: SYM-demo-validate-test-helper-fresh
+    to: TEST-tooling-demo-validate
+    created_at: 2026-10-28T09:14:33.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-932d9382a792

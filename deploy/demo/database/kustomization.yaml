@@ -1,0 +1,6 @@
+# The demo's PostgreSQL (D-14): one CloudNativePG instance on k3s's local-path storage. Synthetic data only (GR-12).
+# CloudNativePG generates the openfief role's password into the Secret openfief-db-app; nothing is committed.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - cluster.yaml

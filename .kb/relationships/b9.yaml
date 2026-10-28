@@ -265,3 +265,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1264ac75161b
+  - type: implements
+    from: SYM-demo-demo-to-micro
+    to: REQ-tooling-demo-budget
+    created_at: 2026-10-28T09:08:06.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-635df5c7d090
+  - type: covered_by
+    from: SYM-demo-demo-to-micro
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:08:06.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbdf51c19734
+  - type: executable_for
+    from: SYM-demo-test-helper-helper
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:13:55.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b968133d14ba

@@ -279,3 +279,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa355b459a76
+  - type: constrains
+    from: REQ-tooling-demo-access
+    to: FACT-SUBJECT-4D3D2171065D9025
+    created_at: 2026-10-28T09:00:42.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f7e10d0fb4e
+  - type: specified_by
+    from: REQ-tooling-demo-access
+    to: SCEN-tooling-demo-ssh-access
+    created_at: 2026-10-28T09:00:42.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6df89f5aafd
+  - type: implements
+    from: SYM-demo-unpinned-images
+    to: REQ-tooling-demo-manifests
+    created_at: 2026-10-28T09:13:09.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18e895d71aea
+  - type: covered_by
+    from: SYM-demo-unpinned-images
+    to: TEST-tooling-demo-validate
+    created_at: 2026-10-28T09:13:10.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d226e2430ed0
+  - type: requires_property
+    from: REQ-tooling-demo-access
+    to: FACT-PROP-8EF3ADA5F93E21AA
+    created_at: 2026-10-28T09:34:50.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1870c3e81c35

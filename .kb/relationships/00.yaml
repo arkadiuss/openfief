@@ -104,3 +104,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a5307be80c4
+  - type: implements
+    from: SYM-demo-pin-images
+    to: REQ-tooling-demo-signed-deploy
+    created_at: 2026-10-28T09:13:00.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09ebc50d4c20
+  - type: covered_by
+    from: SYM-demo-pin-images
+    to: TEST-tooling-demo-pin-images
+    created_at: 2026-10-28T09:13:00.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6be69d877beb

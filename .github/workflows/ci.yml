@@ -123,16 +123,19 @@ jobs:
       push: ${{ github.event_name == 'push' }}
 
   deploy-demo:
-    # Deploys main to the Hetzner k3s demo environment (synthetic data only, GR-12).
-    # SKIPPED until the demo machine exists. To enable it, the owner:
-    #   1. creates the GitHub Environment `demo` (Settings > Environments) with a required reviewer
-    #      and deployment branches limited to main and release tags,
-    #   2. adds the environment secret DEMO_KUBECONFIG (a kubeconfig for a deploy-only service account),
-    #   3. sets the repository variable DEMO_ENABLED=true.
-    # Credentials live only in that environment, never in the repository.
+    # Deploys main to the Hetzner k3s demo environment (synthetic data only, GR-12) by GitOps pull: it publishes
+    # deploy/demo/openfief, pinned to the signed image digests, as a signed OCI artifact that Flux on the machine
+    # applies automatically. No cluster credential exists outside the machine. SKIPPED until the demo machine
+    # exists. To enable it, the owner (docs/dev/demo.md#deploys):
+    #   1. creates the GitHub Environment `demo` (Settings > Environments), deployment branches limited to main,
+    #   2. creates the machine: task demo:up ENV=demo, or the Demo infrastructure workflow (demo-infra.yml),
+    #   3. makes the GHCR packages public after the first push, so the cluster pulls without credentials,
+    #   4. sets the repository variable DEMO_ENABLED=true.
     name: deploy demo
     if: github.event_name == 'push' && vars.DEMO_ENABLED == 'true'
     needs: [check, e2e, images]
     permissions:
       contents: read
+      packages: write
+      id-token: write
     uses: ./.github/workflows/deploy-demo.yml

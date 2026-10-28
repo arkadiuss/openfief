@@ -1,0 +1,63 @@
+# Manages a Hetzner demo machine from the pipeline (docs/dev/demo.md#from-the-pipeline): the same task targets as
+# a terminal, `task demo:<action> ENV=<env>`, with the same budget guard (DEMO_BUDGET_EUR, default 10 EUR).
+# Started by hand only. It runs in the GitHub Environment `demo`, which holds the HCLOUD_TOKEN secret; give that
+# environment a required reviewer so every run that can spend money or delete a demo is approved first.
+# down and recreate delete the demo, so they need `confirm` set to the demo's name.
+name: Demo infrastructure
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: plan and status change nothing; up creates what is missing; recreate and down delete first
+        type: choice
+        options: [plan, status, up, recreate, down]
+        required: true
+      env:
+        description: Demo name (labels env=<name>, server openfief-<name>)
+        type: string
+        default: demo
+        required: true
+      confirm:
+        description: For down and recreate, type the demo's name again
+        type: string
+        default: ''
+        required: false
+
+permissions: {}
+
+# One lifecycle run per demo at a time; a queued run waits instead of cancelling one in progress.
+concurrency:
+  group: demo-infra-${{ inputs.env }}
+  cancel-in-progress: false
+
+jobs:
+  demo:
+    name: demo ${{ inputs.action }} (${{ inputs.env }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment:
+      name: demo
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: task demo:${{ inputs.action }}
+        run: task "demo:$ACTION" ENV="$DEMO_ENV" CONFIRM="$CONFIRM"
+        env:
+          ACTION: ${{ inputs.action }}
+          DEMO_ENV: ${{ inputs.env }}
+          CONFIRM: ${{ inputs.confirm }}
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+          # Optional environment variables of `demo`; empty means the defaults in scripts/demo/demo.sh.
+          DEMO_SSH_CIDRS: ${{ vars.DEMO_SSH_CIDRS }}
+          DEMO_HTTP_CIDRS: ${{ vars.DEMO_HTTP_CIDRS }}
+          DEMO_ACME: ${{ vars.DEMO_ACME }}
+          DEMO_BUDGET_EUR: ${{ vars.DEMO_BUDGET_EUR }}
+          DEMO_SERVER_TYPE: ${{ vars.DEMO_SERVER_TYPE }}
+          DEMO_LOCATION: ${{ vars.DEMO_LOCATION }}

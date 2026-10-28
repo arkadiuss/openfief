@@ -132,3 +132,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-480264d2ca36
+  - type: verified_by
+    from: SCEN-tooling-demo-manifests-check
+    to: TEST-tooling-demo-validate
+    created_at: 2026-10-28T08:59:51.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e8280d3e6ed
+  - type: constrains
+    from: REQ-tooling-demo-manifests
+    to: FACT-SUBJECT-EDFEA2473618839A
+    created_at: 2026-10-28T09:01:34.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b47a9a77911
+  - type: requires_property
+    from: REQ-tooling-demo-manifests
+    to: FACT-PROP-D7FAECC6B61FCBE6
+    created_at: 2026-10-28T09:01:34.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21034d6a482f
+  - type: specified_by
+    from: REQ-tooling-demo-manifests
+    to: SCEN-tooling-demo-manifests-check
+    created_at: 2026-10-28T09:01:34.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-847476a55007

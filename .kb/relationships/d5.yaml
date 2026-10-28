@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c8bbe5795a0
+  - type: implements
+    from: SYM-demo-demo-main
+    to: REQ-tooling-demo-labels
+    created_at: 2026-10-28T09:12:36.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e898c3967ae
+  - type: covered_by
+    from: SYM-demo-demo-main
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:12:36.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-777c73aa55cd
