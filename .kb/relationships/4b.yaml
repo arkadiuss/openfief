@@ -174,3 +174,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b44ea32adcbe
+  - type: implements
+    from: SYM-views-allocate
+    to: REQ-views-allocation
+    created_at: 2026-10-28T07:20:05.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1da1d85d4a33
+  - type: implements
+    from: SYM-views-allocate
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T07:20:05.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0517d321b6af
+  - type: covered_by
+    from: SYM-views-allocate
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:05.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc6e9d048bdd
+  - type: implements
+    from: SYM-views-app-account-valuations
+    to: REQ-views-valuation-queries
+    created_at: 2026-10-28T07:29:42.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1febad46734
+  - type: covered_by
+    from: SYM-views-app-account-valuations
+    to: TEST-views-app
+    created_at: 2026-10-28T07:29:42.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-299be26b94d0
+  - type: implements
+    from: SYM-views-connectapi-pb-monies
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:48:53.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec6a9bc97c93
+  - type: covered_by
+    from: SYM-views-connectapi-pb-monies
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:48:53.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c212e303da0
+  - type: implements
+    from: SYM-views-pb-book-kind
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:59:26.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8ff4ec55719
+  - type: covered_by
+    from: SYM-views-pb-book-kind
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:59:26.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b685b685a7

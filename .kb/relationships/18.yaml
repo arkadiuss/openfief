@@ -48,3 +48,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73258418a403
+  - type: implements
+    from: SYM-views-app-valuation-statuses
+    to: REQ-views-valuation-status
+    created_at: 2026-10-28T07:28:28.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05bfbb5d8230
+  - type: implements
+    from: SYM-views-app-valuation-statuses
+    to: REQ-decision-d36-6-api-valuation-status
+    created_at: 2026-10-28T07:28:28.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f599164a5ae
+  - type: covered_by
+    from: SYM-views-app-valuation-statuses
+    to: TEST-views-app
+    created_at: 2026-10-28T07:28:28.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a280dbd5b691
+  - type: implements
+    from: SYM-views-connectapi-auth-interceptor-authorize
+    to: REQ-views-api-auth
+    created_at: 2026-10-28T08:47:00.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9e22c91ae3a
+  - type: covered_by
+    from: SYM-views-connectapi-auth-interceptor-authorize
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:47:00.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70cb5c541562
+  - type: implements
+    from: SYM-views-pb-book-kind-enum-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:00:24.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-816605c4e078
+  - type: covered_by
+    from: SYM-views-pb-book-kind-enum-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:00:24.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80c7c7d33efa

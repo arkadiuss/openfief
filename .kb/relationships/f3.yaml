@@ -139,3 +139,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b3cb8431465
+  - type: implements
+    from: SYM-views-pb-holding-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:12:00.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3fb37313d87
+  - type: covered_by
+    from: SYM-views-pb-holding-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:12:00.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5341eaedc9e8
+  - type: implements
+    from: SYM-views-pb-allocation-group-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:19:36.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-490def317c20
+  - type: covered_by
+    from: SYM-views-pb-allocation-group-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:19:36.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-185fb94b9e2a
+  - type: implements
+    from: SYM-views-pb-allocation-group-get-value-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:19:55.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-394ff4a94ecb
+  - type: covered_by
+    from: SYM-views-pb-allocation-group-get-value-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:19:55.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aae7e0c6f93

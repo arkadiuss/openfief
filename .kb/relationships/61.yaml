@@ -62,3 +62,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7231f334af77
+  - type: implements
+    from: SYM-views-pb-lot-get-opened
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:13:48.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71e420fe3b5d
+  - type: covered_by
+    from: SYM-views-pb-lot-get-opened
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:13:48.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f265d209578
+  - type: implements
+    from: SYM-views-pb-list-holdings-response-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:28:49.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a163509b43f8
+  - type: covered_by
+    from: SYM-views-pb-list-holdings-response-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:28:49.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c563970fa45c

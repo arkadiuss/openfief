@@ -174,3 +174,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-627c5f8d36a1
+  - type: executable_for
+    from: SYM-views-app-test-helper-dec
+    to: TEST-views-app
+    created_at: 2026-10-28T07:27:44.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b0f42a6e66e
+  - type: implements
+    from: SYM-views-pb-get-account-request-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:24:23.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5619c97ed3b
+  - type: covered_by
+    from: SYM-views-pb-get-account-request-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:24:23.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5333030b293a
+  - type: implements
+    from: SYM-views-pb-list-valuation-statuses-request-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:41:06.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81b51bb00e21
+  - type: covered_by
+    from: SYM-views-pb-list-valuation-statuses-request-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:41:06.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31cb37aab0ca

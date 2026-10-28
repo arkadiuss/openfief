@@ -90,3 +90,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-179e667bf050
+  - type: verified_by
+    from: SCEN-views-api-read-only
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:43:13.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbaf90d62e70
+  - type: verified_by
+    from: SCEN-views-api-read-only
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:43:13.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8696575e5ee9
+  - type: implements
+    from: SYM-views-pb-list-transactions-response-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:27:11.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0936e3ddb348
+  - type: covered_by
+    from: SYM-views-pb-list-transactions-response-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:27:11.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-673d4710889c
+  - type: implements
+    from: SYM-views-pb-get-valuation-status-response-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:37:38.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fde11d8c8087
+  - type: covered_by
+    from: SYM-views-pb-get-valuation-status-response-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:37:38.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1715101fa6f4

@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9dc5e3d860e5
+  - type: implements
+    from: SYM-views-pb-sleeve-role-enum-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:59:20.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e00e5a40f2b7
+  - type: covered_by
+    from: SYM-views-pb-sleeve-role-enum-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:59:20.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-638462c10cce
+  - type: implements
+    from: SYM-views-pb-list-sleeves-response-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:21:52.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-300ae87a42ae
+  - type: covered_by
+    from: SYM-views-pb-list-sleeves-response-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:21:53.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-117ba7a43de4

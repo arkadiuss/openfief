@@ -167,3 +167,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fef01b605f5e
+  - type: implements
+    from: SYM-views-connectapi-pb-transaction
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:49:18.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-059033583c06
+  - type: covered_by
+    from: SYM-views-connectapi-pb-transaction
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:49:18.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8af2b513c5c9
+  - type: implements
+    from: SYM-views-connectapi-pb-status
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:49:43.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-493637ebe861
+  - type: implements
+    from: SYM-views-connectapi-pb-status
+    to: REQ-decision-d36-6-api-valuation-status
+    created_at: 2026-10-28T08:49:43.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4acf86d6d198
+  - type: covered_by
+    from: SYM-views-connectapi-pb-status
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:49:43.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7a4f0f4b3ed
+  - type: implements
+    from: SYM-views-pb-list-cash-request-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:30:51.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc2ef6f0d314
+  - type: covered_by
+    from: SYM-views-pb-list-cash-request-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:30:51.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7df7bc25c22
+  - type: implements
+    from: SYM-views-pb-list-valuation-totals-request-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:38:11.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a22b093a90de
+  - type: covered_by
+    from: SYM-views-pb-list-valuation-totals-request-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:38:11.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c5379f88d49
+  - type: implements
+    from: SYM-views-pb-list-valuation-totals-response-get-to
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:40:01.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5b63b65291d
+  - type: covered_by
+    from: SYM-views-pb-list-valuation-totals-response-get-to
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:40:01.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21dbbf04724e

@@ -300,3 +300,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52ca56bdf526
+  - type: implements
+    from: SYM-views-app-views-lots
+    to: REQ-views-app-queries
+    created_at: 2026-10-28T07:29:15.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1c084185ce0
+  - type: covered_by
+    from: SYM-views-app-views-lots
+    to: TEST-views-app
+    created_at: 2026-10-28T07:29:15.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0c8f37a3abc
+  - type: implements
+    from: SYM-views-pb-list-holdings-response
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:28:28.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-303eb31b84b0
+  - type: covered_by
+    from: SYM-views-pb-list-holdings-response
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:28:28.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27ba365f5b19

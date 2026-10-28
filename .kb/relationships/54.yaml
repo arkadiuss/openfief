@@ -90,3 +90,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce5b25650010
+  - type: validates
+    from: TEST-views-allocation
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T07:17:55.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db558992b33c
+  - type: implements
+    from: SYM-views-pb-valuation-basis-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:02:20.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19fc6dda3478
+  - type: covered_by
+    from: SYM-views-pb-valuation-basis-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:02:20.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e01b3d4b767
+  - type: implements
+    from: SYM-views-pb-list-holdings-response-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:28:54.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-286cf11a7125
+  - type: covered_by
+    from: SYM-views-pb-list-holdings-response-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:28:54.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2a1ce2bee7f
+  - type: implements
+    from: SYM-views-pb-list-account-valuations-request-get-from
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:34:07.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff64ee10c992
+  - type: covered_by
+    from: SYM-views-pb-list-account-valuations-request-get-from
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:34:07.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8769c00a0125
+  - type: implements
+    from: SYM-views-pb-get-allocation-response-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:44:16.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eb0a8955a65
+  - type: covered_by
+    from: SYM-views-pb-get-allocation-response-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:44:16.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-016b209fe3bd

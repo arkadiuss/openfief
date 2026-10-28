@@ -60,7 +60,11 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Lot value | jurisdiction/pl | `pl.LotValue` | A bond lot's statutory value on a date: gross accrued value, and net-if-redeemed value after the early-redemption fee and Belka tax on interest minus the fee plus any purchase discount. | |
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
-| Read API | views | `views` + `connectapi` | The public, read-only `/v1` API. | |
+| Read API | views | `views` + `connectapi` | The public, read-only API: the `openfief.views.v1.ReadService` protobuf service, served as Connect and transcoded to REST under `/v1` (D-50). | |
+| Allocation | views | `views.Allocation` | The portfolio's value in the reporting currency on a date, split into groups by asset class, currency, institution or sleeve (D-30). | breakdown |
+| Allocation item | views | `views.AllocationItem` | One valued holding or cash balance of an account on a date: what an allocation groups. | position |
+| Asset class | views | `views.AssetClass` | The kind of asset an allocation item is: `cash`, `treasury_bond` (a bond series) or `listed` (any other instrument: a stock or ETF in M0). | asset type |
+| Date total | views | `views.DateTotal` | The sum of the stored valuations dated on one date, in the reporting currency and per original currency. | |
 | Plugin | plugins | `plugins.Plugin` | The custom resource for one installed, named instance of a plugin image: the image and its manifest (the vendor's) and the instance's name and config (the owner's). Its status says whether the image is verified. | extension, addon |
 | Grant | plugins | `plugins.Grant` | The custom resource holding what the owner approved for a plugin. | permission set |
 | Catalog | plugins | `plugins.Catalog` | The file in the OpenFief repository that lists first-party and verified plugins, with pinned image digests and signer identities. | marketplace, registry |

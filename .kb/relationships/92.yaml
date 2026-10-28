@@ -174,3 +174,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-825e11da61f7
+  - type: executable_for
+    from: SYM-views-test-page-transactions-size
+    to: TEST-views-page
+    created_at: 2026-10-28T07:21:32.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88baebea5579
+  - type: executable_for
+    from: SYM-views-app-test-assertion-checks
+    to: TEST-views-app
+    created_at: 2026-10-28T07:30:58.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a6f39eb9ce1
+  - type: implements
+    from: SYM-views-pb-transaction-kind-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:00:46.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78a6accbdfe6
+  - type: covered_by
+    from: SYM-views-pb-transaction-kind-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:00:46.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83058e7c584d

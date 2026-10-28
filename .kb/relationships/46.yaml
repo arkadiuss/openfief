@@ -195,3 +195,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f03b4a0c3842
+  - type: implements
+    from: SYM-views-app-views-valuation-status-query
+    to: REQ-views-valuation-status
+    created_at: 2026-10-28T07:30:03.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2fa5eab679a
+  - type: implements
+    from: SYM-views-app-views-valuation-status-query
+    to: REQ-decision-d36-6-api-valuation-status
+    created_at: 2026-10-28T07:30:03.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec18ca732cf5
+  - type: covered_by
+    from: SYM-views-app-views-valuation-status-query
+    to: TEST-views-app
+    created_at: 2026-10-28T07:30:03.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2a3e723d1c7
+  - type: implements
+    from: SYM-views-pb-book-kind-type
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:00:03.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7755710e7263
+  - type: covered_by
+    from: SYM-views-pb-book-kind-type
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:00:03.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ddb667b1075
+  - type: implements
+    from: SYM-views-pb-valuation-get-instrument
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:16:29.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eea08dc34d74
+  - type: covered_by
+    from: SYM-views-pb-valuation-get-instrument
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:16:29.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9534eaf73169
+  - type: implements
+    from: SYM-views-pb-list-cash-response-get-balances
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:31:59.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36b3b121db33
+  - type: covered_by
+    from: SYM-views-pb-list-cash-response-get-balances
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:32:00.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c2693c2a318
+  - type: implements
+    from: SYM-views-pb-list-account-valuations-request-get-to
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:34:12.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-152a963a95a8
+  - type: covered_by
+    from: SYM-views-pb-list-account-valuations-request-get-to
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:34:12.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c56163dfbd41
+  - type: implements
+    from: SYM-views-pb-list-valuation-totals-request
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:37:51.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12c16e87de08
+  - type: covered_by
+    from: SYM-views-pb-list-valuation-totals-request
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:37:51.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1005348b4ab

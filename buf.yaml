@@ -2,6 +2,9 @@
 version: v2
 modules:
   - path: proto
+# google/api/annotations.proto: the read API's HTTP rules (D-50), served as REST by Vanguard. Pinned in buf.lock.
+deps:
+  - buf.build/googleapis/googleapis
 lint:
   use:
     - STANDARD

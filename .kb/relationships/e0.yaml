@@ -139,3 +139,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72a1ff9356bf
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-authed
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:47:25.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c6e4af775b
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-valuation-totals
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:54:47.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-664f14824e83
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-valuation-totals
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:54:47.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-108d10a4a51b

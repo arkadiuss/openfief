@@ -111,3 +111,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7297fe935069
+  - type: implements
+    from: SYM-views-pb-account-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:06:17.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-732afd4fe38c
+  - type: covered_by
+    from: SYM-views-pb-account-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:06:17.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1cde673b2c
+  - type: implements
+    from: SYM-views-pb-get-account-request-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:24:09.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d6cf0b386fb
+  - type: covered_by
+    from: SYM-views-pb-get-account-request-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:24:09.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f42fb25f704e

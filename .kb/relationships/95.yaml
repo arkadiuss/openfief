@@ -167,3 +167,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6b0886693ed
+  - type: implements
+    from: SYM-views-pb-valuation-status-get-running
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:19:05.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5adc0e178ca8
+  - type: covered_by
+    from: SYM-views-pb-valuation-status-get-running
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:19:05.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-834bf9a1b0a4
+  - type: implements
+    from: SYM-views-pb-list-sleeves-request-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:21:14.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc60ccc7031d
+  - type: covered_by
+    from: SYM-views-pb-list-sleeves-request-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:21:14.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8affefba73e3
+  - type: implements
+    from: SYM-views-pb-list-sleeves-request-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:21:21.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f46b2d2b9401
+  - type: covered_by
+    from: SYM-views-pb-list-sleeves-request-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:21:21.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdf76902d9b9
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client-list-holdings
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:52:03.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35fa7da52826
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client-list-holdings
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:52:03.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0921982659c

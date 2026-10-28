@@ -118,3 +118,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d239b76ae53a
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-ledger-holdings-on
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:51:24.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e3371a4a409
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-ledger-holdings-on
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:51:24.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-530f49a2c62f
+  - type: implements
+    from: SYM-views-pb-book-get-currency
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:08:28.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8da3637ac085
+  - type: covered_by
+    from: SYM-views-pb-book-get-currency
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:08:28.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d70964fa9314
+  - type: implements
+    from: SYM-views-pb-date-total-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:17:25.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5a28ed49665
+  - type: covered_by
+    from: SYM-views-pb-date-total-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:17:25.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab52db8234e2
+  - type: implements
+    from: SYM-views-pb-list-transactions-request-get-page-size
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:26:33.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84320dd5181a
+  - type: covered_by
+    from: SYM-views-pb-list-transactions-request-get-page-size
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:26:33.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9a513b5fa3b
+  - type: implements
+    from: SYM-views-pb-get-allocation-response-get-total-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:45:17.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a971d9dc7ecb
+  - type: covered_by
+    from: SYM-views-pb-get-allocation-response-get-total-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:45:17.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efa6460c172d

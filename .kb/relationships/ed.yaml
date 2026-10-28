@@ -55,3 +55,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67f8c07c2ed5
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-check-read-only
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:48:00.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b4ed1a4547
+  - type: implements
+    from: SYM-views-connectapi-read-service
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:56:45.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eff48b2bf8cc
+  - type: implements
+    from: SYM-views-connectapi-read-service
+    to: REQ-views-read-api-protobuf
+    created_at: 2026-10-28T08:56:45.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fcacd59a517
+  - type: covered_by
+    from: SYM-views-connectapi-read-service
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:56:45.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afe3bc38093d
+  - type: implements
+    from: SYM-views-pb-get-allocation-request-get-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:43:37.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5560850edf24
+  - type: covered_by
+    from: SYM-views-pb-get-allocation-request-get-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:43:37.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61be1715c79c

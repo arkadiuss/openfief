@@ -111,3 +111,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-260ffac7d4a4
+  - type: constrains
+    from: REQ-views-allocation
+    to: FACT-SUBJECT-AF6C21C8C468E0C9
+    created_at: 2026-10-28T07:18:18.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfe345525e18
+  - type: requires_property
+    from: REQ-views-allocation
+    to: FACT-PROP-A52212B81EF5CA56
+    created_at: 2026-10-28T07:18:18.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a46b4aea6a3a
+  - type: specified_by
+    from: REQ-views-allocation
+    to: SCEN-views-allocation
+    created_at: 2026-10-28T07:18:18.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73b6b6c0a346
+  - type: implements
+    from: SYM-views-app-views-valuation-totals
+    to: REQ-views-valuation-queries
+    created_at: 2026-10-28T07:29:57.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52b2a312919a
+  - type: covered_by
+    from: SYM-views-app-views-valuation-totals
+    to: TEST-views-app
+    created_at: 2026-10-28T07:29:57.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22489a464a72
+  - type: implements
+    from: SYM-views-pb-list-sleeves-response-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:21:41.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf765c4be037
+  - type: covered_by
+    from: SYM-views-pb-list-sleeves-response-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:21:41.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bedbcdef205
+  - type: implements
+    from: SYM-views-pb-list-sleeves-response-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:21:59.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5f7d8cb53db
+  - type: covered_by
+    from: SYM-views-pb-list-sleeves-response-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:21:59.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e8b6996cbea
+  - type: implements
+    from: SYM-views-pb-list-holdings-response-get-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:29:05.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c6a64ed6206
+  - type: covered_by
+    from: SYM-views-pb-list-holdings-response-get-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:29:05.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-060a08187cd8

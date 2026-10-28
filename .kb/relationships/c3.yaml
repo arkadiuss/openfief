@@ -167,3 +167,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57a993899d08
+  - type: implements
+    from: SYM-views-compare-at
+    to: REQ-views-transaction-pages
+    created_at: 2026-10-28T07:21:14.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-578aad7f9c52
+  - type: covered_by
+    from: SYM-views-compare-at
+    to: TEST-views-page
+    created_at: 2026-10-28T07:21:14.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f016f8f48ca
+  - type: constrains
+    from: REQ-views-api-logs
+    to: FACT-SUBJECT-5D5273B6E7DF2D96
+    created_at: 2026-10-28T08:44:31.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f46b602700c
+  - type: requires_property
+    from: REQ-views-api-logs
+    to: FACT-PROP-69E2C3788A7B45A7
+    created_at: 2026-10-28T08:44:31.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ea3fa53db8e
+  - type: specified_by
+    from: REQ-views-api-logs
+    to: SCEN-views-api-logs
+    created_at: 2026-10-28T08:44:31.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-750f8f7f79dd
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-new-views
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:53:22.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b828944749b6
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-new-views
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:53:22.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3827258d4a1
+  - type: implements
+    from: SYM-views-pb-list-cash-request-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:30:39.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64ac46797452
+  - type: covered_by
+    from: SYM-views-pb-list-cash-request-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:30:39.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58a911dfb825
+  - type: implements
+    from: SYM-views-pb-list-assertion-checks-request-get-status
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:32:49.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60bae79f3913
+  - type: covered_by
+    from: SYM-views-pb-list-assertion-checks-request-get-status
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:32:49.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3e73b91ed1f
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:53:27.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-884f205abebd
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:53:27.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eb339e8a1b6

@@ -55,3 +55,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8631f0634fde
+  - type: executable_for
+    from: SYM-views-test-totals-by-date
+    to: TEST-views-valuation
+    created_at: 2026-10-28T07:22:19.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-435a84491eb3
+  - type: implements
+    from: SYM-views-connectapi-pb-account
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:49:08.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2fab92298c9
+  - type: covered_by
+    from: SYM-views-connectapi-pb-account
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:49:08.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef3539b132a3

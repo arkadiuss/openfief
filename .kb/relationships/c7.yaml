@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6c7c8b7bfd3
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-ledger
+    to: TEST-views-app
+    created_at: 2026-10-28T07:26:56.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f161e2af800

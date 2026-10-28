@@ -97,3 +97,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-433daccd4bca
+  - type: executable_for
+    from: SYM-views-test-helper-date
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:41.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00553d6a48ca
+  - type: executable_for
+    from: SYM-views-test-helper-date
+    to: TEST-views-valuation
+    created_at: 2026-10-28T07:20:41.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d971bf81714f
+  - type: executable_for
+    from: SYM-views-test-helper-date
+    to: TEST-views-page
+    created_at: 2026-10-28T07:20:41.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff07d30c0063
+  - type: implements
+    from: SYM-views-pb-book-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:07:50.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9478afc38aff
+  - type: covered_by
+    from: SYM-views-pb-book-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:07:50.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bbd2c930297
+  - type: implements
+    from: SYM-views-pb-date-total-get-value-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:17:40.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-605d6c0e40cc
+  - type: covered_by
+    from: SYM-views-pb-date-total-get-value-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:17:40.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99b2a3148dac
+  - type: implements
+    from: SYM-views-pb-get-account-request-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:24:16.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-927ecccdb36d
+  - type: covered_by
+    from: SYM-views-pb-get-account-request-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:24:16.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c05b39f5005
+  - type: implements
+    from: SYM-views-pb-list-lots-request-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:29:27.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dee8099b2fb3
+  - type: covered_by
+    from: SYM-views-pb-list-lots-request-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:29:27.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe233e8cf46

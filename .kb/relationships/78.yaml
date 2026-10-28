@@ -153,3 +153,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b41004ea3e8
+  - type: constrains
+    from: REQ-views-valuation-queries
+    to: FACT-SUBJECT-45B51F70D4778563
+    created_at: 2026-10-28T07:25:56.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7030d710db6e
+  - type: requires_property
+    from: REQ-views-valuation-queries
+    to: FACT-PROP-B76D07A7EE243E61
+    created_at: 2026-10-28T07:25:56.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf647eb02d78
+  - type: specified_by
+    from: REQ-views-valuation-queries
+    to: SCEN-views-valuation-queries
+    created_at: 2026-10-28T07:25:56.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-658a4157f7f3
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-valuation-statuses
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:58:24.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9466cc08dc68
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-valuation-statuses
+    to: REQ-decision-d36-6-api-valuation-status
+    created_at: 2026-10-28T08:58:24.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26368b1f7479
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-valuation-statuses
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:58:24.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06faec3466ea

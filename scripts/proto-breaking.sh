@@ -13,7 +13,12 @@ fi
 
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
-git archive "$base" buf.yaml proto | tar -x -C "$work"
+# buf.lock pins the base's dependencies (such as googleapis), which its contracts import.
+files=(buf.yaml proto)
+if git cat-file -e "${base}:buf.lock" 2>/dev/null; then
+  files+=(buf.lock)
+fi
+git archive "$base" "${files[@]}" | tar -x -C "$work"
 if [ -z "$(find proto -name '*.proto' 2>/dev/null)" ]; then
   echo "proto:breaking: every contract at ${base} was removed" >&2
   exit 1

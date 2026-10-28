@@ -195,3 +195,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11850cc42b5f
+  - type: constrains
+    from: REQ-views-valuation-status
+    to: FACT-SUBJECT-FA526484EBD3C4A7
+    created_at: 2026-10-28T07:26:04.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dee495024cf
+  - type: requires_property
+    from: REQ-views-valuation-status
+    to: FACT-PROP-5E90BF1003B535A4
+    created_at: 2026-10-28T07:26:04.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e48c56bbdd59
+  - type: specified_by
+    from: REQ-views-valuation-status
+    to: SCEN-views-valuation-status
+    created_at: 2026-10-28T07:26:04.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ba4f8f14dc1

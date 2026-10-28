@@ -132,3 +132,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-882695733bd1
+  - type: implements
+    from: SYM-views-pb-transaction-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:10:25.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d00dec3d661
+  - type: covered_by
+    from: SYM-views-pb-transaction-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:10:25.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f6f7b82b682
+  - type: implements
+    from: SYM-views-pb-list-transactions-response
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:26:48.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f42129f08906
+  - type: covered_by
+    from: SYM-views-pb-list-transactions-response
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:26:48.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1353610d052
