@@ -97,3 +97,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-938b438b1aab
+  - type: implements
+    from: SYM-valuation-postgres-scan-reading
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:03:35.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3a584cde90a
+  - type: covered_by
+    from: SYM-valuation-postgres-scan-reading
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:03:35.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49289d0c40de
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-plain-store
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:09:48.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfd7bab40896

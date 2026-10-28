@@ -132,3 +132,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c5ae791c458
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-money
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:08:02.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62ee6f3a3d31
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-money
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:08:02.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef1aa3e61f38
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-money
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:08:03.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb19fc9681ed

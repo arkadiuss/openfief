@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9fe0f858edc2
+  - type: implements
+    from: SYM-valuation-postgres-store
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:02:35.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3397438502c5
+  - type: implements
+    from: SYM-valuation-postgres-store
+    to: REQ-decision-d36-1-stored-valuations
+    created_at: 2026-10-28T08:02:35.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-493ad8f7d864
+  - type: covered_by
+    from: SYM-valuation-postgres-store
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:02:35.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54e90b84da02

@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7634974fbe31
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-reval
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:08:30.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4ace84a2f43
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-reval
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:08:30.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f69a831fea7b
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-reval
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:08:30.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-214cf8d8bbc1

@@ -48,3 +48,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a16a81c4f9f4
+  - type: verified_by
+    from: SCEN-valuation-settings
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T07:56:45.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5da7cac4216f

@@ -34,3 +34,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bb1417673e8
+  - type: implements
+    from: SYM-valuation-postgres-store-valued-through
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:03:54.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c33a4b095f5
+  - type: covered_by
+    from: SYM-valuation-postgres-store-valued-through
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:03:54.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e053aece90ba

@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-446f24a8c147
+  - type: executable_for
+    from: SYM-valuation-postgres-test-worker-revalues-end-to-end
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:11:21.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b8714693611

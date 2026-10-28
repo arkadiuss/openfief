@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bde0f8ef08f
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-mem-ledger-log
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:10:43.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21056b535adc

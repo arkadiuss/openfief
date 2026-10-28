@@ -104,3 +104,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42220870d0b1
+  - type: implements
+    from: SYM-valuation-postgres-store-in-tx
+    to: REQ-valuation-enqueue-same-transaction
+    created_at: 2026-10-28T08:01:10.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea252b957a6d
+  - type: implements
+    from: SYM-valuation-postgres-store-in-tx
+    to: REQ-decision-d36-3-revaluation-same-transaction
+    created_at: 2026-10-28T08:01:10.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-438b6e827666
+  - type: covered_by
+    from: SYM-valuation-postgres-store-in-tx
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:01:10.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-408765b6435b
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-valued-days
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:11:12.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af0c422b58b9

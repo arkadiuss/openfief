@@ -97,3 +97,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf159631f017
+  - type: implements
+    from: SYM-valuation-postgres-store-import-hook
+    to: REQ-valuation-enqueue-same-transaction
+    created_at: 2026-10-28T08:01:28.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-952f2108af2f
+  - type: implements
+    from: SYM-valuation-postgres-store-import-hook
+    to: REQ-decision-d36-3-revaluation-same-transaction
+    created_at: 2026-10-28T08:01:28.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5a32af850d6
+  - type: covered_by
+    from: SYM-valuation-postgres-store-import-hook
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:01:28.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a0cce9d6a4c

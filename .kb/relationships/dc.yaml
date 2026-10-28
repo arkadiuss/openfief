@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66d8b9ab88a1
+  - type: executable_for
+    from: SYM-valuation-postgres-test-inputs-round-trip
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:10:29.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-158c535d8d5f

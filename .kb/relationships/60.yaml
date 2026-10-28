@@ -104,3 +104,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e02a20ea6a66
+  - type: implements
+    from: SYM-valuation-postgres-migrations
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:00:41.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3420b10fd36c
+  - type: covered_by
+    from: SYM-valuation-postgres-migrations
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:00:41.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae88db9c74c0

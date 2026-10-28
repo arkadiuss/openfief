@@ -188,3 +188,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e61d3311e1f
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-text-rows
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:08:39.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-162dc28138ca
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-text-rows
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:08:39.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e1204bb70d
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-text-rows
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:08:39.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-246d4290d40e

@@ -160,3 +160,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-401f8ff77558
+  - type: implements
+    from: SYM-valuation-postgres-store-save-bond-basis
+    to: REQ-valuation-enqueue-same-transaction
+    created_at: 2026-10-28T08:02:09.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a3928f33a67
+  - type: implements
+    from: SYM-valuation-postgres-store-save-bond-basis
+    to: REQ-decision-d36-9-basis-change-revalues-all
+    created_at: 2026-10-28T08:02:09.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-404f2cf6c8fd
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-bond-basis
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:02:09.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d96c5baf280

@@ -20,3 +20,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a26af341257
+  - type: implements
+    from: SYM-valuation-postgres-store-fxrates
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:03:08.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec60ad037a82
+  - type: covered_by
+    from: SYM-valuation-postgres-store-fxrates
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:03:08.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a770e58e3d1

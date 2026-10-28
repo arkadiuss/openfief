@@ -76,3 +76,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1105463c5091
+  - type: implements
+    from: SYM-valuation-postgres-wrapper-name
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T07:59:29.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5055def7535
+  - type: covered_by
+    from: SYM-valuation-postgres-wrapper-name
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T07:59:29.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d4ebd220f62
+  - type: implements
+    from: SYM-valuation-postgres-parse-optional-date
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T07:59:52.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f9e90735adf
+  - type: covered_by
+    from: SYM-valuation-postgres-parse-optional-date
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T07:59:52.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a5307be80c4

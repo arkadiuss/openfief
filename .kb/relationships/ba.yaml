@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc959c13ca72
+  - type: implements
+    from: SYM-valuation-postgres-store-index-readings
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:03:28.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38b98f088bb4
+  - type: covered_by
+    from: SYM-valuation-postgres-store-index-readings
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:03:28.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0c6a51e46a2

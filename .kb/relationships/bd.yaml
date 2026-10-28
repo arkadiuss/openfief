@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-426e9943a875
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-start-client
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:11:04.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f49d81f11b1c

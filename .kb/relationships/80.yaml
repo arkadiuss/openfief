@@ -62,3 +62,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59d86aaa59dc
+  - type: implements
+    from: SYM-valuation-postgres-parse-money
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T07:59:15.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e9cf9abdd94
+  - type: covered_by
+    from: SYM-valuation-postgres-parse-money
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T07:59:15.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44f45ad88e8c
+  - type: implements
+    from: SYM-valuation-postgres-store-bond-terms
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:03:41.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7cc3517e7e3
+  - type: covered_by
+    from: SYM-valuation-postgres-store-bond-terms
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:03:41.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37620eb0a222

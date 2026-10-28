@@ -104,3 +104,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92dba538d324
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-apply-status-step
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:10:12.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79f75d42b610

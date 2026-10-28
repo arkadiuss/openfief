@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc0cd1f0f37d
+  - type: implements
+    from: SYM-valuation-postgres-applied-versions
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:00:34.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d1b4143065
+  - type: covered_by
+    from: SYM-valuation-postgres-applied-versions
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:00:34.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03593c1b8bbb

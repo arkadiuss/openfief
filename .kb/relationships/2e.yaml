@@ -48,3 +48,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a8ff4c0bf88
+  - type: implements
+    from: SYM-valuation-postgres-revalue-worker-work
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:05:56.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97b5553974bf
+  - type: covered_by
+    from: SYM-valuation-postgres-revalue-worker-work
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:05:56.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8861fa910de
+  - type: implements
+    from: SYM-valuation-postgres-store-claim
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:06:11.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcc5dec8631
+  - type: covered_by
+    from: SYM-valuation-postgres-store-claim
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:06:11.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21c9f381448a

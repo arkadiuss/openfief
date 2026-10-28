@@ -15172,3 +15172,1358 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-valuation-status
+    title: ValuationStatus
+    sourceFile: internal/valuation/app/status.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:59:07.571Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-status
+  - id: SYM-valuation-postgres-parse-money
+    title: parseMoney
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:59:14.524Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-wrapper-names
+    title: wrapperNames
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:59:21.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-wrapper-name
+    title: wrapperName
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:59:28.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-parse-wrapper
+    title: parseWrapper
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:59:36.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-optional-date
+    title: optionalDate
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:59:44.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-parse-optional-date
+    title: parseOptionalDate
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:59:50.908Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-valuation-text
+    title: valuationText
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:59:56.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-decode-valuation
+    title: decodeValuation
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:01.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-migration
+    title: migration
+    sourceFile: internal/valuation/postgres/migrate.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:09.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-migrate
+    title: Migrate
+    sourceFile: internal/valuation/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:17.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-4-river-job-queue
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-migrate-tx
+    title: migrateTx
+    sourceFile: internal/valuation/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:25.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-applied-versions
+    title: appliedVersions
+    sourceFile: internal/valuation/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:33.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-migrations
+    title: migrations
+    sourceFile: internal/valuation/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:39.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-revalue-account
+    title: RevalueAccount
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:44.844Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-4-river-job-queue
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-revalue-account-kind
+    title: RevalueAccount.Kind
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:50.646Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-revalue-account-insert-opts
+    title: RevalueAccount.InsertOpts
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:55.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-5-revaluation-coalescing
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-store-enqueue-tx
+    title: Store.enqueueTx
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:00:59.623Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-lock-account
+    title: lockAccount
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:01:04.730Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-store-in-tx
+    title: Store.inTx
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:01:09.927Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-3-revaluation-same-transaction
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+  - id: SYM-valuation-postgres-store-enqueue
+    title: Store.Enqueue
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:01:17.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-5-revaluation-coalescing
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-store-import-hook
+    title: Store.ImportHook
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:01:27.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-3-revaluation-same-transaction
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+  - id: SYM-valuation-postgres-store-save-prices
+    title: Store.SavePrices
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:01:35.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+  - id: SYM-valuation-postgres-store-save-fxrates
+    title: Store.SaveFXRates
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:01:42.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+  - id: SYM-valuation-postgres-store-save-index-readings
+    title: Store.SaveIndexReadings
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:01:49.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+  - id: SYM-valuation-postgres-store-save-bond-terms
+    title: Store.SaveBondTerms
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:01:55.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+  - id: SYM-valuation-postgres-store-save-tax-wrapper
+    title: Store.SaveTaxWrapper
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:02.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+  - id: SYM-valuation-postgres-store-save-bond-basis
+    title: Store.SaveBondBasis
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:09.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-9-basis-change-revalues-all
+      - type: implements
+        target: REQ-valuation-enqueue-same-transaction
+  - id: SYM-valuation-postgres-store-statuses
+    title: Store.Statuses
+    sourceFile: internal/valuation/postgres/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:13.460Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-status
+  - id: SYM-valuation-postgres-store-status
+    title: Store.Status
+    sourceFile: internal/valuation/postgres/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:18.909Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-status
+  - id: SYM-valuation-postgres-scan-status
+    title: scanStatus
+    sourceFile: internal/valuation/postgres/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:28.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-status
+  - id: SYM-valuation-postgres-store
+    title: Store
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:33.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-decision-d36-1-stored-valuations
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-new-store
+    title: NewStore
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:39.212Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-store-prices
+    title: Store.Prices
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:50.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-scan-price
+    title: scanPrice
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:59.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-store-fxrates
+    title: Store.FXRates
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-scan-rate
+    title: scanRate
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:16.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-store-index-readings
+    title: Store.IndexReadings
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:26.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-scan-reading
+    title: scanReading
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:33.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-store-bond-terms
+    title: Store.BondTerms
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:40.566Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-store-tax-wrapper
+    title: Store.TaxWrapper
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:45.606Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-store-valued-through
+    title: Store.ValuedThrough
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:53.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-valuation-args
+    title: valuationArgs
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:59.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-store-valuations
+    title: Store.Valuations
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:05.100Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-scan-valuation
+    title: scanValuation
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:11.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-store-replace-valuations
+    title: Store.ReplaceValuations
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:17.937Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-decision-d36-2-valuations-rebuildable
+      - type: implements
+        target: REQ-valuation-schema
+  - id: SYM-valuation-postgres-config
+    title: Config
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:21.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-decision-d36-8-revaluation-settings
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-daily-at
+    title: DailyAt
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:27.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-daily-at-next
+    title: DailyAt.Next
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:41.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-config-validate
+    title: Config.validate
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:57.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-today-in
+    title: TodayIn
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:11.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-ledger
+    title: Ledger
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:25.100Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-new-client
+    title: NewClient
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:33.657Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-river-jobs
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-revalue-worker
+    title: RevalueWorker
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:41.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-decision-d36-4-river-job-queue
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-revalue-worker-work
+    title: RevalueWorker.Work
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:54.866Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-store-claim
+    title: Store.claim
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:08.302Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-store-finish
+    title: Store.finish
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:21.503Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-end-of-day
+    title: EndOfDay
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:27.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-end-of-day-kind
+    title: EndOfDay.Kind
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:37.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-end-of-day-insert-opts
+    title: EndOfDay.InsertOpts
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:50.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-end-of-day-worker
+    title: EndOfDayWorker
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:59.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-end-of-day-worker-work
+    title: EndOfDayWorker.Work
+    sourceFile: internal/valuation/postgres/worker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:10.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-settings
+  - id: SYM-valuation-postgres-test-helper-new-pool
+    title: newPool
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:21.102Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-admin-exec
+    title: adminExec
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:32.729Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-new-store
+    title: newStore
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:42.536Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-dec
+    title: dec
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:51.950Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-money
+    title: money
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:01.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-date
+    title: date
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:11.398Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-instrument
+    title: instrument
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:21.511Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-reval
+    title: reval
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:29.630Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-text-rows
+    title: textRows
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:38.003Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-dirty-rows
+    title: dirtyRows
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:46.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-live-jobs
+    title: liveJobs
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:52.665Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-check-pending
+    title: checkPending
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:58.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-count-rows
+    title: countRows
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:05.526Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-migrate-twice
+    title: TestMigrateTwice
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:12.400Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-prices-of
+    title: pricesOf
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:19.530Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-save-enqueues-in-the-same-transaction
+    title: TestSaveEnqueuesInTheSameTransaction
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:25.879Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-enqueue-coalesces-from-the-earliest-date
+    title: TestEnqueueCoalescesFromTheEarliestDate
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:31.860Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-ledger-tx-with-tx
+    title: ledgerTx.WithTx
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:37.139Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-import-hook-enqueues-in-the-imports-transaction
+    title: TestImportHookEnqueuesInTheImportsTransaction
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:42.701Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-plain-store
+    title: plainStore
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:48.018Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-import-hook-needs-the-ledgers-transaction
+    title: TestImportHookNeedsTheLedgersTransaction
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:52.890Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-save-bond-basis-revalues-only-on-achange
+    title: TestSaveBondBasisRevaluesOnlyOnAChange
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:57.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-status-step
+    title: statusStep
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:02.818Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-statuses
+    title: TestStatuses
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:07.350Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-apply-status-step
+    title: applyStatusStep
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:11.783Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-inputs
+    title: inputs
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:16.396Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-valuation-postgres-test-helper-synthetic-inputs
+    title: syntheticInputs
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:20.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-valuation-postgres-test-helper-save-inputs
+    title: saveInputs
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:24.922Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-valuation-postgres-test-inputs-round-trip
+    title: TestInputsRoundTrip
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:29.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-valuation-postgres-test-helper-check
+    title: check
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:33.491Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-valuation-postgres-test-replace-valuations
+    title: TestReplaceValuations
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:38.396Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-valuation-postgres-test-helper-mem-ledger-log
+    title: memLedger.Log
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:42.800Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-mem-ledger-accounts
+    title: memLedger.Accounts
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:47.076Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-etf-buy
+    title: etfBuy
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:51.258Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-config
+    title: config
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:55.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-wait-for-completed
+    title: waitForCompleted
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:00.169Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-start-client
+    title: startClient
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:04.151Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-etf-price
+    title: etfPrice
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:07.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-valued-days
+    title: valuedDays
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:11.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-check-status
+    title: checkStatus
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:15.948Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-worker-revalues-end-to-end
+    title: TestWorkerRevaluesEndToEnd
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:20.337Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-daily-at
+    title: TestDailyAt
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:24.682Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-new-client-checks-the-config
+    title: TestNewClientChecksTheConfig
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:28.745Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-today-in
+    title: TestTodayIn
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:32.736Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-valuation-postgres-test-helper-ledger-tx
+    title: ledgerTx
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:36:53.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-mem-ledger
+    title: memLedger
+    sourceFile: internal/valuation/postgres/worker_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:36:56.530Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-worker

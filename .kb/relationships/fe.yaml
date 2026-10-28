@@ -48,3 +48,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a2dbbd41c0e
+  - type: verified_by
+    from: SCEN-valuation-schema
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T07:56:54.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0cc11628a60
+  - type: verified_by
+    from: SCEN-valuation-schema
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T07:56:54.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58f9828e9d15
+  - type: implements
+    from: SYM-valuation-postgres-wrapper-names
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T07:59:22.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c566b02932da
+  - type: covered_by
+    from: SYM-valuation-postgres-wrapper-names
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T07:59:22.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4404dd1a0505
