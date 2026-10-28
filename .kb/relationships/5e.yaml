@@ -209,3 +209,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17fe77998a31
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:35:43.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57c7cffbf3be
+  - type: implements
+    from: SYM-identity-session-parse-authenticator
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:50:19.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d82ce65ea448
+  - type: covered_by
+    from: SYM-identity-session-parse-authenticator
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:50:19.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a0d593acb1b
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:51:24.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd650e8f5ae0
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:51:24.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13ef2e5cc21b
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-ceremonies
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:51:24.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d808a37c182
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies-finish-login
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:52:21.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-553e7f5c8e7a
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies-finish-login
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:52:21.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f945b33f7ee
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-ceremonies-finish-login
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:52:21.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edff8d60efbb

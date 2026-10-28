@@ -195,3 +195,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-979c11b7c0d7
+  - type: implements
+    from: SYM-identity-gen-pb-session-scope
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:35:11.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e6362046fd6
+  - type: implements
+    from: SYM-identity-gen-pb-session-scope
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:35:11.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a812706fb54c
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-scope
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:35:11.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b92a82cfeb8
+  - type: implements
+    from: SYM-identity-gen-pb-session-get-idle-expires-at
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:37:29.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20c4d101c9d9
+  - type: implements
+    from: SYM-identity-gen-pb-session-get-idle-expires-at
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:37:29.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53bf79a844c1
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-get-idle-expires-at
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:37:29.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d516c13d5ce5
+  - type: implements
+    from: SYM-identity-gen-pb-create-enrollment-link-request-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:55:35.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a563962c7e19
+  - type: implements
+    from: SYM-identity-gen-pb-create-enrollment-link-request-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:55:35.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60965de5b683
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-enrollment-link-request-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:55:35.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d00df01c9d0d
+  - type: implements
+    from: SYM-identity-gen-pb-create-enrollment-link-request-get-origin
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:55:59.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82a5407ae44e
+  - type: implements
+    from: SYM-identity-gen-pb-create-enrollment-link-request-get-origin
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:55:59.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ab460ebdf97
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-enrollment-link-request-get-origin
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:55:59.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4f64b96fc00
+  - type: executable_for
+    from: SYM-core-auth-cmd-core-core-test-start-core-with
+    to: TEST-core-read-api
+    created_at: 2026-10-28T19:31:10.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27827a118b20
+  - type: executable_for
+    from: SYM-identity-app-auth-test-new-auth-fixture
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:22.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9619a67328f1

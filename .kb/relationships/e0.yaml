@@ -181,3 +181,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e09d198da330
+  - type: implements
+    from: SYM-identity-gen-pb-authenticator-number
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:36:01.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf4622465e9e
+  - type: implements
+    from: SYM-identity-gen-pb-authenticator-number
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:36:01.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8104c323c2c4
+  - type: covered_by
+    from: SYM-identity-gen-pb-authenticator-number
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:36:01.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bda43235037
+  - type: implements
+    from: SYM-identity-gen-pb-finish-registration-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:43:08.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08b360c63144
+  - type: implements
+    from: SYM-identity-gen-pb-finish-registration-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:43:08.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce5ea84b03ab
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-registration-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:43:08.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-691cf7ded67e
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:50:45.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5612cc38b81
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:50:45.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad81e2d69d7c
+  - type: covered_by
+    from: SYM-identity-gen-pb-remove-passkey-request
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:50:45.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e65e22630375
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:57:14.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c1dedb9f880
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:57:14.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbed6f60200f
+  - type: covered_by
+    from: SYM-identity-gen-connect-auth-service-client
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:57:14.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2220410b4122
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-revoke-session
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:55.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c6467205be0
+  - type: implements
+    from: SYM-identity-enrollment-parse-ceremony-kind
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:44:59.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-838408bdecbd
+  - type: covered_by
+    from: SYM-identity-enrollment-parse-ceremony-kind
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:44:59.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2102a097c2aa
+  - type: implements
+    from: SYM-identity-session-authenticator-scope
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:50:24.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0af4529b867
+  - type: covered_by
+    from: SYM-identity-session-authenticator-scope
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:50:24.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c602fcf5cce6

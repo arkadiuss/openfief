@@ -132,3 +132,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5332afa0188
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-status-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:36:21.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce37071bfc0c
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-status-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:36:21.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bee3e8b2da4
+  - type: covered_by
+    from: SYM-identity-gen-pb-script-token-status-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:36:21.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7512b89646c2
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:41:08.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4b323f5dea9
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:41:08.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43e2dbf4fcde
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-request-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:41:08.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47e32bd7e1b0
+  - type: implements
+    from: SYM-identity-origin-origin-rpid
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:54.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7475d23b331e
+  - type: covered_by
+    from: SYM-identity-origin-origin-rpid
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:54.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a5bf90efb3f
+  - type: implements
+    from: SYM-identity-postgres-auth-store-save-ceremony
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:47:39.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cccaeef8fb7
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-save-ceremony
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:47:39.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbb724ab2c00
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-login-over
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:49:21.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4ce5462fcd3

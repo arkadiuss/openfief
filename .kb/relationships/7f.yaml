@@ -153,3 +153,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad872415d50f
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-callers-verify-caller
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:21.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db07008b0990
+  - type: implements
+    from: SYM-identity-origin-parse-origin
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:20.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44bd95e147d9
+  - type: covered_by
+    from: SYM-identity-origin-parse-origin
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:20.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d60c9bcc653

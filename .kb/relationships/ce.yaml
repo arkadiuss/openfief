@@ -209,3 +209,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39bf247ec2d5
+  - type: implements
+    from: SYM-identity-gen-pb-finish-login-response-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:46:12.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78955cf40f66
+  - type: implements
+    from: SYM-identity-gen-pb-finish-login-response-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:46:12.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06736df369cc
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-login-response-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:46:12.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ab4e8208eb3
+  - type: implements
+    from: SYM-identity-gen-pb-logout-request-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:47:37.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39a0c7a7a035
+  - type: implements
+    from: SYM-identity-gen-pb-logout-request-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:47:37.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d834b9c2fb9
+  - type: covered_by
+    from: SYM-identity-gen-pb-logout-request-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:47:37.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d0583417e5a
+  - type: implements
+    from: SYM-identity-gen-pb-logout-response-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:48:15.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed8e9f955589
+  - type: implements
+    from: SYM-identity-gen-pb-logout-response-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:48:15.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9411196187f5
+  - type: covered_by
+    from: SYM-identity-gen-pb-logout-response-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:48:15.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-848710f27295
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-registration
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:58:49.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-430dd5fb7dc1
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-registration
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:58:49.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-346f34a40a25
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-registration
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:58:49.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fe6a5c41d11
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-login
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:58:57.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7a1b95bac25
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-login
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:58:57.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d85ceb9e7abd
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-login
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:58:57.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0fab68e79a

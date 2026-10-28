@@ -90,6 +90,12 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |
 | Script token secret | identity | `identity.FormatSecret` | What a script presents as its bearer token: `ofs_`, the script token's ID, `_` and a random key. Shown once when the token is issued; only the SHA-256 hash of the key is stored. | API key, password |
+| Authenticator | identity | `identity.Authenticator` | A way for the owner to prove who they are before the core issues a session: a passkey (owner scope), or the demo authenticator (read scope, demo databases only). Every authenticator resolves to the one owner. | login provider, IdP |
+| Passkey | identity | `identity.Passkey` | One of the owner's WebAuthn credentials. It works only on the host it was created on, its relying party ID. | security key, password |
+| Session | identity | `identity.Session` | The owner's login on one host: an opaque, revocable bearer token (`ofsess_`, an ID, `_` and a random key) that the core issues after an authenticator succeeds. It expires when idle or old, carries a read or owner scope, and only the SHA-256 hash of its key is stored. | JWT, cookie (the view plugin's container for it) |
+| Session scope | identity | `identity.SessionScope` | What a session may do: `read` (the read API, WhoAmI and logout) or `owner` (also passkeys, script tokens and enrollment links). | role, permission |
+| Enrollment code | identity | `identity.EnrollmentCode` | A one-time, expiring permission to create a passkey on one origin, carried in the fragment of an enrollment link (`/enroll#code=ofenroll_...`). The CLI issues the first one; an owner session issues more. | invite, magic link |
+| Origin | identity | `identity.Origin` | The scheme, host and port the owner's browser uses, such as `https://dev.example.com`. The core serves the owner only on origins on its allow-list; the host is the WebAuthn relying party ID. | URL, domain |
 | Currency | kernel | `kernel.Currency` | An ISO 4217 alphabetic code, such as PLN or USD. | |
 | Money | kernel | `kernel.Money` | An exact decimal amount in one currency. It keeps its original currency; arithmetic across currencies is an error, and conversion is an explicit FX step in valuation. | |
 | Quantity | kernel | `kernel.Quantity` | An exact, possibly fractional number of units of an instrument. | |

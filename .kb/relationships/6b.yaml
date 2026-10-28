@@ -195,3 +195,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31261f15415f
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-enroll-then-login
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:52.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b16a443d108
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-credential
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:52:01.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b440e4f3a3d
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-credential
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:52:01.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-445475684dad
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-credential
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:52:01.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a5875fe9ec2

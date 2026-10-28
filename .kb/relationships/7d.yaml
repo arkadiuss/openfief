@@ -139,3 +139,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae656109c9e4
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-passkeys
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:59:16.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6dae80a5de1
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-passkeys
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:59:16.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c956e3d7ac9b
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-passkeys
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:59:16.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6087a765bc54
+  - type: implements
+    from: SYM-identity-app-auth-proof
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:31:41.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ab08ece4f41
+  - type: covered_by
+    from: SYM-identity-app-auth-proof
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:31:41.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-582c6d0aa176
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-save-ceremony
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:38:46.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2721e3829fe6
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-save-ceremony
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:46.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8510f854e150
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-session-store-ensure-owner
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:34.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a022a11e8b5a

@@ -279,3 +279,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94cca8c7073c
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-response-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:50:19.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0684a4b611a3
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-response-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:50:19.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac1d674e0baf
+  - type: covered_by
+    from: SYM-identity-gen-pb-list-passkeys-response-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:50:19.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edd8e644454a
+  - type: executable_for
+    from: SYM-identity-auth-test-session-at
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:39:48.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8e9eae75d9b
+  - type: implements
+    from: SYM-identity-session-session-scope
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:49:51.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f9e863e6899
+  - type: covered_by
+    from: SYM-identity-session-session-scope
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:49:51.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b28d89fa590

@@ -202,3 +202,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a11fd6fd41c2
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:46:28.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c501859b09a
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:46:28.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0450ade97d84
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-demo-session-request
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:46:28.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6949afe077fc
+  - type: implements
+    from: SYM-core-auth-cmd-core-auth-dev-callers-verify-caller
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:29:22.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8217c6e988cc
+  - type: covered_by
+    from: SYM-core-auth-cmd-core-auth-dev-callers-verify-caller
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:29:22.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-649c190bf44c
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-delete-passkey
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:15.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0215a7985dc
+  - type: implements
+    from: SYM-identity-app-ports-session-store
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:39:17.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a49ae2dafda
+  - type: covered_by
+    from: SYM-identity-app-ports-session-store
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:39:17.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de80a35e9fe8
+  - type: implements
+    from: SYM-identity-origin-origin-equal
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:58.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef9974d232a9
+  - type: covered_by
+    from: SYM-identity-origin-origin-equal
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:59.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e1e8e569628

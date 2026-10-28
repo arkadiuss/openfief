@@ -160,3 +160,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b94f85b2d810
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client-revoke-script-token
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:58:19.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-282096a54f0c
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client-revoke-script-token
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:58:19.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2d0641b037e
+  - type: covered_by
+    from: SYM-identity-gen-connect-auth-service-client-revoke-script-token
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:58:19.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eaccc4d6bada
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-session-store-revoke-session
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:42:00.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-770e1fd170fd
+  - type: implements
+    from: SYM-identity-connectapi-service-auth-service-finish-login
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:43:09.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac51c2ffcef7
+  - type: covered_by
+    from: SYM-identity-connectapi-service-auth-service-finish-login
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:43:09.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bd53fa561aa

@@ -272,3 +272,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a46b19f7379
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest-get-session-token
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:49:01.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c3c9028fa56
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest-get-session-token
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:49:01.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-073136de252d
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-irequest-get-session-token
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:49:01.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b49466fce497
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-response-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:50:24.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74656cf59d65
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-response-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:50:24.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a768fc304b74
+  - type: covered_by
+    from: SYM-identity-gen-pb-list-passkeys-response-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:50:24.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8235ec1037fe
+  - type: implements
+    from: SYM-identity-app-auth-authenticator
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:31:44.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7c9a9dadd66
+  - type: covered_by
+    from: SYM-identity-app-auth-authenticator
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:31:44.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-417fa5c1bfa7
+  - type: implements
+    from: SYM-identity-origin-valid-label
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:45.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2dcdc6708d2
+  - type: covered_by
+    from: SYM-identity-origin-valid-label
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:45.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465c6c5d2da1

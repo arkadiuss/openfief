@@ -153,3 +153,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e57af6094b57
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies-begin-registration
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:52:06.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da755985052e
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies-begin-registration
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:52:06.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-079145363374
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-ceremonies-begin-registration
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:52:06.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b86a4e93b101

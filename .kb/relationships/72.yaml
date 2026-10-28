@@ -272,3 +272,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6ddf0432e25
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-status-enum-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:36:34.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16dde53e8e1c
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-status-enum-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:36:34.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2f8540dee89
+  - type: covered_by
+    from: SYM-identity-gen-pb-script-token-status-enum-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:36:34.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07cdf6bb9b29
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-get-expires-at
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:39:44.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb4a834a1eb3
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-get-expires-at
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:39:44.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1641cd039787
+  - type: covered_by
+    from: SYM-identity-gen-pb-script-token-get-expires-at
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:39:44.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0576f8c7ebdb
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-host-passkeys
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:38:41.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b997d98cd77e
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-host-passkeys
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:41.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96134439a0d0
+  - type: executable_for
+    from: SYM-identity-webauthn-ceremonies-test-register
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:52:50.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26a1ebdbb79d

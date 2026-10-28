@@ -209,3 +209,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d7c93d94f67
+  - type: implements
+    from: SYM-identity-gen-pb-session-get-authenticator
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:37:12.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9294412530b5
+  - type: implements
+    from: SYM-identity-gen-pb-session-get-authenticator
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:37:12.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c007d347689
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-get-authenticator
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:37:12.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a98e61a0535
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-script-tokens
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:59:33.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ec84a94aa79
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-script-tokens
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:59:33.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9effd3dc1be2
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-script-tokens
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:59:33.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61136415bd3f
+  - type: implements
+    from: SYM-identity-passkey-owner
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:46:27.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d36b3264820d
+  - type: implements
+    from: SYM-identity-passkey-owner
+    to: REQ-AUTO-DBE65341C3D9DBFD
+    created_at: 2026-10-28T19:46:27.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bed0a646dcd
+  - type: covered_by
+    from: SYM-identity-passkey-owner
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:46:27.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5235a9faa0d

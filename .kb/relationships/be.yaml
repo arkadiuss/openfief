@@ -237,3 +237,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee2e862e17d2
+  - type: implements
+    from: SYM-identity-gen-pb-session-scope-enum
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:35:15.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ca1bc913eb8
+  - type: implements
+    from: SYM-identity-gen-pb-session-scope-enum
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:35:15.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11828e880fbc
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-scope-enum
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:35:15.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8134beee349d
+  - type: executable_for
+    from: SYM-identity-app-auth-test-origin
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:26.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22a78ffebe89
+  - type: executable_for
+    from: SYM-identity-app-auth-test-auth-fixture-link
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:30.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b8d992b3819

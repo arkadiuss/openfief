@@ -125,3 +125,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1601be9f0b4c
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-response-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:42:35.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67aadc5e2d9a
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-response-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:42:35.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40a89377b999
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-response-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:42:35.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a12b7364090a
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-response-get-ceremony-id
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:45:07.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9f01b418abf
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-response-get-ceremony-id
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:45:07.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68eed9fd528b
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-login-response-get-ceremony-id
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:45:07.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d962a96cb8f
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-request-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:49:42.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2deb7e9577
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-request-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:49:42.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1656ed0bf21
+  - type: covered_by
+    from: SYM-identity-gen-pb-list-passkeys-request-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:49:42.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b512260d7264

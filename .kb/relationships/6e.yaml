@@ -244,3 +244,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8eca19c21ef6
+  - type: implements
+    from: SYM-identity-app-auth-auth-authenticate
+    to: REQ-identity-read-api-sessions
+    created_at: 2026-10-28T19:32:14.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f90fa030b68e
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-authenticate
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:14.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71ea71e20852
+  - type: executable_for
+    from: SYM-identity-auth-test-test-new-enrollment-code-refused
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:28.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-459c9e9a29d6
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-test-owner-stored-once
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:28.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb14d09cdfca

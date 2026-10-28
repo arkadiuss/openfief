@@ -202,3 +202,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a16358baf9b
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-passkeys-per-host
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:34:21.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07d00c2beb68
+  - type: executable_for
+    from: SYM-identity-auth-test-test-passkey-checks
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:18.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f39eb661dae

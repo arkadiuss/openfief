@@ -44,7 +44,7 @@ The [read API](../glossary.md) is how anything outside the core reads the record
 
 **Paging transactions.** `ListTransactions` returns the current version of each transaction in date, then source, then external ID order. A page that has more after it returns a `nextPageToken`: an opaque cursor naming the last transaction's date and key, base64url-encoded. Passing it back starts the next page right after that transaction, so a client reads every current transaction once even if a page boundary falls between transactions on the same date. This is keyset paging: an offset ("skip 200") skips or repeats a row when rows arrive between two requests, while a cursor that names the last row read doesn't. The parameter names follow Google's API improvement proposal AIP-158.
 
-**Bearer tokens.** Every call, over any protocol, needs an `Authorization: Bearer <token>` header. The token is meant to be either a [script token](../glossary.md) or a plugin's projected ServiceAccount token ([plugin identity](../glossary.md)). The API asks a `TokenVerifier` whether the token may read. The core's verifier accepts [script tokens](identity.md) only; plugins' tokens are not accepted yet.
+**Bearer tokens.** Every call, over any protocol, needs an `Authorization: Bearer <token>` header. The token is a [session](../glossary.md) of the owner, of any scope, such as the one the built-in UI holds for the browser, or a [script token](../glossary.md); a plugin's projected ServiceAccount token ([plugin identity](../glossary.md)) is meant to be accepted too. The API asks a `TokenVerifier` whether the token may read. The core's verifier is the identity context's `Auth.Authenticate` ([Identity](identity.md)), which accepts sessions and read-scoped script tokens; plugins' tokens are not accepted yet. Logging in, and every other change, goes through the identity context's separate `AuthService`, never through this API.
 
 ## How it works
 
@@ -72,7 +72,7 @@ flowchart TB
   app --> pure
   app -- "Ledger port" --> ledger["ledger/app.Ledger"]
   app -- "Valuations, ValuationStatuses, FXRates" --> vstore["valuation/postgres.Store"]
-  app -- "TokenVerifier port" --> tokens["script tokens<br/>identity/app.Tokens"]
+  app -- "TokenVerifier port" --> tokens["sessions and script tokens<br/>identity/app.Auth.Authenticate"]
   bin["cmd/core"] -.-> connectapi
 ```
 
@@ -159,7 +159,7 @@ So on the same date the allocation's total includes cash and `ListValuationTotal
 - **D-30**: the allocation by asset class, currency, broker or sleeve, and value over time. The code groups by institution where D-30 says broker, since the treasury bond registry is an institution and not a broker (see the glossary). Value over time is `ListValuationTotals`; the charts themselves are the UI's.
 - **D-36**: the read API reports, per account, the valued-through date and whether a revaluation is pending or running. Built as `GetValuationStatus` and `ListValuationStatuses`; the UI part is not built.
 - **D-62** and **T-12**: totals and the allocation are in the reporting currency, next to each original currency. `app.New` refuses any reporting currency but PLN with an `*UnsupportedReportingCurrencyError`, because stored valuations and FX rates are against PLN only (D-20) and T-12 (proposal P-49) is open.
-- **D-27**: the bearer tokens the API accepts. The core accepts script tokens ([Identity](identity.md)); plugins' projected tokens are not accepted yet.
+- **D-27**: the bearer tokens the API accepts. The core accepts the owner's sessions and script tokens ([Identity](identity.md)); plugins' projected tokens are not accepted yet.
 - Half-up rounding of cash in the allocation follows `valuation.ValueRounding`, which no decision fixes (see [Valuation](valuation.md#decisions)).
 
 ## Verification
@@ -179,7 +179,7 @@ One text differs from the code: REQ-views-allocation-inputs says cash rounds hal
 
 ## Not built yet
 
-- **D-27**: accepting plugins' projected ServiceAccount tokens (audience `openfief-core`); the core's verifier accepts script tokens only.
+- **D-27**: accepting plugins' projected ServiceAccount tokens (audience `openfief-core`); the core's verifier accepts sessions and script tokens only.
 - **D-30**, **D-36**: the built-in UI's allocation and value-over-time charts and its valuation status display, and the view plugins that read through this API (D-3, D-4).
 - Cash in value-over-time totals. Stored valuations have no cash, so `ListValuationTotals` counts holdings only.
 - **D-62**: a reporting currency other than PLN, waiting on T-12.

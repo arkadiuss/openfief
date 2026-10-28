@@ -419,3 +419,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8198db6c4937
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:41:04.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d94fe17dd098
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:41:04.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9f866158b6d
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-request-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:41:04.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab3bc5f53d45
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:49:54.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c000de07de9
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:49:54.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cc731b4fd4e
+  - type: covered_by
+    from: SYM-identity-gen-pb-list-passkeys-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:49:54.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-667666e1423e
+  - type: implements
+    from: SYM-core-auth-cmd-core-auth-view-reviewer-review-token
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:29:03.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa68d25557bf
+  - type: covered_by
+    from: SYM-core-auth-cmd-core-auth-view-reviewer-review-token
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:29:03.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aef8b5aab6c8
+  - type: executable_for
+    from: SYM-identity-auth-test-test-passkey-validate
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:21.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5253c00b662f
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-session-store-session
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:51.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd1bcd6c4941
+  - type: implements
+    from: SYM-identity-postgres-auth-store-take-ceremony
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:47:44.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad71db4c6dd4
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-take-ceremony
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:47:44.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84fa47d15f17
+  - type: implements
+    from: SYM-identity-postgres-auth-store-revoke-session
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:48:19.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c10755a17c1c
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-revoke-session
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:20.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eaa3175592f

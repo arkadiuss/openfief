@@ -335,3 +335,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a054c5955a1
+  - type: implements
+    from: SYM-identity-gen-pb-session-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:36:42.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-753cab9c23da
+  - type: implements
+    from: SYM-identity-gen-pb-session-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:36:42.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcfc22f2d1d3
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:36:42.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38223a8c2626
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-request
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:51:55.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8302b2b86d88
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-request
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:51:55.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b432c70c001
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-script-token-request
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:51:55.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-949d76f30c90
+  - type: executable_for
+    from: SYM-core-auth-cmd-core-auth-test-test-demo-sessions-need-the-marker
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:30:17.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd8a03b1f095
+  - type: implements
+    from: SYM-identity-app-ports-enrollment-store
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:39:12.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d24e269e1598
+  - type: covered_by
+    from: SYM-identity-app-ports-enrollment-store
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:39:12.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80a56969b06f
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-callers
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:17.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b07b1aab4fe2
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-creation-options
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:53:31.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e29cc1a6d6d6
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-creation-options
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:31.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18a9240018e2

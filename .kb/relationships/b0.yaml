@@ -209,3 +209,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad2040720f5d
+  - type: implements
+    from: SYM-identity-app-owner-enrollment-link
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:37:23.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05feadb1c034
+  - type: covered_by
+    from: SYM-identity-app-owner-enrollment-link
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:37:23.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be0318f134aa

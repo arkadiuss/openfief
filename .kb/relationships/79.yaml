@@ -447,3 +447,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8fb0441f101
+  - type: implements
+    from: SYM-identity-app-owner-issue-enrollment-link
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:37:31.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-708a0044bf6e
+  - type: covered_by
+    from: SYM-identity-app-owner-issue-enrollment-link
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:37:32.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5f71e3a0c12
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-want-code
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:42:29.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1c6f207cb9a
+  - type: implements
+    from: SYM-identity-connectapi-service-pb-passkey
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:44:02.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b95458c1805a
+  - type: covered_by
+    from: SYM-identity-connectapi-service-pb-passkey
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:44:02.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-040151bb55bf
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-test-session-store
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:48.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de6a35bc8fc1

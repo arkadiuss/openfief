@@ -244,3 +244,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cccbfcfbddd
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-enrollment-code-is-begin-registration-request-authorization
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:41:58.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8cb32e32297
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-enrollment-code-is-begin-registration-request-authorization
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:41:58.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f978ddc7c7a3
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-request-enrollment-code-is-begin-registration-request-authorization
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:41:58.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-048a894d1a37
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:47:00.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0618882d4b5c
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:47:00.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1023d23aed6
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-demo-session-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:47:00.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3794094f4c34
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-marked-demo-marked
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:42:10.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e4b8c50536b
+  - type: implements
+    from: SYM-identity-postgres-auth-store-save-enrollment-code
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:47:48.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50854447f830
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-save-enrollment-code
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:47:48.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-317429fa1ce0
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-authenticator-response
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:54:01.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99369b8008b3
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-authenticator-response
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:54:01.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ebc137cd9ba

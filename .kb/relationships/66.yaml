@@ -62,3 +62,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3cdb7e1b7c3d
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:52:44.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a66dcbf2b789
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:52:44.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f7024d93935
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-script-token-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:52:44.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71ea5e59d986
+  - type: constrains
+    from: REQ-identity-passkey-ceremonies
+    to: FACT-SUBJECT-A3B522D038115825
+    created_at: 2026-10-28T19:27:27.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb4c5546695d
+  - type: requires_property
+    from: REQ-identity-passkey-ceremonies
+    to: FACT-PROP-A79FD6834FC95740
+    created_at: 2026-10-28T19:27:27.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b842b78aa4b9
+  - type: specified_by
+    from: REQ-identity-passkey-ceremonies
+    to: SCEN-identity-passkey-login
+    created_at: 2026-10-28T19:27:27.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25ae6b22300f
+  - type: implements
+    from: SYM-identity-origin-origin-is-zero
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:46:03.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-996fbcf178ef
+  - type: covered_by
+    from: SYM-identity-origin-origin-is-zero
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:46:03.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b5d2b9c12aa

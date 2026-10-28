@@ -216,3 +216,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13fa8cd11074
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-enrollment-link
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:59:41.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c26e30980bd7
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-enrollment-link
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:59:41.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99bffe10d2b7
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-enrollment-link
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:59:41.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91b75d39a3a4
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-session
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:35:34.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b149d089b51
+  - type: implements
+    from: SYM-identity-app-ports-begun
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:39:25.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc83907a883a
+  - type: covered_by
+    from: SYM-identity-app-ports-begun
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:39:25.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a87b556bc90c

@@ -223,3 +223,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa02d90cf9ba
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-iresponse-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:49:17.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e2e0fc7e37f
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-iresponse-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:49:17.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-801ed8056f32
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-iresponse-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:49:17.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea68d63f5b7f
+  - type: implements
+    from: SYM-identity-app-auth-auth-demo
+    to: REQ-identity-demo-sessions
+    created_at: 2026-10-28T19:32:28.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07921262e5d5
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-demo
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:28.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de13b0daa99d

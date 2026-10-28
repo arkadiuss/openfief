@@ -230,3 +230,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd40958298e5
+  - type: implements
+    from: SYM-identity-gen-pb-logout-request
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:47:28.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1b7ca2dc8d7
+  - type: implements
+    from: SYM-identity-gen-pb-logout-request
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:47:28.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-807216b18e8a
+  - type: covered_by
+    from: SYM-identity-gen-pb-logout-request
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:47:28.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba3a2a8aedaa
+  - type: implements
+    from: SYM-identity-postgres-auth-store-use-enrollment-code
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:47:57.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d3fcd13861b
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-use-enrollment-code
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:47:57.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-084e7a02ed69
+  - type: implements
+    from: SYM-identity-session-authenticator
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:50:09.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54acc54f2acc
+  - type: covered_by
+    from: SYM-identity-session-authenticator
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:50:09.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce701e0de30e
+  - type: implements
+    from: SYM-identity-session-parse-session-token
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:51:20.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dea5a86e0cf
+  - type: covered_by
+    from: SYM-identity-session-parse-session-token
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:51:20.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88d145582de7

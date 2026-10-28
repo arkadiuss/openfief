@@ -293,3 +293,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63ed645ae689
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-request-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:44:16.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e1b2b9df3b2
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-request-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:44:16.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3df45b5103d
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-login-request-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:44:16.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b506bc6ee93
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:48:31.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9441686a13b4
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:48:31.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d95502faf11
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-irequest
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:48:31.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76d5728a6a1b
+  - type: implements
+    from: SYM-identity-enrollment-ceremony-kind-string
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:44:54.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a90994a60f32
+  - type: covered_by
+    from: SYM-identity-enrollment-ceremony-kind-string
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:44:54.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0afffcdaf0e

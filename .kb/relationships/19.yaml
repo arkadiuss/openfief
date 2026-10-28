@@ -174,3 +174,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0bdf91432d45
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-get-enrollment-code
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:41:35.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a96e2f7e0276
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-get-enrollment-code
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:41:35.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1dfb24bca77
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-request-get-enrollment-code
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:41:35.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c180ae370d2
+  - type: implements
+    from: SYM-identity-gen-pb-logout-request-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:47:32.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f71c653d27ab
+  - type: implements
+    from: SYM-identity-gen-pb-logout-request-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:47:32.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf2805138a50
+  - type: covered_by
+    from: SYM-identity-gen-pb-logout-request-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:47:32.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1d5c4ac4bdc
+  - type: executable_for
+    from: SYM-identity-app-auth-test-owner-actions
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:34:58.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2db765f1e30

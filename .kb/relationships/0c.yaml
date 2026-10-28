@@ -188,3 +188,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2117af358801
+  - type: implements
+    from: SYM-identity-app-auth-principal
+    to: REQ-identity-read-api-sessions
+    created_at: 2026-10-28T19:32:10.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8888427389c
+  - type: covered_by
+    from: SYM-identity-app-auth-principal
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:10.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0197f36f70a

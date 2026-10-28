@@ -230,3 +230,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4276dc94898f
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-response-get-passkey-registered
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:40:51.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42c6416d15ac
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-response-get-passkey-registered
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:40:51.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1d98415f96
+  - type: covered_by
+    from: SYM-identity-gen-pb-get-login-methods-response-get-passkey-registered
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:40:51.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb1ece490936
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-request-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:54:37.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae27e16f1613
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-request-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:54:37.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af7e72271f5d
+  - type: covered_by
+    from: SYM-identity-gen-pb-revoke-script-token-request-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:54:37.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f78c150bfa1
+  - type: constrains
+    from: REQ-identity-enrollment-code
+    to: FACT-SUBJECT-982FBA8DE51552F9
+    created_at: 2026-10-28T19:27:34.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f8c01d81954
+  - type: requires_property
+    from: REQ-identity-enrollment-code
+    to: FACT-PROP-53690F51B447A914
+    created_at: 2026-10-28T19:27:34.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-defd79398e34
+  - type: specified_by
+    from: REQ-identity-enrollment-code
+    to: SCEN-identity-enrollment-once
+    created_at: 2026-10-28T19:27:34.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-156d278d0206

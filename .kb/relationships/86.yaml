@@ -97,3 +97,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7b3e2695617
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-get-origin
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:51:17.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44af51b29584
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-get-origin
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:51:17.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d09cc05f46fc
+  - type: covered_by
+    from: SYM-identity-gen-pb-remove-passkey-request-get-origin
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:51:17.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-880b72be73ac
+  - type: implements
+    from: SYM-identity-app-auth-login-methods
+    to: REQ-identity-demo-sessions
+    created_at: 2026-10-28T19:32:19.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2531a57d7d0c
+  - type: covered_by
+    from: SYM-identity-app-auth-login-methods
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:19.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-624b0e10482e
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-demo-session
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:42:39.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4e3dc0f29c6
+  - type: implements
+    from: SYM-identity-session-session
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:50:47.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-386d10875cab
+  - type: covered_by
+    from: SYM-identity-session-session
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:50:47.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d682f318451
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-request-options
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:53:41.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4c6e59c843e
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-request-options
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:41.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9624a84d37cb

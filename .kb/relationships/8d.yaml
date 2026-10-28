@@ -153,3 +153,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99dcd89e0116
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:55:09.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80c6411bdd9e
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:55:09.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5d28e927de4
+  - type: covered_by
+    from: SYM-identity-gen-pb-revoke-script-token-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:55:09.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-293f46f288bc
+  - type: implements
+    from: SYM-identity-app-ports-ceremonies
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:39:20.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dac9b7951ffd
+  - type: covered_by
+    from: SYM-identity-app-ports-ceremonies
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:39:20.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea09c8d6c86c
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-bearer
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:42:25.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e2f3e5dfa8
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-authenticator
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:53:17.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4437dae6897
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-authenticator
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:17.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac62ca649dbb

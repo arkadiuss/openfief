@@ -237,3 +237,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d233a6917a6
+  - type: implements
+    from: SYM-identity-gen-pb-finish-login-response-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:46:16.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1045d31784dd
+  - type: implements
+    from: SYM-identity-gen-pb-finish-login-response-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:46:16.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-678567286712
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-login-response-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:46:16.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1cf8950205f
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:54:43.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d737125b995
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:54:43.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78a0109bc8fa
+  - type: covered_by
+    from: SYM-identity-gen-pb-revoke-script-token-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:54:43.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cd5f249f0bd
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-enrollment-code
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:38:33.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdb07fe0b40b
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-enrollment-code
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:33.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d43548e98326
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-wrap-streaming-handler
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:41:00.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a705526bd337
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-wrap-streaming-handler
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:41:00.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9b208c38a40
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-caller-interceptor-wrap-streaming-handler
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:00.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a942d8176957

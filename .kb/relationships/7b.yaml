@@ -209,3 +209,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89390e0452dd
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:48:44.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60be906c2536
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:48:44.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f3abfd6904f
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-irequest-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:48:44.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fee1debe0ad
+  - type: implements
+    from: SYM-identity-gen-pb-file-openfief-identity-v1-auth-proto-raw-desc-gzip
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:56:55.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ff4b800460b
+  - type: implements
+    from: SYM-identity-gen-pb-file-openfief-identity-v1-auth-proto-raw-desc-gzip
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:56:55.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46cb16835bfd
+  - type: covered_by
+    from: SYM-identity-gen-pb-file-openfief-identity-v1-auth-proto-raw-desc-gzip
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:56:55.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c76d4e3257b
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-authenticator-cose-key
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:53:56.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52f5e9616344
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-authenticator-cose-key
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:56.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4946128828b1

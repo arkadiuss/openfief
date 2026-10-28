@@ -153,3 +153,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bb2dac628a0
+  - type: implements
+    from: SYM-identity-gen-pb-authenticator
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:35:40.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00d134ea0742
+  - type: implements
+    from: SYM-identity-gen-pb-authenticator
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:35:40.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c71860caca5
+  - type: covered_by
+    from: SYM-identity-gen-pb-authenticator
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:35:40.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a89adf64c12a
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-response
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:51:29.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f03d684b5f5c
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-response
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:51:29.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8490eb550426
+  - type: covered_by
+    from: SYM-identity-gen-pb-remove-passkey-response
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:51:29.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8220aa351967
+  - type: implements
+    from: SYM-identity-app-ports-auth-store
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:38:55.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-527fde2a08a9
+  - type: covered_by
+    from: SYM-identity-app-ports-auth-store
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:55.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c04ea180c4b

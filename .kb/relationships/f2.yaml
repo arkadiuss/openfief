@@ -146,3 +146,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8450f14e462
+  - type: validates
+    from: TEST-identity-auth-contract
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:34:52.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f4c69087409
+  - type: executable_for
+    from: SYM-identity-test-auth-service-contract
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:35:08.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afc1112c7a66
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-response-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:40:34.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-486093fbf1a1
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-response-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:40:34.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f828de6ed6c
+  - type: covered_by
+    from: SYM-identity-gen-pb-get-login-methods-response-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:40:34.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa123a8e365f
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:46:48.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de049c16cb9d
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:46:48.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d583191227e
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-demo-session-request-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:46:48.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e82d8f1d5a0

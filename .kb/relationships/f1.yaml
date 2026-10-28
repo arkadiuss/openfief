@@ -272,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8995deacdcf5
+  - type: implements
+    from: SYM-identity-connectapi-handler-callers
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:40:40.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bf720b18387
+  - type: implements
+    from: SYM-identity-connectapi-handler-callers
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:40:40.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34c825a6df38
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-callers
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:40:40.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d91e6b034ea
