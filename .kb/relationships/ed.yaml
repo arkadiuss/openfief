@@ -195,3 +195,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aae9830ece60
+  - type: executable_for
+    from: SYM-cmd-openfief-test-main-world-file
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:41:37.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a9a7c36040d

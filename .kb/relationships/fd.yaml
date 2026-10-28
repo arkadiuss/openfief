@@ -160,3 +160,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b7738cd3b2b
+  - type: implements
+    from: SYM-cmd-openfief-cluster-owner-signers
+    to: REQ-plugins-cli-owner-signers
+    created_at: 2026-10-28T23:38:51.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d8b93c134a0
+  - type: covered_by
+    from: SYM-cmd-openfief-cluster-owner-signers
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:38:51.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6c69433ead9

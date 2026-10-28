@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-884d746d735c
+  - type: executable_for
+    from: SYM-plugins-cli-test-cli-check-run
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:41:28.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9172f1f74d63

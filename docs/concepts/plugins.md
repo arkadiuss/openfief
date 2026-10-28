@@ -5,6 +5,7 @@ covers:
   - internal/plugins/*.go
   - internal/plugins/app/**
   - internal/plugins/catalog/**
+  - internal/plugins/cli/**
   - proto/openfief/connector/**
   - sdk/go/openfief/**
   - sdk/go/gen/openfief/connector/**
@@ -203,7 +204,55 @@ The operator publishes every running plugin's egress allow-list in the ConfigMap
 
 ### Installing with the CLI
 
-The owner installs and uninstalls plugins with the `openfief` command-line tool and their own kubeconfig (D-46, D-58). Its decisions are pure functions in [install.go](../../internal/plugins/install.go):
+The owner installs and uninstalls plugins with the `openfief` command-line tool and their own kubeconfig (D-46, D-58):
+
+```
+openfief plugin install <catalog-name|image@sha256:...> [--name NAME] [--config FILE]
+                        [--trusted-signers FILE] [--yes] [--print]
+openfief plugin uninstall <instance> [--yes]
+openfief plugin list
+```
+
+Every command also takes `--kubeconfig` and `--context`. An install prints what it will apply and asks before applying it:
+
+```
+Instance:     nbp
+Image:        ghcr.io/arkadiuss/openfief/nbp-fx@sha256:4ef5…
+Trust:        unverified: signed by trusted signer openfief-ci (OpenFiefCI, …images.yml@refs/heads/main …); the catalog does not pin this image
+
+It requests, and the PluginGrant will approve, exactly:
+  Capabilities: connector
+  Egress hosts: api.nbp.pl:443
+  Secrets:      none
+  Data tiers:   none
+  Config:       start: string
+                no other keys
+
+Config given: none
+Install nbp? [y/N]
+```
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant O as Owner
+  participant C as openfief CLI
+  participant R as Registry
+  participant K as Kubernetes API (owner's kubeconfig)
+  participant Op as Operator
+  O->>C: plugin install nbp-fx@sha256:…
+  C->>K: read ConfigMap openfief-trusted-signers
+  C->>R: referrers, cosign bundles, image config
+  C->>C: sigstore-go verifies offline, TrustPolicy.Decide, config checked against its schema
+  C->>O: instance, trust, requested permissions
+  O->>C: y
+  C->>K: create Plugin, then PluginGrant
+  K-->>Op: watch event
+  Op->>R: verifies the image again (D-56)
+  Op->>K: workload, allow-list entry
+```
+
+The pieces, from the inside out. The decisions are pure functions in [install.go](../../internal/plugins/install.go):
 
 - **What to install.** `ResolveInstallSource` takes either a catalog entry's name or an image reference. An argument containing `/`, `:` or `@` is an image reference and must be pinned by digest, so a tag is refused (D-17). An image whose digest the catalog pins resolves to that entry even from a mirror, as the trust check does (D-44). A name that several catalog entries share, one per reviewed version, is refused with the list of their images, since which version a bare name means is not decided.
 - **The instance name.** Each install is a named instance (D-48). Without `--name`, `DefaultInstanceName` uses the catalog entry's name, or else the last path component of the image's repository; when neither is a valid name of at most 56 characters, the owner must give one.
@@ -211,6 +260,12 @@ The owner installs and uninstalls plugins with the `openfief` command-line tool 
 - **Which Secrets go.** `SecretsToDelete` takes the Secrets an uninstalled instance's manifest and grant name, and keeps any that another installed instance still names: Secret names come from the manifest, so instances of one image share them (see [Decisions](#decisions)).
 
 The use cases in [app/install.go](../../internal/plugins/app/install.go) put these together around two ports. `Installer.Prepare` resolves the argument, has an `ImageInspector` read the image's signatures and signed manifest label, and lets the same `TrustPolicy` the operator uses decide (D-56): an image the operator would never deploy is refused with `ErrNotTrusted` before anything is shown (D-57). It then checks the config against the manifest's JSON Schema and returns a `Proposal`: the `Plugin`, the grant, and the trust decision with the signer that earned it. Nothing changes until the owner confirms and `Install` hands the proposal to the `InstanceStore`, which refuses a name that already has a `Plugin` or a grant: an upgrade is the owner's own edit (D-47). `PlanUninstall` finds the instance and its Secrets, and `Uninstall` asks the store to delete the grant, the `Plugin` and the Secrets no other instance names. Nothing in an uninstall reaches the ledger, so the data the instance brought in stays (D-18, D-58).
+
+The command line itself is [internal/plugins/cli](../../internal/plugins/cli/cli.go). `Run` parses the arguments (flags may come before or after the argument), `RenderProposal` and `RenderUninstallPlan` describe what will change, and nothing changes unless the owner answers `y` or `yes` or passed `--yes`; any other answer, or no input at all, aborts. A config property is summarized by its type, its allowed values or `any`, and whether it is required; `--print` shows the full schema. `WriteInstances` writes `plugin list` as a table of each instance's image, the reason of its `SignatureVerified` condition (`Verified` or `SignedByTrustedSigner`), its `Ready` status, whether a grant exists and whether anything waits for approval.
+
+What it trusts is exactly what the operator trusts (D-45, D-56): OpenFief's CI, the embedded catalog's publishers, and the owner's signers, read from the `openfief-trusted-signers` ConfigMap with the owner's kubeconfig, or from a `--trusted-signers` file. With `--print` the CLI doesn't contact the cluster at all: it writes the summary to standard error and the `Plugin` and `PluginGrant` as one YAML stream to standard output, and trusts only OpenFief's CI and the catalog unless `--trusted-signers` names a file. The signature check is the operator's own `cosign.Verifier` on the bundled trust root, reading the registry anonymously. `cmd/openfief` wires it, `operator.ValidateConfig` and the [kube](operator.md#packages-and-binaries) adapter's `Instances` store into the command line's `Env`.
+
+Uninstalling deletes the `PluginGrant` first, so the operator stops the plugin at once, then the `Plugin`: the garbage collector removes the workload objects it owns, and the operator's reconcile of a deleted `Plugin` drops its allow-list key ([Operator](operator.md)). The CLI then deletes the Secrets no other instance names. It never creates Secrets: the summary lists the ones the owner has to create (D-29).
 
 ### The connector contract
 
@@ -286,11 +341,13 @@ Implemented, fully or in the part named:
 - **D-43** (part) One catalog file, embedded in the operator; still empty.
 - **D-44** Catalog entries pin a digest and the publisher's identity.
 - **D-45** Three signer kinds: OpenFief CI, catalog publishers, owner signers.
+- **D-46** The `openfief` CLI verifies, shows the request, and applies or prints the `Plugin` and an exactly matching grant.
 - **D-47** Upgrades happen only when the owner edits.
 - **D-48** (part) Every instance keyed by its own name, except Secrets.
 - **D-49** (part) Connector contract: the core calls `Sync` and `ImportFile`.
 - **D-56** (part) Operator verifies offline; status tells verified from only signed.
 - **D-57** No setting deploys an image the policy refuses.
+- **D-58** (part) Uninstall deletes the grant, the `Plugin` (and so the workload and allow-list entry) and unshared Secrets, and keeps the ledger data; the data isn't marked yet.
 - **D-59** Only the core reaches a plugin; the SDK verifies its TokenRequest token with the keys the operator publishes.
 - **D-63** (part) Separate egress token, rebuilt into the proxy URL per request.
 - **D-5** Contracts and Go SDK licensed Apache-2.0.
@@ -339,6 +396,9 @@ Run `task test` from the repository root; it tests both Go modules, the core and
 | An install requests the signed manifest and grants exactly that; names the CRD refuses are refused | `TestPlanInstall`, `TestPlanInstallRefuses` | REQ-plugins-cli-install-plan |
 | An uninstall keeps Secrets another instance still names | `TestSecretsToDelete` | REQ-plugins-cli-uninstall-secrets |
 | An install is verified with the operator's trust policy and refused when it would never deploy, when the schema rejects its config or when the name exists; uninstall keeps shared Secrets; list sorts by name | [app/install_test.go](../../internal/plugins/app/install_test.go): `TestInstallerPrepare`, `TestInstall`, `TestUninstall` | REQ-plugins-cli-install-verifies, REQ-plugins-cli-uninstall, REQ-plugins-cli-list |
+| The summary shows trust, every requested permission and the config properties; uninstall plans and the list table read as intended | [cli/render_test.go](../../internal/plugins/cli/render_test.go): `TestRenderProposal`, `TestRenderProposalWithoutPermissions`, `TestRenderUninstallPlan`, `TestWriteInstances` | REQ-plugins-cli-permission-summary |
+| Nothing changes without `y`, `yes` or `--yes`; `--print` never contacts the cluster; signers from the cluster or a file | [cli/cli_test.go](../../internal/plugins/cli/cli_test.go): `TestRun` | REQ-plugins-cli-confirmation, REQ-plugins-cli-owner-signers, REQ-plugins-cli-print-resources |
+| The binary verifies a key-signed cosign bundle in a registry with the operator's verifier before installing, and refuses unsigned and untrusted images | [cmd/openfief/main_test.go](../../cmd/openfief/main_test.go): `TestInstallVerifiesSignatures`, `TestPrint`, `TestInstallListUninstall` | REQ-plugins-cli-install-verifies |
 | The embedded catalog loads | [catalog/catalog_test.go](../../internal/plugins/catalog/catalog_test.go): `TestLoad` | REQ-plugins-catalog-in-repo |
 | The manifest label parses strictly and must equal the declared manifest as sets | [manifest_label_test.go](../../internal/plugins/manifest_label_test.go): `TestParseManifestLabel`, `TestManifestEqual` | REQ-plugins-manifest-label-match, REQ-plugins-manifest-in-image |
 
@@ -348,11 +408,12 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 
 - **Verified plugins (D-43, D-44).** The catalog file exists but lists no plugin, so every image that runs today is unverified.
 - **Showing trust (D-56).** The `SignatureVerified` condition tells verified from only signed, but there is no UI yet to show it.
-- **The `openfief` CLI (D-46).** There is no `cmd/openfief`; `Plugin` and `PluginGrant` are applied by hand.
+- **Packaging the CLI.** `cmd/openfief` builds with `go build ./cmd/openfief`; no release step ships the binary yet, and `plugin install` can't upgrade an installed instance (D-47 leaves upgrades to the owner's own edit).
 - **More contracts and SDKs (D-11).** Only the connector contract exists: no view contract (P-9 outlines one, but it is a proposal) and no TypeScript SDK.
 - **First-party plugins in the catalog (D-43).** `nbp-fx`, `ibkr-flex` and `eodhd` are built and signed by CI but not in the catalog, so they run as signed by a trusted signer, not verified.
 - **The core naming what to price (D-22).** `eodhd` fetches the instruments its config lists; the core doesn't tell a market-data connector which instruments are held or which indices the model portfolio targets.
 - **One Secret per IBKR instance (D-48).** `ibkr-flex`'s manifest names one Secret, `ibkr-flex-credentials`, so two instances of it, one per IBKR account, read the same credentials (see [Decisions](#decisions)).
 - **Core side of plugin identity (D-27).** Plugins get `openfief-core` tokens and the SDK sends them, but nothing in the core verifies them yet.
-- **Uninstall (D-58).** Deleting a `Plugin` removes its objects by garbage collection and drops its allow-list entry. Deleting its grant and Secrets, and marking its data as coming from a removed instance, are not built.
+- **Marking a removed instance's data (D-58).** `openfief plugin uninstall` deletes the workload, grant, Secrets and allow-list entry and leaves the ledger alone, but the core doesn't mark the data as coming from a removed instance: an uninstalled instance is only no longer listed, so it is no longer synced (see [Ingest](ingest.md)).
+- **One Secret per instance on uninstall (D-48, D-58).** A Secret another installed instance names is kept, because instances of one image share Secret names.
 - **Data tiers.** Carried from manifest to workload but enforced nowhere (P-33 is undecided).

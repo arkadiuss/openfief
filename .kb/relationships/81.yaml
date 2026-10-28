@@ -139,3 +139,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49e95d8971df
+  - type: implements
+    from: SYM-cmd-openfief-new-env
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:38:36.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd0d2d972259
+  - type: covered_by
+    from: SYM-cmd-openfief-new-env
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:38:36.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72c9da1768df

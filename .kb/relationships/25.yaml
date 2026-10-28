@@ -279,3 +279,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4535ef2f6cb
+  - type: implements
+    from: SYM-plugins-cosign-raw-manifest
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:39:32.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7c806998a30
+  - type: covered_by
+    from: SYM-plugins-cosign-raw-manifest
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:39:32.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a73b433d9586
