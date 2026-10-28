@@ -202,3 +202,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c035edfdceb
+  - type: implements
+    from: SYM-views-pb-lot
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:12:52.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb0a34cf0e39
+  - type: covered_by
+    from: SYM-views-pb-lot
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:12:52.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb938e77ff4e
+  - type: implements
+    from: SYM-views-pb-get-valuation-status-request-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:36:35.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c1b336e80c0
+  - type: covered_by
+    from: SYM-views-pb-get-valuation-status-request-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:36:35.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68903f8d1be7

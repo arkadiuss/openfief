@@ -125,3 +125,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a62670598045
+  - type: implements
+    from: SYM-views-pb-transaction-get-kind
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:11:11.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67152a75611e
+  - type: covered_by
+    from: SYM-views-pb-transaction-get-kind
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:11:11.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-999ad20876ec
+  - type: implements
+    from: SYM-views-pb-assertion-check-get-status
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:15:52.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1995011ad2f0
+  - type: covered_by
+    from: SYM-views-pb-assertion-check-get-status
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:15:52.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81672a870372
+  - type: implements
+    from: SYM-views-pb-list-accounts-response-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:23:26.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41c44a918c8d
+  - type: covered_by
+    from: SYM-views-pb-list-accounts-response-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:23:26.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a22d287ca92e
+  - type: implements
+    from: SYM-views-pb-list-lots-response-get-lots
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:30:29.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a3b97bfb983
+  - type: covered_by
+    from: SYM-views-pb-list-lots-response-get-lots
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:30:29.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4df40899b42f

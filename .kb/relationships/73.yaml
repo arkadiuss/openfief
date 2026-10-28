@@ -125,3 +125,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25f0d5ff4026
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-instrument
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:53:08.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1ff23ffc989
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-instrument
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:53:08.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6567755dbf16
+  - type: implements
+    from: SYM-views-pb-instrument-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:04:33.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e39634c96fc
+  - type: covered_by
+    from: SYM-views-pb-instrument-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:04:33.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3148c5b6f073
+  - type: implements
+    from: SYM-views-pb-list-lots-request-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:29:23.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5ff0a085e9c
+  - type: covered_by
+    from: SYM-views-pb-list-lots-request-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:29:23.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f936f1b3d348

@@ -209,3 +209,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4529c669cb04
+  - type: implements
+    from: SYM-views-pb-allocation-dimension
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:02:37.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-838ea3171fe7
+  - type: covered_by
+    from: SYM-views-pb-allocation-dimension
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:02:37.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-591efce40191
+  - type: implements
+    from: SYM-views-pb-transaction-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:10:12.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b6eb8a8eee8
+  - type: covered_by
+    from: SYM-views-pb-transaction-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:10:12.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d9bc51cecec
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:51:19.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6cb91bdc5a5
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:51:19.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec33f54c2e08

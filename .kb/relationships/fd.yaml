@@ -111,3 +111,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ab578561c19
+  - type: implements
+    from: SYM-views-pb-list-transactions-request-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:26:16.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ca00165c539
+  - type: covered_by
+    from: SYM-views-pb-list-transactions-request-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:26:16.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e9696f8c1af
+  - type: implements
+    from: SYM-views-pb-list-assertion-checks-request-get-account-id
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:32:43.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab539f94f765
+  - type: covered_by
+    from: SYM-views-pb-list-assertion-checks-request-get-account-id
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:32:43.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edb22157c5d2

@@ -90,3 +90,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-135a50dbafb9
+  - type: implements
+    from: SYM-views-pb-money-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:03:43.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e957ee0decb
+  - type: covered_by
+    from: SYM-views-pb-money-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:03:43.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e6b54c9ea62
+  - type: implements
+    from: SYM-views-pb-get-valuation-status-response-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:37:30.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c10e1d37b702
+  - type: covered_by
+    from: SYM-views-pb-get-valuation-status-response-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:37:30.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18966ac9cf7e

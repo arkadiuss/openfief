@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1188264846cb
+  - type: implements
+    from: SYM-views-pb-get-allocation-request-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:42:47.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dce0119cba3
+  - type: covered_by
+    from: SYM-views-pb-get-allocation-request-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:42:47.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2645e35b52f

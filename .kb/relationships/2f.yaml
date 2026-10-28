@@ -132,3 +132,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74362c984b53
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-cur
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:52:49.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fb21a5c10d4
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-cur
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:52:49.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f076d9d9a47
+  - type: implements
+    from: SYM-views-pb-money-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:03:37.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-517fab3404dd
+  - type: covered_by
+    from: SYM-views-pb-money-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:03:37.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f8f8707593e
+  - type: implements
+    from: SYM-views-pb-instrument-get-symbol
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:05:01.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5439811508d5
+  - type: covered_by
+    from: SYM-views-pb-instrument-get-symbol
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:05:01.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd2f9a9b9d53
+  - type: implements
+    from: SYM-views-pb-list-account-valuations-response-get-reporting-currency
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:35:46.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd9bf0faff1d
+  - type: covered_by
+    from: SYM-views-pb-list-account-valuations-response-get-reporting-currency
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:35:46.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cb0b508890f

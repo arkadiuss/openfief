@@ -97,3 +97,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bdd4c08a145
+  - type: executable_for
+    from: SYM-views-connectapi-test-connect-get
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:47:56.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-063b280a35a6
+  - type: implements
+    from: SYM-views-pb-money-get-amount
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:03:58.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14e9a07d5c82
+  - type: covered_by
+    from: SYM-views-pb-money-get-amount
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:03:58.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d08d6cbb0155
+  - type: implements
+    from: SYM-views-pb-valuation-get-value
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:16:42.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d97bd92ec6f
+  - type: covered_by
+    from: SYM-views-pb-valuation-get-value
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:16:42.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2438f8e8336a
+  - type: implements
+    from: SYM-views-pb-list-lots-response-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:30:00.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db4929870724
+  - type: covered_by
+    from: SYM-views-pb-list-lots-response-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:30:00.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbce9316d081

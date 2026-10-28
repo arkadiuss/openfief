@@ -125,3 +125,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b399ba404c4
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-ledger-accounts
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:50:48.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-698c3bc2753d
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-ledger-accounts
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:50:48.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52571d6f305d
+  - type: implements
+    from: SYM-views-pb-assertion-status-enum
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:01:29.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f46f955065d3
+  - type: covered_by
+    from: SYM-views-pb-assertion-status-enum
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:01:29.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2279c2867cb5
+  - type: implements
+    from: SYM-views-pb-list-transactions-response-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:27:04.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5fa93b3be85
+  - type: covered_by
+    from: SYM-views-pb-list-transactions-response-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:27:04.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3adf6e646caa
+  - type: implements
+    from: SYM-views-pb-get-allocation-request-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:43:17.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f906437bc274
+  - type: covered_by
+    from: SYM-views-pb-get-allocation-request-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:43:17.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5e73a687130

@@ -118,3 +118,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-811360fc2576
+  - type: implements
+    from: SYM-views-connectapi-pb-sleeve
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:49:03.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4d09360b37c
+  - type: covered_by
+    from: SYM-views-connectapi-pb-sleeve
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:49:03.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96f737938133
+  - type: implements
+    from: SYM-views-pb-list-holdings-response-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:28:37.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aac8ff84be48
+  - type: covered_by
+    from: SYM-views-pb-list-holdings-response-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:28:37.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a09d971348f2
+  - type: implements
+    from: SYM-views-pb-list-account-valuations-request-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:33:43.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46c13c724a28
+  - type: covered_by
+    from: SYM-views-pb-list-account-valuations-request-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:33:43.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d76af7d6973

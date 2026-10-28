@@ -167,3 +167,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3bbef547129e
+  - type: implements
+    from: SYM-views-pb-list-lots-request-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:29:36.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83c22ff8edbc
+  - type: covered_by
+    from: SYM-views-pb-list-lots-request-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:29:36.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20b774266a02

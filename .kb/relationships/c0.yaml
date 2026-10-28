@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd6d9a2c13d0
+  - type: implements
+    from: SYM-views-pb-list-sleeves-response-get-sleeves
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:22:13.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e402e70c2ae4
+  - type: covered_by
+    from: SYM-views-pb-list-sleeves-response-get-sleeves
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:22:13.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd069a1b26e3

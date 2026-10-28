@@ -209,3 +209,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bbc82cc5716
+  - type: implements
+    from: SYM-views-pb-assertion-status-number
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:01:55.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54a32b9c7b98
+  - type: covered_by
+    from: SYM-views-pb-assertion-status-number
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:01:55.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b573eb8d532e
+  - type: implements
+    from: SYM-views-pb-list-sleeves-response-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:22:06.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5e6c11eaa97
+  - type: covered_by
+    from: SYM-views-pb-list-sleeves-response-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:22:06.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d196227ff25f

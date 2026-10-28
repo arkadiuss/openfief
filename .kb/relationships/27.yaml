@@ -104,3 +104,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9fa2da54c3a6
+  - type: implements
+    from: SYM-views-pb-instrument
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:04:11.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9789c2aa6586
+  - type: covered_by
+    from: SYM-views-pb-instrument
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:04:11.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3db710c90e24
+  - type: implements
+    from: SYM-views-pb-list-transactions-request-get-page-token
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:26:42.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21defe51e832
+  - type: covered_by
+    from: SYM-views-pb-list-transactions-request-get-page-token
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:26:42.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2571b40b85e
+  - type: implements
+    from: SYM-views-pb-list-lots-request-get-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:29:44.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e546b193a9c
+  - type: covered_by
+    from: SYM-views-pb-list-lots-request-get-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:29:44.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-004fc07fd0f9
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client-impl
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:51:30.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d3dffc5f9b4
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client-impl
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:51:30.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bac40baa3a8f

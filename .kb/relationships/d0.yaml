@@ -195,3 +195,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a57212fe7101
+  - type: implements
+    from: SYM-views-pb-allocation-dimension-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:02:46.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28b92a27e09e
+  - type: covered_by
+    from: SYM-views-pb-allocation-dimension-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:02:46.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8d54ffe0bc3
+  - type: implements
+    from: SYM-views-pb-account-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:06:34.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0cc2fcd8b43
+  - type: covered_by
+    from: SYM-views-pb-account-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:06:34.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aef891095bd
+  - type: implements
+    from: SYM-views-pb-list-accounts-response-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:23:34.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76678692764b
+  - type: covered_by
+    from: SYM-views-pb-list-accounts-response-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:23:34.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f61a92f7ba69

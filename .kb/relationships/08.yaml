@@ -132,3 +132,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-542be81d1ad4
+  - type: implements
+    from: SYM-views-connectapi-with-request-i-ds
+    to: REQ-views-api-logs
+    created_at: 2026-10-28T08:53:48.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15101054e86b
+  - type: covered_by
+    from: SYM-views-connectapi-with-request-i-ds
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:53:48.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2778962f2d1c
+  - type: implements
+    from: SYM-views-pb-account-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:06:26.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0788b2760476
+  - type: covered_by
+    from: SYM-views-pb-account-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:06:26.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-839297e68c2d
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-accounts
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:53:40.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15f2be325bfd
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-accounts
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:53:40.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e227c76e5a

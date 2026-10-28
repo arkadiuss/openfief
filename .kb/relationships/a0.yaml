@@ -146,3 +146,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ec1e0377344
+  - type: implements
+    from: SYM-views-pb-allocation-dimension-enum
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:02:41.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c269f9bbe69
+  - type: covered_by
+    from: SYM-views-pb-allocation-dimension-enum
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:02:41.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53c73d6327b0
+  - type: implements
+    from: SYM-views-pb-get-valuation-status-request-get-account-id
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:36:45.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c795cf419ab
+  - type: covered_by
+    from: SYM-views-pb-get-valuation-status-request-get-account-id
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:36:45.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b6b6afbe53f

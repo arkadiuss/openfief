@@ -132,3 +132,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a3f51eb7e7f
+  - type: implements
+    from: SYM-views-pb-transaction-kind
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:00:31.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d7d928a700a
+  - type: covered_by
+    from: SYM-views-pb-transaction-kind
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:00:31.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fea3c12d081

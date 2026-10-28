@@ -4,6 +4,9 @@ version: v2
 clean: true
 managed:
   enabled: true
+  # googleapis keeps its own go_package (google.golang.org/genproto/googleapis/api/annotations).
+  disable:
+    - module: buf.build/googleapis/googleapis
   override:
     - file_option: go_package_prefix
       value: github.com/arkadiuss/openfief/sdk/go/gen
@@ -16,3 +19,14 @@ plugins:
   - local: protoc-gen-connect-go
     out: sdk/go/gen
     opt: paths=source_relative
+  # The read API's OpenAPI document, generated from the same definitions as its Connect and REST server (D-50).
+  - local: protoc-gen-connect-openapi
+    out: gen/openapi
+    strategy: all
+    opt:
+      - path=openfief/views/v1/read_service.openapi.yaml
+      - base=proto/openfief/views/v1/read_service.openapi-base.yaml
+      - only-googleapi-http
+      - short-service-tags
+      - services=openfief.views.v1.ReadService
+      - trim-unused-types

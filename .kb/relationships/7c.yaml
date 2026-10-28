@@ -160,3 +160,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db46be88d89e
+  - type: implements
+    from: SYM-views-pb-list-valuation-totals-response-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:39:26.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a60a657ebe0
+  - type: covered_by
+    from: SYM-views-pb-list-valuation-totals-response-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:39:26.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c27079ff88a

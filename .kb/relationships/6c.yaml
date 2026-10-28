@@ -251,3 +251,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0757d9c3ac9
+  - type: implements
+    from: SYM-views-pb-sleeve-role-type
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:59:05.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48e7b2ee95f0
+  - type: covered_by
+    from: SYM-views-pb-sleeve-role-type
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:59:05.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eeb6779f2b7
+  - type: implements
+    from: SYM-views-pb-unvalued-holding-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:20:12.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e593bdfac0cc
+  - type: covered_by
+    from: SYM-views-pb-unvalued-holding-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:20:12.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d9a470b4df8
+  - type: implements
+    from: SYM-views-pb-list-valuation-totals-response-get-reporting-currency
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:40:19.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b766f95d449d
+  - type: covered_by
+    from: SYM-views-pb-list-valuation-totals-response-get-reporting-currency
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:40:19.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebb9f383bf87

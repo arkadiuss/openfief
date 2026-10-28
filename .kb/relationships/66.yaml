@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80b0c5ed4509
+  - id: rel-3a39397d29c2
+    type: implements
+    from: SYM-views-pb-list-lots-request
+    to: REQ-views-api-contract
+    created_at: "2026-10-28T09:29:14.210Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-views-pb-list-lots-request
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:29:14.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b75bf8325d6

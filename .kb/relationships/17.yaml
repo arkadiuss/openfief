@@ -125,3 +125,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5875ad46b215
+  - type: implements
+    from: SYM-views-pb-get-account-request
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:24:02.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f3ce892129c
+  - type: covered_by
+    from: SYM-views-pb-get-account-request
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:24:02.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d631566e1f56
+  - type: implements
+    from: SYM-views-pb-list-lots-request-get-account-id
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:29:40.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4efa3b13eb50
+  - type: covered_by
+    from: SYM-views-pb-list-lots-request-get-account-id
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:29:40.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa7d51d10ccd
+  - type: implements
+    from: SYM-views-pb-get-allocation-response-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:44:05.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75e09a7f8f6c
+  - type: covered_by
+    from: SYM-views-pb-get-allocation-response-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:44:05.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f98d34bc64f

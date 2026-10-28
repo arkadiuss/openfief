@@ -202,3 +202,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6e6f3e9befb
+  - type: executable_for
+    from: SYM-views-connectapi-test-open-api-is-read-only
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:56:17.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcf1a42b31c4
+  - type: implements
+    from: SYM-views-pb-instrument-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:04:27.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb1b52f5eb7c
+  - type: covered_by
+    from: SYM-views-pb-instrument-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:04:27.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca7dc6ba1273
+  - type: implements
+    from: SYM-views-pb-holding-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:12:23.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1a0f697d522
+  - type: covered_by
+    from: SYM-views-pb-holding-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:12:23.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bda96a0ad14c
+  - type: implements
+    from: SYM-views-pb-valuation-get-source
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:16:38.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc6d485c24eb
+  - type: covered_by
+    from: SYM-views-pb-valuation-get-source
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:16:38.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b47df58f12
+  - type: implements
+    from: SYM-views-pb-list-assertion-checks-response-get-checks
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:33:30.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9d7fee97800
+  - type: covered_by
+    from: SYM-views-pb-list-assertion-checks-response-get-checks
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:33:30.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c46cee2b4a41
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client-list-cash
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:52:16.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddbd3691dcb5
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client-list-cash
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:52:16.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d62ab92c24f4

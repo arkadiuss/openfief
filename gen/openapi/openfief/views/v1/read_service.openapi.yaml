@@ -1,0 +1,1103 @@
+openapi: 3.1.0
+info:
+  title: OpenFief read API
+  version: v1
+  description: >-
+    The read-only REST/JSON API over OpenFief's record (D-6, D-50), transcoded from the same protobuf definitions as its Connect service. Money is {amount, currency} with the amount as a decimal string; dates are YYYY-MM-DD. Every request needs a bearer token.
+  license:
+    name: Apache-2.0
+    identifier: Apache-2.0
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: A script token (D-27) or a plugin's projected ServiceAccount token.
+  schemas:
+    openfief.views.v1.Account:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        institution:
+          type: string
+          title: institution
+        name:
+          type: string
+          title: name
+        sleeve:
+          type: string
+          title: sleeve
+          description: The ID of the account's sleeve.
+      title: Account
+      additionalProperties: false
+      description: Account is one account at an institution. It belongs to one sleeve.
+    openfief.views.v1.AllocationDimension:
+      type: string
+      title: AllocationDimension
+      enum:
+        - ALLOCATION_DIMENSION_UNSPECIFIED
+        - ALLOCATION_DIMENSION_ASSET_CLASS
+        - ALLOCATION_DIMENSION_CURRENCY
+        - ALLOCATION_DIMENSION_INSTITUTION
+        - ALLOCATION_DIMENSION_SLEEVE
+      description: AllocationDimension is what an allocation groups by.
+    openfief.views.v1.AllocationGroup:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        valueReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: value_reporting
+      title: AllocationGroup
+      additionalProperties: false
+      description: |-
+        AllocationGroup is one group's value in the reporting currency. Its key is
+         an asset class (cash, treasury_bond, listed), a currency code, an
+         institution or a sleeve ID.
+    openfief.views.v1.AssertionCheck:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        book:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Book'
+          title: book
+        reported:
+          type: string
+          title: reported
+          description: A decimal string.
+        derived:
+          type: string
+          title: derived
+          description: A decimal string.
+        status:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AssertionStatus'
+          title: status
+      title: AssertionCheck
+      additionalProperties: false
+      description: |-
+        AssertionCheck is a balance an institution reported on a date with the
+         result of its latest check. Reported and derived are in the ledger
+         account's unit: an amount of its currency for cash, units for a holding.
+    openfief.views.v1.AssertionStatus:
+      type: string
+      title: AssertionStatus
+      enum:
+        - ASSERTION_STATUS_UNSPECIFIED
+        - ASSERTION_STATUS_MATCHED
+        - ASSERTION_STATUS_FLAGGED
+      description: AssertionStatus is the result of checking a balance assertion.
+    openfief.views.v1.Book:
+      type: object
+      properties:
+        kind:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.BookKind'
+          title: kind
+        currency:
+          type: string
+          title: currency
+          description: Set for every kind but a holding.
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+          description: Set for a holding only.
+      title: Book
+      additionalProperties: false
+      description: |-
+        Book is a ledger account inside an account: a holding names its
+         instrument, every other kind its currency.
+    openfief.views.v1.BookKind:
+      type: string
+      title: BookKind
+      enum:
+        - BOOK_KIND_UNSPECIFIED
+        - BOOK_KIND_CASH
+        - BOOK_KIND_HOLDING
+        - BOOK_KIND_FEE
+        - BOOK_KIND_WITHHOLDING_TAX
+        - BOOK_KIND_FX
+        - BOOK_KIND_EQUITY
+      description: BookKind is the kind of a ledger account inside an account.
+    openfief.views.v1.DateTotal:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        valueReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: value_reporting
+        byCurrency:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: by_currency
+      title: DateTotal
+      additionalProperties: false
+      description: |-
+        DateTotal is the sum of the valuations dated on one date, in the
+         reporting currency and per original currency, in currency order.
+    openfief.views.v1.GetAccountRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+      title: GetAccountRequest
+      additionalProperties: false
+    openfief.views.v1.GetAccountResponse:
+      type: object
+      properties:
+        account:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Account'
+          title: account
+      title: GetAccountResponse
+      additionalProperties: false
+    openfief.views.v1.GetAllocationRequest:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        by:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AllocationDimension'
+          title: by
+      title: GetAllocationRequest
+      additionalProperties: false
+    openfief.views.v1.GetAllocationResponse:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+        by:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AllocationDimension'
+          title: by
+        totalReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: total_reporting
+          description: The sum of all groups, in the reporting currency.
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.AllocationGroup'
+          title: groups
+          description: Largest value first, then by key.
+        unvalued:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.UnvaluedHolding'
+          title: unvalued
+      title: GetAllocationResponse
+      additionalProperties: false
+    openfief.views.v1.GetValuationStatusRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+      title: GetValuationStatusRequest
+      additionalProperties: false
+    openfief.views.v1.GetValuationStatusResponse:
+      type: object
+      properties:
+        status:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ValuationStatus'
+          title: status
+      title: GetValuationStatusResponse
+      additionalProperties: false
+    openfief.views.v1.Holding:
+      type: object
+      properties:
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+        quantity:
+          type: string
+          title: quantity
+          description: A decimal string.
+      title: Holding
+      additionalProperties: false
+      description: Holding is the quantity of one instrument held.
+    openfief.views.v1.Instrument:
+      type: object
+      properties:
+        isin:
+          type: string
+          title: isin
+        symbol:
+          type: string
+          title: symbol
+      title: Instrument
+      additionalProperties: false
+      description: 'Instrument is something that can be held: an ISIN plus a venue symbol.'
+    openfief.views.v1.ListAccountValuationsRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        from:
+          type: string
+          title: from
+          description: The first date of the range, YYYY-MM-DD.
+        to:
+          type: string
+          title: to
+          description: |-
+            The last date of the range, inclusive, YYYY-MM-DD; at most 3700 days
+             after from.
+      title: ListAccountValuationsRequest
+      additionalProperties: false
+    openfief.views.v1.ListAccountValuationsResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        from:
+          type: string
+          title: from
+        to:
+          type: string
+          title: to
+        valuations:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Valuation'
+          title: valuations
+          description: In date then instrument order.
+        totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.DateTotal'
+          title: totals
+          description: One per date that has valuations, in date order.
+        reportingCurrency:
+          type: string
+          title: reporting_currency
+          description: The currency of every value_reporting.
+      title: ListAccountValuationsResponse
+      additionalProperties: false
+    openfief.views.v1.ListAccountsRequest:
+      type: object
+      title: ListAccountsRequest
+      additionalProperties: false
+    openfief.views.v1.ListAccountsResponse:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Account'
+          title: accounts
+      title: ListAccountsResponse
+      additionalProperties: false
+    openfief.views.v1.ListAssertionChecksRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        status:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AssertionStatus'
+          title: status
+          description: Only checks with this status, such as flagged; unspecified for all.
+      title: ListAssertionChecksRequest
+      additionalProperties: false
+    openfief.views.v1.ListAssertionChecksResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.AssertionCheck'
+          title: checks
+      title: ListAssertionChecksResponse
+      additionalProperties: false
+    openfief.views.v1.ListCashRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+      title: ListCashRequest
+      additionalProperties: false
+    openfief.views.v1.ListCashResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        date:
+          type: string
+          title: date
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: balances
+      title: ListCashResponse
+      additionalProperties: false
+    openfief.views.v1.ListHoldingsRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+      title: ListHoldingsRequest
+      additionalProperties: false
+    openfief.views.v1.ListHoldingsResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        date:
+          type: string
+          title: date
+        holdings:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Holding'
+          title: holdings
+      title: ListHoldingsResponse
+      additionalProperties: false
+    openfief.views.v1.ListLotsRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+      title: ListLotsRequest
+      additionalProperties: false
+    openfief.views.v1.ListLotsResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        date:
+          type: string
+          title: date
+        lots:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Lot'
+          title: lots
+      title: ListLotsResponse
+      additionalProperties: false
+    openfief.views.v1.ListSleevesRequest:
+      type: object
+      title: ListSleevesRequest
+      additionalProperties: false
+    openfief.views.v1.ListSleevesResponse:
+      type: object
+      properties:
+        sleeves:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Sleeve'
+          title: sleeves
+      title: ListSleevesResponse
+      additionalProperties: false
+    openfief.views.v1.ListTransactionsRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        pageSize:
+          type: integer
+          title: page_size
+          format: int32
+          description: The most transactions to return, 1 to 500; 0 means 100.
+        pageToken:
+          type: string
+          title: page_token
+          description: The next_page_token of the previous page; empty for the first page.
+      title: ListTransactionsRequest
+      additionalProperties: false
+    openfief.views.v1.ListTransactionsResponse:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Transaction'
+          title: transactions
+        nextPageToken:
+          type: string
+          title: next_page_token
+          description: Pass as page_token to get the next page; empty on the last page.
+      title: ListTransactionsResponse
+      additionalProperties: false
+    openfief.views.v1.ListValuationStatusesRequest:
+      type: object
+      title: ListValuationStatusesRequest
+      additionalProperties: false
+    openfief.views.v1.ListValuationStatusesResponse:
+      type: object
+      properties:
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.ValuationStatus'
+          title: statuses
+      title: ListValuationStatusesResponse
+      additionalProperties: false
+    openfief.views.v1.ListValuationTotalsRequest:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: The first date of the range, YYYY-MM-DD.
+        to:
+          type: string
+          title: to
+          description: |-
+            The last date of the range, inclusive, YYYY-MM-DD; at most 3700 days
+             after from.
+      title: ListValuationTotalsRequest
+      additionalProperties: false
+    openfief.views.v1.ListValuationTotalsResponse:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+        to:
+          type: string
+          title: to
+        totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.DateTotal'
+          title: totals
+          description: One per date that has valuations, in date order.
+        reportingCurrency:
+          type: string
+          title: reporting_currency
+          description: The currency of every value_reporting.
+      title: ListValuationTotalsResponse
+      additionalProperties: false
+    openfief.views.v1.Lot:
+      type: object
+      properties:
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+        opened:
+          type: string
+          title: opened
+          description: YYYY-MM-DD.
+        quantity:
+          type: string
+          title: quantity
+          description: A decimal string.
+        cost:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: cost
+        opening:
+          type: boolean
+          title: opening
+        originSource:
+          type: string
+          title: origin_source
+          description: The key of the transaction that opened the lot.
+        originExternalId:
+          type: string
+          title: origin_external_id
+      title: Lot
+      additionalProperties: false
+      description: |-
+        Lot is an open tax lot. An opening lot was seeded at go-live from what the
+         institution reported held.
+    openfief.views.v1.Money:
+      type: object
+      properties:
+        amount:
+          type: string
+          title: amount
+          description: The amount as a decimal string, such as "-1234.56". Never a number.
+        currency:
+          type: string
+          title: currency
+          description: The ISO 4217 alphabetic code, such as "PLN".
+      title: Money
+      additionalProperties: false
+      description: Money is an exact decimal amount in one currency.
+    openfief.views.v1.Posting:
+      type: object
+      properties:
+        book:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Book'
+          title: book
+        amount:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: amount
+        quantity:
+          type: string
+          title: quantity
+          description: |-
+            The units a posting to a holding moves, as a decimal string; empty for
+             any other ledger account.
+      title: Posting
+      additionalProperties: false
+      description: Posting is one leg of a transaction.
+    openfief.views.v1.Sleeve:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        name:
+          type: string
+          title: name
+        role:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.SleeveRole'
+          title: role
+      title: Sleeve
+      additionalProperties: false
+      description: Sleeve is a part of the portfolio with one role.
+    openfief.views.v1.SleeveRole:
+      type: string
+      title: SleeveRole
+      enum:
+        - SLEEVE_ROLE_UNSPECIFIED
+        - SLEEVE_ROLE_DEFENSIVE
+        - SLEEVE_ROLE_OFFENSIVE
+      description: SleeveRole is what a sleeve is for.
+    openfief.views.v1.Transaction:
+      type: object
+      properties:
+        source:
+          type: string
+          title: source
+        externalId:
+          type: string
+          title: external_id
+        kind:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.TransactionKind'
+          title: kind
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        lotOpened:
+          type: string
+          title: lot_opened
+          description: |-
+            The date an opening lot was acquired, YYYY-MM-DD; empty for any other
+             kind.
+        description:
+          type: string
+          title: description
+        postings:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Posting'
+          title: postings
+      title: Transaction
+      additionalProperties: false
+      description: |-
+        Transaction is the current version of one economic event, keyed by its
+         source and the institution's own ID.
+    openfief.views.v1.TransactionKind:
+      type: string
+      title: TransactionKind
+      enum:
+        - TRANSACTION_KIND_UNSPECIFIED
+        - TRANSACTION_KIND_BUY
+        - TRANSACTION_KIND_SELL
+        - TRANSACTION_KIND_DIVIDEND
+        - TRANSACTION_KIND_FEE
+        - TRANSACTION_KIND_FX_CONVERSION
+        - TRANSACTION_KIND_DEPOSIT
+        - TRANSACTION_KIND_WITHDRAWAL
+        - TRANSACTION_KIND_OPENING_LOT
+      description: TransactionKind is what kind of economic event a transaction is.
+    openfief.views.v1.UnvaluedHolding:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+        quantity:
+          type: string
+          title: quantity
+          description: A decimal string.
+      title: UnvaluedHolding
+      additionalProperties: false
+      description: |-
+        UnvaluedHolding is a holding with no stored valuation on the date asked
+         for, left out of the allocation.
+    openfief.views.v1.Valuation:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+        basis:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ValuationBasis'
+          title: basis
+        source:
+          type: string
+          title: source
+        value:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: value
+        valueReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: value_reporting
+      title: Valuation
+      additionalProperties: false
+      description: |-
+        Valuation is the stored value of a holding on a date, with its basis and
+         source, in its original currency and in the reporting currency.
+    openfief.views.v1.ValuationBasis:
+      type: string
+      title: ValuationBasis
+      enum:
+        - VALUATION_BASIS_UNSPECIFIED
+        - VALUATION_BASIS_MARKET
+        - VALUATION_BASIS_GROSS_ACCRUED
+        - VALUATION_BASIS_NET_IF_REDEEMED
+      description: ValuationBasis says which value of a holding a valuation is.
+    openfief.views.v1.ValuationStatus:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        valuedThrough:
+          type: string
+          title: valued_through
+          description: |-
+            The last date the account's valuations are complete for, YYYY-MM-DD;
+             empty until it has been valued.
+        pending:
+          type: boolean
+          title: pending
+          description: A revaluation is queued and not started.
+        running:
+          type: boolean
+          title: running
+          description: A revaluation is in progress.
+      title: ValuationStatus
+      additionalProperties: false
+      description: ValuationStatus says how current an account's stored valuations are.
+paths:
+  /v1/accounts:
+    get:
+      tags:
+        - ReadService
+      summary: ListAccounts
+      description: ListAccounts returns every account, in ID order.
+      operationId: openfief.views.v1.ReadService.ListAccounts
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListAccountsResponse'
+  /v1/accounts/{accountId}:
+    get:
+      tags:
+        - ReadService
+      summary: GetAccount
+      description: GetAccount returns one account.
+      operationId: openfief.views.v1.ReadService.GetAccount
+      parameters:
+        - name: accountId
+          in: path
+          description: The accountId path parameter.
+          required: true
+          schema:
+            type: string
+            title: account_id
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetAccountResponse'
+  /v1/accounts/{accountId}/balance-assertions:
+    get:
+      tags:
+        - ReadService
+      summary: ListAssertionChecks
+      description: |-
+        ListAssertionChecks returns an account's balance assertions with the
+         result of their latest check, in date then ledger account order. A
+         flagged check is an error for the owner to resolve.
+      operationId: openfief.views.v1.ReadService.ListAssertionChecks
+      parameters:
+        - name: accountId
+          in: path
+          description: The accountId path parameter.
+          required: true
+          schema:
+            type: string
+            title: account_id
+        - name: status
+          in: query
+          description: Only checks with this status, such as flagged; unspecified for all.
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/openfief.views.v1.AssertionStatus'
+            title: status
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListAssertionChecksResponse'
+  /v1/accounts/{accountId}/cash:
+    get:
+      tags:
+        - ReadService
+      summary: ListCash
+      description: |-
+        ListCash returns an account's non-zero cash at the end of a date, one
+         balance per currency, in currency order.
+      operationId: openfief.views.v1.ReadService.ListCash
+      parameters:
+        - name: accountId
+          in: path
+          description: The accountId path parameter.
+          required: true
+          schema:
+            type: string
+            title: account_id
+        - name: date
+          in: query
+          description: YYYY-MM-DD.
+          schema:
+            type: string
+            title: date
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListCashResponse'
+  /v1/accounts/{accountId}/holdings:
+    get:
+      tags:
+        - ReadService
+      summary: ListHoldings
+      description: |-
+        ListHoldings returns an account's non-zero holdings at the end of a date,
+         in ISIN then venue symbol order.
+      operationId: openfief.views.v1.ReadService.ListHoldings
+      parameters:
+        - name: accountId
+          in: path
+          description: The accountId path parameter.
+          required: true
+          schema:
+            type: string
+            title: account_id
+        - name: date
+          in: query
+          description: YYYY-MM-DD.
+          schema:
+            type: string
+            title: date
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListHoldingsResponse'
+  /v1/accounts/{accountId}/lots:
+    get:
+      tags:
+        - ReadService
+      summary: ListLots
+      description: |-
+        ListLots returns an account's open tax lots at the end of a date, per
+         instrument, oldest first.
+      operationId: openfief.views.v1.ReadService.ListLots
+      parameters:
+        - name: accountId
+          in: path
+          description: The accountId path parameter.
+          required: true
+          schema:
+            type: string
+            title: account_id
+        - name: date
+          in: query
+          description: YYYY-MM-DD.
+          schema:
+            type: string
+            title: date
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListLotsResponse'
+  /v1/accounts/{accountId}/transactions:
+    get:
+      tags:
+        - ReadService
+      summary: ListTransactions
+      description: |-
+        ListTransactions returns one page of the current version of each of an
+         account's transactions, in date then key order. Superseded versions are
+         left out.
+      operationId: openfief.views.v1.ReadService.ListTransactions
+      parameters:
+        - name: accountId
+          in: path
+          description: The accountId path parameter.
+          required: true
+          schema:
+            type: string
+            title: account_id
+        - name: pageSize
+          in: query
+          description: The most transactions to return, 1 to 500; 0 means 100.
+          schema:
+            type: integer
+            title: page_size
+            format: int32
+        - name: pageToken
+          in: query
+          description: The next_page_token of the previous page; empty for the first page.
+          schema:
+            type: string
+            title: page_token
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListTransactionsResponse'
+  /v1/accounts/{accountId}/valuation-status:
+    get:
+      tags:
+        - ReadService
+      summary: GetValuationStatus
+      description: |-
+        GetValuationStatus returns the date an account is valued through and
+         whether a revaluation is pending or running (D-36).
+      operationId: openfief.views.v1.ReadService.GetValuationStatus
+      parameters:
+        - name: accountId
+          in: path
+          description: The accountId path parameter.
+          required: true
+          schema:
+            type: string
+            title: account_id
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetValuationStatusResponse'
+  /v1/accounts/{accountId}/valuations:
+    get:
+      tags:
+        - ReadService
+      summary: ListAccountValuations
+      description: |-
+        ListAccountValuations returns an account's stored valuations in a date
+         range, with their totals per date.
+      operationId: openfief.views.v1.ReadService.ListAccountValuations
+      parameters:
+        - name: accountId
+          in: path
+          description: The accountId path parameter.
+          required: true
+          schema:
+            type: string
+            title: account_id
+        - name: from
+          in: query
+          description: The first date of the range, YYYY-MM-DD.
+          schema:
+            type: string
+            title: from
+        - name: to
+          in: query
+          description: |-
+            The last date of the range, inclusive, YYYY-MM-DD; at most 3700 days
+             after from.
+          schema:
+            type: string
+            title: to
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListAccountValuationsResponse'
+  /v1/allocation:
+    get:
+      tags:
+        - ReadService
+      summary: GetAllocation
+      description: |-
+        GetAllocation returns the portfolio's value on a date in the reporting
+         currency, split by asset class, currency, institution or sleeve (D-30).
+         Holdings count at their stored valuation on the date and cash at the FX
+         rate for the date; holdings without a valuation are listed as unvalued.
+      operationId: openfief.views.v1.ReadService.GetAllocation
+      parameters:
+        - name: date
+          in: query
+          description: YYYY-MM-DD.
+          schema:
+            type: string
+            title: date
+        - name: by
+          in: query
+          description: The by query parameter.
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/openfief.views.v1.AllocationDimension'
+            title: by
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetAllocationResponse'
+  /v1/sleeves:
+    get:
+      tags:
+        - ReadService
+      summary: ListSleeves
+      description: ListSleeves returns every sleeve, in ID order.
+      operationId: openfief.views.v1.ReadService.ListSleeves
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListSleevesResponse'
+  /v1/valuation-status:
+    get:
+      tags:
+        - ReadService
+      summary: ListValuationStatuses
+      description: |-
+        ListValuationStatuses returns every account's valuation status, in
+         account ID order.
+      operationId: openfief.views.v1.ReadService.ListValuationStatuses
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListValuationStatusesResponse'
+  /v1/valuations:
+    get:
+      tags:
+        - ReadService
+      summary: ListValuationTotals
+      description: |-
+        ListValuationTotals returns the whole portfolio's value per date in a
+         date range, summed over every account's stored valuations.
+      operationId: openfief.views.v1.ReadService.ListValuationTotals
+      parameters:
+        - name: from
+          in: query
+          description: The first date of the range, YYYY-MM-DD.
+          schema:
+            type: string
+            title: from
+        - name: to
+          in: query
+          description: |-
+            The last date of the range, inclusive, YYYY-MM-DD; at most 3700 days
+             after from.
+          schema:
+            type: string
+            title: to
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListValuationTotalsResponse'
+tags:
+  - name: ReadService
+    description: |-
+      ReadService reads the record: sleeves, accounts, transactions, holdings,
+       tax lots, cash, balance assertions, valuations and the allocation.
