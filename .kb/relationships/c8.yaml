@@ -34,3 +34,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b21e3e036dff
+  - type: constrains
+    from: REQ-decision-d34-2-exact-remaining-cost
+    to: FACT-SUBJECT-2DE79D898756870D
+    created_at: 2026-10-28T06:28:24.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0b725fb224e
+  - type: requires_property
+    from: REQ-decision-d34-2-exact-remaining-cost
+    to: FACT-PROP-8737F3C0AB61B72D
+    created_at: 2026-10-28T06:28:24.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b4b7e36e6c3

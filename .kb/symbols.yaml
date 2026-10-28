@@ -1756,7 +1756,11 @@ symbols:
       recorded_at: 2026-10-28T05:24:08.246Z
     relationships:
       - type: covered_by
+        target: TEST-pl-official
+      - type: covered_by
         target: TEST-pl-value
+      - type: implements
+        target: REQ-decision-d37-1-follow-issuer-tables
       - type: implements
         target: REQ-pl-bond-accrual
       - type: implements
@@ -1810,7 +1814,11 @@ symbols:
       recorded_at: 2026-10-28T05:24:25.758Z
     relationships:
       - type: covered_by
+        target: TEST-pl-official
+      - type: covered_by
         target: TEST-pl-value
+      - type: implements
+        target: REQ-decision-d37-2-tos-base-unrounded
       - type: implements
         target: REQ-pl-bond-accrual
   - id: SYM-pl-round-accrual
@@ -2085,6 +2093,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-pl-tax
+      - type: implements
+        target: REQ-decision-d37-3-belka-half-up
       - type: implements
         target: REQ-pl-belka-tax
       - type: implements
@@ -4442,6 +4452,8 @@ symbols:
       - type: covered_by
         target: TEST-ledger-account
       - type: implements
+        target: REQ-decision-d33-1-equity-per-currency
+      - type: implements
         target: REQ-ledger-posting-ledger-account
   - id: SYM-ledger-book-validate
     title: Book.Validate
@@ -4649,6 +4661,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-8C3982CF80A9A4DF
       - type: implements
+        target: REQ-decision-d33-2-equity-counterpart
+      - type: implements
         target: REQ-ledger-event-postings
   - id: SYM-ledger-new-withdrawal
     title: NewWithdrawal
@@ -4663,6 +4677,8 @@ symbols:
         target: TEST-ledger-events
       - type: implements
         target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-decision-d33-2-equity-counterpart
       - type: implements
         target: REQ-ledger-event-postings
   - id: SYM-ledger-new-opening-lot
@@ -4679,6 +4695,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-3C2A493C661181C7
       - type: implements
+        target: REQ-decision-d33-2-equity-counterpart
+      - type: implements
         target: REQ-ledger-opening-lot-entry
   - id: SYM-ledger-fee-postings
     title: feePostings
@@ -4693,6 +4711,8 @@ symbols:
         target: TEST-ledger-events
       - type: implements
         target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-decision-d34-3-fees-not-in-lot-cost
       - type: implements
         target: REQ-ledger-event-postings
   - id: SYM-ledger-need-positive
@@ -4907,6 +4927,8 @@ symbols:
       - type: covered_by
         target: TEST-ledger-instrument
       - type: implements
+        target: REQ-decision-d35-1-instrument-isin-symbol
+      - type: implements
         target: REQ-ledger-isin
   - id: SYM-ledger-isin-digits
     title: isinDigits
@@ -4998,6 +5020,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-decision-d35-1-instrument-isin-symbol
       - type: implements
         target: REQ-ledger-isin
   - id: SYM-ledger-instrument-string
@@ -5681,6 +5705,8 @@ symbols:
       - type: covered_by
         target: TEST-ledger-lot
       - type: implements
+        target: REQ-decision-d34-2-exact-remaining-cost
+      - type: implements
         target: REQ-ledger-fifo
       - type: implements
         target: REQ-ledger-oversell
@@ -5695,6 +5721,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-lot
+      - type: implements
+        target: REQ-decision-d34-1-consumed-cost-rounding
       - type: implements
         target: REQ-ledger-lot-cost-split
   - id: SYM-ledger-sorted-lots
@@ -5725,6 +5753,8 @@ symbols:
         target: TEST-ledger-lot
       - type: implements
         target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-decision-d35-2-acquisitions-before-disposals
       - type: implements
         target: REQ-ledger-fifo
   - id: SYM-ledger-acquisitions

@@ -76,3 +76,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47c7f0bb510f
+  - type: validates
+    from: TEST-pl-tax
+    to: REQ-decision-d37-3-belka-half-up
+    created_at: 2026-10-28T06:42:06.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3cfa0ae32eb

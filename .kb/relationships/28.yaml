@@ -83,3 +83,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3627aa723df
+  - type: constrains
+    from: REQ-decision-d36-7-ui-valuation-status
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-28T06:30:01.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f74ad35c4606
+  - type: requires_property
+    from: REQ-decision-d36-7-ui-valuation-status
+    to: FACT-PROP-78A60F5961E7D837
+    created_at: 2026-10-28T06:30:01.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b99c104d35b5

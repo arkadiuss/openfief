@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3783210c4524
+  - type: constrains
+    from: REQ-decision-d36-4-river-job-queue
+    to: FACT-SUBJECT-201BF18D8A3B745A
+    created_at: 2026-10-28T06:29:33.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdfe6f3456dd
+  - type: requires_property
+    from: REQ-decision-d36-4-river-job-queue
+    to: FACT-PROP-74D4AA91BCC360D2
+    created_at: 2026-10-28T06:29:33.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b09683ec107

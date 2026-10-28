@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bf9f3febe45
+  - type: constrains
+    from: REQ-decision-d36-2-valuations-rebuildable
+    to: FACT-SUBJECT-633AD5BF26E03B1C
+    created_at: 2026-10-28T06:29:10.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-978b1bfcae32
+  - type: requires_property
+    from: REQ-decision-d36-2-valuations-rebuildable
+    to: FACT-PROP-20C72896D40BAF42
+    created_at: 2026-10-28T06:29:10.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-247c25dbb268

@@ -69,3 +69,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53d800956d68
+  - type: depends_on
+    from: REQ-ledger-lot-cost-split
+    to: REQ-decision-d34-1-consumed-cost-rounding
+    created_at: 2026-10-28T06:41:12.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f33b27e3d38c
+  - type: depends_on
+    from: REQ-ledger-lot-cost-split
+    to: REQ-decision-d34-2-exact-remaining-cost
+    created_at: 2026-10-28T06:41:12.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a01dc6f75e3
+  - type: validates
+    from: TEST-ledger-lot
+    to: REQ-decision-d34-1-consumed-cost-rounding
+    created_at: 2026-10-28T06:41:44.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d8bdf5a1575
+  - type: validates
+    from: TEST-ledger-lot
+    to: REQ-decision-d34-2-exact-remaining-cost
+    created_at: 2026-10-28T06:41:44.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b20575c81863
+  - type: validates
+    from: TEST-ledger-lot
+    to: REQ-decision-d35-2-acquisitions-before-disposals
+    created_at: 2026-10-28T06:41:44.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e2b69acb16b

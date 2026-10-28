@@ -20,3 +20,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-211555bd1034
+  - type: constrains
+    from: REQ-decision-d36-6-api-valuation-status
+    to: FACT-SUBJECT-05E6093FABAAD11C
+    created_at: 2026-10-28T06:29:52.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efd0841b169f
+  - type: requires_property
+    from: REQ-decision-d36-6-api-valuation-status
+    to: FACT-PROP-83384CB4ED0B72AC
+    created_at: 2026-10-28T06:29:52.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d80bda7c915

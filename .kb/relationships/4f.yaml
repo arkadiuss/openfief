@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-125c7aeb4cec
+  - type: constrains
+    from: REQ-decision-d37-2-tos-base-unrounded
+    to: FACT-SUBJECT-F735E9B48801B8D5
+    created_at: 2026-10-28T06:30:45.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db80cf83272e
+  - type: requires_property
+    from: REQ-decision-d37-2-tos-base-unrounded
+    to: FACT-PROP-6403F200D533A972
+    created_at: 2026-10-28T06:30:45.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd6a4aaffd2

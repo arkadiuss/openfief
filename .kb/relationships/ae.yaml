@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8a3b6b69652
+  - type: depends_on
+    from: REQ-ledger-event-postings
+    to: REQ-decision-d33-2-equity-counterpart
+    created_at: 2026-10-28T06:41:01.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b9e7286686b
+  - type: depends_on
+    from: REQ-ledger-event-postings
+    to: REQ-decision-d34-3-fees-not-in-lot-cost
+    created_at: 2026-10-28T06:41:01.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c23388f30f9

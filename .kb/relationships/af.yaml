@@ -48,3 +48,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcc1bdc233b8
+  - type: constrains
+    from: REQ-decision-d33-1-equity-per-currency
+    to: FACT-SUBJECT-DC19372821FB6174
+    created_at: 2026-10-28T06:27:53.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82974eb9e3d2
+  - type: requires_property
+    from: REQ-decision-d33-1-equity-per-currency
+    to: FACT-PROP-58BD0C472CFA160C
+    created_at: 2026-10-28T06:27:53.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0a15c1c87d9
