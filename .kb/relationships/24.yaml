@@ -83,3 +83,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a79450b436ad
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-must-currency
+    to: TEST-ingest-app
+    created_at: 2026-10-28T06:38:15.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-135753624211

@@ -20,3 +20,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94a11320e9b8
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-march2
+    to: TEST-ingest-app
+    created_at: 2026-10-28T06:38:07.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45c671a99579

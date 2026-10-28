@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e2f807f5a9c
+  - type: executable_for
+    from: SYM-ingest-app-test-pull-failures
+    to: TEST-ingest-app
+    created_at: 2026-10-28T06:38:36.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4aa88c83015

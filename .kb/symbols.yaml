@@ -9085,3 +9085,244 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ibkrflex-webservice
+  - id: SYM-ingest-app-ledger-importer
+    title: LedgerImporter
+    sourceFile: internal/ingest/app/ingest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:32.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ingest-app-ingest-path
+  - id: SYM-ingest-app-mapper
+    title: Mapper
+    sourceFile: internal/ingest/app/ingest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:36.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app
+      - type: implements
+        target: REQ-ingest-app-ingest-path
+  - id: SYM-ingest-app-statement-fetcher
+    title: StatementFetcher
+    sourceFile: internal/ingest/app/ingest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:39.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app
+      - type: implements
+        target: REQ-ingest-app-ingest-path
+  - id: SYM-ingest-app-service
+    title: Service
+    sourceFile: internal/ingest/app/ingest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:42.445Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app
+      - type: implements
+        target: REQ-AUTO-41A1F4D687DAA771
+      - type: implements
+        target: REQ-ingest-app-ingest-path
+  - id: SYM-ingest-app-service-ingest-file
+    title: Service.IngestFile
+    sourceFile: internal/ingest/app/ingest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:46.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app
+      - type: implements
+        target: REQ-AUTO-41A1F4D687DAA771
+      - type: implements
+        target: REQ-ingest-app-ingest-path
+  - id: SYM-ingest-app-service-pull
+    title: Service.Pull
+    sourceFile: internal/ingest/app/ingest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:49.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app
+      - type: implements
+        target: REQ-ingest-app-ingest-path
+  - id: SYM-ingest-app-service-ingest
+    title: Service.ingest
+    sourceFile: internal/ingest/app/ingest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:53.038Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app
+      - type: implements
+        target: REQ-ingest-app-ingest-path
+  - id: SYM-ingest-app-test-helper-fake-mapper-map
+    title: fakeMapper.Map
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:55.933Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-fake-ledger-import
+    title: fakeLedger.Import
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:58.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-fake-fetcher-fetch-statement
+    title: fakeFetcher.FetchStatement
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:02.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-march2
+    title: march2
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:06.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-mapping
+    title: mapping
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:10.557Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-must-currency
+    title: mustCurrency
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:15.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-service
+    title: service
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:19.579Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-ingest-file
+    title: TestIngestFile
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:24.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-ingest-file-failures
+    title: TestIngestFileFailures
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:28.350Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-pull
+    title: TestPull
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:32.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-pull-failures
+    title: TestPullFailures
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:36.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-fake-mapper
+    title: fakeMapper
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:39.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-fake-ledger
+    title: fakeLedger
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:41.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-fake-fetcher
+    title: fakeFetcher
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:38:44.044Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
