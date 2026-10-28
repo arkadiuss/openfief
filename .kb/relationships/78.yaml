@@ -132,3 +132,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3d70982e95a
+  - type: executable_for
+    from: SYM-ledger-pg-test-sleeve-kind-constraints
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:56:58.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0df897f5110

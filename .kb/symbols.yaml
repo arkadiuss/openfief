@@ -9803,6 +9803,8 @@ symbols:
         target: TEST-ledger-app-registry
       - type: implements
         target: REQ-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-sleeve-kinds
   - id: SYM-ledger-app-ledger-save-account
     title: Ledger.SaveAccount
     sourceFile: internal/ledger/app/ledger.go
@@ -11212,7 +11214,11 @@ symbols:
       recorded_at: 2026-10-28T06:34:55.906Z
     relationships:
       - type: covered_by
+        target: TEST-ledger-pg-kinds
+      - type: covered_by
         target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-sleeve-kinds
       - type: implements
         target: REQ-ledger-pg-store
   - id: SYM-ledger-pg-store-sleeves
@@ -11225,7 +11231,11 @@ symbols:
       recorded_at: 2026-10-28T06:34:59.418Z
     relationships:
       - type: covered_by
+        target: TEST-ledger-pg-kinds
+      - type: covered_by
         target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-sleeve-kinds
       - type: implements
         target: REQ-ledger-pg-store
   - id: SYM-ledger-pg-scan-sleeve
@@ -11238,7 +11248,11 @@ symbols:
       recorded_at: 2026-10-28T06:35:02.857Z
     relationships:
       - type: covered_by
+        target: TEST-ledger-pg-kinds
+      - type: covered_by
         target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-sleeve-kinds
       - type: implements
         target: REQ-ledger-pg-store
   - id: SYM-ledger-pg-store-save-account
@@ -22735,3 +22749,216 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-portfolio-sleeve-kind
+  - id: SYM-ledger-app-test-helper-core-sleeve
+    title: coreSleeve
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:55:22.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-kinds
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-ledger-save-kind
+    title: Ledger.SaveKind
+    sourceFile: internal/ledger/app/kinds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:55:27.583Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-kinds
+      - type: implements
+        target: REQ-ledger-app-sleeve-kinds
+  - id: SYM-ledger-app-ledger-kinds
+    title: Ledger.Kinds
+    sourceFile: internal/ledger/app/kinds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:55:32.668Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-kinds
+      - type: implements
+        target: REQ-ledger-app-sleeve-kinds
+  - id: SYM-ledger-app-ledger-ensure-defaults
+    title: Ledger.EnsureDefaults
+    sourceFile: internal/ledger/app/kinds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:55:37.261Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-kinds
+      - type: implements
+        target: REQ-ledger-app-ensure-defaults
+  - id: SYM-ledger-app-test-save-kind
+    title: TestSaveKind
+    sourceFile: internal/ledger/app/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:55:41.665Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-kinds
+  - id: SYM-ledger-app-test-ensure-defaults
+    title: TestEnsureDefaults
+    sourceFile: internal/ledger/app/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:55:47.113Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-kinds
+  - id: SYM-ledger-app-test-helper-mem-store-save-kind
+    title: memStore.SaveKind
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:55:53.702Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-kinds
+  - id: SYM-ledger-app-test-helper-mem-store-kinds
+    title: memStore.Kinds
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:55:59.811Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-kinds
+  - id: SYM-ledger-app-kind-store
+    title: KindStore
+    sourceFile: internal/ledger/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:05.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-kinds
+      - type: implements
+        target: REQ-ledger-app-sleeve-kinds
+  - id: SYM-ledger-pg-test-helper-new-database
+    title: newDatabase
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:11.927Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-kinds
+  - id: SYM-ledger-pg-test-helper-migrate-through
+    title: MigrateThrough
+    sourceFile: internal/ledger/postgres/export_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:17.140Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-kinds
+  - id: SYM-ledger-pg-store-save-kind
+    title: Store.SaveKind
+    sourceFile: internal/ledger/postgres/kinds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:22.047Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-kinds
+      - type: implements
+        target: REQ-ledger-pg-sleeve-kinds
+  - id: SYM-ledger-pg-store-kinds
+    title: Store.Kinds
+    sourceFile: internal/ledger/postgres/kinds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:27.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-kinds
+      - type: implements
+        target: REQ-ledger-pg-sleeve-kinds
+  - id: SYM-ledger-pg-scan-kind
+    title: scanKind
+    sourceFile: internal/ledger/postgres/kinds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:33.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-kinds
+      - type: implements
+        target: REQ-ledger-pg-sleeve-kinds
+  - id: SYM-ledger-pg-test-migrate-stores-the-default-kinds
+    title: TestMigrateStoresTheDefaultKinds
+    sourceFile: internal/ledger/postgres/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:40.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-kinds
+  - id: SYM-ledger-pg-test-migrate-gives-stored-sleeves-a-kind
+    title: TestMigrateGivesStoredSleevesAKind
+    sourceFile: internal/ledger/postgres/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:45.179Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-kinds
+  - id: SYM-ledger-pg-test-kind-round-trip
+    title: TestKindRoundTrip
+    sourceFile: internal/ledger/postgres/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:50.854Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-kinds
+  - id: SYM-ledger-pg-test-sleeve-kind-constraints
+    title: TestSleeveKindConstraints
+    sourceFile: internal/ledger/postgres/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:56:56.798Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-kinds
+  - id: SYM-ledger-pg-test-ensure-defaults-on-postgres
+    title: TestEnsureDefaultsOnPostgres
+    sourceFile: internal/ledger/postgres/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:57:03.564Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-kinds

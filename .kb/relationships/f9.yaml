@@ -174,3 +174,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e7368e14dce
+  - type: constrains
+    from: REQ-ledger-app-ensure-defaults
+    to: FACT-SUBJECT-1059EB7F0A7938BA
+    created_at: 2026-10-28T09:53:27.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c3ead3906a1
+  - type: requires_property
+    from: REQ-ledger-app-ensure-defaults
+    to: FACT-PROP-EC400A0B2F140870
+    created_at: 2026-10-28T09:53:27.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eed9be54e1e1
+  - type: specified_by
+    from: REQ-ledger-app-ensure-defaults
+    to: SCEN-ledger-app-ensure-defaults
+    created_at: 2026-10-28T09:53:27.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92a3dec5f4bb

@@ -68,12 +68,14 @@ func (s *Store) WithTx(fn func(tx pgx.Tx) error) error {
 	return fn(s.tx)
 }
 
-// SaveSleeve creates s or replaces the sleeve with its ID.
+// SaveSleeve creates s or replaces the sleeve with its ID. Its kind must be
+// stored.
 func (s *Store) SaveSleeve(ctx context.Context, sl portfolio.Sleeve) error {
 	_, err := s.db.Exec(ctx, `
-		INSERT INTO ledger.sleeves (id, name, role) VALUES ($1, $2, $3)
-		ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role`,
-		string(sl.ID), sl.Name, sl.Role.String())
+		INSERT INTO ledger.sleeves (id, name, kind, role, offensive_override) VALUES ($1, $2, $3, $4, $5)
+		ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, kind = EXCLUDED.kind, role = EXCLUDED.role,
+			offensive_override = EXCLUDED.offensive_override`,
+		string(sl.ID), sl.Name, string(sl.Kind), sl.Role.String(), sl.OffensiveOverride)
 	if err != nil {
 		return fmt.Errorf("saving sleeve %s: %w", sl.ID, err)
 	}
@@ -82,7 +84,8 @@ func (s *Store) SaveSleeve(ctx context.Context, sl portfolio.Sleeve) error {
 
 // Sleeves returns every sleeve, in ID order.
 func (s *Store) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
-	rows, err := s.db.Query(ctx, `SELECT id, name, role FROM ledger.sleeves ORDER BY id COLLATE "C"`)
+	rows, err := s.db.Query(ctx, `
+		SELECT id, name, kind, role, offensive_override FROM ledger.sleeves ORDER BY id COLLATE "C"`)
 	if err != nil {
 		return nil, fmt.Errorf("loading sleeves: %w", err)
 	}
@@ -95,15 +98,18 @@ func (s *Store) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
 
 // scanSleeve reads one sleeve row.
 func scanSleeve(row pgx.CollectableRow) (portfolio.Sleeve, error) {
-	var id, name, role string
-	if err := row.Scan(&id, &name, &role); err != nil {
+	var id, name, kind, role string
+	var override bool
+	if err := row.Scan(&id, &name, &kind, &role, &override); err != nil {
 		return portfolio.Sleeve{}, fmt.Errorf("reading a sleeve: %w", err)
 	}
 	r, err := portfolio.ParseRole(role)
 	if err != nil {
 		return portfolio.Sleeve{}, fmt.Errorf("%w: sleeve %s: %w", ErrCorruptLog, id, err)
 	}
-	return portfolio.Sleeve{ID: portfolio.SleeveID(id), Name: name, Role: r}, nil
+	return portfolio.Sleeve{
+		ID: portfolio.SleeveID(id), Name: name, Kind: portfolio.KindKey(kind), Role: r, OffensiveOverride: override,
+	}, nil
 }
 
 // SaveAccount creates a or replaces the account with its ID. Its sleeve must

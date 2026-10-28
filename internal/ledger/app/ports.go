@@ -34,7 +34,8 @@ type TransactionLog interface {
 
 // Registry stores sleeves and accounts.
 type Registry interface {
-	// SaveSleeve creates s or replaces the stored sleeve with its ID.
+	// SaveSleeve creates s or replaces the stored sleeve with its ID, with
+	// its kind, role and offensive override. Its kind must be stored.
 	SaveSleeve(ctx context.Context, s portfolio.Sleeve) error
 	// Sleeves returns every sleeve, in ID order.
 	Sleeves(ctx context.Context) ([]portfolio.Sleeve, error)
@@ -44,6 +45,17 @@ type Registry interface {
 	Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error)
 	// Accounts returns every account, in ID order.
 	Accounts(ctx context.Context) ([]ledger.Account, error)
+}
+
+// KindStore stores sleeve kinds. Sleeves live in the ledger's store
+// because the portfolio context has no store of its own in M0, and so do
+// their kinds.
+type KindStore interface {
+	// SaveKind creates k, or renames the stored kind with its key. It never
+	// changes a stored kind's default role.
+	SaveKind(ctx context.Context, k portfolio.Kind) error
+	// Kinds returns every sleeve kind, in key order.
+	Kinds(ctx context.Context) ([]portfolio.Kind, error)
 }
 
 // AssertionStore stores balance assertions with the result of their latest
@@ -61,6 +73,7 @@ type AssertionStore interface {
 type Store interface {
 	TransactionLog
 	Registry
+	KindStore
 	AssertionStore
 	// InTx runs fn with a Store whose every call belongs to one database
 	// transaction, committed when fn returns nil and rolled back otherwise.

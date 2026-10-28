@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0256fca649f
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-new-database
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:56:13.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf2268777a03

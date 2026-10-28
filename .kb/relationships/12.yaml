@@ -118,3 +118,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53a840028163
+  - type: executable_for
+    from: SYM-ledger-pg-test-migrate-gives-stored-sleeves-a-kind
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:56:46.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85c8cf66c14b
+  - type: implements
+    from: SYM-ledger-pg-store-sleeves
+    to: REQ-ledger-pg-sleeve-kinds
+    created_at: 2026-10-28T09:59:26.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fce2aeebc8e3
+  - type: covered_by
+    from: SYM-ledger-pg-store-sleeves
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:59:26.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ba40018bd81
