@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af0d37562a5c
+  - type: validates
+    from: TEST-ingest-binding
+    to: REQ-plugins-instance-per-install
+    created_at: 2026-10-28T16:49:56.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20404a815844
+  - type: executable_for
+    from: SYM-ingest-kube-test-helper-check-watch
+    to: TEST-ingest-kube
+    created_at: 2026-10-28T17:27:29.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5959a7e531a

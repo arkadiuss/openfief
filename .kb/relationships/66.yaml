@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b75bf8325d6
+  - type: verified_by
+    from: SCEN-ingest-unbound-account-refused
+    to: TEST-ingest-app-bound
+    created_at: 2026-10-28T16:50:04.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca63d21dfb23
+  - type: verified_by
+    from: SCEN-ingest-unbound-account-refused
+    to: TEST-ingest-binding
+    created_at: 2026-10-28T16:50:04.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d470f47ef222
+  - type: executable_for
+    from: SYM-ingest-pg-test-sync-store-start-batch-abandons-the-open-one
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:58:34.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cdb7e1b7c3d

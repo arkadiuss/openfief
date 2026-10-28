@@ -244,3 +244,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1545b67a3d0
+  - type: constrains
+    from: REQ-ingest-connector-binding
+    to: FACT-SUBJECT-675A558467AB9700
+    created_at: 2026-10-28T16:50:24.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-218384ceb3a8
+  - type: requires_property
+    from: REQ-ingest-connector-binding
+    to: FACT-PROP-FB2EB63BD50A2AE3
+    created_at: 2026-10-28T16:50:24.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42c3d9c127c1
+  - type: specified_by
+    from: REQ-ingest-connector-binding
+    to: SCEN-ingest-unbound-account-refused
+    created_at: 2026-10-28T16:50:24.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc3a47b3a472
+  - type: specified_by
+    from: REQ-ingest-connector-binding
+    to: SCEN-ingest-bind-account
+    created_at: 2026-10-28T16:50:24.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4eeb17cacb03

@@ -349,3 +349,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f125016af615
+  - type: implements
+    from: SYM-identity-kube-new-core-tokens
+    to: REQ-identity-core-tokens
+    created_at: 2026-10-28T17:26:02.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2581bb03ac01
+  - type: covered_by
+    from: SYM-identity-kube-new-core-tokens
+    to: TEST-identity-kube
+    created_at: 2026-10-28T17:26:02.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-569c43951489
+  - type: implements
+    from: SYM-ingest-kube-discovery-start
+    to: REQ-ingest-discovery
+    created_at: 2026-10-28T17:26:54.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4252632da112
+  - type: covered_by
+    from: SYM-ingest-kube-discovery-start
+    to: TEST-ingest-kube
+    created_at: 2026-10-28T17:26:54.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cb617f5df09

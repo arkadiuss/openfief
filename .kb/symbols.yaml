@@ -16895,7 +16895,7 @@ symbols:
       - type: executable_for
         target: TEST-ledger-pg-seed
   - id: SYM-ingest-app-service-import-mapping
-    title: Service.importMapping
+    title: importMapping
     sourceFile: internal/ingest/app/ingest.go
     status: active
     symbol_role: behavioral
@@ -38936,3 +38936,1962 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-demo
+  - id: SYM-ingest-sched-app-binding-store
+    title: BindingStore
+    sourceFile: internal/ingest/app/bindings.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:57.564Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-app-account-registry
+    title: AccountRegistry
+    sourceFile: internal/ingest/app/bindings.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:01.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-app-bind
+    title: Bind
+    sourceFile: internal/ingest/app/bindings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:06.006Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-app-test-connectors-refuse-unbound-accounts
+    title: TestConnectorsRefuseUnboundAccounts
+    sourceFile: internal/ingest/app/bound_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:09.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bound
+  - id: SYM-ingest-sched-app-test-connectors-seed-only-in-opening-mode
+    title: TestConnectorsSeedOnlyInOpeningMode
+    sourceFile: internal/ingest/app/bound_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:12.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bound
+  - id: SYM-ingest-sched-app-connector-bindings
+    title: ConnectorBindings
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:17.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bound
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-app-connectors-check-bound
+    title: Connectors.checkBound
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:21.268Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bound
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-conn-app-test-helper-fake-bindings
+    title: fakeBindings
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:25.462Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-bindings-bound-accounts
+    title: fakeBindings.BoundAccounts
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:29.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-sched-app-instance-lister
+    title: InstanceLister
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:33.561Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-due
+  - id: SYM-ingest-sched-app-open-batch
+    title: OpenBatch
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:37.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+  - id: SYM-ingest-sched-app-sync-claim
+    title: SyncClaim
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:41.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+  - id: SYM-ingest-sched-app-sync-state
+    title: SyncState
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:45.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-due
+  - id: SYM-ingest-sched-app-sync-store
+    title: SyncStore
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:49.180Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+  - id: SYM-ingest-sched-app-scheduler
+    title: Scheduler
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:52.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-core-owns-schedules
+      - type: implements
+        target: REQ-ingest-scheduler-due
+  - id: SYM-ingest-sched-app-scheduler-run
+    title: Scheduler.Run
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:56.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-due
+  - id: SYM-ingest-sched-app-scheduler-tick
+    title: Scheduler.Tick
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:00.038Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-due
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+  - id: SYM-ingest-sched-app-scheduler-wait
+    title: Scheduler.Wait
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:04.376Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+  - id: SYM-ingest-sched-app-scheduler-sync-now
+    title: Scheduler.SyncNow
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:08.558Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+  - id: SYM-ingest-sched-app-scheduler-begin
+    title: Scheduler.begin
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:12.625Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+  - id: SYM-ingest-sched-app-scheduler-end
+    title: Scheduler.end
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:16.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+  - id: SYM-ingest-sched-app-scheduler-attempt
+    title: Scheduler.attempt
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:20.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-core-owns-schedules
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+  - id: SYM-ingest-sched-app-batch-for
+    title: batchFor
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:24.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-due
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+  - id: SYM-ingest-sched-app-scheduler-logger
+    title: Scheduler.logger
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:29.026Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-due
+  - id: SYM-ingest-sched-app-test-helper-mem-instance
+    title: memInstance
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:32.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store
+    title: memStore
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:37.234Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-new-mem-store
+    title: newMemStore
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:41.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store-claim-sync
+    title: memStore.ClaimSync
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:45.417Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store-start-batch
+    title: memStore.StartBatch
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:49.388Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store-complete-sync
+    title: memStore.CompleteSync
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:53.534Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store-fail-sync
+    title: memStore.FailSync
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:52:57.708Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store-sync-states
+    title: memStore.SyncStates
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:01.660Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store-get
+    title: memStore.get
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:05.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store-xtb-state
+    title: memStore.xtbState
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:10.218Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-store-recorded
+    title: memStore.recorded
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:14.188Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-listed
+    title: listed
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:18.294Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-listed-connector-instances
+    title: listed.ConnectorInstances
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:22.623Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-sync-call
+    title: syncCall
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:26.602Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-scripted-caller
+    title: scriptedCaller
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:30.654Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-scripted-caller-sync
+    title: scriptedCaller.Sync
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:34.634Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-scripted-caller-import-file
+    title: scriptedCaller.ImportFile
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:38.991Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-scripted-caller-seen
+    title: scriptedCaller.seen
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:42.956Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-clock
+    title: clock
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:47.158Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-clock-now
+    title: clock.Now
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:50.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-clock-advance
+    title: clock.advance
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:55.169Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-t0
+    title: t0
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:53:59.490Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-scheduler
+    title: scheduler
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:03.733Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-tick
+    title: tick
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:08.381Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-scheduler-syncs-when-due
+    title: TestSchedulerSyncsWhenDue
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:12.803Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-scheduler-retries-with-the-same-batch
+    title: TestSchedulerRetriesWithTheSameBatch
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:16.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-scheduler-syncs-only-listed-instances
+    title: TestSchedulerSyncsOnlyListedInstances
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:20.967Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-scheduler-single-flight
+    title: TestSchedulerSingleFlight
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:24.941Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-scheduler-sync-now
+    title: TestSchedulerSyncNow
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:28.889Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-scheduler-timeout
+    title: TestSchedulerTimeout
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:32.809Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-scheduler-failures
+    title: TestSchedulerFailures
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:37.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-scheduler-run-stops-with-its-context
+    title: TestSchedulerRunStopsWithItsContext
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:41.264Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-bind
+    title: TestBind
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:45.113Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-registry
+    title: registry
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:49.282Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-registry-account
+    title: registry.Account
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:53.158Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-bindings
+    title: memBindings
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:54:57.114Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-bindings-bind
+    title: memBindings.Bind
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:00.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-mem-bindings-bound-accounts
+    title: memBindings.BoundAccounts
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:04.770Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-locked-ledger
+    title: lockedLedger
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:08.878Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-locked-ledger-import
+    title: lockedLedger.Import
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:12.993Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-app-test-helper-locked-ledger-seed
+    title: lockedLedger.Seed
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:19.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-sched-unbound-accounts-error
+    title: UnboundAccountsError
+    sourceFile: internal/ingest/binding.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:23.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-binding
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-unbound-accounts-error-error
+    title: UnboundAccountsError.Error
+    sourceFile: internal/ingest/binding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:30.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-binding
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-unbound-accounts-error-unwrap
+    title: UnboundAccountsError.Unwrap
+    sourceFile: internal/ingest/binding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:37.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-binding
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-check-bound
+    title: CheckBound
+    sourceFile: internal/ingest/binding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:46.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-binding
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-validate-instance-name
+    title: ValidateInstanceName
+    sourceFile: internal/ingest/binding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:55:54.046Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-binding
+      - type: implements
+        target: REQ-ingest-connector-binding
+  - id: SYM-ingest-sched-test-check-bound
+    title: TestCheckBound
+    sourceFile: internal/ingest/binding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:00.699Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-binding
+  - id: SYM-ingest-sched-test-validate-instance-name
+    title: TestValidateInstanceName
+    sourceFile: internal/ingest/binding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:06.288Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-binding
+  - id: SYM-ingest-sched-test-unbound-accounts-error-message
+    title: TestUnboundAccountsErrorMessage
+    sourceFile: internal/ingest/binding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:13.647Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-binding
+  - id: SYM-ingest-pg-migration
+    title: migration
+    sourceFile: internal/ingest/postgres/migrate.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:20.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-migrate
+    title: Migrate
+    sourceFile: internal/ingest/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:27.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-migrate-tx
+    title: migrateTx
+    sourceFile: internal/ingest/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:35.180Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-applied-versions
+    title: appliedVersions
+    sourceFile: internal/ingest/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:43.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-migrations
+    title: migrations
+    sourceFile: internal/ingest/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:50.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-store
+    title: Store
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:56:55.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-new
+    title: New
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:03.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-store-claim-sync
+    title: Store.ClaimSync
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:10.726Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-scan-claim
+    title: scanClaim
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:19.783Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-parse-mode
+    title: parseMode
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:24.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-store-start-batch
+    title: Store.StartBatch
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:29.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-store-complete-sync
+    title: Store.CompleteSync
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:33.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-store-fail-sync
+    title: Store.FailSync
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:37.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-store-sync-states
+    title: Store.SyncStates
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:43.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-store-bind
+    title: Store.Bind
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:49.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-connector-binding
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-store-bound-accounts
+    title: Store.BoundAccounts
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:54.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-connector-binding
+      - type: implements
+        target: REQ-ingest-sync-store
+  - id: SYM-ingest-pg-test-helper-new-pool
+    title: newPool
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:57:59.827Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-helper-admin-exec
+    title: adminExec
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:04.636Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-helper-t0
+    title: t0
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:09.039Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-helper-claim
+    title: claim
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:15.259Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-helper-batch-state
+    title: batchState
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:20.328Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-sync-store-lifecycle
+    title: TestSyncStoreLifecycle
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:24.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-sync-store-claim-expires
+    title: TestSyncStoreClaimExpires
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:29.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-sync-store-start-batch-abandons-the-open-one
+    title: TestSyncStoreStartBatchAbandonsTheOpenOne
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:33.772Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-binding-store
+    title: TestBindingStore
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:38.349Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-pg-test-helper-check-completion
+    title: checkCompletion
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:42.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-sched-sync-policy
+    title: SyncPolicy
+    sourceFile: internal/ingest/schedule.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:45.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-schedule
+      - type: implements
+        target: REQ-ingest-scheduler-due
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+  - id: SYM-ingest-sched-sync-policy-validate
+    title: SyncPolicy.Validate
+    sourceFile: internal/ingest/schedule.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:49.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-schedule
+      - type: implements
+        target: REQ-ingest-scheduler-due
+  - id: SYM-ingest-sched-sync-policy-next-sync
+    title: SyncPolicy.NextSync
+    sourceFile: internal/ingest/schedule.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:53.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-schedule
+      - type: implements
+        target: REQ-ingest-scheduler-due
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+  - id: SYM-ingest-sched-test-helper-policy
+    title: policy
+    sourceFile: internal/ingest/schedule_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:58:57.100Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-schedule
+  - id: SYM-ingest-sched-test-sync-policy-validate
+    title: TestSyncPolicyValidate
+    sourceFile: internal/ingest/schedule_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:59:00.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-schedule
+  - id: SYM-ingest-sched-test-sync-policy-next-sync
+    title: TestSyncPolicyNextSync
+    sourceFile: internal/ingest/schedule_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:59:03.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-schedule
+  - id: SYM-core-connector-args
+    title: connectorArgs
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:07.659Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-sync-config
+    title: syncConfig
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:12.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-parse-connector
+    title: parseConnector
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:17.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-parse-mode
+    title: parseMode
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:22.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-cluster
+    title: cluster
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:26.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-in-cluster
+    title: inCluster
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:31.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-cluster-or-nil
+    title: clusterOrNil
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:36.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-connector-deps
+    title: connectorDeps
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:40.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-with-connector-deps
+    title: withConnectorDeps
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:45.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-new-scheduler
+    title: newScheduler
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:51.272Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+      - type: implements
+        target: REQ-ingest-core-owns-schedules
+  - id: SYM-core-conn-run-connectors
+    title: runConnectors
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:55.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-connector-command
+    title: connectorCommand
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:00.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-sync-now
+    title: syncNow
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:05.801Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-new-batch-id
+    title: newBatchID
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:10.602Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-jitter
+    title: jitter
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:15.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-ledger-importer
+    title: ledgerImporter
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:18.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-ledger-importer-import
+    title: ledgerImporter.Import
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:23.755Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-ledger-importer-seed
+    title: ledgerImporter.Seed
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:28.467Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-import-summary
+    title: importSummary
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:33.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-valuation-inputs
+    title: valuationInputs
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:37.324Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-valuation-inputs-store-prices
+    title: valuationInputs.StorePrices
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:41.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-valuation-inputs-store-fxrates
+    title: valuationInputs.StoreFXRates
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:46.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-valuation-inputs-store-index-readings
+    title: valuationInputs.StoreIndexReadings
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:51.261Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-monthly-reading
+    title: monthlyReading
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:55.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-test-helper-deposit-connector
+    title: depositConnector
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:59.242Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-deposit-connector-sync
+    title: depositConnector.Sync
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:04.068Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-serve-connector
+    title: serveConnector
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:08.664Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-fake-cluster
+    title: fakeCluster
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:13.861Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-connector-cmd
+    title: connectorCmd
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:18.474Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-connector-bind-and-sync
+    title: TestConnectorBindAndSync
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:23.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-save-demo-registry
+    title: saveDemoRegistry
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:28.140Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-check-synced
+    title: checkSynced
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:32.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-serve-schedules-connectors
+    title: TestServeSchedulesConnectors
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:37.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-monthly-reading
+    title: TestMonthlyReading
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:41.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-ingest-deps
+    title: ingestDeps
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:45.760Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-start-cluster
+    title: startCluster
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:49.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-identity-kube-core-tokens
+    title: CoreTokens
+    sourceFile: internal/identity/kube/coretokens.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:52.766Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube
+      - type: implements
+        target: REQ-identity-core-tokens
+  - id: SYM-identity-kube-cached-token
+    title: cachedToken
+    sourceFile: internal/identity/kube/coretokens.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:57.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube
+      - type: implements
+        target: REQ-identity-core-tokens
+  - id: SYM-identity-kube-new-core-tokens
+    title: NewCoreTokens
+    sourceFile: internal/identity/kube/coretokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:01.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube
+      - type: implements
+        target: REQ-identity-core-tokens
+  - id: SYM-identity-kube-core-tokens-token-for
+    title: CoreTokens.TokenFor
+    sourceFile: internal/identity/kube/coretokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:06.446Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube
+      - type: implements
+        target: REQ-identity-core-tokens
+      - type: implements
+        target: REQ-plugins-core-only-caller
+  - id: SYM-identity-kube-test-helper-token-request
+    title: tokenRequest
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:11.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-helper-token-server
+    title: tokenServer
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:14.531Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-helper-token-server-client
+    title: tokenServer.client
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:19.063Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-helper-clock
+    title: clock
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:22.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-helper-clock-now
+    title: clock.Now
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:27.260Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-core-tokens-caches
+    title: TestCoreTokensCaches
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:32.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-core-tokens-failures
+    title: TestCoreTokensFailures
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:37.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-ingest-kube-plugin-resource
+    title: PluginResource
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:41.713Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-discovery
+    title: Discovery
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:44.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-new-discovery
+    title: NewDiscovery
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:49.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-discovery-start
+    title: Discovery.Start
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:53.639Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-discovery-connector-instances
+    title: Discovery.ConnectorInstances
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:58.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-discovery-base-url
+    title: Discovery.BaseURL
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:03.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-running-connector
+    title: RunningConnector
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:08.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-service-address
+    title: ServiceAddress
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:12.648Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-test-helper-plugin
+    title: plugin
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:16.833Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-helper-service
+    title: service
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:20.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-discovery
+    title: TestDiscovery
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:24.901Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-helper-check-watch
+    title: checkWatch
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:28.370Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-service-address
+    title: TestServiceAddress
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:32.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-operator-contract
+    title: TestOperatorContract
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:35.920Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube

@@ -167,3 +167,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-987350fbe472
+  - type: implements
+    from: SYM-ingest-pg-store-bind
+    to: REQ-ingest-sync-store
+    created_at: 2026-10-28T16:57:50.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b15b4274299
+  - type: implements
+    from: SYM-ingest-pg-store-bind
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:57:50.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2b51481c73b
+  - type: covered_by
+    from: SYM-ingest-pg-store-bind
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:57:50.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a4994a28a66
+  - type: implements
+    from: SYM-ingest-kube-new-discovery
+    to: REQ-ingest-discovery
+    created_at: 2026-10-28T17:26:50.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89472877f08c
+  - type: covered_by
+    from: SYM-ingest-kube-new-discovery
+    to: TEST-ingest-kube
+    created_at: 2026-10-28T17:26:50.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d976190913b9

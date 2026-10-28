@@ -139,3 +139,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b1055400777
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-scheduler-syncs-only-listed-instances
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:54:22.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33299722ced1
+  - type: verified_by
+    from: SCEN-core-connector-commands
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:22:40.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6701b499de4e
+  - type: verified_by
+    from: SCEN-core-connector-commands
+    to: TEST-core-unit
+    created_at: 2026-10-28T17:22:40.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-212be2f2f5ee

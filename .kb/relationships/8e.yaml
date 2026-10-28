@@ -272,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a877b479ed5d
+  - type: implements
+    from: SYM-ingest-pg-store-start-batch
+    to: REQ-ingest-sync-store
+    created_at: 2026-10-28T16:57:30.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d49fd03cddef
+  - type: implements
+    from: SYM-ingest-pg-store-start-batch
+    to: REQ-ingest-scheduler-retry
+    created_at: 2026-10-28T16:57:30.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c3e3650b1e2
+  - type: covered_by
+    from: SYM-ingest-pg-store-start-batch
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:57:30.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b84bd4ea2138

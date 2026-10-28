@@ -139,3 +139,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f56af74cd5b5
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-batch-state
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:58:21.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac7ca7b6f069
+  - type: executable_for
+    from: SYM-core-conn-test-connector-bind-and-sync
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:24.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-272528a8d7d3

@@ -174,3 +174,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1dc9c69b098a
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-sync-now
+    to: REQ-ingest-scheduler-single-flight
+    created_at: 2026-10-28T16:52:09.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cec7eabaf9f3
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-sync-now
+    to: REQ-ingest-scheduler-retry
+    created_at: 2026-10-28T16:52:09.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a9f314ed8ae
+  - type: covered_by
+    from: SYM-ingest-sched-app-scheduler-sync-now
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:52:09.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0d63b6ec508
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-registry-account
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:54:54.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf4003deaab2

@@ -216,3 +216,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fdd6516970a4
+  - type: implements
+    from: SYM-ingest-pg-applied-versions
+    to: REQ-ingest-sync-store
+    created_at: 2026-10-28T16:56:44.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e40aa2273739
+  - type: covered_by
+    from: SYM-ingest-pg-applied-versions
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:56:44.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c88dee51239
+  - type: validates
+    from: TEST-ingest-kube
+    to: REQ-plugins-instance-per-install
+    created_at: 2026-10-28T17:22:31.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95fd5b539e80

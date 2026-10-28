@@ -188,3 +188,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-060a08187cd8
+  - type: executable_for
+    from: SYM-core-conn-test-helper-connector-cmd
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:19.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c1341746237

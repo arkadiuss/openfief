@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ab808f6320f
+  - type: implements
+    from: SYM-core-conn-ingest-deps
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:25:46.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02a5e7fdda26
+  - type: covered_by
+    from: SYM-core-conn-ingest-deps
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:46.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-080642568a16

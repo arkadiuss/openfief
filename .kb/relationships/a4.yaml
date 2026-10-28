@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fd283a40d5c
+  - type: executable_for
+    from: SYM-core-conn-test-helper-save-demo-registry
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:29.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5db7340e4223

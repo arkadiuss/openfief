@@ -139,3 +139,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a4ee915fe34
+  - type: verified_by
+    from: SCEN-ingest-sync-when-due
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:50:08.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42f19683682d
+  - type: verified_by
+    from: SCEN-ingest-sync-when-due
+    to: TEST-ingest-schedule
+    created_at: 2026-10-28T16:50:08.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1358ca23158
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-clock-advance
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:53:56.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ea3803383e4
+  - type: implements
+    from: SYM-core-conn-ledger-importer-import
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:24:24.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3d2a28ac8a2
+  - type: covered_by
+    from: SYM-core-conn-ledger-importer-import
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:24:24.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bdf91432d45

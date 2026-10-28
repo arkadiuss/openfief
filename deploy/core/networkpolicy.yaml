@@ -1,8 +1,14 @@
 # The core's own NetworkPolicy. Ingress: plugin pods on the core's port (they dial the Service's connect port).
 # Probes come from the node, and kubectl port-forward enters through the kubelet, so neither needs a rule here.
 # An installation that routes traffic in through an Ingress controller adds a policy that admits it (the demo
-# does, in deploy/demo/openfief). Egress: DNS and the CloudNativePG cluster openfief-db only; the core calls
-# nothing else today.
+# does, in deploy/demo/openfief). Egress: DNS, the CloudNativePG cluster openfief-db, plugin pods on their Connect
+# port, and the Kubernetes API server, and nothing else.
+#
+# The API server rule: a pod reaches it through Service kubernetes (default namespace), which is DNAT-ed to the
+# API server's own address before NetworkPolicy sees the packet, so the rule must name that address and port, not
+# the Service's. On k3s that is the node's IP on port 6443. Node IPs differ per installation, so the base allows
+# port 6443 to any address; an overlay can narrow the ipBlock to the node's (or control plane's) addresses, and a
+# cluster whose API server listens elsewhere (443 on managed clusters) patches the port.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -32,6 +38,23 @@ spec:
       ports:
         - protocol: TCP
           port: 5432
+    # Connector plugins: the operator labels every plugin pod app.kubernetes.io/name: openfief-plugin and serves
+    # Connect on the operator's --plugin-port (8080 by default); each plugin's own policy admits only the core (D-59).
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: openfief-plugin
+      ports:
+        - protocol: TCP
+          port: 8080
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+        - ipBlock:
+            cidr: ::/0
+      ports:
+        - protocol: TCP
+          port: 6443
     - to:
         - namespaceSelector:
             matchLabels:

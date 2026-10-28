@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba2ce84b84dc
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-locked-ledger
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:55:09.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cd529e04d8b

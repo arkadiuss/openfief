@@ -237,3 +237,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf99b2a7bfe0
+  - type: verified_by
+    from: SCEN-ingest-single-flight
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:50:14.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d27eaf353999
+  - type: verified_by
+    from: SCEN-ingest-single-flight
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:50:14.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7147bfa5563c
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-listed
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:53:19.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1031996e2c34

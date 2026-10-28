@@ -121,7 +121,7 @@ func startCore(t *testing.T, dsn string) (*core, *httptest.Server, *pgxpool.Pool
 	t.Cleanup(pool.Close)
 	cfg := defaultServe(t)
 	cfg.Workers = 3
-	c, err := start(ctx, pool, &cfg, coreNow, quiet())
+	c, err := start(ctx, pool, &cfg, coreNow, quiet(), nil)
 	if err != nil {
 		t.Fatalf("start: %v", err)
 	}

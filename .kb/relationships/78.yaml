@@ -209,3 +209,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcdb5ec8c354
+  - type: implements
+    from: SYM-ingest-pg-store-complete-sync
+    to: REQ-ingest-sync-store
+    created_at: 2026-10-28T16:57:34.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1014b885b9b7
+  - type: implements
+    from: SYM-ingest-pg-store-complete-sync
+    to: REQ-ingest-scheduler-retry
+    created_at: 2026-10-28T16:57:34.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec8ece93592c
+  - type: covered_by
+    from: SYM-ingest-pg-store-complete-sync
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:57:34.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-977966f1887e
+  - type: executable_for
+    from: SYM-ingest-sched-test-sync-policy-next-sync
+    to: TEST-ingest-schedule
+    created_at: 2026-10-28T16:59:04.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b1444b330ae
+  - type: executable_for
+    from: SYM-core-conn-test-helper-deposit-connector-sync
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:05.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5203d36334e

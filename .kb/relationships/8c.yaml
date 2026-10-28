@@ -160,3 +160,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-924b789fb74f
+  - type: implements
+    from: SYM-ingest-sched-app-sync-state
+    to: REQ-ingest-scheduler-due
+    created_at: 2026-10-28T16:51:46.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6b019fd4b7
+  - type: covered_by
+    from: SYM-ingest-sched-app-sync-state
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:51:46.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae1f51bc8ae
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-mem-bindings-bind
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:55:01.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32421b3eb449

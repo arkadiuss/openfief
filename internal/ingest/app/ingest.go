@@ -104,7 +104,7 @@ func (s *Service) ingest(ctx context.Context, institution ingest.InstitutionID, 
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("ingest %s batch %s: %w", institution, batch.ID, err)
 	}
-	imported, err := s.importMapping(ctx, mode, &m)
+	imported, err := importMapping(ctx, s.Ledger, mode, &m)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("ingest %s batch %s: %w", institution, batch.ID, err)
 	}
@@ -112,12 +112,12 @@ func (s *Service) ingest(ctx context.Context, institution ingest.InstitutionID, 
 	return batch, nil
 }
 
-// importMapping imports m into the ledger: an opening batch through Seed,
-// which refuses to seed an account twice, and a transactions batch through
+// importMapping imports m into l: an opening batch through Seed, which
+// refuses to seed an account twice, and a transactions batch through
 // Import, after refusing any seeding transaction in it (D-23).
-func (s *Service) importMapping(ctx context.Context, mode ingest.Mode, m *ingest.Mapping) (ingest.ImportSummary, error) {
+func importMapping(ctx context.Context, l LedgerImporter, mode ingest.Mode, m *ingest.Mapping) (ingest.ImportSummary, error) {
 	if mode == ingest.ModeOpening {
-		sum, err := s.Ledger.Seed(ctx, m.Transactions, m.Assertions)
+		sum, err := l.Seed(ctx, m.Transactions, m.Assertions)
 		if err != nil {
 			return ingest.ImportSummary{}, fmt.Errorf("seeding: %w", err)
 		}
@@ -128,7 +128,7 @@ func (s *Service) importMapping(ctx context.Context, mode ingest.Mode, m *ingest
 			return ingest.ImportSummary{}, fmt.Errorf("%w: %s", ErrSeedingOutsideOpening, t.Key)
 		}
 	}
-	sum, err := s.Ledger.Import(ctx, m.Transactions, m.Assertions)
+	sum, err := l.Import(ctx, m.Transactions, m.Assertions)
 	if err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("importing: %w", err)
 	}

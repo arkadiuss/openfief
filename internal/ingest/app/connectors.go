@@ -7,6 +7,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
@@ -69,6 +70,12 @@ type IndexReadingStore interface {
 	StoreIndexReadings(ctx context.Context, batch ingest.BatchID, readings []ingest.IndexReading) error
 }
 
+// ConnectorBindings knows which accounts each connector instance may write
+// to: its connector bindings.
+type ConnectorBindings interface {
+	BoundAccounts(ctx context.Context, instance string) ([]ledger.AccountID, error)
+}
+
 // SyncResult is a completed sync: the import batch and the watermark the
 // next sync continues from.
 type SyncResult struct {
@@ -80,12 +87,23 @@ type SyncResult struct {
 // calls a connector instance to sync or to import a file, and imports what
 // it delivers. The caller of Sync and ImportFile owns the schedule and the
 // retries, and retries a failed batch with the same batch ID.
+//
+// A delivery is imported in two steps that are separate database
+// transactions: the ledger first, then the valuation inputs. A failure
+// between them leaves the transactions imported and the inputs not, and the
+// batch fails; retrying it with the same batch ID imports the transactions
+// again with no further effect (D-18) and stores the inputs, which replace
+// any stored for the same key. The caller stores a sync's watermark only
+// after both steps succeed.
 type Connectors struct {
-	Caller  ConnectorCaller
-	Ledger  LedgerImporter
-	Prices  PriceStore
-	FXRates FXRateStore
-	Indices IndexReadingStore
+	Caller ConnectorCaller
+	// Bindings says which accounts each instance may write to. A delivery
+	// that names any other account is refused whole.
+	Bindings ConnectorBindings
+	Ledger   LedgerImporter
+	Prices   PriceStore
+	FXRates  FXRateStore
+	Indices  IndexReadingStore
 	// Today returns the date a batch starts on.
 	Today func() kernel.Date
 }
@@ -115,9 +133,10 @@ func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.
 }
 
 // deliver imports a delivery as one import batch: transactions scoped to the
-// instance into the ledger, then prices, FX rates and index readings with
-// the instance as their source. Every index reading must be valid, or
-// nothing is imported.
+// instance into the ledger, seeded in an opening batch (D-23), then prices,
+// FX rates and index readings with the instance as their source. Every
+// index reading must be valid and every transaction and balance assertion
+// must be in an account the instance is bound to, or nothing is imported.
 func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.BatchID, source string, mode ingest.Mode, d *Delivery) (ingest.Batch, error) {
 	batch, err := ingest.NewBatch(id, d.Institution, source, mode, c.Today())
 	if err != nil {
@@ -128,8 +147,11 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	m := d.Mapping
+	if err = c.checkBound(ctx, instance, &m); err != nil {
+		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
+	}
 	m.Transactions = ingest.ScopeToConnector(instance, m.Transactions)
-	imported, err := c.Ledger.Import(ctx, m.Transactions, m.Assertions)
+	imported, err := importMapping(ctx, c.Ledger, mode, &m)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
@@ -138,6 +160,21 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	}
 	batch.Complete(&m, imported)
 	return batch, nil
+}
+
+// checkBound refuses m unless every account it names is bound to instance.
+func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.Mapping) error {
+	if len(m.Transactions) == 0 && len(m.Assertions) == 0 {
+		return nil
+	}
+	bound, err := c.Bindings.BoundAccounts(ctx, instance)
+	if err != nil {
+		return fmt.Errorf("connector bindings: %w", err)
+	}
+	if err := ingest.CheckBound(instance, bound, m); err != nil {
+		return fmt.Errorf("refused: %w", err)
+	}
+	return nil
 }
 
 // storeInputs stores a delivery's prices, FX rates and the validated index
