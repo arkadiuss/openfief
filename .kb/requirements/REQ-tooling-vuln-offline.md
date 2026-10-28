@@ -1,6 +1,6 @@
 ---
 title: When a vulnerability database is unreachable, the vulnerability check must warn and pass locally, and must fail when CI is true.
-status: open
+status: closed
 text_ref: docs/dev/sdlc.md
 tags:
   - strict-modeling
