@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0029ad2b9e83
+  - type: implements
+    from: SYM-ledger-holdings-on
+    to: REQ-ledger-holding-derivation
+    created_at: 2026-10-28T05:39:36.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0cebf07e8ce
+  - type: implements
+    from: SYM-ledger-holdings-on
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T05:39:36.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52b8244b2257
+  - type: covered_by
+    from: SYM-ledger-holdings-on
+    to: TEST-ledger-holding
+    created_at: 2026-10-28T05:39:36.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a23fabc828a5

@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-adbbdc8724bc
+  - type: verified_by
+    from: SCEN-ledger-fifo-oldest-first
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:39:03.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9be2968203f7
+  - type: verified_by
+    from: SCEN-ledger-fifo-oldest-first
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:39:03.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5c72d149656

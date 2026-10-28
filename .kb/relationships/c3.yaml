@@ -48,3 +48,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c412d3f664b7
+  - type: executable_for
+    from: SYM-ledger-test-holding-on
+    to: TEST-ledger-holding
+    created_at: 2026-10-28T05:39:42.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc2a4e4e0a27

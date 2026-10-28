@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-155296e649a8
+  - type: executable_for
+    from: SYM-ledger-test-lots-on-oversell
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:24.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef21e2b507d1

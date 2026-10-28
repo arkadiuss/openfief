@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-4be620021606
+    type: executable_for
+    from: SYM-ledger-test-helper-fifo-before
+    to: TEST-ledger-properties
+    created_at: "2026-10-28T05:40:37.343Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

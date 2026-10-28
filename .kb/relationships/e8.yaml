@@ -20,3 +20,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2cb86b05ff12
+  - type: implements
+    from: SYM-ledger-acquisitions
+    to: REQ-ledger-fifo
+    created_at: 2026-10-28T05:40:06.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62b193d0a06c
+  - type: implements
+    from: SYM-ledger-acquisitions
+    to: REQ-ledger-opening-lot-entry
+    created_at: 2026-10-28T05:40:06.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c45562fb832
+  - type: covered_by
+    from: SYM-ledger-acquisitions
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:06.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d427fe6e38b

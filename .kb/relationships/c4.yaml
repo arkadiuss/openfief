@@ -6,3 +6,10 @@ relationships:
     created_at: "2026-10-28T05:24:09.416Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-ledger-opening-lot-entry
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:38:59.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43c6a73358e0

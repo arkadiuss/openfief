@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee28ad1310be
+  - type: implements
+    from: SYM-ledger-oversell-error-error
+    to: REQ-ledger-oversell
+    created_at: 2026-10-28T05:39:52.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16529d4d903f
+  - type: covered_by
+    from: SYM-ledger-oversell-error-error
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:39:52.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dafec516ea3d

@@ -2676,3 +2676,418 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-version
+  - id: SYM-ledger-holding
+    title: Holding
+    sourceFile: internal/ledger/holding.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:31.395Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-holding
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-holding-derivation
+  - id: SYM-ledger-holding-on
+    title: HoldingOn
+    sourceFile: internal/ledger/holding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:33.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-holding
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-holding-derivation
+  - id: SYM-ledger-holdings-on
+    title: HoldingsOn
+    sourceFile: internal/ledger/holding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:36.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-holding
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-holding-derivation
+  - id: SYM-ledger-current-in-account
+    title: currentInAccount
+    sourceFile: internal/ledger/holding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:38.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-holding
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-current-versions
+  - id: SYM-ledger-test-helper-holding-log
+    title: holdingLog
+    sourceFile: internal/ledger/holding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:40.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-holding
+  - id: SYM-ledger-test-holding-on
+    title: TestHoldingOn
+    sourceFile: internal/ledger/holding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:41.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-holding
+  - id: SYM-ledger-test-holdings-on
+    title: TestHoldingsOn
+    sourceFile: internal/ledger/holding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:43.652Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-holding
+  - id: SYM-ledger-test-holdings-on-invalid-log
+    title: TestHoldingsOnInvalidLog
+    sourceFile: internal/ledger/holding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:45.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-holding
+  - id: SYM-ledger-lot
+    title: Lot
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:48.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-fifo
+  - id: SYM-ledger-oversell-error
+    title: OversellError
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:49.533Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-oversell
+  - id: SYM-ledger-oversell-error-error
+    title: OversellError.Error
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:51.912Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-oversell
+  - id: SYM-ledger-lot-consumption
+    title: LotConsumption
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:54.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-fifo
+  - id: SYM-ledger-consume-fifo
+    title: ConsumeFIFO
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:56.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-fifo
+      - type: implements
+        target: REQ-ledger-oversell
+  - id: SYM-ledger-consumed-cost
+    title: consumedCost
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:59.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-lot-cost-split
+  - id: SYM-ledger-sorted-lots
+    title: sortedLots
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:01.580Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-fifo
+  - id: SYM-ledger-lots-on
+    title: LotsOn
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:03.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-fifo
+  - id: SYM-ledger-acquisitions
+    title: acquisitions
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:06.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-fifo
+      - type: implements
+        target: REQ-ledger-opening-lot-entry
+  - id: SYM-ledger-apply-disposals
+    title: applyDisposals
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:08.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-fifo
+      - type: implements
+        target: REQ-ledger-oversell
+  - id: SYM-ledger-test-helper-lot
+    title: lot
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:10.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-consume-fifo
+    title: TestConsumeFIFO
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:12.326Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-helper-check-oversell
+    title: checkOversell
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:14.122Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-consume-fifo-cost-split-adds-up
+    title: TestConsumeFIFOCostSplitAddsUp
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:15.979Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-helper-lot-log
+    title: lotLog
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:18.381Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-lots-on
+    title: TestLotsOn
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:21.662Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-lots-on-oversell
+    title: TestLotsOnOversell
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:24.069Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-helper-random-lots
+    title: randomLots
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:27.266Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-total-units
+    title: totalUnits
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:30.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-cost-by-origin
+    title: costByOrigin
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:33.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-fifo-before
+    title: fifoBefore
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:36.933Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-property-fifo-consumes-oldest-first-and-conserves-cost
+    title: TestPropertyFIFOConsumesOldestFirstAndConservesCost
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:40.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-check-fifo-case
+    title: checkFIFOCase
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:43.287Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-check-fifo-order
+    title: checkFIFOOrder
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:46.865Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-property-oversell-consumes-nothing
+    title: TestPropertyOversellConsumesNothing
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:49.380Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-property-lots-match-holding
+    title: TestPropertyLotsMatchHolding
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:51.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-check-lots-match-holding
+    title: checkLotsMatchHolding
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:54.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties

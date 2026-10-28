@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7681c4c2d05
+  - type: implements
+    from: SYM-ledger-sorted-lots
+    to: REQ-ledger-fifo
+    created_at: 2026-10-28T05:40:01.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d348885e1aa
+  - type: implements
+    from: SYM-ledger-sorted-lots
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T05:40:01.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3bf9eba2fb6
+  - type: covered_by
+    from: SYM-ledger-sorted-lots
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:01.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b291f95cabff

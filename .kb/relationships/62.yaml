@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6177bce97f88
+  - type: executable_for
+    from: SYM-ledger-test-property-lots-match-holding
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:40:51.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a84e94d4b5b9

@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-400dad89d8b4
+    type: constrains
+    from: REQ-ledger-holding-derivation
+    to: FACT-SUBJECT-82ADE63DA63B57D2
+    created_at: "2026-10-28T05:39:14.282Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-ledger-holding-derivation
+    to: FACT-PROP-30E3F30E05D9EB25
+    created_at: 2026-10-28T05:39:14.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-964ce74c4e0f
+  - type: specified_by
+    from: REQ-ledger-holding-derivation
+    to: SCEN-ledger-holding-derivation
+    created_at: 2026-10-28T05:39:14.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f38d03085b81
