@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e72c1993c70
+  - type: implements
+    from: SYM-views-app-views-account
+    to: REQ-views-app-queries
+    created_at: 2026-10-28T07:28:59.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3042e7fd599
+  - type: covered_by
+    from: SYM-views-app-views-account
+    to: TEST-views-app
+    created_at: 2026-10-28T07:28:59.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72cf0a4757f8
+  - type: implements
+    from: SYM-views-app-views-assertion-checks
+    to: REQ-views-app-queries
+    created_at: 2026-10-28T07:29:29.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f02da2dc0f28
+  - type: covered_by
+    from: SYM-views-app-views-assertion-checks
+    to: TEST-views-app
+    created_at: 2026-10-28T07:29:29.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1188264846cb

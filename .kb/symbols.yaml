@@ -27936,3 +27936,667 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-valuation
+  - id: SYM-views-app-test-helper-fake-ledger
+    title: fakeLedger
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:26:56.069Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-ledger-sleeves
+    title: fakeLedger.Sleeves
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:26:59.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-ledger-accounts
+    title: fakeLedger.Accounts
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:02.394Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-ledger-account
+    title: fakeLedger.Account
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:05.667Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-ledger-current-transactions
+    title: fakeLedger.CurrentTransactions
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:08.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-ledger-holdings-on
+    title: fakeLedger.HoldingsOn
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:11.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-ledger-lots-on
+    title: fakeLedger.LotsOn
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:15.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-ledger-cash-on
+    title: fakeLedger.CashOn
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:19.085Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-ledger-assertion-checks
+    title: fakeLedger.AssertionChecks
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:22.571Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-valuations
+    title: fakeValuations
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:24.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-valuations-holding-valuations
+    title: fakeValuations.HoldingValuations
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:28.743Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-statuses
+    title: fakeStatuses
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:31.229Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-statuses-valuation-status
+    title: fakeStatuses.ValuationStatus
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:34.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-rates
+    title: fakeRates
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:36.913Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-rates-latest-rates
+    title: fakeRates.LatestRates
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:40.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-dec
+    title: dec
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:43.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-cur
+    title: cur
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:46.973Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-money
+    title: money
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:50.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-date
+    title: date
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:54.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-instrument
+    title: instrument
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:27:59.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fixture
+    title: fixture
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:02.462Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-new-fixture
+    title: newFixture
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:07.136Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fixture-views
+    title: fixture.views
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:10.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-ledger
+    title: Ledger
+    sourceFile: internal/views/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:13.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-valuations
+    title: Valuations
+    sourceFile: internal/views/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:18.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-valuation-queries
+  - id: SYM-views-app-valuation-status
+    title: ValuationStatus
+    sourceFile: internal/views/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:23.344Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-decision-d36-6-api-valuation-status
+      - type: implements
+        target: REQ-views-valuation-status
+  - id: SYM-views-app-valuation-statuses
+    title: ValuationStatuses
+    sourceFile: internal/views/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:27.912Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-decision-d36-6-api-valuation-status
+      - type: implements
+        target: REQ-views-valuation-status
+  - id: SYM-views-app-fx-rates
+    title: FXRates
+    sourceFile: internal/views/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:32.573Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation-inputs
+  - id: SYM-views-app-views
+    title: Views
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:36.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-new
+    title: New
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:41.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-sleeves
+    title: Views.Sleeves
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:46.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-accounts
+    title: Views.Accounts
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:52.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-account
+    title: Views.Account
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:28:58.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-transactions
+    title: Views.Transactions
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:04.269Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-holdings
+    title: Views.Holdings
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:09.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-lots
+    title: Views.Lots
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:14.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-cash
+    title: Views.Cash
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:21.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-assertion-checks
+    title: Views.AssertionChecks
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:28.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-account-err
+    title: accountErr
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:35.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-account-valuations
+    title: AccountValuations
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:41.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-valuation-queries
+  - id: SYM-views-app-views-account-valuations-query
+    title: Views.AccountValuations
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:49.237Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-valuation-queries
+  - id: SYM-views-app-views-valuation-totals
+    title: Views.ValuationTotals
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:29:56.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-valuation-queries
+  - id: SYM-views-app-views-valuation-status-query
+    title: Views.ValuationStatus
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:02.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-decision-d36-6-api-valuation-status
+      - type: implements
+        target: REQ-views-valuation-status
+  - id: SYM-views-app-views-valuation-statuses
+    title: Views.ValuationStatuses
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:08.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-decision-d36-6-api-valuation-status
+      - type: implements
+        target: REQ-views-valuation-status
+  - id: SYM-views-app-allocation-on
+    title: AllocationOn
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:15.208Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation-inputs
+  - id: SYM-views-app-views-allocation-query
+    title: Views.Allocation
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:21.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation-inputs
+  - id: SYM-views-app-views-allocation-items
+    title: Views.allocationItems
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:27.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation-inputs
+  - id: SYM-views-app-test-allocation
+    title: TestAllocation
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:31.498Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-allocation-failures
+    title: TestAllocationFailures
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:35.776Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-account-valuations
+    title: TestAccountValuations
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:40.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-valuation-totals
+    title: TestValuationTotals
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:44.469Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-valuation-status
+    title: TestValuationStatus
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:48.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-with-ledger-rows
+    title: withLedgerRows
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:52.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-assertion-checks
+    title: TestAssertionChecks
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:30:57.251Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-transactions
+    title: TestTransactions
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:01.388Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-unknown-account
+    title: TestUnknownAccount
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:06.174Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-store-failure
+    title: TestStoreFailure
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:10.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app

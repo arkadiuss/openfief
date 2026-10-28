@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06eb29991688
+  - type: executable_for
+    from: SYM-views-app-test-helper-fixture-views
+    to: TEST-views-app
+    created_at: 2026-10-28T07:28:10.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32f35ef431bb
+  - type: executable_for
+    from: SYM-views-app-test-valuation-totals
+    to: TEST-views-app
+    created_at: 2026-10-28T07:30:45.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06563e0c8ad6

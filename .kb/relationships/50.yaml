@@ -139,3 +139,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-522a8eefa4f4
+  - type: implements
+    from: SYM-views-app-views-valuation-statuses
+    to: REQ-views-valuation-status
+    created_at: 2026-10-28T07:30:09.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4756f24ec76d
+  - type: implements
+    from: SYM-views-app-views-valuation-statuses
+    to: REQ-decision-d36-6-api-valuation-status
+    created_at: 2026-10-28T07:30:09.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-516a23fda3fb
+  - type: covered_by
+    from: SYM-views-app-views-valuation-statuses
+    to: TEST-views-app
+    created_at: 2026-10-28T07:30:09.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11ccd5810553
+  - type: executable_for
+    from: SYM-views-app-test-account-valuations
+    to: TEST-views-app
+    created_at: 2026-10-28T07:30:41.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-691a7e0f7b04

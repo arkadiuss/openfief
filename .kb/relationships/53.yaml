@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-677ac3e83c50
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-statuses-valuation-status
+    to: TEST-views-app
+    created_at: 2026-10-28T07:27:35.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82f99b5e46a3

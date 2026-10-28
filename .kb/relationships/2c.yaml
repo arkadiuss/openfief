@@ -188,3 +188,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d96d05a15142
+  - type: executable_for
+    from: SYM-views-app-test-allocation
+    to: TEST-views-app
+    created_at: 2026-10-28T07:30:32.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35ccb27e8194

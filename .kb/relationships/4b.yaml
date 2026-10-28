@@ -195,3 +195,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc6e9d048bdd
+  - type: implements
+    from: SYM-views-app-account-valuations
+    to: REQ-views-valuation-queries
+    created_at: 2026-10-28T07:29:42.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1febad46734
+  - type: covered_by
+    from: SYM-views-app-account-valuations
+    to: TEST-views-app
+    created_at: 2026-10-28T07:29:42.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-299be26b94d0

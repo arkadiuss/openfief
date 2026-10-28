@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73258418a403
+  - type: implements
+    from: SYM-views-app-valuation-statuses
+    to: REQ-views-valuation-status
+    created_at: 2026-10-28T07:28:28.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05bfbb5d8230
+  - type: implements
+    from: SYM-views-app-valuation-statuses
+    to: REQ-decision-d36-6-api-valuation-status
+    created_at: 2026-10-28T07:28:28.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f599164a5ae
+  - type: covered_by
+    from: SYM-views-app-valuation-statuses
+    to: TEST-views-app
+    created_at: 2026-10-28T07:28:28.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a280dbd5b691

@@ -202,3 +202,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-875a1fb6f0bb
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-rates
+    to: TEST-views-app
+    created_at: 2026-10-28T07:27:37.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a01c928b80b2
+  - type: executable_for
+    from: SYM-views-app-test-helper-money
+    to: TEST-views-app
+    created_at: 2026-10-28T07:27:51.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cac5b0d09e2d

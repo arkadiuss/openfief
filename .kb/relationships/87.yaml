@@ -118,3 +118,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19100c90daf8
+  - type: implements
+    from: SYM-views-app-fx-rates
+    to: REQ-views-allocation-inputs
+    created_at: 2026-10-28T07:28:33.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59658f90e75b
+  - type: implements
+    from: SYM-views-app-fx-rates
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T07:28:33.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-272a976edef2
+  - type: covered_by
+    from: SYM-views-app-fx-rates
+    to: TEST-views-app
+    created_at: 2026-10-28T07:28:33.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-277f3fa02a33
