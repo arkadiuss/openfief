@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-098b29272d2c
+    type: constrains
+    from: REQ-ledger-assertion-mismatch
+    to: FACT-SUBJECT-70F8289C4B07EE53
+    created_at: "2026-10-28T05:44:02.701Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-ledger-assertion-mismatch
+    to: FACT-PROP-D386C6D8651C0127
+    created_at: 2026-10-28T05:44:02.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e5f13e5d919
+  - type: specified_by
+    from: REQ-ledger-assertion-mismatch
+    to: SCEN-ledger-assertion-mismatch
+    created_at: 2026-10-28T05:44:02.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c715942426c1

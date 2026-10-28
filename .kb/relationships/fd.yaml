@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T05:28:13.969Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - id: rel-d8190368bcfe
+    type: implements
+    from: SYM-ledger-instrument-string
+    to: REQ-ledger-isin
+    created_at: "2026-10-28T05:27:18.084Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-instrument-string
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:27:18.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-211555bd1034

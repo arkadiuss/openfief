@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-6fcde6ce1692
+    type: verified_by
+    from: SCEN-portfolio-sleeve-role
+    to: TEST-portfolio-sleeve
+    created_at: "2026-10-28T05:13:23.662Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03b203908396
+  - type: executable_for
+    from: SYM-ledger-test-property-postings-sum-to-zero-per-currency
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:27:39.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c5445efebe
+  - type: executable_for
+    from: SYM-ledger-test-consume-fifo
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:12.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7be286ec8c3

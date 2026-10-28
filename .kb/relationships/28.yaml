@@ -48,3 +48,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7863f995152
+  - id: rel-db4875881359
+    type: verified_by
+    from: SCEN-ledger-isin-check-digit
+    to: TEST-ledger-instrument
+    created_at: "2026-10-28T05:23:53.147Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-ledger-cash-on
+    to: REQ-ledger-assertion-mismatch
+    created_at: 2026-10-28T05:44:28.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82fdfdc0c32f
+  - type: implements
+    from: SYM-ledger-cash-on
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T05:44:28.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-077839ee5f15
+  - type: covered_by
+    from: SYM-ledger-cash-on
+    to: TEST-ledger-assertion
+    created_at: 2026-10-28T05:44:28.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90e9c6c264cc

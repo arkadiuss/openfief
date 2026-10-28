@@ -13,6 +13,13 @@ var ErrInvalidDecimal = errors.New("invalid decimal")
 // ErrUnknownRoundingMode reports a RoundingMode outside the declared constants.
 var ErrUnknownRoundingMode = errors.New("unknown rounding mode")
 
+// halvingDivisor is 2: Div compares twice the remainder with one unit to find
+// ties without dividing again.
+const halvingDivisor = 2
+
+// ErrDivisionByZero reports a division by zero.
+var ErrDivisionByZero = errors.New("division by zero")
+
 // RoundingMode says how Round treats the digits it drops.
 type RoundingMode int
 
@@ -68,6 +75,44 @@ func (d Decimal) Round(places int32, mode RoundingMode) (Decimal, error) {
 		return Decimal{v: d.v.Truncate(places)}, nil
 	}
 	return Decimal{}, fmt.Errorf("%w: %d", ErrUnknownRoundingMode, mode)
+}
+
+// Div returns d / e rounded to places digits after the decimal point with
+// mode. Division is the one operation that cannot always be exact, so it
+// always takes an explicit rounding, applied once to the exact quotient.
+func (d Decimal) Div(e Decimal, places int32, mode RoundingMode) (Decimal, error) {
+	if e.v.IsZero() {
+		return Decimal{}, fmt.Errorf("%w: %s / 0", ErrDivisionByZero, d)
+	}
+	// q is truncated toward zero; r has d's sign and |r| < |e| * 10^-places.
+	q, r := d.v.QuoRem(e.v, places)
+	two := decimal.NewFromInt(halvingDivisor)
+	unit := decimal.New(1, -places)
+	// half compares the dropped remainder with half a unit of the last place.
+	half := r.Abs().Mul(two).Cmp(e.v.Abs().Mul(unit))
+	away, err := roundsAway(mode, half, !q.Shift(places).Mod(two).IsZero())
+	if err != nil {
+		return Decimal{}, err
+	}
+	if away {
+		q = q.Add(unit.Mul(decimal.NewFromInt(int64(d.v.Sign() * e.v.Sign()))))
+	}
+	return Decimal{v: q}, nil
+}
+
+// roundsAway reports whether a truncated quotient moves one unit away from
+// zero, given how the dropped remainder compares with half a unit and whether
+// the last kept digit is odd.
+func roundsAway(mode RoundingMode, half int, odd bool) (bool, error) {
+	switch mode {
+	case RoundHalfEven:
+		return half > 0 || half == 0 && odd, nil
+	case RoundHalfUp:
+		return half >= 0, nil
+	case RoundDown:
+		return false, nil
+	}
+	return false, fmt.Errorf("%w: %d", ErrUnknownRoundingMode, mode)
 }
 
 // Cmp returns -1, 0 or +1 as d is less than, equal to or greater than e.

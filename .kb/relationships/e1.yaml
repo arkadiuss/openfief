@@ -6,3 +6,45 @@ relationships:
     created_at: "2026-10-28T04:51:26.076Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-kernel-test-decimal-div
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T05:13:37.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b3128fcd211
+  - type: implements
+    from: SYM-ledger-book
+    to: REQ-ledger-posting-ledger-account
+    created_at: 2026-10-28T05:25:19.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0936e4693d94
+  - type: covered_by
+    from: SYM-ledger-book
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:19.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a3cf6580f1e
+  - type: implements
+    from: SYM-ledger-fingerprint
+    to: REQ-ledger-import-idempotent
+    created_at: 2026-10-28T05:33:00.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1fddca8f60c
+  - type: implements
+    from: SYM-ledger-fingerprint
+    to: REQ-AUTO-F19F621B67F14F4F
+    created_at: 2026-10-28T05:33:00.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e106566f5659
+  - type: covered_by
+    from: SYM-ledger-fingerprint
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:33:00.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d474f504e5d

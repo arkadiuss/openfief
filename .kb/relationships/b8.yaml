@@ -6,3 +6,52 @@ relationships:
     created_at: "2026-10-28T05:29:57.317Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - id: rel-aa14f94d85e0
+    type: implements
+    from: SYM-ledger-book-string
+    to: REQ-ledger-posting-ledger-account
+    created_at: "2026-10-28T05:25:43.161Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-book-string
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:43.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c40cfa0f9f5
+  - type: executable_for
+    from: SYM-ledger-test-helper-instrument
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:51.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06179d3d58c4
+  - type: executable_for
+    from: SYM-ledger-test-helper-instrument
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:26:51.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4c275677674
+  - type: executable_for
+    from: SYM-ledger-test-helper-instrument
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:26:51.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad8aacc41087
+  - type: executable_for
+    from: SYM-ledger-test-helper-instrument
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:51.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9586c354dff4
+  - type: executable_for
+    from: SYM-ledger-test-helper-instrument
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:26:51.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e15e3df1cdb

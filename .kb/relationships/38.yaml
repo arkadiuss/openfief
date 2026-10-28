@@ -13,3 +13,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18dcd8c656eb
+  - id: rel-a03dbd8fe43b
+    type: implements
+    from: SYM-ledger-holding-on
+    to: REQ-ledger-holding-derivation
+    created_at: "2026-10-28T05:39:34.019Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-ledger-holding-on
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T05:39:34.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bca7be208119
+  - type: covered_by
+    from: SYM-ledger-holding-on
+    to: TEST-ledger-holding
+    created_at: 2026-10-28T05:39:34.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbf1bf82debe
+  - type: verified_by
+    from: SCEN-ledger-assertion-mismatch
+    to: TEST-ledger-assertion
+    created_at: 2026-10-28T05:43:53.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d6c29750d20

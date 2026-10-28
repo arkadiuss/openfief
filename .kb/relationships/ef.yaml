@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b740dd7b5e3
+  - type: implements
+    from: SYM-ledger-transaction-validate-header
+    to: REQ-ledger-postings-zero-sum
+    created_at: 2026-10-28T05:28:01.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be40fb7f7f36
+  - type: implements
+    from: SYM-ledger-transaction-validate-header
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:28:01.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7eda57ac850e
+  - type: covered_by
+    from: SYM-ledger-transaction-validate-header
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:28:01.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-506ec91ff880

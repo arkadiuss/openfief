@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7574989d6cf7
+  - type: executable_for
+    from: SYM-ledger-test-lots-on
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:22.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aff0c522936

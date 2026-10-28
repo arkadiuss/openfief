@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-2f592734efdb
+    type: executable_for
+    from: SYM-ledger-test-holdings-on
+    to: TEST-ledger-holding
+    created_at: "2026-10-28T05:39:43.806Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

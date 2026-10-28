@@ -34,3 +34,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-097767663c7c
+  - id: rel-3de3c7991521
+    type: implements
+    from: SYM-ledger-isin-digits
+    to: REQ-ledger-isin
+    created_at: "2026-10-28T05:27:00.931Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-isin-digits
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:27:00.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-982aa88908f0

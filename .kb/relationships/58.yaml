@@ -34,3 +34,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3cb75d984c8f
+  - type: implements
+    from: SYM-ledger-isin
+    to: REQ-ledger-isin
+    created_at: 2026-10-28T05:26:56.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1597cb15b38a
+  - type: covered_by
+    from: SYM-ledger-isin
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:56.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a497b137e95d
+  - type: executable_for
+    from: SYM-ledger-test-helper-rng-decimal
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:27:34.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3846b7845ec3

@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c5ed91e6dc2
+  - type: executable_for
+    from: SYM-portfolio-test-parse-role
+    to: TEST-portfolio-sleeve
+    created_at: 2026-10-28T05:13:52.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eb50521f513
+  - type: executable_for
+    from: SYM-ledger-test-helper-cost-by-origin
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:40:33.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e793bf79767f

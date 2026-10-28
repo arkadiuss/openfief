@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-837ce1e7c313
+  - id: rel-b448196d640b
+    type: executable_for
+    from: SYM-ledger-test-cash-on
+    to: TEST-ledger-assertion
+    created_at: "2026-10-28T05:44:39.213Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

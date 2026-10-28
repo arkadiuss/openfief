@@ -76,3 +76,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d53686e9e19
+  - type: implements
+    from: SYM-ledger-isin-is-zero
+    to: REQ-ledger-isin
+    created_at: 2026-10-28T05:27:07.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80a3f16f4766
+  - type: covered_by
+    from: SYM-ledger-isin-is-zero
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:27:07.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56173a783c1e

@@ -1,0 +1,36 @@
+relationships:
+  - id: rel-06ab329859f5
+    type: implements
+    from: SYM-ledger-book-validate
+    to: REQ-ledger-posting-ledger-account
+    created_at: "2026-10-28T05:25:40.422Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-book-validate
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:40.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-202d9a8810f1
+  - type: implements
+    from: SYM-ledger-new-dividend
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-28T05:26:08.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99129268d247
+  - type: implements
+    from: SYM-ledger-new-dividend
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:26:08.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b27d78b935f1
+  - type: covered_by
+    from: SYM-ledger-new-dividend
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:08.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83b82018e9a2

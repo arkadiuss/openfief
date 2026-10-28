@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70cd8edfcd44
+  - type: executable_for
+    from: SYM-ledger-test-transaction-validate
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:28:06.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68092306a00d

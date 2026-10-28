@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-faf226d4bc06
+    type: executable_for
+    from: SYM-ledger-test-helper-total-units
+    to: TEST-ledger-properties
+    created_at: "2026-10-28T05:40:30.536Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

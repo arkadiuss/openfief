@@ -34,3 +34,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6c3b81e2421
+  - type: constrains
+    from: REQ-ledger-event-postings
+    to: FACT-SUBJECT-7522D6C27E74C2F2
+    created_at: 2026-10-28T05:24:51.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-576706cafee1
+  - type: requires_property
+    from: REQ-ledger-event-postings
+    to: FACT-PROP-6A1F7568CCDAC128
+    created_at: 2026-10-28T05:24:51.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f168499cd4e0
+  - type: specified_by
+    from: REQ-ledger-event-postings
+    to: SCEN-ledger-dividend-withholding
+    created_at: 2026-10-28T05:24:51.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60190a287ad2
+  - type: specified_by
+    from: REQ-ledger-event-postings
+    to: SCEN-ledger-fx-conversion
+    created_at: 2026-10-28T05:24:51.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8a3b6b69652

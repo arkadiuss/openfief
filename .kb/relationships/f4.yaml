@@ -20,3 +20,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-345cb9052a55
+  - id: rel-b272b79c2afa
+    type: implements
+    from: SYM-ledger-posting
+    to: REQ-ledger-posting-ledger-account
+    created_at: "2026-10-28T05:27:48.715Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-posting
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:27:48.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23820d491649

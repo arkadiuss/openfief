@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-883238abf56e
+    type: implements
+    from: SYM-ledger-book-kind-string
+    to: REQ-ledger-posting-ledger-account
+    created_at: "2026-10-28T05:25:17.697Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-book-kind-string
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:17.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6d2c6fbf635
+  - type: implements
+    from: SYM-ledger-transaction-key-string
+    to: REQ-AUTO-F19F621B67F14F4F
+    created_at: 2026-10-28T05:27:43.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ebccec8d648
+  - type: covered_by
+    from: SYM-ledger-transaction-key-string
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:27:43.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6950c1b0447d

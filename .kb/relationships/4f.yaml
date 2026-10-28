@@ -20,3 +20,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf8861fe41e0
+  - id: rel-6c7dbf490f26
+    type: implements
+    from: SYM-ledger-holding-book
+    to: REQ-ledger-posting-ledger-account
+    created_at: "2026-10-28T05:25:27.104Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-holding-book
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:27.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1af3d0761f43
+  - type: implements
+    from: SYM-ledger-lot-consumption
+    to: REQ-ledger-fifo
+    created_at: 2026-10-28T05:39:54.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fffbe7bad6f
+  - type: implements
+    from: SYM-ledger-lot-consumption
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T05:39:54.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eac874b11eb2
+  - type: covered_by
+    from: SYM-ledger-lot-consumption
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:39:54.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-125c7aeb4cec

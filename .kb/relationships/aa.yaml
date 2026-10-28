@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-620ea54d16c0
+  - type: implements
+    from: SYM-ledger-sums-by-currency
+    to: REQ-ledger-postings-zero-sum
+    created_at: 2026-10-28T05:28:04.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b9320a3f112
+  - type: implements
+    from: SYM-ledger-sums-by-currency
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:28:04.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0a7b586a0e4
+  - type: covered_by
+    from: SYM-ledger-sums-by-currency
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:28:04.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd94df2f2677

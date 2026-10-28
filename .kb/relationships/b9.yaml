@@ -76,3 +76,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fe264741425
+  - type: verified_by
+    from: SCEN-ledger-fx-conversion
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:24:06.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-624b36316135
+  - type: verified_by
+    from: SCEN-ledger-fx-conversion
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:24:06.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f40eea870b7
+  - type: executable_for
+    from: SYM-ledger-test-book-constructors
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:49.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70bdd9d19e57
+  - type: verified_by
+    from: SCEN-ledger-changed-row-supersedes
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:32:10.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f2a87c39f9f
