@@ -2443,3 +2443,1728 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-fx
+  - id: SYM-plugins-egress-host
+    title: EgressHost
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:52.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-parse-egress-host
+    title: ParseEgressHost
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:54.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-egress-host-string
+    title: EgressHost.String
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:57.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-compare-egress-hosts
+    title: compareEgressHosts
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:00.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-egress-host-validate
+    title: EgressHost.validate
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:02.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-validate-hostname
+    title: validateHostname
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:05.449Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-validate-label
+    title: validateLabel
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:07.958Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-is-lower-alnum
+    title: isLowerAlnum
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:10.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-is-digit
+    title: isDigit
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:13.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-is-digits
+    title: isDigits
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:16.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-test-parse-egress-host
+    title: TestParseEgressHost
+    sourceFile: internal/plugins/egress_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:18.155Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-host
+  - id: SYM-plugins-test-egress-host-string
+    title: TestEgressHostString
+    sourceFile: internal/plugins/egress_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:20.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-host
+  - id: SYM-plugins-field-error
+    title: FieldError
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:22.705Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-field-error-error
+    title: FieldError.Error
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:25.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-field-error-unwrap
+    title: FieldError.Unwrap
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:28.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-field-err
+    title: fieldErr
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:31.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-indexed
+    title: indexed
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:34.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-test-helper-host
+    title: host
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:36.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-helper-sample-plugin
+    title: samplePlugin
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:40.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-helper-full-grant
+    title: fullGrant
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:43.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-helper-field-error
+    title: fieldError
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:46.489Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-helper-field-errors
+    title: fieldErrors
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:49.499Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-image-ref
+    title: ImageRef
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:51.426Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-parse-image-ref
+    title: ParseImageRef
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:54.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-repository
+    title: ImageRef.Repository
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:57.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-digest
+    title: ImageRef.Digest
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:01.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-string
+    title: ImageRef.String
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:04.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-is-zero
+    title: ImageRef.IsZero
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:07.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-equal
+    title: ImageRef.Equal
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:10.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-valid-digest
+    title: validDigest
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:14.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-validate-repository
+    title: validateRepository
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:18.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-is-registry-host
+    title: isRegistryHost
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:21.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-validate-registry-host
+    title: validateRegistryHost
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:24.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-valid-path-component
+    title: validPathComponent
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:28.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-valid-separator
+    title: validSeparator
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:31.126Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-test-parse-image-ref
+    title: TestParseImageRef
+    sourceFile: internal/plugins/image_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:33.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-image
+  - id: SYM-plugins-test-image-want
+    title: want
+    sourceFile: internal/plugins/image_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:35.896Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-image
+  - id: SYM-plugins-test-image-ref-equal
+    title: TestImageRefEqual
+    sourceFile: internal/plugins/image_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:38.300Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-image
+  - id: SYM-plugins-capability
+    title: Capability
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:40.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-capability-known
+    title: Capability.known
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:43.353Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-data-tier
+    title: DataTier
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:45.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-data-tier-valid
+    title: DataTier.valid
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:48.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-secret-mount
+    title: SecretMount
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:51.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-manifest
+    title: Manifest
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:53.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-manifest-validate
+    title: Manifest.Validate
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:56.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-manifest-requested
+    title: Manifest.Requested
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:59.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-capabilities
+    title: validateCapabilities
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:02.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-egress
+    title: validateEgress
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:06.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-data-tiers
+    title: validateDataTiers
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:09.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-secret-names
+    title: validateSecretNames
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:12.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-secret-mounts
+    title: validateSecretMounts
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:16.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-valid-secret-name
+    title: validSecretName
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:19.921Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-valid-mount-path
+    title: validMountPath
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:24.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-paths-overlap
+    title: pathsOverlap
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:27.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-overlapping-paths
+    title: overlappingPaths
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:29.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-duplicates
+    title: duplicates
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:32.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-sorted-copy
+    title: sortedCopy
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:34.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-test-manifest-validate
+    title: TestManifestValidate
+    sourceFile: internal/plugins/manifest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:37.388Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+  - id: SYM-plugins-test-manifest-requested
+    title: TestManifestRequested
+    sourceFile: internal/plugins/manifest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:39.555Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+  - id: SYM-plugins-permissions
+    title: Permissions
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:41.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-permissions-is-empty
+    title: Permissions.IsEmpty
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:43.905Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-upgrade-approval-diff
+  - id: SYM-plugins-permissions-validate
+    title: Permissions.validate
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:46.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-permissions-sorted
+    title: Permissions.sorted
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:50.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-plugin
+    title: Plugin
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:51.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-plugin-validate
+    title: Plugin.Validate
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:54.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-grant
+    title: Grant
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:56.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-grant-validate
+    title: Grant.Validate
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:59.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-valid-plugin-name
+    title: validPluginName
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:02.317Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-prefixed
+    title: prefixed
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:04.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-check-pair
+    title: checkPair
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:07.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-upgrade-approval-diff
+  - id: SYM-plugins-needs-approval
+    title: NeedsApproval
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:09.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-upgrade-approval-diff
+  - id: SYM-plugins-missing
+    title: missing
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:12.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-upgrade-approval-diff
+  - id: SYM-plugins-test-plugin-validate
+    title: TestPluginValidate
+    sourceFile: internal/plugins/permissions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:14.539Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-grant-validate
+    title: TestGrantValidate
+    sourceFile: internal/plugins/permissions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:16.695Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-needs-approval
+    title: TestNeedsApproval
+    sourceFile: internal/plugins/permissions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:18.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-needs-approval-nil
+    title: TestNeedsApprovalNil
+    sourceFile: internal/plugins/permissions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:21.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-egress-allow-list
+    title: EgressAllowList
+    sourceFile: internal/plugins/allowlist.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:15.410Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-exact-match
+  - id: SYM-plugins-egress-allow-list-allows
+    title: EgressAllowList.Allows
+    sourceFile: internal/plugins/allowlist.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:17.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-exact-match
+  - id: SYM-plugins-test-egress-allow-list-allows
+    title: TestEgressAllowListAllows
+    sourceFile: internal/plugins/allowlist_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:19.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list
+  - id: SYM-plugins-service
+    title: Service
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:20.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-topology
+    title: Topology
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:22.580Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-peer
+    title: Peer
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:25.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-plugins-network-policy-core-and-proxy
+  - id: SYM-plugins-network-rule
+    title: NetworkRule
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:27.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-plugins-network-policy-core-and-proxy
+  - id: SYM-plugins-network-policy
+    title: NetworkPolicy
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:30.571Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-plugins-network-policy-core-and-proxy
+  - id: SYM-plugins-service-account
+    title: ServiceAccount
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:33.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-projected-token
+    title: ProjectedToken
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:35.623Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-secret-volume
+    title: SecretVolume
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:38.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-env-var
+    title: EnvVar
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:40.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-workload
+    title: Workload
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:43.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-compile
+    title: Compile
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:47.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-plugins-network-policy-core-and-proxy
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-topology-validate
+    title: Topology.validate
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:50.236Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-service-validate
+    title: Service.validate
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:52.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-service-host-port
+    title: Service.hostPort
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:55.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-test-compile-topology
+    title: topology
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:57.888Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-identity-parts
+    title: identityParts
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:00.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile
+    title: TestCompile
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:02.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-never-allows-dns
+    title: TestCompileNeverAllowsDNS
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:04.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-check-only-core-and-proxy
+    title: checkOnlyCoreAndProxy
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:06.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-deterministic
+    title: TestCompileDeterministic
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:08.628Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-nil
+    title: TestCompileNil
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:10.794Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-effective-permissions
+    title: EffectivePermissions
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:12.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective
+    title: Effective
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:15.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-both
+    title: both
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:18.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-plugin
+    title: EffectivePermissions.Plugin
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:21.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-image
+    title: EffectivePermissions.Image
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:23.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-capabilities
+    title: EffectivePermissions.Capabilities
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:26.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-egress
+    title: EffectivePermissions.Egress
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:28.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-secrets
+    title: EffectivePermissions.Secrets
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:31.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-data-tiers
+    title: EffectivePermissions.DataTiers
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:34.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-config
+    title: EffectivePermissions.Config
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:37.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-equal
+    title: EffectivePermissions.Equal
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:39.887Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-test-effective-effective-view
+    title: effectiveView
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:42.428Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-test-effective-view-of
+    title: viewOf
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:45.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-test-effective
+    title: TestEffective
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:47.691Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-test-effective-equal
+    title: TestEffectiveEqual
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:50.519Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-test-effective-accessors-copy
+    title: TestEffectiveAccessorsCopy
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:53.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-service-account-name
+    title: ServiceAccountName
+    sourceFile: internal/plugins/identity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:56.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-identity
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-identity-service-account
+  - id: SYM-plugins-plugin-for-service-account
+    title: PluginForServiceAccount
+    sourceFile: internal/plugins/identity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:59.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-identity
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-identity-service-account
+  - id: SYM-plugins-test-service-account-name
+    title: TestServiceAccountName
+    sourceFile: internal/plugins/identity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:01.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-identity
+  - id: SYM-plugins-test-plugin-for-service-account
+    title: TestPluginForServiceAccount
+    sourceFile: internal/plugins/identity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:03.890Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-identity
+  - id: SYM-plugins-test-identity-result
+    title: result
+    sourceFile: internal/plugins/identity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:06.584Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-identity
+  - id: SYM-plugins-egress-forbidden-prefixes
+    title: ForbiddenPrefixes
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:28.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-egress-check-address
+    title: CheckAddress
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:31.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-egress-embedded-ipv4
+    title: embeddedIPv4
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:35.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-test-check-address
+    title: TestCheckAddress
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:37.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address
+  - id: SYM-plugins-test-check-address-invalid
+    title: TestCheckAddressInvalid
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:40.215Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address
+  - id: SYM-plugins-test-forbidden-prefixes
+    title: TestForbiddenPrefixes
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:43.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address

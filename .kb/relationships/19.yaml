@@ -20,3 +20,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09118513711c
+  - type: constrains
+    from: REQ-plugins-effective-intersection
+    to: FACT-SUBJECT-CF8D9FC9DA6498B7
+    created_at: 2026-10-28T05:28:20.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d44acae3c7a0
+  - type: requires_property
+    from: REQ-plugins-effective-intersection
+    to: FACT-PROP-4BE84260A9B8DC5F
+    created_at: 2026-10-28T05:28:20.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eb4ddd4024f
+  - type: specified_by
+    from: REQ-plugins-effective-intersection
+    to: SCEN-plugins-effective-partial-grant
+    created_at: 2026-10-28T05:28:20.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c5ed91e6dc2

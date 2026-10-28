@@ -13,3 +13,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7d3f0d897ea
+  - type: implements
+    from: SYM-plugins-permissions
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:25:41.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-affc7adaba30
+  - type: covered_by
+    from: SYM-plugins-permissions
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:25:41.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecdcd6f0b76c
+  - type: implements
+    from: SYM-plugins-missing
+    to: REQ-plugins-upgrade-approval-diff
+    created_at: 2026-10-28T05:26:12.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed2e0c1b53bf
+  - type: implements
+    from: SYM-plugins-missing
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T05:26:12.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1962d21b2ea4
+  - type: covered_by
+    from: SYM-plugins-missing
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:26:12.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b740dd7b5e3

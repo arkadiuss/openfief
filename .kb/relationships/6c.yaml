@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-d9e62c8c192c
+    type: constrains
+    from: REQ-plugins-image-digest-only
+    to: FACT-SUBJECT-3C2FC1DC62221CB6
+    created_at: "2026-10-28T05:21:31.423Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-plugins-image-digest-only
+    to: FACT-PROP-AD4B63D43EAA0220
+    created_at: 2026-10-28T05:21:31.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b008b0a6f20
+  - type: specified_by
+    from: REQ-plugins-image-digest-only
+    to: SCEN-plugins-image-tag-rejected
+    created_at: 2026-10-28T05:21:31.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaecf38e3755

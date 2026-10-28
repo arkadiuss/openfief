@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6807f766682
+  - type: executable_for
+    from: SYM-plugins-test-compile-deterministic
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:30:08.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b973bb84221e

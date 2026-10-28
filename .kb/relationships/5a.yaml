@@ -34,3 +34,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bd7f2aeaf44
+  - type: implements
+    from: SYM-plugins-egress-host
+    to: REQ-plugins-egress-host-canonical
+    created_at: 2026-10-28T05:22:52.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0f5add6c8d
+  - type: implements
+    from: SYM-plugins-egress-host
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:22:52.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13105a459366
+  - type: covered_by
+    from: SYM-plugins-egress-host
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:22:52.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f44373fc5f3

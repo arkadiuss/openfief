@@ -6,3 +6,10 @@ relationships:
     created_at: "2026-10-28T04:51:55.294Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-plugins-allow-list-exact
+    to: TEST-plugins-allow-list
+    created_at: 2026-10-28T05:28:12.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b57c5182304a

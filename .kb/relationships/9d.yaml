@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-2acb8e73afe3
+    type: executable_for
+    from: SYM-plugins-test-helper-host
+    to: TEST-plugins-manifest
+    created_at: "2026-10-28T05:23:37.106Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-plugins-test-helper-host
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:23:37.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bf9eff9c894

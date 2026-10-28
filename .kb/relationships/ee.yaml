@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-322b516ed80e
+  - type: executable_for
+    from: SYM-plugins-test-compile
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:30:02.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c81bc1f64e2

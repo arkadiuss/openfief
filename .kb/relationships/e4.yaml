@@ -27,3 +27,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-265e3b48bece
+  - type: implements
+    from: SYM-plugins-is-digits
+    to: REQ-plugins-egress-host-canonical
+    created_at: 2026-10-28T05:23:16.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b34d0daa7d4f
+  - type: implements
+    from: SYM-plugins-is-digits
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:23:16.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c37b40f1bbad
+  - type: covered_by
+    from: SYM-plugins-is-digits
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:23:16.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f797d5c4bef
+  - type: executable_for
+    from: SYM-plugins-test-manifest-requested
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:25:39.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af6b7bad3d34

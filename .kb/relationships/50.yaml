@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-702c277b4615
+  - type: implements
+    from: SYM-plugins-field-error-unwrap
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:23:29.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ede11db9caeb
+  - type: covered_by
+    from: SYM-plugins-field-error-unwrap
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:23:29.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2790bc1f34ed

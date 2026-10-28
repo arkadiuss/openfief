@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74175baa573a
+  - type: executable_for
+    from: SYM-plugins-test-helper-field-errors
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:23:49.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-942016f0675d
+  - type: executable_for
+    from: SYM-plugins-test-helper-field-errors
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:23:49.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc4eed67e1a7

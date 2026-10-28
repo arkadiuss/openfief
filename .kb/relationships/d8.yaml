@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32c1d5f24ebf
+  - type: implements
+    from: SYM-plugins-egress-allow-list-allows
+    to: REQ-plugins-allow-list-exact-match
+    created_at: 2026-10-28T05:29:17.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e3a6d0f1b86
+  - type: implements
+    from: SYM-plugins-egress-allow-list-allows
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:29:17.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17dd1758cdb7
+  - type: covered_by
+    from: SYM-plugins-egress-allow-list-allows
+    to: TEST-plugins-allow-list
+    created_at: 2026-10-28T05:29:17.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-503a5de488c2

@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-e87da43e781e
+    type: verified_by
+    from: SCEN-plugins-identity-namespace
+    to: TEST-plugins-identity
+    created_at: "2026-10-28T05:28:13.969Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

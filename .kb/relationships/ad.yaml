@@ -20,3 +20,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2898734cd55d
+  - id: rel-8d9530f20c77
+    type: implements
+    from: SYM-plugins-parse-egress-host
+    to: REQ-plugins-egress-host-canonical
+    created_at: "2026-10-28T05:22:55.139Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-parse-egress-host
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:22:55.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee8d05c08e39
+  - type: covered_by
+    from: SYM-plugins-parse-egress-host
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:22:55.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec74dfb0e2e9
+  - type: implements
+    from: SYM-plugins-secret-mount
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:24:52.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40082321e293
+  - type: implements
+    from: SYM-plugins-secret-mount
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:24:52.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13637b8922d0
+  - type: covered_by
+    from: SYM-plugins-secret-mount
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:24:52.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1ec131849a8

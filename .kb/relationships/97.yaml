@@ -55,3 +55,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a8b456587dd
+  - type: implements
+    from: SYM-plugins-service-host-port
+    to: REQ-plugins-proxy-env-and-allow-list
+    created_at: 2026-10-28T05:29:55.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7a8cb9459bc
+  - type: implements
+    from: SYM-plugins-service-host-port
+    to: REQ-AUTO-8CBFBD6A12E0865B
+    created_at: 2026-10-28T05:29:55.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e9c883095ea
+  - type: covered_by
+    from: SYM-plugins-service-host-port
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:55.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bee15dcd54cf

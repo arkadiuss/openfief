@@ -13,3 +13,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32f95dbefb2b
+  - id: rel-0518e8887f82
+    type: implements
+    from: SYM-plugins-compile
+    to: REQ-plugins-network-policy-core-and-proxy
+    created_at: "2026-10-28T05:29:47.531Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-compile
+    to: REQ-plugins-workload-identity-secrets
+    created_at: 2026-10-28T05:29:47.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d31144654efa
+  - type: implements
+    from: SYM-plugins-compile
+    to: REQ-plugins-proxy-env-and-allow-list
+    created_at: 2026-10-28T05:29:47.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d7d3f3d6318
+  - type: covered_by
+    from: SYM-plugins-compile
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:47.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52a0191c157b

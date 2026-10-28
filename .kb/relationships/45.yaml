@@ -34,3 +34,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8b8565aa3ea
+  - type: implements
+    from: SYM-plugins-egress-allow-list
+    to: REQ-plugins-allow-list-exact-match
+    created_at: 2026-10-28T05:29:15.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9892d90586c
+  - type: implements
+    from: SYM-plugins-egress-allow-list
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:29:15.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4769dfb3448
+  - type: covered_by
+    from: SYM-plugins-egress-allow-list
+    to: TEST-plugins-allow-list
+    created_at: 2026-10-28T05:29:15.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057a79b9e2f3
+  - type: implements
+    from: SYM-plugins-effective-permissions-egress
+    to: REQ-plugins-effective-intersection
+    created_at: 2026-10-28T05:30:29.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dcd96f9f5e5
+  - type: implements
+    from: SYM-plugins-effective-permissions-egress
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T05:30:29.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1588e15f9f8
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-egress
+    to: TEST-plugins-effective
+    created_at: 2026-10-28T05:30:29.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d53686e9e19
