@@ -35,20 +35,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d9a5961a7797
   - type: implements
-    from: SYM-docgen-finding
-    to: REQ-docs-stale-gate
-    created_at: 2026-10-28T09:35:22.911Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d207ddd11248
-  - type: covered_by
-    from: SYM-docgen-finding
-    to: TEST-docs-fresh
-    created_at: 2026-10-28T09:35:22.928Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-72e4eaadeb27
-  - type: implements
     from: SYM-valuation-app-revaluer
     to: REQ-valuation-revaluation-rows
     created_at: 2026-10-28T07:33:53.137Z
@@ -132,3 +118,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18966ac9cf7e
+  - type: implements
+    from: SYM-docgen-finding
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:35:22.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d207ddd11248
+  - type: covered_by
+    from: SYM-docgen-finding
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:35:22.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72e4eaadeb27

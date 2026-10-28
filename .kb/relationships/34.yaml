@@ -126,20 +126,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-cf1123d64d56
   - type: implements
-    from: SYM-docgen-task
-    to: REQ-docs-generated-reference
-    created_at: 2026-10-28T09:39:01.587Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-79ae87f1b66d
-  - type: covered_by
-    from: SYM-docgen-task
-    to: TEST-docs-reference
-    created_at: 2026-10-28T09:39:01.604Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0b20211edb00
-  - type: implements
     from: SYM-ledger-is-seeding
     to: REQ-ledger-seed-refuse-reseed
     created_at: 2026-10-28T08:39:53.123Z
@@ -251,3 +237,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-afcf1b3dbf52
+  - type: implements
+    from: SYM-docgen-task
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:39:01.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79ae87f1b66d
+  - type: covered_by
+    from: SYM-docgen-task
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:39:01.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b20211edb00

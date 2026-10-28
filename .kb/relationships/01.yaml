@@ -76,27 +76,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4d9cacdaae2
-  - type: constrains
-    from: REQ-docs-generated-reference
-    to: FACT-SUBJECT-69E4E336F63AF9BB
-    created_at: 2026-10-28T09:33:05.241Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ae36e232693c
-  - type: requires_property
-    from: REQ-docs-generated-reference
-    to: FACT-PROP-6B6CA8C8BF07FF77
-    created_at: 2026-10-28T09:33:05.271Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c58cb85cd52d
-  - type: specified_by
-    from: REQ-docs-generated-reference
-    to: SCEN-docs-generated-reference
-    created_at: 2026-10-28T09:33:05.283Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b3ee90d478ee
   - type: implements
     from: SYM-valuation-app-for-import
     to: REQ-valuation-revaluation-triggers
@@ -244,3 +223,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b40d09151dbc
+  - type: constrains
+    from: REQ-docs-generated-reference
+    to: FACT-SUBJECT-69E4E336F63AF9BB
+    created_at: 2026-10-28T09:33:05.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae36e232693c
+  - type: requires_property
+    from: REQ-docs-generated-reference
+    to: FACT-PROP-6B6CA8C8BF07FF77
+    created_at: 2026-10-28T09:33:05.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58cb85cd52d
+  - type: specified_by
+    from: REQ-docs-generated-reference
+    to: SCEN-docs-generated-reference
+    created_at: 2026-10-28T09:33:05.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3ee90d478ee

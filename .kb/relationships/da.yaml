@@ -97,27 +97,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57ef99f00f4b
-  - type: implements
-    from: SYM-docgen-run-refs
-    to: REQ-docs-refs-exist
-    created_at: 2026-10-28T09:37:44.048Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-58c666a04fb1
-  - type: covered_by
-    from: SYM-docgen-run-refs
-    to: TEST-docs-reference
-    created_at: 2026-10-28T09:37:44.065Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2d539f1f520e
-  - type: covered_by
-    from: SYM-docgen-run-refs
-    to: TEST-docs-generate
-    created_at: 2026-10-28T09:37:44.074Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-58955036dbc0
   - type: constrains
     from: REQ-valuation-river-jobs
     to: FACT-SUBJECT-DD938F202657A50C
@@ -223,3 +202,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a946c08c8e43
+  - type: implements
+    from: SYM-docgen-run-refs
+    to: REQ-docs-refs-exist
+    created_at: 2026-10-28T09:37:44.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58c666a04fb1
+  - type: covered_by
+    from: SYM-docgen-run-refs
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:37:44.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d539f1f520e
+  - type: covered_by
+    from: SYM-docgen-run-refs
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:37:44.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58955036dbc0

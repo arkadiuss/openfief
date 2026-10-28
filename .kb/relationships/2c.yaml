@@ -104,41 +104,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-233860691c27
-  - type: constrains
-    from: REQ-docs-build-fails-broken
-    to: FACT-SUBJECT-99FBBD666AEDADD3
-    created_at: 2026-10-28T09:33:10.296Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-63ee7754f4f4
-  - type: requires_property
-    from: REQ-docs-build-fails-broken
-    to: FACT-PROP-F1A73B5F25DA362E
-    created_at: 2026-10-28T09:33:10.341Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0947715494ab
-  - type: implements
-    from: SYM-docgen-status-by-decision
-    to: REQ-docs-generated-reference
-    created_at: 2026-10-28T09:38:57.652Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b90ea9a455bd
-  - type: covered_by
-    from: SYM-docgen-status-by-decision
-    to: TEST-docs-reference
-    created_at: 2026-10-28T09:38:57.676Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c11f3a47f5d5
-  - type: covered_by
-    from: SYM-docgen-status-by-decision
-    to: TEST-docs-generate
-    created_at: 2026-10-28T09:38:57.686Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ceb20f842e71
   - type: executable_for
     from: SYM-valuation-app-test-helper-instrument
     to: TEST-valuation-app-revalue
@@ -300,3 +265,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9283f5172682
+  - type: constrains
+    from: REQ-docs-build-fails-broken
+    to: FACT-SUBJECT-99FBBD666AEDADD3
+    created_at: 2026-10-28T09:33:10.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ee7754f4f4
+  - type: requires_property
+    from: REQ-docs-build-fails-broken
+    to: FACT-PROP-F1A73B5F25DA362E
+    created_at: 2026-10-28T09:33:10.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0947715494ab
+  - type: implements
+    from: SYM-docgen-status-by-decision
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:38:57.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b90ea9a455bd
+  - type: covered_by
+    from: SYM-docgen-status-by-decision
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:38:57.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c11f3a47f5d5
+  - type: covered_by
+    from: SYM-docgen-status-by-decision
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:38:57.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceb20f842e71

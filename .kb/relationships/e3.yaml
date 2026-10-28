@@ -126,20 +126,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ca7a49795e61
   - type: implements
-    from: SYM-docgen-stale-findings
-    to: REQ-docs-stale-gate
-    created_at: 2026-10-28T09:34:48.892Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a4586950785f
-  - type: covered_by
-    from: SYM-docgen-stale-findings
-    to: TEST-docs-fresh
-    created_at: 2026-10-28T09:34:48.910Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2e15de626ff8
-  - type: implements
     from: SYM-valuation-postgres-store-save-index-readings
     to: REQ-valuation-enqueue-same-transaction
     created_at: 2026-10-28T08:01:50.999Z
@@ -237,3 +223,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30b3efcefac4
+  - type: implements
+    from: SYM-docgen-stale-findings
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:34:48.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4586950785f
+  - type: covered_by
+    from: SYM-docgen-stale-findings
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:34:48.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e15de626ff8

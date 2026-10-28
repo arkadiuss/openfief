@@ -104,34 +104,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c8c5c2bbe74
-  - type: implements
-    from: SYM-docgen-context-diagram
-    to: REQ-docs-generated-reference
-    created_at: 2026-10-28T09:33:41.571Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ee4c750b1ac8
-  - type: covered_by
-    from: SYM-docgen-context-diagram
-    to: TEST-docs-reference
-    created_at: 2026-10-28T09:33:41.588Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-407284501b72
-  - type: covered_by
-    from: SYM-docgen-context-diagram
-    to: TEST-docs-generate
-    created_at: 2026-10-28T09:33:41.597Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d95502ea7b7e
-  - type: executable_for
-    from: SYM-docgen-test-parse-log
-    to: TEST-docs-fresh
-    created_at: 2026-10-28T09:35:45.018Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c5a4c63d2890
   - type: executable_for
     from: SYM-valuation-test-lot-indices
     to: TEST-valuation-index
@@ -160,3 +132,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ea6ef5c3b9f
+  - type: implements
+    from: SYM-docgen-context-diagram
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:33:41.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee4c750b1ac8
+  - type: covered_by
+    from: SYM-docgen-context-diagram
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:33:41.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-407284501b72
+  - type: covered_by
+    from: SYM-docgen-context-diagram
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:33:41.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d95502ea7b7e
+  - type: executable_for
+    from: SYM-docgen-test-parse-log
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:35:45.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5a4c63d2890

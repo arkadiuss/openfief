@@ -20,13 +20,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a26af341257
-  - type: executable_for
-    from: SYM-docgen-test-place-of
-    to: TEST-docs-reference
-    created_at: 2026-10-28T09:37:16.048Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bc84e2d65e1b
   - type: implements
     from: SYM-valuation-postgres-store-fxrates
     to: REQ-valuation-schema
@@ -160,3 +153,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ddf9bbb32a5
+  - type: executable_for
+    from: SYM-docgen-test-place-of
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:37:16.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc84e2d65e1b

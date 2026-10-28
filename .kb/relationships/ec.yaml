@@ -132,27 +132,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aafd49fd9e5c
-  - type: executable_for
-    from: SYM-docgen-test-run-fresh-staged
-    to: TEST-docs-fresh
-    created_at: 2026-10-28T09:35:42.091Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4aa5189e632e
-  - type: implements
-    from: SYM-docgen-read-json
-    to: REQ-docs-generated-reference
-    created_at: 2026-10-28T09:36:46.967Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-79f3613581c7
-  - type: covered_by
-    from: SYM-docgen-read-json
-    to: TEST-docs-generate
-    created_at: 2026-10-28T09:36:46.988Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-990b94f96c1e
   - type: implements
     from: SYM-valuation-postgres-migration
     to: REQ-valuation-schema
@@ -237,3 +216,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48993ce8b332
+  - type: executable_for
+    from: SYM-docgen-test-run-fresh-staged
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:35:42.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aa5189e632e
+  - type: implements
+    from: SYM-docgen-read-json
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:36:46.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79f3613581c7
+  - type: covered_by
+    from: SYM-docgen-read-json
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:36:46.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-990b94f96c1e

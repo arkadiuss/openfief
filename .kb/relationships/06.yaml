@@ -118,13 +118,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b62497fbbef2
-  - type: executable_for
-    from: SYM-docgen-test-status-by-decision
-    to: TEST-docs-reference
-    created_at: 2026-10-28T09:37:30.024Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-84ce5172c12e
   - type: implements
     from: SYM-valuation-app-revaluer-rows
     to: REQ-valuation-revaluation-rows
@@ -244,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68c6bf364d01
+  - type: executable_for
+    from: SYM-docgen-test-status-by-decision
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:37:30.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84ce5172c12e

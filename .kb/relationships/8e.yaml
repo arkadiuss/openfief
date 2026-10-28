@@ -125,27 +125,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df91532fd4af
-  - type: implements
-    from: SYM-docgen-requirement-area
-    to: REQ-docs-generated-reference
-    created_at: 2026-10-28T09:38:07.430Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-21fd0248ebb1
-  - type: covered_by
-    from: SYM-docgen-requirement-area
-    to: TEST-docs-reference
-    created_at: 2026-10-28T09:38:07.447Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7154b54b2010
-  - type: covered_by
-    from: SYM-docgen-requirement-area
-    to: TEST-docs-generate
-    created_at: 2026-10-28T09:38:07.463Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a877b479ed5d
   - type: executable_for
     from: SYM-valuation-app-test-helper-fake-ledger-accounts
     to: TEST-valuation-app-revalue
@@ -272,3 +251,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccf8201754da
+  - type: implements
+    from: SYM-docgen-requirement-area
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:38:07.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21fd0248ebb1
+  - type: covered_by
+    from: SYM-docgen-requirement-area
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:38:07.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7154b54b2010
+  - type: covered_by
+    from: SYM-docgen-requirement-area
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:38:07.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a877b479ed5d
