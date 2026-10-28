@@ -22942,3 +22942,29 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-demo-validate
+  - id: SYM-demo-demo-cidrs
+    title: demo_cidrs
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:21.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-access
+  - id: SYM-demo-unknown-variables
+    title: unknown_variables
+    sourceFile: scripts/demo/validate.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:27.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-tooling-demo-manifests

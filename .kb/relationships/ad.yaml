@@ -286,13 +286,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f7e10d0fb4e
-  - type: requires_property
-    from: REQ-tooling-demo-access
-    to: FACT-PROP-B0B3E7F2D9F867CD
-    created_at: 2026-10-28T09:00:42.900Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5871281969e2
   - type: specified_by
     from: REQ-tooling-demo-access
     to: SCEN-tooling-demo-ssh-access
@@ -314,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d226e2430ed0
+  - type: requires_property
+    from: REQ-tooling-demo-access
+    to: FACT-PROP-8EF3ADA5F93E21AA
+    created_at: 2026-10-28T09:34:50.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1870c3e81c35

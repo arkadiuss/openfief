@@ -8,7 +8,7 @@ A demo is one Hetzner Cloud server running k3s. cloud-init installs pinned k3s a
 
 1. **API token.** In the Hetzner Cloud console, open the project, then Security > API tokens, and create a Read & Write token. Export it only in the shell that runs the commands: `read -rs HCLOUD_TOKEN && export HCLOUD_TOKEN`. The scripts never print it or write it to disk, and they ignore any `hcloud` CLI context you have stored.
 2. **SSH key.** Upload your public key with the label the scripts look for: `hcloud ssh-key create --name <you> --public-key-from-file ~/.ssh/id_ed25519.pub --label openfief-ssh=true`, or label an existing key with `hcloud ssh-key add-label <key> openfief-ssh=true`. Every key with that label is installed on new demos; without one, `up` refuses.
-3. **Where you connect from.** Set `DEMO_SSH_CIDRS` to your address, such as `203.0.113.7/32`; several CIDRs are separated by commas. With no value, the firewall allows no inbound traffic at all, not even SSH.
+3. **Where you connect from.** Set `DEMO_SSH_CIDRS` to your address, such as `203.0.113.7/32`; several CIDRs are separated by commas. With no value, the firewall allows no SSH. HTTP and HTTPS are open to everyone by default (`DEMO_HTTP_CIDRS`), since a demo holds synthetic data only.
 4. **Hard spending cap (optional).** Hetzner Cloud has no spending-limit API, so the budget check below lives in the scripts. For a hard cap, ask Hetzner support to lower the project's server limit to 1: no script or token can then create a second server.
 
 ## Commands
@@ -16,7 +16,7 @@ A demo is one Hetzner Cloud server running k3s. cloud-init installs pinned k3s a
 | Command | What it does |
 |---|---|
 | `task demo:plan ENV=demo` | Lists what `up` would create and the monthly cost against the budget. Changes nothing. |
-| `task demo:up ENV=demo` | Creates the firewall and the server if they're missing, and updates the firewall rules from `DEMO_SSH_CIDRS`. Refuses to go over the budget. |
+| `task demo:up ENV=demo` | Creates the firewall and the server if they're missing, and updates the firewall rules from `DEMO_SSH_CIDRS` and `DEMO_HTTP_CIDRS`. Refuses to go over the budget, and prints the demo's URL. |
 | `task demo:status ENV=demo` | Shows the server, its IPv4, the firewall and the project's monthly cost. |
 | `task demo:down ENV=demo CONFIRM=demo` | Deletes every resource labelled `app=openfief,env=demo`, server first. |
 | `task demo:recreate ENV=demo CONFIRM=demo` | `down`, then `up`: a fresh machine from the current cloud-init and pins. |
@@ -26,7 +26,9 @@ A demo is one Hetzner Cloud server running k3s. cloud-init installs pinned k3s a
 | Setting | Default | Meaning |
 |---|---|---|
 | `HCLOUD_TOKEN` | none (required) | The project's API token. |
-| `DEMO_SSH_CIDRS` | empty: no inbound traffic | Sources allowed to reach SSH (22/tcp). |
+| `DEMO_SSH_CIDRS` | empty: no SSH | Sources allowed to reach SSH (22/tcp). |
+| `DEMO_HTTP_CIDRS` | `0.0.0.0/0,::/0` | Sources allowed to reach HTTP and HTTPS (80 and 443/tcp); `none` closes them. |
+| `DEMO_ACME` | `prod` | Let's Encrypt `prod` or `staging` ([URL and TLS](#url-and-tls)). |
 | `DEMO_BUDGET_EUR` | `10` | Maximum monthly gross cost of everything labelled `app=openfief` in the project. |
 | `DEMO_SERVER_TYPE` | `cax11` | Hetzner server type; `cax*` types are Arm64. |
 | `DEMO_LOCATION` | `nbg1` | Hetzner location. |
@@ -48,7 +50,7 @@ One demo is a CAX11: 2 Arm64 vCPUs, 4 GB of RAM and 40 GB of disk, with one prim
 
 The API reports gross prices at the account's VAT rate, and the scripts use those, so the check matches the invoice. Servers are billed by the hour up to the monthly price, so a deleted demo stops costing money. A CX23 (x86, 4 GB) is €0.50 cheaper and works the same way (`DEMO_SERVER_TYPE=cx23`). A CAX21 (8 GB, €10.99 net) is already over the budget alone.
 
-Why 4 GB is enough: Ubuntu plus k3s (API server, SQLite datastore, kubelet, flannel, CoreDNS, local-path, metrics-server) uses about 1 GB; Flux's controllers about 0.4 GB; the CloudNativePG operator and PostgreSQL are capped at 256 MB and 512 MB in `deploy/demo`; and the OpenFief operator and egress proxy are capped at 256 MB each. That is about 2.5 GB at the limits, which leaves room for the core and a few plugins at 64 to 256 MB each.
+Why 4 GB is enough: Ubuntu plus k3s (API server, SQLite datastore, kubelet, flannel, CoreDNS, local-path, metrics-server) uses about 1 GB; Flux's controllers about 0.4 GB; Traefik about 0.1 GB; cert-manager's three controllers are capped at 0.5 GB together; the CloudNativePG operator and PostgreSQL are capped at 256 MB and 512 MB in `deploy/demo`; and the OpenFief operator and egress proxy are capped at 256 MB each. That is about 3 GB at the limits, which leaves room for the core and a few small plugins.
 
 ## What the machine runs
 
@@ -56,16 +58,26 @@ Why 4 GB is enough: Ubuntu plus k3s (API server, SQLite datastore, kubelet, flan
 
 - allows SSH with keys only: no passwords, a locked root password, and root login by key only;
 - turns on unattended security upgrades, rebooting at 04:00 UTC when an upgrade needs it;
-- installs the pinned k3s release binary and install script, each checked against its pinned sha256, with Traefik and servicelb disabled (D-28: no ingress), flannel and k3s's NetworkPolicy controller on (D-12), local-path storage, and Secrets encrypted at rest in the datastore (D-29);
+- installs the pinned k3s release binary and install script, each checked against its pinned sha256, keeping k3s's bundled Traefik and servicelb (the demo's HTTP entry, on the machine's own IPv4 with no paid load balancer), flannel and k3s's NetworkPolicy controller (D-12), local-path storage, and Secrets encrypted at rest in the datastore (D-29);
+- reads its public IPv4 from Hetzner's metadata service and writes the ConfigMap `flux-system/demo-settings` with `DEMO_HOST` (`<ipv4-with-dashes>.sslip.io`) and `DEMO_ACME_SERVER`, which Flux substitutes into the demo's TLS and route layers;
 - places Flux's pinned `install.yaml` (checked against its sha256), plus a `GitRepository` and `Kustomization` for `./deploy/demo`, in k3s's auto-deploy manifests directory, so even the bootstrap is declared rather than applied by hand.
 
-Flux then applies `deploy/demo/stack.yaml` in dependency order: the namespace and CRDs (`deploy/crds`), the CloudNativePG operator from a pinned Helm chart, a one-instance PostgreSQL cluster whose password CloudNativePG generates in the cluster, and finally the OpenFief operator and egress proxy from the signed artifact CI publishes, with images pinned by digest (D-17; see [Deploys](#deploys)).
+Flux then applies `deploy/demo/stack.yaml` in dependency order: the namespace and CRDs (`deploy/crds`), the CloudNativePG operator from a pinned Helm chart, a one-instance PostgreSQL cluster whose password CloudNativePG generates in the cluster, cert-manager and its Let's Encrypt issuer, the HTTP routes ([URL and TLS](#url-and-tls)), and finally the OpenFief operator and egress proxy from the signed artifact CI publishes, with images pinned by digest (D-17; see [Deploys](#deploys)).
 
 The Hetzner disk isn't encrypted by us, so a demo must only ever hold synthetic data: never real broker credentials, account numbers or portfolio data (GR-12).
 
+## URL and TLS
+
+OpenFief itself ships Services only (D-28): `deploy/crds`, `deploy/operator`, `deploy/egress-proxy` and the future `deploy/core` hold no Ingress, and a test in `internal/plugins/operator` keeps it that way. The demo installation adds its own routes on k3s's bundled Traefik, in `deploy/demo/routes`:
+
+- **URL.** `https://<ipv4-with-dashes>.sslip.io`, such as `https://192-0-2-10.sslip.io` for 192.0.2.10. sslip.io answers that name with the IP inside it, so no domain or DNS record is needed. `task demo:up` prints it. A recreated machine usually gets a new IPv4, and so a new URL.
+- **Routes.** Everything under the host goes to Service `openfief-core`, port `http`: the read API, REST under `/v1` and Connect under `/openfief.*` (D-50). The UI gets its own rule when it exists. The `demo-routes` layer stays suspended until `deploy/core` lands; unsuspend it in `deploy/demo/stack.yaml` then, and correct the Service name or port there if the core's differ.
+- **TLS.** cert-manager, from a pinned Helm chart, requests the certificate from Let's Encrypt with an HTTP-01 challenge on port 80 through Traefik. `DEMO_ACME=prod` (the default) gives a browser-trusted certificate; `DEMO_ACME=staging` gives an untrusted one under much higher rate limits. Use staging while you recreate demos repeatedly: production allows only 5 certificates a week for the same hostname, and a new IPv4 means a new hostname. The ACME account has no email address, so no personal data goes to Let's Encrypt and no expiry mail comes back; cert-manager renews on its own.
+- **Firewall.** 80 and 443/tcp are open to `DEMO_HTTP_CIDRS` (everyone by default); SSH stays limited to `DEMO_SSH_CIDRS`. There's no paid load balancer: servicelb binds Traefik to the machine's own IPv4.
+
 ## Reach the demo
 
-There is no ingress (D-28), and the firewall exposes nothing but SSH from `DEMO_SSH_CIDRS`. The simplest way in is kubectl on the machine:
+For anything that isn't routed, there is SSH from `DEMO_SSH_CIDRS`. The simplest way in is kubectl on the machine:
 
 ```bash
 ip="$(hcloud server ip openfief-demo)"
@@ -107,7 +119,7 @@ Every push to `main` and every beta then deploys on its own. A required reviewer
 
 - add the environment secret `HCLOUD_TOKEN` (the project's API token);
 - add a required reviewer, so every run that can spend money or delete a demo waits for approval;
-- optionally set the environment variables `DEMO_SSH_CIDRS`, `DEMO_BUDGET_EUR`, `DEMO_SERVER_TYPE` and `DEMO_LOCATION`.
+- optionally set the environment variables `DEMO_SSH_CIDRS`, `DEMO_HTTP_CIDRS`, `DEMO_ACME`, `DEMO_BUDGET_EUR`, `DEMO_SERVER_TYPE` and `DEMO_LOCATION`.
 
 For `down` and `recreate`, type the demo's name again in the `confirm` input; it's passed on as `CONFIRM`.
 

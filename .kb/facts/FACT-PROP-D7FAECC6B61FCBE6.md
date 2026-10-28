@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:demo.deploy:manifests_validated_in_che
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-1B72CE74D4BB0BE3
-claim_text: task check must build deploy/demo, every git path its Flux Kustomizations apply and the deploy/demo/openfief template with the pinned kustomize, offline, and must fail when an image is not pinned by a sha256 digest or an OCI source does not require a cosign signature.
+claim_key: CLAIM-3332D66244912FFA
+claim_text: task check must build deploy/demo, every git path its Flux Kustomizations apply and the deploy/demo/openfief template with the pinned kustomize, offline, and must fail when an image is not pinned by a sha256 digest, an OCI source does not require a cosign signature, or a substituted layer uses a variable other than DEMO_HOST and DEMO_ACME_SERVER.
 origin:
   kind: agent
   recorded_at: '2026-10-28T09:01:30.209Z'

@@ -8,8 +8,11 @@
 #   - SSH: keys only (Hetzner injects the keys labelled openfief-ssh=true), no root password, no password logins.
 #   - unattended-upgrades for security updates, with an automatic reboot at 04:00 UTC when one needs it.
 #   - k3s @@K3S_VERSION@@: the release binary and install script, each checked against a pinned sha256.
-#     Flannel with k3s's NetworkPolicy controller (D-12) and local-path storage stay on; Traefik and
-#     servicelb are off (D-28: no ingress); Secrets are encrypted at rest in the datastore (D-29).
+#     Flannel with k3s's NetworkPolicy controller (D-12), local-path storage, and the bundled Traefik and
+#     servicelb stay on: the demo takes HTTP(S) on the machine's own IPv4, with no paid load balancer. The product
+#     bases still ship Services only (D-28); deploy/demo adds the demo's routes. Secrets are encrypted at rest (D-29).
+#   - The ConfigMap flux-system/demo-settings, which Flux substitutes into deploy/demo: DEMO_HOST, the machine's
+#     <ipv4-with-dashes>.sslip.io name read from Hetzner's metadata service, and DEMO_ACME_SERVER (@@ACME_SERVER@@).
 #   - Flux @@FLUX_VERSION@@ (install.yaml checked against a pinned sha256) and a GitRepository plus Kustomization on
 #     @@GIT_URL@@ (@@GIT_BRANCH@@, ./deploy/demo), dropped into k3s's auto-deploy manifests directory, so the
 #     cluster is declared, not applied by hand. Everything else comes from deploy/demo through Flux.
@@ -47,9 +50,6 @@ write_files:
     content: |
       write-kubeconfig-mode: "0600"
       secrets-encryption: true
-      disable:
-        - traefik
-        - servicelb
   - path: /var/lib/rancher/k3s/server/manifests/openfief-demo-sync.yaml
     permissions: '0600'
     content: |
@@ -81,8 +81,20 @@ write_files:
     permissions: '0700'
     content: |
       #!/bin/sh
-      # Installs the pinned k3s and Flux; stops at the first checksum mismatch.
+      # Writes the demo settings, then installs the pinned k3s and Flux; stops at the first checksum mismatch.
       set -eu
+      ipv4="$(curl -fsS --retry 5 http://169.254.169.254/hetzner/v1/metadata/public-ipv4)"
+      if ! printf '%s' "$ipv4" | grep -Eqx '([0-9]{1,3}\.){3}[0-9]{1,3}'; then
+        echo "openfief-bootstrap: no public IPv4 from the metadata service" >&2
+        exit 1
+      fi
+      settings=/var/lib/rancher/k3s/server/manifests/openfief-demo-settings.yaml
+      mkdir -p "$(dirname "$settings")"
+      printf '%s\n' \
+        'apiVersion: v1' 'kind: ConfigMap' 'metadata:' '  name: demo-settings' '  namespace: flux-system' 'data:' \
+        "  DEMO_HOST: $(printf '%s' "$ipv4" | tr . -).sslip.io" \
+        '  DEMO_ACME_SERVER: @@ACME_SERVER@@' >"$settings"
+      chmod 0600 "$settings"
       k3s_version='@@K3S_VERSION@@'
       k3s_asset='@@K3S_ASSET@@'
       k3s_url_version="$(printf '%s' "$k3s_version" | sed 's/+/%2B/g')"

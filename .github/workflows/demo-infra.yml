@@ -56,6 +56,8 @@ jobs:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
           # Optional environment variables of `demo`; empty means the defaults in scripts/demo/demo.sh.
           DEMO_SSH_CIDRS: ${{ vars.DEMO_SSH_CIDRS }}
+          DEMO_HTTP_CIDRS: ${{ vars.DEMO_HTTP_CIDRS }}
+          DEMO_ACME: ${{ vars.DEMO_ACME }}
           DEMO_BUDGET_EUR: ${{ vars.DEMO_BUDGET_EUR }}
           DEMO_SERVER_TYPE: ${{ vars.DEMO_SERVER_TYPE }}
           DEMO_LOCATION: ${{ vars.DEMO_LOCATION }}

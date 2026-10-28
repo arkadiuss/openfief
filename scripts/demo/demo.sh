@@ -143,13 +143,14 @@ demo_arch() {
   esac
 }
 
-# demo_firewall_rules prints the Hetzner firewall rules for SSH from a space- or comma-separated list of CIDRs.
-# No CIDRs gives no inbound rule at all, which blocks all inbound traffic; outbound stays open (no outbound rules).
-demo_firewall_rules() {
-  local cidr list=()
-  for cidr in ${1//,/ }; do
+# demo_cidrs prints a space- or comma-separated list of CIDRs (the second argument, from the setting named by
+# the first) as a JSON array; "none" or nothing gives []. It fails on anything that isn't an IPv4 or IPv6 CIDR.
+demo_cidrs() {
+  local setting="$1" cidr list=()
+  for cidr in ${2//,/ }; do
+    [ "$cidr" != none ] || continue
     if [[ ! "$cidr" =~ ^[0-9.]+/[0-9]{1,2}$ && ! "$cidr" =~ ^[0-9a-fA-F:]+/[0-9]{1,3}$ ]]; then
-      demo_fail "DEMO_SSH_CIDRS: '$cidr' is not an IPv4 or IPv6 CIDR such as 203.0.113.7/32"
+      demo_fail "$setting: '$cidr' is not an IPv4 or IPv6 CIDR such as 203.0.113.7/32"
       return 1
     fi
     list+=("$cidr")
@@ -158,8 +159,21 @@ demo_firewall_rules() {
     echo '[]'
     return 0
   fi
-  printf '%s\n' "${list[@]}" | gojq -R . | gojq -s -c \
-    '[{direction: "in", protocol: "tcp", port: "22", source_ips: ., description: "ssh (DEMO_SSH_CIDRS)"}]'
+  printf '%s\n' "${list[@]}" | gojq -R . | gojq -s -c .
+}
+
+# demo_firewall_rules prints the Hetzner firewall rules: SSH (22/tcp) from the CIDRs in the first argument
+# (DEMO_SSH_CIDRS), HTTP and HTTPS (80 and 443/tcp) from those in the second (DEMO_HTTP_CIDRS). A port with no
+# CIDRs gets no rule, so with neither the firewall blocks all inbound traffic; outbound stays open.
+demo_firewall_rules() {
+  local ssh http
+  ssh="$(demo_cidrs DEMO_SSH_CIDRS "$1")" || return 1
+  http="$(demo_cidrs DEMO_HTTP_CIDRS "$2")" || return 1
+  gojq -n -c --argjson ssh "$ssh" --argjson http "$http" '
+    def rule($port; $from; $what): if ($from | length) > 0
+      then {direction: "in", protocol: "tcp", port: $port, source_ips: $from, description: $what} else empty end;
+    [rule("22"; $ssh; "ssh (DEMO_SSH_CIDRS)"), rule("80"; $http; "http (DEMO_HTTP_CIDRS)"),
+     rule("443"; $http; "https (DEMO_HTTP_CIDRS)")]'
 }
 
 # demo_ssh_keys prints the names of the SSH keys in an `hcloud ssh-key list -o json` document, and fails with
@@ -179,16 +193,25 @@ or label an existing key: hcloud ssh-key add-label <key> openfief-ssh=true"
 # demo_render_cloud_init fills the @@NAME@@ placeholders of a cloud-init template from the pinned versions in the
 # environment, after checking each value's form, and fails if a placeholder is left.
 demo_render_cloud_init() {
-  local template="$1" server_type="$2" asset k3s_sha rendered name value
+  local template="$1" server_type="$2" asset k3s_sha acme rendered name value
   asset="$(demo_arch "$server_type")"
   if [ "$asset" = k3s-arm64 ]; then k3s_sha="${K3S_SHA256_ARM64:-}"; else k3s_sha="${K3S_SHA256_AMD64:-}"; fi
+  # Let's Encrypt production by default; staging for experiments, whose certificates browsers don't trust but
+  # whose rate limits are far higher.
+  case "${DEMO_ACME:-prod}" in
+    prod) acme=https://acme-v02.api.letsencrypt.org/directory ;;
+    staging) acme=https://acme-staging-v02.api.letsencrypt.org/directory ;;
+    *) acme="unknown DEMO_ACME '${DEMO_ACME:-}', want prod or staging" ;;
+  esac
   local -A values=(
+    [ACME_SERVER]="$acme"
     [K3S_VERSION]="${K3S_VERSION:-}" [K3S_ASSET]="$asset" [K3S_SHA256]="$k3s_sha"
     [K3S_INSTALL_SHA256]="${K3S_INSTALL_SHA256:-}" [FLUX_VERSION]="${FLUX_VERSION:-}"
     [FLUX_INSTALL_SHA256]="${FLUX_INSTALL_SHA256:-}"
     [GIT_URL]="${DEMO_GIT_URL:-}" [GIT_BRANCH]="${DEMO_GIT_BRANCH:-}"
   )
   local -A forms=(
+    [ACME_SERVER]='^https://acme(-staging)?-v02\.api\.letsencrypt\.org/directory$'
     [K3S_VERSION]='^v[0-9]+\.[0-9]+\.[0-9]+\+k3s[0-9]+$' [K3S_ASSET]='^k3s(-arm64)?$'
     [K3S_SHA256]='^[0-9a-f]{64}$' [K3S_INSTALL_SHA256]='^[0-9a-f]{64}$'
     [FLUX_VERSION]='^v[0-9]+\.[0-9]+\.[0-9]+$' [FLUX_INSTALL_SHA256]='^[0-9a-f]{64}$'
@@ -212,7 +235,9 @@ demo_render_cloud_init() {
 
 : "${DEMO_SERVER_TYPE:=cax11}" "${DEMO_LOCATION:=nbg1}" "${DEMO_IMAGE:=ubuntu-24.04}" "${DEMO_BUDGET_EUR:=10}"
 : "${DEMO_SSH_CIDRS:=}" "${DEMO_GIT_URL:=https://github.com/arkadiuss/openfief}" "${DEMO_GIT_BRANCH:=main}"
-export DEMO_GIT_URL DEMO_GIT_BRANCH
+# HTTP(S) is open to everyone by default: a demo holds synthetic data only (GR-12). DEMO_HTTP_CIDRS=none closes it.
+: "${DEMO_HTTP_CIDRS:=0.0.0.0/0,::/0}" "${DEMO_ACME:=prod}"
+export DEMO_GIT_URL DEMO_GIT_BRANCH DEMO_ACME
 
 # demo_prepare checks the token and tools and isolates hcloud from any local CLI context.
 demo_prepare() {
@@ -267,13 +292,13 @@ demo_plan() {
 
 # demo_up creates the firewall and the server when missing, and brings the firewall rules up to date.
 demo_up() {
-  local name="openfief-$ENV" keys key args=() server_firewalls firewall_id
+  local name="openfief-$ENV" keys key args=() server_firewalls firewall_id ip
   hcloud ssh-key list --selector openfief-ssh=true --output json >"$work/keys.json"
   keys="$(demo_ssh_keys "$work/keys.json")"
-  demo_firewall_rules "$DEMO_SSH_CIDRS" >"$work/rules.json"
+  demo_firewall_rules "$DEMO_SSH_CIDRS" "$DEMO_HTTP_CIDRS" >"$work/rules.json"
   demo_render_cloud_init "$root/deploy/demo/cloud-init.yaml" "$DEMO_SERVER_TYPE" >"$work/user-data.yaml"
-  if [ "$(gojq length "$work/rules.json")" -eq 0 ]; then
-    echo "note: DEMO_SSH_CIDRS is empty, so the firewall allows no inbound traffic at all (not even SSH)"
+  if [ "$(gojq '[.[] | select(.port == "22")] | length' "$work/rules.json")" -eq 0 ]; then
+    echo "note: DEMO_SSH_CIDRS is empty, so the firewall allows no SSH"
   fi
   # Under set -e, a failed plan (an API error or the budget) stops here, before anything is created.
   demo_plan
@@ -296,7 +321,9 @@ demo_up() {
     fi
     echo "server $name already exists; cloud-init changes need: task demo:recreate ENV=$ENV CONFIRM=$ENV"
   fi
-  echo "next: docs/dev/demo.md#reach-the-demo (ssh root@\$(hcloud server ip $name), then kubectl port-forward)"
+  ip="$(hcloud server ip "$name")"
+  echo "demo URL: https://${ip//./-}.sslip.io (TLS from Let's Encrypt $DEMO_ACME, once Flux and cert-manager are up)"
+  echo "next: docs/dev/demo.md#reach-the-demo (ssh root@$ip)"
 }
 
 # demo_down deletes every resource labelled app=openfief,env=<ENV>, servers first, after the name is confirmed.

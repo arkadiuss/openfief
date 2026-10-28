@@ -21,6 +21,7 @@ case "$*" in
   "api /pricing") cat "$FAKE_PRICING" ;;
   "ssh-key list --selector openfief-ssh=true --output json") cat "$FAKE_KEYS" ;;
   "firewall describe "*) echo '{"id": 7}' ;;
+  "server ip "*) echo 192.0.2.10 ;;
   "firewall create "* | "firewall replace-rules "*)
     while [ $# -gt 0 ]; do
       if [ "$1" = --rules-file ]; then cp "$2" "$FAKE_STATE/rules.json"; fi
@@ -132,12 +133,18 @@ check "up creates a missing demo" "$r"
 check "firewall is created with the labels" "$(yes_if grep -qx 'firewall create --name openfief-demo --label app=openfief --label env=demo --rules-file .*' "$work/log")"
 check "server is created with labels, key and firewall" "$(yes_if grep -qx 'server create --name openfief-demo --type cax11 --image ubuntu-24.04 --location nbg1 --firewall openfief-demo --ssh-key alice --user-data-from-file .* --label app=openfief --label env=demo' "$work/log")"
 check "firewall before server" "$(yes_if bash -c "grep -n create '$work/log' | head -n1 | grep -q firewall")"
-check "SSH rule allows only the given CIDRs" "$(yes_if gojq -e '. == [{"direction":"in","protocol":"tcp","port":"22","source_ips":["203.0.113.7/32","2001:db8::/64"],"description":"ssh (DEMO_SSH_CIDRS)"}]' "$work/state/rules.json")"
+check "SSH from the given CIDRs, HTTP(S) from anywhere by default" "$(yes_if gojq -e '. == [
+  {"direction":"in","protocol":"tcp","port":"22","source_ips":["203.0.113.7/32","2001:db8::/64"],"description":"ssh (DEMO_SSH_CIDRS)"},
+  {"direction":"in","protocol":"tcp","port":"80","source_ips":["0.0.0.0/0","::/0"],"description":"http (DEMO_HTTP_CIDRS)"},
+  {"direction":"in","protocol":"tcp","port":"443","source_ips":["0.0.0.0/0","::/0"],"description":"https (DEMO_HTTP_CIDRS)"}]' "$work/state/rules.json")"
+check "up prints the sslip.io URL" "$(yes_if grep -q 'demo URL: https://192-0-2-10.sslip.io (TLS from Let.s Encrypt prod' "$work/out")"
+check "cloud-init asks Let's Encrypt production by default" "$(yes_if grep -q 'DEMO_ACME_SERVER: https://acme-v02.api.letsencrypt.org/directory' "$work/state/user-data.yaml")"
 check "cloud-init pins k3s for arm64" "$(yes_if grep -q "k3s_asset='k3s-arm64'" "$work/state/user-data.yaml")"
 check "cloud-init carries the arm64 checksum" "$(yes_if grep -q "$(printf 'a%.0s' {1..64})" "$work/state/user-data.yaml")"
 check "cloud-init has no placeholder left" "$(yes_if bash -c "! grep -q '@@' '$work/state/user-data.yaml'")"
 check "cloud-init is valid YAML" "$(yes_if gojq --yaml-input -e '.write_files | length > 0' "$work/state/user-data.yaml")"
-check "k3s runs without Traefik and servicelb (no ingress)" "$(yes_if gojq --yaml-input -e '.write_files[] | select(.path == "/etc/rancher/k3s/config.yaml") | .content | contains("disable:\n  - traefik\n  - servicelb")' "$work/state/user-data.yaml")"
+check "k3s keeps its bundled Traefik and servicelb" "$(yes_if gojq --yaml-input -e '.write_files[] | select(.path == "/etc/rancher/k3s/config.yaml") | .content | contains("disable") | not' "$work/state/user-data.yaml")"
+check "the machine writes the sslip.io host into the demo settings" "$(yes_if grep -q 'DEMO_HOST: $(printf .%s. "$ipv4" | tr . -).sslip.io' "$work/state/user-data.yaml")"
 check "SSH takes keys only" "$(yes_if gojq --yaml-input -e '.ssh_pwauth == false and ([.write_files[] | .content | contains("PasswordAuthentication no")] | any)' "$work/state/user-data.yaml")"
 check "cloud-init holds no token" "$(yes_if bash -c "! grep -qi 'token' '$work/state/user-data.yaml'")"
 
@@ -147,7 +154,16 @@ check "up on an existing demo succeeds" "$r"
 check "up is idempotent" "$(yes_if bash -c "! grep -q create '$work/log'")"
 check "up refreshes the firewall rules" "$(yes_if grep -qx 'firewall replace-rules --rules-file .* openfief-demo' "$work/log")"
 check "an attached firewall is not re-applied" "$(yes_if bash -c "! grep -q apply-to-resource '$work/log'")"
-check "no inbound rule without DEMO_SSH_CIDRS" "$(yes_if gojq -e '. == []' "$work/state/rules.json")"
+check "no SSH rule without DEMO_SSH_CIDRS" "$(yes_if gojq -e '[.[].port] == ["80", "443"]' "$work/state/rules.json")"
+if ACTION=up INVENTORY="$work/existing.json" run_demo ENV=demo DEMO_HTTP_CIDRS=none DEMO_SSH_CIDRS=203.0.113.7/32; then r=yes; else r=no; fi
+check "up with DEMO_HTTP_CIDRS=none succeeds" "$r"
+check "DEMO_HTTP_CIDRS=none closes HTTP(S)" "$(yes_if gojq -e '[.[].port] == ["22"]' "$work/state/rules.json")"
+if ACTION=up run_demo ENV=demo DEMO_ACME=staging; then r=yes; else r=no; fi
+check "up with DEMO_ACME=staging succeeds" "$r"
+check "staging asks the Let's Encrypt staging server" "$(yes_if grep -q 'DEMO_ACME_SERVER: https://acme-staging-v02.api.letsencrypt.org/directory' "$work/state/user-data.yaml")"
+if ACTION=up run_demo ENV=demo DEMO_ACME=production; then r=no; else r=yes; fi
+check "an unknown DEMO_ACME is refused" "$r"
+check "an unknown DEMO_ACME creates nothing" "$(yes_if bash -c "! grep -q create '$work/log'")"
 check "the existing server is not priced twice" "$(yes_if bash -c "! grep -q 'primary IPv4 auto-ip' '$work/out'")"
 
 # Without a labelled SSH key, up refuses and explains the label.

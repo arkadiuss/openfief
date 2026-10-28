@@ -48,6 +48,10 @@ fresh
 sed -i 's#path: ./deploy/demo/database#path: ./deploy/demo/missing#' "$work/repo/deploy/demo/stack.yaml"
 expect "a Flux path that does not build" fail "kustomize build ./deploy/demo/missing failed"
 
+fresh
+sed -i 's/[$]{DEMO_HOST}/${DEMO_HOSTNAME}/' "$work/repo/deploy/demo/routes/core.yaml"
+expect "a variable the demo settings don't define" fail "uses variables the demo settings don't define: DEMO_HOSTNAME"
+
 if [ "$failures" -ne 0 ]; then
   echo "demo-validate: $failures of $cases cases failed" >&2
   exit 1
