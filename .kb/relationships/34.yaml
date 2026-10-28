@@ -328,3 +328,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a793d374b121
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-helper-round-trip-func-round-trip
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:41:23.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba986361e5b5

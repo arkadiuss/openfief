@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ec3f19605df
+  - type: verified_by
+    from: SCEN-ingest-delivery-market-data
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T21:37:18.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3481301bdc0

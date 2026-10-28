@@ -1047,10 +1047,76 @@ func (x *IndexReading) GetValue() string {
 	return ""
 }
 
+// IndexLevel is one end-of-day closing level of a market index, such as
+// WIG20 (D-51). A market index can be a target of the model portfolio
+// (D-52, D-53) but is never held, so it has no instrument.
+type IndexLevel struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The index's name as the connector instance's config gives it, such as
+	// "WIG20".
+	Index string `protobuf:"bytes,1,opt,name=index,proto3" json:"index,omitempty"`
+	Date  string `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
+	// The closing level, as a positive decimal string.
+	Level         string `protobuf:"bytes,3,opt,name=level,proto3" json:"level,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IndexLevel) Reset() {
+	*x = IndexLevel{}
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IndexLevel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IndexLevel) ProtoMessage() {}
+
+func (x *IndexLevel) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IndexLevel.ProtoReflect.Descriptor instead.
+func (*IndexLevel) Descriptor() ([]byte, []int) {
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *IndexLevel) GetIndex() string {
+	if x != nil {
+		return x.Index
+	}
+	return ""
+}
+
+func (x *IndexLevel) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *IndexLevel) GetLevel() string {
+	if x != nil {
+		return x.Level
+	}
+	return ""
+}
+
 // Delivery is what a connector returns for one import batch: its mapping of
 // what the institution reported (transactions with their postings, balance
-// assertions and the rows it left out), plus any prices, FX rates and index
-// readings.
+// assertions and the rows it left out), plus any prices, FX rates, index
+// readings and index levels.
 type Delivery struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The batch ID of the call, echoed back.
@@ -1063,13 +1129,14 @@ type Delivery struct {
 	Prices            []*Price            `protobuf:"bytes,6,rep,name=prices,proto3" json:"prices,omitempty"`
 	FxRates           []*FxRate           `protobuf:"bytes,7,rep,name=fx_rates,json=fxRates,proto3" json:"fx_rates,omitempty"`
 	IndexReadings     []*IndexReading     `protobuf:"bytes,8,rep,name=index_readings,json=indexReadings,proto3" json:"index_readings,omitempty"`
+	IndexLevels       []*IndexLevel       `protobuf:"bytes,9,rep,name=index_levels,json=indexLevels,proto3" json:"index_levels,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Delivery) Reset() {
 	*x = Delivery{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[11]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1081,7 +1148,7 @@ func (x *Delivery) String() string {
 func (*Delivery) ProtoMessage() {}
 
 func (x *Delivery) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[11]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1094,7 +1161,7 @@ func (x *Delivery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Delivery.ProtoReflect.Descriptor instead.
 func (*Delivery) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{11}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *Delivery) GetBatchId() string {
@@ -1153,6 +1220,13 @@ func (x *Delivery) GetIndexReadings() []*IndexReading {
 	return nil
 }
 
+func (x *Delivery) GetIndexLevels() []*IndexLevel {
+	if x != nil {
+		return x.IndexLevels
+	}
+	return nil
+}
+
 type SyncRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The core's ID for this import batch; a retry reuses it.
@@ -1167,7 +1241,7 @@ type SyncRequest struct {
 
 func (x *SyncRequest) Reset() {
 	*x = SyncRequest{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[12]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1179,7 +1253,7 @@ func (x *SyncRequest) String() string {
 func (*SyncRequest) ProtoMessage() {}
 
 func (x *SyncRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[12]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1192,7 +1266,7 @@ func (x *SyncRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncRequest.ProtoReflect.Descriptor instead.
 func (*SyncRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{12}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *SyncRequest) GetBatchId() string {
@@ -1228,7 +1302,7 @@ type SyncResponse struct {
 
 func (x *SyncResponse) Reset() {
 	*x = SyncResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[13]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1240,7 +1314,7 @@ func (x *SyncResponse) String() string {
 func (*SyncResponse) ProtoMessage() {}
 
 func (x *SyncResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[13]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1253,7 +1327,7 @@ func (x *SyncResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncResponse.ProtoReflect.Descriptor instead.
 func (*SyncResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{13}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *SyncResponse) GetDelivery() *Delivery {
@@ -1287,7 +1361,7 @@ type FileHeader struct {
 
 func (x *FileHeader) Reset() {
 	*x = FileHeader{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[14]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1299,7 +1373,7 @@ func (x *FileHeader) String() string {
 func (*FileHeader) ProtoMessage() {}
 
 func (x *FileHeader) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[14]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1312,7 +1386,7 @@ func (x *FileHeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileHeader.ProtoReflect.Descriptor instead.
 func (*FileHeader) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{14}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *FileHeader) GetBatchId() string {
@@ -1356,7 +1430,7 @@ type ImportFileRequest struct {
 
 func (x *ImportFileRequest) Reset() {
 	*x = ImportFileRequest{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[15]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1368,7 +1442,7 @@ func (x *ImportFileRequest) String() string {
 func (*ImportFileRequest) ProtoMessage() {}
 
 func (x *ImportFileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[15]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1381,7 +1455,7 @@ func (x *ImportFileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportFileRequest.ProtoReflect.Descriptor instead.
 func (*ImportFileRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{15}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ImportFileRequest) GetPart() isImportFileRequest_Part {
@@ -1436,7 +1510,7 @@ type ImportFileResponse struct {
 
 func (x *ImportFileResponse) Reset() {
 	*x = ImportFileResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[16]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1448,7 +1522,7 @@ func (x *ImportFileResponse) String() string {
 func (*ImportFileResponse) ProtoMessage() {}
 
 func (x *ImportFileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[16]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1461,7 +1535,7 @@ func (x *ImportFileResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportFileResponse.ProtoReflect.Descriptor instead.
 func (*ImportFileResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{16}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ImportFileResponse) GetDelivery() *Delivery {
@@ -1530,7 +1604,12 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\fIndexReading\x122\n" +
 	"\x05index\x18\x01 \x01(\x0e2\x1c.openfief.connector.v1.IndexR\x05index\x12\x12\n" +
 	"\x04date\x18\x02 \x01(\tR\x04date\x12\x14\n" +
-	"\x05value\x18\x03 \x01(\tR\x05value\"\xdf\x03\n" +
+	"\x05value\x18\x03 \x01(\tR\x05value\"L\n" +
+	"\n" +
+	"IndexLevel\x12\x14\n" +
+	"\x05index\x18\x01 \x01(\tR\x05index\x12\x12\n" +
+	"\x04date\x18\x02 \x01(\tR\x04date\x12\x14\n" +
+	"\x05level\x18\x03 \x01(\tR\x05level\"\xa5\x04\n" +
 	"\bDelivery\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12F\n" +
@@ -1539,7 +1618,8 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\bproblems\x18\x05 \x03(\v2\x1e.openfief.connector.v1.ProblemR\bproblems\x124\n" +
 	"\x06prices\x18\x06 \x03(\v2\x1c.openfief.connector.v1.PriceR\x06prices\x128\n" +
 	"\bfx_rates\x18\a \x03(\v2\x1d.openfief.connector.v1.FxRateR\afxRates\x12J\n" +
-	"\x0eindex_readings\x18\b \x03(\v2#.openfief.connector.v1.IndexReadingR\rindexReadings\"w\n" +
+	"\x0eindex_readings\x18\b \x03(\v2#.openfief.connector.v1.IndexReadingR\rindexReadings\x12D\n" +
+	"\findex_levels\x18\t \x03(\v2!.openfief.connector.v1.IndexLevelR\vindexLevels\"w\n" +
 	"\vSyncRequest\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12/\n" +
 	"\x04mode\x18\x02 \x01(\x0e2\x1b.openfief.connector.v1.ModeR\x04mode\x12\x1c\n" +
@@ -1609,7 +1689,7 @@ func file_openfief_connector_v1_connector_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_connector_v1_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_openfief_connector_v1_connector_proto_goTypes = []any{
 	(BookKind)(0),              // 0: openfief.connector.v1.BookKind
 	(TransactionKind)(0),       // 1: openfief.connector.v1.TransactionKind
@@ -1627,12 +1707,13 @@ var file_openfief_connector_v1_connector_proto_goTypes = []any{
 	(*Price)(nil),              // 13: openfief.connector.v1.Price
 	(*FxRate)(nil),             // 14: openfief.connector.v1.FxRate
 	(*IndexReading)(nil),       // 15: openfief.connector.v1.IndexReading
-	(*Delivery)(nil),           // 16: openfief.connector.v1.Delivery
-	(*SyncRequest)(nil),        // 17: openfief.connector.v1.SyncRequest
-	(*SyncResponse)(nil),       // 18: openfief.connector.v1.SyncResponse
-	(*FileHeader)(nil),         // 19: openfief.connector.v1.FileHeader
-	(*ImportFileRequest)(nil),  // 20: openfief.connector.v1.ImportFileRequest
-	(*ImportFileResponse)(nil), // 21: openfief.connector.v1.ImportFileResponse
+	(*IndexLevel)(nil),         // 16: openfief.connector.v1.IndexLevel
+	(*Delivery)(nil),           // 17: openfief.connector.v1.Delivery
+	(*SyncRequest)(nil),        // 18: openfief.connector.v1.SyncRequest
+	(*SyncResponse)(nil),       // 19: openfief.connector.v1.SyncResponse
+	(*FileHeader)(nil),         // 20: openfief.connector.v1.FileHeader
+	(*ImportFileRequest)(nil),  // 21: openfief.connector.v1.ImportFileRequest
+	(*ImportFileResponse)(nil), // 22: openfief.connector.v1.ImportFileResponse
 }
 var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	0,  // 0: openfief.connector.v1.Book.kind:type_name -> openfief.connector.v1.BookKind
@@ -1653,20 +1734,21 @@ var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	13, // 15: openfief.connector.v1.Delivery.prices:type_name -> openfief.connector.v1.Price
 	14, // 16: openfief.connector.v1.Delivery.fx_rates:type_name -> openfief.connector.v1.FxRate
 	15, // 17: openfief.connector.v1.Delivery.index_readings:type_name -> openfief.connector.v1.IndexReading
-	3,  // 18: openfief.connector.v1.SyncRequest.mode:type_name -> openfief.connector.v1.Mode
-	16, // 19: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	3,  // 20: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
-	19, // 21: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
-	16, // 22: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	17, // 23: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
-	20, // 24: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
-	18, // 25: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
-	21, // 26: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
-	25, // [25:27] is the sub-list for method output_type
-	23, // [23:25] is the sub-list for method input_type
-	23, // [23:23] is the sub-list for extension type_name
-	23, // [23:23] is the sub-list for extension extendee
-	0,  // [0:23] is the sub-list for field type_name
+	16, // 18: openfief.connector.v1.Delivery.index_levels:type_name -> openfief.connector.v1.IndexLevel
+	3,  // 19: openfief.connector.v1.SyncRequest.mode:type_name -> openfief.connector.v1.Mode
+	17, // 20: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	3,  // 21: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
+	20, // 22: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
+	17, // 23: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	18, // 24: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
+	21, // 25: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
+	19, // 26: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
+	22, // 27: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
+	26, // [26:28] is the sub-list for method output_type
+	24, // [24:26] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_openfief_connector_v1_connector_proto_init() }
@@ -1674,7 +1756,7 @@ func file_openfief_connector_v1_connector_proto_init() {
 	if File_openfief_connector_v1_connector_proto != nil {
 		return
 	}
-	file_openfief_connector_v1_connector_proto_msgTypes[15].OneofWrappers = []any{
+	file_openfief_connector_v1_connector_proto_msgTypes[16].OneofWrappers = []any{
 		(*ImportFileRequest_Header)(nil),
 		(*ImportFileRequest_Chunk)(nil),
 	}
@@ -1684,7 +1766,7 @@ func file_openfief_connector_v1_connector_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_connector_v1_connector_proto_rawDesc), len(file_openfief_connector_v1_connector_proto_rawDesc)),
 			NumEnums:      5,
-			NumMessages:   17,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

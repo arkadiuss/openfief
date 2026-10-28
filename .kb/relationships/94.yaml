@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa76dcdce911
+  - type: implements
+    from: SYM-valuation-eodhd-client-get
+    to: REQ-valuation-eodhd-request
+    created_at: 2026-10-28T21:39:12.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c3e2469d82c
+  - type: covered_by
+    from: SYM-valuation-eodhd-client-get
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:39:12.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af64d8f5372a

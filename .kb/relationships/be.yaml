@@ -314,3 +314,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71a7cd4b5414
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-manifest
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:45:19.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecf277a430b1

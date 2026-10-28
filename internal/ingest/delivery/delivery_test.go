@@ -214,6 +214,27 @@ func TestFXRates(t *testing.T) {
 	}
 }
 
+func TestPriceAndIndexLevel(t *testing.T) {
+	t.Parallel()
+	closing, err := kernel.ParseMoney("84.1250", cur(t, "GBP"))
+	if err != nil {
+		t.Fatalf("ParseMoney: %v", err)
+	}
+	got := delivery.Price(synthetic(t), date(t, "2025-01-03"), closing)
+	want := &connectorv1.Price{
+		Instrument: &connectorv1.Instrument{Isin: "IETEST000026", Symbol: "TSTB"},
+		Date:       "2025-01-03", Close: &connectorv1.Money{Amount: "84.125", Currency: "GBP"},
+	}
+	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
+		t.Errorf("Price (-want +got):\n%s", diff)
+	}
+	level := delivery.IndexLevel("FAKE20", date(t, "2001-01-03"), dec(t, "1522.60"))
+	wantLevel := &connectorv1.IndexLevel{Index: "FAKE20", Date: "2001-01-03", Level: "1522.6"}
+	if diff := cmp.Diff(wantLevel, level, protocmp.Transform()); diff != "" {
+		t.Errorf("IndexLevel (-want +got):\n%s", diff)
+	}
+}
+
 func TestMode(t *testing.T) {
 	t.Parallel()
 	tests := []struct {

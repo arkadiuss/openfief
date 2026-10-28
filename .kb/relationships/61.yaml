@@ -293,3 +293,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89a76135ab0f
+  - type: implements
+    from: SYM-valuation-eodhd-client-closes
+    to: REQ-valuation-eodhd-closes-exact
+    created_at: 2026-10-28T21:39:05.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-756c2bdec452
+  - type: implements
+    from: SYM-valuation-eodhd-client-closes
+    to: REQ-valuation-eodhd-request
+    created_at: 2026-10-28T21:39:05.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9738197648ba
+  - type: covered_by
+    from: SYM-valuation-eodhd-client-closes
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:39:05.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98b783e8dd68

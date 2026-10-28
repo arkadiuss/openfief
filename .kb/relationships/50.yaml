@@ -279,3 +279,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93b41d0af82e
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-sync-with
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:44:49.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18bf35f1f0c7

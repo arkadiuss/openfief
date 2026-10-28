@@ -251,3 +251,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3dbc190de35
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-helper-stub-client
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:41:28.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-644f4ac15e76
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-unsupported
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:44:29.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-137c407bffc0

@@ -202,3 +202,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11b2c23bcd97
+  - type: constrains
+    from: REQ-plugins-eodhd-config
+    to: FACT-SUBJECT-B5985D839AD69FE2
+    created_at: 2026-10-28T21:37:49.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a004504026e5
+  - type: requires_property
+    from: REQ-plugins-eodhd-config
+    to: FACT-PROP-4319D196DA138B4E
+    created_at: 2026-10-28T21:37:49.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a53f058b38fd
+  - type: specified_by
+    from: REQ-plugins-eodhd-config
+    to: SCEN-plugins-eodhd-config
+    created_at: 2026-10-28T21:37:49.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3a9123389d4

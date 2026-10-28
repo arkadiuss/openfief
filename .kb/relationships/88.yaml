@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c88cc4a84e93
+  - type: implements
+    from: SYM-connector-gen-pb-index-level-descriptor
+    to: REQ-ingest-delivery-market-data
+    created_at: 2026-10-28T21:51:09.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cee87d96edf3
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-level-descriptor
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T21:51:09.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-415027befd38
