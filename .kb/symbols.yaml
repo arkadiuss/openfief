@@ -11444,3 +11444,150 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-pg-store
+  - id: SYM-plugins-rollout-outcome
+    title: RolloutOutcome
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:01.521Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-plugins-rollout-no-grant
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout-input
+    title: RolloutInput
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:03.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout
+    title: Rollout
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:05.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-plan-rollout
+    title: PlanRollout
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:08.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout-input-pending
+    title: RolloutInput.pending
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:11.606Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout-input-current-deployable
+    title: RolloutInput.currentDeployable
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:14.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout-run-under
+    title: Rollout.runUnder
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:17.766Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-rollout-no-grant
+  - id: SYM-plugins-test-rollout-upgraded
+    title: upgraded
+    sourceFile: internal/plugins/rollout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:20.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-rollout
+  - id: SYM-plugins-test-rollout-no-egress-grant
+    title: noEgressGrant
+    sourceFile: internal/plugins/rollout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:22.502Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-rollout
+  - id: SYM-plugins-test-plan-rollout
+    title: TestPlanRollout
+    sourceFile: internal/plugins/rollout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:24.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-rollout
+  - id: SYM-plugins-test-plan-rollout-refuses
+    title: TestPlanRolloutRefuses
+    sourceFile: internal/plugins/rollout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:27.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-rollout

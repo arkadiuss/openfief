@@ -34,3 +34,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6517e13b454a
+  - type: implements
+    from: SYM-plugins-rollout-input
+    to: REQ-plugins-rollout-upgrade-waits
+    created_at: 2026-10-28T06:37:04.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a59851bcd7a
+  - type: implements
+    from: SYM-plugins-rollout-input
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T06:37:04.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6ac5b47a7b2
+  - type: covered_by
+    from: SYM-plugins-rollout-input
+    to: TEST-plugins-rollout
+    created_at: 2026-10-28T06:37:04.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccbe7afd77b5
