@@ -118,11 +118,11 @@ func Instruments() ([]Instrument, error) {
 }
 
 // Sleeves returns the demo's two sleeves: defensive for the bonds and their
-// cash, offensive for the brokerage accounts.
+// cash (kind bonds), offensive for the brokerage accounts (kind satellite).
 func Sleeves() []portfolio.Sleeve {
 	return []portfolio.Sleeve{
-		{ID: DefensiveSleeve, Name: "Demo defensive", Role: portfolio.RoleDefensive},
-		{ID: OffensiveSleeve, Name: "Demo offensive", Role: portfolio.RoleOffensive},
+		{ID: DefensiveSleeve, Name: "Demo defensive", Kind: portfolio.KindBonds, Role: portfolio.RoleDefensive},
+		{ID: OffensiveSleeve, Name: "Demo offensive", Kind: portfolio.KindSatellite, Role: portfolio.RoleOffensive},
 	}
 }
 

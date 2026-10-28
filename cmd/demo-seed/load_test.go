@@ -187,7 +187,7 @@ func checkRefused(t *testing.T, reset bool) {
 	if err := ledgerpg.Migrate(ctx, pool); err != nil {
 		t.Fatalf("Migrate: %v", err)
 	}
-	theirs := portfolio.Sleeve{ID: "core", Name: "Someone's sleeve", Role: portfolio.RoleDefensive}
+	theirs := portfolio.Sleeve{ID: "core", Name: "Someone's sleeve", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive}
 	if err := ledgerapp.New(ledgerpg.New(pool)).SaveSleeve(ctx, theirs); err != nil {
 		t.Fatalf("SaveSleeve: %v", err)
 	}
