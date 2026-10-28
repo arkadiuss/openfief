@@ -48,6 +48,7 @@ Arrows show data flow, not which side starts a call.
 ```mermaid
 flowchart LR
   you(["You: browser via kubectl port-forward<br/>or your own Ingress"])
+  cli(["You: openfief CLI<br/>plugin install"])
 
   subgraph ns["namespace openfief"]
     op["Operator<br/>Plugin + PluginGrant CRDs<br/>digest + cosign checks"]
@@ -68,6 +69,7 @@ flowchart LR
   gf["Ghostfolio<br/>(your separate install)"]
   ext["External: IBKR Flex service,<br/>NBP, GUS, market-data vendor"]
 
+  cli -- "Plugin + PluginGrant<br/>(your kubeconfig)" --> op
   op -. "creates and constrains" .-> plugins
   core --> pg
   you --> ui
@@ -145,7 +147,20 @@ Each plugin runs out of the core's process, with its own network policy, secrets
 - **[D-17]** Plugin images must be pinned by digest, and their signatures are verified with cosign.
 - **[D-32]** Plugin egress goes through an egress proxy built on Stripe's Smokescreen, embedded as a Go library. The operator compiles each `PluginGrant`'s hostnames into that plugin's allow-list. Plugins identify themselves with their projected ServiceAccount token, through a custom role function. NetworkPolicy lets plugins reach only the core and the proxy, with no DNS, and the proxy refuses private and internal address ranges. Plugins reach external hosts through `HTTPS_PROXY`.
 
-### 3.5 Security: tracking and imports
+### 3.5 Plugin distribution and installation
+
+Few plugins are expected. Anyone can write and run their own; the ones the author has reviewed are listed as verified. Every image is signed, so the only question is whose signatures count.
+
+- **[D-42]** A plugin's manifest is embedded in its image, as a label on the image config. One signature covers both the code and the permissions it asks for, and the manifest can be read from the registry without running the image.
+- **[D-43]** One catalog, a file in this repository released with the product, lists the first-party and verified plugins. Any other plugin is installed directly by image reference and shown as unverified. There are no subscribable third-party catalogs.
+- **[D-44]** A verified plugin is one whose version the author reviewed: its catalog entry pins the publisher's signed image digest and the publisher's signer identity. Each new version needs a new catalog entry.
+- **[D-45]** The operator trusts three kinds of signer: OpenFief's CI, the publishers pinned in the catalog, and signers the owner adds. Owners sign their own plugins with their own CI identity or a local key, and those plugins show as unverified.
+- **[D-46]** Plugins are installed with the `openfief` CLI. It reads the catalog or the image, verifies the signature, shows the requested permissions, and on the owner's confirmation applies the `Plugin` and `PluginGrant` with the owner's own kubeconfig, or prints them for GitOps. The core has no right to create or change grants; in M0 the UI only shows installed plugins.
+- **[D-47]** Plugin upgrades are always manual, even when the permissions are unchanged.
+- **[D-48]** Each install is a separately named instance with its own config, secrets, grant and egress allow-list. The same image can be installed more than once, such as one instance per IBKR account.
+- **[D-49]** The core calls connectors: a connector serves a Connect service for syncing and for importing files, and the core owns the schedules, retries and import batches. Views are clients of the read API. File uploads and manual bond-lot entries in the built-in UI go to the core, which hands them to the right connector.
+
+### 3.6 Security: tracking and imports
 
 GR-12 puts the security model first, per use case. M0 has one use case, tracking and imports; the use cases of later milestones are in the proposal files.
 
@@ -169,5 +184,4 @@ Questions and tensions for later milestones live in their proposal files.
 - **[OQ-23]** Verify the Ghostfolio API calls D-4 relies on: creating accounts, listing activities per account, deleting activities, an import dry-run flag, the `MANUAL` scraper fields, and whether the import endpoint is meant to be stable.
 - **[OQ-24]** What is OpenFief's canonical hostname, given that passkeys are bound to it and M1's phone approvals need it reachable over HTTPS? (T-11)
 - **[OQ-25]** GR-4's model portfolio has no chart in M0 (D-30). Are model-portfolio targets entered in M0 anyway, or does the model portfolio arrive with the maintainer in M2?
-- **[OQ-26]** D-9 includes uploading files in the UI, and bond lots are entered by hand, but D-2 says views never write back and D-7 says data enters only through connector ingest paths. Is the built-in UI more than a view (it forwards uploads and bond-lot forms to the connectors), or does each connector serve its own small form, with the UI only linking to it?
 - **[OQ-27]** Verify Smokescreen before building on D-32: its license, its maintenance status, and its library API for a custom role function and per-role allow-lists.
