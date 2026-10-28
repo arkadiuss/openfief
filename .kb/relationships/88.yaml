@@ -125,3 +125,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9de5308ede1b
+  - type: constrains
+    from: REQ-portfolio-sleeve-role-override
+    to: FACT-SUBJECT-20F39635C8813292
+    created_at: 2026-10-28T09:35:20.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-912e081906d6
+  - type: requires_property
+    from: REQ-portfolio-sleeve-role-override
+    to: FACT-PROP-765BC86962EEE1BB
+    created_at: 2026-10-28T09:35:20.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d7f0f58a077
+  - type: specified_by
+    from: REQ-portfolio-sleeve-role-override
+    to: SCEN-portfolio-sleeve-role-override
+    created_at: 2026-10-28T09:35:20.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd93e1062716

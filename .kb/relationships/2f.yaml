@@ -104,3 +104,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0dbe4fbd5776
+  - type: implements
+    from: SYM-portfolio-kind-by-sleeve
+    to: REQ-portfolio-allocation-by-kind
+    created_at: 2026-10-28T09:39:09.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d96796019c8b
+  - type: covered_by
+    from: SYM-portfolio-kind-by-sleeve
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:39:09.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0256fca649f

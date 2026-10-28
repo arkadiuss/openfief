@@ -22505,3 +22505,233 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-connectrpc-mapping
+  - id: SYM-portfolio-kind-key
+    title: KindKey
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:38.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-sleeve-kind
+  - id: SYM-portfolio-kind-key-validate
+    title: KindKey.Validate
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:45.595Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-sleeve-kind
+  - id: SYM-portfolio-kind
+    title: Kind
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:50.083Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-sleeve-kind
+  - id: SYM-portfolio-kind-validate
+    title: Kind.Validate
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:00.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-sleeve-kind
+  - id: SYM-portfolio-default-kinds
+    title: DefaultKinds
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:08.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-default-kinds
+  - id: SYM-portfolio-check-kind
+    title: CheckKind
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:17.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-kind-role-fixed
+  - id: SYM-portfolio-find-kind
+    title: findKind
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:26.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-sleeve-kind
+  - id: SYM-portfolio-check-sleeve
+    title: CheckSleeve
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:34.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-sleeve-role-override
+  - id: SYM-portfolio-default-sleeves
+    title: DefaultSleeves
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:42.285Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-default-kinds
+  - id: SYM-portfolio-missing-defaults
+    title: MissingDefaults
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:51.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-default-kinds
+  - id: SYM-portfolio-has-sleeve
+    title: hasSleeve
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:59.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-default-kinds
+  - id: SYM-portfolio-kind-by-sleeve
+    title: KindBySleeve
+    sourceFile: internal/portfolio/kind.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:07.746Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve-kind
+      - type: implements
+        target: REQ-portfolio-allocation-by-kind
+  - id: SYM-portfolio-test-kind-validate
+    title: TestKindValidate
+    sourceFile: internal/portfolio/kind_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:12.948Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve-kind
+  - id: SYM-portfolio-test-default-kinds
+    title: TestDefaultKinds
+    sourceFile: internal/portfolio/kind_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:18.961Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve-kind
+  - id: SYM-portfolio-test-check-kind
+    title: TestCheckKind
+    sourceFile: internal/portfolio/kind_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:25.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve-kind
+  - id: SYM-portfolio-test-check-sleeve
+    title: TestCheckSleeve
+    sourceFile: internal/portfolio/kind_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:30.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve-kind
+  - id: SYM-portfolio-test-default-sleeves
+    title: TestDefaultSleeves
+    sourceFile: internal/portfolio/kind_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:37.655Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve-kind
+  - id: SYM-portfolio-test-missing-defaults
+    title: TestMissingDefaults
+    sourceFile: internal/portfolio/kind_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:44.921Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve-kind
+  - id: SYM-portfolio-test-kind-by-sleeve
+    title: TestKindBySleeve
+    sourceFile: internal/portfolio/kind_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:52.780Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve-kind

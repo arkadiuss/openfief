@@ -132,3 +132,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f73587f69a67
+  - type: verified_by
+    from: SCEN-portfolio-kind-role-fixed
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:34:26.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10dc2a36adcd

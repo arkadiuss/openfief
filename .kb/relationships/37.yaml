@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d66e43092ecd
+  - type: executable_for
+    from: SYM-portfolio-test-default-sleeves
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:39:39.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cf9c4ce1099
