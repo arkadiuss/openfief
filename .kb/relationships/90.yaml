@@ -83,20 +83,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9dc5e3d860e5
-  - type: executable_for
-    from: SYM-views-connectapi-test-helper-fake-rates-latest-rates
-    to: TEST-views-connectapi-rest
-    created_at: 2026-10-28T08:52:32.914Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1d007c31d0af
-  - type: executable_for
-    from: SYM-views-connectapi-test-helper-fake-rates-latest-rates
-    to: TEST-views-connectapi-connect
-    created_at: 2026-10-28T08:52:32.937Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-15479c08d6d7
   - type: implements
     from: SYM-views-pb-sleeve-role-enum-descriptor
     to: REQ-views-api-contract

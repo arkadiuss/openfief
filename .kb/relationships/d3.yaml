@@ -209,3 +209,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bb975173368
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-valuations-valuations
+    to: TEST-views-app
+    created_at: 2026-10-28T10:10:11.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1808a6f1e0c

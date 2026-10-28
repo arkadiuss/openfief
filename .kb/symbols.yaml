@@ -27808,19 +27808,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-page
-  - id: SYM-views-holding-valuation
-    title: HoldingValuation
-    sourceFile: internal/views/valuation.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:21:39.245Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-valuation
-      - type: implements
-        target: REQ-views-valuation-totals
   - id: SYM-views-date-total
     title: DateTotal
     sourceFile: internal/views/valuation.go
@@ -28015,16 +28002,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-app
-  - id: SYM-views-app-test-helper-fake-valuations-holding-valuations
-    title: fakeValuations.HoldingValuations
-    sourceFile: internal/views/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:27:28.743Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-app
   - id: SYM-views-app-test-helper-fake-statuses
     title: fakeStatuses
     sourceFile: internal/views/app/fakes_test.go
@@ -28036,16 +28013,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-app
-  - id: SYM-views-app-test-helper-fake-statuses-valuation-status
-    title: fakeStatuses.ValuationStatus
-    sourceFile: internal/views/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:27:34.686Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-app
   - id: SYM-views-app-test-helper-fake-rates
     title: fakeRates
     sourceFile: internal/views/app/fakes_test.go
@@ -28054,16 +28021,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T07:27:36.913Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-app
-  - id: SYM-views-app-test-helper-fake-rates-latest-rates
-    title: fakeRates.LatestRates
-    sourceFile: internal/views/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:27:40.353Z
     relationships:
       - type: executable_for
         target: TEST-views-app
@@ -28174,21 +28131,6 @@ symbols:
         target: TEST-views-app
       - type: implements
         target: REQ-views-valuation-queries
-  - id: SYM-views-app-valuation-status
-    title: ValuationStatus
-    sourceFile: internal/views/app/ports.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:28:23.344Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-app
-      - type: implements
-        target: REQ-decision-d36-6-api-valuation-status
-      - type: implements
-        target: REQ-views-valuation-status
   - id: SYM-views-app-valuation-statuses
     title: ValuationStatuses
     sourceFile: internal/views/app/ports.go
@@ -29292,18 +29234,6 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: executable_for
         target: TEST-views-connectapi-rest
-  - id: SYM-views-connectapi-test-helper-fake-valuations-holding-valuations
-    title: fakeValuations.HoldingValuations
-    sourceFile: internal/views/connectapi/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T08:52:03.921Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-connectapi-connect
-      - type: executable_for
-        target: TEST-views-connectapi-rest
   - id: SYM-views-connectapi-test-helper-fake-statuses
     title: fakeStatuses
     sourceFile: internal/views/connectapi/fakes_test.go
@@ -29317,18 +29247,6 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: executable_for
         target: TEST-views-connectapi-rest
-  - id: SYM-views-connectapi-test-helper-fake-statuses-valuation-status
-    title: fakeStatuses.ValuationStatus
-    sourceFile: internal/views/connectapi/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T08:52:19.760Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-connectapi-connect
-      - type: executable_for
-        target: TEST-views-connectapi-rest
   - id: SYM-views-connectapi-test-helper-fake-rates
     title: fakeRates
     sourceFile: internal/views/connectapi/fakes_test.go
@@ -29337,18 +29255,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T08:52:24.379Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-connectapi-connect
-      - type: executable_for
-        target: TEST-views-connectapi-rest
-  - id: SYM-views-connectapi-test-helper-fake-rates-latest-rates
-    title: fakeRates.LatestRates
-    sourceFile: internal/views/connectapi/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T08:52:31.041Z
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-connect
@@ -35682,3 +35588,97 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: implements
         target: REQ-views-api-contract
+  - id: SYM-views-app-test-helper-fake-valuations-valuations
+    title: fakeValuations.Valuations
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:10:10.528Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-statuses-status
+    title: fakeStatuses.Status
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:10:15.335Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-test-helper-fake-rates-fx-rates
+    title: fakeRates.FXRates
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:10:19.898Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-app-valued
+    title: valued
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:10:24.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-valuation-queries
+  - id: SYM-views-app-views-cash-in-reporting
+    title: Views.cashInReporting
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:10:28.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-allocation-inputs
+      - type: implements
+        target: REQ-views-reporting-currency
+  - id: SYM-views-connectapi-test-helper-fake-valuations-valuations
+    title: fakeValuations.Valuations
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:10:34.623Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+  - id: SYM-views-connectapi-test-helper-fake-statuses-status
+    title: fakeStatuses.Status
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:10:40.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+  - id: SYM-views-connectapi-test-helper-fake-rates-fx-rates
+    title: fakeRates.FXRates
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:10:47.319Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+      - type: executable_for
+        target: TEST-views-connectapi-rest

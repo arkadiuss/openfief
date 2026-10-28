@@ -11,7 +11,7 @@ import (
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/valuation"
-	"github.com/arkadiuss/openfief/internal/views"
+	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	"github.com/arkadiuss/openfief/internal/views/app"
 )
 
@@ -99,9 +99,9 @@ func (f *fakeLedger) AssertionChecks(ctx context.Context, id ledger.AccountID) (
 }
 
 // fakeValuations returns every stored valuation, whatever is asked.
-type fakeValuations []views.HoldingValuation
+type fakeValuations []valuation.HoldingValuation
 
-func (f fakeValuations) HoldingValuations(context.Context, ledger.AccountID, kernel.Date, kernel.Date) ([]views.HoldingValuation, error) {
+func (f fakeValuations) Valuations(context.Context, ledger.AccountID, kernel.Date, kernel.Date) ([]valuation.HoldingValuation, error) {
 	return f, nil
 }
 
@@ -109,15 +109,21 @@ func (f fakeValuations) HoldingValuations(context.Context, ledger.AccountID, ker
 // revaluation running.
 type fakeStatuses struct{ through kernel.Date }
 
-func (f fakeStatuses) ValuationStatus(context.Context, ledger.AccountID) (app.ValuationStatus, error) {
-	return app.ValuationStatus{ValuedThrough: f.through, Running: true}, nil
+func (f fakeStatuses) Status(context.Context, ledger.AccountID) (valuationapp.ValuationStatus, error) {
+	return valuationapp.ValuationStatus{ValuedThrough: f.through, Running: true}, nil
 }
 
-// fakeRates returns fixed FX rates.
+// fakeRates returns a currency's fixed FX rates up to a date.
 type fakeRates []valuation.FXRate
 
-func (f fakeRates) LatestRates(context.Context, kernel.Date) ([]valuation.FXRate, error) {
-	return f, nil
+func (f fakeRates) FXRates(_ context.Context, c kernel.Currency, through kernel.Date) ([]valuation.FXRate, error) {
+	var out []valuation.FXRate
+	for _, r := range f {
+		if r.Currency.Equal(c) && !r.Date.After(through) {
+			out = append(out, r)
+		}
+	}
+	return out, nil
 }
 
 func dec(t *testing.T, s string) kernel.Decimal {
@@ -205,8 +211,8 @@ func newViews(t *testing.T, l *fakeLedger) *app.Views {
 	t.Helper()
 	on := date(t, "2026-03-02")
 	vals := fakeValuations{
-		{Account: "acc-1", Instrument: instrument(t, isinPL, "EDO0334"), Date: on, Basis: valuation.NetIfRedeemed, Source: "statutory", Value: money(t, "1043.21", "PLN"), Reporting: money(t, "1043.21", "PLN")},
-		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Value: money(t, "31.5", "USD"), Reporting: money(t, "126.00", "PLN")},
+		{Account: "acc-1", Instrument: instrument(t, isinPL, "EDO0334"), Date: on, Basis: valuation.NetIfRedeemed, Source: "statutory", Value: money(t, "1043.21", "PLN"), PLN: money(t, "1043.21", "PLN")},
+		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Value: money(t, "31.5", "USD"), PLN: money(t, "126.00", "PLN")},
 	}
 	rates := fakeRates{{Currency: cur(t, "USD"), Date: on, Rate: dec(t, "4.00"), Source: "test"}}
 	v, err := app.New(l, vals, fakeStatuses{through: on}, rates, cur(t, "PLN"))

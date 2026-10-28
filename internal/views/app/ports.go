@@ -8,7 +8,7 @@ import (
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/valuation"
-	"github.com/arkadiuss/openfief/internal/views"
+	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 )
 
 // Ledger is what the views read from the ledger context: its queries over
@@ -37,38 +37,29 @@ type Ledger interface {
 	AssertionChecks(ctx context.Context, account ledger.AccountID) ([]ledgerapp.AssertionCheck, error)
 }
 
-// Valuations reads the stored valuations (D-36).
+// Valuations reads the stored holding valuations (D-36).
+// *valuation/postgres.Store implements it.
 type Valuations interface {
-	// HoldingValuations returns account's stored valuations dated from to to,
-	// both inclusive, in date then instrument order, with each value in its
-	// original currency and in the reporting currency (D-62). An account with
-	// none returns none.
-	HoldingValuations(ctx context.Context, account ledger.AccountID, from, to kernel.Date) ([]views.HoldingValuation, error)
-}
-
-// ValuationStatus says how current an account's stored valuations are
-// (D-36).
-type ValuationStatus struct {
-	Account ledger.AccountID
-	// ValuedThrough is the last date the account's valuations are complete
-	// for; zero until it has been valued.
-	ValuedThrough kernel.Date
-	// Pending reports a revaluation queued and not started.
-	Pending bool
-	// Running reports a revaluation in progress.
-	Running bool
+	// Valuations returns account's holding valuations dated from to to, both
+	// inclusive, in date then instrument order, valued or lacking an input,
+	// each with its value in its original currency and in PLN. An account
+	// with none returns none.
+	Valuations(ctx context.Context, account ledger.AccountID, from, to kernel.Date) ([]valuation.HoldingValuation, error)
 }
 
 // ValuationStatuses reads where each account's revaluation stands (D-36).
+// *valuation/postgres.Store implements it.
 type ValuationStatuses interface {
-	// ValuationStatus returns account's valuation status; an account never
-	// valued has a zero ValuedThrough.
-	ValuationStatus(ctx context.Context, account ledger.AccountID) (ValuationStatus, error)
+	// Status returns account's valuation status: the date it is valued
+	// through, zero when never valued, and whether a revaluation is pending
+	// or running.
+	Status(ctx context.Context, account ledger.AccountID) (valuationapp.ValuationStatus, error)
 }
 
 // FXRates reads stored FX rates to PLN (D-20).
+// *valuation/postgres.Store implements it.
 type FXRates interface {
-	// LatestRates returns, for each currency that has one, the latest rate
-	// dated on or before on.
-	LatestRates(ctx context.Context, on kernel.Date) ([]valuation.FXRate, error)
+	// FXRates returns every rate of currency dated on or before through, in
+	// date order.
+	FXRates(ctx context.Context, currency kernel.Currency, through kernel.Date) ([]valuation.FXRate, error)
 }

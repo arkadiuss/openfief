@@ -10,6 +10,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
+	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
 // ErrUnknownDimension reports a Dimension outside the declared constants, or
@@ -171,10 +172,12 @@ func groupKey(item *AllocationItem, d Dimension) (string, error) {
 	return "", fmt.Errorf("%w: %s", ErrUnknownDimension, d)
 }
 
-// ValueHoldings pairs account's holdings with their valuations dated on: a
-// holding with a valuation of its instrument in the account on that date
-// becomes an allocation item, and one without is returned as unvalued.
-func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []HoldingValuation, on kernel.Date) ([]AllocationItem, []ledger.Holding) {
+// ValueHoldings pairs account's holdings with their holding valuations dated
+// on: a holding with a valued holding valuation of its instrument in the
+// account on that date becomes an allocation item, at the valuation's
+// converted value; one without, or whose valuation lacks an input, is
+// returned as unvalued.
+func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []valuation.HoldingValuation, on kernel.Date) ([]AllocationItem, []ledger.Holding) {
 	var items []AllocationItem
 	var unvalued []ledger.Holding
 	for i := range holdings {
@@ -184,17 +187,18 @@ func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []Hol
 			unvalued = append(unvalued, *h)
 			continue
 		}
-		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, Reporting: v.Reporting})
+		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, Reporting: v.PLN})
 	}
 	return items, unvalued
 }
 
-// valuationOf returns the valuation in vals of in, held in account, dated on.
-func valuationOf(vals []HoldingValuation, account ledger.AccountID, in ledger.Instrument, on kernel.Date) (HoldingValuation, bool) {
+// valuationOf returns the valued holding valuation in vals of in, held in
+// account, dated on.
+func valuationOf(vals []valuation.HoldingValuation, account ledger.AccountID, in ledger.Instrument, on kernel.Date) (valuation.HoldingValuation, bool) {
 	for i := range vals {
-		if v := &vals[i]; v.Account == account && v.Instrument == in && v.Date.Equal(on) {
+		if v := &vals[i]; v.Valued() && v.Account == account && v.Instrument == in && v.Date.Equal(on) {
 			return *v, true
 		}
 	}
-	return HoldingValuation{}, false
+	return valuation.HoldingValuation{}, false
 }

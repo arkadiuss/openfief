@@ -6,7 +6,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
-	"github.com/arkadiuss/openfief/internal/views"
 )
 
 // Synthetic ISINs with valid check digits; no real instrument is implied.
@@ -56,23 +55,30 @@ func instrument(t *testing.T, isin, symbol string) ledger.Instrument {
 	return ledger.Instrument{ISIN: i, Symbol: symbol}
 }
 
-// val is a stored valuation in account acc-1 of the instrument isin/symbol:
-// value in its currency, pln its value in the reporting currency, PLN.
+// val is a holding valuation in account acc-1 of the instrument isin/symbol:
+// value in its currency, pln its value in PLN; a value of "missing" lacks a
+// price.
 type val struct {
 	isin, symbol, day, value, currency, pln string
 }
 
-func (v *val) build(t *testing.T) views.HoldingValuation {
+func (v *val) build(t *testing.T) valuation.HoldingValuation {
 	t.Helper()
-	return views.HoldingValuation{
+	if v.value == "missing" {
+		return valuation.HoldingValuation{
+			Account: "acc-1", Instrument: instrument(t, v.isin, v.symbol), Date: date(t, v.day),
+			Basis: valuation.Market, Missing: valuation.MissingPrice,
+		}
+	}
+	return valuation.HoldingValuation{
 		Account: "acc-1", Instrument: instrument(t, v.isin, v.symbol), Date: date(t, v.day),
-		Basis: valuation.Market, Source: "test", Value: money(t, v.value, v.currency), Reporting: money(t, v.pln, "PLN"),
+		Basis: valuation.Market, Source: "test", Value: money(t, v.value, v.currency), PLN: money(t, v.pln, "PLN"),
 	}
 }
 
-func vals(t *testing.T, vs []val) []views.HoldingValuation {
+func vals(t *testing.T, vs []val) []valuation.HoldingValuation {
 	t.Helper()
-	out := make([]views.HoldingValuation, 0, len(vs))
+	out := make([]valuation.HoldingValuation, 0, len(vs))
 	for i := range vs {
 		out = append(out, vs[i].build(t))
 	}

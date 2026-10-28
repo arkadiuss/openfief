@@ -147,20 +147,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-528dd4ba115e
   - type: implements
-    from: SYM-views-holding-valuation
-    to: REQ-views-valuation-totals
-    created_at: 2026-10-28T07:21:39.934Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d873555a98bb
-  - type: covered_by
-    from: SYM-views-holding-valuation
-    to: TEST-views-valuation
-    created_at: 2026-10-28T07:21:39.959Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-884424571f4a
-  - type: implements
     from: SYM-views-pb-book-kind-enum
     to: REQ-views-api-contract
     created_at: 2026-10-28T08:59:35.628Z

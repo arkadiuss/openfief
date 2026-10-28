@@ -10,6 +10,7 @@ import (
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/valuation"
+	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	"github.com/arkadiuss/openfief/internal/views"
 )
 
@@ -17,8 +18,9 @@ import (
 var ErrUnknownAccount = errors.New("unknown account")
 
 // cashRounding is how cash converted to the reporting currency for the
-// allocation is rounded to its minor unit.
-const cashRounding = kernel.RoundHalfEven
+// allocation is rounded to its minor unit: as the valuation context rounds
+// holding values, so cash and holdings add up alike.
+const cashRounding = valuation.ValueRounding
 
 // UnsupportedReportingCurrencyError reports a reporting currency (D-62) the
 // views cannot convert to. FX rates are quoted against PLN only (D-20), and
@@ -154,10 +156,10 @@ func accountErr(what string, err error) error {
 	return fmt.Errorf("%s: %w", what, err)
 }
 
-// AccountValuations is an account's stored valuations in a date range with
-// their totals per date.
+// AccountValuations is an account's valued holding valuations in a date
+// range with their totals per date.
 type AccountValuations struct {
-	Valuations []views.HoldingValuation
+	Valuations []valuation.HoldingValuation
 	Totals     []views.DateTotal
 }
 
@@ -170,10 +172,11 @@ func (v *Views) AccountValuations(ctx context.Context, account ledger.AccountID,
 	if _, err := v.Account(ctx, account); err != nil {
 		return AccountValuations{}, err
 	}
-	vals, err := v.valuations.HoldingValuations(ctx, account, from, to)
+	stored, err := v.valuations.Valuations(ctx, account, from, to)
 	if err != nil {
 		return AccountValuations{}, fmt.Errorf("loading valuations: %w", err)
 	}
+	vals := valued(stored)
 	totals, err := views.TotalsByDate(vals, v.reporting)
 	if err != nil {
 		return AccountValuations{}, fmt.Errorf("totalling valuations: %w", err)
@@ -191,9 +194,9 @@ func (v *Views) ValuationTotals(ctx context.Context, from, to kernel.Date) ([]vi
 	if err != nil {
 		return nil, err
 	}
-	var all []views.HoldingValuation
+	var all []valuation.HoldingValuation
 	for i := range accounts {
-		vals, loadErr := v.valuations.HoldingValuations(ctx, accounts[i].ID, from, to)
+		vals, loadErr := v.valuations.Valuations(ctx, accounts[i].ID, from, to)
 		if loadErr != nil {
 			return nil, fmt.Errorf("loading valuations: %w", loadErr)
 		}
@@ -208,13 +211,13 @@ func (v *Views) ValuationTotals(ctx context.Context, from, to kernel.Date) ([]vi
 
 // ValuationStatus returns the date account is valued through and whether a
 // revaluation is pending or running (D-36).
-func (v *Views) ValuationStatus(ctx context.Context, account ledger.AccountID) (ValuationStatus, error) {
+func (v *Views) ValuationStatus(ctx context.Context, account ledger.AccountID) (valuationapp.ValuationStatus, error) {
 	if _, err := v.Account(ctx, account); err != nil {
-		return ValuationStatus{}, err
+		return valuationapp.ValuationStatus{}, err
 	}
-	s, err := v.statuses.ValuationStatus(ctx, account)
+	s, err := v.statuses.Status(ctx, account)
 	if err != nil {
-		return ValuationStatus{}, fmt.Errorf("loading valuation status: %w", err)
+		return valuationapp.ValuationStatus{}, fmt.Errorf("loading valuation status: %w", err)
 	}
 	s.Account = account
 	return s, nil
@@ -222,14 +225,14 @@ func (v *Views) ValuationStatus(ctx context.Context, account ledger.AccountID) (
 
 // ValuationStatuses returns every account's valuation status, in account ID
 // order.
-func (v *Views) ValuationStatuses(ctx context.Context) ([]ValuationStatus, error) {
+func (v *Views) ValuationStatuses(ctx context.Context) ([]valuationapp.ValuationStatus, error) {
 	accounts, err := v.Accounts(ctx)
 	if err != nil {
 		return nil, err
 	}
-	out := make([]ValuationStatus, 0, len(accounts))
+	out := make([]valuationapp.ValuationStatus, 0, len(accounts))
 	for i := range accounts {
-		s, err := v.statuses.ValuationStatus(ctx, accounts[i].ID)
+		s, err := v.statuses.Status(ctx, accounts[i].ID)
 		if err != nil {
 			return nil, fmt.Errorf("loading valuation status: %w", err)
 		}
@@ -237,6 +240,19 @@ func (v *Views) ValuationStatuses(ctx context.Context) ([]ValuationStatus, error
 		out = append(out, s)
 	}
 	return out, nil
+}
+
+// valued returns the holding valuations in vals that lack no input. Those
+// that do are left out: the valuation status says how far an account is
+// valued.
+func valued(vals []valuation.HoldingValuation) []valuation.HoldingValuation {
+	out := make([]valuation.HoldingValuation, 0, len(vals))
+	for i := range vals {
+		if vals[i].Valued() {
+			out = append(out, vals[i])
+		}
+	}
+	return out
 }
 
 // AllocationOn is the portfolio's allocation on a date, with the holdings
@@ -256,14 +272,10 @@ func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimensio
 	if err != nil {
 		return AllocationOn{}, err
 	}
-	rates, err := v.rates.LatestRates(ctx, on)
-	if err != nil {
-		return AllocationOn{}, fmt.Errorf("loading FX rates: %w", err)
-	}
 	var items []views.AllocationItem
 	out := AllocationOn{Date: on}
 	for i := range accounts {
-		got, unvalued, itemErr := v.allocationItems(ctx, &accounts[i], on, rates)
+		got, unvalued, itemErr := v.allocationItems(ctx, &accounts[i], on)
 		if itemErr != nil {
 			return AllocationOn{}, itemErr
 		}
@@ -278,12 +290,12 @@ func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimensio
 
 // allocationItems returns a's valued holdings and cash on on, and its
 // holdings that have no valuation on on.
-func (v *Views) allocationItems(ctx context.Context, a *ledger.Account, on kernel.Date, rates []valuation.FXRate) ([]views.AllocationItem, []ledger.Holding, error) {
+func (v *Views) allocationItems(ctx context.Context, a *ledger.Account, on kernel.Date) ([]views.AllocationItem, []ledger.Holding, error) {
 	holdings, err := v.ledger.HoldingsOn(ctx, a.ID, on)
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading holdings: %w", err)
 	}
-	vals, err := v.valuations.HoldingValuations(ctx, a.ID, on, on)
+	vals, err := v.valuations.Valuations(ctx, a.ID, on, on)
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading valuations: %w", err)
 	}
@@ -293,12 +305,29 @@ func (v *Views) allocationItems(ctx context.Context, a *ledger.Account, on kerne
 		return nil, nil, fmt.Errorf("loading cash: %w", err)
 	}
 	for _, c := range cash {
-		// New admits only PLN as the reporting currency, so the PLN rates convert.
-		converted, err := valuation.ConvertToPLN(c, rates, on, cashRounding)
+		converted, err := v.cashInReporting(ctx, c, on)
 		if err != nil {
 			return nil, nil, fmt.Errorf("converting cash to %s: %w", v.reporting, err)
 		}
 		items = append(items, views.AllocationItem{Account: *a, AssetClass: views.AssetCash, Value: c, Reporting: converted})
 	}
 	return items, unvalued, nil
+}
+
+// cashInReporting converts cash c to the reporting currency at the FX rate
+// for on. New admits only PLN as the reporting currency, so the stored rates
+// to PLN convert; PLN cash needs no rate.
+func (v *Views) cashInReporting(ctx context.Context, c kernel.Money, on kernel.Date) (kernel.Money, error) {
+	var rates []valuation.FXRate
+	if !c.Currency().Equal(v.reporting) {
+		var err error
+		if rates, err = v.rates.FXRates(ctx, c.Currency(), on); err != nil {
+			return kernel.Money{}, fmt.Errorf("loading FX rates: %w", err)
+		}
+	}
+	converted, err := valuation.ConvertToPLN(c, rates, on, cashRounding)
+	if err != nil {
+		return kernel.Money{}, fmt.Errorf("converting cash: %w", err)
+	}
+	return converted, nil
 }

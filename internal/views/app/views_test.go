@@ -11,6 +11,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/valuation"
+	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	"github.com/arkadiuss/openfief/internal/views"
 	"github.com/arkadiuss/openfief/internal/views/app"
 )
@@ -93,7 +94,7 @@ func TestAccountValuations(t *testing.T) {
 		t.Fatalf("AccountValuations() error = %v", err)
 	}
 	want := app.AccountValuations{
-		Valuations: f.valuations.vals[2:],
+		Valuations: f.valuations.vals[2:4],
 		Totals: []views.DateTotal{{
 			Date: f.on, Reporting: money(t, "1170.00", "PLN"),
 			ByCurrency: []kernel.Money{money(t, "1050.00", "PLN"), money(t, "30", "USD")},
@@ -135,7 +136,7 @@ func TestValuationStatus(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ValuationStatuses() error = %v", err)
 	}
-	want := []app.ValuationStatus{{Account: "acc-1", ValuedThrough: f.on, Pending: true}, {Account: "acc-2"}}
+	want := []valuationapp.ValuationStatus{{Account: "acc-1", ValuedThrough: f.on, Pending: true}, {Account: "acc-2"}}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("ValuationStatuses() mismatch (-want +got):\n%s", diff)
 	}

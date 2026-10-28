@@ -39,6 +39,14 @@ func TestTotalsByDate(t *testing.T) {
 	}{
 		{name: "no valuations, no totals", want: []total{}},
 		{
+			name: "a valuation that lacks an input counts nowhere",
+			vals: []val{
+				{isinIE, "ETF1", "2026-03-02", "1", "USD", "4.00"},
+				{isinIE, "ETF2", "2026-03-02", "missing", "USD", "missing"},
+			},
+			want: []total{{"2026-03-02", "4.00", [][2]string{{"1", "USD"}}}},
+		},
+		{
 			name: "one date, two currencies, sums exactly",
 			vals: []val{
 				{isinIE, "ETF1", "2026-03-02", "100.10", "USD", "400.40"},
@@ -76,7 +84,7 @@ func TestTotalsByDate(t *testing.T) {
 func TestTotalsByDateOtherCurrency(t *testing.T) {
 	t.Parallel()
 	in := vals(t, []val{{isinIE, "ETF1", "2026-03-02", "1", "USD", "1"}})
-	in[0].Reporting = money(t, "1", "USD")
+	in[0].PLN = money(t, "1", "USD")
 	if _, err := views.TotalsByDate(in, pln(t)); !errors.Is(err, views.ErrNotReportingCurrency) {
 		t.Errorf("TotalsByDate() error = %v, want %v", err, views.ErrNotReportingCurrency)
 	}

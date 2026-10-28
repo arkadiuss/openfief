@@ -178,8 +178,9 @@ func TestValueHoldings(t *testing.T) {
 	stored := vals(t, []val{
 		{isinPL, "EDO0334", "2026-03-02", "1050.00", "PLN", "1050.00"},
 		{isinIE, "ETF1", "2026-03-02", "30", "USD", "120.00"},
-		// Another date and another account do not value the holdings on.
+		// Another date, another account or a missing input do not value the holdings on.
 		{isinIE, "ETF2", "2026-03-01", "10", "USD", "40.00"},
+		{isinIE, "ETF2", "2026-03-02", "missing", "USD", "missing"},
 	})
 	moved := vals(t, []val{{isinIE, "ETF2", "2026-03-02", "10", "USD", "40.00"}})[0]
 	moved.Account = "acc-2"

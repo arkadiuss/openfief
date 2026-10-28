@@ -8,6 +8,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/portfolio"
+	"github.com/arkadiuss/openfief/internal/valuation"
+	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	"github.com/arkadiuss/openfief/internal/views"
 	"github.com/arkadiuss/openfief/internal/views/app"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
@@ -117,10 +119,10 @@ func pbCheck(c *ledgerapp.AssertionCheck) *viewsv1.AssertionCheck {
 }
 
 // pbValuation converts a stored valuation of a holding.
-func pbValuation(v *views.HoldingValuation) *viewsv1.Valuation {
+func pbValuation(v *valuation.HoldingValuation) *viewsv1.Valuation {
 	return &viewsv1.Valuation{
 		Date: pbDate(v.Date), Instrument: pbInstrument(v.Instrument), Basis: viewsv1.ValuationBasis(enumNumber(int(v.Basis))),
-		Source: v.Source, Value: pbMoney(v.Value), ValueReporting: pbMoney(v.Reporting),
+		Source: v.Source, Value: pbMoney(v.Value), ValueReporting: pbMoney(v.PLN),
 	}
 }
 
@@ -135,7 +137,7 @@ func pbTotals(ts []views.DateTotal) []*viewsv1.DateTotal {
 
 // pbStatus converts an account's valuation status; a never-valued account
 // has no valued-through date.
-func pbStatus(s *app.ValuationStatus) *viewsv1.ValuationStatus {
+func pbStatus(s *valuationapp.ValuationStatus) *viewsv1.ValuationStatus {
 	return &viewsv1.ValuationStatus{AccountId: string(s.Account), ValuedThrough: pbDate(s.ValuedThrough), Pending: s.Pending, Running: s.Running}
 }
 

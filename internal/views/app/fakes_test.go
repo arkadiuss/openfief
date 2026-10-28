@@ -11,7 +11,7 @@ import (
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/valuation"
-	"github.com/arkadiuss/openfief/internal/views"
+	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	"github.com/arkadiuss/openfief/internal/views/app"
 )
 
@@ -79,12 +79,12 @@ func (f *fakeLedger) AssertionChecks(ctx context.Context, id ledger.AccountID) (
 // fakeValuations returns the stored valuations of an account dated in the
 // range asked for.
 type fakeValuations struct {
-	vals []views.HoldingValuation
+	vals []valuation.HoldingValuation
 	fail error
 }
 
-func (f *fakeValuations) HoldingValuations(_ context.Context, id ledger.AccountID, from, to kernel.Date) ([]views.HoldingValuation, error) {
-	var out []views.HoldingValuation
+func (f *fakeValuations) Valuations(_ context.Context, id ledger.AccountID, from, to kernel.Date) ([]valuation.HoldingValuation, error) {
+	var out []valuation.HoldingValuation
 	for i := range f.vals {
 		if v := &f.vals[i]; v.Account == id && !v.Date.Before(from) && !v.Date.After(to) {
 			out = append(out, *v)
@@ -95,17 +95,23 @@ func (f *fakeValuations) HoldingValuations(_ context.Context, id ledger.AccountI
 
 // fakeStatuses returns a fixed status per account; none is a never-valued
 // account.
-type fakeStatuses map[ledger.AccountID]app.ValuationStatus
+type fakeStatuses map[ledger.AccountID]valuationapp.ValuationStatus
 
-func (f fakeStatuses) ValuationStatus(_ context.Context, id ledger.AccountID) (app.ValuationStatus, error) {
+func (f fakeStatuses) Status(_ context.Context, id ledger.AccountID) (valuationapp.ValuationStatus, error) {
 	return f[id], nil
 }
 
-// fakeRates returns fixed FX rates.
+// fakeRates returns a currency's fixed FX rates up to a date.
 type fakeRates []valuation.FXRate
 
-func (f fakeRates) LatestRates(context.Context, kernel.Date) ([]valuation.FXRate, error) {
-	return f, nil
+func (f fakeRates) FXRates(_ context.Context, c kernel.Currency, through kernel.Date) ([]valuation.FXRate, error) {
+	var out []valuation.FXRate
+	for _, r := range f {
+		if r.Currency.Equal(c) && !r.Date.After(through) {
+			out = append(out, r)
+		}
+	}
+	return out, nil
 }
 
 func dec(t *testing.T, s string) kernel.Decimal {
@@ -166,8 +172,8 @@ func newFixture(t *testing.T) *fixture {
 	on := date(t, "2026-03-02")
 	bond, etf1, etf2 := instrument(t, isinPL, "EDO0334"), instrument(t, isinIE, "ETF1"), instrument(t, isinIE, "ETF2")
 	units := func(n int64) kernel.Quantity { return kernel.NewQuantity(kernel.NewDecimal(n, 0)) }
-	value := func(in ledger.Instrument, day, v, c, pln string) views.HoldingValuation {
-		return views.HoldingValuation{Account: "acc-1", Instrument: in, Date: date(t, day), Basis: valuation.Market, Source: "test", Value: money(t, v, c), Reporting: money(t, pln, "PLN")}
+	value := func(in ledger.Instrument, day, v, c, pln string) valuation.HoldingValuation {
+		return valuation.HoldingValuation{Account: "acc-1", Instrument: in, Date: date(t, day), Basis: valuation.Market, Source: "test", Value: money(t, v, c), PLN: money(t, pln, "PLN")}
 	}
 	return &fixture{
 		on: on,
@@ -187,11 +193,13 @@ func newFixture(t *testing.T) *fixture {
 				"acc-2": {money(t, "100", "EUR")},
 			},
 		},
-		valuations: &fakeValuations{vals: []views.HoldingValuation{
+		valuations: &fakeValuations{vals: []valuation.HoldingValuation{
 			value(bond, "2026-03-01", "1049.00", "PLN", "1049.00"),
 			value(etf1, "2026-03-01", "29", "USD", "116.00"),
 			value(bond, "2026-03-02", "1050.00", "PLN", "1050.00"),
 			value(etf1, "2026-03-02", "30", "USD", "120.00"),
+			// ETF2 lacks a price: it shows only as unvalued.
+			{Account: "acc-1", Instrument: etf2, Date: on, Basis: valuation.Market, Quantity: units(2), Missing: valuation.MissingPrice},
 		}},
 		statuses: fakeStatuses{"acc-1": {ValuedThrough: on, Pending: true}},
 		rates: fakeRates{
