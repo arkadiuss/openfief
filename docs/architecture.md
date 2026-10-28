@@ -46,7 +46,7 @@ flowchart TB
   subgraph ns["namespace openfief"]
     op["Operator<br/>Plugin + PluginGrant"]:::partial
     proxy["Egress proxy<br/>Smokescreen"]:::built
-    core["Core service<br/>ledger, valuation, read API;<br/>connector calls not built"]:::partial
+    core["Core service<br/>ledger, valuation, read API,<br/>connector scheduler"]:::built
     pg[("PostgreSQL")]:::partial
     subgraph plugins["Plugins, one pod each"]
       ui["Built-in UI view"]:::missing
@@ -76,12 +76,12 @@ flowchart TB
 | Ledger | D-18, D-19, D-23, D-33 to D-35 | Domain, use cases and the PostgreSQL store in `internal/ledger`, including the guard against seeding an account twice; the core service runs it | [Ledger](concepts/ledger.md) |
 | Valuation and FX | D-20, D-21, D-25, D-36 | Prices, FX lookups, valuation bases and the NBP client in `internal/valuation`; stored valuations and the River revaluation queue (D-36) in `internal/valuation/postgres` | [Valuation](concepts/valuation.md) |
 | Treasury bonds | D-9, D-25, D-37 | Polish bond rules in `internal/jurisdiction/pl` | [Treasury bonds](concepts/treasury-bonds.md) |
-| Ingest | D-7, D-8, D-23, D-49, D-59 | Import batches and the IBKR Flex mapping and pull in `internal/ingest`, still a package of the core rather than a plugin. The core's client for connector plugins is in `internal/ingest/connectrpc`, but the per-instance tokens it needs (D-59) aren't built | [Ingest](concepts/ingest.md) |
+| Ingest | D-7, D-8, D-23, D-49, D-59 | Import batches and the IBKR Flex mapping and pull in `internal/ingest`, still a package of the core rather than a plugin. The core's side of connector plugins: the client in `internal/ingest/connectrpc`, the scheduler, watermarks and connector bindings in `internal/ingest/app` and `internal/ingest/postgres`, instance discovery in `internal/ingest/kube`, and the per-instance tokens (D-59) in `internal/identity/kube` | [Ingest](concepts/ingest.md) |
 | Shared kernel | (code organization) | Money, currency, quantity and dates in `internal/kernel` | [Kernel](concepts/kernel.md) |
 | Portfolio | D-52 to D-54, D-61 | Sleeves and sleeve kinds with their default roles and install defaults in `internal/portfolio`; the model portfolio is not built | [Portfolio](concepts/portfolio.md) |
 | Demo dataset | GR-12 | A synthetic dataset in `internal/demo`, loaded by `cmd/demo-seed` through the same ingest, ledger and valuation paths real data takes. It refuses any database without its own demo marker | [Demo](dev/demo.md) |
 | Read API | D-6, D-7, D-30, D-36, D-50, D-62 | The `openfief.views.v1.ReadService` protobuf service and its generated OpenAPI document; the queries, totals and allocation in `internal/views`; the Connect and REST `/v1` handler, through Vanguard, in `internal/views/connectapi`. The core service serves it | [Read API](concepts/read-api.md) |
-| Core service | D-2, D-14, D-27, D-28, D-36, D-50 | `cmd/core`, installed by `deploy/core` (below). It migrates every context's schema, runs the River revaluation workers, and serves the read API on port 8080 with [script tokens](concepts/identity.md) from `internal/identity` as its only accepted tokens, plus unauthenticated `/healthz` and `/readyz`. `core token issue`, `list` and `revoke` manage the tokens. It doesn't call connectors yet (D-49): no connector plugin exists, so data enters through `cmd/demo-seed` | [Identity](concepts/identity.md), [Read API](concepts/read-api.md) |
+| Core service | D-2, D-14, D-27, D-28, D-36, D-50 | `cmd/core`, installed by `deploy/core` (below). It migrates every context's schema, runs the River revaluation workers, and serves the read API on port 8080 with [script tokens](concepts/identity.md) from `internal/identity` as its only accepted tokens, plus unauthenticated `/healthz` and `/readyz`. `core token issue`, `list` and `revoke` manage the tokens. In a cluster it syncs every running connector instance on a schedule (D-49), as the ingest page explains; `core connector bind` and `core connector sync` bind an instance to an account and sync one now. No connector plugin is installed on the demo yet, so its data enters through `cmd/demo-seed` | [Identity](concepts/identity.md), [Read API](concepts/read-api.md) |
 | UI, Ghostfolio view, CLI, XTB parser, market data | D-3 to D-5, D-30, D-46, D-51 | Not built | [Status](/status/) |
 
 The [status page](/status/) gives the same picture decision by decision, from the requirements in kibi.
@@ -126,6 +126,8 @@ flowchart LR
   internet(["Internet"])
   core -- "DSN from Secret<br/>openfief-db-app" --> db
   p1 -- "connect port" --> core
+  core -- "Sync, with a TokenRequest token<br/>for the instance (D-59)" --> p1
+  core -- "TokenRequest, reads Plugins<br/>and Services" --> api(["Kubernetes API"])
   op -- "reads selector and ports" --> core
   op -- "watches" --> crds
   op -- "creates" --> p1
@@ -135,7 +137,7 @@ flowchart LR
   px -- "granted hosts only" --> internet
 ```
 
-The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/`, `egress-proxy/` and `core/` for the three workloads. The core's Service `openfief-core` is a ClusterIP with two named ports on the same container port 8080: `http` (8080), the read API and health endpoints, reached with `kubectl port-forward` by default (D-28), and `connect` (8081), the port the operator hands to plugins (D-49). Its NetworkPolicy admits plugin pods and lets the core reach only DNS and the database; its pods mount no Kubernetes API token. The database URL comes from CloudNativePG's Secret `openfief-db-app`, key `uri` (D-14, D-29). The [operator](concepts/operator.md) and [egress](concepts/egress.md) pages walk through them.
+The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/`, `egress-proxy/` and `core/` for the three workloads. The core's Service `openfief-core` is a ClusterIP with two named ports on the same container port 8080: `http` (8080), the read API and health endpoints, reached with `kubectl port-forward` by default (D-28), and `connect` (8081), the port the operator hands to plugins (D-49). Its NetworkPolicy admits plugin pods and lets the core reach only DNS, the database, plugin pods on their Connect port (8080) and the Kubernetes API server. A pod reaches the API server through Service `kubernetes`, which is translated to the API server's own address before NetworkPolicy applies, so the rule names that port: 6443, as on k3s, to any address; an overlay narrows it to the node's address or changes the port. The core's pods mount a Kubernetes API token, and its Role (`deploy/core/rbac.yaml`) allows only `create` on its own `serviceaccounts/token` (resourceNames `openfief-core`) and `get`, `list` and `watch` on Plugins and Services, all in the `openfief` namespace. The database URL comes from CloudNativePG's Secret `openfief-db-app`, key `uri` (D-14, D-29). The [operator](concepts/operator.md) and [egress](concepts/egress.md) pages walk through them.
 
 ## The demo environment
 

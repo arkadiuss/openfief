@@ -195,3 +195,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d6da2c209a8
+  - type: executable_for
+    from: SYM-core-conn-test-monthly-reading
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:42.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-740c5e494cf3

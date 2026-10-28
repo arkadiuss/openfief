@@ -209,3 +209,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-822b8aea5a33
+  - type: implements
+    from: SYM-ingest-kube-plugin-resource
+    to: REQ-ingest-discovery
+    created_at: 2026-10-28T17:26:42.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b70470a14c63
+  - type: covered_by
+    from: SYM-ingest-kube-plugin-resource
+    to: TEST-ingest-kube
+    created_at: 2026-10-28T17:26:42.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1697b8e45026

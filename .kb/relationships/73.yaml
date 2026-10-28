@@ -188,3 +188,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9987bf493c14
+  - type: implements
+    from: SYM-core-conn-new-batch-id
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:24:11.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e0754de9ff4
+  - type: covered_by
+    from: SYM-core-conn-new-batch-id
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:24:11.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd61d1f6d578

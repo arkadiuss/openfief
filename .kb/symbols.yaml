@@ -40160,3 +40160,738 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-schedule
+  - id: SYM-core-connector-args
+    title: connectorArgs
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:07.659Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-sync-config
+    title: syncConfig
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:12.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-parse-connector
+    title: parseConnector
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:17.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-parse-mode
+    title: parseMode
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:22.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-cluster
+    title: cluster
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:26.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-in-cluster
+    title: inCluster
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:31.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-cluster-or-nil
+    title: clusterOrNil
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:36.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-connector-deps
+    title: connectorDeps
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:40.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-with-connector-deps
+    title: withConnectorDeps
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:45.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-new-scheduler
+    title: newScheduler
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:51.272Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+      - type: implements
+        target: REQ-ingest-core-owns-schedules
+  - id: SYM-core-conn-run-connectors
+    title: runConnectors
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:55.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-connector-command
+    title: connectorCommand
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:00.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-sync-now
+    title: syncNow
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:05.801Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-new-batch-id
+    title: newBatchID
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:10.602Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-jitter
+    title: jitter
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:15.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-ledger-importer
+    title: ledgerImporter
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:18.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-ledger-importer-import
+    title: ledgerImporter.Import
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:23.755Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-ledger-importer-seed
+    title: ledgerImporter.Seed
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:28.467Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-import-summary
+    title: importSummary
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:33.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-valuation-inputs
+    title: valuationInputs
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:37.324Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-valuation-inputs-store-prices
+    title: valuationInputs.StorePrices
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:41.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-valuation-inputs-store-fxrates
+    title: valuationInputs.StoreFXRates
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:46.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-valuation-inputs-store-index-readings
+    title: valuationInputs.StoreIndexReadings
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:51.261Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-monthly-reading
+    title: monthlyReading
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:55.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-test-helper-deposit-connector
+    title: depositConnector
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:59.242Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-deposit-connector-sync
+    title: depositConnector.Sync
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:04.068Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-serve-connector
+    title: serveConnector
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:08.664Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-fake-cluster
+    title: fakeCluster
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:13.861Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-connector-cmd
+    title: connectorCmd
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:18.474Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-connector-bind-and-sync
+    title: TestConnectorBindAndSync
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:23.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-save-demo-registry
+    title: saveDemoRegistry
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:28.140Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-helper-check-synced
+    title: checkSynced
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:32.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-serve-schedules-connectors
+    title: TestServeSchedulesConnectors
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:37.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-test-monthly-reading
+    title: TestMonthlyReading
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:41.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-conn-ingest-deps
+    title: ingestDeps
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:45.760Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-core-conn-start-cluster
+    title: startCluster
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:49.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-identity-kube-core-tokens
+    title: CoreTokens
+    sourceFile: internal/identity/kube/coretokens.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:52.766Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube
+      - type: implements
+        target: REQ-identity-core-tokens
+  - id: SYM-identity-kube-cached-token
+    title: cachedToken
+    sourceFile: internal/identity/kube/coretokens.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:57.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube
+      - type: implements
+        target: REQ-identity-core-tokens
+  - id: SYM-identity-kube-new-core-tokens
+    title: NewCoreTokens
+    sourceFile: internal/identity/kube/coretokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:01.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube
+      - type: implements
+        target: REQ-identity-core-tokens
+  - id: SYM-identity-kube-core-tokens-token-for
+    title: CoreTokens.TokenFor
+    sourceFile: internal/identity/kube/coretokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:06.446Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube
+      - type: implements
+        target: REQ-identity-core-tokens
+      - type: implements
+        target: REQ-plugins-core-only-caller
+  - id: SYM-identity-kube-test-helper-token-request
+    title: tokenRequest
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:11.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-helper-token-server
+    title: tokenServer
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:14.531Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-helper-token-server-client
+    title: tokenServer.client
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:19.063Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-helper-clock
+    title: clock
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:22.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-helper-clock-now
+    title: clock.Now
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:27.260Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-core-tokens-caches
+    title: TestCoreTokensCaches
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:32.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-identity-kube-test-core-tokens-failures
+    title: TestCoreTokensFailures
+    sourceFile: internal/identity/kube/coretokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:37.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube
+  - id: SYM-ingest-kube-plugin-resource
+    title: PluginResource
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:41.713Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-discovery
+    title: Discovery
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:44.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-new-discovery
+    title: NewDiscovery
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:49.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-discovery-start
+    title: Discovery.Start
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:53.639Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-discovery-connector-instances
+    title: Discovery.ConnectorInstances
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:26:58.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-discovery-base-url
+    title: Discovery.BaseURL
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:03.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-running-connector
+    title: RunningConnector
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:08.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-service-address
+    title: ServiceAddress
+    sourceFile: internal/ingest/kube/discovery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:12.648Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube
+      - type: implements
+        target: REQ-ingest-discovery
+  - id: SYM-ingest-kube-test-helper-plugin
+    title: plugin
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:16.833Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-helper-service
+    title: service
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:20.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-discovery
+    title: TestDiscovery
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:24.901Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-helper-check-watch
+    title: checkWatch
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:28.370Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-service-address
+    title: TestServiceAddress
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:32.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube
+  - id: SYM-ingest-kube-test-operator-contract
+    title: TestOperatorContract
+    sourceFile: internal/ingest/kube/discovery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:27:35.920Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube

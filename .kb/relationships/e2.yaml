@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b11a82026466
+  - type: validates
+    from: TEST-identity-kube
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T17:22:29.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01eae89625df

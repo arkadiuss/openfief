@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-deebc83fec55
+  - type: executable_for
+    from: SYM-identity-kube-test-helper-token-request
+    to: TEST-identity-kube
+    created_at: 2026-10-28T17:26:12.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57bc613de7f8

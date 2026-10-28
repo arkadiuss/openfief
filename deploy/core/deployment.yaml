@@ -22,7 +22,9 @@ spec:
         app.kubernetes.io/part-of: openfief
     spec:
       serviceAccountName: openfief-core
-      automountServiceAccountToken: false
+      # The core calls the Kubernetes API (rbac.yaml): TokenRequest for its own tokens to plugins (D-59) and reads
+      # of Plugins and Services to find connector instances (D-49).
+      automountServiceAccountToken: true
       # Longer than --shutdown-timeout, so requests and running revaluations can finish before the kill.
       terminationGracePeriodSeconds: 30
       securityContext:
@@ -42,6 +44,12 @@ spec:
             - --workers=2
             - --bond-basis=net_if_redeemed
             - --shutdown-timeout=25s
+            # Connector syncs (D-49); on by default in a cluster, shown here with their defaults.
+            - --connectors=true
+            - --sync-every=6h
+            - --sync-jitter=30m
+            - --sync-timeout=5m
+            - --service-account=openfief-core
           env:
             - name: OPENFIEF_DSN
               valueFrom:

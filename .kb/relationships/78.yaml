@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b1444b330ae
+  - type: executable_for
+    from: SYM-core-conn-test-helper-deposit-connector-sync
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:05.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5203d36334e

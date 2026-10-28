@@ -132,3 +132,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2219aefb60c5
+  - type: implements
+    from: SYM-core-parse-connector
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:23:18.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62edfbf07c05
+  - type: covered_by
+    from: SYM-core-parse-connector
+    to: TEST-core-unit
+    created_at: 2026-10-28T17:23:18.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ce149f22626

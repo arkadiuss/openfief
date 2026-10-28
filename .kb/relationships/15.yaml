@@ -272,3 +272,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6fa1ab95931
+  - type: executable_for
+    from: SYM-core-conn-test-helper-fake-cluster
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:15.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86fcbb56762c
+  - type: executable_for
+    from: SYM-core-conn-test-helper-check-synced
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:33.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab90692adae3

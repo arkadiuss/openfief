@@ -11,15 +11,18 @@
 //	OPENFIEF_DSN=postgres://... core token issue --name NAME [--ttl 720h]
 //	OPENFIEF_DSN=postgres://... core token list
 //	OPENFIEF_DSN=postgres://... core token revoke ID
+//	OPENFIEF_DSN=postgres://... core connector bind --instance NAME --account ID
+//	OPENFIEF_DSN=postgres://... core connector sync --instance NAME [--mode opening|transactions]
 //
 // `token issue` prints the new token's secret once, on stdout, and nowhere
 // else. The service logs internal IDs and counts only: never an amount, a
 // holding, a token or its hash.
 //
-// Not built yet: the core calling connectors (D-49), with their schedules,
-// retries and import batches, and the per-instance tokens it presents to
-// them (D-59). No connector plugin exists yet; data enters through the
-// demo loader (cmd/demo-seed) until then.
+// In a Kubernetes cluster, serve also syncs the running connector
+// instances on a schedule (D-49), presenting a TokenRequest token of its own
+// ServiceAccount whose audience is the instance (D-59). connector bind lets
+// an instance write to an account; connector sync syncs one instance now
+// and needs the cluster too. Outside a cluster serve doesn't sync.
 package main
 
 import (
@@ -73,6 +76,11 @@ func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) err
 				return err
 			}
 			return tokenCommand(ctx, cmd, newTokens(d.pool, time.Now), out, time.Now())
+		})
+	case cmdBind, cmdSync:
+		cl := clusterOrNil(log)
+		return withConnectorDeps(ctx, cmd.DSN, log, func(d *connectorDeps) error {
+			return connectorCommand(ctx, cmd, d, cl, out)
 		})
 	}
 	return fmt.Errorf("%w: %q", errUsage, cmd.Name)

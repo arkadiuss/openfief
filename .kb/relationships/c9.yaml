@@ -314,3 +314,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0c127990793
+  - type: executable_for
+    from: SYM-ingest-kube-test-discovery
+    to: TEST-ingest-kube
+    created_at: 2026-10-28T17:27:25.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9be3361135f

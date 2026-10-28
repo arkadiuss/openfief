@@ -181,3 +181,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a188513166a4
+  - type: validates
+    from: TEST-core-connectors
+    to: REQ-ingest-core-owns-schedules
+    created_at: 2026-10-28T17:22:34.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fac5fa42bad
+  - type: validates
+    from: TEST-core-connectors
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T17:22:34.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6dab164f04

@@ -111,7 +111,7 @@ func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.
 	go func() { served <- httpSrv.Serve(ln) }()
 	log.Info("listening", "address", ln.Addr().String())
 
-	c, startErr := start(ctx, pool, cfg, now, log)
+	c, startErr := start(ctx, pool, cfg, now, log, clusterOrNil(log))
 	if startErr == nil {
 		s.api.Store(&c.api)
 		log.Info("ready")
@@ -135,8 +135,10 @@ func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.
 }
 
 // start migrates the database, retrying until it is reachable or ctx ends,
-// wires the core and starts its revaluation workers.
-func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger) (*core, error) {
+// wires the core and starts its revaluation workers. In cluster cl, and as
+// cfg asks, it starts the connector scheduler in the background, which
+// can't fail the start, so the read API serves whatever the cluster does.
+func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger, cl *cluster) (*core, error) {
 	for {
 		err := migrate(ctx, pool)
 		if err == nil {
@@ -157,7 +159,26 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	if err := c.river.Start(context.WithoutCancel(ctx)); err != nil {
 		return nil, fmt.Errorf("starting the revaluation workers: %w", err)
 	}
+	startCluster(ctx, c, cfg, cl, log)
 	return c, nil
+}
+
+// startCluster starts the connector scheduler, as cfg asks, when the core
+// runs in cluster cl.
+func startCluster(ctx context.Context, c *core, cfg *serveConfig, cl *cluster, log *slog.Logger) {
+	if cl == nil {
+		if cfg.Connectors {
+			log.Info("not in a Kubernetes cluster: no connector syncs")
+		}
+		return
+	}
+	if cfg.Connectors {
+		c.connectors = make(chan struct{})
+		go func() {
+			defer close(c.connectors)
+			runConnectors(ctx, c.deps, cl, &cfg.Sync)
+		}()
+	}
 }
 
 // shutdown marks s as draining, then stops the HTTP server and c's workers,
@@ -173,6 +194,12 @@ func shutdown(ctx context.Context, s *server, httpSrv *http.Server, c *core, tim
 	}
 	if c == nil {
 		return errors.Join(errs...)
+	}
+	if c.connectors != nil {
+		select { // the scheduler stops with ctx and records its attempts
+		case <-c.connectors:
+		case <-sctx.Done():
+		}
 	}
 	if err := c.river.Stop(sctx); err != nil {
 		if cancelErr := c.river.StopAndCancel(context.WithoutCancel(ctx)); cancelErr != nil {

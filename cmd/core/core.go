@@ -15,6 +15,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
+	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
@@ -39,7 +40,7 @@ func withPool(ctx context.Context, dsn string, fn func(d *deps) error) error {
 }
 
 // migrate applies every context's migrations: the ledger's, valuation's with
-// River's, and identity's. Each takes its own advisory lock, so replicas
+// River's, identity's and ingest's. Each takes its own advisory lock, so replicas
 // starting at once apply each migration once.
 func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	if err := ledgerpg.Migrate(ctx, pool); err != nil {
@@ -51,6 +52,9 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	if err := identitypg.Migrate(ctx, pool); err != nil {
 		return fmt.Errorf("migrating: %w", err)
 	}
+	if err := ingestpg.Migrate(ctx, pool); err != nil {
+		return fmt.Errorf("migrating: %w", err)
+	}
 	return nil
 }
 
@@ -59,11 +63,24 @@ func newTokens(pool *pgxpool.Pool, now func() time.Time) *identityapp.Tokens {
 	return identityapp.NewTokens(identitypg.New(pool), now, nil)
 }
 
-// core is the wired core service: the read API's handler and the River
-// client that runs the revaluation workers.
+// core is the wired core service: the read API's handler, the River
+// client that runs the revaluation workers, and what the connector
+// scheduler is built from.
 type core struct {
 	api   http.Handler
 	river *river.Client[pgx.Tx]
+	deps  *connectorDeps
+	// connectors is closed when the connector scheduler has stopped; nil
+	// when it doesn't run.
+	connectors chan struct{}
+}
+
+// ingestDeps returns the ledger, with valuation's import hook (D-36), and
+// valuation's input use cases over pool.
+func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledger, *valuationapp.InputRecorder) {
+	store := ledgerpg.New(pool)
+	l := ledgerapp.New(store, vstore.ImportHook())
+	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore)
 }
 
 // newCore wires the core over a migrated database: the ledger with
@@ -77,18 +94,16 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, fmt.Errorf("valuation store: %w", err)
 	}
-	store := ledgerpg.New(pool)
-	l := ledgerapp.New(store, vstore.ImportHook())
+	l, recorder := ingestDeps(pool, vstore)
 	if cfg.EnsureDefaults {
 		if defErr := l.EnsureDefaults(ctx); defErr != nil {
 			return nil, fmt.Errorf("storing the default sleeves: %w", defErr)
 		}
 	}
-	recorder := valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore)
 	if _, basisErr := recorder.ApplyBondBasis(ctx, cfg.BondBasis); basisErr != nil {
 		return nil, fmt.Errorf("bond basis: %w", basisErr)
 	}
-	client, err := valuationpg.NewClient(pool, vstore, store, &valuationpg.Config{
+	client, err := valuationpg.NewClient(pool, vstore, ledgerpg.New(pool), &valuationpg.Config{
 		Concurrency: cfg.Workers,
 		EndOfDay:    cfg.EndOfDay,
 		BondBasis:   cfg.BondBasis,
@@ -106,7 +121,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, fmt.Errorf("read API: %w", err)
 	}
-	return &core{api: api, river: client}, nil
+	deps := &connectorDeps{
+		pool: pool, ledger: l, recorder: recorder, now: now, log: log,
+		today: valuationpg.TodayIn(cfg.EndOfDay.Location, now),
+	}
+	return &core{api: api, river: client, deps: deps}, nil
 }
 
 // readTokens is the read API's token verifier: a read-scoped script token

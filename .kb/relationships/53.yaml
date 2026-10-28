@@ -167,3 +167,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-420acb136dac
+  - type: implements
+    from: SYM-core-conn-jitter
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:24:16.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84836a449a65
+  - type: covered_by
+    from: SYM-core-conn-jitter
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:24:16.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c842f4bf777

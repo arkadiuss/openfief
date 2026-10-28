@@ -97,3 +97,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a847780a811d
+  - type: constrains
+    from: REQ-ingest-discovery
+    to: FACT-SUBJECT-32B0B9A6BCAD5E63
+    created_at: 2026-10-28T17:22:56.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7159e23a69e
+  - type: requires_property
+    from: REQ-ingest-discovery
+    to: FACT-PROP-2B0478A1351B6120
+    created_at: 2026-10-28T17:22:56.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54a0f2bc9e53
+  - type: specified_by
+    from: REQ-ingest-discovery
+    to: SCEN-ingest-discover-instances
+    created_at: 2026-10-28T17:22:56.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df70f429d033
+  - type: implements
+    from: SYM-core-conn-run-connectors
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:23:57.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6097e1de776
+  - type: covered_by
+    from: SYM-core-conn-run-connectors
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:23:57.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-116a64517bbb

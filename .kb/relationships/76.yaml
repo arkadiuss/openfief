@@ -265,3 +265,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92fa94128719
+  - type: constrains
+    from: REQ-identity-core-tokens
+    to: FACT-SUBJECT-D2FDAD9362808F55
+    created_at: 2026-10-28T17:22:48.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79aa2af5b829
+  - type: requires_property
+    from: REQ-identity-core-tokens
+    to: FACT-PROP-E5EC0125CC1D319E
+    created_at: 2026-10-28T17:22:48.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-695ff69a9084
+  - type: specified_by
+    from: REQ-identity-core-tokens
+    to: SCEN-identity-core-token-per-instance
+    created_at: 2026-10-28T17:22:48.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44c8b667088c
