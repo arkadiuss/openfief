@@ -55,3 +55,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6960e4b44290
+  - type: executable_for
+    from: SYM-ibkrflex-test-helper-round-trip-func-round-trip
+    to: TEST-ibkrflex-webservice
+    created_at: 2026-10-28T06:35:04.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1302cc63501b

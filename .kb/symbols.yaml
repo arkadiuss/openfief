@@ -8859,3 +8859,229 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ibkrflex-rows
+  - id: SYM-ibkrflex-retry-code
+    title: retryCode
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:14.947Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-client
+    title: Client
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:17.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-AUTO-FD618A602F7F9106
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-service-response
+    title: serviceResponse
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:22.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-client-fetch-statement
+    title: Client.FetchStatement
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:26.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-AUTO-FD618A602F7F9106
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-client-poll
+    title: Client.poll
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:30.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-client-wait
+    title: Client.wait
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:33.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-client-get
+    title: Client.get
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:36.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-parse-service-response
+    title: parseServiceResponse
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:40.256Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-root-element
+    title: rootElement
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:43.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-or
+    title: or
+    sourceFile: internal/ingest/ibkrflex/webservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:46.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-webservice
+      - type: implements
+        target: REQ-ibkrflex-web-service-pull
+  - id: SYM-ibkrflex-test-helper-replay-client
+    title: replayClient
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:50.232Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice
+  - id: SYM-ibkrflex-test-helper-user-agent-then-headers
+    title: userAgentThenHeaders
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:53.786Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice
+  - id: SYM-ibkrflex-test-fetch-statement
+    title: TestFetchStatement
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:57.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice
+  - id: SYM-ibkrflex-test-fetch-statement-token-invalid
+    title: TestFetchStatementTokenInvalid
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:00.966Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice
+  - id: SYM-ibkrflex-test-helper-round-trip-func-round-trip
+    title: roundTripFunc.RoundTrip
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:04.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice
+  - id: SYM-ibkrflex-test-helper-xml-response
+    title: xmlResponse
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:07.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice
+  - id: SYM-ibkrflex-test-fetch-statement-failures
+    title: TestFetchStatementFailures
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:11.391Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice
+  - id: SYM-ibkrflex-test-fetch-statement-stops-when-cancelled
+    title: TestFetchStatementStopsWhenCancelled
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:14.898Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice
+  - id: SYM-ibkrflex-test-helper-round-trip-func
+    title: roundTripFunc
+    sourceFile: internal/ingest/ibkrflex/webservice_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:17.311Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-webservice

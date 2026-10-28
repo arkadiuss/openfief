@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Content-Type: text/xml;charset=UTF-8
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic Flex Web Service response for tests, written by hand. -->
+<FlexStatementResponse timestamp="06 March, 2026 05:30 PM EST">
+<Status>Fail</Status>
+<ErrorCode>1015</ErrorCode>
+<ErrorMessage>Token is invalid.</ErrorMessage>
+</FlexStatementResponse>
