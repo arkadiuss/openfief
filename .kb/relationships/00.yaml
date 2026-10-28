@@ -48,3 +48,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56b986c0af0b
+  - type: verified_by
+    from: SCEN-operator-cluster-peers
+    to: TEST-operator-cluster
+    created_at: 2026-10-28T06:50:23.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa5aacba9101

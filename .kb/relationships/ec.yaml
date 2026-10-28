@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98d8ddc13853
+  - type: implements
+    from: SYM-operator-peer
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T06:52:18.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1888d5dcda54
+  - type: implements
+    from: SYM-operator-peer
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:52:18.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99869a249c17
+  - type: covered_by
+    from: SYM-operator-peer
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:52:18.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ca96ce315c7

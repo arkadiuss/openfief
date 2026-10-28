@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-323c71281ac4
+  - type: validates
+    from: TEST-operator-cluster
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-28T06:50:15.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bc4b59a05e2

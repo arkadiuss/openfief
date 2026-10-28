@@ -83,3 +83,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ee957a643d3
+  - type: implements
+    from: SYM-operator-deployment
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T06:52:25.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d116d704f7ba
+  - type: implements
+    from: SYM-operator-deployment
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:52:25.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-482340282247
+  - type: covered_by
+    from: SYM-operator-deployment
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:52:25.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-990dd9cb89aa

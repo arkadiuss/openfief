@@ -8,6 +8,7 @@ require (
 	github.com/areknoster/hypert v0.7.0
 	github.com/google/go-cmp v0.7.0
 	github.com/jackc/pgx/v5 v5.11.0
+	github.com/santhosh-tekuri/jsonschema/v6 v6.0.2
 	github.com/shopspring/decimal v1.4.0
 	github.com/sirupsen/logrus v1.9.4
 	github.com/stripe/smokescreen v0.1.0

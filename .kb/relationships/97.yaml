@@ -104,3 +104,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d3830fda42a
+  - type: executable_for
+    from: SYM-operator-test-objects-tcp
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:54:23.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c98f3d1a129e

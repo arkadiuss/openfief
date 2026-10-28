@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd563b479072
+  - type: implements
+    from: SYM-operator-to-port
+    to: REQ-operator-cluster-peers
+    created_at: 2026-10-28T06:51:34.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d5c909f18fe
+  - type: implements
+    from: SYM-operator-to-port
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-28T06:51:34.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6540759f7311
+  - type: covered_by
+    from: SYM-operator-to-port
+    to: TEST-operator-cluster
+    created_at: 2026-10-28T06:51:34.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2af544e53572
