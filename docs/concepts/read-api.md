@@ -8,7 +8,7 @@ covers:
   - gen/openapi/**
 ---
 
-The [read API](../glossary.md) is how anything outside the core reads the record: sleeves, accounts, transactions, holdings, tax lots, cash, balance assertion checks, stored valuations and the allocation. The built-in UI and every view plugin are meant to read through it, and so can the owner's own scripts. It only reads: data enters OpenFief through connectors, never through this API. This page explains the service, the pure rules behind its totals and the allocation, and the HTTP adapter that serves it. No binary serves it yet (see [Not built yet](#not-built-yet)).
+The [read API](../glossary.md) is how anything outside the core reads the record: sleeves, accounts, transactions, holdings, tax lots, cash, balance assertion checks, stored valuations and the allocation. The built-in UI and every view plugin are meant to read through it, and so can the owner's own scripts. It only reads: data enters OpenFief through connectors, never through this API. This page explains the service, the pure rules behind its totals and the allocation, and the HTTP adapter that serves it. The core service, `cmd/core`, serves it on Service `openfief-core`, port `http` (8080).
 
 ## Concepts
 
@@ -44,7 +44,7 @@ The [read API](../glossary.md) is how anything outside the core reads the record
 
 **Paging transactions.** `ListTransactions` returns the current version of each transaction in date, then source, then external ID order. A page that has more after it returns a `nextPageToken`: an opaque cursor naming the last transaction's date and key, base64url-encoded. Passing it back starts the next page right after that transaction, so a client reads every current transaction once even if a page boundary falls between transactions on the same date. This is keyset paging: an offset ("skip 200") skips or repeats a row when rows arrive between two requests, while a cursor that names the last row read doesn't. The parameter names follow Google's API improvement proposal AIP-158.
 
-**Bearer tokens.** Every call, over any protocol, needs an `Authorization: Bearer <token>` header. The token is meant to be either a [script token](../glossary.md) or a plugin's projected ServiceAccount token ([plugin identity](../glossary.md)). The API asks a `TokenVerifier` whether the token may read; no implementation of it exists yet.
+**Bearer tokens.** Every call, over any protocol, needs an `Authorization: Bearer <token>` header. The token is meant to be either a [script token](../glossary.md) or a plugin's projected ServiceAccount token ([plugin identity](../glossary.md)). The API asks a `TokenVerifier` whether the token may read. The core's verifier accepts [script tokens](identity.md) only; plugins' tokens are not accepted yet.
 
 ## How it works
 
@@ -72,13 +72,13 @@ flowchart TB
   app --> pure
   app -- "Ledger port" --> ledger["ledger/app.Ledger"]
   app -- "Valuations, ValuationStatuses, FXRates" --> vstore["valuation/postgres.Store"]
-  app -- "TokenVerifier port" --> tokens["no implementation yet"]
-  bin["no cmd binary calls connectapi.New yet"] -.-> connectapi
+  app -- "TokenVerifier port" --> tokens["script tokens<br/>identity/app.Tokens"]
+  bin["cmd/core"] -.-> connectapi
 ```
 
 ### A request, from HTTP to the ports
 
-`connectapi.New(views, verifier, opts...)` builds one `http.Handler`. The ports are declared in `views/app`, by the consumer. Each is shaped like a method the other contexts already have, so the wiring can pass `*ledgerapp.Ledger` as `Ledger` and `*valuation/postgres.Store` as `Valuations`, `ValuationStatuses` and `FXRates`.
+`connectapi.New(views, verifier, opts...)` builds one `http.Handler`. The ports are declared in `views/app`, by the consumer. Each is shaped like a method the other contexts already have, and `cmd/core` passes `*ledgerapp.Ledger` as `Ledger` and `*valuation/postgres.Store` as `Valuations`, `ValuationStatuses` and `FXRates`.
 
 ```mermaid
 flowchart TD
@@ -159,7 +159,7 @@ So on the same date the allocation's total includes cash and `ListValuationTotal
 - **D-30**: the allocation by asset class, currency, broker or sleeve, and value over time. The code groups by institution where D-30 says broker, since the treasury bond registry is an institution and not a broker (see the glossary). Value over time is `ListValuationTotals`; the charts themselves are the UI's.
 - **D-36**: the read API reports, per account, the valued-through date and whether a revaluation is pending or running. Built as `GetValuationStatus` and `ListValuationStatuses`; the UI part is not built.
 - **D-62** and **T-12**: totals and the allocation are in the reporting currency, next to each original currency. `app.New` refuses any reporting currency but PLN with an `*UnsupportedReportingCurrencyError`, because stored valuations and FX rates are against PLN only (D-20) and T-12 (proposal P-49) is open.
-- **D-27**: the bearer tokens the API accepts. Only the port is built.
+- **D-27**: the bearer tokens the API accepts. The core accepts script tokens ([Identity](identity.md)); plugins' projected tokens are not accepted yet.
 - Half-up rounding of cash in the allocation follows `valuation.ValueRounding`, which no decision fixes (see [Valuation](valuation.md#decisions)).
 
 ## Verification
@@ -173,14 +173,13 @@ So on the same date the allocation's total includes cash and `ListValuationTotal
 | A generated Connect client and Connect's GET form; error codes; every method read-only in the descriptor; enums match the domain | `TestConnectQueries`, `TestConnectValuation`, `TestConnectPages`, `TestConnectErrors`, `TestConnectGET`, `TestServiceIsReadOnly`, `TestEnumsMatch` in [connect_test.go](../../internal/views/connectapi/connect_test.go) | REQ-views-api-contract, REQ-views-api-read-only, TEST-views-connectapi-connect |
 | REST responses validated against the generated OpenAPI; 405 with `Allow: GET`; tokens; headers; money as strings; a log without data | `TestREST`, `TestRESTInternalError`, `TestRESTUnauthenticated`, `TestRESTReadOnly`, `TestOpenAPIIsReadOnly`, `TestSecurityHeaders`, `TestMoneyIsADecimalString`, `TestLogNamesNoData` in [handler_test.go](../../internal/views/connectapi/handler_test.go) | REQ-views-api-contract, REQ-views-api-read-only, REQ-views-api-auth, REQ-views-api-logs, TEST-views-connectapi-rest |
 
-These requirements refine the firm ones imported from D-6, D-7, D-30, D-36 #6 and D-50 (REQ-views-read-api-protobuf). Every test runs over in-memory fakes of the ports with synthetic accounts and ISINs, offline, under `task test`. The REST tests go through the real Vanguard transcoder and check each response body against `gen/openapi` with kin-openapi. `task proto:check` fails when the generated Go or OpenAPI differs from what the protobuf produces.
+These requirements refine the firm ones imported from D-6, D-7, D-30, D-36 #6 and D-50 (REQ-views-read-api-protobuf). Every test runs over in-memory fakes of the ports with synthetic accounts and ISINs, offline, under `task test`. The REST tests go through the real Vanguard transcoder and check each response body against `gen/openapi` with kin-openapi. `task proto:check` fails when the generated Go or OpenAPI differs from what the protobuf produces. Over the real stores, `TestCoreServesTheReadAPI` in [cmd/core](../../cmd/core/core_test.go), under `task test:pg`, starts the core on a fresh PostgreSQL with part of the demo dataset, issues a script token with `core token issue`, decodes REST answers strictly into the protobuf messages, and gets 401 without a token or with an unknown or revoked one.
 
 One text differs from the code: REQ-views-allocation-inputs says cash rounds half-even; the code rounds half up with `valuation.ValueRounding`, and the tests use amounts where the two agree.
 
 ## Not built yet
 
-- **D-27**: an implementation of `app.TokenVerifier`, for script tokens and plugins' projected ServiceAccount tokens. Until one exists, nothing can call the API.
-- **D-6**, **D-50**: the core binary that serves it. No `cmd/` wires `connectapi.New` to the ledger and valuation stores, so the API runs only in tests.
+- **D-27**: accepting plugins' projected ServiceAccount tokens (audience `openfief-core`); the core's verifier accepts script tokens only.
 - **D-30**, **D-36**: the built-in UI's allocation and value-over-time charts and its valuation status display, and the view plugins that read through this API (D-3, D-4).
 - Cash in value-over-time totals. Stored valuations have no cash, so `ListValuationTotals` counts holdings only.
 - **D-62**: a reporting currency other than PLN, waiting on T-12.

@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-011c33883c88
+  - type: executable_for
+    from: SYM-core-test-helper-warsaw
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:36:10.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c2d9f4084d1
+  - type: executable_for
+    from: SYM-core-test-helper-get-json
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:37:24.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a4ee915fe34

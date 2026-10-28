@@ -4,8 +4,8 @@
 #   demo-database  ./deploy/demo/database  a one-instance CloudNativePG cluster, synthetic data only (GR-12)
 #   demo-cert-manager ./deploy/demo/cert-manager  cert-manager from a pinned Helm chart
 #   demo-ingress   ./deploy/demo/ingress   the Let's Encrypt ClusterIssuer (HTTP-01 through k3s's Traefik)
-#   demo-routes    ./deploy/demo/routes    https://<ipv4-with-dashes>.sslip.io to the core (suspended until it exists)
-#   demo-openfief  the signed artifact     the operator and the egress proxy, images pinned by digest (D-17)
+#   demo-routes    ./deploy/demo/routes    https://<ipv4-with-dashes>.sslip.io to the core
+#   demo-openfief  the signed artifact     operator, egress proxy, core, demo data; images pinned by digest (D-17)
 # The product bases ship Services only (D-28); the routes are this demo's own, on k3s's bundled Traefik.
 # The first three follow main in git. demo-openfief follows the OCI artifact that CI publishes after every push to
 # main (and every beta): deploy/demo/openfief rendered with the digests whose signatures verified, then signed.
@@ -96,8 +96,6 @@ metadata:
   name: demo-routes
   namespace: flux-system
 spec:
-  # Suspended until deploy/core lands: the route targets Service openfief-core, port http. Remove this line then.
-  suspend: true
   dependsOn:
     - name: demo-ingress
     - name: demo-openfief

@@ -125,3 +125,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78a9bd0cbdb7
+  - type: executable_for
+    from: SYM-core-test-run-refuses-unknown-command
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:36:06.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44ccf3629016

@@ -60,6 +60,7 @@ The use cases are in [identity/app](../../internal/identity/app/tokens.go): `Iss
 - TEST-identity-domain: table tests of token creation, expiry and revocation checks, scopes, secret parsing and the constant-time hash comparison.
 - TEST-identity-app: issue, verify, revoke and list over an in-memory store with a fixed clock, including that a store failure is never reported as an invalid token and that errors never contain the secret.
 - TEST-identity-postgres: under `task test:pg`, the round trip through PostgreSQL, that no column holds the key, and that the table refuses bad rows.
+- TEST-core-read-api: under `task test:pg`, the core issues a token from its command line, serves the read API with it, and answers 401 with no token, an unknown one and a revoked one.
 
 ## Not built yet
 

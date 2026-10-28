@@ -118,3 +118,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c96c7f03f2a5
+  - type: validates
+    from: TEST-core-read-api
+    to: REQ-AUTO-6DEFC82AA5A3C618
+    created_at: 2026-10-28T14:32:46.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-363fd5cb3fd5
+  - type: validates
+    from: TEST-core-read-api
+    to: REQ-decision-d36-4-river-job-queue
+    created_at: 2026-10-28T14:32:46.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1d1f796727c
+  - type: validates
+    from: TEST-core-read-api
+    to: REQ-AUTO-2D0C3CC0151C3C5C
+    created_at: 2026-10-28T14:32:46.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-116e19e96cb8
+  - type: validates
+    from: TEST-core-read-api
+    to: REQ-views-read-api-protobuf
+    created_at: 2026-10-28T14:32:46.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-609466ae2dd1

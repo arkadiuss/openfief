@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61697c5d0ae6
+  - type: executable_for
+    from: SYM-core-test-helper-reply
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:37:14.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52a4fad42408

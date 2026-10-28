@@ -167,3 +167,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-567ced3818c8
+  - type: verified_by
+    from: SCEN-core-graceful-shutdown
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:32:52.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cff2d4761015
+  - type: verified_by
+    from: SCEN-core-graceful-shutdown
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:32:52.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-559634dc949e

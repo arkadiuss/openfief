@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc7834343557
+  - type: implements
+    from: SYM-core-new-flags
+    to: REQ-core-config
+    created_at: 2026-10-28T14:33:53.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa138e8c69fa
+  - type: covered_by
+    from: SYM-core-new-flags
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:33:53.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce471c2219c9

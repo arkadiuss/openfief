@@ -1,0 +1,26 @@
+# The demo's own way in (D-28 leaves it to the installation): k3s's bundled Traefik, in kube-system, may reach
+# the core's http port for the demo's Ingress (../routes). It adds to the core's own NetworkPolicy.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-core-from-traefik
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-core
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - protocol: TCP
+          port: 8080

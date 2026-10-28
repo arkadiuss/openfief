@@ -195,3 +195,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c427b285d9b7
+  - type: implements
+    from: SYM-core-server-readyz
+    to: REQ-core-health-endpoints
+    created_at: 2026-10-28T14:35:11.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-114dbf767e40
+  - type: implements
+    from: SYM-core-server-readyz
+    to: REQ-core-graceful-shutdown
+    created_at: 2026-10-28T14:35:11.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a87dc0ee4d0f
+  - type: covered_by
+    from: SYM-core-server-readyz
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:35:11.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ef8611c5ee4

@@ -167,3 +167,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-632855691b2d
+  - type: implements
+    from: SYM-core-split-command
+    to: REQ-core-config
+    created_at: 2026-10-28T14:33:49.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cde49eb7cb2
+  - type: covered_by
+    from: SYM-core-split-command
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:33:49.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b43c120949

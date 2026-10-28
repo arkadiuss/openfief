@@ -216,3 +216,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42bb50e93444
+  - type: implements
+    from: SYM-core-with-pool
+    to: REQ-core-serves-read-api
+    created_at: 2026-10-28T14:34:27.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c5ed3077c69
+  - type: covered_by
+    from: SYM-core-with-pool
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:34:27.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02541cf8fc93
