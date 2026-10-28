@@ -55,3 +55,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b8ceb9f899d
+  - type: verified_by
+    from: SCEN-tooling-proto-contracts
+    to: TEST-tooling-proto-breaking
+    created_at: 2026-10-28T07:37:17.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac62207ac0a6

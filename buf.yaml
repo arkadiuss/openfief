@@ -1,0 +1,10 @@
+# Protobuf contracts (D-11), Apache-2.0 (proto/LICENSE, D-5). Run through task: proto:lint, proto:breaking, proto:gen.
+version: v2
+modules:
+  - path: proto
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE
