@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee892c2d076a
+  - type: implements
+    from: SYM-views-performance-series
+    to: REQ-views-performance-twr
+    created_at: 2026-10-28T21:03:02.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4b15d8d0779
+  - type: implements
+    from: SYM-views-performance-series
+    to: REQ-views-performance-gaps
+    created_at: 2026-10-28T21:03:02.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0a3267f1165
+  - type: covered_by
+    from: SYM-views-performance-series
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:03:02.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02fe7f527d0a

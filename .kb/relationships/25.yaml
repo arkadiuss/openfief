@@ -258,3 +258,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2537a4e92eb
+  - type: executable_for
+    from: SYM-views-test-performance-of-cash-is-flat
+    to: TEST-views-performance-properties
+    created_at: 2026-10-28T21:05:04.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-932e8f150f6c
+  - type: implements
+    from: SYM-views-pb-transfer
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:08:42.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45552df2f471
+  - type: covered_by
+    from: SYM-views-pb-transfer
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:08:42.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4535ef2f6cb

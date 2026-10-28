@@ -300,3 +300,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef44895ecbea
+  - type: validates
+    from: TEST-views-performance-properties
+    to: REQ-portfolio-twr-comparison
+    created_at: 2026-10-28T20:54:29.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2d7ae5505cb

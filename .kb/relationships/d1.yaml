@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eeb722ad61b5
+  - type: executable_for
+    from: SYM-views-test-helper-perf-day
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:05:15.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b98711cc3416

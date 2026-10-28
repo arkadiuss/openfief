@@ -349,3 +349,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebcd5654021f
+  - type: validates
+    from: TEST-views-app-performance
+    to: REQ-AUTO-718AA30AAFD0E6E8
+    created_at: 2026-10-28T20:54:32.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83ebf9b8996a

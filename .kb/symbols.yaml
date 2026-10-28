@@ -55302,3 +55302,1752 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-plugin
+  - id: SYM-core-test-helper-check-performance
+    title: checkPerformance
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:59:47.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-views-app-performance-type
+    title: Performance
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:59:52.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-views-performance-query
+  - id: SYM-views-app-views-performance
+    title: Views.Performance
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:59:57.954Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-AUTO-718AA30AAFD0E6E8
+      - type: implements
+        target: REQ-views-performance-query
+  - id: SYM-views-app-record-type
+    title: record
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:02.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-views-performance-query
+  - id: SYM-views-app-views-recorded
+    title: Views.recorded
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:07.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-views-performance-query
+  - id: SYM-views-app-earlier
+    title: earlier
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:13.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-views-performance-query
+  - id: SYM-views-app-later
+    title: later
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:18.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-views-performance-query
+  - id: SYM-views-app-first-date-of-transactions
+    title: firstDate
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:23.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-views-performance-query
+  - id: SYM-views-app-views-valuations-for
+    title: Views.valuationsFor
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:27.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-views-performance-query
+  - id: SYM-views-app-views-cash-rates
+    title: Views.cashRates
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:32.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-views-performance-query
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-app-test-helper-new-performance-fixture
+    title: newPerformanceFixture
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:38.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-performance-day
+    title: performanceDay
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:43.715Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-performance-days
+    title: performanceDays
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:48.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-performance
+    title: TestPerformance
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:00:54.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-optional-date
+    title: optionalDate
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:00.219Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-performance-failures
+    title: TestPerformanceFailures
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:05.183Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-failing-statuses
+    title: failingStatuses
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:09.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-failing-statuses-status
+    title: failingStatuses.Status
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:14.323Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-val-row
+    title: valRow
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:18.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-val-row-build
+    title: valRow.build
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:24.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-connectapi-test-connect-performance
+    title: TestConnectPerformance
+    sourceFile: internal/views/connectapi/connect_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:29.279Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+  - id: SYM-views-connectapi-parse-optional-date
+    title: parseOptionalDate
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:33.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-rest
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-connectapi-pb-performance
+    title: pbPerformance
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:37.744Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-rest
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-connectapi-test-helper-amount
+    title: amount
+    sourceFile: internal/views/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:42.733Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+  - id: SYM-views-connectapi-test-helper-performance-day
+    title: performanceDay
+    sourceFile: internal/views/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:48.228Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+  - id: SYM-views-connectapi-test-helper-performance-body
+    title: performanceBody
+    sourceFile: internal/views/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:53.231Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+  - id: SYM-views-connectapi-test-rest-performance
+    title: TestRESTPerformance
+    sourceFile: internal/views/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:01:58.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+  - id: SYM-views-connectapi-read-service-get-performance
+    title: readService.GetPerformance
+    sourceFile: internal/views/connectapi/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:03.160Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-rest
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-cash-flow
+    title: CashFlow
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:08.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-transfers
+  - id: SYM-views-transfer
+    title: Transfer
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:12.493Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-transfers
+  - id: SYM-views-transfer-in-transit-on
+    title: Transfer.InTransitOn
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:17.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-transfers
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-external-flows
+    title: ExternalFlows
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:22.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-transfers
+      - type: implements
+        target: REQ-views-performance-twr
+  - id: SYM-views-compare-flows
+    title: compareFlows
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:27.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-transfers
+  - id: SYM-views-match-transfers
+    title: MatchTransfers
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:32.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-portfolio-twr-comparison
+      - type: implements
+        target: REQ-views-performance-transfers
+  - id: SYM-views-nearest-deposit
+    title: nearestDeposit
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:37.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-transfers
+  - id: SYM-views-performance-gap
+    title: PerformanceGap
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:41.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-gaps
+  - id: SYM-views-performance-gap-string
+    title: PerformanceGap.String
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:46.446Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-gaps
+  - id: SYM-views-performance-input
+    title: PerformanceInput
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:51.417Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-twr
+  - id: SYM-views-performance-day
+    title: PerformanceDay
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:02:56.196Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-twr
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-performance-series
+    title: PerformanceSeries
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:01.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-gaps
+      - type: implements
+        target: REQ-views-performance-twr
+  - id: SYM-views-performance-func
+    title: Performance
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:06.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-portfolio-twr-comparison
+      - type: implements
+        target: REQ-views-performance-twr
+  - id: SYM-views-chain
+    title: chain
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:10.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-twr
+  - id: SYM-views-transfers-in
+    title: transfersIn
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:15.828Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-transfers
+  - id: SYM-views-cash-key
+    title: cashKey
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:20.445Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-holding-key
+    title: holdingKey
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:25.503Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-day-builder
+    title: dayBuilder
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:29.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-new-day-builder
+    title: newDayBuilder
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:34.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-day-builder-day
+    title: dayBuilder.day
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:39.671Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-gaps
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-day-builder-apply-through
+    title: dayBuilder.applyThrough
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:44.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-day-builder-holdings
+    title: dayBuilder.holdings
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:49.492Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-gaps
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-day-builder-cash-on
+    title: dayBuilder.cashOn
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:54.195Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-day-builder-in-transit
+    title: dayBuilder.inTransit
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:03:59.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-transfers
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-day-builder-flows-on
+    title: dayBuilder.flowsOn
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:04.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-twr
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-day-builder-convert-all
+    title: dayBuilder.convertAll
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:09.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-gaps
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-sum-in
+    title: sumIn
+    sourceFile: internal/views/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:14.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-value
+  - id: SYM-views-test-helper-rng
+    title: rng
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:18.264Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-helper-rng-next
+    title: rng.next
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:22.667Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-helper-rng-intn
+    title: rng.intn
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:27.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-helper-rng-price
+    title: rng.price
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:31.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-helper-price-path
+    title: pricePath
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:36.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-helper-invested-case
+    title: investedCase
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:41.250Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-helper-indexes
+    title: indexes
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:46.475Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-performance-ignores-deposit-size
+    title: TestPerformanceIgnoresDepositSize
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:51.507Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-helper-cash-only
+    title: cashOnly
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:04:56.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-performance-of-cash-is-flat
+    title: TestPerformanceOfCashIsFlat
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:02.539Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-performance-drift
+    title: TestPerformanceDrift
+    sourceFile: internal/views/performance_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:08.533Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance-properties
+  - id: SYM-views-test-helper-perf-day
+    title: perfDay
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:13.712Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-dec
+    title: dec
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:18.511Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-event
+    title: event
+    sourceFile: internal/views/performance_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:22.142Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-event-build
+    title: event.build
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:26.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-row
+    title: row
+    sourceFile: internal/views/performance_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:30.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-row-build
+    title: row.build
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:35.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-rate
+    title: rate
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:40.684Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-perf-case
+    title: perfCase
+    sourceFile: internal/views/performance_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:45.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-perf-case-input
+    title: perfCase.input
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:51.270Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-point
+    title: point
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:05:56.734Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-points
+    title: points
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:01.249Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-pt
+    title: pt
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:06.577Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-invested-events
+    title: investedEvents
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:11.286Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-invested-rows
+    title: investedRows
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:16.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-performance
+    title: TestPerformance
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:21.076Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-performance-parts
+    title: TestPerformanceParts
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:26.036Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-performance-rejects
+    title: TestPerformanceRejects
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:30.635Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-performance-gap-string
+    title: TestPerformanceGapString
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:35.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-event-txs
+    title: eventTxs
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:40.506Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-flows-of
+    title: flowsOf
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:45.394Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-matched
+    title: matched
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:49.978Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-match-transfers
+    title: TestMatchTransfers
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:54.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-external-flows
+    title: TestExternalFlows
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:06:59.040Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-pb-performance-gap
+    title: PerformanceGap
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:02.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-gap-enum
+    title: PerformanceGap.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:07.422Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-gap-string
+    title: PerformanceGap.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:12.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-gap-descriptor
+    title: PerformanceGap.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:17.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-gap-type
+    title: PerformanceGap.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:22.533Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-gap-number
+    title: PerformanceGap.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:27.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-gap-enum-descriptor
+    title: PerformanceGap.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:32.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day
+    title: PerformanceDay
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:36.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-reset
+    title: PerformanceDay.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:40.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-string
+    title: PerformanceDay.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:46.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-proto-message
+    title: PerformanceDay.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:51.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-proto-reflect
+    title: PerformanceDay.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:07:56.121Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-descriptor
+    title: PerformanceDay.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:01.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-get-date
+    title: PerformanceDay.GetDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:06.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-get-index
+    title: PerformanceDay.GetIndex
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:11.290Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-get-value-reporting
+    title: PerformanceDay.GetValueReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:16.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-get-holdings-reporting
+    title: PerformanceDay.GetHoldingsReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:21.866Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-get-cash-reporting
+    title: PerformanceDay.GetCashReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:27.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-get-in-transit-reporting
+    title: PerformanceDay.GetInTransitReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:32.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-performance-day-get-flow-reporting
+    title: PerformanceDay.GetFlowReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:37.239Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer
+    title: Transfer
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:41.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-reset
+    title: Transfer.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:46.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-string
+    title: Transfer.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:51.066Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-proto-message
+    title: Transfer.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:08:56.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-proto-reflect
+    title: Transfer.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:01.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-descriptor
+    title: Transfer.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:06.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-get-withdrawal-account-id
+    title: Transfer.GetWithdrawalAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:11.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-get-withdrawal-date
+    title: Transfer.GetWithdrawalDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:16.641Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-get-deposit-account-id
+    title: Transfer.GetDepositAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:21.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-get-deposit-date
+    title: Transfer.GetDepositDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:26.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-transfer-get-amount
+    title: Transfer.GetAmount
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:31.917Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-request
+    title: GetPerformanceRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:35.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-request-reset
+    title: GetPerformanceRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:41.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-request-string
+    title: GetPerformanceRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:46.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-request-proto-message
+    title: GetPerformanceRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:52.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-request-proto-reflect
+    title: GetPerformanceRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:09:57.524Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-request-descriptor
+    title: GetPerformanceRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:02.700Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-request-get-from
+    title: GetPerformanceRequest.GetFrom
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:08.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-request-get-to
+    title: GetPerformanceRequest.GetTo
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:13.237Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response
+    title: GetPerformanceResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:17.750Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-reset
+    title: GetPerformanceResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:23.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-string
+    title: GetPerformanceResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:28.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-proto-message
+    title: GetPerformanceResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:33.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-proto-reflect
+    title: GetPerformanceResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:39.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-descriptor
+    title: GetPerformanceResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:45.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-from
+    title: GetPerformanceResponse.GetFrom
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:51.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-to
+    title: GetPerformanceResponse.GetTo
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:10:57.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-days
+    title: GetPerformanceResponse.GetDays
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:11:03.591Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-gap
+    title: GetPerformanceResponse.GetGap
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:11:10.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-revaluation-pending
+    title: GetPerformanceResponse.GetRevaluationPending
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:11:15.905Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-transfers
+    title: GetPerformanceResponse.GetTransfers
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:11:21.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-reporting-currency
+    title: GetPerformanceResponse.GetReportingCurrency
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:11:26.289Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pbconnect-read-service-client-get-performance
+    title: readServiceClient.GetPerformance
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:11:31.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-get-performance
+    title: UnimplementedReadServiceHandler.GetPerformance
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:11:37.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract

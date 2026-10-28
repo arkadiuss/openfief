@@ -7,4 +7,4 @@ origin:
 id: SCEN-views-allocation-inputs
 type: scenario
 ---
-Given every account's holdings and cash on a date, stored valuations for some holdings on that date and FX rates to PLN, when the allocation is asked for, then each valued holding counts at its stored PLN value, each cash balance is converted at the latest rate dated on or before the date and rounded to grosze half-even, PLN cash counts as it is, and a holding with no valuation on the date is listed as unvalued; cash in a currency with no rate fails the request rather than being left out.
+Given a synthetic portfolio on one date with a bond and an ETF valued, a second ETF lacking a price, and cash in PLN, USD and EUR, when the allocation is asked for by each dimension, then the valued holdings count at their stored valuation in PLN, the ETF without a valuation is listed as unvalued, and each cash balance is converted at the latest FX rate on or before the date, rounded half up to grosze like holding values (valuation.ValueRounding). A cash currency with no rate fails the call. Assumes PLN is the reporting currency.

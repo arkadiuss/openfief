@@ -156,3 +156,37 @@ func pbAllocation(a *app.AllocationOn) *viewsv1.GetAllocationResponse {
 	}
 	return out
 }
+
+// parseOptionalDate reads a request's YYYY-MM-DD date; empty is the zero
+// date.
+func parseOptionalDate(s string) (kernel.Date, error) {
+	if s == "" {
+		return kernel.Date{}, nil
+	}
+	return parseDate(s)
+}
+
+// pbPerformance converts the portfolio's performance series.
+func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPerformanceResponse {
+	out := &viewsv1.GetPerformanceResponse{
+		From: pbDate(p.From), To: pbDate(p.To), Gap: viewsv1.PerformanceGap(enumNumber(int(p.Series.Gap))),
+		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(),
+		Days:      make([]*viewsv1.PerformanceDay, 0, len(p.Series.Days)),
+		Transfers: make([]*viewsv1.Transfer, 0, len(p.Series.Transfers)),
+	}
+	for i := range p.Series.Days {
+		d := &p.Series.Days[i]
+		out.Days = append(out.Days, &viewsv1.PerformanceDay{
+			Date: pbDate(d.Date), Index: d.Index.String(), ValueReporting: pbMoney(d.Value), HoldingsReporting: pbMoney(d.Holdings),
+			CashReporting: pbMoney(d.Cash), InTransitReporting: pbMoney(d.InTransit), FlowReporting: pbMoney(d.Flow),
+		})
+	}
+	for i := range p.Series.Transfers {
+		t := &p.Series.Transfers[i]
+		out.Transfers = append(out.Transfers, &viewsv1.Transfer{
+			WithdrawalAccountId: string(t.Withdrawal.Account), WithdrawalDate: pbDate(t.Withdrawal.Date),
+			DepositAccountId: string(t.Deposit.Account), DepositDate: pbDate(t.Deposit.Date), Amount: pbMoney(t.Deposit.Amount),
+		})
+	}
+	return out
+}

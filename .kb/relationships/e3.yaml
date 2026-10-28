@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5017baf26dc9
+  - type: implements
+    from: SYM-views-performance-day
+    to: REQ-views-performance-twr
+    created_at: 2026-10-28T21:02:57.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-582d842f2123
+  - type: implements
+    from: SYM-views-performance-day
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:02:57.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b92d14efe716
+  - type: covered_by
+    from: SYM-views-performance-day
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:02:57.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed87c28d7f51

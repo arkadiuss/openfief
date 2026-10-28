@@ -482,3 +482,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-982ea0289615
+  - type: executable_for
+    from: SYM-views-test-helper-price-path
+    to: TEST-views-performance-properties
+    created_at: 2026-10-28T21:04:37.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-248602e3283c

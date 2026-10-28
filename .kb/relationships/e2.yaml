@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9eaa3175592f
+  - type: implements
+    from: SYM-views-cash-key
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:03:21.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d8c77582b91
+  - type: covered_by
+    from: SYM-views-cash-key
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:03:21.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53b69b3e7068

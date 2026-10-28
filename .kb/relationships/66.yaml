@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b05443cf5de3
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-performance-body
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T21:01:54.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3718c270584

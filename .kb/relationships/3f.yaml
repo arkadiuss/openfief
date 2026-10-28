@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-581e28fb32b9
+  - type: executable_for
+    from: SYM-views-test-helper-invested-rows
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:06:17.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1a5f03ab5e5

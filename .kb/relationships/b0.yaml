@@ -230,3 +230,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3791d27f9cb1
+  - type: verified_by
+    from: SCEN-views-performance-gaps
+    to: TEST-views-performance
+    created_at: 2026-10-28T20:54:41.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543393dc49ae
+  - type: implements
+    from: SYM-views-holding-key
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:03:26.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff02a6846822
+  - type: covered_by
+    from: SYM-views-holding-key
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:03:26.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed55c66ff356

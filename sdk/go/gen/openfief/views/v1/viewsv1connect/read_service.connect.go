@@ -80,6 +80,9 @@ const (
 	// ReadServiceGetAllocationProcedure is the fully-qualified name of the ReadService's GetAllocation
 	// RPC.
 	ReadServiceGetAllocationProcedure = "/openfief.views.v1.ReadService/GetAllocation"
+	// ReadServiceGetPerformanceProcedure is the fully-qualified name of the ReadService's
+	// GetPerformance RPC.
+	ReadServiceGetPerformanceProcedure = "/openfief.views.v1.ReadService/GetPerformance"
 )
 
 // ReadServiceClient is a client for the openfief.views.v1.ReadService service.
@@ -124,6 +127,13 @@ type ReadServiceClient interface {
 	// Holdings count at their stored valuation on the date and cash at the FX
 	// rate for the date; holdings without a valuation are listed as unvalued.
 	GetAllocation(context.Context, *connect.Request[v1.GetAllocationRequest]) (*connect.Response[v1.GetAllocationResponse], error)
+	// GetPerformance returns the portfolio's time-weighted return per day
+	// (D-61) as an index that starts at 100, with the portfolio's value
+	// including cash, in the reporting currency. Deposits and withdrawals are
+	// not performance; transfers between the owner's own accounts are not cash
+	// flows. The series stops at the last day every account is valued for,
+	// and says why.
+	GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error)
 }
 
 // NewReadServiceClient constructs a client for the openfief.views.v1.ReadService service. By
@@ -228,6 +238,13 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		getPerformance: connect.NewClient[v1.GetPerformanceRequest, v1.GetPerformanceResponse](
+			httpClient,
+			baseURL+ReadServiceGetPerformanceProcedure,
+			connect.WithSchema(readServiceMethods.ByName("GetPerformance")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -246,6 +263,7 @@ type readServiceClient struct {
 	listValuationTotals   *connect.Client[v1.ListValuationTotalsRequest, v1.ListValuationTotalsResponse]
 	listValuationStatuses *connect.Client[v1.ListValuationStatusesRequest, v1.ListValuationStatusesResponse]
 	getAllocation         *connect.Client[v1.GetAllocationRequest, v1.GetAllocationResponse]
+	getPerformance        *connect.Client[v1.GetPerformanceRequest, v1.GetPerformanceResponse]
 }
 
 // ListSleeves calls openfief.views.v1.ReadService.ListSleeves.
@@ -313,6 +331,11 @@ func (c *readServiceClient) GetAllocation(ctx context.Context, req *connect.Requ
 	return c.getAllocation.CallUnary(ctx, req)
 }
 
+// GetPerformance calls openfief.views.v1.ReadService.GetPerformance.
+func (c *readServiceClient) GetPerformance(ctx context.Context, req *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error) {
+	return c.getPerformance.CallUnary(ctx, req)
+}
+
 // ReadServiceHandler is an implementation of the openfief.views.v1.ReadService service.
 type ReadServiceHandler interface {
 	// ListSleeves returns every sleeve, in ID order.
@@ -355,6 +378,13 @@ type ReadServiceHandler interface {
 	// Holdings count at their stored valuation on the date and cash at the FX
 	// rate for the date; holdings without a valuation are listed as unvalued.
 	GetAllocation(context.Context, *connect.Request[v1.GetAllocationRequest]) (*connect.Response[v1.GetAllocationResponse], error)
+	// GetPerformance returns the portfolio's time-weighted return per day
+	// (D-61) as an index that starts at 100, with the portfolio's value
+	// including cash, in the reporting currency. Deposits and withdrawals are
+	// not performance; transfers between the owner's own accounts are not cash
+	// flows. The series stops at the last day every account is valued for,
+	// and says why.
+	GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error)
 }
 
 // NewReadServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -455,6 +485,13 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	readServiceGetPerformanceHandler := connect.NewUnaryHandler(
+		ReadServiceGetPerformanceProcedure,
+		svc.GetPerformance,
+		connect.WithSchema(readServiceMethods.ByName("GetPerformance")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.views.v1.ReadService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ReadServiceListSleevesProcedure:
@@ -483,6 +520,8 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 			readServiceListValuationStatusesHandler.ServeHTTP(w, r)
 		case ReadServiceGetAllocationProcedure:
 			readServiceGetAllocationHandler.ServeHTTP(w, r)
+		case ReadServiceGetPerformanceProcedure:
+			readServiceGetPerformanceHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -542,4 +581,8 @@ func (UnimplementedReadServiceHandler) ListValuationStatuses(context.Context, *c
 
 func (UnimplementedReadServiceHandler) GetAllocation(context.Context, *connect.Request[v1.GetAllocationRequest]) (*connect.Response[v1.GetAllocationResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.GetAllocation is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.GetPerformance is not implemented"))
 }

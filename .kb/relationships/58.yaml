@@ -321,3 +321,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ab3566ff939
+  - type: constrains
+    from: REQ-views-performance-gaps
+    to: FACT-SUBJECT-134DCCCDF96783CB
+    created_at: 2026-10-28T20:55:13.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c4d064834b0
+  - type: requires_property
+    from: REQ-views-performance-gaps
+    to: FACT-PROP-90A71B01FD453CD1
+    created_at: 2026-10-28T20:55:13.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62e036b78053
+  - type: specified_by
+    from: REQ-views-performance-gaps
+    to: SCEN-views-performance-gaps
+    created_at: 2026-10-28T20:55:14.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98c1be343d25
+  - type: implements
+    from: SYM-views-chain
+    to: REQ-views-performance-twr
+    created_at: 2026-10-28T21:03:12.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7982c4020a75
+  - type: covered_by
+    from: SYM-views-chain
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:03:12.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34ebc1b1dbaf
+  - type: implements
+    from: SYM-views-pb-get-performance-request-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:09:42.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45e328298620
+  - type: covered_by
+    from: SYM-views-pb-get-performance-request-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:09:42.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb48de41f4cc

@@ -230,3 +230,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91c9f68d624b
+  - type: implements
+    from: SYM-views-day-builder-flows-on
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:04:05.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-333410065bc4
+  - type: implements
+    from: SYM-views-day-builder-flows-on
+    to: REQ-views-performance-twr
+    created_at: 2026-10-28T21:04:05.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81c7556211a1
+  - type: covered_by
+    from: SYM-views-day-builder-flows-on
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:04:05.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bcc76638165
+  - type: executable_for
+    from: SYM-views-test-performance-drift
+    to: TEST-views-performance-properties
+    created_at: 2026-10-28T21:05:10.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97472824aa59

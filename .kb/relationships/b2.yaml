@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-788982c4f17e
+  - type: implements
+    from: SYM-views-day-builder-convert-all
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:04:10.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fed64835a4c8
+  - type: implements
+    from: SYM-views-day-builder-convert-all
+    to: REQ-views-performance-gaps
+    created_at: 2026-10-28T21:04:10.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-138ee5cfb914
+  - type: covered_by
+    from: SYM-views-day-builder-convert-all
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:04:10.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-405a25621163

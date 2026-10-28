@@ -363,3 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65b4c57e129c
+  - type: executable_for
+    from: SYM-views-test-external-flows
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:07:00.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c07813d17bf2

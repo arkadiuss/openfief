@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0760e021425
+  - type: verified_by
+    from: SCEN-views-performance-value
+    to: TEST-views-performance
+    created_at: 2026-10-28T20:54:36.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fb202e1084d
+  - type: implements
+    from: SYM-views-external-flows
+    to: REQ-views-performance-twr
+    created_at: 2026-10-28T21:02:23.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23e20263eb98
+  - type: implements
+    from: SYM-views-external-flows
+    to: REQ-views-performance-transfers
+    created_at: 2026-10-28T21:02:23.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f870154aa6c6
+  - type: covered_by
+    from: SYM-views-external-flows
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:02:23.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4b152c9ef15

@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f5a9a8a1e3b
+  - type: executable_for
+    from: SYM-views-test-helper-point
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:05:58.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c2e6c154014

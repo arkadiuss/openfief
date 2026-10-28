@@ -440,3 +440,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-636d8102f2f6
+  - type: implements
+    from: SYM-views-new-day-builder
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:03:36.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3c6a61d4a23
+  - type: covered_by
+    from: SYM-views-new-day-builder
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:03:36.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea8c87c98e08
+  - type: implements
+    from: SYM-views-pb-transfer-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:09:02.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6ba14f190a7
+  - type: covered_by
+    from: SYM-views-pb-transfer-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:09:02.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4769fd1eb94b
+  - type: implements
+    from: SYM-views-pb-transfer-get-withdrawal-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:09:17.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46f80a7ed522
+  - type: covered_by
+    from: SYM-views-pb-transfer-get-withdrawal-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:09:17.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f49b5ff9448

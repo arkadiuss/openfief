@@ -251,3 +251,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f81bbb16ff5f
+  - type: verified_by
+    from: SCEN-views-performance-twr
+    to: TEST-views-performance
+    created_at: 2026-10-28T20:54:34.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27c5de73882
+  - type: verified_by
+    from: SCEN-views-performance-twr
+    to: TEST-views-performance-properties
+    created_at: 2026-10-28T20:54:34.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45a32da4e9a7

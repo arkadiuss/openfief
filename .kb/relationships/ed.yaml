@@ -181,3 +181,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-294411f1b4ff
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client-get-performance
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:11:33.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34740f0d4b11
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client-get-performance
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:11:33.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aae9830ece60
