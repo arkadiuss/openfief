@@ -45,6 +45,8 @@ sequenceDiagram
 
 **Digest pinning.** An image tag such as `:main` is a movable pointer. A digest (`@sha256:...`) is the hash of the content, so it changes if one byte changes. Pinning a digest means you run exactly what was tested and signed. Here, GitHub Actions are pinned by commit SHA, Dockerfile base images by digest, and cosign signs the digest the build produced. D-17 requires plugin images to be pinned by digest.
 
+**GitOps.** In a push deploy, CI holds a credential for the cluster and runs `kubectl apply`. GitOps, a name Weaveworks gave the practice in 2017, turns this around: an agent inside the cluster pulls the desired state from a versioned source and keeps the cluster matching it. [Flux](https://fluxcd.io), a CNCF project that grew out of Weaveworks, is such an agent. Nothing outside the cluster needs a way in, and the source's history is the deploy log. The demo's Flux pulls from git and from a signed OCI artifact: a registry entry that holds manifests instead of an image.
+
 **Supply-chain hygiene with Renovate.** Exact pins stop surprise upgrades, but they go stale. [Renovate](https://docs.renovatebot.com) is a bot that finds pinned versions and opens pull requests to bump them, so each upgrade is a reviewed and tested change. It can't see a pin it can't parse, so the Taskfile and workflows mark versions with `# renovate:` comments.
 
 **Traceability gate.** In safety-critical engineering, a traceability matrix links each requirement to the code that implements it and the test that verifies it. [kibi](kibi.md) keeps that record in `.kb/` and checks it with Prolog rules. Its gate in the pre-commit hook refuses a commit whose behavioral code has no owning requirement or no covering test.
@@ -55,9 +57,9 @@ sequenceDiagram
 
 Every step is a task target, and `task --list` shows them with descriptions. Three conventions recur:
 
-- **Pinned tools in `.bin/`.** The `vars` block pins golangci-lint, govulncheck, lefthook, Task itself, actionlint, controller-gen, buf and buf's two Go generators. The internal `tool:*` targets `go install` them into `.bin/`, and a `status` check skips the install unless the version changed. Go tools are built with the toolchain in `go.mod` (`GO_TOOLCHAIN`, now `go1.27.3`), because golangci-lint refuses code that targets a newer Go than it was built with. The envtest API server and etcd come from [envtest-assets.sh](../../scripts/envtest-assets.sh), which checks each archive against a pinned SHA-512.
+- **Pinned tools in `.bin/`.** The `vars` block pins golangci-lint, govulncheck, lefthook, Task itself, actionlint, controller-gen, Hugo, buf and buf's two Go generators, and for the demo hcloud, kustomize and gojq. The internal `tool:*` targets `go install` them into `.bin/`, and a `status` check skips the install unless the version changed. Go tools are built with the toolchain in `go.mod` (`GO_TOOLCHAIN`, now `go1.27.3`), because golangci-lint refuses code that targets a newer Go than it was built with. The envtest API server and etcd come from [envtest-assets.sh](../../scripts/envtest-assets.sh), which checks each archive against a pinned SHA-512. The flux CLI can't be built with `go install`, so `tool:flux` downloads its release archive and checks a pinned sha256. The k3s and Flux versions a demo machine installs are pinned here too, with their sha256 sums, and rendered into its cloud-init.
 - **Explicit paths.** Tasks call `{{.BIN}}/golangci-lint`, not `golangci-lint`, so a global install can't shadow the pin.
-- **Skip until it exists.** Many targets print "skipping" and succeed while their input is missing: `GO_GUARD` (no `go.mod`), `PROTO_GUARD` (no `.proto` files), `e2e` (no `test/e2e`) and `deploy:demo` (no `deploy/demo`). The pipeline was built ahead of the product, so some green steps do nothing yet.
+- **Skip until it exists.** Many targets print "skipping" and succeed while their input is missing: `GO_GUARD` (no `go.mod`), `PROTO_GUARD` (no `.proto` files) and `e2e` (no `test/e2e`). The pipeline was built ahead of the product. Today only `e2e` still skips; since the first contract landed in `proto/openfief/connector/v1`, every proto step runs.
 
 `task setup` runs once per clone. It installs the tools, runs `npm ci` for kibi, installs the lefthook hooks, and registers kibi's merge driver for the `.kb` files named in [.gitattributes](../../.gitattributes). CI runs `task setup:ci` instead, which skips lefthook and the merge driver and compiles the branch's knowledge base.
 
@@ -71,10 +73,11 @@ Every step is a task target, and `task --list` shows them with descriptions. Thr
 | `lint:ci` | actionlint on the workflows, with its shellcheck and pyflakes integrations off | a workflow error |
 | `proto` | `buf lint`, `buf format --diff`, [proto-breaking.sh](../../scripts/proto-breaking.sh), [proto-check.sh](../../scripts/proto-check.sh) | a lint or format issue, a breaking change against the base, or a stale `sdk/go/gen` |
 | `vuln` | [vulncheck.sh](../../scripts/vulncheck.sh): govulncheck in each module, then `npm audit --audit-level=high` | a finding, or an unreachable vulnerability database |
-| `test` | `go test ./...` in each module with the envtest binaries, then the seven `scripts/tests/*.test.sh` | any failure |
+| `test` | `go test ./...` in each module with the envtest binaries, then the ten `scripts/tests/*.test.sh` | any failure |
 | `docs:check` | [check-docs.sh](../../scripts/check-docs.sh) | an undefined or duplicate GR, D, P, T, OQ or R ID, or a changed ground-rule line |
 | `docs:build` | [docgen](../../tools/docgen/main.go) writes the reference pages, then Hugo and [docs-diagrams.mjs](../../scripts/docs-diagrams.mjs) build the site ([docs.md](docs.md)) | a broken link, a diagram that doesn't render, or a docs page naming a kibi ID or task that doesn't exist |
 | `docs:fresh` (CI only) | `git log` over the range from `DOCS_BASE`, piped into `docgen fresh` | covered code changed without a page covering it and without a `Docs-Unchanged:` trailer, or a Go package no page covers |
+| `demo:validate` | [validate.sh](../../scripts/demo/validate.sh): `kustomize build` of `deploy/demo`, of every git path its Flux Kustomizations apply, and of `deploy/demo/openfief` | a layer doesn't build, an image isn't pinned by digest, an OCI source doesn't require a cosign signature, or a substituting layer uses a variable cloud-init doesn't define |
 | `kibi:check` or `kibi:staged` | `kibi check` (CI); `kibi check-generated --staged --changed-only` and `kibi check --staged` (hook) | a knowledge-base rule violation |
 
 Two steps compare against a base revision: the ground-rule check reads `DOCS_BASE`, and `proto:breaking` reads `PROTO_BASE`, then `DOCS_BASE`. Both default to `HEAD`, which locally means "against the last commit". CI sets `DOCS_BASE` to the pull request's base.
@@ -102,7 +105,7 @@ flowchart TD
   subgraph cc["task check:commit (in order, stops at the first failure)"]
     direction TB
     gen["gen:check"] --> fmt["fmt:check"] --> lint["lint"] --> lintci["lint:ci"] --> proto["proto"]
-    proto --> vuln["vuln"] --> test["test"] --> docs["docs:check"] --> site["docs:build"] --> kibi["kibi:staged (check-generated, check on staged)"]
+    proto --> vuln["vuln"] --> test["test"] --> docs["docs:check"] --> site["docs:build"] --> dv["demo:validate"] --> kibi["kibi:staged (check-generated, check on staged)"]
   end
   cc -->|"all green"| msg["lefthook commit-msg: task docs:fresh:commit"]
   msg -->|"pages updated, or Docs-Unchanged"| done["Commit is recorded"]
@@ -125,26 +128,28 @@ In CI, the setup action sets `KIBI_BRANCH`, because `actions/checkout` leaves a 
 Each job first calls the composite [setup action](../../.github/actions/setup/action.yml). It installs Go from `go.mod`, installs Task at the Taskfile's `TASK_VERSION` and sets `KIBI_BRANCH`. Task is the one tool installed outside a task target, since no target can run before Task exists. By default the action also installs Node and runs `task setup:ci`; jobs that only need Task pass `tools: 'false'`.
 
 - `check` runs `task check` with full history. `DOCS_BASE` is the pull request's base SHA, or the previous `main` (`github.event.before`) on a push.
+- `test-pg` runs `task test:pg`. [test-pg.sh](../../scripts/test-pg.sh) starts a throwaway PostgreSQL from the runner's binaries on a Unix socket, each test creates a fresh database with every migration applied, and the server is removed afterwards.
 - `dco` runs on pull requests only: `task dco BASE=<base sha> HEAD=<head sha>`. [dco-check.sh](../../scripts/dco-check.sh) walks each non-merge commit in the range and requires a `Signed-off-by` trailer that matches the commit's author name and email exactly.
 - `e2e` is a matrix over `k3d` and `kind` (D-12), and one failure doesn't cancel the other. A third-party action creates the cluster. `task e2e` then runs [assert-local-cluster.sh](../../scripts/assert-local-cluster.sh), which refuses any API server not on `127.0.0.1`, `localhost`, `0.0.0.0` or `[::1]`, and then runs `go test -tags e2e ./test/e2e/...`.
 - `images` waits for `check` and calls [images.yml](../../.github/workflows/images.yml), with `push` true only on a push to `main`.
 - `docs` runs on a push to `main` after `check`. `check` has built the site in `task check` and uploaded `site/public` as a Pages artifact; `docs` publishes it with GitHub's `deploy-pages` action to the `github-pages` environment ([docs.md](docs.md)).
-- `deploy-demo` runs on a push to `main` when the repository variable `DEMO_ENABLED` is `true`, after `check`, `e2e` and `images` succeed. It calls [deploy-demo.yml](../../.github/workflows/deploy-demo.yml).
+- `deploy-demo` runs on a push to `main` when the repository variable `DEMO_ENABLED` is `true`, after `check`, `e2e` and `images` succeed. It calls [deploy-demo.yml](../../.github/workflows/deploy-demo.yml), described in [The demo](#the-demo).
 
 ```mermaid
 flowchart TD
   pr(["pull_request to main"])
   push(["push to main"])
-  pr --> check & dco & e2e
-  push --> check & e2e
+  pr --> check & testpg & dco & e2e
+  push --> check & testpg & e2e
   check["check: task check"] --> images["images: calls images.yml"]
   check -->|"push to main"| docsjob["docs: publish site/public to GitHub Pages"]
+  testpg["test-pg: task test:pg"]
   dco["dco: task dco"]
   e2e["e2e matrix (k3d, kind): task e2e"]
   images -->|"pull request"| build["build amd64 and arm64 with SBOM and provenance, not pushed"]
   images -->|"push to main"| pub["build, push to GHCR, task image:sign on the digest"]
   check & e2e & pub --> gate{"deploy-demo job: DEMO_ENABLED is true?"}
-  gate -->|"yes"| demo["deploy-demo.yml: environment demo, task deploy:demo"]
+  gate -->|"yes"| demo["deploy-demo.yml: task deploy:demo publishes the signed demo-manifests artifact"]
   gate -->|"no"| skip["deploy skipped"]
 ```
 
@@ -156,7 +161,40 @@ flowchart TD
 | Push to `main` | yes | `sha-<short sha>` and `main` |
 | Release | yes, unless `dry_run` | the version, such as `2026.11.0-beta.1` |
 
-**Demo deploy.** [deploy-demo.yml](../../.github/workflows/deploy-demo.yml) has one job, bound to the GitHub Environment `demo`, which holds the `DEMO_KUBECONFIG` secret. Its concurrency group makes deploys queue instead of overlapping. `task deploy:demo` writes the kubeconfig to a temporary file, deletes it on exit, and runs `kubectl apply -k deploy/demo`. `VERSION` is printed but doesn't choose what gets deployed.
+### The demo
+
+The demo is one Hetzner Cloud server running k3s, holding synthetic data only (GR-12). [demo.md](demo.md) is the operator's guide; it's a proposal, and this section only explains the machinery. The pipeline touches the demo in two ways.
+
+**The machine.** `demo:plan`, `demo:up`, `demo:status`, `demo:down` and `demo:recreate` all run [demo.sh](../../scripts/demo/demo.sh) with the pinned hcloud CLI. They run from a terminal, or from [demo-infra.yml](../../.github/workflows/demo-infra.yml), a hand-started workflow in the GitHub Environment `demo`, which holds `HCLOUD_TOKEN`. The script keeps no state: it finds resources by the labels `app=openfief` and `env=<name>`, so `up` creates only what is missing. Before it creates anything, it prices the server and its IPv4 from Hetzner's price list in integer micro-euros. It refuses if the monthly total of all OpenFief resources would exceed `DEMO_BUDGET_EUR`, which defaults to 10 EUR. `down` and `recreate` need `CONFIRM` set to the demo's name. The server boots from [cloud-init.yaml](../../deploy/demo/cloud-init.yaml), filled in with the Taskfile's pins. It installs k3s and Flux, checking each download's sha256, and points Flux at `deploy/demo` on `main`.
+
+**Deploys.** Nothing outside the machine holds a credential for the cluster. Flux follows two kinds of source, declared in [stack.yaml](../../deploy/demo/stack.yaml). The platform layers follow `main` in git: the CRDs, the CloudNativePG operator and database, cert-manager and the Let's Encrypt issuer. OpenFief itself, today the operator and the egress proxy, follows a signed OCI artifact. [deploy-demo.yml](../../.github/workflows/deploy-demo.yml) publishes it by running `task deploy:demo TAG=<tag> REPO=<owner/repo>`, where the tag is `sha-<short commit>` for `main` or the version for a beta:
+
+1. [pin-images.sh](../../scripts/demo/pin-images.sh) runs `cosign verify` on each image at that tag. It accepts only a signature from `images.yml` on `main`, and writes the verified digest over the all-zeros placeholder in `deploy/demo/openfief/kustomization.yaml`. One unverified image fails the deploy.
+2. validate.sh checks the result, and kustomize renders it.
+3. `flux push artifact` pushes the manifests to `ghcr.io/<owner>/<repo>/demo-manifests:<tag>`. cosign signs that digest keylessly, and `flux tag artifact` moves the `demo` tag to it.
+4. Flux on the machine checks the `demo` tag every two minutes. It applies a new artifact only if the signature comes from `deploy-demo.yml` on `main`.
+
+The deploy job runs in the `demo` environment with `packages: write` and `id-token: write` and no secret. A concurrency group makes deploys queue instead of overlapping.
+
+```mermaid
+sequenceDiagram
+  participant D as deploy-demo.yml
+  participant G as GHCR
+  participant F as "Flux on the demo"
+  participant K as "k3s on the demo"
+  D->>G: cosign verify operator and egress-proxy at TAG
+  G-->>D: digests signed by images.yml on main
+  D->>D: pin-images.sh, validate.sh, kustomize build
+  D->>G: flux push artifact demo-manifests at TAG
+  D->>G: cosign sign the artifact digest
+  D->>G: flux tag artifact TAG as demo
+  loop every 2 minutes
+    F->>G: fetch demo-manifests at tag demo
+    F->>F: check the signer is deploy-demo.yml on main
+    F->>K: apply the demo-openfief layer
+  end
+  Note over F,K: platform layers follow main in git
+```
 
 ### Releases
 
@@ -165,7 +203,7 @@ flowchart TD
 1. `plan` refuses a real run unless the actor is the repository owner and the ref is `main`. It then runs three tasks on full history. `release:check` calls [release-version.sh](../../scripts/release-version.sh): stable must be `YYYY.M.N` and beta `YYYY.M.N-beta.K`, with no `v`, no leading zeros, a month from 1 to 12, `K` from 1 up, and no existing tag. `release:notes` writes the notes to the run's summary page. `release:assets` packs `deploy/` into `dist/openfief-deploy-<version>.tar.gz` and builds the docs site into `dist/openfief-docs-<version>.tar.gz`; these copies are only a trial and are discarded.
 2. `images` calls images.yml with the version as the tag, and pushes and signs only on a real run.
 3. `publish` runs only on a real run. `task release:publish` repeats the version check, rebuilds the tarball and notes, and creates the tag at the checked-out commit through the GitHub API. For `stable` it also creates a GitHub release with the notes and both tarballs. A beta gets a tag and no GitHub release.
-4. `deploy-demo` runs after a real beta when `DEMO_ENABLED` is `true`.
+4. `deploy-demo` runs after a real beta when `DEMO_ENABLED` is `true`. It publishes the beta's verified digests as the demo artifact, as above, with the version as the tag.
 
 [release-notes.sh](../../scripts/release-notes.sh) finds the previous release with `git describe`, limited to tags that start with four digits. A stable release skips beta tags, so its notes cover the whole cycle; a beta starts after the newest release of either channel. Each non-merge commit goes into Breaking changes (`!` or a `BREAKING CHANGE:` footer), Features (`feat`), Fixes (`fix`), Performance (`perf`) or Other changes, which also takes anything not in Conventional Commit form.
 
@@ -191,7 +229,7 @@ sequenceDiagram
     alt channel is stable
       U->>H: gh release create with notes, deploy and docs tarballs
     else channel is beta and DEMO_ENABLED is true
-      U->>D: deploy the beta to demo
+      U->>D: publish the beta digests as the demo artifact
     end
   else dry_run is true (default)
     Note over I,U: images built but not pushed, publish skipped
@@ -205,71 +243,81 @@ sequenceDiagram
 | What | Pinned in | Kept current by |
 |---|---|---|
 | Go toolchain | `toolchain go1.27.3` in both `go.mod` files; `golang:1.27.3` by digest in the Dockerfiles | Renovate for `go.mod`; nothing for the Dockerfiles |
-| Go dev tools | Taskfile `vars` | Renovate, "Taskfile tools" |
-| kibi | exact versions in [package.json](../../package.json), plus `package-lock.json` | Renovate, "kibi" |
+| Go dev tools, including Hugo, hcloud, kustomize and gojq | Taskfile `vars` | Renovate, "Taskfile tools" |
+| kibi, Mermaid, playwright-core | exact versions in [package.json](../../package.json), plus `package-lock.json` | Renovate (npm); kibi as one group |
+| flux CLI; k3s and Flux on the demo machine | Taskfile `vars`, each with sha256 sums | Renovate bumps the version; the sums by hand ([demo.md](demo.md#update-the-pinned-versions)) |
+| Demo Helm charts (CloudNativePG, cert-manager) | `deploy/demo/*/helmrelease.yaml` | nothing |
 | Actions | a commit SHA in each `uses:` | Renovate, "GitHub Actions" |
 | Node, k3d, kind | the setup action and ci.yml, with `# renovate:` comments | Renovate, "CI toolchains" |
 | envtest binaries | `ENVTEST_K8S_VERSION` plus SHA-512 sums in envtest-assets.sh | by hand |
 | Base images | digests in `cmd/*/Dockerfile` | nothing (see below) |
-| kubectl, gh, Buildx, QEMU | the runner image and the actions' defaults | not pinned here |
+| kubectl, gh, Buildx, QEMU, Chrome (docs diagrams), PostgreSQL (`test:pg`) | the runner image and the actions' defaults | not pinned here |
 
 ## Verification
 
-The pipeline's decisions live in shell scripts, and each script that decides something non-trivial has a test in [scripts/tests](../../scripts/tests). Each test works in a throwaway directory or git repository from `mktemp`. The git tests also clear `GIT_DIR` and its siblings, which a hook exports, so they can't touch the real repository. Each test is a kibi test record that covers a tooling requirement. `task test` runs all seven, so they run in the hook and in CI.
+The pipeline's decisions live in shell scripts, and each script that decides something non-trivial has a test in [scripts/tests](../../scripts/tests). Each test works in a throwaway directory or git repository from `mktemp`. The git tests also clear `GIT_DIR` and its siblings, which a hook exports, so they can't touch the real repository. Each test is a kibi test record that covers a tooling requirement. `task test` runs all ten, so they run in the hook and in CI.
 
 | Test | Proves |
 |---|---|
-| `check-docs.test.sh` (TEST-tooling-docs-check) | Unchanged docs pass; a reference to an undefined ID, an edited ground-rule line and an ID defined twice each fail with the right message. |
+| `check-docs.test.sh` (TEST-tooling-docs-check) | Unchanged docs pass; a reference to an undefined ID, an edited ground-rule line, an ID defined twice and a base revision that isn't a commit each fail with the right message. |
 | `vulncheck.test.sh` (TEST-tooling-vuln-offline) | A high npm finding fails, an unreachable npm registry fails, and a govulncheck that can't reach `vuln.go.dev` fails. Stubs keep it offline. |
 | `ci-images.test.sh` (TEST-tooling-ci-images) | No Dockerfile gives `[]`; two Dockerfiles give the expected matrix with a lowercased prefix; a duplicate or invalid image name fails. |
 | `dco-check.test.sh` (TEST-tooling-dco) | A commit signed off by its author passes; a sign-off by someone else and a missing sign-off both fail and name the commit. |
 | `release-version.test.sh` (TEST-tooling-release-version) | 14 table cases: valid stable and beta versions pass; a `v` prefix, leading zeros, month 13, `beta.0`, the wrong or an unknown channel, and an existing tag fail. |
 | `release-notes.test.sh` (TEST-tooling-release-notes) | Stable notes start after the previous stable, beta notes after the previous release of either channel, a first release covers all history, and both `!` and `BREAKING CHANGE:` count as breaking. |
 | `proto-breaking.test.sh` (TEST-tooling-proto-breaking) | A base without contracts passes; adding a field passes; changing a field's type fails and names it; `PROTO_BASE` and `DOCS_BASE` both select the base. Needs `buf` on `PATH`. |
+| `demo.test.sh` (TEST-tooling-demo) | 71 checks against a fake hcloud with synthetic prices. A missing token is refused before any API call. `plan` prices the server and IPv4 and creates nothing. `up` over budget is refused, counting existing resources; otherwise it creates the firewall before the server, with labels, keys and rules, and a second `up` creates nothing. `down` needs the matching `CONFIRM`. The rendered cloud-init pins k3s for the CPU, leaves no placeholder and holds no token. |
+| `demo-pin-images.test.sh` (TEST-tooling-demo-pin-images) | With a fake cosign: signed images get their digests and comments survive; only `images.yml` on `main` is trusted; an unsigned image fails and keeps its placeholder; a malformed tag or digest is refused. |
+| `demo-validate.test.sh` (TEST-tooling-demo-validate) | The committed manifests pass; an OCI source without cosign verification, an image pinned by tag only, a Flux path that doesn't build and an undefined substitution variable each fail. |
 
 To run them and the other self-checks:
 
 ```sh
-task test                      # Go tests plus the seven script tests
+task test                      # Go tests plus the ten script tests
 bash scripts/tests/dco-check.test.sh
-PATH="$PWD/.bin:$PATH" bash scripts/tests/proto-breaking.test.sh
+PATH="$PWD/.bin:$PATH" bash scripts/tests/demo.test.sh
 task lint:ci                   # actionlint over the workflows
 task gen:check                 # regenerate, then fail on drift
 task proto                     # buf lint, breaking and generated-code checks
+task demo:validate             # build every demo layer offline; digests and signatures
+task demo:plan ENV=demo        # read-only Hetzner API calls; needs HCLOUD_TOKEN
 task ci:images PREFIX=ghcr.io/arkadiuss/openfief
 task release:check CHANNEL=beta VERSION=2026.11.0-beta.1
 task release:notes VERSION=2026.11.0
 task dco BASE=origin/main HEAD=HEAD
 ```
 
-actionlint checks the workflows only statically. To exercise the release workflow without publishing, dispatch a dry run with `gh workflow run release.yml -f channel=beta -f version=2026.11.0-beta.1 -f dry_run=true`, and read the notes on the run's summary page. To check a published image, verify its signature and read its SBOM:
+actionlint checks the workflows only statically. To exercise the release workflow without publishing, dispatch a dry run with `gh workflow run release.yml -f channel=beta -f version=2026.11.0-beta.1 -f dry_run=true`, and read the notes on the run's summary page. To check what was published, verify the signatures with the identities the pipeline itself trusts, and read an image's SBOM:
 
 ```sh
 cosign verify ghcr.io/arkadiuss/openfief/operator:main \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-  --certificate-identity-regexp '^https://github.com/arkadiuss/openfief/\.github/workflows/'
+  --certificate-identity https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main
+cosign verify ghcr.io/arkadiuss/openfief/demo-manifests:demo \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity https://github.com/arkadiuss/openfief/.github/workflows/deploy-demo.yml@refs/heads/main
 docker buildx imagetools inspect ghcr.io/arkadiuss/openfief/operator:main --format '{{ json .SBOM }}'
 ```
 
-The certificate should name `images.yml`, the reusable workflow that ran the signing job. The regexp accepts any workflow in the repository, so tighten it once you've seen a real certificate.
+pin-images.sh trusts the first identity and Flux the second. Both assume that Fulcio names the reusable workflow that ran the job, not the workflow that called it; this page hasn't been checked against a real certificate. On the machine, `flux get sources oci` and `flux get kustomizations` show what Flux verified and applied ([demo.md](demo.md#reach-the-demo)).
 
-Nothing tests [assert-local-cluster.sh](../../scripts/assert-local-cluster.sh), gen-check.sh, proto-check.sh, envtest-assets.sh, [test-pg.sh](../../scripts/test-pg.sh), or the tasks only CI runs: `image:sign`, `deploy:demo` and `release:publish`.
+Nothing tests [assert-local-cluster.sh](../../scripts/assert-local-cluster.sh), gen-check.sh, proto-check.sh, envtest-assets.sh or test-pg.sh, a demo machine's boot, or the tasks only CI runs: `image:sign`, `deploy:demo` as a whole and `release:publish`.
 
 ## Not built yet
 
 These are the gaps between [sdlc.md](sdlc.md) or [testing.md](testing.md) and the files, plus things that look broken.
 
-- **Local green isn't always CI green** (sdlc.md:10). The hook ends with `kibi:staged`, while CI checks the whole knowledge base (the last steps of `check:commit` and `check` in Taskfile.yml). DCO is checked only in CI; the `commit-msg` hook runs only the docs gate. The hook reads the working tree, so unstaged edits count. Vulnerability databases change between runs.
-- **Not everything goes through a task target** (sdlc.md:17). Docker's actions build and push images inside images.yml, so no task target builds an image locally. Third-party actions create the e2e clusters.
-- **Not every tool is pinned in the Taskfile** (sdlc.md:18). Node, k3d and kind are pinned in the workflows, and kubectl, gh, Buildx and QEMU aren't pinned at all.
+- **Local green isn't always CI green** (sdlc.md:10). The hook ends with `kibi:staged`, while CI checks the whole knowledge base (the last steps of `check:commit` and `check` in Taskfile.yml). DCO and the PostgreSQL tests run only in CI; the `commit-msg` hook runs only the docs gate. The hook reads the working tree, so unstaged edits count. Vulnerability databases change between runs.
+- **A failing PostgreSQL test doesn't stop the demo deploy.** `deploy-demo` needs `check`, `e2e` and `images`, but not `test-pg` (ci.yml:161).
+- **Not everything goes through a task target** (sdlc.md:17). Docker's actions build and push images inside images.yml, so no task target builds an image locally. Third-party actions also create the e2e clusters and publish the docs site.
+- **Not every tool is pinned in the Taskfile** (sdlc.md:18). Node, k3d and kind are pinned in the workflows, and the demo's Helm charts in `deploy/demo`. kubectl, gh, Buildx, QEMU, the Chrome that renders docs diagrams and the PostgreSQL that `test:pg` starts come from the runner image or the actions' defaults.
 - **`task vuln` ignores low and moderate npm findings** (sdlc.md:19 says any finding). vulncheck.sh:24 passes `--audit-level=high`, and the test covers only a high finding.
-- **Conventional Commits aren't enforced** (sdlc.md:24). Nothing lints commit messages or PR titles, and a non-conforming commit lands under Other changes.
-- **No PR template** asks which requirements a PR implements or how it was verified (sdlc.md:25).
-- **End-to-end tests don't exist** (sdlc.md:11 and :30). `test/e2e` is missing, so both e2e jobs create a cluster, pass the local-cluster guard and skip (the `e2e` target). Nothing builds or loads images, or installs `deploy/`, into the cluster yet. The guard has no test, though REQ-tooling-e2e-local-only has a scenario.
-- **PostgreSQL integration tests never run in CI** (testing.md:10 and :28). They skip without `OPENFIEF_PG_DSN`, and `task test:pg` is in neither `check` nor ci.yml.
-- **The demo deploy is wired but off** (sdlc.md:12 and :31). `DEMO_ENABLED` is unset and `deploy/demo` doesn't exist, so `task deploy:demo` skips. Once it exists, it applies whatever `deploy/demo` says: `VERSION` doesn't select a beta's images (the `deploy:demo` target).
-- **Releases don't pin their images** (sdlc.md:39, D-17). images.yml exposes no digest output, and the deploy manifests name images with no tag or digest (deploy/operator/deployment.yaml:28, deploy/egress-proxy/deployment.yaml:26). The stable tarball ships those manifests as they are. "The CRDs and the bootstrap install" are one archive of `deploy/`.
-- **The dry run is per run, not a gate** (sdlc.md:40). A run with `dry_run: false` validates in `plan`, then pushes and signs images straight away (release.yml:73-83). Nothing requires an earlier dry run of the same commit, or checks that the commit passed CI. Because image builds don't fail fast, one image can be pushed while another fails, which leaves pushed images with no tag.
-- **No SDK or contract releases** (sdlc.md:41). There's no `sdk/go/vX.Y.Z` tagging and no TypeScript SDK. `buf breaking` runs on every change, but `proto/` has no `.proto` files yet, so every proto step skips.
-- **Renovate doesn't update Dockerfile base images** (sdlc.md:45). `enabledManagers` (renovate.json:5) lacks `dockerfile`, yet cmd/operator/Dockerfile:3 and cmd/egress-proxy/Dockerfile:3 say Renovate updates them. The `golang:1.27.3` image can drift from `go.mod`'s toolchain.
-- **Smaller issues.** `task test` runs proto-breaking.test.sh but its `deps` install only the envtest binaries, not `buf`, so it fails on a clone whose `.bin/` predates buf; `task check` hides this because `proto` runs first. The setup action's "no go.mod yet" step is dead now that `go.mod` exists (action.yml:22-28). The Dockerfiles copy only `cmd/` and `internal/`, so image builds will break once the core imports the `sdk/go` module, as buf.gen.yaml expects.
+- **Conventional Commits aren't enforced** (sdlc.md:25). Nothing lints commit messages or PR titles, and a non-conforming commit lands under Other changes.
+- **No PR template** asks which requirements a PR implements or how it was verified (sdlc.md:26).
+- **End-to-end tests don't exist** (sdlc.md:11 and :31). `test/e2e` is missing, so both e2e jobs create a cluster, pass the local-cluster guard and skip (the `e2e` target). Nothing builds or loads images, or installs `deploy/`, into the cluster yet. The guard has no test, though REQ-tooling-e2e-local-only has a scenario.
+- **The demo serves no product yet** (sdlc.md:12 and :32). The deploy path is built, but whether it runs depends on settings outside the repository: the `demo` environment, public GHCR packages and `DEMO_ENABLED`. The app layer holds the operator and the egress proxy, and `demo-routes` stays suspended until a core service exists (deploy/demo/stack.yaml:107).
+- **Releases don't pin their images** (sdlc.md:41, D-17). images.yml exposes no digest output. The stable tarball ships `deploy/` with bases that name images without a tag or digest (deploy/operator/deployment.yaml:28, deploy/egress-proxy/deployment.yaml:26) and expect an overlay to pin them. Only the demo has such an overlay, and CI fills it in at deploy time. "The CRDs and the bootstrap install" are one archive of `deploy/`.
+- **The dry run is per run, not a gate** (sdlc.md:42). A run with `dry_run: false` validates in `plan`, then pushes and signs images straight away (release.yml:73-83). Nothing requires an earlier dry run of the same commit, or checks that the commit passed CI. Because image builds don't fail fast, one image can be pushed while another fails, which leaves pushed images with no tag.
+- **No SDK or contract releases** (sdlc.md:43). There's no `sdk/go/vX.Y.Z` tagging and no TypeScript SDK. `buf breaking` now has a contract to check and runs on every change, not only before an SDK release.
+- **Renovate misses some pins** (sdlc.md:47). `enabledManagers` (renovate.json:5) lacks `dockerfile`, yet cmd/operator/Dockerfile:3 and cmd/egress-proxy/Dockerfile:3 say Renovate updates them, so `golang:1.27.3` can drift from `go.mod`'s toolchain. No manager reads the demo's Helm chart versions. For k3s and Flux, Renovate bumps the version but not the sha256 sums beside it: a stale flux CLI sum fails the next deploy job, while stale k3s or Flux install sums show up only when a machine boots and stops at that download.
+- **Smaller issues.** `task test` runs proto-breaking.test.sh, but its `deps` install envtest, kustomize and gojq, not `buf`, so it fails on a clone whose `.bin/` predates buf; `task check` hides this because `proto` runs first. The setup action's "no go.mod yet" step is dead now that `go.mod` exists (action.yml:22-28). The core now imports the `sdk/go` module (in `internal/ingest/connectrpc`) through go.work only: `go.mod` doesn't require it, and the Dockerfiles copy neither go.work nor `sdk/`. The images still build because neither binary imports that package yet.

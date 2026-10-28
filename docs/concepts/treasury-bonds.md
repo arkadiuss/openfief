@@ -65,7 +65,7 @@ The [tax wrapper](../glossary.md) is the tax regime of the account a lot sits in
 | `IKE` | Not charged, assuming a withdrawal | None: exempt when the withdrawal conditions are met, which valuation assumes |
 | `IKZE` | Not charged, assuming a withdrawal | None withheld; the reduced flat tax on IKZE withdrawals applies to the whole account and is not part of a bond's value |
 
-The `IKE` doc comment notes that the issue letters offer only ROR, DOR, TOS, COI and EDO for IKE and IKZE, but `ValueLot` doesn't check a lot's bond type against its wrapper.
+The wrapper belongs to the account: the valuation context records it per account, and an account without one is taxable. The `IKE` doc comment notes that the issue letters offer only ROR, DOR, TOS, COI and EDO for IKE and IKZE, but nothing checks a lot's bond type against its wrapper.
 
 ### The tax FX rate date
 
@@ -132,7 +132,7 @@ flowchart TD
 
 Here `months` is the period length (1, 3 or 12) and `a` is the days from the period's start to the date. All arithmetic is exact decimal until the single `Quo` that rounds half up to grosze; the lot amounts are the per-bond amounts times the quantity. Belka tax, by contrast, is computed once on the lot's total. On the day a coupon is paid, a coupon type has started a new period, so its accrued interest is zero.
 
-`ValueLot` needs an index reading for every period up to the one the date falls in, coupon types included: their earlier periods were paid out and don't change the value, but without a reading `PeriodRate` still fails with `MissingIndexError`. `ValueLot` takes readings by period number; a caller uses `CPIMonth(start)` to find which month's CPI a period needs. For ROR and DOR the caller must pick the reading itself, because the tenth-business-day rule needs Poland's holiday calendar, which the package doesn't have.
+`ValueLot` needs an index reading for every period up to the one the date falls in, coupon types included: their earlier periods were paid out and don't change the value, but without a reading `PeriodRate` still fails with `MissingIndexError`. `ValueLot` takes readings by period number. In a revaluation, [`valuation.LotIndices`](valuation.md#valuing-one-holding) picks them from the stored monthly readings: the CPI of `CPIMonth(start)` for inflation-indexed types, and for ROR and DOR the reference-rate reading recorded for the month the period starts. Which rate that is, the one in force on the tenth business day before the month, is left to whoever records it, because it needs Poland's holiday calendar, which neither package has. A missing reading makes the holding's stored row a gap (`index_reading`), not an error.
 
 A synthetic EDO0334 lot shows the periods and a value on a date:
 
@@ -157,7 +157,7 @@ The same lot in IKE is worth 1030.20 PLN net. Bought by exchange at 99.90 PLN, i
 
 ## Decisions
 
-- **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date: also the purchase price, the tax wrapper, the series terms and the index readings.
+- **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date. In a revaluation the purchase date is the lot's open date and the price per bond its cost over its quantity; the series terms (per ISIN), the index readings and the account's tax wrapper are recorded separately.
 - **D-20**: Polish tax uses NBP rates, from the day before (`TaxRateCutoff`).
 - **D-25**: gross accrued and net-if-redeemed values. D-25 names only IKE, and only for tax ("no tax inside IKE"). The code also withholds no tax inside IKZE, and charges no fee in either wrapper because it assumes a withdrawal. The glossary's early-redemption fee entry backs the fee part; nothing in DESIGN.md decides the IKZE tax part.
 - **D-37**: issuer tables and examples over the letter. Implemented as decided: the TOS base isn't rounded between years, and Belka tax rounds half up.
@@ -184,7 +184,6 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 
 ## Not built yet
 
-- **D-9**: anything that supplies a series' terms or the CPI and NBP reference rate readings (the DESIGN.md diagram's treasury bonds connector); manual lot entry in the built-in UI (D-49); and an import of the bond service's export, if one exists (OQ-22).
-- **D-9**: choosing the NBP reference rate reading for ROR and DOR, which needs a business-day calendar.
-- **D-36**: stored bond valuations, and revaluation when an index reading arrives.
+- **D-9**: anything that fetches series terms, CPI or NBP reference rates (the DESIGN.md diagram's treasury bonds connector) and records them through `valuation/app.InputRecorder`; manual lot entry in the built-in UI (D-49); and an import of the bond service's export, if one exists (OQ-22).
+- **D-9**: picking the NBP reference rate in force on the tenth business day before a month, which needs a business-day calendar.
 - **D-62**, **GR-13**: the jurisdiction pack (`jurisdiction.Pack` in the glossary) that would make these rules pluggable and set PLN as the default reporting currency; today `pl` is a plain package.
