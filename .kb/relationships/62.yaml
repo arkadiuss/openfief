@@ -489,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-248602e3283c
+  - type: verified_by
+    from: SCEN-valuation-eodhd-listing
+    to: TEST-valuation-eodhd-listing
+    created_at: 2026-10-28T21:37:08.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca0f87bdd9bd
+  - type: verified_by
+    from: SCEN-valuation-eodhd-listing
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:37:08.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9352eb06b629

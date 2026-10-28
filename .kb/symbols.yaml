@@ -57051,3 +57051,1188 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: implements
         target: REQ-views-api-contract
+  - id: SYM-valuation-eodhd-supported-exchange
+    title: SupportedExchange
+    sourceFile: internal/valuation/eodhd/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:03.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-connector
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-listing
+    title: Listing
+    sourceFile: internal/valuation/eodhd/listing.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:07.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-listing-ticker
+    title: Listing.Ticker
+    sourceFile: internal/valuation/eodhd/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:11.910Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-pick
+    title: Pick
+    sourceFile: internal/valuation/eodhd/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:17.437Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-connector
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-candidates
+    title: candidates
+    sourceFile: internal/valuation/eodhd/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:22.744Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-listing-quote
+    title: Listing.Quote
+    sourceFile: internal/valuation/eodhd/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:28.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-closes-exact
+  - id: SYM-valuation-eodhd-close
+    title: Close
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:36.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-closes-exact
+  - id: SYM-valuation-eodhd-client
+    title: Client
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:42.223Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-AUTO-0C514DFCDB36FBEB
+      - type: implements
+        target: REQ-valuation-eodhd-request
+  - id: SYM-valuation-eodhd-new
+    title: New
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:49.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-request
+  - id: SYM-valuation-eodhd-client-listings
+    title: Client.Listings
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:38:56.870Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-request
+  - id: SYM-valuation-eodhd-client-closes
+    title: Client.Closes
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:39:03.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-closes-exact
+      - type: implements
+        target: REQ-valuation-eodhd-request
+  - id: SYM-valuation-eodhd-client-get
+    title: Client.get
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:39:10.394Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-request
+  - id: SYM-valuation-eodhd-without-url
+    title: withoutURL
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:39:16.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-request
+  - id: SYM-valuation-eodhd-parse-listings
+    title: parseListings
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:39:22.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-text
+    title: text
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:39:38.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-bar
+    title: bar
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:39:44.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-closes-exact
+  - id: SYM-valuation-eodhd-parse-closes
+    title: parseCloses
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:39:58.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-closes-exact
+  - id: SYM-valuation-eodhd-test-supported-exchange
+    title: TestSupportedExchange
+    sourceFile: internal/valuation/eodhd/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:08.529Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-test-pick
+    title: TestPick
+    sourceFile: internal/valuation/eodhd/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:13.619Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-test-ticker
+    title: TestTicker
+    sourceFile: internal/valuation/eodhd/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:18.619Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-test-quote
+    title: TestQuote
+    sourceFile: internal/valuation/eodhd/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:23.449Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-test-helper-recording-client
+    title: recordingClient
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:29.085Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-helper-user-agent-and-headers-validator
+    title: userAgentAndHeadersValidator
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:34.310Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-listings
+    title: TestListings
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:39.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-listings-none
+    title: TestListingsNone
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:44.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-closes
+    title: TestCloses
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:48.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-closes-whole-history
+    title: TestClosesWholeHistory
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:53.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-closes-unknown-ticker
+    title: TestClosesUnknownTicker
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:40:58.447Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-closes-parses-exactly
+    title: TestClosesParsesExactly
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:03.160Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-client-rejects
+    title: TestClientRejects
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:07.886Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-client-never-returns-the-key
+    title: TestClientNeverReturnsTheKey
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:12.679Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-helper-round-trip-func
+    title: roundTripFunc
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:17.510Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-helper-round-trip-func-round-trip
+    title: roundTripFunc.RoundTrip
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:22.554Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-helper-stub-client
+    title: stubClient
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:27.451Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-valuation-eodhd-test-helper-date
+    title: date
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:32.161Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+      - type: executable_for
+        target: TEST-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-test-helper-isin
+    title: isin
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:36.950Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+      - type: executable_for
+        target: TEST-valuation-eodhd-listing
+  - id: SYM-valuation-eodhd-test-helper-closing
+    title: closing
+    sourceFile: internal/valuation/eodhd/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:41.777Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-client
+  - id: SYM-plugins-eodhd-main
+    title: main
+    sourceFile: plugins/eodhd/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:46.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-serve
+    title: serve
+    sourceFile: plugins/eodhd/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:51.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-run
+    title: run
+    sourceFile: plugins/eodhd/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:41:56.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-new-connector
+    title: newConnector
+    sourceFile: plugins/eodhd/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:01.088Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-today
+    title: today
+    sourceFile: plugins/eodhd/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:05.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-raw-config
+    title: rawConfig
+    sourceFile: plugins/eodhd/config.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:09.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+  - id: SYM-plugins-eodhd-raw-instrument
+    title: rawInstrument
+    sourceFile: plugins/eodhd/config.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:12.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+  - id: SYM-plugins-eodhd-raw-index
+    title: rawIndex
+    sourceFile: plugins/eodhd/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:17.927Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+  - id: SYM-plugins-eodhd-config
+    title: config
+    sourceFile: plugins/eodhd/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:22.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+  - id: SYM-plugins-eodhd-instrument
+    title: instrument
+    sourceFile: plugins/eodhd/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:29.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+  - id: SYM-plugins-eodhd-index
+    title: index
+    sourceFile: plugins/eodhd/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:34.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+  - id: SYM-plugins-eodhd-raw-config-parse
+    title: rawConfig.parse
+    sourceFile: plugins/eodhd/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:39.019Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+  - id: SYM-plugins-eodhd-raw-instrument-parse
+    title: rawInstrument.parse
+    sourceFile: plugins/eodhd/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:43.496Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-plugins-eodhd-config
+  - id: SYM-plugins-eodhd-market-data
+    title: marketData
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:48.198Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-connector
+    title: connector
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:52.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-AUTO-0C514DFCDB36FBEB
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-connector-sync
+    title: connector.Sync
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:42:56.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-AUTO-0C514DFCDB36FBEB
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-status
+    title: status
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:01.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-sync-run
+    title: syncRun
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:05.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-sync-run-instrument
+    title: syncRun.instrument
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:10.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-sync-run-index
+    title: syncRun.index
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:15.397Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-sync-run-closes
+    title: syncRun.closes
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:20.351Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-read-secret-file
+    title: readSecretFile
+    sourceFile: plugins/eodhd/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:25.242Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-AUTO-0C514DFCDB36FBEB
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-watermark
+    title: watermark
+    sourceFile: plugins/eodhd/watermark.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:28.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-parse-watermark
+    title: parseWatermark
+    sourceFile: plugins/eodhd/watermark.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:33.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-next-from
+    title: nextFrom
+    sourceFile: plugins/eodhd/watermark.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:38.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-watermark-string
+    title: watermark.String
+    sourceFile: plugins/eodhd/watermark.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:43.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-plugins-eodhd-sync
+  - id: SYM-plugins-eodhd-test-helper-day
+    title: day
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:48.585Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+      - type: executable_for
+        target: TEST-plugins-eodhd-main
+  - id: SYM-plugins-eodhd-test-helper-fake-eodhd
+    title: fakeEODHD
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:53.382Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-new-fake-eodhd
+    title: newFakeEODHD
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:43:58.268Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-fake-eodhd-listings
+    title: fakeEODHD.Listings
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:03.184Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-fake-eodhd-closes
+    title: fakeEODHD.Closes
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:08.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-secrets-dir
+    title: secretsDir
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:13.054Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-price
+    title: price
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:17.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-level
+    title: level
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:22.980Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-unsupported
+    title: unsupported
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:27.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-sync-case
+    title: syncCase
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:32.651Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-sync-cases
+    title: syncCases
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:37.821Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-sync
+    title: TestSync
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:43.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-sync-with
+    title: syncWith
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:48.322Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-check-sync
+    title: checkSync
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:53.498Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-next-from
+    title: TestNextFrom
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:44:58.594Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-fake-verifier
+    title: fakeVerifier
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:03.926Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-fake-verifier-verify-core
+    title: fakeVerifier.VerifyCore
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:08.865Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-served-connector
+    title: TestServedConnector
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:13.613Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-manifest
+    title: TestManifest
+    sourceFile: plugins/eodhd/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:17.953Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-main
+  - id: SYM-plugins-eodhd-test-config-parse
+    title: TestConfigParse
+    sourceFile: plugins/eodhd/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:22.098Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-main
+  - id: SYM-plugins-eodhd-test-new-connector
+    title: TestNewConnector
+    sourceFile: plugins/eodhd/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:26.279Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-main
+  - id: SYM-plugins-eodhd-test-today
+    title: TestToday
+    sourceFile: plugins/eodhd/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:30.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-main
+  - id: SYM-ingest-delivery-price
+    title: Price
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:35.100Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-ingest-delivery-index-level
+    title: IndexLevel
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:39.774Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-ingest-delivery-test-price-and-index-level
+    title: TestPriceAndIndexLevel
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:45:43.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-connector-gen-pb-index-level
+    title: IndexLevel
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:50:41.491Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-index-level-reset
+    title: IndexLevel.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:50:46.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-index-level-string
+    title: IndexLevel.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:50:52.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-index-level-proto-message
+    title: IndexLevel.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:50:57.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-index-level-proto-reflect
+    title: IndexLevel.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:51:02.934Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-index-level-descriptor
+    title: IndexLevel.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:51:08.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-index-level-get-index
+    title: IndexLevel.GetIndex
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:51:13.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-index-level-get-date
+    title: IndexLevel.GetDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:51:19.195Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-index-level-get-level
+    title: IndexLevel.GetLevel
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:51:24.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data
+  - id: SYM-connector-gen-pb-delivery-get-index-levels
+    title: Delivery.GetIndexLevels
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T21:51:29.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-market-data

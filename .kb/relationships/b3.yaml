@@ -258,3 +258,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de13b0daa99d
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-closes-parses-exactly
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:41:04.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af8b3752249e

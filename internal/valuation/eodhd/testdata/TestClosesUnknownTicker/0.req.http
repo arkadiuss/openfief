@@ -1,0 +1,5 @@
+GET https://eodhd.com/api/eod/NOPE.WAR?api_token=SANITIZED&fmt=json&from=2025-01-02&order=a&period=d&to=2025-01-07 HTTP/1.1
+Host: eodhd.com
+User-Agent: openfief
+Accept: application/json
+

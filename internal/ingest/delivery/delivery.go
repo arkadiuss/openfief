@@ -1,6 +1,6 @@
 // Package delivery is the connector side of the connector contract
-// (D-49): it writes a connector's mapping, FX rates and ingest mode as
-// openfief.connector.v1 messages, the reverse of what the core's
+// (D-49): it writes a connector's mapping, prices, FX rates, index levels
+// and ingest mode as openfief.connector.v1 messages, the reverse of what the core's
 // internal/ingest/connectrpc reads. First-party connector plugins under
 // plugins/ use it, so their institution adapters stay in internal/ and
 // their binaries stay thin.
@@ -77,6 +77,22 @@ func FXRates(rates []valuation.FXRate) []*connectorv1.FxRate {
 		out = append(out, &connectorv1.FxRate{Currency: r.Currency.String(), Date: r.Date.String(), Rate: r.Rate.String()})
 	}
 	return out
+}
+
+// Price writes the end-of-day close of one unit of in on a date (D-21), in
+// the currency the instrument is quoted in. Its source is the connector's
+// own and is not part of the contract.
+func Price(in ledger.Instrument, on kernel.Date, closing kernel.Money) *connectorv1.Price {
+	return &connectorv1.Price{
+		Instrument: &connectorv1.Instrument{Isin: in.ISIN.String(), Symbol: in.Symbol},
+		Date:       on.String(), Close: money(closing),
+	}
+}
+
+// IndexLevel writes the closing level of the market index named index on a
+// date.
+func IndexLevel(index string, on kernel.Date, level kernel.Decimal) *connectorv1.IndexLevel {
+	return &connectorv1.IndexLevel{Index: index, Date: on.String(), Level: level.String()}
 }
 
 // transaction writes one transaction.

@@ -363,3 +363,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb7ebdcd21c4
+  - type: implements
+    from: SYM-valuation-eodhd-parse-closes
+    to: REQ-valuation-eodhd-closes-exact
+    created_at: 2026-10-28T21:40:00.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3c72f2ef9ad
+  - type: covered_by
+    from: SYM-valuation-eodhd-parse-closes
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:40:00.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97fb981e495b
+  - type: implements
+    from: SYM-plugins-eodhd-instrument
+    to: REQ-plugins-eodhd-config
+    created_at: 2026-10-28T21:42:30.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa3c3766fe3d
+  - type: covered_by
+    from: SYM-plugins-eodhd-instrument
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:42:30.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e378e5ea8092

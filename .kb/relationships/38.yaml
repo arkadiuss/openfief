@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-54745fa4d159
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-listings-none
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:40:45.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8246e9ca529

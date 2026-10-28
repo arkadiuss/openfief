@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Length: 750
+Content-Type: application/json
+Date: Tue, 07 Jan 2025 22:00:00 GMT
+
+[{"Code":"SYNT","Exchange":"XETRA","Name":"Synthetic Test ETF","Type":"ETF","Country":"Germany","Currency":"EUR","ISIN":"XX00000SYNT3","previousClose":101.37,"previousCloseDate":"2025-01-06"},{"Code":"SYNT","Exchange":"LSE","Name":"Synthetic Test ETF","Type":"ETF","Country":"UK","Currency":"GBX","ISIN":"XX00000SYNT3","previousClose":8412.5,"previousCloseDate":"2025-01-06"},{"Code":"SYN1","Exchange":"F","Name":"Synthetic Test ETF","Type":"ETF","Country":"Germany","Currency":"EUR","ISIN":"XX00000SYNT3","previousClose":101.3,"previousCloseDate":"2025-01-06"},{"Code":"SYNTX","Exchange":"US","Name":"Synthetic Test Holdings","Type":"Common Stock","Country":"USA","Currency":"USD","ISIN":null,"previousClose":12.04,"previousCloseDate":"2025-01-06"}]

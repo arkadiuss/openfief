@@ -195,3 +195,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f7f765a28f6
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-helper-closing
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:41:43.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f09d47272c75

@@ -64,7 +64,7 @@ const (
 type ConnectorServiceClient interface {
 	// Sync pulls what the institution reports since the watermark of the
 	// previous sync, such as new transactions with balance assertions, or
-	// end-of-day prices, FX rates and index readings.
+	// end-of-day prices, FX rates, index readings and index levels.
 	Sync(context.Context, *connect.Request[v1.SyncRequest]) (*connect.Response[v1.SyncResponse], error)
 	// ImportFile maps one statement file, such as an uploaded export. The first
 	// message carries the header, the rest carry the file's bytes in order.
@@ -118,7 +118,7 @@ func (c *connectorServiceClient) ImportFile(ctx context.Context) *connect.Client
 type ConnectorServiceHandler interface {
 	// Sync pulls what the institution reports since the watermark of the
 	// previous sync, such as new transactions with balance assertions, or
-	// end-of-day prices, FX rates and index readings.
+	// end-of-day prices, FX rates, index readings and index levels.
 	Sync(context.Context, *connect.Request[v1.SyncRequest]) (*connect.Response[v1.SyncResponse], error)
 	// ImportFile maps one statement file, such as an uploaded export. The first
 	// message carries the header, the rest carry the file's bytes in order.

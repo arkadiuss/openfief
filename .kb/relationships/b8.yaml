@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc7652257334
+  - type: implements
+    from: SYM-connector-gen-pb-index-level-reset
+    to: REQ-ingest-delivery-market-data
+    created_at: 2026-10-28T21:50:48.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b171baee7449
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-level-reset
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T21:50:48.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1f02100eb48
