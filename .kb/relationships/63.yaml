@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-514c0725f450
+  - type: implements
+    from: SYM-valuation-postgres-scan-status
+    to: REQ-valuation-status
+    created_at: 2026-10-28T08:02:29.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e61df1db577e
+  - type: covered_by
+    from: SYM-valuation-postgres-scan-status
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:02:29.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b96662c47233

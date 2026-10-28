@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86bb7723e483
+  - type: implements
+    from: SYM-valuation-app-input-cache-bond-inputs
+    to: REQ-valuation-bond-holding
+    created_at: 2026-10-28T07:34:50.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6315b2c90516
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-bond-inputs
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:34:50.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-884f39226332

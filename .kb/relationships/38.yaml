@@ -111,3 +111,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f354d1d67aa
+  - type: implements
+    from: SYM-valuation-index-reading
+    to: REQ-valuation-lot-indices
+    created_at: 2026-10-28T07:31:33.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5e1a99cc48d
+  - type: covered_by
+    from: SYM-valuation-index-reading
+    to: TEST-valuation-index
+    created_at: 2026-10-28T07:31:33.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c7170822bfb
+  - type: implements
+    from: SYM-valuation-app-valuation-store
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:33:44.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c40b2a1925c4
+  - type: covered_by
+    from: SYM-valuation-app-valuation-store
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:33:44.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82e487d1c85c
+  - type: implements
+    from: SYM-valuation-app-revaluer-value
+    to: REQ-valuation-market-holding
+    created_at: 2026-10-28T07:34:19.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62cad02f5719
+  - type: implements
+    from: SYM-valuation-app-revaluer-value
+    to: REQ-valuation-bond-holding
+    created_at: 2026-10-28T07:34:19.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ea0595b7913
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-value
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:34:19.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-401f8ff77558
+  - type: implements
+    from: SYM-valuation-postgres-store-save-bond-basis
+    to: REQ-valuation-enqueue-same-transaction
+    created_at: 2026-10-28T08:02:09.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a3928f33a67
+  - type: implements
+    from: SYM-valuation-postgres-store-save-bond-basis
+    to: REQ-decision-d36-9-basis-change-revalues-all
+    created_at: 2026-10-28T08:02:09.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-404f2cf6c8fd
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-bond-basis
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:02:09.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d96c5baf280

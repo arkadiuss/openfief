@@ -125,3 +125,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a312cef2f2f2
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-money
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:36:44.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95552fd7334b
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-money
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:36:44.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3808bc4e489
+  - type: verified_by
+    from: SCEN-valuation-river-jobs
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T07:56:26.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a04508f0e2a1
+  - type: verified_by
+    from: SCEN-valuation-river-jobs
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T07:56:26.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06e609aa2a2c

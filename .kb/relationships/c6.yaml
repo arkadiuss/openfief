@@ -34,3 +34,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b9645219479
+  - type: validates
+    from: TEST-valuation-app-revalue
+    to: REQ-decision-d36-1-stored-valuations
+    created_at: 2026-10-28T07:28:23.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b11961115aa6
+  - type: validates
+    from: TEST-valuation-app-revalue
+    to: REQ-decision-d36-2-valuations-rebuildable
+    created_at: 2026-10-28T07:28:23.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61458bfd7a48
+  - type: validates
+    from: TEST-valuation-app-revalue
+    to: REQ-AUTO-0C90AD924924F4F6
+    created_at: 2026-10-28T07:28:23.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e54b9dc16a23
+  - type: validates
+    from: TEST-valuation-app-revalue
+    to: REQ-AUTO-E10BE8CE13E67657
+    created_at: 2026-10-28T07:28:23.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e8f1876705a
+  - type: validates
+    from: TEST-valuation-app-revalue
+    to: REQ-AUTO-5769411DB9663682
+    created_at: 2026-10-28T07:28:23.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9751740ea2e

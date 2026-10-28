@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f163b4fb30b0
+  - type: executable_for
+    from: SYM-valuation-test-helper-edo-terms
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:13.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65fbe31b2f2f

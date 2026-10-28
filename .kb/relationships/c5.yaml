@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4c179760fe9
+  - type: implements
+    from: SYM-valuation-postgres-store-enqueue
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:01:19.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40dd97c9a122
+  - type: implements
+    from: SYM-valuation-postgres-store-enqueue
+    to: REQ-decision-d36-5-revaluation-coalescing
+    created_at: 2026-10-28T08:01:19.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fd0bc40ee8c
+  - type: covered_by
+    from: SYM-valuation-postgres-store-enqueue
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:01:19.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e0f1de4e14d

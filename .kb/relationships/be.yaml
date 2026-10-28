@@ -62,3 +62,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5f164850e8e
+  - type: executable_for
+    from: SYM-valuation-test-value-market-holding
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:07.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-222281d8ff50
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-store
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:07:44.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16377c04768b
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-store
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:07:44.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eee0bea8f4a
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-store
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:07:44.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6c39fa5f274

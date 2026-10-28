@@ -83,3 +83,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d83f95134a6
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-config
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:10:56.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e24d2eaae4b

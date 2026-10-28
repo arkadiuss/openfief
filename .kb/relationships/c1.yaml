@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-752df1434a24
+  - type: validates
+    from: TEST-valuation-app-plan
+    to: REQ-decision-d36-5-revaluation-coalescing
+    created_at: 2026-10-28T07:28:27.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e81a7ef3fe5e
+  - type: validates
+    from: TEST-valuation-app-plan
+    to: REQ-decision-d36-9-basis-change-revalues-all
+    created_at: 2026-10-28T07:28:27.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca9b8acae158
+  - type: validates
+    from: TEST-valuation-app-plan
+    to: REQ-decision-d36-10-fixed-revaluation-triggers
+    created_at: 2026-10-28T07:28:27.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18be9cc64651

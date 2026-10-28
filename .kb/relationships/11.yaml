@@ -118,3 +118,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9341e1e4a651
+  - type: executable_for
+    from: SYM-valuation-test-value-bond-holding-rejects
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:25.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69ac8917beab
+  - type: implements
+    from: SYM-valuation-app-planner-end-of-day
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:24.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-747f69fb6e2f
+  - type: covered_by
+    from: SYM-valuation-app-planner-end-of-day
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:24.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a267d463069

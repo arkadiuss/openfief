@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac62207ac0a6
+  - type: implements
+    from: SYM-valuation-find-reading
+    to: REQ-valuation-lot-indices
+    created_at: 2026-10-28T07:31:44.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e1e989395f9
+  - type: covered_by
+    from: SYM-valuation-find-reading
+    to: TEST-valuation-index
+    created_at: 2026-10-28T07:31:44.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-477078c0082b

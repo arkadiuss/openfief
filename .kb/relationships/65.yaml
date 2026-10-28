@@ -90,3 +90,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12186fcbeada
+  - type: implements
+    from: SYM-valuation-postgres-store-save-tax-wrapper
+    to: REQ-valuation-enqueue-same-transaction
+    created_at: 2026-10-28T08:02:03.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd2bb80daade
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-tax-wrapper
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:02:03.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29850210ad77

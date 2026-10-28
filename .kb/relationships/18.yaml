@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9fa1637a952
+  - type: executable_for
+    from: SYM-valuation-postgres-test-enqueue-coalesces-from-the-earliest-date
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:09:32.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73258418a403

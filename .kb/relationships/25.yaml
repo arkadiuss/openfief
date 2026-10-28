@@ -48,3 +48,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f1811344ec2
+  - type: executable_for
+    from: SYM-valuation-postgres-test-migrate-twice
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:09:13.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26046077efc1

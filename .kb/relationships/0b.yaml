@@ -34,3 +34,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06792c9f32b2
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-prices-of
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:09:20.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11a7ee86639a

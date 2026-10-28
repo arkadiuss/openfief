@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-8007843b450e
+    type: executable_for
+    from: SYM-valuation-postgres-test-today-in
+    to: TEST-valuation-postgres-worker
+    created_at: "2026-10-28T08:11:33.422Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

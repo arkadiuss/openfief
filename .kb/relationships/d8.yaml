@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-670d1dc8f3dd
+  - type: implements
+    from: SYM-valuation-revaluation
+    to: REQ-valuation-coalesce
+    created_at: 2026-10-28T07:32:40.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6281031e55e8
+  - type: covered_by
+    from: SYM-valuation-revaluation
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:40.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3432eae251f9
+  - type: executable_for
+    from: SYM-valuation-app-test-revalue-bonds
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:40:30.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11d458a4f6b3

@@ -41,3 +41,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fdce2c6207f8
+  - type: implements
+    from: SYM-valuation-bond-holding
+    to: REQ-valuation-bond-holding
+    created_at: 2026-10-28T07:32:19.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca6216e3eeea
+  - type: covered_by
+    from: SYM-valuation-bond-holding
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:19.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2619be7e4ad3
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-index-readings
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:34.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec680ef79cdb
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-index-readings
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:34.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0f6d37cc4c9

@@ -27,3 +27,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc384396e861
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-bond-terms
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:37:53.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb9ba77787e5
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-bond-terms
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:37:53.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20cb8ef22b33
+  - type: constrains
+    from: REQ-valuation-status
+    to: FACT-SUBJECT-3E29EC8DB2813A76
+    created_at: 2026-10-28T07:58:19.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7df7e27761ca
+  - type: requires_property
+    from: REQ-valuation-status
+    to: FACT-PROP-DE9370157A6C38F2
+    created_at: 2026-10-28T07:58:19.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-180eecb44092
+  - type: specified_by
+    from: REQ-valuation-status
+    to: SCEN-valuation-status
+    created_at: 2026-10-28T07:58:19.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-724b39741c03

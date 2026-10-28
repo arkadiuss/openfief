@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7544b5a1d172
+  - type: validates
+    from: TEST-valuation-postgres-queue
+    to: REQ-decision-d36-3-revaluation-same-transaction
+    created_at: 2026-10-28T07:55:50.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92feb4eebb08
+  - type: validates
+    from: TEST-valuation-postgres-queue
+    to: REQ-decision-d36-4-river-job-queue
+    created_at: 2026-10-28T07:55:50.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a8233527252
+  - type: validates
+    from: TEST-valuation-postgres-queue
+    to: REQ-decision-d36-5-revaluation-coalescing
+    created_at: 2026-10-28T07:55:50.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc21324d0a67
+  - type: validates
+    from: TEST-valuation-postgres-queue
+    to: REQ-decision-d36-9-basis-change-revalues-all
+    created_at: 2026-10-28T07:55:50.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef052fa37e3e

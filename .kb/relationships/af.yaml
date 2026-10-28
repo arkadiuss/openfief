@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a07baf2c3c3
+  - type: implements
+    from: SYM-valuation-app-revaluer-revalue
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:34:06.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa111d88e952
+  - type: implements
+    from: SYM-valuation-app-revaluer-revalue
+    to: REQ-decision-d36-2-valuations-rebuildable
+    created_at: 2026-10-28T07:34:06.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0b72b237c82
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-revalue
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:34:06.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28fe22d6bc33

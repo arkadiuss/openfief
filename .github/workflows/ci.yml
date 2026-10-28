@@ -33,6 +33,25 @@ jobs:
         env:
           DOCS_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
 
+  test-pg:
+    # PostgreSQL integration tests (every internal/*/postgres package). The ubuntu-24.04 image ships
+    # PostgreSQL's binaries with the server stopped; task test:pg starts a throwaway cluster from them
+    # on a Unix socket and removes it afterwards (scripts/test-pg.sh), so no service container is needed.
+    name: task test:pg
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: task test:pg
+        run: task test:pg
+
   dco:
     name: DCO sign-off
     if: github.event_name == 'pull_request'

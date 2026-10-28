@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-175fa979b83e
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-replace-valuations
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:05.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d4bd801e350
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-replace-valuations
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:05.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f642c2b4d4de

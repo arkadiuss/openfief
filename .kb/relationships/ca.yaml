@@ -76,3 +76,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a809371817c
+  - type: constrains
+    from: REQ-valuation-lot-indices
+    to: FACT-SUBJECT-53FC5E22263EFA3D
+    created_at: 2026-10-28T07:30:18.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bde1d6fe9b1c
+  - type: requires_property
+    from: REQ-valuation-lot-indices
+    to: FACT-PROP-CD35A1A63EB6B685
+    created_at: 2026-10-28T07:30:19.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ef1a39d2231
+  - type: specified_by
+    from: REQ-valuation-lot-indices
+    to: SCEN-valuation-lot-indices
+    created_at: 2026-10-28T07:30:19.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ac1991e96bb
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-prices
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:23.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bba6e9867002
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-prices
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:23.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67e90a2b58bc
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-bond-basis
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:51.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80baf262230e
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-bond-basis
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:51.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cd11ef82827
+  - type: implements
+    from: SYM-valuation-postgres-daily-at
+    to: REQ-valuation-settings
+    created_at: 2026-10-28T08:04:30.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-832984c6210d
+  - type: covered_by
+    from: SYM-valuation-postgres-daily-at
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:04:30.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bac64b84e4ed

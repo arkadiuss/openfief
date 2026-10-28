@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d293846ea96f
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-ledger-tx
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:36:54.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74a7e06854da

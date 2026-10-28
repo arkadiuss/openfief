@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe2ea544839e
+  - type: implements
+    from: SYM-valuation-app-input-cache
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:34:31.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc994d54531b
+  - type: covered_by
+    from: SYM-valuation-app-input-cache
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:34:31.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a82077c309da

@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-534bc5519966
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-fxrates
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:29.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-072cbf1ea447
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-fxrates
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:29.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d4135d517b1
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-save-inputs
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:10:25.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f071a32c4c41

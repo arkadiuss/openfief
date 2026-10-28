@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be76a1a81caf
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-etf-ledger
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:39:52.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-763f515b4950
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-etf-ledger
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:39:52.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7079c3eff62
+  - type: implements
+    from: SYM-valuation-postgres-parse-wrapper
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T07:59:37.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aee246bda3e
+  - type: covered_by
+    from: SYM-valuation-postgres-parse-wrapper
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T07:59:37.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82024ba3284f

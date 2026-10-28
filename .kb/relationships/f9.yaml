@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f62588d7740
+  - type: implements
+    from: SYM-valuation-app-input-cache-market
+    to: REQ-valuation-market-holding
+    created_at: 2026-10-28T07:34:45.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e02d8118c95
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-market
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:34:45.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a4f68d23c43

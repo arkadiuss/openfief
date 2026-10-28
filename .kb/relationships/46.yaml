@@ -104,3 +104,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3869700ed581
+  - type: executable_for
+    from: SYM-valuation-test-missing-reason-names
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:00.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e99384baa9e9

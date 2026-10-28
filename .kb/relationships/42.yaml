@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fefc4a817e09
+  - type: implements
+    from: SYM-valuation-postgres-store-tax-wrapper
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:03:46.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58d73aeec89c
+  - type: covered_by
+    from: SYM-valuation-postgres-store-tax-wrapper
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:03:46.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb0a1092351c
