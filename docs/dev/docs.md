@@ -18,7 +18,7 @@ The pages follow Diátaxis (Daniele Procida, grown out of the Divio documentatio
 | Kind | What it answers | Where | Kept true by |
 |---|---|---|---|
 | Explanation | Why is it like this, and how does it work? | [concepts/](../concepts/), [architecture.md](../architecture.md), [pipeline.md](pipeline.md) | The staleness gate below |
-| Reference | What exactly is there? | Generated at build time: code map, custom resources, tasks, [status](https://arkadiuss.github.io/openfief/status/), [requirements report](https://arkadiuss.github.io/openfief/requirements/) | Regenerated on every build; never committed |
+| Reference | What exactly is there? | Generated at build time: code map, custom resources, tasks, [status](/status/), [requirements report](/requirements/) | Regenerated on every build; never committed |
 | Decisions | What did the author decide? | [DESIGN.md](../DESIGN.md), [proposals/](../proposals/), [research.md](../research.md) | The design-docs skill and `task docs:check` |
 | Rules | What must contributors and agents do? | [dev/](./) and [AGENTS.md](../../AGENTS.md) | Review |
 | How-to guides and tutorials | How do I do a task? | Added with the first installable release | Tested in the end-to-end suite **(P)** |
@@ -125,8 +125,9 @@ flowchart LR
 ```
 
 - Every pull request and every push builds the docs as part of `task check`, so a broken page fails CI like a failing test.
-- Each push to `main` publishes the site to GitHub Pages from the same CI run that deploys the demo.
+- Each push to `main` publishes the site to GitHub Pages from the same CI run that deploys the demo. It is served at [docs.openfief.dev](https://docs.openfief.dev/): the custom domain set in the repository's Pages settings, with a DNS `CNAME` from `docs` to `arkadiuss.github.io`. The landing page at the apex domain and the demo at `demo.openfief.dev` are separate.
 - Each release attaches `openfief-docs-<version>.tar.gz`, the site as it was at that version, for self-hosters who run that release.
+- Every link and asset is relative to its page (Hugo's `relativeURLs`). So one build works at the custom domain, at the GitHub Pages fallback address, and opened straight from disk out of the tarball. Docs pages link to generated pages by site path, such as `/status/`.
 
 The site is [Hugo](https://gohugo.io), pinned in the Taskfile like the other tools. Its small theme lives in `site/`: no theme dependency, no CDN, and a strict content security policy. `docs/` is mounted into the site unchanged, so every page reads the same on GitHub and on the site.
 
@@ -134,6 +135,6 @@ The site is [Hugo](https://gohugo.io), pinned in the Taskfile like the other too
 
 The docs double as the author's verification tool:
 
-- **[Status](https://arkadiuss.github.io/openfief/status/)** lists every decision with the kibi requirements derived from it, how many implementing symbols and tests each has, and its evidence level. A decision with no implemented requirement is visibly not built.
-- **[Code map](https://arkadiuss.github.io/openfief/reference/code-map/)** draws the as-built dependencies between bounded contexts from the Go imports. Compare it with the designed context map in [code-organization.md](code-organization.md).
+- **[Status](/status/)** lists every decision with the kibi requirements derived from it, how many implementing symbols and tests each has, and its evidence level. A decision with no implemented requirement is visibly not built.
+- **[Code map](/reference/code-map/)** draws the as-built dependencies between bounded contexts from the Go imports. Compare it with the designed context map in [code-organization.md](code-organization.md).
 - **Concept pages** end with `Verification` (which tests prove which behavior) and `Not built yet` (decided but missing).

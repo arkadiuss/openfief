@@ -5,8 +5,10 @@ covers:
   - internal/plugins/*.go
   - internal/plugins/app/**
   - internal/plugins/catalog/**
-  - proto/**
-  - sdk/**
+  - proto/openfief/connector/**
+  - sdk/go/openfief/**
+  - sdk/go/gen/openfief/connector/**
+  - sdk/go/go.mod
 ---
 
 A plugin is how OpenFief reaches the outside world: a connector brings data in, a view shows the record somewhere else. Each plugin runs in its own container, out of the core's process, and gets only what its vendor asked for and its owner approved. This page explains that model, what the pure `plugins` package builds from it, and the connector contract and Go SDK a plugin is written with. The [Operator](operator.md) page covers how the operator applies it to a cluster, and [Egress](egress.md) covers the proxy that enforces plugins' outbound hosts.

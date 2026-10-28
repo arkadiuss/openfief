@@ -1,7 +1,10 @@
 # OpenFief docs site (docs/dev/docs.md). Built from the repository root by `task docs:build`:
 #   hugo --source . --config site/hugo.toml
 # so links to source files resolve against the real tree. docs/ is mounted as content unchanged.
-baseURL = 'https://arkadiuss.github.io/openfief/'
+baseURL = 'https://docs.openfief.dev/'
+# Every link and asset is written relative to its page, so the same build works at the custom domain, at the
+# GitHub Pages fallback URL, and opened from disk out of a release's docs tarball.
+relativeURLs = true
 title = 'OpenFief'
 locale = 'en'
 disableKinds = ['taxonomy', 'term', 'rss']
