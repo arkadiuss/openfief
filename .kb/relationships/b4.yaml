@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-81ad33a3eda5
+    type: verified_by
+    from: SCEN-valuation-fx-rate-lookup
+    to: TEST-valuation-fx
+    created_at: "2026-10-28T05:29:50.691Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

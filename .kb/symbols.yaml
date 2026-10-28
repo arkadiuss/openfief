@@ -2088,3 +2088,358 @@ symbols:
         target: REQ-pl-belka-tax
       - type: implements
         target: REQ-pl-early-redemption-fee-cap
+  - id: SYM-valuation-pln
+    title: PLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:33.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-fxrate
+    title: FXRate
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:36.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+  - id: SYM-valuation-rate-on-or-before
+    title: RateOnOrBefore
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:38.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+  - id: SYM-valuation-to-pln
+    title: ToPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:41.303Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-convert-to-pln
+    title: ConvertToPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:43.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-round-pln
+    title: roundPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:46.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-price
+    title: Price
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:49.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-basis
+    title: Basis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:50.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-basis-string
+    title: Basis.String
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:53.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-parse-basis
+    title: ParseBasis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:56.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-valuation
+    title: Valuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:59.344Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-market-valuation
+    title: MarketValuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:01.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-bond-basis
+    title: BondBasis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:04.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-bond-valuation
+    title: BondValuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:08.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-test-helper-table
+    title: table
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:10.174Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-rate-on-or-before
+    title: TestRateOnOrBefore
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:11.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-rate-on-or-before-conflicts
+    title: TestRateOnOrBeforeConflicts
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:13.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-tax-rate-uses-the-table-before-the-event
+    title: TestTaxRateUsesTheTableBeforeTheEvent
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:16.156Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-to-pln
+    title: TestToPLN
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:18.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-to-plnneeds-the-amounts-currency
+    title: TestToPLNNeedsTheAmountsCurrency
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:19.967Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-convert-to-pln
+    title: TestConvertToPLN
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:22.204Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-basis-names
+    title: TestBasisNames
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:24.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-market-valuation
+    title: TestMarketValuation
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:26.429Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-bond-basis
+    title: TestBondBasis
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:28.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-bond-valuation
+    title: TestBondValuation
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:30.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-dec
+    title: dec
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:32.597Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-cur
+    title: cur
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:34.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-money
+    title: money
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:36.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-date
+    title: date
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:38.774Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-rate
+    title: rate
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:40.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx

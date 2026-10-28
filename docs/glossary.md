@@ -20,7 +20,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one role. Defensive: not available to agents. Offensive: the part fiefs are leased from. | bucket |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
-| FX rate | valuation | `valuation.FXRate` | A rate to PLN; NBP table A in M0. | |
+| FX rate | valuation | `valuation.FXRate` | The value in PLN of one unit of a currency on a date, from a source; NBP table A in M0. The rate for a date is the latest one dated on or before it. | |
 | Valuation | valuation | `valuation.Valuation` | The value of a holding on a date, with its basis and source. | |
 | Valuation basis | valuation | `valuation.Basis` | `market`, `gross_accrued` or `net_if_redeemed`. | |
 | Bond series | jurisdiction/pl | `pl.Series` | A Polish retail treasury bond series code, such as EDO0536 (EDO maturing in May 2036). Valuation uses it through jurisdiction/pl's rules. | bond (ambiguous) |

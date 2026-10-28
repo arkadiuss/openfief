@@ -20,3 +20,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf8b6c3996e5
+  - type: executable_for
+    from: SYM-valuation-test-helper-money
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:31:36.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-452d22dcfec6
+  - type: executable_for
+    from: SYM-valuation-test-helper-money
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:31:36.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc6cf824fcd8

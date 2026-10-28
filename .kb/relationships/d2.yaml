@@ -20,3 +20,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbdc0666f5dd
+  - type: executable_for
+    from: SYM-valuation-test-rate-on-or-before-conflicts
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:31:14.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92a70c5c1480

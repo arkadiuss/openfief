@@ -20,3 +20,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0bbae866c2c
+  - type: constrains
+    from: REQ-valuation-fx-rate-lookup
+    to: FACT-SUBJECT-1F1960A35C9FB983
+    created_at: 2026-10-28T05:30:05.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6314d1b296b7
+  - type: requires_property
+    from: REQ-valuation-fx-rate-lookup
+    to: FACT-PROP-D159EFA34903A097
+    created_at: 2026-10-28T05:30:05.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a8d17bc03bb
+  - type: specified_by
+    from: REQ-valuation-fx-rate-lookup
+    to: SCEN-valuation-fx-rate-lookup
+    created_at: 2026-10-28T05:30:05.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74175baa573a

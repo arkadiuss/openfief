@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-9dfccffac6a8
+    type: constrains
+    from: REQ-valuation-market-value
+    to: FACT-SUBJECT-716249F643A39736
+    created_at: "2026-10-28T05:30:26.671Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-valuation-market-value
+    to: FACT-PROP-0573285B2027FECA
+    created_at: 2026-10-28T05:30:26.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7a1348589f0
+  - type: specified_by
+    from: REQ-valuation-market-value
+    to: SCEN-valuation-market-value
+    created_at: 2026-10-28T05:30:26.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1c48ad1e288

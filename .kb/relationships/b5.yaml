@@ -34,3 +34,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a67db043716
+  - type: validates
+    from: TEST-valuation-fx
+    to: REQ-AUTO-5769411DB9663682
+    created_at: 2026-10-28T05:29:45.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16d1cf7b502
+  - type: validates
+    from: TEST-valuation-fx
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T05:29:45.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-759b978f6954

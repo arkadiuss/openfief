@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-a38290ef0208
+    type: executable_for
+    from: SYM-valuation-test-helper-cur
+    to: TEST-valuation-fx
+    created_at: "2026-10-28T05:31:34.822Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-valuation-test-helper-cur
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:31:34.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32f95dbefb2b

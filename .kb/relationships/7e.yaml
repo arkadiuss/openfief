@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-009aac0a3b9a
+  - type: implements
+    from: SYM-valuation-fxrate
+    to: REQ-valuation-fx-rate-lookup
+    created_at: 2026-10-28T05:30:36.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-709cc9d380b0
+  - type: covered_by
+    from: SYM-valuation-fxrate
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:30:36.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6661049c25d

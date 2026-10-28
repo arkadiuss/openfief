@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-fd11def6f51a
+    type: verified_by
+    from: SCEN-valuation-bond-basis
+    to: TEST-valuation-valuation
+    created_at: "2026-10-28T05:29:54.988Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

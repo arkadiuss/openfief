@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1319a3132c48
+  - type: constrains
+    from: REQ-valuation-bond-basis
+    to: FACT-SUBJECT-C4667D6B8DCAE40E
+    created_at: 2026-10-28T05:30:18.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-593f0df3e30f
+  - type: requires_property
+    from: REQ-valuation-bond-basis
+    to: FACT-PROP-EF1AA1D7D5FC1B26
+    created_at: 2026-10-28T05:30:18.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbac980d807c
+  - type: specified_by
+    from: REQ-valuation-bond-basis
+    to: SCEN-valuation-bond-basis
+    created_at: 2026-10-28T05:30:18.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ab876f053f1

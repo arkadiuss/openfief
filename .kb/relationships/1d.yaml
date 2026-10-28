@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43bd8b9a5574
+  - type: implements
+    from: SYM-valuation-basis-string
+    to: REQ-valuation-bond-basis
+    created_at: 2026-10-28T05:30:53.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2d50af8f565
+  - type: covered_by
+    from: SYM-valuation-basis-string
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:30:53.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4972482757e3

@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-1007f9979191
+    type: implements
+    from: SYM-valuation-market-valuation
+    to: REQ-valuation-market-value
+    created_at: "2026-10-28T05:31:01.950Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-valuation-market-valuation
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:31:01.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6ec81697be0

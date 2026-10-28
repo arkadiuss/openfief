@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44a4d7013469
+  - type: implements
+    from: SYM-valuation-round-pln
+    to: REQ-valuation-pln-conversion
+    created_at: 2026-10-28T05:30:46.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-567a443fcb6d
+  - type: covered_by
+    from: SYM-valuation-round-pln
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:30:46.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef711773ad02
