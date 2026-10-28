@@ -1,0 +1,23 @@
+{{ define "main" }}
+<article>
+  <h1>{{ partial "title.html" . }}</h1>
+  {{- with .Description }}
+  <p class="lede">{{ . }}</p>
+  {{- end }}
+  {{- if eq .Section "proposals" }}
+  <p class="notice">Proposals are not decided. Decisions live in <a href="{{ (site.GetPage "/DESIGN.md").RelPermalink }}">the design</a>.</p>
+  {{- end }}
+  {{- partial "covers.html" . }}
+  {{ .Content }}
+  {{- partial "pagemeta.html" . }}
+</article>
+{{ end }}
+
+{{ define "toc" }}
+  {{- if ge (len .Fragments.Headings) 1 }}
+  <nav class="toc-inner" aria-label="On this page">
+    <p class="toc-title">On this page</p>
+    {{ .TableOfContents }}
+  </nav>
+  {{- end }}
+{{ end }}

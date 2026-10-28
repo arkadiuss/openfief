@@ -16,3 +16,9 @@ kibi-report/
 .task/
 dist/
 /.claude/worktrees/
+
+# Docs site build output (task docs:build)
+/site/.gen/
+/site/public/
+/site/resources/
+.hugo_build.lock

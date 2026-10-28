@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef3539b132a3
+  - type: implements
+    from: SYM-docgen-decision
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:38:41.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49826c217d97
+  - type: covered_by
+    from: SYM-docgen-decision
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:38:41.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac7308cf9d1d
+  - type: covered_by
+    from: SYM-docgen-decision
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:38:41.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb15037054ae

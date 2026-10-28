@@ -1,0 +1,42 @@
+{{- /*
+Every relative link is checked at build time, so a broken one fails the build:
+- a Markdown file or folder under docs/ becomes the site page it renders to;
+- any other repository path must exist and becomes a GitHub link pinned to the built commit;
+- a same-page #fragment must name a heading on the page;
+- a site path (/requirements/) is made relative to the site's base URL.
+*/ -}}
+{{- $dest := .Destination -}}
+{{- $href := $dest -}}
+{{- $u := urls.Parse $dest -}}
+{{- $p := .PageInner -}}
+{{- $from := "" -}}
+{{- with $p.File -}}{{- $from = strings.TrimPrefix (printf "%s/" hugo.WorkingDir) .Filename -}}{{- end -}}
+{{- if or $u.Scheme (hasPrefix $dest "//") -}}
+  {{- /* External link: kept as written. */ -}}
+{{- else if hasPrefix $dest "/" -}}
+  {{- /* Site path such as the generated requirements report: made relative to the site's base URL. */ -}}
+  {{- $href = relURL (strings.TrimPrefix "/" $dest) -}}
+{{- else if hasPrefix $dest "#" -}}
+  {{- if not ($p.Fragments.Identifiers.Contains $u.Fragment) -}}
+    {{- errorf "%s: link %q names no heading on this page" $from $dest -}}
+  {{- end -}}
+{{- else -}}
+  {{- $target := path.Clean (path.Join (path.Dir $from) $u.Path) -}}
+  {{- $frag := cond (ne $u.Fragment "") (printf "#%s" $u.Fragment) "" -}}
+  {{- $page := false -}}
+  {{- range slice "docs/" "site/content/" "site/.gen/content/" -}}
+    {{- if and (not $page) (or (hasPrefix $target .) (eq (printf "%s/" $target) .)) -}}
+      {{- $page = site.GetPage (printf "/%s" (strings.TrimPrefix . (printf "%s/" $target) | strings.TrimSuffix "/")) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $page -}}
+    {{- $href = printf "%s%s" $page.RelPermalink $frag -}}
+  {{- else if fileExists $target -}}
+    {{- $kind := cond (os.Stat $target).IsDir "tree" "blob" -}}
+    {{- $href = printf "%s/%s/%s/%s%s" site.Params.repoURL $kind site.Params.commit $target $frag -}}
+  {{- else -}}
+    {{- errorf "%s: broken link %q (resolves to %s, which does not exist)" $from $dest $target -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $href }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text }}</a>
+{{- /* chomp */ -}}

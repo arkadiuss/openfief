@@ -1,0 +1,9 @@
+{{- /* First build pass only (params.diagramsCollect): every Mermaid block on the site, for scripts/docs-diagrams.mjs to render. */ -}}
+{{- $all := slice -}}
+{{- range site.Pages -}}
+  {{- $_ := .Content -}}
+  {{- with .Store.Get "mermaid" -}}
+    {{- $all = $all | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $all | jsonify (dict "indent" "  ") -}}

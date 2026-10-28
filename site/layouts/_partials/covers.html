@@ -1,0 +1,11 @@
+{{- /* The code paths a page explains (its `covers` front matter); docgen's fresh gate keeps them in step. */ -}}
+{{- with .Params.covers }}
+<div class="covers">
+  <span class="covers-label">Covers</span>
+  {{- range . }}
+    {{- $dir := strings.TrimSuffix "/" (index (split . "*") 0) }}
+    {{- $kind := cond (strings.Contains . "*") "tree" "blob" }}
+    <a href="{{ site.Params.repoURL }}/{{ $kind }}/{{ site.Params.commit }}/{{ $dir }}"><code>{{ . }}</code></a>
+  {{- end }}
+</div>
+{{- end }}

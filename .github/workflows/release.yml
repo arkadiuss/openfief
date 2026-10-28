@@ -53,9 +53,8 @@ jobs:
           # Release notes and the tag check need every commit and tag.
           fetch-depth: 0
           persist-credentials: false
+      # Full tooling: release:assets builds the docs site, which needs kibi, Node packages and Hugo.
       - uses: ./.github/actions/setup
-        with:
-          tools: 'false'
       - name: task release:check
         run: task release:check CHANNEL="$CHANNEL" VERSION="$VERSION"
         env:
@@ -95,9 +94,8 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      # Full tooling: release:assets builds the docs site, which needs kibi, Node packages and Hugo.
       - uses: ./.github/actions/setup
-        with:
-          tools: 'false'
       - name: task release:publish
         run: task release:publish CHANNEL="$CHANNEL" VERSION="$VERSION"
         env:

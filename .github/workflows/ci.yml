@@ -32,6 +32,31 @@ jobs:
         run: task check
         env:
           DOCS_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+      - name: Upload the docs site
+        # task check built it (docs:build); the docs job publishes it on pushes to main (docs/dev/docs.md).
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site/public
+
+  docs:
+    # Publishes the docs site to GitHub Pages from the same run that deploys the demo.
+    # The owner sets Settings > Pages > Source to "GitHub Actions" once.
+    name: publish docs
+    if: github.event_name == 'push'
+    needs: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
   test-pg:
     # PostgreSQL integration tests (every internal/*/postgres package). The ubuntu-24.04 image ships

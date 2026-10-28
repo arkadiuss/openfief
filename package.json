@@ -1,7 +1,7 @@
 {
   "name": "openfief-devtools",
   "private": true,
-  "description": "Developer tooling only (kibi requirements layer). Not part of the OpenFief product.",
+  "description": "Developer tooling only (kibi requirements layer, docs diagram rendering). Not part of the OpenFief product.",
   "license": "AGPL-3.0-or-later",
   "engines": {
     "node": ">=22"
@@ -10,7 +10,9 @@
     "kibi-cli": "2.36.0",
     "kibi-core": "0.26.1",
     "kibi-mcp": "3.21.0",
-    "kibi-plugin-treesitter": "2.0.2"
+    "kibi-plugin-treesitter": "2.0.2",
+    "mermaid": "12.2.0",
+    "playwright-core": "1.63.0"
   },
   "kibi": {
     "plugins": [

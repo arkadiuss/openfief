@@ -5,6 +5,11 @@ pre-commit:
     check:
       run: PATH="$PWD/.bin:$PATH" task check:commit
 
+commit-msg:
+  commands:
+    docs-fresh:
+      run: PATH="$PWD/.bin:$PATH" task docs:fresh:commit MSG={1}
+
 post-checkout:
   commands:
     kibi-sync:

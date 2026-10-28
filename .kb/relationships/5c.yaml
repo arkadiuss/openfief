@@ -258,3 +258,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6bbb6019a2e
+  - type: executable_for
+    from: SYM-docgen-test-summary-shortens-long-text
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:37:18.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ab859b671ea

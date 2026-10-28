@@ -70,6 +70,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ce66368f09c0
   - type: implements
+    from: SYM-docgen-tasks-page
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:39:05.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d25585d959d5
+  - type: covered_by
+    from: SYM-docgen-tasks-page
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:39:05.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0b67d9513e4
+  - type: implements
     from: SYM-connector-gen-pb-instrument-proto-message
     to: REQ-connector-contract-messages
     created_at: 2026-10-28T08:13:22.786Z

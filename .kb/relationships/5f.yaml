@@ -230,3 +230,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c88c0914a4c7
+  - type: implements
+    from: SYM-docgen-status-pie
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:38:30.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51f58ad13ebf
+  - type: covered_by
+    from: SYM-docgen-status-pie
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:38:30.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c523ccc5f802
+  - type: covered_by
+    from: SYM-docgen-status-pie
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:38:30.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eebe35ce42d
