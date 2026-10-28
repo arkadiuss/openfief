@@ -76,3 +76,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a809371817c
+  - type: implements
+    from: SYM-plugins-app-caching-token-reviewer-review-token
+    to: REQ-plugins-egress-token-review-cache
+    created_at: 2026-10-28T08:48:06.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc1c688af08
+  - type: covered_by
+    from: SYM-plugins-app-caching-token-reviewer-review-token
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:48:06.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1ea18fe1f49

@@ -97,3 +97,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8c5ab884d5b
+  - type: constrains
+    from: REQ-plugins-egress-proxy-embedded-buildproxy
+    to: FACT-SUBJECT-A197B520E58C9AE3
+    created_at: 2026-10-28T08:46:58.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d1f8d9ae29a
+  - type: requires_property
+    from: REQ-plugins-egress-proxy-embedded-buildproxy
+    to: FACT-PROP-3F9C3A23F224CA9F
+    created_at: 2026-10-28T08:46:58.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b75376243160
+  - type: specified_by
+    from: REQ-plugins-egress-proxy-embedded-buildproxy
+    to: SCEN-plugins-egress-proxy-stops-cleanly
+    created_at: 2026-10-28T08:46:58.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ecb6ca8890c

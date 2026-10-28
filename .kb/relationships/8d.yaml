@@ -83,3 +83,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be9c66334728
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-new-config
+    to: REQ-plugins-egress-proxy-embedded-buildproxy
+    created_at: 2026-10-28T08:49:38.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11c10724bbaa
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-new-config
+    to: REQ-plugins-egress-proxy-connect-only-allow-list
+    created_at: 2026-10-28T08:49:38.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4662f7eb6263
+  - type: covered_by
+    from: SYM-plugins-smokescreen-fn-new-config
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:49:38.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deac7627a6f6

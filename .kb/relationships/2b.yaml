@@ -62,3 +62,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a899d85c63c
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-proxy-token
+    to: REQ-plugins-egress-proxy-identifies-plugin
+    created_at: 2026-10-28T08:50:06.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61f54e862a20
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-proxy-token
+    to: REQ-AUTO-15828B9727AFA488
+    created_at: 2026-10-28T08:50:06.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0630dafc624
+  - type: covered_by
+    from: SYM-plugins-smokescreen-fn-proxy-token
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:50:06.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb42b159c205

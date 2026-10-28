@@ -104,3 +104,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78f29a3c426c
+  - type: implements
+    from: SYM-plugins-smokescreen-proxy-serve
+    to: REQ-plugins-egress-proxy-embedded-buildproxy
+    created_at: 2026-10-28T08:49:49.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3e40fe338ae
+  - type: covered_by
+    from: SYM-plugins-smokescreen-proxy-serve
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:49:49.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e2696a5aa4

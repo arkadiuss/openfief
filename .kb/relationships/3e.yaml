@@ -83,3 +83,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7544b5a1d172
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-fn-new-lists
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:50:19.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd46a3177439

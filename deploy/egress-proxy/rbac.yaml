@@ -29,8 +29,10 @@ subjects:
   - kind: ServiceAccount
     name: egress-proxy
 ---
-# TokenReview is a cluster-scoped API, so verifying plugin tokens needs a ClusterRole even though the
-# proxy only serves the openfief namespace. Narrower than system:auth-delegator: create tokenreviews only.
+# D-63 has the proxy check plugin tokens (audience openfief-egress) with TokenReview, a cluster-scoped
+# API, so this needs a ClusterRole even though the proxy only serves the openfief namespace. It is the
+# only cluster-scoped permission OpenFief's components hold. Narrower than system:auth-delegator:
+# create tokenreviews only.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:

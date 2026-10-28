@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4c179760fe9
+  - type: constrains
+    from: REQ-plugins-egress-allow-lists-swapped-atomically
+    to: FACT-SUBJECT-CBE5237E6B3B40B6
+    created_at: 2026-10-28T08:47:18.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fd018d743ba
+  - type: requires_property
+    from: REQ-plugins-egress-allow-lists-swapped-atomically
+    to: FACT-PROP-F35C70748EEFBA82
+    created_at: 2026-10-28T08:47:18.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bcb32d4a25f
+  - type: specified_by
+    from: REQ-plugins-egress-allow-lists-swapped-atomically
+    to: SCEN-plugins-egress-allow-lists-swapped
+    created_at: 2026-10-28T08:47:18.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e949168fd22c

@@ -104,3 +104,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06ba299da41a
+  - type: validates
+    from: TEST-plugins-smokescreen-proxy
+    to: REQ-plugins-egress-fail-closed
+    created_at: 2026-10-28T08:45:56.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a4b78f30375

@@ -132,3 +132,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aafd49fd9e5c
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-proxy-serve-stops
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:52:21.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cdd749adcd6

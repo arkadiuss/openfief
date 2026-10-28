@@ -1,6 +1,6 @@
 // Package app holds the plugins context's use cases and the ports they
 // consume. The egress use case decides, for the egress proxy, which plugin
-// is asking and whether it may reach a destination (D-27, D-32).
+// is asking and whether it may reach a destination (D-27, D-32, D-63).
 package app
 
 import (
@@ -12,9 +12,10 @@ import (
 )
 
 // TokenReviewer verifies a projected ServiceAccount token and returns the
-// Kubernetes username it authenticates. Implementations must accept only
-// tokens issued for plugins.CoreAudience, and return an error wrapping
-// ErrUnauthenticated for any token they do not accept.
+// Kubernetes username it authenticates. For the egress proxy,
+// implementations must accept only tokens issued for plugins.EgressAudience
+// (D-63), and return an error wrapping ErrUnauthenticated for any token they
+// do not accept. It is a port so the verifier can be swapped.
 type TokenReviewer interface {
 	ReviewToken(ctx context.Context, token string) (username string, err error)
 }
@@ -85,10 +86,16 @@ func (e *Egress) Identify(ctx context.Context, token string) (string, error) {
 }
 
 // Decide checks one destination against the plugin's current egress
-// allow-list. A plugin without a list may reach nothing.
+// allow-list. A plugin without a list may reach nothing, and so may every
+// plugin when there is no AllowListSource: Smokescreen would allow every
+// destination without an allow-list, so this never does (D-63).
 func (e *Egress) Decide(plugin, host string, port uint16) EgressDecision {
 	d := EgressDecision{Plugin: plugin, Host: host, Port: port}
-	list, ok := e.lists.AllowList(plugin)
+	var list plugins.EgressAllowList
+	ok := false
+	if e.lists != nil { // no source at all: nobody has a list (D-63)
+		list, ok = e.lists.AllowList(plugin)
+	}
 	switch {
 	case !ok:
 		d.Reason = ReasonNoAllowList
