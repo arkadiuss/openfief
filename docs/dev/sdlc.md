@@ -17,6 +17,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - The Taskfile is the single entry point for all tooling, kibi included. Hooks and CI only call task targets, never tools directly.
 - Tool versions are pinned in the Taskfile **(P)**; lefthook manages the git hooks **(P)**. Only one tool owns `.git/hooks`.
 - `task vuln` fails on any finding, and also when a vulnerability database can't be reached.
+- kibi's relationship shards and `symbols.yaml` merge record by record through kibi's merge driver (`.gitattributes`); `task setup` registers it in each clone.
 
 ## Commits and PRs
 

@@ -1,0 +1,4 @@
+# kibi's merge driver merges these three-way, record by record; `task setup` registers it.
+# Without it, git falls back to its default text merge.
+.kb/symbols.yaml merge=kibi
+.kb/relationships/*.yaml merge=kibi
