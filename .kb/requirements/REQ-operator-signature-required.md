@@ -1,5 +1,5 @@
 ---
-title: The operator must deploy a plugin image only when an image verifier confirms its signature, and until cosign verification exists it must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
+title: The operator must deploy a plugin image only when its image verifier confirms the signature, and an operator built without a verifier must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
 status: open
 text_ref: docs/DESIGN.md#D-17
 tags:
@@ -8,33 +8,33 @@ tags:
   - confidence-band:high
   - provenance:docs-design-md-d-17
   - lane:strict
-semantic_text: The operator must deploy a plugin image only when an image verifier confirms its signature, and until cosign verification exists it must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
+semantic_text: The operator must deploy a plugin image only when its image verifier confirms the signature, and an operator built without a verifier must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
 logic_claims:
-  - CLAIM-89F8C266C1C6BC69
+  - CLAIM-5BC1096F3F857964
 semantic_clauses:
-  - The operator must deploy a plugin image only when an image verifier confirms its signature, and until cosign verification exists it must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
+  - The operator must deploy a plugin image only when its image verifier confirms the signature, and an operator built without a verifier must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: f95bf8deffb0c47f9186bae19744d47a50f8178d0df88e38749bbd8d2845db9c
+semantic_source_hash: 5ffc9e8bef5daba311d9bcc8a20337f7c6681ddaf0f415e6cdfcae6cbdf92a6d
 semantic_inventory:
-  - claim_key: CLAIM-89F8C266C1C6BC69
-    claim_text: The operator must deploy a plugin image only when an image verifier confirms its signature, and until cosign verification exists it must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented
+  - claim_key: CLAIM-5BC1096F3F857964
+    claim_text: The operator must deploy a plugin image only when its image verifier confirms the signature, and an operator built without a verifier must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented
     role: normative
     status: modeled
     span:
       start: 0
-      end: 226
+      end: 228
 origin:
   kind: agent
   recorded_at: '2026-10-28T07:00:23.617Z'
 id: REQ-operator-signature-required
 type: req
 ---
-The operator must deploy a plugin image only when an image verifier confirms its signature, and until cosign verification exists it must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
+The operator must deploy a plugin image only when its image verifier confirms the signature, and an operator built without a verifier must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
 
 ## Context
 
-D-17 says plugin images are verified with cosign from M0. Verification (sigstore trust root, signer identity policy, fetching signatures from the registry) is not built yet, so the operator has a verifier seam whose only implementation verifies nothing and blocks every deployment, rather than one that pretends success. Refines REQ-AUTO-AC7E986366466A6A. Modeled by Claude Code for the M0 operator task; the author has not reviewed it yet.
+D-17 says plugin images are verified with cosign from M0. The operator keeps a verifier seam: PolicyVerifier is the real implementation that cmd/operator wires in, and UnimplementedVerifier, which verifies nothing and blocks every deployment, remains for tests and as the safe default of the seam rather than one that pretends success. Refines REQ-AUTO-AC7E986366466A6A. Modeled by Claude Code for the M0 signature-verification task; the author has not reviewed it yet.
 
 ## Source
 

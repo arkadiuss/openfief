@@ -23851,3 +23851,337 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-cosign
+  - id: SYM-operator-cmd-fn-image-verifier
+    title: imageVerifier
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:05.724Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-operator-trust-config
+  - id: SYM-operator-cmd-fn-trust-policy
+    title: trustPolicy
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:10.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-operator-trust-config
+  - id: SYM-operator-cmd-test-parse-flags-trusted-signers
+    title: TestParseFlagsTrustedSigners
+    sourceFile: cmd/operator/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:14.835Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cmd
+  - id: SYM-operator-cmd-test-trust-policy
+    title: TestTrustPolicy
+    sourceFile: cmd/operator/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:19.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cmd
+  - id: SYM-operator-cmd-test-image-verifier
+    title: TestImageVerifier
+    sourceFile: cmd/operator/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:23.191Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cmd
+  - id: SYM-catalog-load
+    title: Load
+    sourceFile: internal/plugins/catalog/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:28.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-catalog-embedded
+      - type: implements
+        target: REQ-operator-trust-config
+      - type: implements
+        target: REQ-plugins-catalog-in-repo
+  - id: SYM-catalog-test-load
+    title: TestLoad
+    sourceFile: internal/plugins/catalog/catalog_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:32.425Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-catalog-embedded
+  - id: SYM-operator-observation-result
+    title: observation.result
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:37.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-policy-verifier
+  - id: SYM-operator-fn-declared-manifest
+    title: declaredManifest
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:42.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-test-reconciler-test-policy-verifier
+    title: testPolicyVerifier
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:47.927Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-signed-image-source
+    title: SignedImageSource
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:53.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-policy-verifier
+      - type: implements
+        target: REQ-plugins-verified-status
+  - id: SYM-operator-policy-verifier
+    title: PolicyVerifier
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:31:56.970Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-policy-verifier
+      - type: implements
+        target: REQ-plugins-verified-status
+  - id: SYM-operator-new-policy-verifier
+    title: NewPolicyVerifier
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:01.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-policy-verifier
+      - type: implements
+        target: REQ-plugins-verified-status
+  - id: SYM-operator-policy-verifier-verify-image
+    title: PolicyVerifier.VerifyImage
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:06.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-policy-verifier
+      - type: implements
+        target: REQ-plugins-unsigned-never-deployed
+  - id: SYM-operator-fn-refusal-reason
+    title: refusalReason
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:10.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-policy-verifier
+      - type: implements
+        target: REQ-plugins-unsigned-never-deployed
+  - id: SYM-operator-policy-verifier-inspect
+    title: PolicyVerifier.inspect
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:15.954Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-policy-verifier
+      - type: implements
+        target: REQ-plugins-verified-status
+  - id: SYM-operator-test-verify-ci-signature
+    title: ciSignature
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:21.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-verify-publisher-signature
+    title: publisherSignature
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:27.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+  - id: SYM-operator-test-verify-stranger-signature
+    title: strangerSignature
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:34.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+  - id: SYM-operator-test-verify-fake-source
+    title: fakeSource
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:40.765Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-verify-fake-source-inspect
+    title: fakeSource.Inspect
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:47.930Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-verify-must-image
+    title: mustImage
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:53.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-verify-view-manifest
+    title: viewManifest
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:32:57.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-verify-test-policy
+    title: testPolicy
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:02.754Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-policy-verifier
+    title: TestPolicyVerifier
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:08.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+  - id: SYM-operator-test-policy-verifier-cache
+    title: TestPolicyVerifierCache
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:13.541Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+  - id: SYM-operator-test-unimplemented-verifier
+    title: TestUnimplementedVerifier
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:18.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier

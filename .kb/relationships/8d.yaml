@@ -118,3 +118,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-deac7627a6f6
+  - type: implements
+    from: SYM-operator-observation-result
+    to: REQ-operator-policy-verifier
+    created_at: 2026-10-28T09:31:38.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc051a9f5df4
+  - type: covered_by
+    from: SYM-operator-observation-result
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T09:31:38.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3fa69511521

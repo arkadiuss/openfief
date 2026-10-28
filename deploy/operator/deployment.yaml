@@ -32,6 +32,8 @@ spec:
             - --egress-proxy-service=egress-proxy
             - --egress-proxy-port=proxy
             - --plugin-port=8080
+            # Signers the owner trusts besides OpenFief's CI and the catalog (D-45); see kustomization.yaml.
+            - --trusted-signers=/etc/openfief/trust/signers.json
           ports:
             - name: probes
               containerPort: 8081
@@ -49,8 +51,17 @@ spec:
               memory: 64Mi
             limits:
               memory: 256Mi
+          volumeMounts:
+            - name: trusted-signers
+              mountPath: /etc/openfief/trust
+              readOnly: true
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
               drop: [ALL]
+      volumes:
+        - name: trusted-signers
+          configMap:
+            name: openfief-trusted-signers
+            optional: true

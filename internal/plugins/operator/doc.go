@@ -13,7 +13,12 @@
 // Ingress (D-28).
 //
 // Images are deployed only after an ImageVerifier confirms their cosign
-// signature (D-17). Verification is not implemented yet: the default
-// UnimplementedVerifier reports every image as unverified, so the operator
-// deploys no plugin until a real verifier replaces it.
+// signature (D-17) and that their signed manifest label is the manifest the
+// Plugin declares (D-42). The operator's verifier is PolicyVerifier: it reads
+// the image through a SignedImageSource (the cosign adapter) and lets
+// plugins.TrustPolicy decide (D-45, D-56). Its outcome is the
+// SignatureVerified condition: True with reason Verified for a verified
+// plugin, True with reason SignedByTrustedSigner for any other trusted
+// signer, False when refused, Unknown when the registry could not be read,
+// which is retried. Nothing deploys an image the policy refuses (D-57).
 package operator

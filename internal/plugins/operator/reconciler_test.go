@@ -40,7 +40,7 @@ const (
 // every other one is rejected.
 type signedImages []string
 
-func (s signedImages) VerifyImage(_ context.Context, image plugins.ImageRef) operator.Verification {
+func (s signedImages) VerifyImage(_ context.Context, image plugins.ImageRef, _ *plugins.Manifest) operator.Verification {
 	for _, i := range s {
 		if i == image.String() {
 			return operator.Verification{Status: metav1.ConditionTrue, Reason: "Verified", Message: "test signature"}
@@ -314,6 +314,23 @@ func TestReconcile(t *testing.T) {
 			t.Errorf("state mismatch (-want +got):\n%s", diff)
 		}
 	})
+	t.Run("signature checks run through the trust policy", func(t *testing.T) {
+		t.Parallel()
+		testPolicyVerifier(t, tc)
+	})
+	t.Run("an image that could not be checked is checked again", func(t *testing.T) {
+		t.Parallel()
+		ctx := t.Context()
+		create(ctx, t, tc.client, samplePlugin("unchecked", imageA))
+		req := ctrl.Request{NamespacedName: types.NamespacedName{Namespace: "openfief", Name: "unchecked"}}
+		res, err := tc.reconciler(operator.UnimplementedVerifier{}).Reconcile(ctx, req)
+		if err != nil {
+			t.Fatalf("Reconcile: %v", err)
+		}
+		if res.RequeueAfter <= 0 {
+			t.Errorf("Reconcile result %+v, want a requeue", res)
+		}
+	})
 	t.Run("config its schema rejects is never deployed", func(t *testing.T) {
 		t.Parallel()
 		ctx := t.Context()
@@ -479,5 +496,44 @@ func TestSetupWithManager(t *testing.T) {
 	}
 	if err := (&operator.GrantReconciler{Client: mgr.GetClient()}).SetupWithManager(mgr); err != nil {
 		t.Errorf("GrantReconciler.SetupWithManager: %v", err)
+	}
+}
+
+// testPolicyVerifier runs the reconciler with the operator's PolicyVerifier:
+// an image signed by OpenFief's CI whose signed manifest label is the
+// Plugin's manifest runs; one whose label differs never does (D-42).
+func testPolicyVerifier(t *testing.T, tc *testCluster) {
+	t.Helper()
+	ctx := t.Context()
+	label, err := plugins.ParseManifestLabel(`{"capabilities":["connector"],"egress":["api.example.com"],` +
+		`"secrets":[{"name":"signedci-token","mountPath":"/etc/openfief/token"}],` +
+		`"configSchema":{"type":"object","properties":{"interval":{"type":"string"}}}}`)
+	if err != nil {
+		t.Fatalf("label: %v", err)
+	}
+	src := &fakeSource{images: map[string]plugins.SignedImage{
+		imageB: {Image: mustImage(t, imageB), Signatures: []plugins.SignerIdentity{ciSignature()}, Manifest: label},
+	}}
+	r := tc.reconciler(operator.NewPolicyVerifier(src, testPolicy(t)))
+	for _, name := range []string{"signedci", "relabelled"} {
+		create(ctx, t, tc.client, samplePlugin(name, imageB, "api.example.com"))
+		create(ctx, t, tc.client, sampleGrant(name, "api.example.com"))
+		tc.reconcile(ctx, t, r, name)
+	}
+	running := state{
+		Image: imageB, ServiceAccount: true, ProxyRule: true, AllowList: "api.example.com:443\n",
+		TokenAudiences: []string{"openfief-core OPENFIEF_TOKEN_FILE", "openfief-egress OPENFIEF_EGRESS_TOKEN_FILE"},
+		Conditions:     conditions("False/Progressing", "False/Approved", "True/SignedByTrustedSigner"),
+		DeployedImage:  imageB, EffectiveEgress: []string{"api.example.com:443"},
+	}
+	if diff := cmp.Diff(running, tc.state(ctx, t, "signedci"), cmpopts.EquateEmpty()); diff != "" {
+		t.Errorf("label matches: state mismatch (-want +got):\n%s", diff)
+	}
+	refused := state{
+		DenyAll:    true,
+		Conditions: conditions("False/SignatureNotVerified", "False/Approved", "False/ManifestMismatch"),
+	}
+	if diff := cmp.Diff(refused, tc.state(ctx, t, "relabelled"), cmpopts.EquateEmpty()); diff != "" {
+		t.Errorf("label differs: state mismatch (-want +got):\n%s", diff)
 	}
 }

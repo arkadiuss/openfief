@@ -139,3 +139,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c1326dcf4a6
+  - type: implements
+    from: SYM-operator-new-policy-verifier
+    to: REQ-operator-policy-verifier
+    created_at: 2026-10-28T09:32:02.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-015dd7025487
+  - type: implements
+    from: SYM-operator-new-policy-verifier
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-28T09:32:02.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b521cd1e84cd
+  - type: covered_by
+    from: SYM-operator-new-policy-verifier
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-28T09:32:02.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43c5c7cfd391

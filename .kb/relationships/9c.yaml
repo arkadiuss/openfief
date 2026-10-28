@@ -132,3 +132,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2109bb76cc86
+  - type: implements
+    from: SYM-operator-policy-verifier-verify-image
+    to: REQ-operator-policy-verifier
+    created_at: 2026-10-28T09:32:06.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84487309f63a
+  - type: implements
+    from: SYM-operator-policy-verifier-verify-image
+    to: REQ-plugins-unsigned-never-deployed
+    created_at: 2026-10-28T09:32:06.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1307d015c955
+  - type: covered_by
+    from: SYM-operator-policy-verifier-verify-image
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-28T09:32:06.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7a173fbed62

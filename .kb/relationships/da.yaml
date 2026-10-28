@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-178a605033fe
+  - type: executable_for
+    from: SYM-operator-cmd-test-image-verifier
+    to: TEST-operator-cmd
+    created_at: 2026-10-28T09:31:23.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66b9dcb3022c
