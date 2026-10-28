@@ -25,7 +25,10 @@ for tag in GR D P T OQ R; do
   fi
 done
 
-if git diff "$base" -U0 -- DESIGN.md | grep -qE '^[-+]- \*\*\[GR-'; then
+if ! git rev-parse --verify --quiet "$base^{commit}" >/dev/null; then
+  echo "docs: base revision '$base' is not a commit in this repository; can't compare ground rules" >&2
+  fail=1
+elif git diff "$base" -U0 -- DESIGN.md | grep -qE '^[-+]- \*\*\[GR-'; then
   echo "docs: ground-rule lines in docs/DESIGN.md changed against $base; ground rules are never edited" >&2
   fail=1
 fi
