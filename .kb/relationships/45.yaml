@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56173a783c1e
+  - type: constrains
+    from: REQ-valuation-fx-range-splitting
+    to: FACT-SUBJECT-D433B5FCB6CC2162
+    created_at: 2026-10-28T05:54:24.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b1c550f2e9e
+  - type: requires_property
+    from: REQ-valuation-fx-range-splitting
+    to: FACT-PROP-56B089ABF6615550
+    created_at: 2026-10-28T05:54:24.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab6b1db998cf
+  - type: specified_by
+    from: REQ-valuation-fx-range-splitting
+    to: SCEN-valuation-fx-range-splitting
+    created_at: 2026-10-28T05:54:24.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f2c92f5c54d

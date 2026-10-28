@@ -20,3 +20,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c737f8e9edb
+  - type: executable_for
+    from: SYM-valuation-app-test-split-range
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:54:55.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fdbf067ee7a

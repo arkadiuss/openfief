@@ -55,3 +55,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f646a235e57e
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-provider-rates
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:55:16.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3579ac03f52
