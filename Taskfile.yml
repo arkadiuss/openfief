@@ -495,26 +495,28 @@ tasks:
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh '{{.ACTION}}'
 
-  dns:docs:plan:
-    desc: 'What `task dns:docs` would change in the docs site''s DNS record docs.<DEMO_DOMAIN>, without changing anything (CLOUDFLARE_API_TOKEN), e.g. task dns:docs:plan'
+  dns:site:plan:
+    desc: 'What `task dns:site` would change in the website''s DNS records at <DEMO_DOMAIN> and www.<DEMO_DOMAIN>, without changing anything (CLOUDFLARE_API_TOKEN), e.g. task dns:site:plan'
     cmds:
-      - task: dns:docs:run
+      - task: dns:site:run
         vars: {ACTION: plan}
 
-  dns:docs:
-    desc: 'Make docs.<DEMO_DOMAIN> (docs.openfief.dev) a DNS-only CNAME to GitHub Pages, touching only the record commented managed-by=openfief-docs (CLOUDFLARE_API_TOKEN), e.g. task dns:docs'
+  dns:site:
+    desc: 'Point <DEMO_DOMAIN> (A and AAAA) and www (CNAME) at GitHub Pages, DNS-only, with the verification TXT when GITHUB_PAGES_CHALLENGE is set; changes only records commented managed-by=openfief-site and deletes the retired managed-by=openfief-docs record (CLOUDFLARE_API_TOKEN), e.g. task dns:site'
     cmds:
-      - task: dns:docs:run
+      - task: dns:site:run
         vars: {ACTION: apply}
 
-  dns:docs:run:
+  dns:site:run:
     internal: true
     deps: [tool:gojq]
     # CLOUDFLARE_API_TOKEN is inherited from the environment and never templated here, so Task never prints it.
+    # GITHUB_PAGES_CHALLENGE is the public value of a DNS TXT record, not a secret.
     env:
       DEMO_DOMAIN: '{{.DEMO_DOMAIN}}'
+      GITHUB_PAGES_CHALLENGE: '{{.GITHUB_PAGES_CHALLENGE}}'
     cmds:
-      - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh dns-docs '{{.ACTION}}'
+      - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh dns-site '{{.ACTION}}'
 
   demo:validate:
     desc: Build the demo's GitOps manifests (deploy/demo) offline and check that every image is pinned by digest

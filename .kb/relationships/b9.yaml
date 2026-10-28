@@ -370,13 +370,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e88ebc5f339e
-  - type: implements
-    from: SYM-demo-demo-dns-apply-changes
-    to: REQ-tooling-demo-dns-docs
-    created_at: 2026-10-28T14:36:42.589Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fbe61662a59a
   - type: covered_by
     from: SYM-demo-demo-dns-apply-changes
     to: TEST-tooling-demo
@@ -412,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddb042b244e4
+  - type: implements
+    from: SYM-demo-demo-dns-apply-changes
+    to: REQ-tooling-site-dns
+    created_at: 2026-10-28T15:29:44.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5738e71458c
