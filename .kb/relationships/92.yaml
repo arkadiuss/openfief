@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2d7ae5505cb
+  - type: executable_for
+    from: SYM-portfolio-test-since
+    to: TEST-portfolio-drawdown
+    created_at: 2026-10-28T22:22:49.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ed293f0a6cc

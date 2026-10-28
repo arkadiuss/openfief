@@ -209,3 +209,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a974062571bf
+  - type: validates
+    from: TEST-portfolio-backtest
+    to: REQ-portfolio-backtest-yearly-rebalance
+    created_at: 2026-10-28T22:11:18.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06d3c85512db

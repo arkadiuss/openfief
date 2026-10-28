@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-493530fc5e01
+  - type: implements
+    from: SYM-portfolio-target
+    to: REQ-portfolio-model-targets
+    created_at: 2026-10-28T22:23:26.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cddea0a7e625
+  - type: implements
+    from: SYM-portfolio-target
+    to: REQ-portfolio-model-weights
+    created_at: 2026-10-28T22:23:26.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbdad94c57bd
+  - type: covered_by
+    from: SYM-portfolio-target
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:26.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-537310b276fa

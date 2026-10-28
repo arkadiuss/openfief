@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49e95d8971df
+  - type: executable_for
+    from: SYM-portfolio-test-helper-points-of
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:21:56.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdccafca060b

@@ -195,3 +195,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e62cc2e2b2bd
+  - type: implements
+    from: SYM-portfolio-span-type
+    to: REQ-portfolio-backtest-index
+    created_at: 2026-10-28T22:16:04.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b44b6c5577a
+  - type: covered_by
+    from: SYM-portfolio-span-type
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:16:04.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e0597c32275

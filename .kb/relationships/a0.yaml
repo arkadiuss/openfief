@@ -244,3 +244,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-541ae4d064e8
+  - type: executable_for
+    from: SYM-portfolio-test-helper-closes-of
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:21:47.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b87379ba1b9

@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbdafac4cce6
+  - type: executable_for
+    from: SYM-portfolio-test-backtest-of-one-target-is-its-price
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:26.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15834dab4eea

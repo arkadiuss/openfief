@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4faeb85a6675
+  - type: executable_for
+    from: SYM-portfolio-test-helper-missing-of
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:22:15.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51b55969edf5

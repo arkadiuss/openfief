@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc6c91744355
+  - type: implements
+    from: SYM-portfolio-target-key
+    to: REQ-portfolio-model-targets
+    created_at: 2026-10-28T22:23:30.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37f71b23eb91
+  - type: covered_by
+    from: SYM-portfolio-target-key
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:30.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd9f65c93237

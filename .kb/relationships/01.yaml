@@ -314,3 +314,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da1ef73d4a01
+  - type: implements
+    from: SYM-portfolio-sorted-rates
+    to: REQ-portfolio-backtest-history
+    created_at: 2026-10-28T22:23:03.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edd589a0c2cc
+  - type: covered_by
+    from: SYM-portfolio-sorted-rates
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:23:03.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cba2f34a6f8a

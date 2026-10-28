@@ -251,3 +251,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c00f491f37e5
+  - type: implements
+    from: SYM-portfolio-drawdown
+    to: REQ-portfolio-drawdown-depth
+    created_at: 2026-10-28T22:22:33.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c482565859a3
+  - type: implements
+    from: SYM-portfolio-drawdown
+    to: REQ-portfolio-max-drawdown
+    created_at: 2026-10-28T22:22:33.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d758ae7712cf
+  - type: covered_by
+    from: SYM-portfolio-drawdown
+    to: TEST-portfolio-drawdown
+    created_at: 2026-10-28T22:22:33.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b418eed0693c

@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2101c8001539
+  - type: verified_by
+    from: SCEN-portfolio-rebase
+    to: TEST-portfolio-drawdown
+    created_at: 2026-10-28T22:11:31.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1c2454c9d8a

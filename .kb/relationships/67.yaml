@@ -377,3 +377,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f64d607a018a
+  - type: verified_by
+    from: SCEN-portfolio-backtest-rebalance
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:11:27.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d239c9675a1
+  - type: verified_by
+    from: SCEN-portfolio-backtest-rebalance
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:11:27.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78e1f7ed8af7

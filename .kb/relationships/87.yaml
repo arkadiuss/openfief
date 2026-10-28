@@ -265,3 +265,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-945d75d7dfb9
+  - type: implements
+    from: SYM-portfolio-later-date
+    to: REQ-portfolio-backtest-history
+    created_at: 2026-10-28T22:23:07.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-295d82042fd3
+  - type: covered_by
+    from: SYM-portfolio-later-date
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:23:07.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a32a0375d69f

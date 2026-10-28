@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ecccbefe9d19
+  - type: implements
+    from: SYM-portfolio-common-span
+    to: REQ-portfolio-backtest-index
+    created_at: 2026-10-28T22:16:08.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ddd1180bc7f
+  - type: implements
+    from: SYM-portfolio-common-span
+    to: REQ-portfolio-backtest-yearly-rebalance
+    created_at: 2026-10-28T22:16:08.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-586a2e397952
+  - type: covered_by
+    from: SYM-portfolio-common-span
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:16:09.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dd72af6a02d

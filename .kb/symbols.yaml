@@ -57051,3 +57051,765 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: implements
         target: REQ-views-api-contract
+  - id: SYM-portfolio-close-type
+    title: Close
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:25.250Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-rate-type
+    title: Rate
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:29.649Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-point-type
+    title: Point
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:34.031Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-missing-data
+    title: MissingData
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:37.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-missing-data-string
+    title: MissingData.String
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:41.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-backtest-input
+    title: BacktestInput
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:46.232Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-target-history
+    title: targetHistory
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:50.382Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+      - type: implements
+        target: REQ-valuation-reporting-currency
+  - id: SYM-portfolio-backtest-series
+    title: BacktestSeries
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:54.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-backtest-func
+    title: Backtest
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:59.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+      - type: implements
+        target: REQ-portfolio-backtest-yearly-rebalance
+  - id: SYM-portfolio-span-type
+    title: span
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:03.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-common-span
+    title: commonSpan
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:07.783Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+      - type: implements
+        target: REQ-portfolio-backtest-yearly-rebalance
+  - id: SYM-portfolio-simulate
+    title: simulate
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:12.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+      - type: implements
+        target: REQ-portfolio-backtest-yearly-rebalance
+  - id: SYM-portfolio-rebalance
+    title: rebalance
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:17.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+      - type: implements
+        target: REQ-portfolio-backtest-yearly-rebalance
+  - id: SYM-portfolio-value-on
+    title: valueOn
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:21.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-test-helper-rng
+    title: rng
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:24.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-rng-next
+    title: rng.next
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:29.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-rng-intn
+    title: rng.intn
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:05.551Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-rng-path
+    title: rng.path
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:09.534Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-property-start
+    title: propertyStart
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:13.479Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-closes-from
+    title: closesFrom
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:17.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-within
+    title: within
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:21.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-backtest-of-one-target-is-its-price
+    title: TestBacktestOfOneTargetIsItsPrice
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:25.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-backtest-ignores-price-scale
+    title: TestBacktestIgnoresPriceScale
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:29.608Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-max-drawdown-is-the-worst-pair
+    title: TestMaxDrawdownIsTheWorstPair
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:33.442Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-worst-fall
+    title: worstFall
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:37.847Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-must-date
+    title: mustDate
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:42.110Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-closes-of
+    title: closesOf
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:46.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-rates-of
+    title: ratesOf
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:50.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-points-of
+    title: pointsOf
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:54.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-backtest-case
+    title: backtestCase
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:58.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-backtest-case-input
+    title: backtestCase.input
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:02.185Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-backtest
+    title: TestBacktest
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:06.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-backtest-case-want-missing
+    title: backtestCase.wantMissing
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:10.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-missing-of
+    title: missingOf
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:14.604Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-backtest-cases
+    title: backtestCases
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:18.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-backtest-target-histories
+    title: TestBacktestTargetHistories
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:23.319Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-missing-data-string
+    title: TestMissingDataString
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:27.605Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-drawdown
+    title: Drawdown
+    sourceFile: internal/portfolio/drawdown.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:31.975Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-drawdown
+      - type: implements
+        target: REQ-portfolio-drawdown-depth
+      - type: implements
+        target: REQ-portfolio-max-drawdown
+  - id: SYM-portfolio-max-drawdown
+    title: MaxDrawdown
+    sourceFile: internal/portfolio/drawdown.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:36.031Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-drawdown
+      - type: implements
+        target: REQ-portfolio-drawdown-depth
+      - type: implements
+        target: REQ-portfolio-max-drawdown
+  - id: SYM-portfolio-since
+    title: Since
+    sourceFile: internal/portfolio/drawdown.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:40.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-drawdown
+      - type: implements
+        target: REQ-portfolio-rebase
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+  - id: SYM-portfolio-test-max-drawdown
+    title: TestMaxDrawdown
+    sourceFile: internal/portfolio/drawdown_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:44.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-drawdown
+  - id: SYM-portfolio-test-since
+    title: TestSince
+    sourceFile: internal/portfolio/drawdown_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:48.604Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-drawdown
+  - id: SYM-portfolio-walk
+    title: walk
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:55.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-sorted-closes
+    title: sortedCloses
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:59.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-sorted-rates
+    title: sortedRates
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:02.625Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-later-date
+    title: laterDate
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:06.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-hundred-percent
+    title: hundredPercent
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:10.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-target-kind
+    title: TargetKind
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:14.158Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-target-kind-string
+    title: TargetKind.String
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:18.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-parse-target-kind
+    title: ParseTargetKind
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:22.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-target
+    title: Target
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:25.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+      - type: implements
+        target: REQ-portfolio-model-weights
+  - id: SYM-portfolio-target-key
+    title: Target.Key
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:29.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-target-validate
+    title: Target.Validate
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:33.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-model
+    title: Model
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:36.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+      - type: implements
+        target: REQ-portfolio-model-weights
+  - id: SYM-portfolio-model-validate
+    title: Model.Validate
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:40.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+      - type: implements
+        target: REQ-portfolio-model-weights
+  - id: SYM-portfolio-test-helper-must-dec
+    title: mustDec
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:44.771Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-helper-must-currency
+    title: mustCurrency
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:49.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-helper-target-spec
+    title: targetSpec
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:52.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-helper-target-spec-build
+    title: targetSpec.build
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:58.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-helper-build-targets
+    title: buildTargets
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:02.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-target-kind
+    title: TestTargetKind
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:07.322Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-model-validate
+    title: TestModelValidate
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:11.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-target-key
+    title: TestTargetKey
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:16.602Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-target-history-type
+    title: TargetHistory
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:28:30.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history

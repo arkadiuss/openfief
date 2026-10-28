@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79e3efe7b448
+  - type: constrains
+    from: REQ-portfolio-backtest-history
+    to: FACT-SUBJECT-CC375F51A146E82A
+    created_at: 2026-10-28T22:11:40.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30ff8892c778
+  - type: requires_property
+    from: REQ-portfolio-backtest-history
+    to: FACT-PROP-D8A8612B04DB95C9
+    created_at: 2026-10-28T22:11:40.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82f4cdfcc619
+  - type: specified_by
+    from: REQ-portfolio-backtest-history
+    to: SCEN-portfolio-backtest-history
+    created_at: 2026-10-28T22:11:40.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-168245f4505d

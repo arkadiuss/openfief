@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21f45c9ad826
+  - type: executable_for
+    from: SYM-portfolio-test-helper-rng-intn
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:06.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0897d6c26e8
