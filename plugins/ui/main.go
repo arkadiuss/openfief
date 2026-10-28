@@ -6,7 +6,9 @@
 // wires them to the plugin's environment.
 //
 // The manifest asks for the view capability and no egress hosts, and takes
-// no config.
+// no config. Outside a cluster, against a core run locally, the UI presents
+// OPENFIEF_AUTH_CALLER_TOKEN to the AuthService instead of a projected
+// token.
 package main
 
 import (
@@ -70,17 +72,15 @@ func run(ctx context.Context, log *slog.Logger) error {
 }
 
 // newHandler builds the UI's handler from the plugin's environment: the
-// core's address, and the token file the AuthService client re-reads on
-// every call, since projected tokens rotate.
+// core's address, and the token the AuthService client presents
+// (authClient).
 func newHandler(log *slog.Logger) (http.Handler, error) {
 	coreURL, err := openfief.CoreURL()
 	if err != nil {
 		return nil, fmt.Errorf("core address: %w", err)
 	}
-	authHTTP := openfief.CoreHTTPClient(openfief.TokenFile{})
-	authHTTP.Timeout = coreTimeout
 	h, err := ui.New(ui.Config{
-		Auth: identityv1connect.NewAuthServiceClient(authHTTP, coreURL),
+		Auth: identityv1connect.NewAuthServiceClient(authClient(os.Getenv), coreURL),
 		Read: viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:  log,
 	})
@@ -88,6 +88,32 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		return nil, fmt.Errorf("ui: %w", err)
 	}
 	return h, nil
+}
+
+// authCallerEnv names the token a UI running outside a cluster presents to
+// the AuthService instead of a projected token: the core started with the
+// same OPENFIEF_AUTH_CALLER_TOKEN accepts it, and only outside a cluster.
+const authCallerEnv = "OPENFIEF_AUTH_CALLER_TOKEN"
+
+// callerToken is a fixed AuthService caller token.
+type callerToken string
+
+// Token returns the fixed token.
+func (c callerToken) Token() (string, error) { return string(c), nil }
+
+// authClient is the HTTP client for the AuthService. It presents the token
+// in OPENFIEF_AUTH_CALLER_TOKEN when that is set (outside a cluster), and
+// otherwise the projected token, read from its file on every call since it
+// rotates.
+func authClient(getenv func(string) string) *http.Client {
+	var c *http.Client
+	if token := getenv(authCallerEnv); token != "" {
+		c = openfief.CoreHTTPClient(callerToken(token))
+	} else {
+		c = openfief.CoreHTTPClient(openfief.TokenFile{})
+	}
+	c.Timeout = coreTimeout
+	return c
 }
 
 // readClient is the HTTP client for the read API. It sets no Authorization

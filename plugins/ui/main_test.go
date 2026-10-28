@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 
@@ -30,6 +31,37 @@ func TestManifest(t *testing.T) {
 	}
 	if len(got.ConfigSchema) == 0 {
 		t.Error("the manifest has no config schema")
+	}
+}
+
+// TestAuthClient checks what the UI presents to the AuthService: the
+// OPENFIEF_AUTH_CALLER_TOKEN token when it is set, outside a cluster.
+func TestAuthClient(t *testing.T) {
+	t.Parallel()
+	var got string
+	srv := httptest.NewServer(http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
+		got = r.Header.Get("Authorization")
+	}))
+	t.Cleanup(srv.Close)
+	c := authClient(func(name string) string {
+		if name == authCallerEnv {
+			return "local-caller"
+		}
+		return ""
+	})
+	req, err := http.NewRequestWithContext(t.Context(), http.MethodGet, srv.URL, http.NoBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err := c.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := resp.Body.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if got != "Bearer local-caller" || c.Timeout != coreTimeout {
+		t.Errorf("Authorization = %q, timeout %v; want the caller token and %v", got, c.Timeout, coreTimeout)
 	}
 }
 

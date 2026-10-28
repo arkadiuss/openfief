@@ -27,7 +27,7 @@ Projected tokens rotate, so the UI reads its token from the file the operator mo
 
 ## How it works
 
-The code is in [`internal/views/ui`](../../internal/views/ui/doc.go); [`plugins/ui`](../../plugins/ui/main.go) only wires it to the plugin's environment: the core's address (`OPENFIEF_CORE_ADDRESS`), the listen port (`OPENFIEF_LISTEN_PORT`) and the token file.
+The code is in [`internal/views/ui`](../../internal/views/ui/doc.go); [`plugins/ui`](../../plugins/ui/main.go) only wires it to the plugin's environment: the core's address (`OPENFIEF_CORE_ADDRESS`), the listen port (`OPENFIEF_LISTEN_PORT`) and the token file. Outside a cluster, against a core run locally, there is no projected token: the UI then presents `OPENFIEF_AUTH_CALLER_TOKEN`, the token the core was started with in the same variable, which the core accepts only outside a cluster.
 
 ```mermaid
 flowchart LR
@@ -106,7 +106,7 @@ sequenceDiagram
 
 ### The demo
 
-[`deploy/demo/plugins/ui.yaml`](../../deploy/demo/plugins/ui.yaml) installs the instance `ui` with a grant for exactly the `view` capability. The operator runs it as Service `plugin-ui`, port `connect` (8080). The demo's Ingress, [`deploy/demo/routes/openfief.yaml`](../../deploy/demo/routes/openfief.yaml), sends `/v1` and `/openfief.views.v1.ReadService` to the core and everything else to `plugin-ui`; nothing routes to the AuthService. The operator's NetworkPolicy for a plugin admits only the core (D-59), so a demo-only policy, [`ui-from-traefik.yaml`](../../deploy/demo/openfief/ui-from-traefik.yaml), also admits k3s's Traefik, like `core-from-traefik`.
+[`deploy/demo/plugins/ui.yaml`](../../deploy/demo/plugins/ui.yaml) installs the instance `ui` with a grant for exactly the `view` capability. The operator runs it as Service `plugin-ui`, port `connect` (8080). The demo's Ingress, [`deploy/demo/routes/openfief.yaml`](../../deploy/demo/routes/openfief.yaml), sends `/v1` and `/openfief.views.v1.ReadService` to the core and everything else to `plugin-ui`; nothing routes to the AuthService. The operator's NetworkPolicy for a plugin admits only the core (D-59), so a demo-only policy, [`ui-from-traefik.yaml`](../../deploy/demo/openfief/ui-from-traefik.yaml), also admits k3s's Traefik, like `core-from-traefik`. The demo's core runs with `--auth-origin=https://demo.openfief.dev` next to the base's `http://localhost:8080`, and with `--demo-sessions`, so "View demo" works on the demo database.
 
 ## Decisions
 
@@ -137,7 +137,6 @@ In the end-to-end suite the UI runs from a stand-in Deployment ([ui-standin.yaml
 
 ## Not built yet
 
-- **The core's side.** The core doesn't serve the AuthService yet, its read API accepts script tokens but not sessions, and its `--demo-sessions` and `--auth-origin` flags don't exist yet. Until they do, the login page says the core couldn't answer, and nothing past it works against a real core.
 - The portfolio's time-weighted return (D-61) and the model portfolio's comparison and drawdowns (D-52 to D-54).
 - File uploads and manual bond-lot entry, which the UI hands to the core (D-49), and the list of installed plugins with their signature status (D-46, D-56).
 - A way to change the reporting currency or the bond basis from the UI.
