@@ -6068,3 +6068,88 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-assertion
+  - id: SYM-plugins-encode-allow-lists
+    title: EncodeAllowLists
+    sourceFile: internal/plugins/allowlist_codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:00.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list-codec
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-configmap-format
+  - id: SYM-plugins-decode-allow-lists
+    title: DecodeAllowLists
+    sourceFile: internal/plugins/allowlist_codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:04.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list-codec
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-configmap-format
+  - id: SYM-plugins-fn-decode-hosts
+    title: decodeHosts
+    sourceFile: internal/plugins/allowlist_codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:08.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list-codec
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-configmap-format
+  - id: SYM-plugins-test-encode-allow-lists
+    title: TestEncodeAllowLists
+    sourceFile: internal/plugins/allowlist_codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:11.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list-codec
+  - id: SYM-plugins-test-decode-allow-lists
+    title: TestDecodeAllowLists
+    sourceFile: internal/plugins/allowlist_codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:15.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list-codec
+  - id: SYM-plugins-test-allow-lists-round-trip
+    title: TestAllowListsRoundTrip
+    sourceFile: internal/plugins/allowlist_codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:18.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list-codec
+  - id: SYM-plugins-fn-codec-error
+    title: codecError
+    sourceFile: internal/plugins/allowlist_codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:21.708Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list-codec
