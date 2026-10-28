@@ -70,7 +70,7 @@ flowchart TB
 
 | Part | Decided in | Built today | Explained in |
 |---|---|---|---|
-| Operator | D-13, D-15, D-16, D-17, D-56 | `cmd/operator` and the reconciler in `internal/plugins/operator`, plus install manifests in `deploy/`. It deploys no plugin yet: image signature verification (D-56) isn't built, and the placeholder verifier refuses every image | [Operator](concepts/operator.md) |
+| Operator | D-13, D-15 to D-17, D-42 to D-45, D-56, D-57 | `cmd/operator` and the reconciler in `internal/plugins/operator`, plus install manifests in `deploy/`. It deploys an image only when a trusted signer signed its digest, checked offline with sigstore-go against a bundled Sigstore trust root (`internal/plugins/cosign`; `cmd/sigstore-trusted-root` refreshes the root). The trusted signers are OpenFief's CI, the publishers pinned in the plugin catalog (`internal/plugins/catalog`, empty today) and any the owner adds in a ConfigMap | [Operator](concepts/operator.md) |
 | Egress proxy | D-32, D-63 | `cmd/egress-proxy`, embedding Smokescreen through `BuildProxy`. It checks each plugin's `openfief-egress` token with a TokenReview, caches accepted reviews, and allows only the hosts the grant names | [Egress](concepts/egress.md) |
 | Plugin model | D-11, D-16, D-42 to D-49, D-59 | Manifests, grants, effective permissions and workload compilation in `internal/plugins`. The connector contract (`openfief.connector.v1`) and the Go SDK for plugin authors in `sdk/go` | [Plugins](concepts/plugins.md) |
 | Ledger | D-18, D-19, D-23, D-33 to D-35 | Domain, use cases and the PostgreSQL store in `internal/ledger`, including the guard against seeding an account twice; no service runs it yet | [Ledger](concepts/ledger.md) |
@@ -78,7 +78,8 @@ flowchart TB
 | Treasury bonds | D-9, D-25, D-37 | Polish bond rules in `internal/jurisdiction/pl` | [Treasury bonds](concepts/treasury-bonds.md) |
 | Ingest | D-7, D-8, D-23, D-49, D-59 | Import batches and the IBKR Flex mapping and pull in `internal/ingest`, still a package of the core rather than a plugin. The core's client for connector plugins is in `internal/ingest/connectrpc`, but the per-instance tokens it needs (D-59) aren't built | [Ingest](concepts/ingest.md) |
 | Shared kernel | (code organization) | Money, currency, quantity and dates in `internal/kernel` | [Kernel](concepts/kernel.md) |
-| Portfolio | D-52 to D-54, D-61 | Sleeves in `internal/portfolio`; the model portfolio is not built | [Portfolio](concepts/portfolio.md) |
+| Portfolio | D-52 to D-54, D-61 | Sleeves and sleeve kinds with their default roles and install defaults in `internal/portfolio`; the model portfolio is not built | [Portfolio](concepts/portfolio.md) |
+| Demo dataset | GR-12 | A synthetic dataset in `internal/demo`, loaded by `cmd/demo-seed` through the same ingest, ledger and valuation paths real data takes. It refuses any database without its own demo marker | [Demo](dev/demo.md) |
 | Core service, read API, UI, Ghostfolio view, CLI, XTB parser, market data | D-2 to D-6, D-30, D-46, D-50, D-51 | Not built | [Status](https://arkadiuss.github.io/openfief/status/) |
 
 The [status page](https://arkadiuss.github.io/openfief/status/) gives the same picture decision by decision, from the requirements in kibi.
@@ -159,6 +160,8 @@ flowchart LR
 ```
 
 Arrows between layers are Flux `dependsOn` edges. The CI side, from signed images to the published artifact, is on the [delivery pipeline](dev/pipeline.md) page.
+
+The synthetic data comes from `deploy/demo-data`, a one-off Job that runs `cmd/demo-seed` against the demo database. No layer above applies it yet, although its kustomization says `deploy/demo` includes it.
 
 ## Main flows
 

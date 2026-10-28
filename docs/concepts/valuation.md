@@ -171,7 +171,7 @@ The adapter keeps NBP's JSON shape inside the package. It parses `mid` from the 
 
 ## Decisions
 
-- **D-36**: stored valuations, River queue, coalescing, fixed triggers, configurable settings, basis change revalues all. Built in the valuation context, but not yet wired or exposed: no binary in `cmd/` runs the store, the import hook or the River client, and no read API or UI shows the status.
+- **D-36**: stored valuations, River queue, coalescing, fixed triggers, configurable settings, basis change revalues all. Built in the valuation context. Only `cmd/demo-seed` runs the store, the import hook and the River client, to value the demo dataset; no product binary does, and no read API or UI shows the status.
 - **D-20**: NBP table A to PLN, swappable rate provider. Two gaps remain: NBP is a package of the core module (`internal/valuation/nbp`), not the FX plugin of D-20 and DESIGN.md's M0 diagram; and "tax always uses NBP rates" isn't enforced, since `RateOnOrBefore` ignores `Source`.
 - **D-21**: end-of-day prices only.
 - **D-25**: configurable bond basis, net-if-redeemed by default. The code also withholds no tax inside IKZE (see [Treasury bonds](treasury-bonds.md#decisions)).
@@ -202,7 +202,7 @@ One behavior differs from its doc comment. `RateOnOrBefore` says two different r
 
 ## Not built yet
 
-- **D-36**: the read API and UI parts. `Store.Statuses` computes each account's status, but no read API or UI exists to show it. Nothing in `cmd/` runs `Migrate`, the store, the import hook, the River client or `ApplyBondBasis`, or reads `Config` from settings.
+- **D-36**: the read API and UI parts. `Store.Statuses` computes each account's status, but no read API or UI exists to show it. Only `cmd/demo-seed` runs `Migrate`, the store, the import hook, the River client and `ApplyBondBasis`; no product binary does, and nothing reads `Config` from settings.
 - **D-49**, **D-20**: passing connector deliveries on. The ingest context's `PriceStore`, `FXRateStore` and `IndexReadingStore` ports have no implementation that calls `InputRecorder`, and the NBP adapter is not a connector plugin. Nothing fetches rates, CPI or reference rates on a schedule.
 - **D-22**, **D-51**: the EODHD market-data connector, and the cross-check against IBKR Flex prices.
 - **D-62**: the reporting currency setting (`valuation.ReportingCurrency` in the glossary).

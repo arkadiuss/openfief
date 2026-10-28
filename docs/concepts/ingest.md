@@ -111,7 +111,7 @@ classDiagram
 
 `NewBatch` refuses a batch without an ID, an institution, a source, a known mode or a start date (`ErrInvalidBatch`); the zero `Mode` is not a mode. `Batch.Complete` records the mapping's counts, the ledger's summary and a copy of the problems. `IndexReading.Validate` requires a known index, a date and a source, and a CPI reading dated on the first of its month (`ErrInvalidIndexReading`). `ScopeToConnector` returns copies of transactions whose key source is `plugin:<instance>:<source>`; an empty source stays empty, so the ledger still rejects it.
 
-The ports are declared in `app`, by their consumer. Some adapters have the matching methods; the ledger and the stores are not connected yet:
+The ports are declared in `app`, by their consumer. Some adapters have the matching methods. The ledger is connected only in `cmd/demo-seed`, whose `importer` turns the ledger's summary into `ingest.ImportSummary`; no product binary connects it, and nothing connects the stores:
 
 ```mermaid
 flowchart LR
@@ -137,7 +137,7 @@ flowchart LR
   fc -. "matching method" .-> sf
   rc -. "matching methods" .-> cc
   rc --> ct
-  led -. "no adapter yet" .-x li
+  led -. "adapter only in cmd/demo-seed" .-> li
 ```
 
 Nothing implements `CoreTokens` or the three stores yet.
@@ -199,7 +199,7 @@ sequenceDiagram
         S->>S: any opening lot or opening cash: ErrSeedingOutsideOpening
         S->>L: Import(transactions, assertions)
       end
-      Note over L: ledger/app.Ledger commits either in one database transaction, once an adapter connects it
+      Note over L: ledger/app.Ledger commits either in one database transaction
       L-->>S: ImportSummary
       S->>S: batch.Complete(mapping, summary)
       S-->>C: Batch
@@ -364,7 +364,7 @@ The Flex golden files sit next to their fixtures, `opening.xml` and `activity.xm
 - **Treasury bonds.** Manual lot entry in the built-in UI, handed to the core (D-9, D-49), and an import of the bond service's own export if one exists (D-9, OQ-22). The connector contract has only `Sync` and `ImportFile`, no call for manual entries.
 - **Connector plugins.** The contract, the core's client and the Go SDK exist, but no connector plugin does. The IBKR code would move into one (D-11, D-49).
 - **Core-owned scheduling.** The daily sync's schedule, retries, and stored import batches and watermarks (D-49).
-- **Entry points.** Upload, CLI and watched folder (D-7). No binary in `cmd/` builds `Service` or `Connectors`.
+- **Entry points.** Upload, CLI and watched folder (D-7). Only `cmd/demo-seed` builds a `Service`, to load the demo dataset; no product binary builds `Service` or `Connectors`.
 - **Adapters for the ports.**
   - `LedgerImporter`, over `ledger/app.Ledger.Import` and `Seed`, turning flagged checks into `FailedAssertions`.
   - `CoreTokens`, over Kubernetes' TokenRequest API (D-59).
