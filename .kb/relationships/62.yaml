@@ -202,3 +202,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a38b5cd43dc
+  - type: implements
+    from: SYM-operator-api-plugin-grant-status-deep-copy-into
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:45:35.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33fd6f4c766e
+  - type: covered_by
+    from: SYM-operator-api-plugin-grant-status-deep-copy-into
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:45:35.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd83e1568bcd
+  - type: executable_for
+    from: SYM-operator-test-objects-peer
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:54:25.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bed1124dfa5
+  - type: implements
+    from: SYM-operator-plugin-reconciler-grant
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:54.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f7fe7edeedb
+  - type: implements
+    from: SYM-operator-plugin-reconciler-grant
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T07:01:54.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8751ae91ab78
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-grant
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:54.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02f47f4bb0b9
+  - type: implements
+    from: SYM-operator-image-verifier
+    to: REQ-operator-signature-required
+    created_at: 2026-10-28T07:04:29.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-237f295124ac
+  - type: implements
+    from: SYM-operator-image-verifier
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T07:04:29.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95e6a3b093df
+  - type: covered_by
+    from: SYM-operator-image-verifier
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:29.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e9b9431dba

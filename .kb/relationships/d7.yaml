@@ -20,3 +20,45 @@ relationships:
     created_at: "2026-10-28T05:25:37.625Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: constrains
+    from: REQ-operator-signature-required
+    to: FACT-SUBJECT-AEEB2502BB90108C
+    created_at: 2026-10-28T07:00:23.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aa1c031d88d
+  - type: requires_property
+    from: REQ-operator-signature-required
+    to: FACT-PROP-8794F8DBB6DED750
+    created_at: 2026-10-28T07:00:23.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aa36622c829
+  - type: specified_by
+    from: REQ-operator-signature-required
+    to: SCEN-operator-unverified-image
+    created_at: 2026-10-28T07:00:23.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2057b95dded
+  - type: implements
+    from: SYM-operator-data-tiers
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:21.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9fac5ce924f
+  - type: implements
+    from: SYM-operator-data-tiers
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T07:01:21.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-520fde879313
+  - type: covered_by
+    from: SYM-operator-data-tiers
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:21.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f4fc4d927c9

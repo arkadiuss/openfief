@@ -55,3 +55,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fb9c393a4a4
+  - type: implements
+    from: SYM-operator-effective-to-api
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:13.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-798607061d0b
+  - type: implements
+    from: SYM-operator-effective-to-api
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T07:01:13.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24bc2294ec6e
+  - type: covered_by
+    from: SYM-operator-effective-to-api
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:13.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a4794a6a3f9
+  - type: implements
+    from: SYM-operator-cmd-main
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T07:13:34.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c622b8ef4f39
+  - type: implements
+    from: SYM-operator-cmd-main
+    to: REQ-AUTO-BBBDDCF207E884A1
+    created_at: 2026-10-28T07:13:34.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0f6a720472a
+  - type: covered_by
+    from: SYM-operator-cmd-main
+    to: TEST-operator-cmd
+    created_at: 2026-10-28T07:13:34.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57ef99f00f4b

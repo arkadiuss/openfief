@@ -125,3 +125,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8840bd77923
+  - type: constrains
+    from: REQ-operator-workload-objects
+    to: FACT-SUBJECT-040695DC2B45EBE0
+    created_at: 2026-10-28T06:50:34.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d07696cd6c7
+  - type: requires_property
+    from: REQ-operator-workload-objects
+    to: FACT-PROP-DB795534EE33A6D2
+    created_at: 2026-10-28T06:50:34.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f082a9a95635
+  - type: specified_by
+    from: REQ-operator-workload-objects
+    to: SCEN-operator-workload-objects
+    created_at: 2026-10-28T06:50:34.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3990ea1b596
+  - type: implements
+    from: SYM-operator-verification
+    to: REQ-operator-signature-required
+    created_at: 2026-10-28T07:04:31.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4b082af02f8
+  - type: implements
+    from: SYM-operator-verification
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T07:04:31.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba4bff9630b8
+  - type: covered_by
+    from: SYM-operator-verification
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:31.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f52fba34a915

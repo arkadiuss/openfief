@@ -69,3 +69,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ae3e61f869c
+  - type: implements
+    from: SYM-operator-api-manifest
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:44:26.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b44ae833270
+  - type: implements
+    from: SYM-operator-api-manifest
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T06:44:26.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d3f0facb719
+  - type: covered_by
+    from: SYM-operator-api-manifest
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:44:26.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0416322c798
+  - type: implements
+    from: SYM-operator-api-plugin-deep-copy-into
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:45:08.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-515866f8ef82
+  - type: covered_by
+    from: SYM-operator-api-plugin-deep-copy-into
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:45:08.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e0b44e1dba1

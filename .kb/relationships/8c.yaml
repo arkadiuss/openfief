@@ -20,3 +20,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a452a8fc5789
+  - type: implements
+    from: SYM-operator-truncate
+    to: REQ-operator-upgrade-status
+    created_at: 2026-10-28T07:04:26.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1ef1935147
+  - type: implements
+    from: SYM-operator-truncate
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T07:04:26.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d01297181a8
+  - type: covered_by
+    from: SYM-operator-truncate
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:26.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c574b2b224cd

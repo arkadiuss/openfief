@@ -34,3 +34,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e9ccf9bb24a
+  - type: executable_for
+    from: SYM-operator-test-objects-ptr-to
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:54:14.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88f585b4f483
+  - type: executable_for
+    from: SYM-operator-test-reconciler-sample-grant
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:00.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d91e4af60afe

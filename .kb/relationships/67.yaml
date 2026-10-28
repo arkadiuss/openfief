@@ -62,3 +62,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-beab8ef63fb9
+  - type: verified_by
+    from: SCEN-operator-upgrade-waits
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T06:59:54.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a7f43eb7175
+  - type: implements
+    from: SYM-operator-cmd-run
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T07:13:42.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8505f99a521
+  - type: implements
+    from: SYM-operator-cmd-run
+    to: REQ-AUTO-BBBDDCF207E884A1
+    created_at: 2026-10-28T07:13:42.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4475e7ddaec8
+  - type: covered_by
+    from: SYM-operator-cmd-run
+    to: TEST-operator-cmd
+    created_at: 2026-10-28T07:13:42.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b97010e53e5

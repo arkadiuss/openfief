@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8595dd266f4c
+  - type: implements
+    from: SYM-operator-unimplemented-verifier-verify-image
+    to: REQ-operator-signature-required
+    created_at: 2026-10-28T07:04:41.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a16d14d77fc
+  - type: implements
+    from: SYM-operator-unimplemented-verifier-verify-image
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T07:04:41.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8a4a3b9c9a9
+  - type: covered_by
+    from: SYM-operator-unimplemented-verifier-verify-image
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:41.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9a6dacc1365

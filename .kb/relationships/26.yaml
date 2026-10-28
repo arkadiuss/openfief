@@ -55,3 +55,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4afd530562a
+  - type: executable_for
+    from: SYM-operator-test-reconciler-start-cluster
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:02:41.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1e06fda4fa1

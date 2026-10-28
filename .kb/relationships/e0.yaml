@@ -83,3 +83,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f13737fe0fe
+  - type: implements
+    from: SYM-operator-permissions-to-api
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:11.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cd37edec46c
+  - type: implements
+    from: SYM-operator-permissions-to-api
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T07:01:11.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b9272ee39d9
+  - type: covered_by
+    from: SYM-operator-permissions-to-api
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:11.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce63db3a71c2

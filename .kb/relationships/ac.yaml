@@ -97,3 +97,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6069c4a0b10d
+  - type: constrains
+    from: REQ-operator-cluster-peers
+    to: FACT-SUBJECT-E4ED656B951F9EFF
+    created_at: 2026-10-28T06:50:42.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3883ca052c93
+  - type: requires_property
+    from: REQ-operator-cluster-peers
+    to: FACT-PROP-3D2B6E397B2AD7EF
+    created_at: 2026-10-28T06:50:42.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e9b37d858f4
+  - type: specified_by
+    from: REQ-operator-cluster-peers
+    to: SCEN-operator-cluster-peers
+    created_at: 2026-10-28T06:50:43.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa676e7f10d
+  - type: executable_for
+    from: SYM-operator-test-manifests-declared
+    to: TEST-operator-manifests
+    created_at: 2026-10-28T07:09:58.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3158c9e5ce7

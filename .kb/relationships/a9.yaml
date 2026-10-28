@@ -34,3 +34,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-875f17aae632
+  - type: implements
+    from: SYM-operator-plugin-reconciler-apply-object-as
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:02:18.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fc7bba7a231
+  - type: implements
+    from: SYM-operator-plugin-reconciler-apply-object-as
+    to: REQ-operator-allow-list-publish
+    created_at: 2026-10-28T07:02:18.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-156a67af024c
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-apply-object-as
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:02:18.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-657581874a57
+  - type: implements
+    from: SYM-operator-outcome-reason
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:04:13.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c45c745c3e6
+  - type: implements
+    from: SYM-operator-outcome-reason
+    to: REQ-operator-signature-required
+    created_at: 2026-10-28T07:04:13.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-252663df8ebe
+  - type: covered_by
+    from: SYM-operator-outcome-reason
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:13.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a91bbbbd9fc

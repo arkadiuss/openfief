@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-376194faa573
+  - type: implements
+    from: SYM-operator-plugin-reconciler-verify
+    to: REQ-operator-signature-required
+    created_at: 2026-10-28T07:01:47.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee8a8fb93131
+  - type: implements
+    from: SYM-operator-plugin-reconciler-verify
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T07:01:47.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-693c1656c074
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-verify
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:47.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-247dd8cf70b0

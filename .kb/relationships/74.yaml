@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97ad516798de
+  - type: executable_for
+    from: SYM-plugins-test-plan-rollout
+    to: TEST-plugins-rollout
+    created_at: 2026-10-28T06:37:25.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86bb7723e483

@@ -62,3 +62,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44b0bb046c84
+  - type: implements
+    from: SYM-operator-api-plugin-list-deep-copy-object
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:45:49.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dc634543b07
+  - type: covered_by
+    from: SYM-operator-api-plugin-list-deep-copy-object
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:45:49.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea165f443150
+  - type: implements
+    from: SYM-operator-container
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T06:52:29.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86dc22f3398f
+  - type: implements
+    from: SYM-operator-container
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:52:29.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b8428c328ad
+  - type: covered_by
+    from: SYM-operator-container
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:52:29.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b35336b06dbf
+  - type: implements
+    from: SYM-operator-grant-reconciler-setup-with-manager
+    to: REQ-operator-grant-validity
+    created_at: 2026-10-28T07:03:54.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00f9fb256c13
+  - type: implements
+    from: SYM-operator-grant-reconciler-setup-with-manager
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T07:03:54.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27197bbb7c0
+  - type: covered_by
+    from: SYM-operator-grant-reconciler-setup-with-manager
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:54.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecf024c6ef80

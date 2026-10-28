@@ -62,3 +62,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b3eef90a183
+  - type: implements
+    from: SYM-plugins-rollout-run-under
+    to: REQ-plugins-rollout-no-grant
+    created_at: 2026-10-28T06:37:18.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a130023be0a
+  - type: implements
+    from: SYM-plugins-rollout-run-under
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T06:37:18.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9e351b5beb5
+  - type: covered_by
+    from: SYM-plugins-rollout-run-under
+    to: TEST-plugins-rollout
+    created_at: 2026-10-28T06:37:18.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3e2fd0be92f
+  - type: implements
+    from: SYM-operator-secret-volume
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T06:52:36.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a386e147e3e7
+  - type: implements
+    from: SYM-operator-secret-volume
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:52:36.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-468802d87ea6
+  - type: covered_by
+    from: SYM-operator-secret-volume
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:52:36.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-808b0eec4210
+  - type: executable_for
+    from: SYM-operator-test-reconciler-conditions
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:14.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-248fe2ce38a4

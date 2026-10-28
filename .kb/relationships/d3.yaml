@@ -62,3 +62,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a25c3888404
+  - type: executable_for
+    from: SYM-operator-api-test-deep-copy-is-independent
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:44:53.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ead65a4bd5e5
+  - type: implements
+    from: SYM-operator-config-map-name
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T06:52:05.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47d2792c44a9
+  - type: implements
+    from: SYM-operator-config-map-name
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:52:05.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bbe7397ba58
+  - type: covered_by
+    from: SYM-operator-config-map-name
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:52:05.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aada69ba49b
+  - type: implements
+    from: SYM-operator-plugin-reconciler-plan
+    to: REQ-operator-upgrade-status
+    created_at: 2026-10-28T07:01:40.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c677bc1d1b00
+  - type: implements
+    from: SYM-operator-plugin-reconciler-plan
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T07:01:40.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33b3c77444ca
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-plan
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:40.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db7ce819447

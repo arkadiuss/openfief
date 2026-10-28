@@ -76,3 +76,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74b1c558f3ff
+  - type: implements
+    from: SYM-operator-plugin-reconciler-apply-object
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:02:14.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44222aeb32e7
+  - type: implements
+    from: SYM-operator-plugin-reconciler-apply-object
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T07:02:14.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ba5cd9c5e69
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-apply-object
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:02:14.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdc818c976ba
+  - type: executable_for
+    from: SYM-operator-test-reconciler-sample-plugin
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:02:56.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2ac5efae7c4

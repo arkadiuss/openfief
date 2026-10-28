@@ -34,3 +34,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0638b6aac54
+  - type: constrains
+    from: REQ-plugins-rollout-no-grant
+    to: FACT-SUBJECT-DE9DF6057FCDB217
+    created_at: 2026-10-28T06:36:35.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7441bc0d7b9e
+  - type: requires_property
+    from: REQ-plugins-rollout-no-grant
+    to: FACT-PROP-727D460B7C03DF13
+    created_at: 2026-10-28T06:36:35.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3836c5b86765
+  - type: specified_by
+    from: REQ-plugins-rollout-no-grant
+    to: SCEN-plugins-rollout-no-grant
+    created_at: 2026-10-28T06:36:35.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd7dcf983842
+  - type: implements
+    from: SYM-operator-verification-verified
+    to: REQ-operator-signature-required
+    created_at: 2026-10-28T07:04:36.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46cf736d3d79
+  - type: implements
+    from: SYM-operator-verification-verified
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T07:04:36.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90eedddffb98
+  - type: covered_by
+    from: SYM-operator-verification-verified
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:36.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a809371817c

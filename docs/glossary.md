@@ -53,6 +53,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Image reference | plugins | `plugins.ImageRef` | A plugin's container image, pinned by digest (`repository@sha256:...`), never by tag. | image tag |
 | Effective permissions | plugins | `plugins.EffectivePermissions` | What OpenFief enforces for a plugin: only what its Plugin requests and its Grant approves. | |
 | Workload | plugins | `plugins.Workload` | What the operator creates for one plugin, compiled from its effective permissions: identity, token, Secret mounts, environment, NetworkPolicy and egress allow-list. | deployment (the Kubernetes object is one part) |
+| Rollout | plugins | `plugins.Rollout` | Which version of a plugin runs under its grant: the current one, the previously deployed one while an upgrade waits for approval, or none. | deployment (the Kubernetes object) |
+| Pending approval | plugins | `plugins.Rollout.Pending` | What a plugin's current version requests that its grant does not approve. The owner approves it by adding it to the grant. | diff |
 | Plugin identity | identity | `plugins.ServiceAccountName` | The ServiceAccount `plugin-<name>` in the `openfief` namespace, proven by its projected token with audience `openfief-core`. | |
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |

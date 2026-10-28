@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18d57e925a21
+  - type: implements
+    from: SYM-operator-deny-all-network-policy
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T06:51:59.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6ebd27a06af
+  - type: implements
+    from: SYM-operator-deny-all-network-policy
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-28T06:51:59.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb4470e6fdfa
+  - type: covered_by
+    from: SYM-operator-deny-all-network-policy
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:51:59.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b20bcab63b76

@@ -11444,3 +11444,2248 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-pg-store
+  - id: SYM-plugins-rollout-outcome
+    title: RolloutOutcome
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:01.521Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-plugins-rollout-no-grant
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout-input
+    title: RolloutInput
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:03.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout
+    title: Rollout
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:05.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-plan-rollout
+    title: PlanRollout
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:08.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout-input-pending
+    title: RolloutInput.pending
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:11.606Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout-input-current-deployable
+    title: RolloutInput.currentDeployable
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:14.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-rollout-upgrade-waits
+  - id: SYM-plugins-rollout-run-under
+    title: Rollout.runUnder
+    sourceFile: internal/plugins/rollout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:17.766Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-rollout
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-rollout-no-grant
+  - id: SYM-plugins-test-rollout-upgraded
+    title: upgraded
+    sourceFile: internal/plugins/rollout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:20.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-rollout
+  - id: SYM-plugins-test-rollout-no-egress-grant
+    title: noEgressGrant
+    sourceFile: internal/plugins/rollout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:22.502Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-rollout
+  - id: SYM-plugins-test-plan-rollout
+    title: TestPlanRollout
+    sourceFile: internal/plugins/rollout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:24.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-rollout
+  - id: SYM-plugins-test-plan-rollout-refuses
+    title: TestPlanRolloutRefuses
+    sourceFile: internal/plugins/rollout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:37:27.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-rollout
+  - id: SYM-operator-api-group-version
+    title: GroupVersion
+    sourceFile: internal/plugins/operator/v1alpha1/groupversion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:11.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-add-to-scheme
+    title: AddToScheme
+    sourceFile: internal/plugins/operator/v1alpha1/groupversion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:16.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin
+    title: Plugin
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:20.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-spec
+    title: PluginSpec
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:23.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-manifest
+    title: Manifest
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:26.047Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-secret-mount
+    title: SecretMount
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:28.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-permissions
+    title: Permissions
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:30.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-status
+    title: PluginStatus
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:33.261Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-list
+    title: PluginList
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:35.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-grant
+    title: PluginGrant
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:38.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-grant-status
+    title: PluginGrantStatus
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:40.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-grant-list
+    title: PluginGrantList
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:43.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-test-add-to-scheme
+    title: TestAddToScheme
+    sourceFile: internal/plugins/operator/v1alpha1/types_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:46.743Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-api
+  - id: SYM-operator-api-test-types-sample-plugin
+    title: samplePlugin
+    sourceFile: internal/plugins/operator/v1alpha1/types_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:49.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-api
+  - id: SYM-operator-api-test-deep-copy-is-independent
+    title: TestDeepCopyIsIndependent
+    sourceFile: internal/plugins/operator/v1alpha1/types_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:52.702Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-api
+  - id: SYM-operator-api-manifest-deep-copy-into
+    title: Manifest.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:55.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-manifest-deep-copy
+    title: Manifest.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:58.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-permissions-deep-copy-into
+    title: Permissions.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:02.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-permissions-deep-copy
+    title: Permissions.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:05.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-deep-copy-into
+    title: Plugin.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:08.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-deep-copy
+    title: Plugin.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:10.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-deep-copy-object
+    title: Plugin.DeepCopyObject
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:13.224Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-deep-copy-into
+    title: PluginGrant.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:15.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-deep-copy
+    title: PluginGrant.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:19.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-deep-copy-object
+    title: PluginGrant.DeepCopyObject
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:22.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-list-deep-copy-into
+    title: PluginGrantList.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:25.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-list-deep-copy
+    title: PluginGrantList.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:28.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-list-deep-copy-object
+    title: PluginGrantList.DeepCopyObject
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:32.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-status-deep-copy-into
+    title: PluginGrantStatus.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:35.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-status-deep-copy
+    title: PluginGrantStatus.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:38.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-list-deep-copy-into
+    title: PluginList.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:42.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-list-deep-copy
+    title: PluginList.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:45.406Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-list-deep-copy-object
+    title: PluginList.DeepCopyObject
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:49.356Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-spec-deep-copy-into
+    title: PluginSpec.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:52.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-spec-deep-copy
+    title: PluginSpec.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:56.496Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-status-deep-copy-into
+    title: PluginStatus.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:59.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-status-deep-copy
+    title: PluginStatus.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:46:02.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-secret-mount-deep-copy-into
+    title: SecretMount.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:46:06.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-secret-mount-deep-copy
+    title: SecretMount.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:46:09.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-cluster
+    title: Cluster
+    sourceFile: internal/plugins/operator/cluster.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:22.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-cluster-peers
+  - id: SYM-operator-cluster-from-services
+    title: ClusterFromServices
+    sourceFile: internal/plugins/operator/cluster.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:25.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-cluster-peers
+  - id: SYM-operator-service-of
+    title: serviceOf
+    sourceFile: internal/plugins/operator/cluster.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:28.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-cluster-peers
+  - id: SYM-operator-service-port
+    title: servicePort
+    sourceFile: internal/plugins/operator/cluster.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:31.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-cluster-peers
+  - id: SYM-operator-to-port
+    title: toPort
+    sourceFile: internal/plugins/operator/cluster.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:34.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-cluster-peers
+  - id: SYM-operator-selects-plugin-pods
+    title: selectsPluginPods
+    sourceFile: internal/plugins/operator/cluster.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:36.792Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-cluster-peers
+  - id: SYM-operator-test-cluster-service
+    title: service
+    sourceFile: internal/plugins/operator/cluster_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:38.980Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster
+  - id: SYM-operator-test-cluster-from-services
+    title: TestClusterFromServices
+    sourceFile: internal/plugins/operator/cluster_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:41.207Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster
+  - id: SYM-operator-no-loader
+    title: noLoader
+    sourceFile: internal/plugins/operator/config.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:43.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-config
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-config-schema
+  - id: SYM-operator-no-loader-load
+    title: noLoader.Load
+    sourceFile: internal/plugins/operator/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:45.873Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-config
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-config-schema
+  - id: SYM-operator-validate-config
+    title: ValidateConfig
+    sourceFile: internal/plugins/operator/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:48.467Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-config
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-config-schema
+  - id: SYM-operator-test-validate-config
+    title: TestValidateConfig
+    sourceFile: internal/plugins/operator/config_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:50.681Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-config
+  - id: SYM-operator-objects
+    title: Objects
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:53.431Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-build-objects
+    title: BuildObjects
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:56.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-deny-all-network-policy
+    title: DenyAllNetworkPolicy
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:51:58.994Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-allow-list-config-map
+    title: AllowListConfigMap
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:01.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-config-map-name
+    title: configMapName
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:04.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-pod-labels
+    title: podLabels
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:07.801Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-object-meta
+    title: objectMeta
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:10.947Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-network-policy
+    title: networkPolicy
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:13.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-peer
+    title: peer
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:17.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-tcp-port
+    title: tcpPort
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:21.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-deployment
+    title: deployment
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:25.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-container
+    title: container
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:29.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-volumes
+    title: volumes
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:33.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-0455DAAE4C01C965
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-secret-volume
+    title: secretVolume
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:52:36.386Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-test-objects-core-selector
+    title: coreSelector
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:03.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-proxy-selector
+    title: proxySelector
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:05.987Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-cluster
+    title: cluster
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:08.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-workload
+    title: workload
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:11.218Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-ptr-to
+    title: ptrTo
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:13.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-labels
+    title: labels
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:17.080Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-object-meta
+    title: objectMeta
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:19.988Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-tcp
+    title: tcp
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:22.872Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-peer
+    title: peer
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:25.585Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-network-policy
+    title: networkPolicy
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:28.343Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-env
+    title: env
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:31.052Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-deployment
+    title: deployment
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:33.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-objects
+    title: objects
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:36.383Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-build-objects
+    title: TestBuildObjects
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:39.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-build-objects-refuses
+    title: TestBuildObjectsRefuses
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:41.903Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-deny-all-network-policy
+    title: TestDenyAllNetworkPolicy
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:44.751Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-allow-list-config-map
+    title: TestAllowListConfigMap
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:54:47.706Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-plugin-from-spec
+    title: pluginFromSpec
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:05.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-grant-from-resource
+    title: grantFromResource
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:08.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-permissions-to-api
+    title: permissionsToAPI
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:10.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-effective-to-api
+    title: effectiveToAPI
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:13.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-parse-egress
+    title: parseEgress
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:15.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-capabilities
+    title: capabilities
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:18.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-data-tiers
+    title: dataTiers
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:20.720Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-raw-json
+    title: rawJSON
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:23.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-settings
+    title: Settings
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:26.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler
+    title: PluginReconciler
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:28.800Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-reconcile
+    title: PluginReconciler.Reconcile
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:33.768Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-observe
+    title: PluginReconciler.observe
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:37.373Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-config-schema
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-plan
+    title: PluginReconciler.plan
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:40.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-previous-version
+    title: previousVersion
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:43.608Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-plugin-reconciler-verify
+    title: PluginReconciler.verify
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:46.760Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-grant-result
+    title: grantResult
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:50.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-grant
+    title: PluginReconciler.grant
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:53.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-cluster
+    title: PluginReconciler.cluster
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:57.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-cluster-peers
+  - id: SYM-operator-plugin-reconciler-apply
+    title: PluginReconciler.apply
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:00.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-deployment-available
+    title: deploymentAvailable
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:04.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-teardown
+    title: PluginReconciler.teardown
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:08.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-apply-owned
+    title: PluginReconciler.applyOwned
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:11.304Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-plugin-reconciler-apply-object
+    title: PluginReconciler.applyObject
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:14.499Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-plugin-reconciler-apply-object-as
+    title: PluginReconciler.applyObjectAs
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:17.773Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-allow-list-publish
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-publish-allow-list
+    title: PluginReconciler.publishAllowList
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:20.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-operator-allow-list-publish
+  - id: SYM-operator-allow-list-field-owner
+    title: allowListFieldOwner
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:23.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-allow-list-publish
+  - id: SYM-operator-plugin-reconciler-write-status
+    title: PluginReconciler.writeStatus
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:27.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-test-reconciler-signed-images
+    title: signedImages
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:31.068Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-signed-images-verify-image
+    title: signedImages.VerifyImage
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:33.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster
+    title: testCluster
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:37.865Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-start-cluster
+    title: startCluster
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:40.832Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-create
+    title: create
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:43.907Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster-reconciler
+    title: testCluster.reconciler
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:47.176Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster-reconcile
+    title: testCluster.reconcile
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:51.010Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-sample-plugin
+    title: samplePlugin
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:55.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-sample-grant
+    title: sampleGrant
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:00.372Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-state
+    title: state
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:04.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster-state
+    title: testCluster.state
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:07.963Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster-object-state
+    title: testCluster.objectState
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:10.855Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-conditions
+    title: conditions
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:14.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconcile
+    title: TestReconcile
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:18.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-upgrade
+    title: testUpgrade
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:23.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-revoke
+    title: testRevoke
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:26.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-invalid-grant
+    title: testInvalidGrant
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:29.145Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-deleted-plugin-leaves-the-allow-list
+    title: TestDeletedPluginLeavesTheAllowList
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:31.974Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-setup-with-manager
+    title: TestSetupWithManager
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:35.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-plugin-reconciler-setup-with-manager
+    title: PluginReconciler.SetupWithManager
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:37.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-same-plugin
+    title: samePlugin
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:40.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-all-plugins-if-named
+    title: PluginReconciler.allPluginsIfNamed
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:43.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-grant-reconciler
+    title: GrantReconciler
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:45.501Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-grant-reconciler-reconcile
+    title: GrantReconciler.Reconcile
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:48.413Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-grant-status
+    title: grantStatus
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:51.571Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-grant-reconciler-setup-with-manager
+    title: GrantReconciler.SetupWithManager
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:54.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-observation
+    title: observation
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:56.414Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-observation-running
+    title: observation.running
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:59.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-plugin-status
+    title: pluginStatus
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:03.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-condition
+    title: condition
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:07.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-ready-condition
+    title: readyCondition
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:10.109Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-outcome-reason
+    title: outcomeReason
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:12.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-outcome-message
+    title: outcomeMessage
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:16.785Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-approval-condition
+    title: approvalCondition
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:20.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-describe
+    title: describe
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:23.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-truncate
+    title: truncate
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:25.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-image-verifier
+    title: ImageVerifier
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:28.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-verification
+    title: Verification
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:31.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-verification-verified
+    title: Verification.Verified
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:35.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-unimplemented-verifier
+    title: UnimplementedVerifier
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:38.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-unimplemented-verifier-verify-image
+    title: UnimplementedVerifier.VerifyImage
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:41.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-test-manifests-kinds
+    title: kinds
+    sourceFile: internal/plugins/operator/manifests_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:09:00.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-manifests
+  - id: SYM-operator-test-manifests
+    title: TestManifests
+    sourceFile: internal/plugins/operator/manifests_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:09:03.037Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-manifests
+  - id: SYM-operator-test-manifests-declared
+    title: declared
+    sourceFile: internal/plugins/operator/manifests_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:09:58.210Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-manifests
+  - id: SYM-operator-cmd-options
+    title: options
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:30.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-BBBDDCF207E884A1
+  - id: SYM-operator-cmd-main
+    title: main
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:34.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-BBBDDCF207E884A1
+  - id: SYM-operator-cmd-parse-flags
+    title: parseFlags
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:38.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-BBBDDCF207E884A1
+  - id: SYM-operator-cmd-run
+    title: run
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:42.389Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-BBBDDCF207E884A1
+  - id: SYM-operator-cmd-test-parse-flags
+    title: TestParseFlags
+    sourceFile: cmd/operator/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:45.508Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cmd

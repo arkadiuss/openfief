@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ba2a1bd6044
+  - type: implements
+    from: SYM-operator-object-meta
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T06:52:11.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a5dda0aab1
+  - type: implements
+    from: SYM-operator-object-meta
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:52:11.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8d692afa049
+  - type: covered_by
+    from: SYM-operator-object-meta
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:52:11.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5f164850e8e

@@ -62,3 +62,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53fd1e5759c2
+  - type: implements
+    from: SYM-operator-api-plugin-spec
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:44:24.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fbe5c877ba3
+  - type: implements
+    from: SYM-operator-api-plugin-spec
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T06:44:24.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ad78a610f8e
+  - type: covered_by
+    from: SYM-operator-api-plugin-spec
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:44:24.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee957a643d3
+  - type: implements
+    from: SYM-operator-deployment
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T06:52:25.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d116d704f7ba
+  - type: implements
+    from: SYM-operator-deployment
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:52:25.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-482340282247
+  - type: covered_by
+    from: SYM-operator-deployment
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:52:25.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-990dd9cb89aa
+  - type: implements
+    from: SYM-operator-plugin-reconciler-all-plugins-if-named
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:03:43.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a97d7d8fa88d
+  - type: implements
+    from: SYM-operator-plugin-reconciler-all-plugins-if-named
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T07:03:43.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdfd96530655
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-all-plugins-if-named
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:43.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df91532fd4af

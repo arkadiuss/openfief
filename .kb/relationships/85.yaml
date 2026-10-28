@@ -48,3 +48,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd2184a164e4
+  - type: validates
+    from: TEST-operator-objects
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:50:13.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e75884ba6192
+  - type: validates
+    from: TEST-operator-objects
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-28T06:50:13.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8771028eed7
+  - type: validates
+    from: TEST-operator-objects
+    to: REQ-AUTO-4E89A76200230A6F
+    created_at: 2026-10-28T06:50:13.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b6835c5f41
+  - type: validates
+    from: TEST-operator-objects
+    to: REQ-AUTO-0455DAAE4C01C965
+    created_at: 2026-10-28T06:50:13.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-500ca456f8a0

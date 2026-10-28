@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8cf266c36fb2
+  - type: implements
+    from: SYM-operator-api-plugin-grant-list-deep-copy
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:45:29.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b941155fecaf
+  - type: covered_by
+    from: SYM-operator-api-plugin-grant-list-deep-copy
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:45:29.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a796020ce046

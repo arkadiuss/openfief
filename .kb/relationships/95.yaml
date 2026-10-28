@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-804f2ddae11f
+  - type: constrains
+    from: REQ-operator-upgrade-status
+    to: FACT-SUBJECT-D4980B15C47DCF8A
+    created_at: 2026-10-28T07:00:15.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0487172018d2
+  - type: requires_property
+    from: REQ-operator-upgrade-status
+    to: FACT-PROP-5AFCC995D6DC9B8F
+    created_at: 2026-10-28T07:00:15.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b6a234e0801
+  - type: specified_by
+    from: REQ-operator-upgrade-status
+    to: SCEN-operator-upgrade-waits
+    created_at: 2026-10-28T07:00:15.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ac10b84c31f

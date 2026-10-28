@@ -111,3 +111,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88b818ccbdfc
+  - type: executable_for
+    from: SYM-operator-test-deleted-plugin-leaves-the-allow-list
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:32.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5da3587243fc

@@ -76,3 +76,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a6d82015f52
+  - type: implements
+    from: SYM-operator-plugin-reconciler-teardown
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:02:08.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb02537a319c
+  - type: implements
+    from: SYM-operator-plugin-reconciler-teardown
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T07:02:08.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c88e2402086
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-teardown
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:02:08.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d05c2a53d973
+  - type: executable_for
+    from: SYM-operator-test-reconciler-test-cluster-object-state
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:11.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a06a16f2ae6f
+  - type: implements
+    from: SYM-operator-unimplemented-verifier
+    to: REQ-operator-signature-required
+    created_at: 2026-10-28T07:04:38.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfdb39daf6cf
+  - type: implements
+    from: SYM-operator-unimplemented-verifier
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T07:04:38.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13203a6a43a1
+  - type: covered_by
+    from: SYM-operator-unimplemented-verifier
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:38.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca7a49795e61

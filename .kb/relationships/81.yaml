@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12afda8f8d5c
+  - type: implements
+    from: SYM-operator-api-plugin-grant-deep-copy-object
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:45:22.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-665f6750ef9f
+  - type: covered_by
+    from: SYM-operator-api-plugin-grant-deep-copy-object
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:45:22.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21cc6609144a

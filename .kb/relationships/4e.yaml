@@ -20,3 +20,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4ebc0b5ada1
+  - id: rel-d2c180a2715e
+    type: implements
+    from: SYM-operator-pod-labels
+    to: REQ-operator-workload-objects
+    created_at: "2026-10-28T06:52:08.133Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-operator-pod-labels
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T06:52:08.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07699c8f7459
+  - type: covered_by
+    from: SYM-operator-pod-labels
+    to: TEST-operator-objects
+    created_at: 2026-10-28T06:52:08.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fab804611f2
