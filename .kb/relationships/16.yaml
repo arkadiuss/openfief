@@ -83,3 +83,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-209dcd4f0b51
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-failing-connector
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:04:53.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da6e91333be0

@@ -202,3 +202,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-618c265f4877
+  - type: constrains
+    from: REQ-ingest-core-authenticates-to-connector
+    to: FACT-SUBJECT-0181257F533247C5
+    created_at: 2026-10-28T08:56:15.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-429350e6dfd3
+  - type: requires_property
+    from: REQ-ingest-core-authenticates-to-connector
+    to: FACT-PROP-20A7BB0974F3430D
+    created_at: 2026-10-28T08:56:15.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5eb333d0ec6
+  - type: specified_by
+    from: REQ-ingest-core-authenticates-to-connector
+    to: SCEN-ingest-core-authenticates-to-connector
+    created_at: 2026-10-28T08:56:15.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19fcd65a8ca0
+  - type: implements
+    from: SYM-ingest-conn-rpc-translate
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:11.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c440f4b5c170
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-translate
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:12.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b73205c05483

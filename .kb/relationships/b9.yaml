@@ -181,3 +181,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65399acf3059
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-helper-delivery
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T09:00:24.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f7032ba6f71
+  - type: implements
+    from: SYM-ingest-conn-rpc-client-service
+    to: REQ-ingest-core-authenticates-to-connector
+    created_at: 2026-10-28T09:01:52.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7d1514dbd99
+  - type: implements
+    from: SYM-ingest-conn-rpc-client-service
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T09:01:52.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-561b5b551def
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-client-service
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:52.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-024affd112f6
+  - type: implements
+    from: SYM-ingest-conn-rpc-book-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:47.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6f64f7583c4
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-book-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:47.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1264ac75161b

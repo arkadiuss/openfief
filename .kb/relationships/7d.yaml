@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f95ad7fd8ed
+  - type: validates
+    from: TEST-ingest-connectrpc-mapping
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T08:54:28.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-242ddd1471a5

@@ -111,3 +111,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bffc8a164d6c
+  - type: constrains
+    from: REQ-ingest-instance-scoped-keys
+    to: FACT-SUBJECT-88F1C2EA762103A7
+    created_at: 2026-10-28T08:55:40.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f46a55fc7358
+  - type: requires_property
+    from: REQ-ingest-instance-scoped-keys
+    to: FACT-PROP-0F4AF87CD4CC6495
+    created_at: 2026-10-28T08:55:40.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0616b8f883f
+  - type: specified_by
+    from: REQ-ingest-instance-scoped-keys
+    to: SCEN-ingest-instance-scoped-keys
+    created_at: 2026-10-28T08:55:40.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f313f66ee4b
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-mode-to
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:06:42.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c1326dcf4a6

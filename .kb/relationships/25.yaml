@@ -90,3 +90,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34cf67fc9f2a
+  - type: implements
+    from: SYM-ingest-conn-rpc-ignore-eof
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T09:01:41.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d188ff7b8a1c
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-ignore-eof
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:41.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95162dd95101

@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-641955280377
+  - type: executable_for
+    from: SYM-ingest-conn-dom-test-scope-to-connector
+    to: TEST-ingest-scope
+    created_at: 2026-10-28T08:57:25.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57d917adc905

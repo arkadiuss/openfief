@@ -104,3 +104,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c1154dde1d7
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-plain-decimal
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:06:13.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-988c0494bee9

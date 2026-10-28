@@ -34,3 +34,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-251d9401d133
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-connectors-import-file
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T09:00:48.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bbc37f8cb7b

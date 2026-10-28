@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-408592c1b836
+  - type: executable_for
+    from: SYM-ingest-conn-dom-test-index-reading-validate
+    to: TEST-ingest-index-reading
+    created_at: 2026-10-28T08:57:30.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a91148e3d14

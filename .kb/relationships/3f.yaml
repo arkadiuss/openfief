@@ -55,3 +55,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88133d375dce
+  - type: constrains
+    from: REQ-ingest-connector-contract-translation
+    to: FACT-SUBJECT-69A02BF8F0306433
+    created_at: 2026-10-28T08:55:58.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e215dd519181
+  - type: requires_property
+    from: REQ-ingest-connector-contract-translation
+    to: FACT-PROP-5F3DDF774D4BF3CA
+    created_at: 2026-10-28T08:55:58.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a59c0883f9c5
+  - type: specified_by
+    from: REQ-ingest-connector-contract-translation
+    to: SCEN-ingest-connector-contract-translation
+    created_at: 2026-10-28T08:55:58.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b2bdc1c2c4b

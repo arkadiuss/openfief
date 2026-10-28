@@ -17616,3 +17616,1130 @@ symbols:
         target: REQ-connector-contract-messages
       - type: implements
         target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-dom-connector-key-source
+    title: ConnectorKeySource
+    sourceFile: internal/ingest/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:56:41.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-scope
+      - type: implements
+        target: REQ-ingest-instance-scoped-keys
+  - id: SYM-ingest-conn-dom-scope-to-connector
+    title: ScopeToConnector
+    sourceFile: internal/ingest/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:56:48.997Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-scope
+      - type: implements
+        target: REQ-ingest-instance-scoped-keys
+      - type: implements
+        target: REQ-plugins-instance-per-install
+  - id: SYM-ingest-conn-dom-index
+    title: Index
+    sourceFile: internal/ingest/index.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:56:55.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-index-reading
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-dom-index-string
+    title: Index.String
+    sourceFile: internal/ingest/index.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:02.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-index-reading
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-dom-index-reading
+    title: IndexReading
+    sourceFile: internal/ingest/index.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:06.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-index-reading
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-dom-index-reading-validate
+    title: IndexReading.Validate
+    sourceFile: internal/ingest/index.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:13.589Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-index-reading
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-dom-test-connector-key-source
+    title: TestConnectorKeySource
+    sourceFile: internal/ingest/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:18.806Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-scope
+  - id: SYM-ingest-conn-dom-test-scope-to-connector
+    title: TestScopeToConnector
+    sourceFile: internal/ingest/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:24.213Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-scope
+  - id: SYM-ingest-conn-dom-test-index-reading-validate
+    title: TestIndexReadingValidate
+    sourceFile: internal/ingest/index_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:29.482Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-index-reading
+  - id: SYM-ingest-conn-dom-test-index-string
+    title: TestIndexString
+    sourceFile: internal/ingest/index_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:34.811Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-index-reading
+  - id: SYM-ingest-conn-app-delivery
+    title: Delivery
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:42.293Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-connector-caller
+    title: ConnectorCaller
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:49.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-app-named-file
+    title: NamedFile
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:57.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-core-tokens
+    title: CoreTokens
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:06.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+      - type: implements
+        target: REQ-plugins-core-only-caller
+  - id: SYM-ingest-conn-app-price-store
+    title: PriceStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:13.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-fxrate-store
+    title: FXRateStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:21.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-index-reading-store
+    title: IndexReadingStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:30.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-app-sync-result
+    title: SyncResult
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:37.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-connectors
+    title: Connectors
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:41.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-app-connectors-sync
+    title: Connectors.Sync
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:48.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-core-owns-schedules
+  - id: SYM-ingest-conn-app-connectors-import-file
+    title: Connectors.ImportFile
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:54.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-conn-app-connectors-deliver
+    title: Connectors.deliver
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:00.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-instance-scoped-keys
+  - id: SYM-ingest-conn-app-connectors-store-inputs
+    title: Connectors.storeInputs
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:08.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-sourced-readings
+    title: sourcedReadings
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:16.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-app-test-helper-fake-caller
+    title: fakeCaller
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:21.553Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-caller-sync
+    title: fakeCaller.Sync
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:29.684Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-caller-import-file
+    title: fakeCaller.ImportFile
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:37.926Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-stores
+    title: fakeStores
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:44.336Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-stores-store-prices
+    title: fakeStores.StorePrices
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:53.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-stores-store-fxrates
+    title: fakeStores.StoreFXRates
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:03.531Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-stores-store-index-readings
+    title: fakeStores.StoreIndexReadings
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:12.751Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-delivery
+    title: delivery
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:22.334Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-connectors
+    title: connectors
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:31.666Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-connectors-sync
+    title: TestConnectorsSync
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:39.540Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-connectors-import-file
+    title: TestConnectorsImportFile
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:47.252Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-connectors-failures
+    title: TestConnectorsFailures
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:53.959Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-rpc-client
+    title: Client
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:00.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-rpc-new-client
+    title: NewClient
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:07.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-rpc-h2-cclient
+    title: H2CClient
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:13.559Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-rpc-client-sync
+    title: Client.Sync
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:20.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+  - id: SYM-ingest-conn-rpc-client-import-file
+    title: Client.ImportFile
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:26.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+  - id: SYM-ingest-conn-rpc-send-chunks
+    title: sendChunks
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:34.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-connector-contract-messages
+  - id: SYM-ingest-conn-rpc-ignore-eof
+    title: ignoreEOF
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:40.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-connector-contract-messages
+  - id: SYM-ingest-conn-rpc-call
+    title: call
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:46.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+  - id: SYM-ingest-conn-rpc-client-service
+    title: Client.service
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:51.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+      - type: implements
+        target: REQ-plugins-core-only-caller
+  - id: SYM-ingest-conn-rpc-invalid
+    title: invalid
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:56.213Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-plain-decimal
+    title: plainDecimal
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:00.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-all-digits
+    title: allDigits
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:05.915Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-translate
+    title: translate
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:11.137Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-decimal-from
+    title: decimalFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:15.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-date-from
+    title: dateFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:20.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-optional-date-from
+    title: optionalDateFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:24.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-currency-from
+    title: currencyFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:29.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-money-from
+    title: moneyFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:34.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-instrument-from
+    title: instrumentFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:38.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-book-kind-from
+    title: bookKindFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:42.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-book-from
+    title: bookFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:46.949Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-posting-from
+    title: postingFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:52.764Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-transaction-kind-from
+    title: transactionKindFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:58.876Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-transaction-from
+    title: transactionFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:03.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-assertion-from
+    title: assertionFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:09.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-problem-from
+    title: problemFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:15.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-mode-to
+    title: modeTo
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:21.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-delivery-from
+    title: deliveryFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:28.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-mapping-from
+    title: mappingFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:37.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-price-from
+    title: priceFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:43.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-fx-rate-from
+    title: fxRateFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:50.069Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-index-from
+    title: indexFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:56.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-index-reading-from
+    title: indexReadingFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:04.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-test-helper-fake-tokens
+    title: fakeTokens
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:08.931Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-tokens-token-for
+    title: fakeTokens.TokenFor
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:16.435Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector
+    title: fakeConnector
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:21.661Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector-sync
+    title: fakeConnector.Sync
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:28.605Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector-import-file
+    title: fakeConnector.ImportFile
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:33.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector-record
+    title: fakeConnector.record
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:39.388Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector-delivery
+    title: fakeConnector.delivery
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:45.307Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-failing-connector
+    title: failingConnector
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:52.671Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-new-client
+    title: newClient
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:59.609Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-client-sync
+    title: TestClientSync
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:05.366Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-client-import-file
+    title: TestClientImportFile
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:12.267Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-client-failures
+    title: TestClientFailures
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:18.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-test-delivery
+    title: testDelivery
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:24.609Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-helper-must-decimal
+    title: mustDecimal
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:32.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-helper-must-date
+    title: mustDate
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:38.284Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-helper-must-money
+    title: mustMoney
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:44.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-helper-test-instrument
+    title: testInstrument
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:49.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-delivery-from
+    title: TestDeliveryFrom
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:56.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-delivery-from-rejects
+    title: TestDeliveryFromRejects
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:03.642Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-plain-decimal
+    title: TestPlainDecimal
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:11.818Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-valuation-inputs-from
+    title: TestValuationInputsFrom
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:19.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-valuation-inputs-from-rejects
+    title: TestValuationInputsFromRejects
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:27.445Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-delivery-from-missing
+    title: TestDeliveryFromMissing
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:34.118Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-mode-to
+    title: TestModeTo
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:41.111Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping

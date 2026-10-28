@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b216b0e481e
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-must-date
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:05:39.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5eaa748de35

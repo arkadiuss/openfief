@@ -97,3 +97,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-946832a374af
+  - type: implements
+    from: SYM-ingest-conn-rpc-send-chunks
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T09:01:35.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f383f31dd95
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-send-chunks
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:35.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc2a690906b9

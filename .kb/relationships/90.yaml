@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84ce2e21dbc2
+  - type: implements
+    from: SYM-ingest-conn-dom-connector-key-source
+    to: REQ-ingest-instance-scoped-keys
+    created_at: 2026-10-28T08:56:43.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb7015323835
+  - type: covered_by
+    from: SYM-ingest-conn-dom-connector-key-source
+    to: TEST-ingest-scope
+    created_at: 2026-10-28T08:56:43.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e1a62eba6ec

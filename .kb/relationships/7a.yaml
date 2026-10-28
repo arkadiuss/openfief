@@ -48,3 +48,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-534bc5519966
+  - type: implements
+    from: SYM-ingest-conn-app-connectors
+    to: REQ-ingest-connector-batches
+    created_at: 2026-10-28T08:58:42.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50bfb1ab6ee2
+  - type: implements
+    from: SYM-ingest-conn-app-connectors
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:58:42.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1b2776516c0
+  - type: covered_by
+    from: SYM-ingest-conn-app-connectors
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:58:42.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96f33b4d3e1c
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-connectors-sync
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T09:00:41.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0564871c700b
+  - type: implements
+    from: SYM-ingest-conn-rpc-client-sync
+    to: REQ-ingest-core-authenticates-to-connector
+    created_at: 2026-10-28T09:01:21.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6535f1517e47
+  - type: implements
+    from: SYM-ingest-conn-rpc-client-sync
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T09:01:21.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-897311e61584
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-client-sync
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:21.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62acc3e0e44b

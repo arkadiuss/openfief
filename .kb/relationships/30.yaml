@@ -34,3 +34,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e049e664664b
+  - type: implements
+    from: SYM-ingest-conn-rpc-all-digits
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:06.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a541e8998ca8
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-all-digits
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:06.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d93d509567d

@@ -146,3 +146,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96774f7a95aa
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-helper-fake-caller-import-file
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:59:39.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea5ecdccd836

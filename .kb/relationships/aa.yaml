@@ -237,3 +237,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce563b2f89da
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-helper-fake-caller
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:59:23.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e0b6d94e18a
+  - type: implements
+    from: SYM-ingest-conn-rpc-delivery-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:03:30.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a7edd6c64f5
+  - type: implements
+    from: SYM-ingest-conn-rpc-delivery-from
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T09:03:30.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f59b07b5570
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-delivery-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:03:30.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3768074ff342

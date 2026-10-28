@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1937555eb6f4
+  - type: verified_by
+    from: SCEN-ingest-core-authenticates-to-connector
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T08:54:57.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db0cd6bd490c

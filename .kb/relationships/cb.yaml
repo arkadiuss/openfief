@@ -69,3 +69,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4170a0cde7d
+  - type: implements
+    from: SYM-ingest-conn-app-sync-result
+    to: REQ-ingest-connector-batches
+    created_at: 2026-10-28T08:58:37.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc6bd63e0e35
+  - type: covered_by
+    from: SYM-ingest-conn-app-sync-result
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:58:37.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4af3526a10d5

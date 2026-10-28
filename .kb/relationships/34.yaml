@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00e62cac696a
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-helper-connectors
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T09:00:33.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c4ec807c7f

@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c73d2a62fc1
+  - type: implements
+    from: SYM-ingest-conn-rpc-new-client
+    to: REQ-ingest-core-authenticates-to-connector
+    created_at: 2026-10-28T09:01:08.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94b0772a4295
+  - type: implements
+    from: SYM-ingest-conn-rpc-new-client
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T09:01:08.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b69e0f5916f
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-new-client
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:08.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2109bb76cc86

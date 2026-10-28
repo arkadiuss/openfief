@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-248fe2ce38a4
+  - type: implements
+    from: SYM-ingest-conn-rpc-h2-cclient
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T09:01:14.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4048cbafd678
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-h2-cclient
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:14.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e680bc358073

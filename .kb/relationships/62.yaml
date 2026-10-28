@@ -265,3 +265,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51e9b9431dba
+  - type: implements
+    from: SYM-ingest-conn-app-connector-caller
+    to: REQ-ingest-connector-batches
+    created_at: 2026-10-28T08:57:51.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f0ec9de559c
+  - type: implements
+    from: SYM-ingest-conn-app-connector-caller
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:57:51.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-399b235e0a0d
+  - type: covered_by
+    from: SYM-ingest-conn-app-connector-caller
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:57:51.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52ca56bdf526
