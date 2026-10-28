@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3207f1c75635
+  - type: constrains
+    from: REQ-decision-d36-1-stored-valuations
+    to: FACT-SUBJECT-633AD5BF26E03B1C
+    created_at: 2026-10-28T06:29:00.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e47e4a09ac
+  - type: requires_property
+    from: REQ-decision-d36-1-stored-valuations
+    to: FACT-PROP-B6E167175DEB2812
+    created_at: 2026-10-28T06:29:00.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c778303bf07
+  - type: implements
+    from: SYM-pl-belka-tax-decimal
+    to: REQ-decision-d37-3-belka-half-up
+    created_at: 2026-10-28T06:44:21.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42af0d13dcc2

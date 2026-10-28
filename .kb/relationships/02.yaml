@@ -55,3 +55,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4527d6182675
+  - type: validates
+    from: TEST-ledger-properties
+    to: REQ-decision-d34-2-exact-remaining-cost
+    created_at: 2026-10-28T06:41:50.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d7f88d0cdf

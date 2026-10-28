@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4a54b9d1956
+  - type: constrains
+    from: REQ-decision-d36-9-basis-change-revalues-all
+    to: FACT-SUBJECT-F8619923C8041B16
+    created_at: 2026-10-28T06:30:20.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43ecfc811ad5
+  - type: requires_property
+    from: REQ-decision-d36-9-basis-change-revalues-all
+    to: FACT-PROP-1311270421025B58
+    created_at: 2026-10-28T06:30:20.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cfa1f80cb4f

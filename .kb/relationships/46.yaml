@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2aad56077221
+  - type: constrains
+    from: REQ-decision-d37-3-belka-half-up
+    to: FACT-SUBJECT-D76C92870F5380B6
+    created_at: 2026-10-28T06:30:55.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dfe1f62c865
+  - type: requires_property
+    from: REQ-decision-d37-3-belka-half-up
+    to: FACT-PROP-5DAB8B49C482120E
+    created_at: 2026-10-28T06:30:55.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f81c70eae8b0

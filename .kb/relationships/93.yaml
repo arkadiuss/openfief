@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5dedfc359819
+  - type: constrains
+    from: REQ-decision-d33-2-equity-counterpart
+    to: FACT-SUBJECT-DC19372821FB6174
+    created_at: 2026-10-28T06:28:07.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71e94e9a0a72
+  - type: requires_property
+    from: REQ-decision-d33-2-equity-counterpart
+    to: FACT-PROP-3BB090089DE580EC
+    created_at: 2026-10-28T06:28:07.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d948c2b6901e
+  - type: depends_on
+    from: REQ-pl-belka-tax
+    to: REQ-decision-d37-3-belka-half-up
+    created_at: 2026-10-28T06:41:23.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a17e6c29a46

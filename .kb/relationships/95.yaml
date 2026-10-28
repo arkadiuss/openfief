@@ -76,3 +76,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd5301517b5c
+  - type: implements
+    from: SYM-pl-value-lot
+    to: REQ-decision-d37-1-follow-issuer-tables
+    created_at: 2026-10-28T06:44:02.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a367efea994e
+  - type: covered_by
+    from: SYM-pl-value-lot
+    to: TEST-pl-official
+    created_at: 2026-10-28T06:44:02.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8570e35744aa

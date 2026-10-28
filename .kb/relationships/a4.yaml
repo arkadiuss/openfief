@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d58cdb078886
+  - type: constrains
+    from: REQ-decision-d34-3-fees-not-in-lot-cost
+    to: FACT-SUBJECT-8B6CCDF464EA6977
+    created_at: 2026-10-28T06:28:32.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-713506f67a51
+  - type: requires_property
+    from: REQ-decision-d34-3-fees-not-in-lot-cost
+    to: FACT-PROP-BFB6F8D239C3B7D2
+    created_at: 2026-10-28T06:28:32.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85bffb4397a9

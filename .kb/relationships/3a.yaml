@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T06:19:20.404Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - id: rel-2d50ff2e5862
+    type: constrains
+    from: REQ-decision-d36-3-revaluation-same-transaction
+    to: FACT-SUBJECT-201BF18D8A3B745A
+    created_at: "2026-10-28T06:29:22.801Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-decision-d36-3-revaluation-same-transaction
+    to: FACT-PROP-B8222597829A5A58
+    created_at: 2026-10-28T06:29:22.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-792dfcbcacf7

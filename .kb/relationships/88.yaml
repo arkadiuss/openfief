@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-919b8bb0645a
+  - type: implements
+    from: SYM-ledger-instrument-validate
+    to: REQ-decision-d35-1-instrument-isin-symbol
+    created_at: 2026-10-28T06:43:31.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-483303cbe836
