@@ -449,6 +449,23 @@ cp "$work/state/dns.json" "$work/dns-site.json"
 if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site.json" run_demo; then r=yes; else r=no; fi
 check "dns:site again succeeds" "$r"
 check "dns:site again changes nothing" "$(yes_if bash -c "test -z '$(dns_calls)' && grep -q 'website at example.com and www.example.com are up to date' '$work/out'")"
+# Records made by hand with the site's comment, as Cloudflare returns them (its own ids, TTL 300, extra fields, in
+# another order), are adopted as they are.
+{
+  i=40
+  for a in $site_aaaa $site_a; do
+    t=A
+    [[ "$a" != *:* ]] || t=AAAA
+    i=$((i + 1))
+    gojq -n -c --arg t "$t" --arg a "$a" --arg id "$(printf '%032x' "$i")" --arg c "$site_comment" \
+      '{id: $id, type: $t, name: "example.com", content: $a, proxiable: true, proxied: false, ttl: 300,
+        comment: $c, tags: [], created_on: "2026-10-28T00:00:00Z"}'
+  done
+  gojq -n -c --arg c "$site_comment" '{id: "00000000000000000000000000000050", type: "CNAME", name: "www.example.com",
+    content: "arkadiuss.github.io", proxiable: true, proxied: false, ttl: 300, comment: $c, tags: []}'
+} | gojq -s -c . >"$work/dns-site-hand.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-hand.json" run_demo; then r=yes; else r=no; fi
+check "dns:site adopts hand-made records with its comment without a change" "$(yes_if bash -c "test $r = yes && test -z '$(dns_calls)' && grep -q 'up to date' '$work/out' && cmp -s '$work/dns-site-hand.json' '$work/state/dns.json'")"
 
 # An address list change: a stale address of ours is replaced, a fifth of ours removed, a proxied one set DNS-only.
 gojq -c '(map(select(.content == "185.199.108.153")) | .[0].id) as $id
