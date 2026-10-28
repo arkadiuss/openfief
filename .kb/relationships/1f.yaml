@@ -174,3 +174,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4125e7472385
+  - type: verified_by
+    from: SCEN-plugins-trust-decision
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:50:45.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-205b8128657c
+  - type: implements
+    from: SYM-plugins-trust-policy-signers
+    to: REQ-plugins-trust-decision
+    created_at: 2026-10-28T08:59:09.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53b5d533b8da
+  - type: implements
+    from: SYM-plugins-trust-policy-signers
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:59:09.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db2dd2d7ea82
+  - type: covered_by
+    from: SYM-plugins-trust-policy-signers
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:59:09.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39b85f8113bb

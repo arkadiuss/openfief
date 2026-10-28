@@ -202,3 +202,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbcb5c138dae
+  - type: executable_for
+    from: SYM-plugins-test-parse-catalog
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:55:34.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c14fbca6a8be

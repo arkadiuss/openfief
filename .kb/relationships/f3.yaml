@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5eaa748de35
+  - type: executable_for
+    from: SYM-plugins-test-trust-keyless
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:59:49.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22e16bbfca1a
+  - type: executable_for
+    from: SYM-plugins-test-trust-keyless
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:59:49.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90425b700b2b

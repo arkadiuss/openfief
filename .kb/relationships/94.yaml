@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c6253b58d61
+  - type: executable_for
+    from: SYM-plugins-test-signer-validate
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T09:01:02.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-915277bad1ba

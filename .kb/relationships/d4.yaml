@@ -153,3 +153,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b798f2f4b8b5
+  - type: executable_for
+    from: SYM-plugins-test-parse-owner-signers
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:55:47.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1be9161a323f

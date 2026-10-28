@@ -146,3 +146,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44032605a916
+  - type: implements
+    from: SYM-plugins-signer-identity-is-key
+    to: REQ-plugins-signer-identity-match
+    created_at: 2026-10-28T08:57:23.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-553c181670cd
+  - type: implements
+    from: SYM-plugins-signer-identity-is-key
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:57:23.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3afbc6c2acb3
+  - type: covered_by
+    from: SYM-plugins-signer-identity-is-key
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:57:23.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a76f15b3a980

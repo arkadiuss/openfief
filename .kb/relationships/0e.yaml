@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef738708febe
+  - type: executable_for
+    from: SYM-plugins-test-trust-new-public-key-pem
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:59:41.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4a7695b6b59
+  - type: executable_for
+    from: SYM-plugins-test-trust-new-public-key-pem
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:59:41.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6afcaff22449

@@ -153,3 +153,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35d6a2fe4a77
+  - type: implements
+    from: SYM-plugins-signer-identity
+    to: REQ-plugins-signer-identity-match
+    created_at: 2026-10-28T08:57:09.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f355fbaa4f87
+  - type: implements
+    from: SYM-plugins-signer-identity
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:57:09.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2543aae4f7a4
+  - type: covered_by
+    from: SYM-plugins-signer-identity
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:57:09.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41e79cc1b52f

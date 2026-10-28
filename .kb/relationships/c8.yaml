@@ -118,3 +118,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3046f075fcbe
+  - type: implements
+    from: SYM-plugins-fn-public-key-der
+    to: REQ-plugins-signer-identity-match
+    created_at: 2026-10-28T08:58:02.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b74c2b978975
+  - type: implements
+    from: SYM-plugins-fn-public-key-der
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:58:02.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fbcabaf956c
+  - type: covered_by
+    from: SYM-plugins-fn-public-key-der
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:58:02.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fc93c5742be

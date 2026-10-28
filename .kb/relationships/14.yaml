@@ -62,3 +62,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9cc7ea83b393
+  - type: constrains
+    from: REQ-plugins-trust-decision
+    to: FACT-SUBJECT-AFCCAA5C1E93D2FD
+    created_at: 2026-10-28T08:51:47.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-835b8134a451
+  - type: requires_property
+    from: REQ-plugins-trust-decision
+    to: FACT-PROP-4B58CF4AADD27E53
+    created_at: 2026-10-28T08:51:47.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7ff5d19f6b7
+  - type: specified_by
+    from: REQ-plugins-trust-decision
+    to: SCEN-plugins-trust-decision
+    created_at: 2026-10-28T08:51:47.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc7ceb6cd9f9
