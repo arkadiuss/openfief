@@ -117,12 +117,34 @@ func TestCorePolicyRefusesOtherPods(t *testing.T) {
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)
 	waitCoreAvailable(t, k)
-	if r := mustCall(t, k, clientPod, "/healthz", ""); r.status != http.StatusOK {
+	if r := answerFrom(t, k, clientPod, "/healthz"); r.status != http.StatusOK {
 		t.Fatalf("GET /healthz from %s: status %d, body %q; want 200", clientPod, r.status, r.body)
 	}
-	if r := mustCall(t, k, outsiderPod, "/healthz", ""); r.status != 0 {
+	if r := answerFrom(t, k, outsiderPod, "/healthz"); r.status != 0 {
 		t.Fatalf("GET /healthz from %s: status %d; want no connection (is NetworkPolicy enforced?)", outsiderPod, r.status)
 	}
+}
+
+// answerFrom calls path on the core from pod until curl reports a result,
+// retrying only when the exec stream itself fails (as it can on kind while
+// the API server is busy), and returns that result: an HTTP status, or 0
+// when curl got no connection. It never retries on an HTTP answer, so a
+// refusal or a wrong status still fails the test.
+func answerFrom(t *testing.T, k *kube, pod, path string) reply {
+	t.Helper()
+	var got reply
+	err := waitFor(t.Context(), coreTimeout, func(ctx context.Context) (string, bool, error) {
+		r, callErr := call(ctx, k, pod, path, "")
+		if callErr != nil {
+			return "", false, fmt.Errorf("%w: %w", errRetry, callErr)
+		}
+		got = r
+		return "", true, nil
+	})
+	if err != nil {
+		t.Fatalf("GET %s from %s: %v", path, pod, err)
+	}
+	return got
 }
 
 // TestDemoSeedCompletes checks that the demo-seed Job loads and values the
