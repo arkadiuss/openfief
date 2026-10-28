@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1adee200e428
+  - type: implements
+    from: SYM-ingest-institution-id
+    to: REQ-ingest-batch-record
+    created_at: 2026-10-28T06:17:42.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82e3c2115afc
+  - type: covered_by
+    from: SYM-ingest-institution-id
+    to: TEST-ingest-batch
+    created_at: 2026-10-28T06:17:42.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aac087d01832

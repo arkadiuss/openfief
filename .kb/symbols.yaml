@@ -7549,3 +7549,283 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-smokescreen-proxy
+  - id: SYM-ingest-institution-id
+    title: InstitutionID
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:17:42.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-institution
+    title: Institution
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:17:43.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-institution-validate
+    title: Institution.Validate
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:17:46.909Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-mode
+    title: Mode
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:17:49.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-mode-string
+    title: Mode.String
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:17:54.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-batch-id
+    title: BatchID
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:17:59.134Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-import-summary
+    title: ImportSummary
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:03.750Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-batch
+    title: Batch
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:06.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-new-batch
+    title: NewBatch
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:10.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-batch-complete
+    title: Batch.Complete
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:17.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-mapping
+    title: Mapping
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:22.501Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-problem-kind
+    title: ProblemKind
+    sourceFile: internal/ingest/problem.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:26.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-problem-kind-string
+    title: ProblemKind.String
+    sourceFile: internal/ingest/problem.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:32.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-problem
+    title: Problem
+    sourceFile: internal/ingest/problem.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:37.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-problem-string
+    title: Problem.String
+    sourceFile: internal/ingest/problem.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:43.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-unsupported
+    title: Unsupported
+    sourceFile: internal/ingest/problem.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:49.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-skipped
+    title: Skipped
+    sourceFile: internal/ingest/problem.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:18:58.954Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-batch
+      - type: implements
+        target: REQ-ingest-batch-record
+  - id: SYM-ingest-test-helper-day
+    title: day
+    sourceFile: internal/ingest/batch_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:19:07.536Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-batch
+  - id: SYM-ingest-test-institution-validate
+    title: TestInstitutionValidate
+    sourceFile: internal/ingest/batch_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:19:13.603Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-batch
+  - id: SYM-ingest-test-new-batch
+    title: TestNewBatch
+    sourceFile: internal/ingest/batch_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:19:19.321Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-batch
+  - id: SYM-ingest-test-batch-complete
+    title: TestBatchComplete
+    sourceFile: internal/ingest/batch_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:19:25.030Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-batch
+  - id: SYM-ingest-test-enum-strings
+    title: TestEnumStrings
+    sourceFile: internal/ingest/batch_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:19:30.585Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-batch

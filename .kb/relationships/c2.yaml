@@ -6,3 +6,24 @@ relationships:
     created_at: "2026-10-28T04:50:51.426Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-ingest-batch-complete
+    to: REQ-ingest-batch-record
+    created_at: 2026-10-28T06:18:18.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-564e79401dd8
+  - type: implements
+    from: SYM-ingest-batch-complete
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T06:18:18.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-338cc5178797
+  - type: covered_by
+    from: SYM-ingest-batch-complete
+    to: TEST-ingest-batch
+    created_at: 2026-10-28T06:18:18.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0728a354d28
