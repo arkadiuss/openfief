@@ -114,7 +114,7 @@ func TestPageRefProblems(t *testing.T) {
 	known := knownRefs{repo: repo, symbols: "  - id: SYM-ledger-append\n", tasks: map[string]bool{"test": true, "docs:build": true}}
 	page := "REQ-ledger-log and TEST-ledger-log and SYM-ledger-append.\n" +
 		"Patterns like TEST-tooling-* and REQ-x* are fine.\n" +
-		"Run `task test` or `task docs:build`.\n" +
+		"Run `task test` or `task docs:build`, or a placeholder like `task demo:<action>`.\n" +
 		"REQ-missing and `task nope`.\n"
 	got := pageRefProblems("p.md", page, known)
 	want := []string{"p.md:4: REQ-missing is not in kibi", `p.md:4: there is no task "nope"`}
@@ -129,9 +129,10 @@ func TestTasksPage(t *testing.T) {
 	list.Tasks = append(list.Tasks,
 		task{Name: "docs:build", Desc: "Build the site"},
 		task{Name: "docs:fresh", Desc: "Gate | range"},
-		task{Name: "test", Desc: "Tests"})
+		task{Name: "test", Desc: "Tests"},
+		task{Name: "demo:down", Desc: "Delete `demo ENV`; needs CONFIRM=<ENV>"})
 	got := tasksPage(list)
-	for _, want := range []string{"## docs\n", "| `task docs:fresh` | Gate \\| range |", "## test\n"} {
+	for _, want := range []string{"## docs\n", "| `task docs:fresh` | Gate \\| range |", "## test\n", "| `task demo:down` | Delete `demo ENV`; needs CONFIRM=&lt;ENV&gt; |"} {
 		if !strings.Contains(got, want) {
 			t.Errorf("tasksPage() lacks %q", want)
 		}

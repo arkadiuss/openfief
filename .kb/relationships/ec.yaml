@@ -153,3 +153,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-990b94f96c1e
+  - type: implements
+    from: SYM-valuation-postgres-migration
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:00:10.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ee37c02100d
+  - type: covered_by
+    from: SYM-valuation-postgres-migration
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:00:10.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8c331cb34fe
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-proxy-serve-stops
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:52:21.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cdd749adcd6
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-get-value
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:25.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-915fc1aa70fb
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-get-value
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:25.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f54262f323fc
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-reading-get-value
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:25.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1498c5018749
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-fake-connector
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:04:23.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-870f54d7590e
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-must-decimal
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:05:33.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-185d6066c99c

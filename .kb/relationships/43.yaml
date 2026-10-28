@@ -62,3 +62,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a85f9b607f2f
+  - type: verified_by
+    from: SCEN-valuation-missing-input
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:28:40.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e3baba5d63c
+  - type: verified_by
+    from: SCEN-valuation-missing-input
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:28:40.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-275f15f43917
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-dec
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:36:36.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6970dc44fba
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-dec
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:36:36.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8aa9f393e641
+  - type: executable_for
+    from: SYM-valuation-app-test-revalue-is-idempotent
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:40:19.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d20f7e0abb4
+  - type: executable_for
+    from: SYM-ingest-app-test-ingest-seeds-only-in-opening-mode
+    to: TEST-ingest-app
+    created_at: 2026-10-28T08:44:30.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43207150868d
+  - type: implements
+    from: SYM-ingest-conn-rpc-transaction-kind-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:59.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47c111ed5ac4
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-transaction-kind-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:59.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dbe69940878

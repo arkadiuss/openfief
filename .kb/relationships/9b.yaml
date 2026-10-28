@@ -132,3 +132,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e89912318f98
+  - type: constrains
+    from: REQ-tooling-demo-bootstrap
+    to: FACT-SUBJECT-BBDDA77D77099F6A
+    created_at: 2026-10-28T09:01:10.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e90b3f310a5f
+  - type: requires_property
+    from: REQ-tooling-demo-bootstrap
+    to: FACT-PROP-52D59A932D10D5AE
+    created_at: 2026-10-28T09:01:10.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f6246893928
+  - type: specified_by
+    from: REQ-tooling-demo-bootstrap
+    to: SCEN-tooling-demo-cloud-init
+    created_at: 2026-10-28T09:01:10.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-671640d2e026

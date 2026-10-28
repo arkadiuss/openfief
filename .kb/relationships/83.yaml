@@ -111,3 +111,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84ef10bfd1a2
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-auth-recorder-serve-http
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:06:11.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b294e3f8d52
+  - type: implements
+    from: SYM-connector-gen-pb-sync-response
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:19:46.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba8c8fcd553c
+  - type: implements
+    from: SYM-connector-gen-pb-sync-response
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:19:46.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c41e7dfe1dd1
+  - type: covered_by
+    from: SYM-connector-gen-pb-sync-response
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:19:46.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5916d577f28f

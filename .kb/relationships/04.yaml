@@ -104,3 +104,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1fa0914b2b5
+  - type: implements
+    from: SYM-valuation-app-account-log
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:00.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ffe209b3765
+  - type: covered_by
+    from: SYM-valuation-app-account-log
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:00.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf6d77075b3c

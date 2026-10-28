@@ -13,3 +13,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e8148d16d60
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-market-store
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:40:05.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6de5a41107a3
+  - type: executable_for
+    from: SYM-sdk-go-test-instance-audience
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:10:18.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-663182ac897a
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-chunk
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:23.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3131c9be4739
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-chunk
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:23.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88d8d54b257d
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-request-chunk
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:23.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d35db8e7ca0d
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-fake-connector-import-file
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:04:34.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4eb9ed902547

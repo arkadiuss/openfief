@@ -104,3 +104,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c55e92459b6c
+  - type: implements
+    from: SYM-valuation-postgres-valuation-text
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T07:59:57.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6ece87e4898
+  - type: covered_by
+    from: SYM-valuation-postgres-valuation-text
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T07:59:57.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ae981fcc2cd
+  - type: verified_by
+    from: SCEN-ledger-seed-same-again
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:38:46.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-854b6a5a23f8
+  - type: verified_by
+    from: SCEN-ledger-seed-same-again
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-28T08:38:46.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-939b52425241
+  - type: verified_by
+    from: SCEN-ledger-seed-same-again
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-28T08:38:46.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e57a03e275c
+  - type: implements
+    from: SYM-sdk-go-read-in-dir
+    to: REQ-sdk-go-token-rotation
+    created_at: 2026-10-28T08:05:46.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2d93567297b
+  - type: covered_by
+    from: SYM-sdk-go-read-in-dir
+    to: TEST-sdk-go-token
+    created_at: 2026-10-28T08:05:46.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab31ac8349ae
+  - type: constrains
+    from: REQ-ingest-connector-batches
+    to: FACT-SUBJECT-26599C6DFD7167ED
+    created_at: 2026-10-28T08:55:19.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-836561e54f2e
+  - type: requires_property
+    from: REQ-ingest-connector-batches
+    to: FACT-PROP-3E77549F9AE9860A
+    created_at: 2026-10-28T08:55:19.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d90fa21cb727
+  - type: specified_by
+    from: REQ-ingest-connector-batches
+    to: SCEN-ingest-connector-batches
+    created_at: 2026-10-28T08:55:19.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cac8eb3da38

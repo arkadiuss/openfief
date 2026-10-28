@@ -76,3 +76,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e34620fca906
+  - type: implements
+    from: SYM-valuation-postgres-scan-rate
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:03:18.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a86840c01ea9
+  - type: covered_by
+    from: SYM-valuation-postgres-scan-rate
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:03:18.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a6dc1709610
+  - type: executable_for
+    from: SYM-sdk-go-test-egress-sends-current-token-on-every-connect
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:08:18.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d66e43092ecd
+  - type: implements
+    from: SYM-demo-demo-cost-lines
+    to: REQ-tooling-demo-budget
+    created_at: 2026-10-28T09:08:24.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a0349cff051
+  - type: covered_by
+    from: SYM-demo-demo-cost-lines
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:08:24.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68c99975f0c1

@@ -181,3 +181,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-800074b8b991
+  - type: implements
+    from: SYM-valuation-postgres-migrate
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:00:18.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23fddb04d580
+  - type: implements
+    from: SYM-valuation-postgres-migrate
+    to: REQ-decision-d36-4-river-job-queue
+    created_at: 2026-10-28T08:00:18.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c43429b59eb1
+  - type: covered_by
+    from: SYM-valuation-postgres-migrate
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:00:18.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e6070846501
+  - type: implements
+    from: SYM-valuation-postgres-end-of-day
+    to: REQ-valuation-settings
+    created_at: 2026-10-28T08:06:28.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cbdaa075a9f
+  - type: covered_by
+    from: SYM-valuation-postgres-end-of-day
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:06:28.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e440890c4829
+  - type: implements
+    from: SYM-connector-gen-pb-book-kind-type
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:10:49.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4942d6304c4
+  - type: implements
+    from: SYM-connector-gen-pb-book-kind-type
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:10:49.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99d329f89c69
+  - type: covered_by
+    from: SYM-connector-gen-pb-book-kind-type
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:10:49.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-645e3bd0f85f
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-mode
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:38.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d418353fbf6
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-mode
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:38.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da91703a1537
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-get-mode
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:38.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d3826fa5fcc

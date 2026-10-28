@@ -69,3 +69,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e15e3df1cdb
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-tax-wrapper
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:36:12.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba58726cc636
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-tax-wrapper
+    to: REQ-valuation-input-validation
+    created_at: 2026-10-28T07:36:12.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e4715421bdf
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-record-tax-wrapper
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:36:12.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bab34c5e3293
+  - type: implements
+    from: SYM-plugins-app-fn-cached-review
+    to: REQ-plugins-egress-token-review-cache
+    created_at: 2026-10-28T08:47:55.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a74a5119347
+  - type: covered_by
+    from: SYM-plugins-app-fn-cached-review
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:47:55.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-518096ed7544

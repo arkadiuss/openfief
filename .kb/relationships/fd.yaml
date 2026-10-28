@@ -34,3 +34,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d80bda7c915
+  - type: implements
+    from: SYM-valuation-postgres-revalue-account
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:00:46.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a70ab306f59
+  - type: implements
+    from: SYM-valuation-postgres-revalue-account
+    to: REQ-decision-d36-4-river-job-queue
+    created_at: 2026-10-28T08:00:46.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c2c8f0d08d8
+  - type: covered_by
+    from: SYM-valuation-postgres-revalue-account
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:00:46.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10fd40084616
+  - type: executable_for
+    from: SYM-ledger-pg-test-lock-account
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-28T08:43:53.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6085e2e2b0
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-basic
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:08:34.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfb35f9dc99a

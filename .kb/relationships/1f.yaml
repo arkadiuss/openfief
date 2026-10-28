@@ -78,13 +78,6 @@ relationships:
     id: rel-7aff0c522936
   - type: validates
     from: TEST-plugins-kube
-    to: REQ-AUTO-C6544ADAF8F5AE65
-    created_at: 2026-10-28T06:09:52.757Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8bdee725843b
-  - type: validates
-    from: TEST-plugins-kube
     to: REQ-AUTO-48C62B395F846700
     created_at: 2026-10-28T06:09:52.799Z
     created_by: kibi/upsert
@@ -181,3 +174,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11e656ccb5d4
+  - type: executable_for
+    from: SYM-valuation-test-helper-edo-terms
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:13.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65fbe31b2f2f
+  - type: validates
+    from: TEST-plugins-kube
+    to: REQ-AUTO-15828B9727AFA488
+    created_at: 2026-10-28T08:46:02.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6a18e1c128c
+  - type: executable_for
+    from: SYM-plugins-app-test-egress-decide-without-source
+    to: TEST-plugins-app-egress
+    created_at: 2026-10-28T08:47:45.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4125e7472385

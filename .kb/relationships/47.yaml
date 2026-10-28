@@ -76,3 +76,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ef17c8af3c0
+  - type: verified_by
+    from: SCEN-valuation-input-validation
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:29:07.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a40b5f36294
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-new-needs-listener-and-egress
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:52:36.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c319a95ca441
+  - type: implements
+    from: SYM-connector-gen-pb-money-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:12:54.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1bcca9a9458
+  - type: implements
+    from: SYM-connector-gen-pb-money-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:12:54.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-391dd08fd489
+  - type: covered_by
+    from: SYM-connector-gen-pb-money-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:12:54.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a3d3d9077ca
+  - type: implements
+    from: SYM-ingest-conn-rpc-optional-date-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:25.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aa6b1198493
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-optional-date-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:25.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-193c8dcc6584

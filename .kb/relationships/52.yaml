@@ -20,3 +20,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-607052bf2bef
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-reset
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:31.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac7789f714dd
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-reset
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:31.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feb64eea1581
+  - type: covered_by
+    from: SYM-connector-gen-pb-delivery-reset
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:31.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41e8b062df7f

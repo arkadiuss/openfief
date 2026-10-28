@@ -41,3 +41,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97a666cfa2b9
+  - type: executable_for
+    from: SYM-valuation-test-price-on-or-before
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:03.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a8ff4c0bf88
+  - type: implements
+    from: SYM-valuation-postgres-revalue-worker-work
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:05:56.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97b5553974bf
+  - type: covered_by
+    from: SYM-valuation-postgres-revalue-worker-work
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:05:56.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8861fa910de
+  - type: implements
+    from: SYM-valuation-postgres-store-claim
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:06:11.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcc5dec8631
+  - type: covered_by
+    from: SYM-valuation-postgres-store-claim
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:06:11.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21c9f381448a
+  - type: constrains
+    from: REQ-tooling-demo-token
+    to: FACT-SUBJECT-F4BC1BEF1AE17551
+    created_at: 2026-10-28T09:00:53.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465d6fb9e93f
+  - type: requires_property
+    from: REQ-tooling-demo-token
+    to: FACT-PROP-7C04680E6EB30B0D
+    created_at: 2026-10-28T09:00:53.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21d5fff12318
+  - type: specified_by
+    from: REQ-tooling-demo-token
+    to: SCEN-tooling-demo-token
+    created_at: 2026-10-28T09:00:53.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf083a609444
+  - type: constrains
+    from: REQ-tooling-demo-signed-deploy
+    to: FACT-SUBJECT-EDFEA2473618839A
+    created_at: 2026-10-28T09:01:24.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-051b8ae37fe4
+  - type: specified_by
+    from: REQ-tooling-demo-signed-deploy
+    to: SCEN-tooling-demo-pin-signed
+    created_at: 2026-10-28T09:01:24.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b16bad0395d
+  - type: requires_property
+    from: REQ-tooling-demo-signed-deploy
+    to: FACT-PROP-875BB366B951B8AF
+    created_at: 2026-10-28T09:06:00.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-679fbb165c5e

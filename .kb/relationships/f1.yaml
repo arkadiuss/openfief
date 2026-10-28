@@ -97,3 +97,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8c5ab884d5b
+  - type: verified_by
+    from: SCEN-valuation-basis-change
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:29:03.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cec6da22d68
+  - type: executable_for
+    from: SYM-valuation-test-value-market-holding-conflicting-rates
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:10.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bfe77857cfd
+  - type: constrains
+    from: REQ-plugins-egress-proxy-embedded-buildproxy
+    to: FACT-SUBJECT-A197B520E58C9AE3
+    created_at: 2026-10-28T08:46:58.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d1f8d9ae29a
+  - type: requires_property
+    from: REQ-plugins-egress-proxy-embedded-buildproxy
+    to: FACT-PROP-3F9C3A23F224CA9F
+    created_at: 2026-10-28T08:46:58.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b75376243160
+  - type: specified_by
+    from: REQ-plugins-egress-proxy-embedded-buildproxy
+    to: SCEN-plugins-egress-proxy-stops-cleanly
+    created_at: 2026-10-28T08:46:58.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ecb6ca8890c
+  - type: implements
+    from: SYM-sdk-go-new-connector-server
+    to: REQ-sdk-go-core-only
+    created_at: 2026-10-28T08:04:55.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49d7ac5d4ae1
+  - type: implements
+    from: SYM-sdk-go-new-connector-server
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:04:55.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34b18d6200e5
+  - type: covered_by
+    from: SYM-sdk-go-new-connector-server
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:04:55.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-185570333d6e
+  - type: implements
+    from: SYM-ingest-conn-rpc-client-import-file
+    to: REQ-ingest-core-authenticates-to-connector
+    created_at: 2026-10-28T09:01:28.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7116446cfeef
+  - type: implements
+    from: SYM-ingest-conn-rpc-client-import-file
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T09:01:28.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d550d7569af8
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-client-import-file
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:28.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ebf22d5cd7d

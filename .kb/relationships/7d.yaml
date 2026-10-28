@@ -41,3 +41,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f95ad7fd8ed
+  - type: implements
+    from: SYM-valuation-missing-reason-string
+    to: REQ-valuation-missing-input
+    created_at: 2026-10-28T07:31:53.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9a25f946291
+  - type: covered_by
+    from: SYM-valuation-missing-reason-string
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:31:53.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e20d48eae5e6
+  - type: validates
+    from: TEST-ingest-connectrpc-mapping
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T08:54:28.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-242ddd1471a5
+  - type: implements
+    from: SYM-demo-demo-has
+    to: REQ-tooling-demo-labels
+    created_at: 2026-10-28T09:12:09.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3fc9df51b37
+  - type: covered_by
+    from: SYM-demo-demo-has
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:12:09.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32e4e72a96a5
+  - type: implements
+    from: SYM-demo-demo-status
+    to: REQ-tooling-demo-labels
+    created_at: 2026-10-28T09:12:31.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7734a42de72
+  - type: covered_by
+    from: SYM-demo-demo-status
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:12:31.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3ca02617543

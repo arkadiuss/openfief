@@ -34,3 +34,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c96c7f03f2a5
+  - type: implements
+    from: SYM-ledger-seed-decision
+    to: REQ-ledger-seed-refuse-reseed
+    created_at: 2026-10-28T08:40:04.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18f5957e063b
+  - type: covered_by
+    from: SYM-ledger-seed-decision
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:40:04.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d71d3a6e8bde
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-type
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:17.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f9a36424f9
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-type
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:17.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62a0c74f9e99
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-kind-type
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:17.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bddb8ccd572f
+  - type: implements
+    from: SYM-connector-gen-pb-problem-kind-enum
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:33.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60b2bd7f155b
+  - type: implements
+    from: SYM-connector-gen-pb-problem-kind-enum
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:33.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0593c74eaca
+  - type: covered_by
+    from: SYM-connector-gen-pb-problem-kind-enum
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:33.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a625d50a03ea
+  - type: implements
+    from: SYM-ingest-conn-rpc-mapping-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:03:38.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4710c3b6d9fa
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-mapping-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:03:38.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-736caf0014c3

@@ -3,6 +3,8 @@
 set -euo pipefail
 # A git hook exports these for the outer repository; the throwaway repository below must not inherit them.
 unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
+# CI sets DOCS_BASE to a commit of the outer repository, which the throwaway repository does not have.
+unset DOCS_BASE
 
 root="$(git rev-parse --show-toplevel)"
 work="$(mktemp -d)"
@@ -44,7 +46,15 @@ expect_fail "an edited ground rule" 'ground-rule lines'
 printf '\n- **[GR-1]** A second definition.\n' >>docs/proposals/hosting.md
 expect_fail "an ID defined twice" 'GR IDs defined more than once: GR-1'
 
+if out="$(DOCS_BASE=0000000000000000000000000000000000000000 bash scripts/check-docs.sh 2>&1)"; then
+  echo "FAIL: an unknown base revision should fail the check" >&2
+  failures=$((failures + 1))
+elif ! grep -q 'is not a commit' <<<"$out"; then
+  echo "FAIL: an unknown base revision should report 'is not a commit', got: $out" >&2
+  failures=$((failures + 1))
+fi
+
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "check-docs: 4 cases passed"
+echo "check-docs: 5 cases passed"

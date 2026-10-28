@@ -104,3 +104,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e0b44e1dba1
+  - type: implements
+    from: SYM-valuation-valued-through
+    to: REQ-valuation-missing-input
+    created_at: 2026-10-28T07:32:36.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfdec7ac9a77
+  - type: covered_by
+    from: SYM-valuation-valued-through
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:36.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caffdcdc374e
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-env-config
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:09:03.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d5f1c9b11d3
+  - type: verified_by
+    from: SCEN-tooling-demo-confirmed-down
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T08:59:24.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0c0d546d2cd

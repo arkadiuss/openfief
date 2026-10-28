@@ -16,7 +16,7 @@ var errBrokenRefs = errors.New("docs name kibi entities or tasks that don't exis
 
 var (
 	kbIDRe    = regexp.MustCompile(`\b(REQ|TEST|SCEN|SYM)-[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9]\b(-?\*)?`)
-	taskRefRe = regexp.MustCompile("`task ([a-z][a-z0-9:_-]*)")
+	taskRefRe = regexp.MustCompile("`task ([a-z][a-z0-9:_-]*)(<?)")
 )
 
 // kbFolder is the folder holding one Markdown file per kibi entity with the given ID prefix.
@@ -107,7 +107,7 @@ func checkPages(repo fs.FS, root string, known knownRefs) ([]string, error) {
 }
 
 // pageRefProblems lists, with line numbers, the kibi IDs and task names on one page that don't exist.
-// An ID followed by `*` or `-*` is a pattern, not a reference.
+// An ID followed by `*` or `-*`, and a task name followed by `<`, such as `task demo:<action>`, are patterns, not references.
 func pageRefProblems(name, text string, known knownRefs) []string {
 	var problems []string
 	n := 0
@@ -119,7 +119,7 @@ func pageRefProblems(name, text string, known knownRefs) []string {
 			}
 		}
 		for _, m := range taskRefRe.FindAllStringSubmatch(line, -1) {
-			if !known.tasks[m[1]] {
+			if m[2] == "" && !known.tasks[m[1]] {
 				problems = append(problems, fmt.Sprintf("%s:%d: there is no task %q", name, n, m[1]))
 			}
 		}

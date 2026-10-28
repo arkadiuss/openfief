@@ -76,3 +76,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f98fc40bed7
+  - type: implements
+    from: SYM-valuation-app-new-planner
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:34:57.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9bf910bbf28
+  - type: covered_by
+    from: SYM-valuation-app-new-planner
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:34:57.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-735c2efc321a
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-dialer
+    to: REQ-plugins-egress-proxy-checks-every-address
+    created_at: 2026-10-28T08:49:44.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db29ac498c63
+  - type: covered_by
+    from: SYM-plugins-smokescreen-fn-dialer
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:49:44.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ead160d2043b
+  - type: implements
+    from: SYM-plugins-smokescreen-proxy-close-tunnels
+    to: REQ-plugins-egress-proxy-embedded-buildproxy
+    created_at: 2026-10-28T08:50:00.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0939539eb2bf
+  - type: covered_by
+    from: SYM-plugins-smokescreen-proxy-close-tunnels
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:50:00.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2f55e38fb48
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-fake-verifier-verify-core
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:09:21.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf0ad9beb13c
+  - type: implements
+    from: SYM-connector-gen-pb-sync-response-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:19:53.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19fdfb2dfd99
+  - type: implements
+    from: SYM-connector-gen-pb-sync-response-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:19:53.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5150bfdb33ff
+  - type: covered_by
+    from: SYM-connector-gen-pb-sync-response-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:19:53.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44032605a916

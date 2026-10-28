@@ -153,3 +153,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3dcc72c3ee5
+  - type: implements
+    from: SYM-valuation-app-planner-from-start
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:19.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc8cea3ff354
+  - type: covered_by
+    from: SYM-valuation-app-planner-from-start
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:19.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3d4b3698573
+  - type: executable_for
+    from: SYM-valuation-postgres-test-statuses
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:10:08.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3476dc8ef361
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-inputs
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:10:17.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31d9615ed00e
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:03.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1f5a1a19f84
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:03.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de1715c04e68
+  - type: covered_by
+    from: SYM-connector-gen-pb-balance-assertion-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:03.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-817afe41b470
+  - type: implements
+    from: SYM-connector-gen-pb-fx-rate-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:17:46.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f6b0b10909
+  - type: implements
+    from: SYM-connector-gen-pb-fx-rate-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:17:46.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c64ce07e948
+  - type: covered_by
+    from: SYM-connector-gen-pb-fx-rate-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:17:46.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-487380d05a30

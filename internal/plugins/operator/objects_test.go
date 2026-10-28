@@ -115,17 +115,46 @@ func env(withProxy bool) []corev1.EnvVar {
 	if withProxy {
 		out = append(out, corev1.EnvVar{Name: "HTTPS_PROXY", Value: "http://192.0.2.20:4750"}, corev1.EnvVar{Name: "NO_PROXY", Value: "192.0.2.10"})
 	}
-	return append(out,
+	out = append(out,
 		corev1.EnvVar{Name: "OPENFIEF_CONFIG", ValueFrom: &corev1.EnvVarSource{ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
 			LocalObjectReference: corev1.LocalObjectReference{Name: "plugin-sample-config"}, Key: "config.json",
 		}}},
 		corev1.EnvVar{Name: "OPENFIEF_CORE_ADDRESS", Value: "192.0.2.10:80"},
+	)
+	if withProxy {
+		out = append(out, corev1.EnvVar{Name: "OPENFIEF_EGRESS_TOKEN_FILE", Value: "/var/run/secrets/openfief-egress/token"})
+	}
+	return append(out,
 		corev1.EnvVar{Name: "OPENFIEF_LISTEN_PORT", Value: "9090"},
 		corev1.EnvVar{Name: "OPENFIEF_TOKEN_FILE", Value: "/var/run/secrets/openfief/token"},
 	)
 }
 
+// tokenVolume is a projected token volume for audience.
+func tokenVolume(name, audience string) corev1.Volume {
+	return corev1.Volume{Name: name, VolumeSource: corev1.VolumeSource{Projected: &corev1.ProjectedVolumeSource{
+		Sources: []corev1.VolumeProjection{{ServiceAccountToken: &corev1.ServiceAccountTokenProjection{
+			Audience: audience, ExpirationSeconds: ptrTo[int64](3600), Path: "token",
+		}}},
+	}}}
+}
+
+// podVolumes are the pod's volumes and the container's mounts: the core
+// token, the egress token only with egress granted, and the one Secret.
+func podVolumes(withProxy bool) ([]corev1.Volume, []corev1.VolumeMount) {
+	vols := []corev1.Volume{tokenVolume("openfief-token", "openfief-core")}
+	mounts := []corev1.VolumeMount{{Name: "openfief-token", MountPath: "/var/run/secrets/openfief", ReadOnly: true}}
+	if withProxy {
+		vols = append(vols, tokenVolume("openfief-egress-token", "openfief-egress"))
+		mounts = append(mounts, corev1.VolumeMount{Name: "openfief-egress-token", MountPath: "/var/run/secrets/openfief-egress", ReadOnly: true})
+	}
+	vols = append(vols, corev1.Volume{Name: "secret-0", VolumeSource: corev1.VolumeSource{Secret: &corev1.SecretVolumeSource{SecretName: "sample-token"}}})
+	mounts = append(mounts, corev1.VolumeMount{Name: "secret-0", MountPath: "/etc/openfief/token", ReadOnly: true})
+	return vols, mounts
+}
+
 func deployment(withProxy bool) *appsv1.Deployment {
+	vols, mounts := podVolumes(withProxy)
 	return &appsv1.Deployment{
 		TypeMeta:   metav1.TypeMeta{APIVersion: "apps/v1", Kind: "Deployment"},
 		ObjectMeta: objectMeta("plugin-sample"),
@@ -144,25 +173,15 @@ func deployment(withProxy bool) *appsv1.Deployment {
 					},
 					Containers: []corev1.Container{{
 						Name: "plugin", Image: sampleImage, ImagePullPolicy: corev1.PullIfNotPresent,
-						Ports: []corev1.ContainerPort{{Name: "connect", ContainerPort: 9090, Protocol: corev1.ProtocolTCP}},
-						Env:   env(withProxy),
-						VolumeMounts: []corev1.VolumeMount{
-							{Name: "openfief-token", MountPath: "/var/run/secrets/openfief", ReadOnly: true},
-							{Name: "secret-0", MountPath: "/etc/openfief/token", ReadOnly: true},
-						},
+						Ports:        []corev1.ContainerPort{{Name: "connect", ContainerPort: 9090, Protocol: corev1.ProtocolTCP}},
+						Env:          env(withProxy),
+						VolumeMounts: mounts,
 						SecurityContext: &corev1.SecurityContext{
 							AllowPrivilegeEscalation: ptrTo(false), Privileged: ptrTo(false), ReadOnlyRootFilesystem: ptrTo(true),
 							RunAsNonRoot: ptrTo(true), Capabilities: &corev1.Capabilities{Drop: []corev1.Capability{"ALL"}},
 						},
 					}},
-					Volumes: []corev1.Volume{
-						{Name: "openfief-token", VolumeSource: corev1.VolumeSource{Projected: &corev1.ProjectedVolumeSource{
-							Sources: []corev1.VolumeProjection{{ServiceAccountToken: &corev1.ServiceAccountTokenProjection{
-								Audience: "openfief-core", ExpirationSeconds: ptrTo[int64](3600), Path: "token",
-							}}},
-						}}},
-						{Name: "secret-0", VolumeSource: corev1.VolumeSource{Secret: &corev1.SecretVolumeSource{SecretName: "sample-token"}}},
-					},
+					Volumes: vols,
 				},
 			},
 		},
@@ -204,7 +223,7 @@ func TestBuildObjects(t *testing.T) {
 		want   operator.Objects
 	}{
 		{
-			name:   "granted egress adds the proxy rule and proxy environment",
+			name:   "granted egress adds the proxy rule, proxy environment and egress token",
 			egress: []plugins.EgressHost{{Host: "api.example.com", Port: 443}},
 			want:   objects(true),
 		},

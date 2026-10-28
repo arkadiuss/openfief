@@ -90,3 +90,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91fe280e663f
+  - type: implements
+    from: SYM-valuation-app-input-recorder-apply-bond-basis
+    to: REQ-valuation-basis-change
+    created_at: 2026-10-28T07:36:17.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b379c4345385
+  - type: implements
+    from: SYM-valuation-app-input-recorder-apply-bond-basis
+    to: REQ-decision-d36-9-basis-change-revalues-all
+    created_at: 2026-10-28T07:36:17.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a6e45a8f774
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-apply-bond-basis
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:36:17.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc959c13ca72
+  - type: implements
+    from: SYM-valuation-postgres-store-index-readings
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:03:28.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38b98f088bb4
+  - type: covered_by
+    from: SYM-valuation-postgres-store-index-readings
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:03:28.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0c6a51e46a2
+  - type: executable_for
+    from: SYM-plugins-app-test-caching-token-reviewer-bounded
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:49:15.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cee58a5dc1ed
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:04.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a3fa302ec4e
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:04.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f71f714c6d37
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-request-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:04.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76cdc3401d79

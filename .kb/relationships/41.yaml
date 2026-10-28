@@ -27,3 +27,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1070cd673bf8
+  - type: constrains
+    from: REQ-valuation-revaluation-triggers
+    to: FACT-SUBJECT-8E4176040D621F68
+    created_at: 2026-10-28T07:30:32.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebfa8a85a7aa
+  - type: requires_property
+    from: REQ-valuation-revaluation-triggers
+    to: FACT-PROP-0BA60A48F3567113
+    created_at: 2026-10-28T07:30:32.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20dab0d5f827
+  - type: specified_by
+    from: REQ-valuation-revaluation-triggers
+    to: SCEN-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:30:32.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ccda686c6eb
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-fn-basic
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:51:13.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-648722166559
+  - type: implements
+    from: SYM-sdk-go-core-url
+    to: REQ-sdk-go-plugin-environment
+    created_at: 2026-10-28T08:03:58.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c13e98f59a31
+  - type: covered_by
+    from: SYM-sdk-go-core-url
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:03:58.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f05746184da1
+  - type: implements
+    from: SYM-connector-gen-pb-price-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:17:05.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8da8851a5506
+  - type: implements
+    from: SYM-connector-gen-pb-price-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:17:06.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a42028c9429
+  - type: covered_by
+    from: SYM-connector-gen-pb-price-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:17:06.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daecb7e748eb
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-file-name
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:42.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9450ca4e6658
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-file-name
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:42.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c571661e02e
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-get-file-name
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:42.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8d08b217cf4
+  - type: implements
+    from: SYM-connector-gen-pb-init
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:02.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-546841247394
+  - type: implements
+    from: SYM-connector-gen-pb-init
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:02.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01d72b286afd
+  - type: covered_by
+    from: SYM-connector-gen-pb-init
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:02.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-480264d2ca36
+  - type: verified_by
+    from: SCEN-tooling-demo-manifests-check
+    to: TEST-tooling-demo-validate
+    created_at: 2026-10-28T08:59:51.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e8280d3e6ed
+  - type: constrains
+    from: REQ-tooling-demo-manifests
+    to: FACT-SUBJECT-EDFEA2473618839A
+    created_at: 2026-10-28T09:01:34.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b47a9a77911
+  - type: requires_property
+    from: REQ-tooling-demo-manifests
+    to: FACT-PROP-D7FAECC6B61FCBE6
+    created_at: 2026-10-28T09:01:34.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21034d6a482f
+  - type: specified_by
+    from: REQ-tooling-demo-manifests
+    to: SCEN-tooling-demo-manifests-check
+    created_at: 2026-10-28T09:01:34.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-847476a55007

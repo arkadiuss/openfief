@@ -55,3 +55,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a796020ce046
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-ledger-log
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:37:18.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f975499141d3
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-ledger-log
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:37:18.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e5dc5fa07b7
+  - type: implements
+    from: SYM-connector-gen-pb-sync-request-reset
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:19:18.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7262fade8862
+  - type: implements
+    from: SYM-connector-gen-pb-sync-request-reset
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:19:18.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03aa58a01023
+  - type: covered_by
+    from: SYM-connector-gen-pb-sync-request-reset
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:19:18.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e40b2dc021d
+  - type: implements
+    from: SYM-connector-gen-pb-sync-response-get-delivery
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:07.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02ce93a590e1
+  - type: implements
+    from: SYM-connector-gen-pb-sync-response-get-delivery
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:07.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57206c9bf273
+  - type: covered_by
+    from: SYM-connector-gen-pb-sync-response-get-delivery
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:07.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2342fb6da410

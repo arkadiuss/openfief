@@ -125,3 +125,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84ce5172c12e
+  - type: implements
+    from: SYM-valuation-app-revaluer-rows
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:34:12.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b978a10e25b
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-rows
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:34:12.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4002f982ff81
+  - type: executable_for
+    from: SYM-valuation-postgres-test-import-hook-needs-the-ledgers-transaction
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:09:53.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8753b75670d6
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-proto-reflect
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:11.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53666d24b88f
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-proto-reflect
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:12.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f90ef5a224db
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-reading-proto-reflect
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:12.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c773e41c9a93
+  - type: constrains
+    from: REQ-tooling-demo-budget
+    to: FACT-SUBJECT-F4BC1BEF1AE17551
+    created_at: 2026-10-28T09:00:11.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4141e685459b
+  - type: requires_property
+    from: REQ-tooling-demo-budget
+    to: FACT-PROP-5BD18608E506DB40
+    created_at: 2026-10-28T09:00:11.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-476ac36e9a10
+  - type: specified_by
+    from: REQ-tooling-demo-budget
+    to: SCEN-tooling-demo-over-budget
+    created_at: 2026-10-28T09:00:11.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43a7e652adab

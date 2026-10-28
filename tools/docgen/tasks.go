@@ -27,7 +27,7 @@ func tasksPage(list taskList) string {
 			group = g
 			fmt.Fprintf(&b, "\n## %s\n\n| Task | What it does |\n|---|---|\n", group)
 		}
-		fmt.Fprintf(&b, "| `task %s` | %s |\n", t.Name, strings.ReplaceAll(t.Desc, "|", "\\|"))
+		fmt.Fprintf(&b, "| `task %s` | %s |\n", t.Name, tableCell(t.Desc))
 	}
 	return b.String()
 }

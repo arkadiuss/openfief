@@ -97,3 +97,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0299357f83e
+  - type: implements
+    from: SYM-plugins-app-caching-token-reviewer
+    to: REQ-plugins-egress-token-review-cache
+    created_at: 2026-10-28T08:47:50.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a125aee50de
+  - type: covered_by
+    from: SYM-plugins-app-caching-token-reviewer
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:47:50.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-480de92efd44
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-helper-fake-stores-store-index-readings
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T09:00:14.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53a840028163

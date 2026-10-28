@@ -1,5 +1,5 @@
 ---
-title: The egress proxy accepts only a plugin's projected token
+title: The egress proxy accepts only a plugin's egress-audience token
 status: active
 origin:
   kind: agent
@@ -7,4 +7,4 @@ origin:
 id: SCEN-plugins-egress-proxy-identifies-plugin
 type: scenario
 ---
-Given a CONNECT with Proxy-Authorization Bearer and a token the TokenReview API authenticates for audience openfief-core as system:serviceaccount:openfief:plugin-sample, when the proxy identifies it, then the plugin is sample; with no token, a Basic credential, a token for another audience, an unauthenticated token or a non-plugin ServiceAccount, the CONNECT is refused and the token is never logged.
+Given a CONNECT whose Proxy-Authorization is Basic with the projected token as the password, as Go's and Node's clients send it for a proxy URL with credentials, and the TokenReview API authenticates that token for audience openfief-egress as system:serviceaccount:openfief:plugin-sample, when the proxy identifies it, then the plugin is sample; with no token, Bearer, a token for openfief-core only, an unauthenticated token or a non-plugin ServiceAccount, the CONNECT is refused with 407 and the token is never logged.

@@ -83,3 +83,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d7c93d94f67
+  - type: implements
+    from: SYM-valuation-postgres-store-statuses
+    to: REQ-valuation-status
+    created_at: 2026-10-28T08:02:14.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ee14e99705b
+  - type: covered_by
+    from: SYM-valuation-postgres-store-statuses
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:02:14.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa410a9e9179
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-pool
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:07:22.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a56690fef4e
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-pool
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:07:22.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d599be0385e3
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-pool
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:07:22.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc58d48db167
+  - type: executable_for
+    from: SYM-plugins-app-test-cache-fn-jwt-expiring
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:49:04.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-058c92680d2c
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-serve-fake-connector-import-file
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:09:39.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fc2305c7639
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-proto-reflect
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:28.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d31fcfb2c491
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-proto-reflect
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:28.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42938f37104c
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-proto-reflect
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:28.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a4c34a631f0
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-handler
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:29.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb3c1446723b
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-handler
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:29.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c6d26853033
+  - type: covered_by
+    from: SYM-connector-gen-connect-connector-service-handler
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:29.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a79a19adbb29

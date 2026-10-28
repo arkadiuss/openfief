@@ -48,3 +48,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72e4eaadeb27
+  - type: implements
+    from: SYM-valuation-app-revaluer
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:33:53.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aff5ed5c0c4d
+  - type: covered_by
+    from: SYM-valuation-app-revaluer
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:33:53.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d33d5bc6a99
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-ledger
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:37:09.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cde224aeec9d
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-ledger
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:37:09.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69d844cf1b86
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-get-lot-opened
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:47.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29330e221a3a
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-get-lot-opened
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:47.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-740547d280a4
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-get-lot-opened
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:47.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-313678127dd1

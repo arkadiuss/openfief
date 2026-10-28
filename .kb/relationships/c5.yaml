@@ -69,3 +69,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4c179760fe9
+  - type: implements
+    from: SYM-valuation-postgres-store-enqueue
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:01:19.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40dd97c9a122
+  - type: implements
+    from: SYM-valuation-postgres-store-enqueue
+    to: REQ-decision-d36-5-revaluation-coalescing
+    created_at: 2026-10-28T08:01:19.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fd0bc40ee8c
+  - type: covered_by
+    from: SYM-valuation-postgres-store-enqueue
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:01:19.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e0f1de4e14d
+  - type: constrains
+    from: REQ-plugins-egress-allow-lists-swapped-atomically
+    to: FACT-SUBJECT-CBE5237E6B3B40B6
+    created_at: 2026-10-28T08:47:18.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fd018d743ba
+  - type: requires_property
+    from: REQ-plugins-egress-allow-lists-swapped-atomically
+    to: FACT-PROP-F35C70748EEFBA82
+    created_at: 2026-10-28T08:47:18.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bcb32d4a25f
+  - type: specified_by
+    from: REQ-plugins-egress-allow-lists-swapped-atomically
+    to: SCEN-plugins-egress-allow-lists-swapped
+    created_at: 2026-10-28T08:47:18.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e949168fd22c
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-fake-proxy
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:07:04.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22f4925630da

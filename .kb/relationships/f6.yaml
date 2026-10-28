@@ -13,3 +13,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1fd2420c6a87
+  - type: constrains
+    from: REQ-valuation-revaluation-rows
+    to: FACT-SUBJECT-201BF18D8A3B745A
+    created_at: 2026-10-28T07:29:16.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62023f1a51b8
+  - type: requires_property
+    from: REQ-valuation-revaluation-rows
+    to: FACT-PROP-38D2F7B2DDC0EC25
+    created_at: 2026-10-28T07:29:16.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fac697b4dafe
+  - type: specified_by
+    from: REQ-valuation-revaluation-rows
+    to: SCEN-valuation-revaluation-rebuild
+    created_at: 2026-10-28T07:29:16.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19766c3593fc
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:13.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71e55b47f9be
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:13.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b18536bbf04
+  - type: covered_by
+    from: SYM-connector-gen-pb-balance-assertion-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:13.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-251d9401d133
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-connectors-import-file
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T09:00:48.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bbc37f8cb7b

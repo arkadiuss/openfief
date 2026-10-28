@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40bcb2f459cd
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-fn-proxy-fixture-open
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:51:30.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e72c1993c70

@@ -226,5 +226,15 @@ func firstSentence(doc string) string {
 	if i := strings.Index(doc, ". "); i >= 0 {
 		doc = doc[:i+1]
 	}
-	return strings.ReplaceAll(doc, "|", "\\|")
+	return tableCell(doc)
+}
+
+// tableCell makes text safe in a Markdown table cell: pipes are escaped, and angle brackets outside code
+// spans, such as CONFIRM=<ENV>, become entities instead of raw HTML.
+func tableCell(text string) string {
+	parts := strings.Split(text, "`")
+	for i := 0; i < len(parts); i += 2 {
+		parts[i] = strings.NewReplacer("<", "&lt;", ">", "&gt;").Replace(parts[i])
+	}
+	return strings.ReplaceAll(strings.Join(parts, "`"), "|", "\\|")
 }

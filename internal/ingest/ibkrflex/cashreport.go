@@ -44,15 +44,10 @@ func endingCash(r *row) (kernel.Money, error) {
 }
 
 // openingCash returns the transaction that brings cash into the account at
-// go-live.
+// go-live: a deposit, or a withdrawal for a negative balance, against equity
+// (D-33), keyed so that the ledger knows the account is seeded.
 func (s *stmt) openingCash(cash kernel.Money) (ledger.Transaction, error) {
-	h := s.header("opening-cash:"+cash.Currency().String()+":"+s.to.String(), s.to)
-	var t ledger.Transaction
-	var err error
-	if cash.Sign() > 0 {
-		t, err = ledger.NewDeposit(h, cash)
-	} else {
-		t, err = ledger.NewWithdrawal(h, cash.Neg())
-	}
+	h := s.header(ledger.OpeningCashID(cash.Currency(), s.to), s.to)
+	t, err := ledger.NewOpeningCash(h, cash)
 	return booked(&t, err, "opening cash")
 }

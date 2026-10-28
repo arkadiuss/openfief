@@ -41,11 +41,13 @@ func (f *fakeMapper) Map(src io.Reader, mode ingest.Mode) (ingest.Mapping, error
 	return f.mapping, f.err
 }
 
-// fakeLedger records the transactions and assertions it imports.
+// fakeLedger records the transactions and assertions it imports or seeds.
 type fakeLedger struct {
-	summary    ingest.ImportSummary
-	err        error
+	summary ingest.ImportSummary
+	err     error
+	// calls counts imports and seeds; seeds counts seeds alone.
 	calls      int
+	seeds      int
 	txs        []ledger.Transaction
 	assertions []ledger.BalanceAssertion
 }
@@ -54,6 +56,11 @@ func (f *fakeLedger) Import(_ context.Context, txs []ledger.Transaction, asserti
 	f.calls++
 	f.txs, f.assertions = txs, assertions
 	return f.summary, f.err
+}
+
+func (f *fakeLedger) Seed(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
+	f.seeds++
+	return f.Import(ctx, txs, assertions)
 }
 
 // fakeFetcher returns a fixed statement or error.
@@ -211,6 +218,60 @@ func TestPullFailures(t *testing.T) {
 			}
 			if l.calls != 0 {
 				t.Errorf("ledger imports = %d, want 0", l.calls)
+			}
+		})
+	}
+}
+
+// openingMapping returns a mapping with the opening cash of acc-1.
+func openingMapping(t *testing.T) ingest.Mapping {
+	t.Helper()
+	day := march2(t)
+	usd, err := kernel.ParseMoney("100", mustCurrency(t, "USD"))
+	if err != nil {
+		t.Fatalf("ParseMoney: %v", err)
+	}
+	h := ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "test", ExternalID: ledger.OpeningCashID(usd.Currency(), day)}, Account: "acc-1", Date: day}
+	cash, err := ledger.NewOpeningCash(h, usd)
+	if err != nil {
+		t.Fatalf("NewOpeningCash: %v", err)
+	}
+	return ingest.Mapping{Transactions: []ledger.Transaction{cash}}
+}
+
+func TestIngestSeedsOnlyInOpeningMode(t *testing.T) {
+	t.Parallel()
+	refused := &ledger.AlreadySeededError{Account: "acc-1"}
+	tests := []struct {
+		name      string
+		mode      ingest.Mode
+		mapping   func(t *testing.T) ingest.Mapping
+		summary   ingest.ImportSummary
+		ledgerErr error
+		want      ingest.ImportSummary
+		wantErr   error
+		// wantCalls and wantSeeds count the ledger's imports and seeds.
+		wantCalls, wantSeeds int
+	}{
+		{name: "opening batch seeds", mode: ingest.ModeOpening, mapping: openingMapping, summary: ingest.ImportSummary{New: 1}, want: ingest.ImportSummary{New: 1}, wantCalls: 1, wantSeeds: 1},
+		{name: "same opening batch again changes nothing", mode: ingest.ModeOpening, mapping: openingMapping, summary: ingest.ImportSummary{Unchanged: 1, AlreadySeeded: []ledger.AccountID{"acc-1"}}, want: ingest.ImportSummary{Unchanged: 1, AlreadySeeded: []ledger.AccountID{"acc-1"}}, wantCalls: 1, wantSeeds: 1},
+		{name: "opening batch of a seeded account is refused", mode: ingest.ModeOpening, mapping: openingMapping, ledgerErr: refused, wantErr: ledger.ErrAlreadySeeded, wantCalls: 1, wantSeeds: 1},
+		{name: "transactions batch imports", mode: ingest.ModeTransactions, mapping: mapping, summary: ingest.ImportSummary{New: 1}, want: ingest.ImportSummary{New: 1}, wantCalls: 1},
+		{name: "transactions batch with opening cash is refused", mode: ingest.ModeTransactions, mapping: openingMapping, wantErr: app.ErrSeedingOutsideOpening},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			l := &fakeLedger{summary: tt.summary, err: tt.ledgerErr}
+			got, err := service(t, &fakeMapper{mapping: tt.mapping(t)}, l).IngestFile(context.Background(), "ibkr", tt.mode, strings.NewReader("x"))
+			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
+				t.Fatalf("IngestFile error (-want +got):\n%s", diff)
+			}
+			if diff := cmp.Diff(tt.want, got.Imported, cmpopts.EquateEmpty()); diff != "" {
+				t.Errorf("imported (-want +got):\n%s", diff)
+			}
+			if l.calls != tt.wantCalls || l.seeds != tt.wantSeeds {
+				t.Errorf("ledger calls = %d, seeds = %d; want %d and %d", l.calls, l.seeds, tt.wantCalls, tt.wantSeeds)
 			}
 		})
 	}

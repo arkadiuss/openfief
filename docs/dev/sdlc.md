@@ -31,6 +31,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - CI runs on GitHub Actions **(P)**: the same checks as the hook, end-to-end tests on k3s plus kind (D-12), and multi-arch images with an SBOM, signed with cosign (D-17).
 - Demo and test environment: a Hetzner machine running k3s, deployed by the pipeline from `main` and from beta releases. It holds synthetic data only: never real broker credentials or portfolio data (GR-12).
 - Deploy credentials live in a protected GitHub Environment, never in the repository **(P)**.
+- Creating, reaching, deploying to and destroying the demo machine: [demo.md](demo.md).
 
 ## Releases
 

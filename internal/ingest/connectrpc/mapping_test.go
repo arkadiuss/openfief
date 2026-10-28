@@ -1,0 +1,307 @@
+package connectrpc
+
+import (
+	"errors"
+	"testing"
+
+	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
+
+	"github.com/arkadiuss/openfief/internal/ingest"
+	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/ledger"
+	"github.com/arkadiuss/openfief/internal/valuation"
+	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
+)
+
+const testISIN = "PLTEST000010"
+
+// testDelivery is a synthetic delivery for batch b-1: one buy of 2 units for
+// 100.50 USD, a holding assertion, a skipped row, a price, an FX rate and an
+// index reading.
+func testDelivery() *connectorv1.Delivery {
+	instrument := &connectorv1.Instrument{Isin: testISIN, Symbol: "TST"}
+	holding := &connectorv1.Book{Kind: connectorv1.BookKind_BOOK_KIND_HOLDING, Instrument: instrument}
+	return &connectorv1.Delivery{
+		BatchId: "b-1", Institution: "xtb",
+		Transactions: []*connectorv1.Transaction{{
+			Key:       &connectorv1.TransactionKey{Source: "acc-1", ExternalId: "T1"},
+			AccountId: "acc-1", Kind: connectorv1.TransactionKind_TRANSACTION_KIND_BUY, Date: "2026-03-02",
+			Description: "buy",
+			Postings: []*connectorv1.Posting{
+				{Book: &connectorv1.Book{Kind: connectorv1.BookKind_BOOK_KIND_CASH, Currency: "USD"}, Amount: &connectorv1.Money{Amount: "-100.50", Currency: "USD"}},
+				{Book: holding, Amount: &connectorv1.Money{Amount: "100.50", Currency: "USD"}, Quantity: "2"},
+			},
+		}},
+		BalanceAssertions: []*connectorv1.BalanceAssertion{{AccountId: "acc-1", Date: "2026-03-02", Book: holding, Balance: "2"}},
+		Problems:          []*connectorv1.Problem{{Kind: connectorv1.ProblemKind_PROBLEM_KIND_SKIPPED, Ref: "row 3", Reason: "summary row"}},
+		Prices: []*connectorv1.Price{{
+			Instrument: instrument, Date: "2026-03-02", Close: &connectorv1.Money{Amount: "50.25", Currency: "USD"},
+		}},
+		FxRates:       []*connectorv1.FxRate{{Currency: "USD", Date: "2026-03-02", Rate: "3.9876"}},
+		IndexReadings: []*connectorv1.IndexReading{{Index: connectorv1.Index_INDEX_CPI, Date: "2026-02-01", Value: "0.049"}},
+	}
+}
+
+func mustDecimal(t *testing.T, s string) kernel.Decimal {
+	t.Helper()
+	d, err := kernel.ParseDecimal(s)
+	if err != nil {
+		t.Fatalf("ParseDecimal: %v", err)
+	}
+	return d
+}
+
+func mustDate(t *testing.T, s string) kernel.Date {
+	t.Helper()
+	d, err := kernel.ParseDate(s)
+	if err != nil {
+		t.Fatalf("ParseDate: %v", err)
+	}
+	return d
+}
+
+func mustMoney(t *testing.T, amount, currency string) kernel.Money {
+	t.Helper()
+	c, err := kernel.ParseCurrency(currency)
+	if err != nil {
+		t.Fatalf("ParseCurrency: %v", err)
+	}
+	return kernel.NewMoney(mustDecimal(t, amount), c)
+}
+
+func testInstrument(t *testing.T) ledger.Instrument {
+	t.Helper()
+	isin, err := ledger.ParseISIN(testISIN)
+	if err != nil {
+		t.Fatalf("ParseISIN: %v", err)
+	}
+	return ledger.Instrument{ISIN: isin, Symbol: "TST"}
+}
+
+func TestDeliveryFrom(t *testing.T) {
+	t.Parallel()
+	got, err := deliveryFrom(testDelivery(), "b-1", "w-2")
+	if err != nil {
+		t.Fatalf("deliveryFrom: %v", err)
+	}
+	day := mustDate(t, "2026-03-02")
+	usd := mustMoney(t, "100.50", "USD")
+	holding := ledger.HoldingBook(testInstrument(t))
+	want := app.Delivery{
+		Institution: "xtb", Watermark: "w-2",
+		Prices:  []valuation.Price{{Instrument: testInstrument(t).String(), Date: day, Close: mustMoney(t, "50.25", "USD")}},
+		FXRates: []valuation.FXRate{{Currency: usd.Currency(), Date: day, Rate: mustDecimal(t, "3.9876")}},
+		IndexReadings: []ingest.IndexReading{{
+			Index: ingest.IndexCPI, Date: mustDate(t, "2026-02-01"), Value: mustDecimal(t, "0.049"),
+		}},
+		Mapping: ingest.Mapping{
+			Transactions: []ledger.Transaction{{
+				Key: ledger.TransactionKey{Source: "acc-1", ExternalID: "T1"}, Account: "acc-1",
+				Kind: ledger.KindBuy, Date: day, Description: "buy",
+				Postings: []ledger.Posting{
+					{Book: ledger.CashBook(usd.Currency()), Amount: usd.Neg()},
+					{Book: holding, Amount: usd, Quantity: kernel.NewQuantity(mustDecimal(t, "2"))},
+				},
+			}},
+			Assertions: []ledger.BalanceAssertion{{Account: "acc-1", Date: day, Book: holding, Balance: mustDecimal(t, "2")}},
+			Problems:   []ingest.Problem{ingest.Skipped("row 3", "summary row")},
+		},
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("deliveryFrom (-want +got):\n%s", diff)
+	}
+	for i := range got.Mapping.Transactions {
+		if err := got.Mapping.Transactions[i].Validate(); err != nil {
+			t.Errorf("translated transaction is not valid: %v", err)
+		}
+	}
+}
+
+func TestDeliveryFromRejects(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		edit func(r *connectorv1.Delivery)
+	}{
+		{name: "another batch", edit: func(r *connectorv1.Delivery) { r.BatchId = "b-0" }},
+		{name: "bad price", edit: func(r *connectorv1.Delivery) { r.Prices[0].Close.Amount = "0" }},
+		{name: "bad FX rate", edit: func(r *connectorv1.Delivery) { r.FxRates[0].Rate = "-1" }},
+		{name: "bad index reading", edit: func(r *connectorv1.Delivery) { r.IndexReadings[0].Index = 0 }},
+		{name: "exponent amount", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[0].Amount.Amount = "-1.005e2" }},
+		{name: "grouped amount", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[0].Amount.Amount = "1,000.50" }},
+		{name: "missing amount", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[0].Amount = nil }},
+		{name: "lower-case currency", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[0].Amount.Currency = "usd" }},
+		{name: "bad quantity", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[1].Quantity = "two" }},
+		{name: "date with time", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Date = "2026-03-02T10:00:00Z" }},
+		{name: "bad lot open date", edit: func(r *connectorv1.Delivery) { r.Transactions[0].LotOpened = "02.03.2026" }},
+		{name: "no transaction kind", edit: func(r *connectorv1.Delivery) {
+			r.Transactions[0].Kind = connectorv1.TransactionKind_TRANSACTION_KIND_UNSPECIFIED
+		}},
+		{name: "no book kind", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[0].Book.Kind = 0 }},
+		{name: "wrong ISIN check digit", edit: func(r *connectorv1.Delivery) {
+			r.Transactions[0].Postings[1].Book.Instrument = &connectorv1.Instrument{Isin: "PLTEST000011", Symbol: "TST"}
+		}},
+		{name: "no venue symbol", edit: func(r *connectorv1.Delivery) {
+			r.Transactions[0].Postings[1].Book.Instrument = &connectorv1.Instrument{Isin: testISIN}
+		}},
+		{name: "bad assertion balance", edit: func(r *connectorv1.Delivery) { r.BalanceAssertions[0].Balance = "" }},
+		{name: "bad assertion date", edit: func(r *connectorv1.Delivery) { r.BalanceAssertions[0].Date = "" }},
+		{name: "bad assertion book", edit: func(r *connectorv1.Delivery) { r.BalanceAssertions[0].Book = nil }},
+		{name: "no problem kind", edit: func(r *connectorv1.Delivery) { r.Problems[0].Kind = 0 }},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			r := testDelivery()
+			tt.edit(r)
+			if _, err := deliveryFrom(r, "b-1", ""); !errors.Is(err, ErrInvalidMessage) {
+				t.Errorf("deliveryFrom error = %v, want %v", err, ErrInvalidMessage)
+			}
+		})
+	}
+}
+
+func TestPlainDecimal(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		{"0", true},
+		{"-12.34", true},
+		{"100.50", true},
+		{"0.049", true},
+		{"", false},
+		{"-", false},
+		{".5", false},
+		{"5.", false},
+		{"+1", false},
+		{"1e3", false},
+		{"1,000", false},
+		{" 1", false},
+		{"1.2.3", false},
+		{"--1", false},
+		{"1-", false},
+		{"NaN", false},
+	}
+	for _, tt := range tests {
+		if got := plainDecimal(tt.in); got != tt.want {
+			t.Errorf("plainDecimal(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
+
+func TestValuationInputsFrom(t *testing.T) {
+	t.Parallel()
+	in := testInstrument(t)
+	price, err := priceFrom("p", &connectorv1.Price{
+		Instrument: &connectorv1.Instrument{Isin: testISIN, Symbol: "TST"}, Date: "2026-03-02",
+		Close: &connectorv1.Money{Amount: "12.34", Currency: "PLN"},
+	})
+	if err != nil {
+		t.Fatalf("priceFrom: %v", err)
+	}
+	wantPrice := valuation.Price{Instrument: in.String(), Date: mustDate(t, "2026-03-02"), Close: mustMoney(t, "12.34", "PLN")}
+	if diff := cmp.Diff(wantPrice, price); diff != "" {
+		t.Errorf("priceFrom (-want +got):\n%s", diff)
+	}
+	rate, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "3.9876"})
+	if err != nil {
+		t.Fatalf("fxRateFrom: %v", err)
+	}
+	wantRate := valuation.FXRate{Currency: mustMoney(t, "1", "USD").Currency(), Date: mustDate(t, "2026-03-02"), Rate: mustDecimal(t, "3.9876")}
+	if diff := cmp.Diff(wantRate, rate); diff != "" {
+		t.Errorf("fxRateFrom (-want +got):\n%s", diff)
+	}
+	reading, err := indexReadingFrom("i", &connectorv1.IndexReading{Index: connectorv1.Index_INDEX_REFERENCE_RATE, Date: "2026-07-03", Value: "0.0575"})
+	if err != nil {
+		t.Fatalf("indexReadingFrom: %v", err)
+	}
+	wantReading := ingest.IndexReading{Index: ingest.IndexReferenceRate, Date: mustDate(t, "2026-07-03"), Value: mustDecimal(t, "0.0575")}
+	if diff := cmp.Diff(wantReading, reading); diff != "" {
+		t.Errorf("indexReadingFrom (-want +got):\n%s", diff)
+	}
+}
+
+func TestValuationInputsFromRejects(t *testing.T) {
+	t.Parallel()
+	usd := &connectorv1.Money{Amount: "1", Currency: "USD"}
+	instrument := &connectorv1.Instrument{Isin: testISIN, Symbol: "TST"}
+	tests := []struct {
+		name string
+		err  func() error
+	}{
+		{"zero close", func() error {
+			_, err := priceFrom("p", &connectorv1.Price{Instrument: instrument, Date: "2026-03-02", Close: &connectorv1.Money{Amount: "0", Currency: "USD"}})
+			return err
+		}},
+		{"price without instrument", func() error {
+			_, err := priceFrom("p", &connectorv1.Price{Date: "2026-03-02", Close: usd})
+			return err
+		}},
+		{"price without date", func() error {
+			_, err := priceFrom("p", &connectorv1.Price{Instrument: instrument, Close: usd})
+			return err
+		}},
+		{"negative rate", func() error {
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "-3.9"})
+			return err
+		}},
+		{"rate without currency", func() error {
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Date: "2026-03-02", Rate: "3.9"})
+			return err
+		}},
+		{"rate without date", func() error {
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Rate: "3.9"})
+			return err
+		}},
+		{"no index", func() error {
+			_, err := indexReadingFrom("i", &connectorv1.IndexReading{Date: "2026-07-03", Value: "0.0575"})
+			return err
+		}},
+		{"reading without date", func() error {
+			_, err := indexReadingFrom("i", &connectorv1.IndexReading{Index: connectorv1.Index_INDEX_CPI, Value: "0.049"})
+			return err
+		}},
+		{"percent reading", func() error {
+			_, err := indexReadingFrom("i", &connectorv1.IndexReading{Index: connectorv1.Index_INDEX_CPI, Date: "2026-02-01", Value: "4.9%"})
+			return err
+		}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if diff := cmp.Diff(ErrInvalidMessage, tt.err(), cmpopts.EquateErrors()); diff != "" {
+				t.Errorf("error (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestDeliveryFromMissing(t *testing.T) {
+	t.Parallel()
+	if _, err := deliveryFrom(nil, "b-1", ""); !errors.Is(err, ErrInvalidMessage) {
+		t.Errorf("deliveryFrom(nil) error = %v, want %v", err, ErrInvalidMessage)
+	}
+}
+
+func TestModeTo(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		in      ingest.Mode
+		want    connectorv1.Mode
+		wantErr error
+	}{
+		{in: ingest.ModeOpening, want: connectorv1.Mode_MODE_OPENING},
+		{in: ingest.ModeTransactions, want: connectorv1.Mode_MODE_TRANSACTIONS},
+		{in: 0, want: connectorv1.Mode_MODE_UNSPECIFIED, wantErr: ingest.ErrInvalidBatch},
+	}
+	for _, tt := range tests {
+		got, err := modeTo(tt.in)
+		if got != tt.want || !errors.Is(err, tt.wantErr) {
+			t.Errorf("modeTo(%v) = %v, %v; want %v, %v", tt.in, got, err, tt.want, tt.wantErr)
+		}
+	}
+}

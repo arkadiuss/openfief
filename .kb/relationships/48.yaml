@@ -111,3 +111,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-178b4da30182
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-valued-through
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:00.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ad34ff14851
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-valued-through
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:00.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77d9815110f7
+  - type: implements
+    from: SYM-valuation-postgres-end-of-day-kind
+    to: REQ-valuation-settings
+    created_at: 2026-10-28T08:06:40.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1084177e539
+  - type: covered_by
+    from: SYM-valuation-postgres-end-of-day-kind
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:06:40.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-038b20b9fa33
+  - type: implements
+    from: SYM-sdk-go-listen-address
+    to: REQ-sdk-go-plugin-environment
+    created_at: 2026-10-28T08:04:03.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f57c6df5ca76
+  - type: covered_by
+    from: SYM-sdk-go-listen-address
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:04:03.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37aeb43afa40
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-client-2
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:19.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebcc3a92e485
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-client-2
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:19.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac9304a6ce42
+  - type: covered_by
+    from: SYM-connector-gen-connect-connector-service-client-2
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:19.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-943f24480e44
+  - type: executable_for
+    from: SYM-demo-pin-test-helper-yes-if
+    to: TEST-tooling-demo-pin-images
+    created_at: 2026-10-28T09:14:28.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13e6ce9f5b36

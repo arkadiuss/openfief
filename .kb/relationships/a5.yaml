@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0b67d9513e4
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:22.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4767c001bcc
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:22.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7630d3c0599b
+  - type: covered_by
+    from: SYM-connector-gen-pb-instrument-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:22.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fafa9a11bfb
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-client-failures
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:05:19.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7835e89d7e4

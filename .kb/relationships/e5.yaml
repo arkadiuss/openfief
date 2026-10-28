@@ -41,3 +41,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ddd315fc8ed
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-mem-ledger
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:36:57.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e4594e126e8
+  - type: verified_by
+    from: SCEN-ledger-seed-concurrent
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-28T08:38:51.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91fc024175d5
+  - type: verified_by
+    from: SCEN-ledger-seed-concurrent
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-28T08:38:51.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeeb2d4433a9
+  - type: implements
+    from: SYM-demo-stack-paths
+    to: REQ-tooling-demo-manifests
+    created_at: 2026-10-28T09:13:04.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aa7a1aa1e3e
+  - type: covered_by
+    from: SYM-demo-stack-paths
+    to: TEST-tooling-demo-validate
+    created_at: 2026-10-28T09:13:04.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02129fe8696b

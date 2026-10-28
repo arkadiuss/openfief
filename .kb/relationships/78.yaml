@@ -97,3 +97,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcdb5ec8c354
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-date
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:08:12.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0316c52f91c7
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-date
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:08:12.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b865765dae9
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-date
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:08:12.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b059c6a4cf5
+  - type: executable_for
+    from: SYM-ledger-test-opening-cash-id
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:41:01.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3937de609d03
+  - type: constrains
+    from: REQ-plugins-egress-token-projected
+    to: FACT-SUBJECT-580F1F6B1556993B
+    created_at: 2026-10-28T08:37:45.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1df0b147c7a7
+  - type: requires_property
+    from: REQ-plugins-egress-token-projected
+    to: FACT-PROP-2F1535257438251E
+    created_at: 2026-10-28T08:37:45.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af35b57eb472
+  - type: specified_by
+    from: REQ-plugins-egress-token-projected
+    to: SCEN-plugins-egress-token-only-with-egress
+    created_at: 2026-10-28T08:37:45.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3d70982e95a

@@ -118,3 +118,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81c7c8c40d14
+  - type: constrains
+    from: REQ-ledger-seed-atomic
+    to: FACT-SUBJECT-E66CF2A720821755
+    created_at: 2026-10-28T08:39:26.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ba8a4dccbdb
+  - type: requires_property
+    from: REQ-ledger-seed-atomic
+    to: FACT-PROP-E6C58A08AC6A8B16
+    created_at: 2026-10-28T08:39:26.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3867cdf335f1
+  - type: specified_by
+    from: REQ-ledger-seed-atomic
+    to: SCEN-ledger-seed-concurrent
+    created_at: 2026-10-28T08:39:26.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f44b8ed04349
+  - type: implements
+    from: SYM-connector-gen-pb-price
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:58.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb05a0f42d31
+  - type: implements
+    from: SYM-connector-gen-pb-price
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:58.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3421352c3dc6
+  - type: covered_by
+    from: SYM-connector-gen-pb-price
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:58.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e49a4cf69a13

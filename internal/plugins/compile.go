@@ -10,8 +10,12 @@ import (
 const (
 	// TokenMountPath is the directory of a plugin's projected token.
 	TokenMountPath = ReservedMountPath + "/openfief"
-	// TokenPath is the token's file name inside TokenMountPath.
+	// TokenPath is the token's file name inside TokenMountPath and
+	// EgressTokenMountPath.
 	TokenPath = "token"
+	// EgressTokenMountPath is the directory of the projected token a plugin
+	// presents to the egress proxy (D-63).
+	EgressTokenMountPath = ReservedMountPath + "/openfief-egress"
 	// TokenExpirationSeconds is the projected token's requested lifetime; the
 	// kubelet refreshes it before it expires.
 	TokenExpirationSeconds int64 = 3600
@@ -71,8 +75,9 @@ type ServiceAccount struct {
 	AutomountAPIToken bool
 }
 
-// ProjectedToken is the projected ServiceAccount token volume a plugin
-// presents to the core and the egress proxy (D-27).
+// ProjectedToken is a projected ServiceAccount token volume: the one a
+// plugin presents to the core (D-27) or the one it presents to the egress
+// proxy (D-63).
 type ProjectedToken struct {
 	Audience          string
 	ExpirationSeconds int64
@@ -105,6 +110,7 @@ type Workload struct {
 	DataTiers       []DataTier
 	ServiceAccount  ServiceAccount
 	Token           ProjectedToken
+	EgressToken     *ProjectedToken // nil unless some egress host is granted
 	Secrets         []SecretVolume
 	Env             []EnvVar
 	NetworkPolicy   NetworkPolicy
@@ -120,7 +126,10 @@ type Workload struct {
 //     NO_PROXY set to the core;
 //   - the granted Secrets, mounted read-only;
 //   - a ServiceAccount without Kubernetes API access, and a projected token
-//     with audience CoreAudience (D-27), in the openfief namespace (D-15).
+//     with audience CoreAudience (D-27), in the openfief namespace (D-15);
+//   - only when some egress host is granted, a second projected token with
+//     audience EgressAudience for the egress proxy (D-63), so the proxy never
+//     sees a token the core would accept.
 func Compile(e *EffectivePermissions, t Topology) (Workload, error) {
 	if e == nil || e.plugin == "" {
 		return Workload{}, fmt.Errorf("%w: empty effective permissions", ErrNoCapabilityGranted)
@@ -151,6 +160,10 @@ func Compile(e *EffectivePermissions, t Topology) (Workload, error) {
 	}
 	if len(e.egress) > 0 {
 		w.NetworkPolicy.Egress = append(w.NetworkPolicy.Egress, NetworkRule{Peer: PeerEgressProxy, Port: t.EgressProxy.TargetPort})
+		w.EgressToken = &ProjectedToken{
+			Audience: EgressAudience, ExpirationSeconds: TokenExpirationSeconds,
+			MountPath: EgressTokenMountPath, Path: TokenPath,
+		}
 		w.Env = []EnvVar{
 			{Name: EnvHTTPSProxy, Value: "http://" + t.EgressProxy.hostPort()},
 			{Name: EnvNoProxy, Value: t.Core.Address},

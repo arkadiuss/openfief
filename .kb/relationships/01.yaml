@@ -97,3 +97,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3ee90d478ee
+  - type: implements
+    from: SYM-valuation-app-for-import
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:34.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-887b4ef52034
+  - type: implements
+    from: SYM-valuation-app-for-import
+    to: REQ-valuation-coalesce
+    created_at: 2026-10-28T07:35:34.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63269ee56d3c
+  - type: covered_by
+    from: SYM-valuation-app-for-import
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:34.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db3e55e653e6
+  - type: verified_by
+    from: SCEN-valuation-enqueue-same-transaction
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T07:56:15.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbcfda05d1fb
+  - type: implements
+    from: SYM-valuation-postgres-store-enqueue-tx
+    to: REQ-valuation-enqueue-same-transaction
+    created_at: 2026-10-28T08:01:00.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c44e23670e22
+  - type: implements
+    from: SYM-valuation-postgres-store-enqueue-tx
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:01:00.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-093392a42081
+  - type: covered_by
+    from: SYM-valuation-postgres-store-enqueue-tx
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:01:00.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e76877f95f08
+  - type: implements
+    from: SYM-plugins-smokescreen-new
+    to: REQ-plugins-egress-proxy-embedded-buildproxy
+    created_at: 2026-10-28T08:49:32.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c20804f1ea05
+  - type: implements
+    from: SYM-plugins-smokescreen-new
+    to: REQ-plugins-egress-fail-closed
+    created_at: 2026-10-28T08:49:32.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd025527ef7b
+  - type: covered_by
+    from: SYM-plugins-smokescreen-new
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:49:32.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c0c2b93e953
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-key-get-source
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:05.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61d31ed2174f
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-key-get-source
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:05.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25f774362092
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-key-get-source
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:05.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55a57ce704f9
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-client-import-file
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:26.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b079ee80860b
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-client-import-file
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:26.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001de5196de7
+  - type: covered_by
+    from: SYM-connector-gen-connect-connector-service-client-import-file
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:26.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cc139e6c987

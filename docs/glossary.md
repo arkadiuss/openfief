@@ -16,6 +16,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Instrument | ledger | `ledger.Instrument` | Something that can be held, identified by ISIN plus a venue symbol. A bond series is an instrument. | security, ticker, asset |
 | Holding | ledger | `ledger.Holding` | The quantity of one instrument in one account on a date, derived from postings. | position (allowed only inside connector adapters, as the broker's word) |
 | Lot | ledger | `ledger.Lot` | A quantity acquired on a date at a cost; consumed FIFO. An opening lot is seeded from a broker's current positions instead of full history. | |
+| Opening cash | ledger | `ledger.NewOpeningCash` | The cash an account holds at go-live, seeded as a deposit, or a withdrawal for a negative balance, against the equity ledger account, keyed `opening-cash:<currency>:<date>`. | opening balance |
+| Seeding | ledger | `app.Ledger.Seed` | Bringing an account into the ledger at go-live from its institution's current state: its opening lots and opening cash (D-23). An account whose current transactions include either is seeded, and seeding it again is refused unless nothing would change. | bootstrap, initial import |
 | Balance assertion | ledger | `ledger.BalanceAssertion` | A broker-reported balance on a date that the derived balance must match; a mismatch is an error. | snapshot |
 | Assertion check | ledger | `app.AssertionCheck` | A balance assertion with the result of its latest check: matched, or flagged with the derived balance when they differ. A flagged check is an error for the owner to resolve; the import that found it is kept. | reconciliation |
 | Model portfolio | portfolio | `portfolio.Model` | An optional weighted basket of targets for the whole portfolio, which the real portfolio is compared with. Entered by the owner in M0; GR-4's maintainer agent adjusts it from M2. | strategy, benchmark |
@@ -30,12 +32,21 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Mapping | ingest | `ingest.Mapping` | What a connector makes of one statement: transactions, balance assertions and ingest problems. | |
 | Ingest problem | ingest | `ingest.Problem` | A statement row the mapping left out of the ledger, with its reason: `unsupported` (can't be booked yet, such as an option trade) or `skipped` (left out on purpose, such as a summary row). Not an error. | warning |
 | Import summary | ingest | `ingest.ImportSummary` | What the ledger did with a batch's mapping: new transactions, new versions, unchanged ones, and failed balance assertions. | |
+| Connector contract | ingest | `openfief.connector.v1.ConnectorService` | The protobuf service over Connect RPC that a connector plugin serves and the core calls (D-11, D-49): Sync pulls what the institution reported since a watermark, ImportFile maps a statement file. Each call is one import batch, with a batch ID the core generates and reuses on a retry. Not the public read API. | ingest API |
+| Delivery | ingest | `app.Delivery` | What a connector returns for one import batch: its mapping, plus any prices, FX rates and index readings, and for a sync the next watermark. The core scopes its transaction keys to the connector instance. | push, upload (for plugins) |
+| Watermark | ingest | `app.Delivery.Watermark` | Where a connector's next sync continues from. The connector returns it, the core stores it after importing the delivery and hands it back on the next sync; only the connector understands it. | cursor, checkpoint |
+| Index reading | ingest | `ingest.IndexReading` | One published value of an index that sets treasury bond interest, as a yearly fraction: CPI year on year for a month (GUS), or the NBP reference rate from the day it takes effect. Period indices are picked from them. | rate (alone) |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
 | Index | valuation | `valuation.Index` | A market index, such as WIG20 or MSCI World, with an end-of-day level series from the market-data connector. It can be a target, but it can't be held. | benchmark |
 | FX rate | valuation | `valuation.FXRate` | The value in PLN of one unit of a currency on a date, from a source; NBP table A in M0. The rate for a date is the latest one dated on or before it. | |
 | Reporting currency | valuation | `valuation.ReportingCurrency` | The currency totals, charts and the model comparison are shown in. A setting whose default comes from the jurisdiction pack: PLN for the Polish pack. | base currency, home currency |
 | Valuation | valuation | `valuation.Valuation` | The value of a holding on a date, with its basis and source. | |
 | Valuation basis | valuation | `valuation.Basis` | `market`, `gross_accrued` or `net_if_redeemed`. | |
+| Holding valuation | valuation | `valuation.HoldingValuation` | The stored valuation of one holding on one day, keyed by account, instrument, date and valuation basis: its value in the instrument's own currency and in PLN, with the source and dates of its inputs, or the missing input that stopped it. | |
+| Revaluation | valuation | `valuation.Revaluation`, `app.Revaluer` | Rebuilding an account's holding valuations from a date to today, from the transaction log, prices, FX rates and index readings. Any change to those inputs enqueues one in the same database transaction, and pending ones coalesce per account from the earliest date. | recalculation, refresh |
+| Missing input | valuation | `valuation.MissingReason` | A price, FX rate or index reading that a holding valuation needed and did not have. The holding valuation records the gap instead of failing the revaluation. | |
+| Valued-through date | valuation | `app.ValuationStatus.ValuedThrough` | The last day up to which every holding of an account has a valuation: the day before its first missing input, or today. | |
+| Index reading | valuation | `valuation.IndexReading` | One published reading of a period index for one month: CPI year on year for the month it measures, or the NBP reference rate for the month whose interest periods it sets. | |
 | Bond series | jurisdiction/pl | `pl.Series` | A Polish retail treasury bond series code, such as EDO0536 (EDO maturing in May 2036). Valuation uses it through jurisdiction/pl's rules. | bond (ambiguous) |
 | Bond type | jurisdiction/pl | `pl.BondType` | The product a bond series belongs to, named by the code's first three letters: OTS, ROR, DOR, TOS, COI, EDO, ROS, ROD. Fixes the term, interest period, indexation and payout. | series (for the type) |
 | Series terms | jurisdiction/pl | `pl.Terms` | What one series' issue letter fixes: first-period rate, margin and early-redemption fee. Data supplied per series, never hard-coded. | |
@@ -65,7 +76,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Workload | plugins | `plugins.Workload` | What the operator creates for one plugin, compiled from its effective permissions: identity, token, Secret mounts, environment, NetworkPolicy and egress allow-list. | deployment (the Kubernetes object is one part) |
 | Rollout | plugins | `plugins.Rollout` | Which version of a plugin runs under its grant: the current one, the previously deployed one while an upgrade waits for approval, or none. | deployment (the Kubernetes object) |
 | Pending approval | plugins | `plugins.Rollout.Pending` | What a plugin's current version requests that its grant does not approve. The owner approves it by adding it to the grant. | diff |
-| Plugin identity | identity | `plugins.ServiceAccountName` | The ServiceAccount `plugin-<name>` in the `openfief` namespace, proven by its projected token with audience `openfief-core`. | |
+| Plugin identity | identity | `plugins.ServiceAccountName` | The ServiceAccount `plugin-<name>` in the `openfief` namespace, proven to the core by its projected token with audience `openfief-core`, and to the egress proxy by a second one with audience `openfief-egress`. | |
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |
 | Currency | kernel | `kernel.Currency` | An ISO 4217 alphabetic code, such as PLN or USD. | |
@@ -169,6 +180,7 @@ Don't create code for these before their milestone.
 | Reader / decider split | One model reads untrusted text and emits typed notes; a separate decider sees only those notes. |
 | Reconcile loop | The Kubernetes controller pattern: repeatedly compare desired state with actual state and act to remove the difference. |
 | RP ID | Relying-party ID: the domain a WebAuthn passkey is bound to. |
+| SDK | Software development kit: the libraries plugin authors build on. OpenFief's are `sdk/go` (a separate Go module) and, later, `sdk/ts`, Apache-2.0 like the contracts (D-5). |
 | Smokescreen | Stripe's open-source egress proxy, written in Go, which checks each client's HTTP CONNECT destinations against a per-client allow-list. |
 | TIF | Time in force: how long an order stays working (for example day, or good-till-cancelled). |
 | TokenRequest / TokenReview | Kubernetes APIs: TokenRequest issues a short-lived ServiceAccount token for a chosen audience; TokenReview checks whether a token is valid. |

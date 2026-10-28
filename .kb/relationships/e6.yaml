@@ -111,3 +111,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03420594fe4b
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-index-readings
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:37:49.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6fe8eb55ae8
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-index-readings
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:37:49.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c913b8c9d6c
+  - type: implements
+    from: SYM-connector-gen-pb-index-enum-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:12:41.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6158d65f5389
+  - type: implements
+    from: SYM-connector-gen-pb-index-enum-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:12:41.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-183581996da4
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-enum-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:12:41.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0419a0cbbe49
+  - type: implements
+    from: SYM-connector-gen-pb-fx-rate
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:17:29.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-683b443e66e9
+  - type: implements
+    from: SYM-connector-gen-pb-fx-rate
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:17:29.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e9a1feb4616
+  - type: covered_by
+    from: SYM-connector-gen-pb-fx-rate
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:17:29.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0d9faa3fc7d
+  - type: executable_for
+    from: SYM-ingest-conn-dom-test-connector-key-source
+    to: TEST-ingest-scope
+    created_at: 2026-10-28T08:57:19.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-734feacdd6f6
+  - type: implements
+    from: SYM-ingest-conn-app-sourced-readings
+    to: REQ-ingest-index-reading-valid
+    created_at: 2026-10-28T08:59:17.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6c91dd77bd0
+  - type: covered_by
+    from: SYM-ingest-conn-app-sourced-readings
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:59:17.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-409f9a8587cb

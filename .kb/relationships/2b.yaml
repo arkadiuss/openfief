@@ -62,3 +62,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a899d85c63c
+  - type: implements
+    from: SYM-valuation-lot-indices
+    to: REQ-valuation-lot-indices
+    created_at: 2026-10-28T07:31:39.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09c4d9db7f33
+  - type: covered_by
+    from: SYM-valuation-lot-indices
+    to: TEST-valuation-index
+    created_at: 2026-10-28T07:31:39.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16e1dc03cdec
+  - type: executable_for
+    from: SYM-ledger-app-test-seed-of-an-unknown-account
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-28T08:42:22.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4577e74e6ab8
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-proxy-token
+    to: REQ-plugins-egress-proxy-identifies-plugin
+    created_at: 2026-10-28T08:50:06.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61f54e862a20
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-proxy-token
+    to: REQ-AUTO-15828B9727AFA488
+    created_at: 2026-10-28T08:50:06.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0630dafc624
+  - type: covered_by
+    from: SYM-plugins-smokescreen-fn-proxy-token
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:50:06.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb42b159c205
+  - type: implements
+    from: SYM-sdk-go-core-httpclient
+    to: REQ-sdk-go-token-rotation
+    created_at: 2026-10-28T08:02:44.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d494abb12f9
+  - type: implements
+    from: SYM-sdk-go-core-httpclient
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T08:02:44.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abed7387f479
+  - type: covered_by
+    from: SYM-sdk-go-core-httpclient
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:02:44.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8a0ef6b297d
+  - type: implements
+    from: SYM-connector-gen-pb-transaction
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:11.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42aecfe8d709
+  - type: implements
+    from: SYM-connector-gen-pb-transaction
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:11.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-995a20caf49f
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:11.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c1154dde1d7
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-plain-decimal
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:06:13.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-988c0494bee9
+  - type: implements
+    from: SYM-demo-demo-down
+    to: REQ-tooling-demo-labels
+    created_at: 2026-10-28T09:12:25.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4eb177385171
+  - type: covered_by
+    from: SYM-demo-demo-down
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:12:25.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e2d534be6ab

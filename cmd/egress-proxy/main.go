@@ -1,7 +1,9 @@
-// Command egress-proxy is OpenFief's egress proxy (D-32): Smokescreen with
-// plugin identity from projected ServiceAccount tokens (D-27) and per-plugin
-// egress allow-lists from the operator's ConfigMap. It runs in the openfief
-// namespace with in-cluster credentials and stops on SIGTERM.
+// Command egress-proxy is OpenFief's egress proxy (D-32, D-63): Smokescreen,
+// embedded in OpenFief's own HTTP server, with plugin identity from projected
+// ServiceAccount tokens (audience openfief-egress) checked by TokenReview and
+// cached, and per-plugin egress allow-lists from the operator's ConfigMap. It
+// runs in the openfief namespace with in-cluster credentials and stops on
+// SIGTERM, letting open tunnels drain.
 package main
 
 import (
@@ -14,12 +16,13 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/sirupsen/logrus"
-	ss "github.com/stripe/smokescreen/pkg/smokescreen"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 
+	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/internal/plugins/app"
 	"github.com/arkadiuss/openfief/internal/plugins/kube"
 	"github.com/arkadiuss/openfief/internal/plugins/smokescreen"
@@ -54,25 +57,24 @@ func run(addr string, log *logrus.Logger) error {
 	if err != nil {
 		return fmt.Errorf("egress allow-lists: %w", err)
 	}
+	tokens, err := app.NewCachingTokenReviewer(kube.NewTokenReviewer(client, plugins.EgressAudience), app.DefaultTokenCacheTTL, time.Now)
+	if err != nil {
+		return fmt.Errorf("token cache: %w", err)
+	}
 	listener, err := (&net.ListenConfig{}).Listen(ctx, "tcp", addr)
 	if err != nil {
 		return fmt.Errorf("listen on %s: %w", addr, err)
 	}
-	cfg, err := smokescreen.NewConfig(app.NewEgress(kube.NewTokenReviewer(client), lists), smokescreen.Options{
+	proxy, err := smokescreen.New(app.NewEgress(tokens, lists), smokescreen.Options{
 		Listener:    listener,
 		Healthcheck: http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusNoContent) }),
 		Log:         log,
 	})
 	if err != nil {
-		return errors.Join(fmt.Errorf("egress proxy config: %w", err), listener.Close())
+		return errors.Join(fmt.Errorf("egress proxy: %w", err), listener.Close())
 	}
-	// Smokescreen handles SIGTERM itself, draining open tunnels; quit stops
-	// it at once when the allow-list watch's context ends first.
-	quit := make(chan any)
-	go func() {
-		<-ctx.Done()
-		close(quit)
-	}()
-	ss.StartWithConfig(cfg, quit)
+	if err := proxy.Serve(ctx); err != nil {
+		return fmt.Errorf("egress proxy: %w", err)
+	}
 	return nil
 }

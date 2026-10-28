@@ -111,3 +111,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ef326cd3a04
+  - type: executable_for
+    from: SYM-valuation-test-helper-holding
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:57.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3af568f70ec6
+  - type: implements
+    from: SYM-valuation-app-new-input-recorder
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:49.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001754dddf42
+  - type: covered_by
+    from: SYM-valuation-app-new-input-recorder
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:49.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf17f992eac9
+  - type: implements
+    from: SYM-ledger-already-seeded-error-error
+    to: REQ-ledger-seed-refuse-reseed
+    created_at: 2026-10-28T08:40:15.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cf2e7ec9a5d
+  - type: covered_by
+    from: SYM-ledger-already-seeded-error-error
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:40:15.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6de44de96219
+  - type: implements
+    from: SYM-sdk-go-egress-transport-base
+    to: REQ-sdk-go-egress-proxy-url
+    created_at: 2026-10-28T08:03:44.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46002bcf4af8
+  - type: covered_by
+    from: SYM-sdk-go-egress-transport-base
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:03:44.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc81b98c3299
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-number
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:22.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fedecb636307
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-number
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:22.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51275b4fc732
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-kind-number
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:22.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aa17ecb33ad
+  - type: implements
+    from: SYM-demo-demo-arch
+    to: REQ-tooling-demo-bootstrap
+    created_at: 2026-10-28T09:08:42.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3035ce6032e
+  - type: covered_by
+    from: SYM-demo-demo-arch
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:08:42.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a985ebcceed0

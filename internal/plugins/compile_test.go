@@ -59,6 +59,9 @@ func TestCompile(t *testing.T) {
 			Hosts:  []plugins.EgressHost{host("api.example.com", 443), host("data.example.org", 8443)},
 		},
 		Config: []byte(`{"interval":"24h"}`),
+		EgressToken: &plugins.ProjectedToken{
+			Audience: "openfief-egress", ExpirationSeconds: 3600, MountPath: "/var/run/secrets/openfief-egress", Path: "token",
+		},
 	}
 	identityParts(&withEgress)
 	noEgress := plugins.Workload{

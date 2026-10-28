@@ -41,3 +41,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6fc10a559cce
+  - type: implements
+    from: SYM-valuation-postgres-store-prices
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:02:52.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-678bccdddfc2
+  - type: covered_by
+    from: SYM-valuation-postgres-store-prices
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:02:52.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-797830588245
+  - type: implements
+    from: SYM-valuation-postgres-store-finish
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:06:22.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c108808330dc
+  - type: covered_by
+    from: SYM-valuation-postgres-store-finish
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:06:22.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3603d458a51a
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:38.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95acb6dce283
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:38.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f885e87fec76
+  - type: covered_by
+    from: SYM-connector-gen-pb-delivery-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:38.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d8ac915fecc
+  - type: implements
+    from: SYM-ingest-conn-rpc-index-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:03:58.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d3eeae0ff02
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-index-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:03:58.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f1f624c91e
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-delivery-from-rejects
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:06:04.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-191f0b7b5b15

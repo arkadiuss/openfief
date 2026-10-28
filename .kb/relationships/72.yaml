@@ -104,3 +104,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a862094e6074
+  - type: implements
+    from: SYM-valuation-holding-valuation-valued
+    to: REQ-valuation-missing-input
+    created_at: 2026-10-28T07:32:05.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1586dc3447
+  - type: covered_by
+    from: SYM-valuation-holding-valuation-valued
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:05.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-724a1c6126aa
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-buy
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:36:59.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f22bf976d46b
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-buy
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:36:59.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eaac36aaab25
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:37:31.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecab0e2b1752
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:37:31.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-052652e8a947
+  - type: constrains
+    from: REQ-sdk-go-core-only
+    to: FACT-SUBJECT-395F81AF430C74E7
+    created_at: 2026-10-28T08:01:30.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82f6a178ab76
+  - type: requires_property
+    from: REQ-sdk-go-core-only
+    to: FACT-PROP-4313BD8396BF0AB1
+    created_at: 2026-10-28T08:01:30.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-961e959abb92
+  - type: specified_by
+    from: REQ-sdk-go-core-only
+    to: SCEN-sdk-go-core-only
+    created_at: 2026-10-28T08:01:30.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9560bf14784f
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:57.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbde07549ce3
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:57.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-141c87ffcaa8
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-request-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:57.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e4b2209c1d
+  - type: verified_by
+    from: SCEN-ingest-index-reading-valid
+    to: TEST-ingest-index-reading
+    created_at: 2026-10-28T08:55:02.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d8232d2e6ee
+  - type: verified_by
+    from: SCEN-ingest-index-reading-valid
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:55:02.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c035edfdceb

@@ -104,3 +104,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76262db7f37f
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-tx-snapshot
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-28T08:43:16.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b581c915414
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-tx-snapshot
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T08:43:16.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9563bfe63389
+  - type: executable_for
+    from: SYM-plugins-app-test-new-caching-token-reviewer-ttl
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:49:21.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35ce2af14e2a
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-proxy-healthcheck
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:52:12.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbb0e0ba19cb
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-start-connector
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:09:55.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d6a40de1079
+  - type: implements
+    from: SYM-connector-gen-pb-index
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:12:21.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19b9d1fb4490
+  - type: implements
+    from: SYM-connector-gen-pb-index
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:12:21.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bc64fef8f77
+  - type: covered_by
+    from: SYM-connector-gen-pb-index
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:12:21.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39761a6e83af

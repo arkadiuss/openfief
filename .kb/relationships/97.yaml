@@ -153,3 +153,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-795260d95190
+  - type: executable_for
+    from: SYM-valuation-test-coalesce
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:31.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-959a3d6ad801
+  - type: implements
+    from: SYM-valuation-postgres-revalue-account-insert-opts
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:00:55.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8e1ea6ba58a
+  - type: implements
+    from: SYM-valuation-postgres-revalue-account-insert-opts
+    to: REQ-decision-d36-5-revaluation-coalescing
+    created_at: 2026-10-28T08:00:55.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e97e2169748e
+  - type: covered_by
+    from: SYM-valuation-postgres-revalue-account-insert-opts
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:00:55.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afc8db758ff8
+  - type: executable_for
+    from: SYM-ledger-pg-test-concurrent-seeds-over-postgres
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-28T08:43:47.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c360ff0daa3
+  - type: implements
+    from: SYM-connector-gen-pb-problem-kind-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:37.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4167afb55420
+  - type: implements
+    from: SYM-connector-gen-pb-problem-kind-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:37.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42b1330b57d2
+  - type: covered_by
+    from: SYM-connector-gen-pb-problem-kind-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:37.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3a5671ba6ed
+  - type: implements
+    from: SYM-demo-verified-digest
+    to: REQ-tooling-demo-signed-deploy
+    created_at: 2026-10-28T09:12:50.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce4ed9d4909a
+  - type: covered_by
+    from: SYM-demo-verified-digest
+    to: TEST-tooling-demo-pin-images
+    created_at: 2026-10-28T09:12:50.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be4c7e7bd6d0

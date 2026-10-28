@@ -104,3 +104,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4368435dcb16
+  - type: implements
+    from: SYM-valuation-postgres-revalue-account-kind
+    to: REQ-valuation-river-jobs
+    created_at: 2026-10-28T08:00:51.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0857a3594303
+  - type: covered_by
+    from: SYM-valuation-postgres-revalue-account-kind
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:00:51.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c1871e1798
+  - type: implements
+    from: SYM-sdk-go-close-body
+    to: REQ-sdk-go-token-rotation
+    created_at: 2026-10-28T08:03:08.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14606c75d61c
+  - type: implements
+    from: SYM-sdk-go-close-body
+    to: REQ-sdk-go-egress-proxy-url
+    created_at: 2026-10-28T08:03:08.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fe67daa02a6
+  - type: covered_by
+    from: SYM-sdk-go-close-body
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:03:08.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50834fb69232

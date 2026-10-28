@@ -76,3 +76,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfad63a2fbb7
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-two-accounts
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:39:14.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12cefc40a511

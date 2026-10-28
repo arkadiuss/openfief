@@ -34,3 +34,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-346b40681da2
+  - type: executable_for
+    from: SYM-valuation-app-test-revalue-keeps-an-earlier-gap
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:40:26.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da5079021897
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-dirty-rows
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:08:47.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4df74fe1bdcb
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-dirty-rows
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:08:47.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03693dd772cc
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-dirty-rows
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-28T08:08:47.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a2b1d1913c2
+  - type: implements
+    from: SYM-ledger-decide-seed
+    to: REQ-ledger-seed-refuse-reseed
+    created_at: 2026-10-28T08:40:34.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ec75788dfa7
+  - type: implements
+    from: SYM-ledger-decide-seed
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T08:40:34.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6031528d7fb2
+  - type: covered_by
+    from: SYM-ledger-decide-seed
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:40:34.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-991064377bdc
+  - type: implements
+    from: SYM-ingest-conn-app-named-file
+    to: REQ-ingest-connector-batches
+    created_at: 2026-10-28T08:57:58.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dcd61cc938d
+  - type: covered_by
+    from: SYM-ingest-conn-app-named-file
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:57:59.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a93b8a290a2

@@ -90,3 +90,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7eec373ffec4
+  - type: implements
+    from: SYM-valuation-price-on-or-before
+    to: REQ-valuation-market-holding
+    created_at: 2026-10-28T07:32:09.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0ab6f73c69e
+  - type: implements
+    from: SYM-valuation-price-on-or-before
+    to: REQ-AUTO-A129ED289B2239A8
+    created_at: 2026-10-28T07:32:09.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d00c42aef195
+  - type: covered_by
+    from: SYM-valuation-price-on-or-before
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:09.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc0cd1f0f37d
+  - type: implements
+    from: SYM-valuation-postgres-applied-versions
+    to: REQ-valuation-schema
+    created_at: 2026-10-28T08:00:34.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d1b4143065
+  - type: covered_by
+    from: SYM-valuation-postgres-applied-versions
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-28T08:00:34.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03593c1b8bbb
+  - type: executable_for
+    from: SYM-sdk-go-test-token-file-rereads-rotated-token
+    to: TEST-sdk-go-token
+    created_at: 2026-10-28T08:10:28.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccb00959fd31
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:29.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e47dbf4b2055
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:29.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f253021c971a
+  - type: covered_by
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:30.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-666d82319cf2
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-valuation-inputs-from-rejects
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:06:28.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c16178eebb0

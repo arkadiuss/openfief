@@ -76,3 +76,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c22ff984287d
+  - type: verified_by
+    from: SCEN-valuation-revaluation-rebuild
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:28:36.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-112276efc1f3
+  - type: implements
+    from: SYM-valuation-index-kind
+    to: REQ-valuation-lot-indices
+    created_at: 2026-10-28T07:31:17.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-290009049382
+  - type: covered_by
+    from: SYM-valuation-index-kind
+    to: TEST-valuation-index
+    created_at: 2026-10-28T07:31:17.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bf9c3a28135
+  - type: constrains
+    from: REQ-ingest-connector-contract-translation
+    to: FACT-SUBJECT-69A02BF8F0306433
+    created_at: 2026-10-28T08:55:58.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e215dd519181
+  - type: requires_property
+    from: REQ-ingest-connector-contract-translation
+    to: FACT-PROP-5F3DDF774D4BF3CA
+    created_at: 2026-10-28T08:55:58.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a59c0883f9c5
+  - type: specified_by
+    from: REQ-ingest-connector-contract-translation
+    to: SCEN-ingest-connector-contract-translation
+    created_at: 2026-10-28T08:55:58.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b2bdc1c2c4b

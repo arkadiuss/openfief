@@ -55,3 +55,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc3acd13f722
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-recorded
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:10.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47dc57ec007a
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-recorded
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:10.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66d8b9ab88a1
+  - type: executable_for
+    from: SYM-valuation-postgres-test-inputs-round-trip
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-28T08:10:29.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-158c535d8d5f
+  - type: implements
+    from: SYM-connector-gen-pb-mode-type
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:12:10.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fc78df33179
+  - type: implements
+    from: SYM-connector-gen-pb-mode-type
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:12:10.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5faf7668fb1
+  - type: covered_by
+    from: SYM-connector-gen-pb-mode-type
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:12:10.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf4d1cad2d64
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-proto-reflect
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:10.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65583ec349ac
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-proto-reflect
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:10.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-778d2c7e8087
+  - type: covered_by
+    from: SYM-connector-gen-pb-balance-assertion-proto-reflect
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:10.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fb85a34bd0f

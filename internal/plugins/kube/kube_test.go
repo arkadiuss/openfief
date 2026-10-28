@@ -65,9 +65,14 @@ func TestTokenReviewerReviewToken(t *testing.T) {
 		wantErr error
 	}{
 		{
-			name:   "authenticated for the core audience",
-			status: authnv1.TokenReviewStatus{Authenticated: true, Audiences: []string{plugins.CoreAudience}, User: authnv1.UserInfo{Username: sampleUsername}},
+			name:   "authenticated for the egress audience",
+			status: authnv1.TokenReviewStatus{Authenticated: true, Audiences: []string{plugins.EgressAudience}, User: authnv1.UserInfo{Username: sampleUsername}},
 			want:   sampleUsername,
+		},
+		{
+			name:    "authenticated for the core audience only",
+			status:  authnv1.TokenReviewStatus{Authenticated: true, Audiences: []string{plugins.CoreAudience}, User: authnv1.UserInfo{Username: sampleUsername}},
+			wantErr: app.ErrUnauthenticated,
 		},
 		{
 			name:    "not authenticated",
@@ -85,7 +90,7 @@ func TestTokenReviewerReviewToken(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			var asked []string
-			reviewer := kube.NewTokenReviewer(reviewClient(&tt.status, tt.apiErr, &asked))
+			reviewer := kube.NewTokenReviewer(reviewClient(&tt.status, tt.apiErr, &asked), plugins.EgressAudience)
 			got, err := reviewer.ReviewToken(t.Context(), sampleToken)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Fatalf("ReviewToken() error (-want +got):\n%s", diff)
@@ -96,7 +101,7 @@ func TestTokenReviewerReviewToken(t *testing.T) {
 			if err != nil && strings.Contains(err.Error(), sampleToken) {
 				t.Errorf("ReviewToken() error %q contains the token", err)
 			}
-			if diff := cmp.Diff([]string{plugins.CoreAudience}, asked); diff != "" {
+			if diff := cmp.Diff([]string{plugins.EgressAudience}, asked); diff != "" {
 				t.Errorf("TokenReview audiences (-want +got):\n%s", diff)
 			}
 		})
