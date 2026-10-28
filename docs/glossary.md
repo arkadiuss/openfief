@@ -24,7 +24,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Target | portfolio | `portfolio.Target` | One instrument or index in the model portfolio, with its weight. The weights sum to 100%. | allocation |
 | Backtest | portfolio | `portfolio.Backtest` | The model portfolio's value series computed from end-of-day history, rebalanced to the target weights once a year. | simulation |
 | Max drawdown | portfolio | `portfolio.MaxDrawdown` | The worst fall from a peak to a later trough in a value series, with both dates. | max loss |
-| Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one role. Defensive: not available to agents. Offensive: the part fiefs are leased from. | bucket |
+| Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one sleeve kind and one role, which defaults to the kind's. Defensive: not available to agents. Offensive: the part fiefs are leased from. A sleeve is offensive in a defensive kind only when the owner explicitly overrides it. | bucket |
+| Sleeve kind | portfolio | `portfolio.Kind` | A named category of sleeve with a default role, such as core, bonds, retirement or agent-pool. Built-in kinds come with OpenFief; the owner can add and rename kinds, but a kind's default role never changes. | sleeve type |
 | Jurisdiction pack | jurisdiction | `jurisdiction.Pack` | The pluggable rules for one country (GR-13): bond terms, tax rules, and the default reporting currency. Poland first. | locale, country plugin |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
 | Statement | ingest | `app.StatementFetcher` | What an institution reports about an account, as a file or a pulled document, such as an IBKR Flex Query or an xStation export. A connector maps it. | report, export (alone) |
@@ -65,6 +66,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Catalog | plugins | `plugins.Catalog` | The file in the OpenFief repository that lists first-party and verified plugins, with pinned image digests and signer identities. | marketplace, registry |
 | Verified plugin | plugins | `plugins.Verified` | A plugin whose catalog entry pins a version the author reviewed. Anything installed by image reference alone is unverified. | official, trusted |
 | Trusted signer | plugins | `plugins.Signer` | An identity whose image signatures the operator accepts: OpenFief's CI, a catalog publisher, or one the owner added. | |
+| Signer identity | plugins | `plugins.SignerIdentity` | Who made a signature: for a keyless signature, the OIDC issuer and subject in its Fulcio certificate (such as a GitHub Actions workflow at a ref); otherwise a public key. | key ID |
+| Trust policy | plugins | `plugins.TrustPolicy` | Every trusted signer plus the catalog. It decides whether a signed image is a verified plugin, unverified but signed by a trusted signer, or refused. Nothing overrides a refusal. | allow-list (that is egress) |
 | Manifest | plugins | `plugins.Manifest` | A plugin's declared capabilities, egress hosts, secrets, data tiers and config schema. | |
 | Egress allow-list | plugins | `plugins.EgressAllowList` | The hostnames a plugin may reach through the egress proxy. | whitelist |
 | Capability | plugins | `plugins.Capability` | What a plugin may act as: `connector` or `view` in M0. Declared in its manifest and approved in its grant. | kind, role |
@@ -83,6 +86,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Money | kernel | `kernel.Money` | An exact decimal amount in one currency. It keeps its original currency; arithmetic across currencies is an error, and conversion is an explicit FX step in valuation. | |
 | Quantity | kernel | `kernel.Quantity` | An exact, possibly fractional number of units of an instrument. | |
 | Date | kernel | `kernel.Date` | A calendar date with no time of day or time zone, written YYYY-MM-DD. | timestamp |
+| Demo dataset | demo (not a context: tooling) | `demo.Dataset` | A synthetic portfolio with about a year of history and its valuation inputs, generated from a seed and a date, for showing OpenFief on a demo database. Its instruments have synthetic ISINs; only public data is real: bond series terms, GUS CPI and NBP rates. Loaded by `cmd/demo-seed`, which refuses any database without its demo marker that already holds data. | sample data, test portfolio |
+| Demo marker | demo (not a context: tooling) | `demo.DatabaseState` | The row `demo = true` in the `demo` schema that marks a database as a demo database. Only the demo loader writes it, and only a marked database may be reset. | |
 
 ### Later milestones
 

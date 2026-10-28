@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9b587418e2d
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-save-kind
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-28T09:55:54.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8631f0634fde

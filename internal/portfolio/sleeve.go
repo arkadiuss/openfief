@@ -44,11 +44,18 @@ func (r Role) String() string {
 // SleeveID identifies a sleeve. Accounts refer to their sleeve by it.
 type SleeveID string
 
-// Sleeve is a part of the portfolio with one role.
+// Sleeve is a part of the portfolio with one role and one kind. Its role
+// defaults to its kind's default role and is stored on the sleeve, so that
+// renaming a kind never changes what agents may lease from (GR-6).
 type Sleeve struct {
 	ID   SleeveID
 	Name string
+	Kind KindKey
 	Role Role
+	// OffensiveOverride records that the owner explicitly made this sleeve
+	// offensive although its kind is defensive. CheckSleeve requires it for
+	// exactly that case and refuses it otherwise.
+	OffensiveOverride bool
 }
 
 // Validate reports whether s has an ID, a name and one known role.

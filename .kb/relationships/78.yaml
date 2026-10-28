@@ -146,3 +146,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3d70982e95a
+  - type: executable_for
+    from: SYM-ledger-pg-test-sleeve-kind-constraints
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:56:58.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0df897f5110
+  - type: implements
+    from: SYM-demo-market-in
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:40:07.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13408e1d9698
+  - type: covered_by
+    from: SYM-demo-market-in
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:40:07.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b41004ea3e8

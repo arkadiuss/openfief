@@ -160,3 +160,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1597bb6f9b23
+  - type: implements
+    from: SYM-plugins-catalog
+    to: REQ-plugins-catalog-format
+    created_at: 2026-10-28T08:54:31.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92df6b809c34
+  - type: implements
+    from: SYM-plugins-catalog
+    to: REQ-plugins-verified-entry-pins
+    created_at: 2026-10-28T08:54:31.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cda593c9a62c
+  - type: covered_by
+    from: SYM-plugins-catalog
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:54:31.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca0d23538125
+  - type: executable_for
+    from: SYM-cosign-test-inspect
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:23:57.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98b0cabca533

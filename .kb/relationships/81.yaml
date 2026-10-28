@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8bf219cf6ecb
+  - type: implements
+    from: SYM-cosign-fn-read-referrer
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:21:06.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ec6a4fabb52
+  - type: implements
+    from: SYM-cosign-fn-read-referrer
+    to: REQ-plugins-manifest-in-image
+    created_at: 2026-10-28T09:21:06.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a743c439b89
+  - type: covered_by
+    from: SYM-cosign-fn-read-referrer
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:21:06.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b342ad95c357

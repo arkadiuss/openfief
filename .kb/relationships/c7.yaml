@@ -146,3 +146,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f41cee109fcd
+  - type: executable_for
+    from: SYM-portfolio-test-missing-defaults
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:39:46.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af440abec138
+  - type: implements
+    from: SYM-demo-position-attrs
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:42:33.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-070313a27405
+  - type: covered_by
+    from: SYM-demo-position-attrs
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:42:33.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c7c8b7bfd3

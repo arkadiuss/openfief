@@ -34,3 +34,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9ff2e73ec08
+  - type: implements
+    from: SYM-ledger-pg-store-kinds
+    to: REQ-ledger-pg-sleeve-kinds
+    created_at: 2026-10-28T09:56:28.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-363c4676866b
+  - type: covered_by
+    from: SYM-ledger-pg-store-kinds
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:56:28.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6cb6034bae8
+  - type: implements
+    from: SYM-plugins-signer-identity-matches
+    to: REQ-plugins-signer-identity-match
+    created_at: 2026-10-28T08:57:30.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee533cd4e964
+  - type: implements
+    from: SYM-plugins-signer-identity-matches
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:57:30.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc13956a636a
+  - type: covered_by
+    from: SYM-plugins-signer-identity-matches
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:57:30.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c888d380664
+  - type: implements
+    from: SYM-plugins-signer
+    to: REQ-plugins-signer-identity-match
+    created_at: 2026-10-28T08:58:08.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-419047afa5cf
+  - type: implements
+    from: SYM-plugins-signer
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:58:08.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f2128db77dc
+  - type: covered_by
+    from: SYM-plugins-signer
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:58:08.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05031c0863a3

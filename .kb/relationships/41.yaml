@@ -160,3 +160,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-847476a55007
+  - type: verified_by
+    from: SCEN-ledger-app-ensure-defaults
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-28T09:52:58.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7240dbafe241
+  - type: verified_by
+    from: SCEN-ledger-app-ensure-defaults
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:52:58.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8ad3fe8d894
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-descriptor-of
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:19:49.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0579dfd2af52

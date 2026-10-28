@@ -167,3 +167,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc3c332d990a
+  - type: constrains
+    from: REQ-plugins-cosign-bundle-verification
+    to: FACT-SUBJECT-BCED31B8DC4D4289
+    created_at: 2026-10-28T09:17:10.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56346c2b2616
+  - type: requires_property
+    from: REQ-plugins-cosign-bundle-verification
+    to: FACT-PROP-677749B8B15A92CA
+    created_at: 2026-10-28T09:17:10.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e182df8e282
+  - type: specified_by
+    from: REQ-plugins-cosign-bundle-verification
+    to: SCEN-plugins-cosign-bundle
+    created_at: 2026-10-28T09:17:10.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d54066b77eef
+  - type: implements
+    from: SYM-catalog-load
+    to: REQ-plugins-catalog-in-repo
+    created_at: 2026-10-28T09:31:28.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ec0b1df351
+  - type: implements
+    from: SYM-catalog-load
+    to: REQ-operator-trust-config
+    created_at: 2026-10-28T09:31:28.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd6a2cd4592c
+  - type: covered_by
+    from: SYM-catalog-load
+    to: TEST-plugins-catalog-embedded
+    created_at: 2026-10-28T09:31:28.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7ab2fb51466
+  - type: executable_for
+    from: SYM-operator-test-verify-must-image
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-28T09:32:54.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fa95a624fc6
+  - type: executable_for
+    from: SYM-operator-test-verify-must-image
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T09:32:54.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-949912aad542

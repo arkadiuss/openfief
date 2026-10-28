@@ -97,3 +97,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ab211f5eb60
+  - type: implements
+    from: SYM-demo-seed-loader-direct
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:51:28.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cfc7a4752df
+  - type: implements
+    from: SYM-demo-seed-loader-direct
+    to: REQ-AUTO-34242A3F858F647D
+    created_at: 2026-10-28T09:51:28.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f7f663745b6
+  - type: covered_by
+    from: SYM-demo-seed-loader-direct
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:51:28.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed1eff671a3a

@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b2d796b397e
+  - type: verified_by
+    from: SCEN-portfolio-sleeve-kind
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:34:22.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c25f6925c68
+  - type: implements
+    from: SYM-cosign-fn-read-manifest-label
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:21:26.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a6a83bfa96c
+  - type: implements
+    from: SYM-cosign-fn-read-manifest-label
+    to: REQ-plugins-manifest-in-image
+    created_at: 2026-10-28T09:21:26.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a48980b37e5
+  - type: covered_by
+    from: SYM-cosign-fn-read-manifest-label
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:21:26.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c740bc4e1cd

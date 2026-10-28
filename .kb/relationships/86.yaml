@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7b3e2695617
+  - type: implements
+    from: SYM-demo-seed-inspect
+    to: REQ-demo-guard-refuses-real-data
+    created_at: 2026-10-28T09:50:23.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edf663768e14
+  - type: covered_by
+    from: SYM-demo-seed-inspect
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:50:23.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01a0f341051d

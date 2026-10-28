@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0439007f1c58
+  - type: constrains
+    from: REQ-demo-idempotent-per-day
+    to: FACT-SUBJECT-8445428BF4E0E148
+    created_at: 2026-10-28T09:31:48.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfe750e9315e
+  - type: requires_property
+    from: REQ-demo-idempotent-per-day
+    to: FACT-PROP-7D8A1D3908785387
+    created_at: 2026-10-28T09:31:48.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca4f42212c01
+  - type: specified_by
+    from: REQ-demo-idempotent-per-day
+    to: SCEN-demo-idempotent-per-day
+    created_at: 2026-10-28T09:31:48.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5767848383a

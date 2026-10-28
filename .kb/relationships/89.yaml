@@ -139,3 +139,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c1326dcf4a6
+  - type: implements
+    from: SYM-operator-new-policy-verifier
+    to: REQ-operator-policy-verifier
+    created_at: 2026-10-28T09:32:02.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-015dd7025487
+  - type: implements
+    from: SYM-operator-new-policy-verifier
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-28T09:32:02.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b521cd1e84cd
+  - type: covered_by
+    from: SYM-operator-new-policy-verifier
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-28T09:32:02.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43c5c7cfd391
+  - type: implements
+    from: SYM-demo-bond-lot
+    to: REQ-demo-synthetic-only
+    created_at: 2026-10-28T09:45:51.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-339a5536ca6e
+  - type: covered_by
+    from: SYM-demo-bond-lot
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:45:51.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da97937322f9
+  - type: executable_for
+    from: SYM-demo-test-helper-check-assertions
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:48:44.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fedd1cc43c06

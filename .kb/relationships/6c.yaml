@@ -174,3 +174,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-352eb9f71e15
+  - type: verified_by
+    from: SCEN-portfolio-allocation-by-kind
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:34:36.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f9d1a13ac06
+  - type: implements
+    from: SYM-plugins-signer-identity-validate-keyless
+    to: REQ-plugins-signer-identity-match
+    created_at: 2026-10-28T08:57:45.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c5cf3f5a00f
+  - type: implements
+    from: SYM-plugins-signer-identity-validate-keyless
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:57:45.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44413841b76d
+  - type: covered_by
+    from: SYM-plugins-signer-identity-validate-keyless
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:57:45.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c23d1a0644a
+  - type: implements
+    from: SYM-demo-stamp
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:42:05.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01bf8c909cb3
+  - type: covered_by
+    from: SYM-demo-stamp
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:42:05.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca9ef0bb7df5
+  - type: executable_for
+    from: SYM-demo-seed-test-helper-must-date
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:54:49.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c677214280ae

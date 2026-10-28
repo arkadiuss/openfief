@@ -62,3 +62,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9cc7ea83b393
+  - type: constrains
+    from: REQ-plugins-trust-decision
+    to: FACT-SUBJECT-AFCCAA5C1E93D2FD
+    created_at: 2026-10-28T08:51:47.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-835b8134a451
+  - type: requires_property
+    from: REQ-plugins-trust-decision
+    to: FACT-PROP-4B58CF4AADD27E53
+    created_at: 2026-10-28T08:51:47.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7ff5d19f6b7
+  - type: specified_by
+    from: REQ-plugins-trust-decision
+    to: SCEN-plugins-trust-decision
+    created_at: 2026-10-28T08:51:47.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc7ceb6cd9f9
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-keyless-bundle
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:20:12.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33c55cdd442e
+  - type: implements
+    from: SYM-operator-cmd-fn-image-verifier
+    to: REQ-operator-trust-config
+    created_at: 2026-10-28T09:31:06.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60ba9fedd977
+  - type: covered_by
+    from: SYM-operator-cmd-fn-image-verifier
+    to: TEST-operator-cmd
+    created_at: 2026-10-28T09:31:06.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-224150dcdcd5
+  - type: executable_for
+    from: SYM-operator-test-verify-view-manifest
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-28T09:32:58.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bacbcf38a30e
+  - type: executable_for
+    from: SYM-operator-test-verify-view-manifest
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T09:32:58.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0c2b692e635

@@ -258,3 +258,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5988e31f0037
+  - type: verified_by
+    from: SCEN-ledger-pg-sleeve-kinds
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:53:03.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa6922292cbc
+  - type: constrains
+    from: REQ-plugins-signer-identity-match
+    to: FACT-SUBJECT-F68DEFF0C7AFE491
+    created_at: 2026-10-28T08:51:25.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75bbe59cd9d1
+  - type: requires_property
+    from: REQ-plugins-signer-identity-match
+    to: FACT-PROP-742BD11C7BE92EA5
+    created_at: 2026-10-28T08:51:25.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26431ee4af5c
+  - type: specified_by
+    from: REQ-plugins-signer-identity-match
+    to: SCEN-plugins-signer-identity-match
+    created_at: 2026-10-28T08:51:25.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a30ac65bbb51
+  - type: executable_for
+    from: SYM-plugins-test-signer-identity-validate
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:59:58.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddfe6f434e8f
+  - type: executable_for
+    from: SYM-cosign-test-verifier-world-sign-ci
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:23:31.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16d23c8c5c13
+  - type: implements
+    from: SYM-demo-seed-importer-seed
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:51:53.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f29cae20de
+  - type: implements
+    from: SYM-demo-seed-importer-seed
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T09:51:53.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-675ede3d4a40
+  - type: covered_by
+    from: SYM-demo-seed-importer-seed
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:51:53.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-747eb6a26b86
+  - type: implements
+    from: SYM-demo-seed-revalue
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:52:37.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b020a4b2c694
+  - type: implements
+    from: SYM-demo-seed-revalue
+    to: REQ-decision-d36-1-stored-valuations
+    created_at: 2026-10-28T09:52:37.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90ee4c34fabf
+  - type: covered_by
+    from: SYM-demo-seed-revalue
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:52:37.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-719cf405c757

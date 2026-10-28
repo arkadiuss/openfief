@@ -55,3 +55,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43857776be5b
+  - type: implements
+    from: SYM-demo-batch
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:43:34.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f4fd59861bb
+  - type: covered_by
+    from: SYM-demo-batch
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:43:34.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d537985d73fc
+  - type: implements
+    from: SYM-demo-seed-loader-ibkr
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:51:08.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a83c720a20bf
+  - type: implements
+    from: SYM-demo-seed-loader-ibkr
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T09:51:08.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48a6eea126c3
+  - type: covered_by
+    from: SYM-demo-seed-loader-ibkr
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:51:08.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9eed86ff7bd

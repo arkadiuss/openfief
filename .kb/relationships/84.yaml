@@ -174,3 +174,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2418d1e8450
+  - type: constrains
+    from: REQ-demo-fx-rates
+    to: FACT-SUBJECT-8445428BF4E0E148
+    created_at: 2026-10-28T09:31:56.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-528d16637d86
+  - type: requires_property
+    from: REQ-demo-fx-rates
+    to: FACT-PROP-AE2DEE79BED38D20
+    created_at: 2026-10-28T09:31:56.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc990e060e59
+  - type: specified_by
+    from: REQ-demo-fx-rates
+    to: SCEN-demo-fx-rates
+    created_at: 2026-10-28T09:31:56.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-857c812bdaa3
+  - type: executable_for
+    from: SYM-demo-test-generate-is-deterministic
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:48:00.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2500d7fdc61d

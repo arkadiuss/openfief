@@ -382,7 +382,15 @@ tasks:
     requires:
       vars: [IMAGE]
     cmds:
+      # cosign v3's default: a Sigstore bundle (DSSE, predicate https://sigstore.dev/cosign/sign/v1) stored as an
+      # OCI referrer of the digest. The operator reads only this format (internal/plugins/cosign); its certificate
+      # subject is images.yml at refs/heads/main (plugins.OpenFiefCISubject), so keep signing in that workflow.
       - cosign sign --yes '{{.IMAGE}}'
+
+  trustroot:update:
+    desc: Refresh the operator's bundled Sigstore trust root (D-56) through TUF; review the diff and commit it
+    cmds:
+      - '{{.GO_GUARD}} go run ./cmd/sigstore-trusted-root -o internal/plugins/cosign/trusted_root.json'
 
   deploy:demo:
     desc: 'Publish deploy/demo/openfief, pinned to the signed digests of TAG, as the signed artifact Flux on the demo follows (CI only; needs cosign and a GHCR login), e.g. task deploy:demo TAG=sha-1a2b3c4 REPO=owner/openfief'

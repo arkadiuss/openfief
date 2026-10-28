@@ -139,3 +139,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-27e1e50acdbf
+  - type: implements
+    from: SYM-demo-sorted-currencies
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:43:25.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-055c78fcb285
+  - type: covered_by
+    from: SYM-demo-sorted-currencies
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:43:25.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c049c67d9b2

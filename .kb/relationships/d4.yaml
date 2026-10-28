@@ -153,3 +153,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b798f2f4b8b5
+  - type: implements
+    from: SYM-ledger-app-kind-store
+    to: REQ-ledger-app-sleeve-kinds
+    created_at: 2026-10-28T09:56:06.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8ca9511300a
+  - type: covered_by
+    from: SYM-ledger-app-kind-store
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-28T09:56:06.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d89770691c3e
+  - type: executable_for
+    from: SYM-plugins-test-parse-owner-signers
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:55:47.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1be9161a323f

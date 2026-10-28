@@ -146,3 +146,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ba55b09e140
+  - type: validates
+    from: TEST-plugins-trust
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:50:18.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbb860fdd92c
+  - type: validates
+    from: TEST-plugins-trust
+    to: REQ-plugins-verified-entry-pins
+    created_at: 2026-10-28T08:50:18.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c74bde040b0b
+  - type: validates
+    from: TEST-plugins-trust
+    to: REQ-plugins-unsigned-never-deployed
+    created_at: 2026-10-28T08:50:18.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-734867c6d382
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-logged-entry
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:20:18.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1173c75c8962
+  - type: implements
+    from: SYM-demo-seed-run
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:50:41.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dc344511e53
+  - type: covered_by
+    from: SYM-demo-seed-run
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:50:41.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e2f020b0c5a

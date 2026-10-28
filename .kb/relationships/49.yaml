@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1688f6366c0f
+  - type: constrains
+    from: REQ-demo-consistent-history
+    to: FACT-SUBJECT-0398A019C8DDC27F
+    created_at: 2026-10-28T09:31:39.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac2f41ba87c1
+  - type: requires_property
+    from: REQ-demo-consistent-history
+    to: FACT-PROP-C2CC5538535C6ECB
+    created_at: 2026-10-28T09:31:39.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97098a189960
+  - type: specified_by
+    from: REQ-demo-consistent-history
+    to: SCEN-demo-consistent-history
+    created_at: 2026-10-28T09:31:39.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-759463869672

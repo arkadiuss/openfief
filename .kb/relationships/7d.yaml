@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3ca02617543
+  - type: constrains
+    from: REQ-demo-deterministic
+    to: FACT-SUBJECT-0398A019C8DDC27F
+    created_at: 2026-10-28T09:31:16.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd5bd24bce0
+  - type: requires_property
+    from: REQ-demo-deterministic
+    to: FACT-PROP-260B38062E8CF9DB
+    created_at: 2026-10-28T09:31:16.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3424a4fe9463
+  - type: specified_by
+    from: REQ-demo-deterministic
+    to: SCEN-demo-deterministic
+    created_at: 2026-10-28T09:31:16.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55a02196a256

@@ -69,3 +69,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a91148e3d14
+  - type: verified_by
+    from: SCEN-ledger-app-kinds
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-28T09:52:53.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61f407b73916
+  - type: verified_by
+    from: SCEN-ledger-app-kinds
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T09:52:53.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f468b2d08af
+  - type: implements
+    from: SYM-cosign-fn-platform-images
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:21:35.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d7e7e9b0e0
+  - type: implements
+    from: SYM-cosign-fn-platform-images
+    to: REQ-plugins-manifest-in-image
+    created_at: 2026-10-28T09:21:35.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-befb0ee0e530
+  - type: covered_by
+    from: SYM-cosign-fn-platform-images
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:21:35.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-672180b0c6bf

@@ -160,3 +160,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c82787894f7a
+  - type: implements
+    from: SYM-ledger-app-ledger-save-kind
+    to: REQ-ledger-app-sleeve-kinds
+    created_at: 2026-10-28T09:55:28.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-309bfbd6d0d6
+  - type: covered_by
+    from: SYM-ledger-app-ledger-save-kind
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-28T09:55:28.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed2fb2ec7eb3
+  - type: executable_for
+    from: SYM-cosign-test-inspect-unreachable-registry
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:24:18.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-419cc1b6bfcf
+  - type: implements
+    from: SYM-demo-flex-doc-end
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:41:35.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22a8d0c763e7
+  - type: covered_by
+    from: SYM-demo-flex-doc-end
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:41:35.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ae9288f133a

@@ -118,3 +118,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-679fbb165c5e
+  - type: implements
+    from: SYM-cosign-fn-new-key-verifier
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:22:21.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83f9fec6e2fd
+  - type: implements
+    from: SYM-cosign-fn-new-key-verifier
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T09:22:21.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc18fcbcaa3f
+  - type: covered_by
+    from: SYM-cosign-fn-new-key-verifier
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:22:21.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8135b4d7b36d
+  - type: implements
+    from: SYM-demo-sim-fx
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:39:22.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec0b021977ff
+  - type: covered_by
+    from: SYM-demo-sim-fx
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:39:22.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da2ad04681da
+  - type: implements
+    from: SYM-demo-seed-parse-rate
+    to: REQ-demo-fx-rates
+    created_at: 2026-10-28T09:52:29.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21b7b4c350d8
+  - type: covered_by
+    from: SYM-demo-seed-parse-rate
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:52:29.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c63f678a932b

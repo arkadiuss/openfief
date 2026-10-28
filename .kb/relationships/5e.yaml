@@ -132,3 +132,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1ca9ec4eaa6
+  - type: implements
+    from: SYM-operator-cmd-fn-trust-policy
+    to: REQ-operator-trust-config
+    created_at: 2026-10-28T09:31:11.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1e8c6dc688b
+  - type: covered_by
+    from: SYM-operator-cmd-fn-trust-policy
+    to: TEST-operator-cmd
+    created_at: 2026-10-28T09:31:11.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-064b5faf3015
+  - type: implements
+    from: SYM-operator-policy-verifier-inspect
+    to: REQ-operator-policy-verifier
+    created_at: 2026-10-28T09:32:16.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c0025a6007e
+  - type: implements
+    from: SYM-operator-policy-verifier-inspect
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-28T09:32:16.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc080f4cf461
+  - type: covered_by
+    from: SYM-operator-policy-verifier-inspect
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-28T09:32:16.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9955e572b422
+  - type: executable_for
+    from: SYM-operator-test-verify-fake-source-inspect
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-28T09:32:48.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adf1ecbf615c
+  - type: executable_for
+    from: SYM-operator-test-verify-fake-source-inspect
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T09:32:48.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe579a7a8a09

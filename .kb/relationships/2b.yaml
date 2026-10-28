@@ -167,3 +167,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e2d534be6ab
+  - type: constrains
+    from: REQ-demo-real-pipelines
+    to: FACT-SUBJECT-8445428BF4E0E148
+    created_at: 2026-10-28T09:31:31.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4d4ea5696c5
+  - type: requires_property
+    from: REQ-demo-real-pipelines
+    to: FACT-PROP-FE780A5DEAE4E1AB
+    created_at: 2026-10-28T09:31:32.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62ae5dbe3f96
+  - type: specified_by
+    from: REQ-demo-real-pipelines
+    to: SCEN-demo-load-end-to-end
+    created_at: 2026-10-28T09:31:32.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fd3d87dbe72

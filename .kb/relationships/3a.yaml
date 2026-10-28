@@ -83,3 +83,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4a9d877b547
+  - type: implements
+    from: SYM-demo-instrument-specs
+    to: REQ-demo-synthetic-only
+    created_at: 2026-10-28T09:35:51.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b4868be3a73
+  - type: covered_by
+    from: SYM-demo-instrument-specs
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:35:51.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-999f78bb225e

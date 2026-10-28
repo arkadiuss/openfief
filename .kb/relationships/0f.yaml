@@ -132,3 +132,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8e3422701be
+  - type: implements
+    from: SYM-demo-plan-on
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:39:50.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6da3684d42cf
+  - type: covered_by
+    from: SYM-demo-plan-on
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:39:50.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-528dd4ba115e

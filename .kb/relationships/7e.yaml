@@ -111,3 +111,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da1a07fe42c9
+  - type: verified_by
+    from: SCEN-plugins-catalog-strict
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:51:01.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-829adc8c754d

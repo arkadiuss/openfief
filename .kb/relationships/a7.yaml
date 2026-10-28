@@ -97,3 +97,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4d458e3f4e5
+  - type: validates
+    from: TEST-demo-dataset
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T09:30:17.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b956c6108a
+  - type: validates
+    from: TEST-demo-dataset
+    to: REQ-AUTO-34242A3F858F647D
+    created_at: 2026-10-28T09:30:17.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e40b9993628a
+  - type: implements
+    from: SYM-demo-sim-open
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:38:32.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06d8eff8e1d0
+  - type: covered_by
+    from: SYM-demo-sim-open
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:38:32.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-158ca51ece8f

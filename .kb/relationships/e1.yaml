@@ -160,3 +160,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98b7c8746109
+  - type: executable_for
+    from: SYM-portfolio-test-kind-validate
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:39:13.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceaa5c39b84a
+  - type: executable_for
+    from: SYM-plugins-test-trust-new-policy-fixture
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T09:00:38.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dd46dd94c0c

@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d831404525a
+  - type: executable_for
+    from: SYM-demo-seed-test-committed-rates-parse
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:54:15.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fa2da54c3a6

@@ -160,3 +160,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39761a6e83af
+  - type: implements
+    from: SYM-ledger-pg-scan-sleeve
+    to: REQ-ledger-pg-sleeve-kinds
+    created_at: 2026-10-28T09:59:37.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d5361eb6af6
+  - type: covered_by
+    from: SYM-ledger-pg-scan-sleeve
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:59:37.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e81982011c92

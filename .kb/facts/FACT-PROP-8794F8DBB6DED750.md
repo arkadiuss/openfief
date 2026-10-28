@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:operator.image_signature:deploys_only_
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-89F8C266C1C6BC69
-claim_text: The operator must deploy a plugin image only when an image verifier confirms its signature, and until cosign verification exists it must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
+claim_key: CLAIM-5BC1096F3F857964
+claim_text: The operator must deploy a plugin image only when its image verifier confirms the signature, and an operator built without a verifier must deploy no plugin image and report SignatureVerified as Unknown with reason NotImplemented.
 origin:
   kind: agent
   recorded_at: '2026-10-28T07:00:21.297Z'

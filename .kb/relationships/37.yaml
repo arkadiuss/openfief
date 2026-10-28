@@ -111,3 +111,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68c99975f0c1
+  - type: executable_for
+    from: SYM-portfolio-test-default-sleeves
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:39:39.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cf9c4ce1099
+  - type: executable_for
+    from: SYM-ledger-pg-test-kind-round-trip
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:56:51.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43cb4cc3085e
+  - type: executable_for
+    from: SYM-plugins-test-catalog-validate
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:55:40.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d183e860f12
+  - type: executable_for
+    from: SYM-plugins-test-trust-policy-fixture
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T09:00:29.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9454f4001a0
+  - type: executable_for
+    from: SYM-cosign-test-verifier-world
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:23:08.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-890ea11eb129

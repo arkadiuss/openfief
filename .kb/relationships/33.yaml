@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37e095d5d262
+  - type: constrains
+    from: REQ-portfolio-kind-role-fixed
+    to: FACT-SUBJECT-5DC2172602284182
+    created_at: 2026-10-28T09:35:06.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b099dd6ec0b7
+  - type: requires_property
+    from: REQ-portfolio-kind-role-fixed
+    to: FACT-PROP-5BC247274493878D
+    created_at: 2026-10-28T09:35:06.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49f6bbcda68b
+  - type: specified_by
+    from: REQ-portfolio-kind-role-fixed
+    to: SCEN-portfolio-kind-role-fixed
+    created_at: 2026-10-28T09:35:06.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7e3a6907e0d

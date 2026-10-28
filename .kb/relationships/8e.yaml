@@ -209,3 +209,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06c2e0b569b0
+  - type: implements
+    from: SYM-cosign-fn-new-verifier
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:22:07.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-250dbde0053c
+  - type: implements
+    from: SYM-cosign-fn-new-verifier
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T09:22:07.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b72b647f1c4d
+  - type: covered_by
+    from: SYM-cosign-fn-new-verifier
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:22:07.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95c47d1fdfd0
+  - type: verified_by
+    from: SCEN-demo-guard-marks-and-resets
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:30:32.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a517821b40c8
+  - type: verified_by
+    from: SCEN-demo-guard-marks-and-resets
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:30:32.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39595f0af20e

@@ -139,3 +139,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5da48e83ca2a
+  - type: implements
+    from: SYM-ledger-app-ledger-ensure-defaults
+    to: REQ-ledger-app-ensure-defaults
+    created_at: 2026-10-28T09:55:38.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2848cc7fff8
+  - type: covered_by
+    from: SYM-ledger-app-ledger-ensure-defaults
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-28T09:55:38.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73738857a77c
+  - type: implements
+    from: SYM-demo-seed-loader-inputs
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:51:33.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e69ca7fb3dbe
+  - type: implements
+    from: SYM-demo-seed-loader-inputs
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-28T09:51:33.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40b1113b8893
+  - type: covered_by
+    from: SYM-demo-seed-loader-inputs
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:51:34.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-825e11da61f7
