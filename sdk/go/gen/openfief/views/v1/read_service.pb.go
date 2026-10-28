@@ -487,10 +487,12 @@ func (x *Instrument) GetSymbol() string {
 
 // Sleeve is a part of the portfolio with one role.
 type Sleeve struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Role          SleeveRole             `protobuf:"varint,3,opt,name=role,proto3,enum=openfief.views.v1.SleeveRole" json:"role,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name  string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Role  SleeveRole             `protobuf:"varint,3,opt,name=role,proto3,enum=openfief.views.v1.SleeveRole" json:"role,omitempty"`
+	// The key of the sleeve's kind, such as "core" or "agent-pool".
+	Kind          string `protobuf:"bytes,4,opt,name=kind,proto3" json:"kind,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -544,6 +546,13 @@ func (x *Sleeve) GetRole() SleeveRole {
 		return x.Role
 	}
 	return SleeveRole_SLEEVE_ROLE_UNSPECIFIED
+}
+
+func (x *Sleeve) GetKind() string {
+	if x != nil {
+		return x.Kind
+	}
+	return ""
 }
 
 // Account is one account at an institution. It belongs to one sleeve.
@@ -2806,11 +2815,12 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\n" +
 	"Instrument\x12\x12\n" +
 	"\x04isin\x18\x01 \x01(\tR\x04isin\x12\x16\n" +
-	"\x06symbol\x18\x02 \x01(\tR\x06symbol\"_\n" +
+	"\x06symbol\x18\x02 \x01(\tR\x06symbol\"s\n" +
 	"\x06Sleeve\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x121\n" +
-	"\x04role\x18\x03 \x01(\x0e2\x1d.openfief.views.v1.SleeveRoleR\x04role\"g\n" +
+	"\x04role\x18\x03 \x01(\x0e2\x1d.openfief.views.v1.SleeveRoleR\x04role\x12\x12\n" +
+	"\x04kind\x18\x04 \x01(\tR\x04kind\"g\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\x12\n" +

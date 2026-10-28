@@ -56,7 +56,7 @@ type fakeLedger struct {
 }
 
 func (f *fakeLedger) Sleeves(context.Context) ([]portfolio.Sleeve, error) {
-	return []portfolio.Sleeve{{ID: "core", Name: "Core", Role: portfolio.RoleDefensive}}, f.fail
+	return []portfolio.Sleeve{{ID: "core", Name: "Core", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive}}, f.fail
 }
 
 func (f *fakeLedger) Accounts(context.Context) ([]ledger.Account, error) { return f.accounts, f.fail }

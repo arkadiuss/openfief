@@ -139,6 +139,8 @@ message Sleeve {
   string id = 1;
   string name = 2;
   SleeveRole role = 3;
+  // The key of the sleeve's kind, such as "core" or "agent-pool".
+  string kind = 4;
 }
 
 // Account is one account at an institution. It belongs to one sleeve.

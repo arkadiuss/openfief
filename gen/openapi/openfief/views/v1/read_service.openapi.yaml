@@ -601,6 +601,10 @@ components:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.SleeveRole'
           title: role
+        kind:
+          type: string
+          title: kind
+          description: The key of the sleeve's kind, such as "core" or "agent-pool".
       title: Sleeve
       additionalProperties: false
       description: Sleeve is a part of the portfolio with one role.

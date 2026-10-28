@@ -35682,3 +35682,16 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: executable_for
         target: TEST-views-connectapi-rest
+  - id: SYM-views-pb-sleeve-get-kind
+    title: Sleeve.GetKind
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T10:24:58.349Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract

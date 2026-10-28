@@ -120,7 +120,7 @@ func TestConnectGET(t *testing.T) {
 	// Read-only methods are also reachable with Connect's GET form.
 	_, rec := newAPI(t, newLedger(t)).serve(t, http.MethodGet,
 		"/openfief.views.v1.ReadService/ListSleeves?connect=v1&encoding=json&message=%7B%7D", goodToken)
-	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "SLEEVE_ROLE_DEFENSIVE") {
+	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "SLEEVE_ROLE_DEFENSIVE") || !strings.Contains(rec.Body.String(), `"kind":"core"`) {
 		t.Errorf("Connect GET ListSleeves = %d %s", rec.Code, rec.Body)
 	}
 }

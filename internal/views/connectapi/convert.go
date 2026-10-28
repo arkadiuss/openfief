@@ -64,7 +64,7 @@ func pbInstrument(in ledger.Instrument) *viewsv1.Instrument {
 
 // pbSleeve converts a sleeve.
 func pbSleeve(s *portfolio.Sleeve) *viewsv1.Sleeve {
-	return &viewsv1.Sleeve{Id: string(s.ID), Name: s.Name, Role: viewsv1.SleeveRole(enumNumber(int(s.Role)))}
+	return &viewsv1.Sleeve{Id: string(s.ID), Name: s.Name, Kind: string(s.Kind), Role: viewsv1.SleeveRole(enumNumber(int(s.Role)))}
 }
 
 // pbAccount converts an account.
