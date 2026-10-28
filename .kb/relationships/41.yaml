@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec1e10ddfc64
+  - id: rel-e94294d45bc4
+    type: constrains
+    from: REQ-identity-passkey-new-hostname
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: "2026-10-28T06:09:47.653Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-identity-passkey-new-hostname
+    to: FACT-PROP-8FC50A3A7622EE2C
+    created_at: 2026-10-28T06:09:47.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1070cd673bf8

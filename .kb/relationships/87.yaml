@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b7295c75539
+  - id: rel-8ea3233eb515
+    type: constrains
+    from: REQ-plugins-catalog-in-repo
+    to: FACT-SUBJECT-B79DA0C69EEC5A10
+    created_at: "2026-10-28T05:38:35.040Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-plugins-catalog-in-repo
+    to: FACT-PROP-0586BDDB5DC4FF1F
+    created_at: 2026-10-28T05:38:35.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-119539ccb243

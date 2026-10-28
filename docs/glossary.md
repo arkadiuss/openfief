@@ -18,7 +18,12 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Lot | ledger | `ledger.Lot` | A quantity acquired on a date at a cost; consumed FIFO. An opening lot is seeded from a broker's current positions instead of full history. | |
 | Balance assertion | ledger | `ledger.BalanceAssertion` | A broker-reported balance on a date that the derived balance must match; a mismatch is an error. | snapshot |
 | Assertion check | ledger | `app.AssertionCheck` | A balance assertion with the result of its latest check: matched, or flagged with the derived balance when they differ. A flagged check is an error for the owner to resolve; the import that found it is kept. | reconciliation |
+| Model portfolio | portfolio | `portfolio.Model` | An optional weighted basket of targets for the whole portfolio, which the real portfolio is compared with. Entered by the owner in M0; GR-4's maintainer agent adjusts it from M2. | strategy, benchmark |
+| Target | portfolio | `portfolio.Target` | One instrument or index in the model portfolio, with its weight. The weights sum to 100%. | allocation |
+| Backtest | portfolio | `portfolio.Backtest` | The model portfolio's value series computed from end-of-day history, rebalanced to the target weights once a year. | simulation |
+| Max drawdown | portfolio | `portfolio.MaxDrawdown` | The worst fall from a peak to a later trough in a value series, with both dates. | max loss |
 | Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one role. Defensive: not available to agents. Offensive: the part fiefs are leased from. | bucket |
+| Jurisdiction pack | jurisdiction | `jurisdiction.Pack` | The pluggable rules for one country (GR-13): bond terms, tax rules, and the default reporting currency. Poland first. | locale, country plugin |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
 | Statement | ingest | `app.StatementFetcher` | What an institution reports about an account, as a file or a pulled document, such as an IBKR Flex Query or an xStation export. A connector maps it. | report, export (alone) |
 | Ingest mode | ingest | `ingest.Mode` | What an import batch takes from a statement: `opening` seeds an account at go-live with opening lots and its opening cash (D-23); `transactions` imports transactions from go-live on. Both import balance assertions. | |
@@ -26,7 +31,9 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Ingest problem | ingest | `ingest.Problem` | A statement row the mapping left out of the ledger, with its reason: `unsupported` (can't be booked yet, such as an option trade) or `skipped` (left out on purpose, such as a summary row). Not an error. | warning |
 | Import summary | ingest | `ingest.ImportSummary` | What the ledger did with a batch's mapping: new transactions, new versions, unchanged ones, and failed balance assertions. | |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
+| Index | valuation | `valuation.Index` | A market index, such as WIG20 or MSCI World, with an end-of-day level series from the market-data connector. It can be a target, but it can't be held. | benchmark |
 | FX rate | valuation | `valuation.FXRate` | The value in PLN of one unit of a currency on a date, from a source; NBP table A in M0. The rate for a date is the latest one dated on or before it. | |
+| Reporting currency | valuation | `valuation.ReportingCurrency` | The currency totals, charts and the model comparison are shown in. A setting whose default comes from the jurisdiction pack: PLN for the Polish pack. | base currency, home currency |
 | Valuation | valuation | `valuation.Valuation` | The value of a holding on a date, with its basis and source. | |
 | Valuation basis | valuation | `valuation.Basis` | `market`, `gross_accrued` or `net_if_redeemed`. | |
 | Bond series | jurisdiction/pl | `pl.Series` | A Polish retail treasury bond series code, such as EDO0536 (EDO maturing in May 2036). Valuation uses it through jurisdiction/pl's rules. | bond (ambiguous) |
@@ -42,8 +49,11 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
 | Read API | views | `views` + `connectapi` | The public, read-only `/v1` API. | |
-| Plugin | plugins | `plugins.Plugin` | The custom resource holding what a plugin requests: image, manifest, config. | extension, addon |
+| Plugin | plugins | `plugins.Plugin` | The custom resource for one installed, named instance of a plugin image: the image and its manifest (the vendor's) and the instance's name and config (the owner's). Its status says whether the image is verified. | extension, addon |
 | Grant | plugins | `plugins.Grant` | The custom resource holding what the owner approved for a plugin. | permission set |
+| Catalog | plugins | `plugins.Catalog` | The file in the OpenFief repository that lists first-party and verified plugins, with pinned image digests and signer identities. | marketplace, registry |
+| Verified plugin | plugins | `plugins.Verified` | A plugin whose catalog entry pins a version the author reviewed. Anything installed by image reference alone is unverified. | official, trusted |
+| Trusted signer | plugins | `plugins.Signer` | An identity whose image signatures the operator accepts: OpenFief's CI, a catalog publisher, or one the owner added. | |
 | Manifest | plugins | `plugins.Manifest` | A plugin's declared capabilities, egress hosts, secrets, data tiers and config schema. | |
 | Egress allow-list | plugins | `plugins.EgressAllowList` | The hostnames a plugin may reach through the egress proxy. | whitelist |
 | Capability | plugins | `plugins.Capability` | What a plugin may act as: `connector` or `view` in M0. Declared in its manifest and approved in its grant. | kind, role |
@@ -77,8 +87,6 @@ Don't create code for these before their milestone.
 | Fill | One execution against an order. |
 | Policy decision | The result of evaluating an intent: allow, deny or needs approval, with the rules matched. |
 | Audit event | One append-only record of a state change. |
-| Model portfolio | A target allocation the real portfolio follows and adjusts towards. |
-| Target | One weight in the model portfolio. |
 | Invalidation condition | A condition stated up front that would prove a thesis wrong, such as a price level or a fundamental change. |
 
 ### Rules
@@ -115,11 +123,13 @@ Don't create code for these before their milestone.
 | Double-entry bookkeeping | Every transaction is recorded as postings that sum to zero across accounts, so money never appears or vanishes; documented by Luca Pacioli in 1494. |
 | Egress proxy | A proxy that all outbound traffic from a set of pods must pass through, so destinations can be allowed by hostname rather than IP. |
 | End of day (EOD) | Prices or rates as of each trading day's close. |
+| EODHD | EOD Historical Data, a market-data vendor; the first market-data connector uses it. |
 | ESMA | European Securities and Markets Authority, the EU securities regulator. |
 | etcd | The key-value store that holds a Kubernetes cluster's state, including Secrets. |
 | FIFO | First in, first out: the oldest lots are treated as sold first when computing gains. |
 | Flex Query | IBKR's configurable reporting export (trades, positions, cash), retrievable through a web service with a token. |
 | Frontier model | The most capable models from the large labs, typically cloud-hosted. |
+| GPW | Giełda Papierów Wartościowych w Warszawie, the Warsaw Stock Exchange. |
 | GUS | Główny Urząd Statystyczny, Statistics Poland. |
 | HITL | Human in the loop: a person must approve before the system acts. |
 | htmx | A small JavaScript library that lets server-rendered HTML pages update parts of themselves without a front-end framework. |
@@ -161,6 +171,10 @@ Don't create code for these before their milestone.
 | RP ID | Relying-party ID: the domain a WebAuthn passkey is bound to. |
 | Smokescreen | Stripe's open-source egress proxy, written in Go, which checks each client's HTTP CONNECT destinations against a per-client allow-list. |
 | TIF | Time in force: how long an order stays working (for example day, or good-till-cancelled). |
+| TokenRequest / TokenReview | Kubernetes APIs: TokenRequest issues a short-lived ServiceAccount token for a chosen audience; TokenReview checks whether a token is valid. |
+| TWR / MWR | Time-weighted return chains the returns between cash flows, so deposits and withdrawals don't count as performance; it is the standard for comparing with a benchmark. Money-weighted return (an IRR, such as XIRR) weights by the money invested, so it reflects the investor's timing. |
+| Vanguard | A Go library by Buf that serves one Connect service as REST, gRPC and Connect, translating between them (transcoding). |
+| VWAP | Volume-weighted average price. |
 | WebAuthn / passkey | The web standard for public-key authentication; a passkey is a WebAuthn credential stored on a device. |
 | xAPI | XTB's former public trading API, shut down in 2025. |
 | XTB | X-Trade Brokers, a Polish broker. |

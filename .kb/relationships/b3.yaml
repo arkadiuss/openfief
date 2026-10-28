@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e19db2fe6ec3
+  - id: rel-72c436875ca0
+    type: constrains
+    from: REQ-valuation-reporting-currency
+    to: FACT-SUBJECT-8EA06C629A63C4D2
+    created_at: "2026-10-28T06:18:42.484Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-valuation-reporting-currency
+    to: FACT-PROP-EBAE49B1175D654F
+    created_at: 2026-10-28T06:18:42.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8153f04eb36

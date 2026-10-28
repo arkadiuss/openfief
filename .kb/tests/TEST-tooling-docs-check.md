@@ -8,4 +8,4 @@ origin:
 id: TEST-tooling-docs-check
 type: test
 ---
-Runs scripts/check-docs.sh against a throwaway git copy of the design documents: unchanged docs pass; an undefined OQ-999 reference, an edited GR-14 line and a second definition of OQ-21 each fail and are named.
+Runs scripts/check-docs.sh against a throwaway git copy of the design documents: unchanged docs pass; an undefined OQ-999 reference, an edited GR-14 line and a second definition of GR-1 each fail and are named.

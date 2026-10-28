@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c184a9180ad1
+  - id: rel-ac19b59c235b
+    type: constrains
+    from: REQ-ingest-core-calls-connectors
+    to: FACT-SUBJECT-316DC3E227F53389
+    created_at: "2026-10-28T05:39:29.704Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-ingest-core-calls-connectors
+    to: FACT-PROP-75FA196DDD1B73A8
+    created_at: 2026-10-28T05:39:29.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41ef77e8d9c9

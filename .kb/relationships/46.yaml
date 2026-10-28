@@ -76,3 +76,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa98e2bc10d7
+  - id: rel-92dab6a00c12
+    type: constrains
+    from: REQ-identity-install-without-hostname
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: "2026-10-28T06:09:44.528Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-identity-install-without-hostname
+    to: FACT-PROP-ABA1FAFE9F9CC8FF
+    created_at: 2026-10-28T06:09:44.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d69fdb369a77
+  - type: constrains
+    from: REQ-views-ghostfolio-restricted-view
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-28T06:18:58.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3614896f21d7
+  - type: requires_property
+    from: REQ-views-ghostfolio-restricted-view
+    to: FACT-PROP-D733C79725F0C7A1
+    created_at: 2026-10-28T06:18:58.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3869700ed581

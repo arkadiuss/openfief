@@ -97,3 +97,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7854afaa91da
+  - type: constrains
+    from: REQ-plugins-manifest-in-image
+    to: FACT-SUBJECT-9245D1B907023D02
+    created_at: 2026-10-28T05:38:28.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e880f49ddba7
+  - type: requires_property
+    from: REQ-plugins-manifest-in-image
+    to: FACT-PROP-011C72EF3E18094A
+    created_at: 2026-10-28T05:38:28.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba42da3d56a5

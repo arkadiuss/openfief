@@ -31,8 +31,6 @@ jobs:
       - name: task check
         run: task check
         env:
-          # vuln fails here when a vulnerability database is unreachable (scripts/vulncheck.sh).
-          CI: 'true'
           DOCS_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
 
   dco:

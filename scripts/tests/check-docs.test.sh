@@ -41,8 +41,8 @@ expect_fail "an undefined OQ tag" 'undefined OQ tags: OQ-999'
 sed -i 's/^- \*\*\[GR-14\]\*\* \(.*\)$/- **[GR-14]** \1 (edited)/' docs/DESIGN.md
 expect_fail "an edited ground rule" 'ground-rule lines'
 
-printf '\n- **[OQ-21]** A second definition.\n' >>docs/proposals/hosting.md
-expect_fail "an ID defined twice" 'OQ IDs defined more than once: OQ-21'
+printf '\n- **[GR-1]** A second definition.\n' >>docs/proposals/hosting.md
+expect_fail "an ID defined twice" 'GR IDs defined more than once: GR-1'
 
 if [ "$failures" -ne 0 ]; then
   exit 1
