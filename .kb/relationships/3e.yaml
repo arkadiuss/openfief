@@ -209,3 +209,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a205786301fc
+  - type: constrains
+    from: REQ-plugins-cli-list
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-10-28T22:43:42.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e67ed3b0c031
+  - type: requires_property
+    from: REQ-plugins-cli-list
+    to: FACT-PROP-6B78A5E1DF05F522
+    created_at: 2026-10-28T22:43:42.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34d96a5f8550
+  - type: specified_by
+    from: REQ-plugins-cli-list
+    to: SCEN-plugins-cli-list-instances
+    created_at: 2026-10-28T22:43:42.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79976079ac89

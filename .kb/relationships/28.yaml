@@ -391,3 +391,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f9a0161011a
+  - type: implements
+    from: SYM-plugins-app-instance-store
+    to: REQ-plugins-cli-list
+    created_at: 2026-10-28T22:43:53.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22085e93c38e
+  - type: implements
+    from: SYM-plugins-app-instance-store
+    to: REQ-plugins-cli-uninstall
+    created_at: 2026-10-28T22:43:53.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-108ef95b464b
+  - type: covered_by
+    from: SYM-plugins-app-instance-store
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:43:53.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfc59fe15249
+  - type: executable_for
+    from: SYM-plugins-app-test-install-fake-images
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:44:40.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5926977f57f1

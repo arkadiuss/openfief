@@ -59,6 +59,7 @@ Everything in [`internal/plugins`](../../internal/plugins/) is pure: no I/O, no 
 | [install.go](../../internal/plugins/install.go) | What the `openfief` CLI decides: `ResolveInstallSource` and `DefaultInstanceName` read an install argument, `PlanInstall` builds the `Plugin` and its grant, `SecretsToDelete` picks the Secrets an uninstall removes; see [Installing with the CLI](#installing-with-the-cli) |
 | [signing_keys.go](../../internal/plugins/signing_keys.go) | `SigningKeys`, `ParseSigningKeys`: the cluster's token issuer and public signing keys, checked before the operator publishes them for plugins |
 | [errors.go](../../internal/plugins/errors.go) | Sentinel errors and `FieldError` |
+| [app/install.go](../../internal/plugins/app/install.go) | The CLI's use cases: `Installer.Prepare`, `Install`, `PlanUninstall`, `Uninstall`, `Instances`, and the ports `ImageInspector` and `InstanceStore` they consume |
 | [app/egress.go](../../internal/plugins/app/egress.go), [app/tokencache.go](../../internal/plugins/app/tokencache.go) | The egress proxy's use case, `app.Egress`, and its token cache, `app.CachingTokenReviewer`; see [Egress](egress.md) |
 
 ### From a plugin and its grant to a workload
@@ -209,6 +210,8 @@ The owner installs and uninstalls plugins with the `openfief` command-line tool 
 - **What is applied.** `PlanInstall` builds a `Plugin` that requests exactly the image's signed manifest label (D-42), with the owner's config, and a grant of the same name that approves exactly what it requests. The owner confirms that list, so the grant is never wider than what was shown, and `NeedsApproval` finds nothing pending.
 - **Which Secrets go.** `SecretsToDelete` takes the Secrets an uninstalled instance's manifest and grant name, and keeps any that another installed instance still names: Secret names come from the manifest, so instances of one image share them (see [Decisions](#decisions)).
 
+The use cases in [app/install.go](../../internal/plugins/app/install.go) put these together around two ports. `Installer.Prepare` resolves the argument, has an `ImageInspector` read the image's signatures and signed manifest label, and lets the same `TrustPolicy` the operator uses decide (D-56): an image the operator would never deploy is refused with `ErrNotTrusted` before anything is shown (D-57). It then checks the config against the manifest's JSON Schema and returns a `Proposal`: the `Plugin`, the grant, and the trust decision with the signer that earned it. Nothing changes until the owner confirms and `Install` hands the proposal to the `InstanceStore`, which refuses a name that already has a `Plugin` or a grant: an upgrade is the owner's own edit (D-47). `PlanUninstall` finds the instance and its Secrets, and `Uninstall` asks the store to delete the grant, the `Plugin` and the Secrets no other instance names. Nothing in an uninstall reaches the ledger, so the data the instance brought in stays (D-18, D-58).
+
 ### The connector contract
 
 [connector.proto](../../proto/openfief/connector/v1/connector.proto) defines `openfief.connector.v1.ConnectorService`, which a connector serves and the core calls (D-49):
@@ -335,6 +338,7 @@ Run `task test` from the repository root; it tests both Go modules, the core and
 | An install argument is one catalog entry or a digest-pinned image; tags, unknown and shared names are refused; the instance is named by default | [install_test.go](../../internal/plugins/install_test.go): `TestResolveInstallSource` | REQ-plugins-cli-install-source |
 | An install requests the signed manifest and grants exactly that; names the CRD refuses are refused | `TestPlanInstall`, `TestPlanInstallRefuses` | REQ-plugins-cli-install-plan |
 | An uninstall keeps Secrets another instance still names | `TestSecretsToDelete` | REQ-plugins-cli-uninstall-secrets |
+| An install is verified with the operator's trust policy and refused when it would never deploy, when the schema rejects its config or when the name exists; uninstall keeps shared Secrets; list sorts by name | [app/install_test.go](../../internal/plugins/app/install_test.go): `TestInstallerPrepare`, `TestInstall`, `TestUninstall` | REQ-plugins-cli-install-verifies, REQ-plugins-cli-uninstall, REQ-plugins-cli-list |
 | The embedded catalog loads | [catalog/catalog_test.go](../../internal/plugins/catalog/catalog_test.go): `TestLoad` | REQ-plugins-catalog-in-repo |
 | The manifest label parses strictly and must equal the declared manifest as sets | [manifest_label_test.go](../../internal/plugins/manifest_label_test.go): `TestParseManifestLabel`, `TestManifestEqual` | REQ-plugins-manifest-label-match, REQ-plugins-manifest-in-image |
 

@@ -58418,3 +58418,314 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-uninstall-secrets
+  - id: SYM-plugins-app-image-inspector
+    title: ImageInspector
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:43:43.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-instance
+    title: Instance
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:43:48.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-app-instance-store
+    title: InstanceStore
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:43:52.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-list
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+  - id: SYM-plugins-app-install-request
+    title: InstallRequest
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:43:56.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-proposal
+    title: Proposal
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:01.022Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-installer
+    title: Installer
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:04.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-installer-prepare
+    title: Installer.Prepare
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:08.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-install
+    title: Install
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:12.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-uninstall-plan
+    title: UninstallPlan
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:16.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+  - id: SYM-plugins-app-plan-uninstall
+    title: PlanUninstall
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:21.268Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-app-uninstall
+    title: Uninstall
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:25.497Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-app-instances
+    title: Instances
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:29.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-app-test-install-sample-manifest
+    title: sampleManifest
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:34.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-images
+    title: fakeImages
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:39.773Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-images-inspect
+    title: fakeImages.Inspect
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:43.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-installer
+    title: installer
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:48.195Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-proposed
+    title: proposed
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:52.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-test-installer-prepare
+    title: TestInstallerPrepare
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:56.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-store
+    title: fakeStore
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:00.874Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-store-list
+    title: fakeStore.List
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:05.183Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-store-create
+    title: fakeStore.Create
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:09.369Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-store-delete
+    title: fakeStore.Delete
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:13.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-install-samples
+    title: installSamples
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:18.001Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-test-install
+    title: TestInstall
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:22.376Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-uninstall
+    title: uninstall
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:26.641Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-test-uninstall
+    title: TestUninstall
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:30.908Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install

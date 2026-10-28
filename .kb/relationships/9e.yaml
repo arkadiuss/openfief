@@ -482,3 +482,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2483b00da43d
+  - type: executable_for
+    from: SYM-plugins-app-test-install-fake-store-list
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:45:06.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffacdc4a8786

@@ -209,3 +209,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c686cffe167e
+  - type: implements
+    from: SYM-plugins-app-uninstall-plan
+    to: REQ-plugins-cli-uninstall
+    created_at: 2026-10-28T22:44:18.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88098b2bfc9d
+  - type: covered_by
+    from: SYM-plugins-app-uninstall-plan
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:44:18.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98bb618bfedb
