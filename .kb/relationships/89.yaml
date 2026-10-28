@@ -69,3 +69,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd5e7167e843
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-enum-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:26.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-925396b9d54b
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-enum-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:26.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c2f0da58fa9
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-kind-enum-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:26.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7adb5b0742c
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-reset
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:17.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c770255e9f5e
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-reset
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:17.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e8c915c178b
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-reset
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:17.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bffc8a164d6c
+  - type: constrains
+    from: REQ-ingest-instance-scoped-keys
+    to: FACT-SUBJECT-88F1C2EA762103A7
+    created_at: 2026-10-28T08:55:40.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f46a55fc7358
+  - type: requires_property
+    from: REQ-ingest-instance-scoped-keys
+    to: FACT-PROP-0F4AF87CD4CC6495
+    created_at: 2026-10-28T08:55:40.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0616b8f883f
+  - type: specified_by
+    from: REQ-ingest-instance-scoped-keys
+    to: SCEN-ingest-instance-scoped-keys
+    created_at: 2026-10-28T08:55:40.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f313f66ee4b
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-mode-to
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:06:42.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c1326dcf4a6

@@ -97,3 +97,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3c0ef12336b
+  - type: executable_for
+    from: SYM-sdk-go-test-egress-refusals
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:08:26.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fda5be8d96ed
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:09.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c2c09990a9a
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:09.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1f29cba9a93
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-kind-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:09.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9706844cfc9
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-reset
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:15.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fecaf9dbaa95
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-reset
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:15.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c08a485f224
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-reset
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:15.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed5119ef4bf2
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-get-fx-rates
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:19:08.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3a96cfdd215
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-get-fx-rates
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:19:08.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fcabee8d78b
+  - type: covered_by
+    from: SYM-connector-gen-pb-delivery-get-fx-rates
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:19:08.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3cdecb9d83a

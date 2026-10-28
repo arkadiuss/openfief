@@ -90,3 +90,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bfb78851207
+  - type: implements
+    from: SYM-connector-gen-pb-problem
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:30.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a61e2ba5b73
+  - type: implements
+    from: SYM-connector-gen-pb-problem
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:30.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-255e90d4fe18
+  - type: covered_by
+    from: SYM-connector-gen-pb-problem
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:30.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8548ecfa589
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-response-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:44.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e9801a911b
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-response-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:44.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d389df82dd82
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-response-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:44.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd5965521a4
+  - type: implements
+    from: SYM-ingest-conn-app-delivery
+    to: REQ-ingest-connector-batches
+    created_at: 2026-10-28T08:57:43.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1e1fc94be62
+  - type: covered_by
+    from: SYM-ingest-conn-app-delivery
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:57:43.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d160ebf9a24
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-helper-fake-stores
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:59:46.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bf1af030489
+  - type: implements
+    from: SYM-ingest-conn-rpc-book-kind-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:43.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e251023caab8
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-book-kind-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:43.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc3c332d990a

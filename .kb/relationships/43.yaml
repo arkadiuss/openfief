@@ -83,3 +83,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43207150868d
+  - type: implements
+    from: SYM-ingest-conn-rpc-transaction-kind-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:59.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47c111ed5ac4
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-transaction-kind-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:59.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dbe69940878

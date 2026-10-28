@@ -146,3 +146,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd2acdda628c
+  - type: verified_by
+    from: SCEN-sdk-go-plugin-environment
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:00:58.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bbf8a055b63
+  - type: implements
+    from: SYM-sdk-go-bearer-transport-round-trip
+    to: REQ-sdk-go-token-rotation
+    created_at: 2026-10-28T08:03:00.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd82c142a81e
+  - type: covered_by
+    from: SYM-sdk-go-bearer-transport-round-trip
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:03:00.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d756aa26841

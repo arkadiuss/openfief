@@ -69,3 +69,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b87e67fcf80
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-fake-proxy-note
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:07:25.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-749e93647556
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-get-chunk
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:14.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fca284185bf
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-get-chunk
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:14.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-105cca1f4f76
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-request-get-chunk
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:14.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb9a95ede492

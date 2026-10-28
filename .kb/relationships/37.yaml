@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a6dc1709610
+  - type: executable_for
+    from: SYM-sdk-go-test-egress-sends-current-token-on-every-connect
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:08:18.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d66e43092ecd

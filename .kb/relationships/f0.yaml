@@ -76,3 +76,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9e29404ab1e
+  - type: validates
+    from: TEST-ingest-scope
+    to: REQ-plugins-instance-per-install
+    created_at: 2026-10-28T08:54:17.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1e29c25f247

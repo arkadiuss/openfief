@@ -153,3 +153,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7cdd749adcd6
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-get-value
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:25.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-915fc1aa70fb
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-get-value
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:25.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f54262f323fc
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-reading-get-value
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:25.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1498c5018749
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-fake-connector
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:04:23.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-870f54d7590e
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-must-decimal
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:05:33.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-185d6066c99c

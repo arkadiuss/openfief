@@ -17448,3 +17448,5060 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-smokescreen-proxy
+  - id: SYM-sdk-go-core-httpclient
+    title: CoreHTTPClient
+    sourceFile: sdk/go/openfief/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:42.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-core-client
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-sdk-go-token-rotation
+  - id: SYM-sdk-go-bearer-transport
+    title: bearerTransport
+    sourceFile: sdk/go/openfief/core.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:50.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-core-client
+      - type: implements
+        target: REQ-sdk-go-token-rotation
+  - id: SYM-sdk-go-bearer-transport-round-trip
+    title: bearerTransport.RoundTrip
+    sourceFile: sdk/go/openfief/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:02:59.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-core-client
+      - type: implements
+        target: REQ-sdk-go-token-rotation
+  - id: SYM-sdk-go-close-body
+    title: closeBody
+    sourceFile: sdk/go/openfief/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:07.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-core-client
+      - type: implements
+        target: REQ-sdk-go-egress-proxy-url
+      - type: implements
+        target: REQ-sdk-go-token-rotation
+  - id: SYM-sdk-go-egress-transport
+    title: EgressTransport
+    sourceFile: sdk/go/openfief/egress.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:12.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-egress
+      - type: implements
+        target: REQ-plugins-sdk-token-per-request
+      - type: implements
+        target: REQ-sdk-go-egress-proxy-url
+  - id: SYM-sdk-go-new-egress-client
+    title: NewEgressClient
+    sourceFile: sdk/go/openfief/egress.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:23.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-egress
+      - type: implements
+        target: REQ-sdk-go-egress-proxy-url
+  - id: SYM-sdk-go-egress-transport-round-trip
+    title: EgressTransport.RoundTrip
+    sourceFile: sdk/go/openfief/egress.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:31.162Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-egress
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-sdk-go-egress-proxy-url
+  - id: SYM-sdk-go-egress-transport-close-idle-connections
+    title: EgressTransport.CloseIdleConnections
+    sourceFile: sdk/go/openfief/egress.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:38.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-egress
+      - type: implements
+        target: REQ-sdk-go-egress-proxy-url
+  - id: SYM-sdk-go-egress-transport-base
+    title: EgressTransport.base
+    sourceFile: sdk/go/openfief/egress.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:43.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-egress
+      - type: implements
+        target: REQ-sdk-go-egress-proxy-url
+  - id: SYM-sdk-go-egress-transport-proxy-url
+    title: EgressTransport.proxyURL
+    sourceFile: sdk/go/openfief/egress.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:49.877Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-egress
+      - type: implements
+        target: REQ-plugins-sdk-token-per-request
+      - type: implements
+        target: REQ-sdk-go-egress-proxy-url
+  - id: SYM-sdk-go-core-url
+    title: CoreURL
+    sourceFile: sdk/go/openfief/env.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:03:57.136Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-env
+      - type: implements
+        target: REQ-sdk-go-plugin-environment
+  - id: SYM-sdk-go-listen-address
+    title: ListenAddress
+    sourceFile: sdk/go/openfief/env.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:02.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-env
+      - type: implements
+        target: REQ-sdk-go-plugin-environment
+  - id: SYM-sdk-go-load-config
+    title: LoadConfig
+    sourceFile: sdk/go/openfief/env.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:08.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-env
+      - type: implements
+        target: REQ-sdk-go-plugin-environment
+  - id: SYM-sdk-go-instance-audience
+    title: InstanceAudience
+    sourceFile: sdk/go/openfief/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:14.991Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-sdk-go-core-only
+  - id: SYM-sdk-go-core-verifier
+    title: CoreVerifier
+    sourceFile: sdk/go/openfief/serve.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:20.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-core-only
+  - id: SYM-sdk-go-require-core
+    title: RequireCore
+    sourceFile: sdk/go/openfief/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:27.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-core-only
+  - id: SYM-sdk-go-bearer-token
+    title: bearerToken
+    sourceFile: sdk/go/openfief/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:38.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-sdk-go-core-only
+  - id: SYM-sdk-go-new-connector-server
+    title: NewConnectorServer
+    sourceFile: sdk/go/openfief/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:04:53.302Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+      - type: implements
+        target: REQ-sdk-go-core-only
+  - id: SYM-sdk-go-receive-file
+    title: ReceiveFile
+    sourceFile: sdk/go/openfief/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:05.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-sdk-go-receive-file
+  - id: SYM-sdk-go-token-source
+    title: TokenSource
+    sourceFile: sdk/go/openfief/token.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:18.103Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-token
+      - type: implements
+        target: REQ-sdk-go-token-rotation
+  - id: SYM-sdk-go-token-file
+    title: TokenFile
+    sourceFile: sdk/go/openfief/token.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:25.463Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-token
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-sdk-go-token-rotation
+  - id: SYM-sdk-go-token-file-token
+    title: TokenFile.Token
+    sourceFile: sdk/go/openfief/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:34.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-token
+      - type: implements
+        target: REQ-sdk-go-plugin-environment
+      - type: implements
+        target: REQ-sdk-go-token-rotation
+  - id: SYM-sdk-go-read-in-dir
+    title: readInDir
+    sourceFile: sdk/go/openfief/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:44.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-token
+      - type: implements
+        target: REQ-sdk-go-token-rotation
+  - id: SYM-sdk-go-test-helper-auth-recorder
+    title: authRecorder
+    sourceFile: sdk/go/openfief/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:05:56.502Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-core-client
+  - id: SYM-sdk-go-test-helper-auth-recorder-serve-http
+    title: authRecorder.ServeHTTP
+    sourceFile: sdk/go/openfief/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:09.091Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-core-client
+  - id: SYM-sdk-go-test-helper-auth-recorder-seen
+    title: authRecorder.seen
+    sourceFile: sdk/go/openfief/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:21.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-core-client
+  - id: SYM-sdk-go-test-helper-get
+    title: get
+    sourceFile: sdk/go/openfief/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:30.365Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-core-client
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-core-httpclient-sends-current-token
+    title: TestCoreHTTPClientSendsCurrentToken
+    sourceFile: sdk/go/openfief/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:39.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-core-client
+  - id: SYM-sdk-go-test-core-httpclient-without-token
+    title: TestCoreHTTPClientWithoutToken
+    sourceFile: sdk/go/openfief/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:06:50.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-core-client
+  - id: SYM-sdk-go-test-helper-fake-proxy
+    title: fakeProxy
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:02.183Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-helper-fake-proxy-serve-http
+    title: fakeProxy.ServeHTTP
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:13.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-helper-fake-proxy-note
+    title: fakeProxy.note
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:23.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-helper-fake-proxy-pipe
+    title: fakeProxy.pipe
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:32.399Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-helper-proxy-log
+    title: proxyLog
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:41.043Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-helper-fake-proxy-seen
+    title: fakeProxy.seen
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:49.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-helper-egress-fixture
+    title: egressFixture
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:07:57.297Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-helper-new-egress-fixture
+    title: newEgressFixture
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:08.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-egress-sends-current-token-on-every-connect
+    title: TestEgressSendsCurrentTokenOnEveryConnect
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:17.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-egress-refusals
+    title: TestEgressRefusals
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:25.567Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-helper-basic
+    title: basic
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:33.195Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-new-egress-client
+    title: TestNewEgressClient
+    sourceFile: sdk/go/openfief/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:41.693Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-egress
+  - id: SYM-sdk-go-test-core-url
+    title: TestCoreURL
+    sourceFile: sdk/go/openfief/env_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:47.621Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-env
+  - id: SYM-sdk-go-test-listen-address
+    title: TestListenAddress
+    sourceFile: sdk/go/openfief/env_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:52.867Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-env
+  - id: SYM-sdk-go-test-load-config
+    title: TestLoadConfig
+    sourceFile: sdk/go/openfief/env_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:08:57.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-env
+  - id: SYM-sdk-go-test-helper-env-config
+    title: config
+    sourceFile: sdk/go/openfief/env_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:02.677Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-env
+  - id: SYM-sdk-go-test-token-file-from-env
+    title: TestTokenFileFromEnv
+    sourceFile: sdk/go/openfief/env_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:07.625Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-env
+  - id: SYM-sdk-go-test-helper-fake-verifier
+    title: fakeVerifier
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:13.922Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-fake-verifier-verify-core
+    title: fakeVerifier.VerifyCore
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:21.064Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-serve-fake-connector
+    title: fakeConnector
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:27.837Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-serve-fake-connector-sync
+    title: fakeConnector.Sync
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:33.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-serve-fake-connector-import-file
+    title: fakeConnector.ImportFile
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:38.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-fake-connector-call-count
+    title: fakeConnector.callCount
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:43.967Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-test-connector
+    title: testConnector
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:49.139Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-start-connector
+    title: startConnector
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:54.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-connector-server-requires-core
+    title: TestConnectorServerRequiresCore
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:59.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-connector-server-sync
+    title: TestConnectorServerSync
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:04.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-import-file
+    title: importFile
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:08.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-receive-file
+    title: TestReceiveFile
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:12.951Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-instance-audience
+    title: TestInstanceAudience
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:17.442Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-sdk-go-test-helper-write-token
+    title: writeToken
+    sourceFile: sdk/go/openfief/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:20.662Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-core-client
+      - type: executable_for
+        target: TEST-sdk-go-egress
+      - type: executable_for
+        target: TEST-sdk-go-env
+      - type: executable_for
+        target: TEST-sdk-go-token
+  - id: SYM-sdk-go-test-token-file
+    title: TestTokenFile
+    sourceFile: sdk/go/openfief/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:23.915Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-token
+  - id: SYM-sdk-go-test-token-file-rereads-rotated-token
+    title: TestTokenFileRereadsRotatedToken
+    sourceFile: sdk/go/openfief/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:27.504Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-token
+  - id: SYM-connector-gen-pb-book-kind
+    title: BookKind
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:30.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-kind-enum
+    title: BookKind.Enum
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:35.493Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-kind-string
+    title: BookKind.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:40.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-kind-descriptor
+    title: BookKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:44.719Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-kind-type
+    title: BookKind.Type
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:48.880Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-kind-number
+    title: BookKind.Number
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:53.297Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-kind-enum-descriptor
+    title: BookKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:10:57.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-kind
+    title: TransactionKind
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:00.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-kind-enum
+    title: TransactionKind.Enum
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:04.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-kind-string
+    title: TransactionKind.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:08.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-kind-descriptor
+    title: TransactionKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:12.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-kind-type
+    title: TransactionKind.Type
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:16.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-kind-number
+    title: TransactionKind.Number
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:21.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-kind-enum-descriptor
+    title: TransactionKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:25.541Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-kind
+    title: ProblemKind
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:28.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-kind-enum
+    title: ProblemKind.Enum
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:32.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-kind-string
+    title: ProblemKind.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:36.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-kind-descriptor
+    title: ProblemKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:40.199Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-kind-type
+    title: ProblemKind.Type
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:44.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-kind-number
+    title: ProblemKind.Number
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:47.558Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-kind-enum-descriptor
+    title: ProblemKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:51.113Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-mode
+    title: Mode
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:53.752Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-mode-enum
+    title: Mode.Enum
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:11:58.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-mode-string
+    title: Mode.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:02.156Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-mode-descriptor
+    title: Mode.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:06.011Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-mode-type
+    title: Mode.Type
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:09.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-mode-number
+    title: Mode.Number
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:13.771Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-mode-enum-descriptor
+    title: Mode.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:17.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index
+    title: Index
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:20.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-enum
+    title: Index.Enum
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:24.008Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-string
+    title: Index.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:27.491Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-descriptor
+    title: Index.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:30.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-type
+    title: Index.Type
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:34.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-number
+    title: Index.Number
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:37.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-enum-descriptor
+    title: Index.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:41.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-money
+    title: Money
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:44.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-money-reset
+    title: Money.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:47.685Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-money-string
+    title: Money.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:50.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-money-proto-message
+    title: Money.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:54.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-money-proto-reflect
+    title: Money.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:12:57.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-money-descriptor
+    title: Money.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:01.660Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-money-get-amount
+    title: Money.GetAmount
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:05.048Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-money-get-currency
+    title: Money.GetCurrency
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:08.677Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-instrument
+    title: Instrument
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:11.269Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-instrument-reset
+    title: Instrument.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:14.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-instrument-string
+    title: Instrument.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:18.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-instrument-proto-message
+    title: Instrument.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:22.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-instrument-proto-reflect
+    title: Instrument.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:25.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-instrument-descriptor
+    title: Instrument.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:29.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-instrument-get-isin
+    title: Instrument.GetIsin
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:32.833Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-instrument-get-symbol
+    title: Instrument.GetSymbol
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:36.231Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book
+    title: Book
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:38.583Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-reset
+    title: Book.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:42.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-string
+    title: Book.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:45.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-proto-message
+    title: Book.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:49.493Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-proto-reflect
+    title: Book.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:53.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-descriptor
+    title: Book.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:13:57.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-get-kind
+    title: Book.GetKind
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:01.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-get-currency
+    title: Book.GetCurrency
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:05.869Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-book-get-instrument
+    title: Book.GetInstrument
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:10.066Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting
+    title: Posting
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:12.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting-reset
+    title: Posting.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:16.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting-string
+    title: Posting.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:20.285Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting-proto-message
+    title: Posting.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:23.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting-proto-reflect
+    title: Posting.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:27.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting-descriptor
+    title: Posting.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:31.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting-get-book
+    title: Posting.GetBook
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:35.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting-get-amount
+    title: Posting.GetAmount
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:39.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-posting-get-quantity
+    title: Posting.GetQuantity
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:42.548Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-key
+    title: TransactionKey
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:44.975Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-key-reset
+    title: TransactionKey.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:48.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-key-string
+    title: TransactionKey.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:51.763Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-key-proto-message
+    title: TransactionKey.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:55.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-key-proto-reflect
+    title: TransactionKey.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:14:58.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-key-descriptor
+    title: TransactionKey.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:02.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-key-get-source
+    title: TransactionKey.GetSource
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:05.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-key-get-external-id
+    title: TransactionKey.GetExternalId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:08.716Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction
+    title: Transaction
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:11.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-reset
+    title: Transaction.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:14.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-string
+    title: Transaction.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:18.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-proto-message
+    title: Transaction.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:21.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-proto-reflect
+    title: Transaction.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:25.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-descriptor
+    title: Transaction.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:28.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-get-key
+    title: Transaction.GetKey
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:32.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-get-account-id
+    title: Transaction.GetAccountId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:35.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-get-kind
+    title: Transaction.GetKind
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:39.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-get-date
+    title: Transaction.GetDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:42.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-get-lot-opened
+    title: Transaction.GetLotOpened
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:46.724Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-get-description
+    title: Transaction.GetDescription
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:50.215Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-transaction-get-postings
+    title: Transaction.GetPostings
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:53.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion
+    title: BalanceAssertion
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:56.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-reset
+    title: BalanceAssertion.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:15:59.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-string
+    title: BalanceAssertion.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:02.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-proto-message
+    title: BalanceAssertion.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:06.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-proto-reflect
+    title: BalanceAssertion.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:09.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-descriptor
+    title: BalanceAssertion.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:13.383Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-get-account-id
+    title: BalanceAssertion.GetAccountId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:16.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-get-date
+    title: BalanceAssertion.GetDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:20.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-get-book
+    title: BalanceAssertion.GetBook
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:23.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-balance-assertion-get-balance
+    title: BalanceAssertion.GetBalance
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:27.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem
+    title: Problem
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:29.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-reset
+    title: Problem.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:33.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-string
+    title: Problem.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:36.395Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-proto-message
+    title: Problem.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:39.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-proto-reflect
+    title: Problem.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:42.927Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-descriptor
+    title: Problem.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:46.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-get-kind
+    title: Problem.GetKind
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:49.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-get-ref
+    title: Problem.GetRef
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:52.580Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-problem-get-reason
+    title: Problem.GetReason
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:55.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price
+    title: Price
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:16:57.926Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price-reset
+    title: Price.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:01.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price-string
+    title: Price.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:05.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price-proto-message
+    title: Price.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:09.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price-proto-reflect
+    title: Price.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:12.501Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price-descriptor
+    title: Price.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:16.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price-get-instrument
+    title: Price.GetInstrument
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:19.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price-get-date
+    title: Price.GetDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:23.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-price-get-close
+    title: Price.GetClose
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:26.440Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate
+    title: FxRate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:28.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate-reset
+    title: FxRate.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:32.196Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate-string
+    title: FxRate.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:35.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate-proto-message
+    title: FxRate.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:38.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate-proto-reflect
+    title: FxRate.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:42.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate-descriptor
+    title: FxRate.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:45.660Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate-get-currency
+    title: FxRate.GetCurrency
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:48.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate-get-date
+    title: FxRate.GetDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:52.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-fx-rate-get-rate
+    title: FxRate.GetRate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:55.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading
+    title: IndexReading
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:17:57.725Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading-reset
+    title: IndexReading.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:01.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading-string
+    title: IndexReading.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:04.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading-proto-message
+    title: IndexReading.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:07.992Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading-proto-reflect
+    title: IndexReading.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:11.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading-descriptor
+    title: IndexReading.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:14.859Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading-get-index
+    title: IndexReading.GetIndex
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:18.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading-get-date
+    title: IndexReading.GetDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:21.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-index-reading-get-value
+    title: IndexReading.GetValue
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:24.797Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery
+    title: Delivery
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:27.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-reset
+    title: Delivery.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:30.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-string
+    title: Delivery.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:34.051Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-proto-message
+    title: Delivery.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:37.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-proto-reflect
+    title: Delivery.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:40.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-descriptor
+    title: Delivery.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:44.256Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-get-batch-id
+    title: Delivery.GetBatchId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:47.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-get-institution
+    title: Delivery.GetInstitution
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:50.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-get-transactions
+    title: Delivery.GetTransactions
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:54.045Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-get-balance-assertions
+    title: Delivery.GetBalanceAssertions
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:18:57.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-get-problems
+    title: Delivery.GetProblems
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:01.268Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-get-prices
+    title: Delivery.GetPrices
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:04.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-get-fx-rates
+    title: Delivery.GetFxRates
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:08.128Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-delivery-get-index-readings
+    title: Delivery.GetIndexReadings
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:11.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request
+    title: SyncRequest
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:14.208Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request-reset
+    title: SyncRequest.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:17.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request-string
+    title: SyncRequest.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:21.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request-proto-message
+    title: SyncRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:25.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request-proto-reflect
+    title: SyncRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:28.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request-descriptor
+    title: SyncRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:32.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request-get-batch-id
+    title: SyncRequest.GetBatchId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:35.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request-get-mode
+    title: SyncRequest.GetMode
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:39.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-request-get-watermark
+    title: SyncRequest.GetWatermark
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:43.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-response
+    title: SyncResponse
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:45.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-response-reset
+    title: SyncResponse.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:49.439Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-response-string
+    title: SyncResponse.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:53.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-response-proto-message
+    title: SyncResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:19:56.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-response-proto-reflect
+    title: SyncResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:00.192Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-response-descriptor
+    title: SyncResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:03.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-response-get-delivery
+    title: SyncResponse.GetDelivery
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:07.209Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-sync-response-get-watermark
+    title: SyncResponse.GetWatermark
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:10.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header
+    title: FileHeader
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:13.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-reset
+    title: FileHeader.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:16.980Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-string
+    title: FileHeader.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:20.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-proto-message
+    title: FileHeader.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:24.232Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-proto-reflect
+    title: FileHeader.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:27.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-descriptor
+    title: FileHeader.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:31.133Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-get-batch-id
+    title: FileHeader.GetBatchId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:34.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-get-mode
+    title: FileHeader.GetMode
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:38.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-get-file-name
+    title: FileHeader.GetFileName
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:41.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-header-get-media-type
+    title: FileHeader.GetMediaType
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:44.668Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request
+    title: ImportFileRequest
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:47.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-reset
+    title: ImportFileRequest.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:50.536Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-string
+    title: ImportFileRequest.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:53.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-proto-message
+    title: ImportFileRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:20:57.223Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-proto-reflect
+    title: ImportFileRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:00.541Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-descriptor
+    title: ImportFileRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:03.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-get-part
+    title: ImportFileRequest.GetPart
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:07.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-get-header
+    title: ImportFileRequest.GetHeader
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:10.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-get-chunk
+    title: ImportFileRequest.GetChunk
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:14.304Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-is-import-file-request-part
+    title: isImportFileRequest_Part
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:17.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-header
+    title: ImportFileRequest_Header
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:20.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-chunk
+    title: ImportFileRequest_Chunk
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:23.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-header-is-import-file-request-part
+    title: ImportFileRequest_Header.isImportFileRequest_Part
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:27.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-request-chunk-is-import-file-request-part
+    title: ImportFileRequest_Chunk.isImportFileRequest_Part
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:30.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-response
+    title: ImportFileResponse
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:32.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-response-reset
+    title: ImportFileResponse.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:36.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-response-string
+    title: ImportFileResponse.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:40.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-response-proto-message
+    title: ImportFileResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:43.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-response-proto-reflect
+    title: ImportFileResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:47.103Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-response-descriptor
+    title: ImportFileResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:50.673Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-import-file-response-get-delivery
+    title: ImportFileResponse.GetDelivery
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:54.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-openfief-connector-v1-connector-proto-raw-desc-gzip
+    title: file_openfief_connector_v1_connector_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:21:57.722Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:01.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-file-openfief-connector-v1-connector-proto-init
+    title: file_openfief_connector_v1_connector_proto_init
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:05.240Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-pb-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:08.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-connector-service-client
+    title: ConnectorServiceClient
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:12.303Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-new-connector-service-client
+    title: NewConnectorServiceClient
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:15.799Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-connector-service-client-2
+    title: connectorServiceClient
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:18.403Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-connector-service-client-sync
+    title: connectorServiceClient.Sync
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:21.889Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-connector-service-client-import-file
+    title: connectorServiceClient.ImportFile
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:25.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-connector-service-handler
+    title: ConnectorServiceHandler
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:28.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-new-connector-service-handler
+    title: NewConnectorServiceHandler
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:32.071Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-unimplemented-connector-service-handler
+    title: UnimplementedConnectorServiceHandler
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:34.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-unimplemented-connector-service-handler-sync
+    title: UnimplementedConnectorServiceHandler.Sync
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:38.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-connector-gen-connect-unimplemented-connector-service-handler-import-file
+    title: UnimplementedConnectorServiceHandler.ImportFile
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:22:41.591Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-dom-connector-key-source
+    title: ConnectorKeySource
+    sourceFile: internal/ingest/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:56:41.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-scope
+      - type: implements
+        target: REQ-ingest-instance-scoped-keys
+  - id: SYM-ingest-conn-dom-scope-to-connector
+    title: ScopeToConnector
+    sourceFile: internal/ingest/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:56:48.997Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-scope
+      - type: implements
+        target: REQ-ingest-instance-scoped-keys
+      - type: implements
+        target: REQ-plugins-instance-per-install
+  - id: SYM-ingest-conn-dom-index
+    title: Index
+    sourceFile: internal/ingest/index.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:56:55.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-index-reading
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-dom-index-string
+    title: Index.String
+    sourceFile: internal/ingest/index.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:02.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-index-reading
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-dom-index-reading
+    title: IndexReading
+    sourceFile: internal/ingest/index.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:06.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-index-reading
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-dom-index-reading-validate
+    title: IndexReading.Validate
+    sourceFile: internal/ingest/index.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:13.589Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-index-reading
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-dom-test-connector-key-source
+    title: TestConnectorKeySource
+    sourceFile: internal/ingest/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:18.806Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-scope
+  - id: SYM-ingest-conn-dom-test-scope-to-connector
+    title: TestScopeToConnector
+    sourceFile: internal/ingest/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:24.213Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-scope
+  - id: SYM-ingest-conn-dom-test-index-reading-validate
+    title: TestIndexReadingValidate
+    sourceFile: internal/ingest/index_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:29.482Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-index-reading
+  - id: SYM-ingest-conn-dom-test-index-string
+    title: TestIndexString
+    sourceFile: internal/ingest/index_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:34.811Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-index-reading
+  - id: SYM-ingest-conn-app-delivery
+    title: Delivery
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:42.293Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-connector-caller
+    title: ConnectorCaller
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:49.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-app-named-file
+    title: NamedFile
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:57:57.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-core-tokens
+    title: CoreTokens
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:06.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+      - type: implements
+        target: REQ-plugins-core-only-caller
+  - id: SYM-ingest-conn-app-price-store
+    title: PriceStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:13.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-fxrate-store
+    title: FXRateStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:21.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-index-reading-store
+    title: IndexReadingStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:30.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-app-sync-result
+    title: SyncResult
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:37.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-connectors
+    title: Connectors
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:41.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-app-connectors-sync
+    title: Connectors.Sync
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:48.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-core-owns-schedules
+  - id: SYM-ingest-conn-app-connectors-import-file
+    title: Connectors.ImportFile
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:58:54.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-conn-app-connectors-deliver
+    title: Connectors.deliver
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:00.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-instance-scoped-keys
+  - id: SYM-ingest-conn-app-connectors-store-inputs
+    title: Connectors.storeInputs
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:08.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+  - id: SYM-ingest-conn-app-sourced-readings
+    title: sourcedReadings
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:16.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-index-reading-valid
+  - id: SYM-ingest-conn-app-test-helper-fake-caller
+    title: fakeCaller
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:21.553Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-caller-sync
+    title: fakeCaller.Sync
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:29.684Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-caller-import-file
+    title: fakeCaller.ImportFile
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:37.926Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-stores
+    title: fakeStores
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:44.336Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-stores-store-prices
+    title: fakeStores.StorePrices
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:59:53.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-stores-store-fxrates
+    title: fakeStores.StoreFXRates
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:03.531Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-fake-stores-store-index-readings
+    title: fakeStores.StoreIndexReadings
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:12.751Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-delivery
+    title: delivery
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:22.334Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-helper-connectors
+    title: connectors
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:31.666Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-connectors-sync
+    title: TestConnectorsSync
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:39.540Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-connectors-import-file
+    title: TestConnectorsImportFile
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:47.252Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-app-test-connectors-failures
+    title: TestConnectorsFailures
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:00:53.959Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-conn-rpc-client
+    title: Client
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:00.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-rpc-new-client
+    title: NewClient
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:07.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-rpc-h2-cclient
+    title: H2CClient
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:13.559Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-calls-connectors
+  - id: SYM-ingest-conn-rpc-client-sync
+    title: Client.Sync
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:20.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+  - id: SYM-ingest-conn-rpc-client-import-file
+    title: Client.ImportFile
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:26.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+  - id: SYM-ingest-conn-rpc-send-chunks
+    title: sendChunks
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:34.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-connector-contract-messages
+  - id: SYM-ingest-conn-rpc-ignore-eof
+    title: ignoreEOF
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:40.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-connector-contract-messages
+  - id: SYM-ingest-conn-rpc-call
+    title: call
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:46.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+  - id: SYM-ingest-conn-rpc-client-service
+    title: Client.service
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:51.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-core-authenticates-to-connector
+      - type: implements
+        target: REQ-plugins-core-only-caller
+  - id: SYM-ingest-conn-rpc-invalid
+    title: invalid
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:01:56.213Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-plain-decimal
+    title: plainDecimal
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:00.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-all-digits
+    title: allDigits
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:05.915Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-translate
+    title: translate
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:11.137Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-decimal-from
+    title: decimalFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:15.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-date-from
+    title: dateFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:20.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-optional-date-from
+    title: optionalDateFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:24.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-currency-from
+    title: currencyFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:29.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-money-from
+    title: moneyFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:34.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-instrument-from
+    title: instrumentFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:38.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-book-kind-from
+    title: bookKindFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:42.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-book-from
+    title: bookFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:46.949Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-posting-from
+    title: postingFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:52.764Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-transaction-kind-from
+    title: transactionKindFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:02:58.876Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-transaction-from
+    title: transactionFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:03.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-assertion-from
+    title: assertionFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:09.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-problem-from
+    title: problemFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:15.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-mode-to
+    title: modeTo
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:21.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-delivery-from
+    title: deliveryFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:28.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-connector-contract-messages
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-mapping-from
+    title: mappingFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:37.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-price-from
+    title: priceFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:43.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-fx-rate-from
+    title: fxRateFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:50.069Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-index-from
+    title: indexFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:03:56.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-index-reading-from
+    title: indexReadingFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:04.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-test-helper-fake-tokens
+    title: fakeTokens
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:08.931Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-tokens-token-for
+    title: fakeTokens.TokenFor
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:16.435Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector
+    title: fakeConnector
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:21.661Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector-sync
+    title: fakeConnector.Sync
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:28.605Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector-import-file
+    title: fakeConnector.ImportFile
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:33.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector-record
+    title: fakeConnector.record
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:39.388Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-fake-connector-delivery
+    title: fakeConnector.delivery
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:45.307Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-failing-connector
+    title: failingConnector
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:52.671Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-new-client
+    title: newClient
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:04:59.609Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-client-sync
+    title: TestClientSync
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:05.366Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-client-import-file
+    title: TestClientImportFile
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:12.267Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-client-failures
+    title: TestClientFailures
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:18.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-test-delivery
+    title: testDelivery
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:24.609Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-helper-must-decimal
+    title: mustDecimal
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:32.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-helper-must-date
+    title: mustDate
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:38.284Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-helper-must-money
+    title: mustMoney
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:44.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-helper-test-instrument
+    title: testInstrument
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:49.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-delivery-from
+    title: TestDeliveryFrom
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:05:56.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-delivery-from-rejects
+    title: TestDeliveryFromRejects
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:03.642Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-plain-decimal
+    title: TestPlainDecimal
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:11.818Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-valuation-inputs-from
+    title: TestValuationInputsFrom
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:19.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-valuation-inputs-from-rejects
+    title: TestValuationInputsFromRejects
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:27.445Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-delivery-from-missing
+    title: TestDeliveryFromMissing
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:34.118Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-conn-rpc-test-mode-to
+    title: TestModeTo
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:06:41.111Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping

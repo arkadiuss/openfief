@@ -132,3 +132,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e853ea931b2f
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-fake-verifier
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:09:15.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d6cb992a156
+  - type: implements
+    from: SYM-connector-gen-pb-money-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:12:51.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceb12f70c398
+  - type: implements
+    from: SYM-connector-gen-pb-money-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:12:51.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44c81b674def
+  - type: covered_by
+    from: SYM-connector-gen-pb-money-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:12:51.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1597bb6f9b23

@@ -90,3 +90,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71797421e612
+  - type: verified_by
+    from: SCEN-sdk-go-token-rotation
+    to: TEST-sdk-go-token
+    created_at: 2026-10-28T08:00:55.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a93be15562ae
+  - type: verified_by
+    from: SCEN-sdk-go-token-rotation
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:00:55.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29bd3fe29666
+  - type: verified_by
+    from: SCEN-sdk-go-token-rotation
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:00:55.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4362a19ccf7
+  - type: implements
+    from: SYM-ingest-conn-app-connectors-deliver
+    to: REQ-ingest-connector-batches
+    created_at: 2026-10-28T08:59:02.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd96a8b4eeb
+  - type: implements
+    from: SYM-ingest-conn-app-connectors-deliver
+    to: REQ-ingest-instance-scoped-keys
+    created_at: 2026-10-28T08:59:02.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc04d995f45a
+  - type: covered_by
+    from: SYM-ingest-conn-app-connectors-deliver
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:59:02.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-127750022e76
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-delivery-from-missing
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:06:35.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72f14fd6e906

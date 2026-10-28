@@ -153,3 +153,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06e609aa2a2c
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-batch-id
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:35.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63289e803a79
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-batch-id
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:35.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cb7fdee3d33
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-get-batch-id
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:35.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b64aef3617e1
+  - type: implements
+    from: SYM-connector-gen-pb-file-openfief-connector-v1-connector-proto-raw-desc-gzip
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:58.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-965d6faaa647
+  - type: implements
+    from: SYM-connector-gen-pb-file-openfief-connector-v1-connector-proto-raw-desc-gzip
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:58.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-531790d7a18c
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-openfief-connector-v1-connector-proto-raw-desc-gzip
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:58.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11850cc42b5f

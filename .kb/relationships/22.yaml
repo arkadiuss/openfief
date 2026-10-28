@@ -90,3 +90,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-54e90b84da02
+  - type: implements
+    from: SYM-connector-gen-pb-mode-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:12:06.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fa7238e8fef
+  - type: implements
+    from: SYM-connector-gen-pb-mode-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:12:06.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4d49e65f840
+  - type: covered_by
+    from: SYM-connector-gen-pb-mode-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:12:06.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a63f93248dad
+  - type: implements
+    from: SYM-connector-gen-pb-book-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:58.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce8794854a85
+  - type: implements
+    from: SYM-connector-gen-pb-book-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:58.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e128213f61e
+  - type: covered_by
+    from: SYM-connector-gen-pb-book-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:58.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2a7bfa7e6f9

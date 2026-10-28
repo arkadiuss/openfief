@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40953d4b3f18
+  - type: implements
+    from: SYM-ingest-conn-app-index-reading-store
+    to: REQ-ingest-connector-batches
+    created_at: 2026-10-28T08:58:31.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1fec24d8898
+  - type: implements
+    from: SYM-ingest-conn-app-index-reading-store
+    to: REQ-ingest-index-reading-valid
+    created_at: 2026-10-28T08:58:31.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e711c4102e1d
+  - type: covered_by
+    from: SYM-ingest-conn-app-index-reading-store
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:58:32.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e417458376c

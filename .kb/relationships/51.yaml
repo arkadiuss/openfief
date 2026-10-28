@@ -90,3 +90,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efa71ee903c9
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-connectors-failures
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T09:00:55.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a3db2aaba3e
+  - type: implements
+    from: SYM-ingest-conn-rpc-mode-to
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:03:22.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d24e383eff37
+  - type: implements
+    from: SYM-ingest-conn-rpc-mode-to
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T09:03:22.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a22d67559a5f
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-mode-to
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:03:22.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e58da930ad4a

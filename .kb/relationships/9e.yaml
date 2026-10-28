@@ -160,3 +160,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2348bb175789
+  - type: implements
+    from: SYM-connector-gen-pb-fx-rate-proto-reflect
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:17:42.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67250a5611cf
+  - type: implements
+    from: SYM-connector-gen-pb-fx-rate-proto-reflect
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:17:42.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14db57ff6646
+  - type: covered_by
+    from: SYM-connector-gen-pb-fx-rate-proto-reflect
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:17:42.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85ce8ad00c6a
+  - type: implements
+    from: SYM-connector-gen-pb-sync-request-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:19:32.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bdde07de67f
+  - type: implements
+    from: SYM-connector-gen-pb-sync-request-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:19:32.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6fbcaebcee9
+  - type: covered_by
+    from: SYM-connector-gen-pb-sync-request-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:19:32.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-618c265f4877
+  - type: constrains
+    from: REQ-ingest-core-authenticates-to-connector
+    to: FACT-SUBJECT-0181257F533247C5
+    created_at: 2026-10-28T08:56:15.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-429350e6dfd3
+  - type: requires_property
+    from: REQ-ingest-core-authenticates-to-connector
+    to: FACT-PROP-20A7BB0974F3430D
+    created_at: 2026-10-28T08:56:15.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5eb333d0ec6
+  - type: specified_by
+    from: REQ-ingest-core-authenticates-to-connector
+    to: SCEN-ingest-core-authenticates-to-connector
+    created_at: 2026-10-28T08:56:15.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19fcd65a8ca0
+  - type: implements
+    from: SYM-ingest-conn-rpc-translate
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:11.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c440f4b5c170
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-translate
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:12.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b73205c05483

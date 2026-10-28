@@ -69,3 +69,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aee715af2c2d
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:15.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea94cc65d428
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:15.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6bc78e1678c
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-reading-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:15.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dc3c6dc4f76
+  - type: implements
+    from: SYM-connector-gen-pb-sync-request-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:19:25.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d547cf98c16
+  - type: implements
+    from: SYM-connector-gen-pb-sync-request-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:19:25.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b19a0f516e
+  - type: covered_by
+    from: SYM-connector-gen-pb-sync-request-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:19:25.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-644806873d37

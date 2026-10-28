@@ -125,3 +125,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03593c1b8bbb
+  - type: executable_for
+    from: SYM-sdk-go-test-token-file-rereads-rotated-token
+    to: TEST-sdk-go-token
+    created_at: 2026-10-28T08:10:28.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccb00959fd31
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:29.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e47dbf4b2055
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:29.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f253021c971a
+  - type: covered_by
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:30.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-666d82319cf2
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-valuation-inputs-from-rejects
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:06:28.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c16178eebb0

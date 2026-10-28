@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-143b586c09d3
+  - type: implements
+    from: SYM-ingest-conn-dom-index
+    to: REQ-ingest-index-reading-valid
+    created_at: 2026-10-28T08:56:56.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-134b9c0e8a30
+  - type: covered_by
+    from: SYM-ingest-conn-dom-index
+    to: TEST-ingest-index-reading
+    created_at: 2026-10-28T08:56:56.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00fbd12c56e2

@@ -118,3 +118,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16f40661df68
+  - type: executable_for
+    from: SYM-sdk-go-test-token-file-from-env
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:09:08.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-563681115afb
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-get-index
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:18.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed31640de2cd
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-get-index
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:18.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b8cb09b6b7e
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-reading-get-index
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:18.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f41cee109fcd

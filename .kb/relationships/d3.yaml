@@ -125,3 +125,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51e2531d8d38
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-proto-reflect
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:25.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8350a3dc650
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-proto-reflect
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:25.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1659ed0de209
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-proto-reflect
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:25.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17f54485006f
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-get-batch-id
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:48.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8fac718cd13
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-get-batch-id
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:48.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6aee1d69345
+  - type: covered_by
+    from: SYM-connector-gen-pb-delivery-get-batch-id
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:48.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a39ac4076efc
+  - type: verified_by
+    from: SCEN-ingest-instance-scoped-keys
+    to: TEST-ingest-scope
+    created_at: 2026-10-28T08:54:49.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7601041d05e3
+  - type: verified_by
+    from: SCEN-ingest-instance-scoped-keys
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:54:49.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-253cffd37fc0

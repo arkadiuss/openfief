@@ -146,3 +146,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c0c2b93e953
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-key-get-source
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:05.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61d31ed2174f
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-key-get-source
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:05.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25f774362092
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-key-get-source
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:05.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55a57ce704f9
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-client-import-file
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:26.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b079ee80860b
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-client-import-file
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:26.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001de5196de7
+  - type: covered_by
+    from: SYM-connector-gen-connect-connector-service-client-import-file
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:26.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cc139e6c987

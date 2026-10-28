@@ -104,3 +104,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce63db3a71c2
+  - type: verified_by
+    from: SCEN-connector-contract-messages
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:00:40.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-740cf032eba8
+  - type: verified_by
+    from: SCEN-connector-contract-messages
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T08:54:39.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a19c57f2bb50
+  - type: verified_by
+    from: SCEN-connector-contract-messages
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T08:54:39.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb7e31543524
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-delivery-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:05:58.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81228b5dc5cb

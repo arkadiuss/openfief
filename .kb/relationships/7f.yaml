@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9bdf44bd68c
+  - type: implements
+    from: SYM-connector-gen-pb-problem-kind-enum-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:51.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05a67657ad72
+  - type: implements
+    from: SYM-connector-gen-pb-problem-kind-enum-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:51.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e083add7ca61
+  - type: covered_by
+    from: SYM-connector-gen-pb-problem-kind-enum-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:51.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a77d37851813

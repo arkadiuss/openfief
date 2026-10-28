@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37620eb0a222
+  - type: implements
+    from: SYM-connector-gen-connect-new-connector-service-client
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:16.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfdd3b6e593b
+  - type: implements
+    from: SYM-connector-gen-connect-new-connector-service-client
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:16.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b8f8decb1fb
+  - type: covered_by
+    from: SYM-connector-gen-connect-new-connector-service-client
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:16.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b54db34bc9f6

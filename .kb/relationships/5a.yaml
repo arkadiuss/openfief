@@ -146,3 +146,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37e8cd4d5a06
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-auth-recorder-seen
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:06:22.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8448cb88f598
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-get-prices
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:19:05.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-121de2b92498
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-get-prices
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:19:05.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-033a55262965
+  - type: covered_by
+    from: SYM-connector-gen-pb-delivery-get-prices
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:19:05.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd15cb500553
+  - type: implements
+    from: SYM-ingest-conn-rpc-call
+    to: REQ-ingest-core-authenticates-to-connector
+    created_at: 2026-10-28T09:01:47.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe02dcf9da45
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-call
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:47.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bad4a02e513

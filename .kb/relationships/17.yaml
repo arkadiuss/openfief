@@ -55,3 +55,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c642603464b3
+  - type: executable_for
+    from: SYM-sdk-go-test-core-url
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:08:48.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7ec79e00506
+  - type: implements
+    from: SYM-connector-gen-pb-money-get-amount
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:05.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8be1f873f7e1
+  - type: implements
+    from: SYM-connector-gen-pb-money-get-amount
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:05.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f4d558d42bc
+  - type: covered_by
+    from: SYM-connector-gen-pb-money-get-amount
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:05.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29796d9274fa
+  - type: implements
+    from: SYM-connector-gen-pb-posting-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:14:20.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48bca8b0bb05
+  - type: implements
+    from: SYM-connector-gen-pb-posting-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:14:20.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6068feaec3e
+  - type: covered_by
+    from: SYM-connector-gen-pb-posting-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:14:20.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8362a01f6680
+  - type: implements
+    from: SYM-ingest-conn-rpc-fx-rate-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:03:51.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e356991e2580
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-fx-rate-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:03:51.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cdfa4f103b7

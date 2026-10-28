@@ -76,3 +76,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2b298b0c8fb
+  - type: implements
+    from: SYM-connector-gen-pb-mode-enum
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:59.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70e1cb981ec9
+  - type: implements
+    from: SYM-connector-gen-pb-mode-enum
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:59.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9af42bf68a5
+  - type: covered_by
+    from: SYM-connector-gen-pb-mode-enum
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:59.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-026275a77450
+  - type: implements
+    from: SYM-connector-gen-pb-price-get-close
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:17:26.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44f22517fde6
+  - type: implements
+    from: SYM-connector-gen-pb-price-get-close
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:17:27.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f25e5d339511
+  - type: covered_by
+    from: SYM-connector-gen-pb-price-get-close
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:17:27.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ef72a30c3f8

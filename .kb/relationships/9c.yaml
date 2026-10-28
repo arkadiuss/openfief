@@ -90,3 +90,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb6f9815d3b8
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-get-date
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:43.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2ee15ddba6b
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-get-date
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:43.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2efcf57600d5
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-get-date
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:43.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c73d2a62fc1
+  - type: implements
+    from: SYM-ingest-conn-rpc-new-client
+    to: REQ-ingest-core-authenticates-to-connector
+    created_at: 2026-10-28T09:01:08.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94b0772a4295
+  - type: implements
+    from: SYM-ingest-conn-rpc-new-client
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T09:01:08.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b69e0f5916f
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-new-client
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:01:08.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2109bb76cc86

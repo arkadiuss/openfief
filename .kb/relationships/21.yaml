@@ -83,3 +83,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f7e378ef5a7
+  - type: executable_for
+    from: SYM-sdk-go-test-core-httpclient-without-token
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:06:51.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07c243bf220e

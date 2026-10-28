@@ -111,3 +111,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82024ba3284f
+  - type: validates
+    from: TEST-sdk-go-env
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T08:00:36.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f3cad52f73c
+  - type: executable_for
+    from: SYM-sdk-go-test-load-config
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:08:58.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbf5d01ade6f
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-get-book
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:24.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-392eed4f93be
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-get-book
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:24.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bd18d90b767
+  - type: covered_by
+    from: SYM-connector-gen-pb-balance-assertion-get-book
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:24.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54e42ae0bce2
+  - type: implements
+    from: SYM-ingest-conn-dom-scope-to-connector
+    to: REQ-ingest-instance-scoped-keys
+    created_at: 2026-10-28T08:56:50.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69d489ad2af5
+  - type: implements
+    from: SYM-ingest-conn-dom-scope-to-connector
+    to: REQ-plugins-instance-per-install
+    created_at: 2026-10-28T08:56:50.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87abfaa8f75c
+  - type: covered_by
+    from: SYM-ingest-conn-dom-scope-to-connector
+    to: TEST-ingest-scope
+    created_at: 2026-10-28T08:56:50.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72aa8b7ce47c
+  - type: implements
+    from: SYM-ingest-conn-rpc-decimal-from
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-10-28T09:02:16.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42b303065d8a
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-decimal-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T09:02:16.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-879d1f389236
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-fake-tokens-token-for
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-28T09:04:17.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37cada69430b

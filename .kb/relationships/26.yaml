@@ -69,3 +69,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c86a3023866
+  - type: executable_for
+    from: SYM-sdk-go-test-core-httpclient-sends-current-token
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:06:42.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f6b659de279
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-client-sync
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:22.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7d7d6f27eae
+  - type: implements
+    from: SYM-connector-gen-connect-connector-service-client-sync
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:22.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fa2d9e45f7f
+  - type: covered_by
+    from: SYM-connector-gen-connect-connector-service-client-sync
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:22.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0c9808abb48

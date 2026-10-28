@@ -62,3 +62,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69d844cf1b86
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-get-lot-opened
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:47.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29330e221a3a
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-get-lot-opened
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:47.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-740547d280a4
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-get-lot-opened
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:47.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-313678127dd1

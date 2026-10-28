@@ -55,3 +55,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b96662c47233
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-proto-reflect
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:01.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ce9479ae1f4
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-proto-reflect
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:01.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fcc1118fd38
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-request-proto-reflect
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:01.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-641955280377
+  - type: executable_for
+    from: SYM-ingest-conn-dom-test-scope-to-connector
+    to: TEST-ingest-scope
+    created_at: 2026-10-28T08:57:25.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57d917adc905

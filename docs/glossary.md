@@ -32,6 +32,10 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Mapping | ingest | `ingest.Mapping` | What a connector makes of one statement: transactions, balance assertions and ingest problems. | |
 | Ingest problem | ingest | `ingest.Problem` | A statement row the mapping left out of the ledger, with its reason: `unsupported` (can't be booked yet, such as an option trade) or `skipped` (left out on purpose, such as a summary row). Not an error. | warning |
 | Import summary | ingest | `ingest.ImportSummary` | What the ledger did with a batch's mapping: new transactions, new versions, unchanged ones, and failed balance assertions. | |
+| Connector contract | ingest | `openfief.connector.v1.ConnectorService` | The protobuf service over Connect RPC that a connector plugin serves and the core calls (D-11, D-49): Sync pulls what the institution reported since a watermark, ImportFile maps a statement file. Each call is one import batch, with a batch ID the core generates and reuses on a retry. Not the public read API. | ingest API |
+| Delivery | ingest | `app.Delivery` | What a connector returns for one import batch: its mapping, plus any prices, FX rates and index readings, and for a sync the next watermark. The core scopes its transaction keys to the connector instance. | push, upload (for plugins) |
+| Watermark | ingest | `app.Delivery.Watermark` | Where a connector's next sync continues from. The connector returns it, the core stores it after importing the delivery and hands it back on the next sync; only the connector understands it. | cursor, checkpoint |
+| Index reading | ingest | `ingest.IndexReading` | One published value of an index that sets treasury bond interest, as a yearly fraction: CPI year on year for a month (GUS), or the NBP reference rate from the day it takes effect. Period indices are picked from them. | rate (alone) |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
 | Index | valuation | `valuation.Index` | A market index, such as WIG20 or MSCI World, with an end-of-day level series from the market-data connector. It can be a target, but it can't be held. | benchmark |
 | FX rate | valuation | `valuation.FXRate` | The value in PLN of one unit of a currency on a date, from a source; NBP table A in M0. The rate for a date is the latest one dated on or before it. | |
@@ -176,6 +180,7 @@ Don't create code for these before their milestone.
 | Reader / decider split | One model reads untrusted text and emits typed notes; a separate decider sees only those notes. |
 | Reconcile loop | The Kubernetes controller pattern: repeatedly compare desired state with actual state and act to remove the difference. |
 | RP ID | Relying-party ID: the domain a WebAuthn passkey is bound to. |
+| SDK | Software development kit: the libraries plugin authors build on. OpenFief's are `sdk/go` (a separate Go module) and, later, `sdk/ts`, Apache-2.0 like the contracts (D-5). |
 | Smokescreen | Stripe's open-source egress proxy, written in Go, which checks each client's HTTP CONNECT destinations against a per-client allow-list. |
 | TIF | Time in force: how long an order stays working (for example day, or good-till-cancelled). |
 | TokenRequest / TokenReview | Kubernetes APIs: TokenRequest issues a short-lived ServiceAccount token for a chosen audience; TokenReview checks whether a token is valid. |

@@ -62,3 +62,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b893922a0493
+  - type: validates
+    from: TEST-sdk-go-serve
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:00:13.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ec606844d7d
+  - type: validates
+    from: TEST-sdk-go-serve
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T08:00:13.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aadec38adf67
+  - type: validates
+    from: TEST-sdk-go-serve
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T08:00:13.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7d42fb2933a
+  - type: implements
+    from: SYM-ingest-conn-app-connectors-import-file
+    to: REQ-ingest-connector-batches
+    created_at: 2026-10-28T08:58:55.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56980bd97cb3
+  - type: implements
+    from: SYM-ingest-conn-app-connectors-import-file
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-28T08:58:55.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b21dbb0b442
+  - type: covered_by
+    from: SYM-ingest-conn-app-connectors-import-file
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T08:58:55.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da1a07fe42c9

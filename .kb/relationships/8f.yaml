@@ -90,3 +90,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e24d2eaae4b
+  - type: implements
+    from: SYM-sdk-go-core-verifier
+    to: REQ-sdk-go-core-only
+    created_at: 2026-10-28T08:04:21.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a246e19bc91a
+  - type: implements
+    from: SYM-sdk-go-core-verifier
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T08:04:21.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6218c018f4a6
+  - type: covered_by
+    from: SYM-sdk-go-core-verifier
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:04:21.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf1dbffe8462
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-serve-fake-connector
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:09:28.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fce9cc93d700

@@ -132,3 +132,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cee58a5dc1ed
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:04.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a3fa302ec4e
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:04.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f71f714c6d37
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-request-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:04.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76cdc3401d79
