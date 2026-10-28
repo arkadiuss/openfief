@@ -69,3 +69,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb7c4d7a460c
+  - type: implements
+    from: SYM-operator-api-plugin-grant
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:44:38.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67e6fa26306c
+  - type: implements
+    from: SYM-operator-api-plugin-grant
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T06:44:38.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fe880d1e0d7
+  - type: covered_by
+    from: SYM-operator-api-plugin-grant
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:44:38.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87217175fcae
+  - type: implements
+    from: SYM-operator-api-plugin-grant-list
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:44:43.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2d03bafe9f9
+  - type: implements
+    from: SYM-operator-api-plugin-grant-list
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T06:44:43.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e054432e119d
+  - type: covered_by
+    from: SYM-operator-api-plugin-grant-list
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:44:43.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49a3cb6e45a3
+  - type: implements
+    from: SYM-operator-api-plugin-grant-list-deep-copy-object
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:45:32.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aa5362b687c
+  - type: covered_by
+    from: SYM-operator-api-plugin-grant-list-deep-copy-object
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:45:32.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0159a0afe0be

@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a25c3888404
+  - type: executable_for
+    from: SYM-operator-api-test-deep-copy-is-independent
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:44:53.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ead65a4bd5e5

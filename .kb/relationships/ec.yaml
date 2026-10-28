@@ -76,3 +76,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98670d6c7816
+  - type: implements
+    from: SYM-operator-api-permissions-deep-copy
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:45:05.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50dada10d466
+  - type: covered_by
+    from: SYM-operator-api-permissions-deep-copy
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:45:05.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98d8ddc13853

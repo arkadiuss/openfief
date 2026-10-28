@@ -76,3 +76,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de731a39c389
+  - type: implements
+    from: SYM-operator-api-add-to-scheme
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:44:17.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7024209b889
+  - type: covered_by
+    from: SYM-operator-api-add-to-scheme
+    to: TEST-operator-api
+    created_at: 2026-10-28T06:44:17.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-867044287dbf

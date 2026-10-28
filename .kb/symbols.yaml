@@ -11591,3 +11591,531 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-rollout
+  - id: SYM-operator-api-group-version
+    title: GroupVersion
+    sourceFile: internal/plugins/operator/v1alpha1/groupversion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:11.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-add-to-scheme
+    title: AddToScheme
+    sourceFile: internal/plugins/operator/v1alpha1/groupversion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:16.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin
+    title: Plugin
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:20.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-spec
+    title: PluginSpec
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:23.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-manifest
+    title: Manifest
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:26.047Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-secret-mount
+    title: SecretMount
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:28.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-permissions
+    title: Permissions
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:30.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-status
+    title: PluginStatus
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:33.261Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-list
+    title: PluginList
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:35.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-grant
+    title: PluginGrant
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:38.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-grant-status
+    title: PluginGrantStatus
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:40.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-plugin-grant-list
+    title: PluginGrantList
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:43.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+  - id: SYM-operator-api-test-add-to-scheme
+    title: TestAddToScheme
+    sourceFile: internal/plugins/operator/v1alpha1/types_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:46.743Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-api
+  - id: SYM-operator-api-test-types-sample-plugin
+    title: samplePlugin
+    sourceFile: internal/plugins/operator/v1alpha1/types_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:49.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-api
+  - id: SYM-operator-api-test-deep-copy-is-independent
+    title: TestDeepCopyIsIndependent
+    sourceFile: internal/plugins/operator/v1alpha1/types_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:52.702Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-api
+  - id: SYM-operator-api-manifest-deep-copy-into
+    title: Manifest.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:55.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-manifest-deep-copy
+    title: Manifest.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:44:58.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-permissions-deep-copy-into
+    title: Permissions.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:02.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-permissions-deep-copy
+    title: Permissions.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:05.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-deep-copy-into
+    title: Plugin.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:08.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-deep-copy
+    title: Plugin.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:10.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-deep-copy-object
+    title: Plugin.DeepCopyObject
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:13.224Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-deep-copy-into
+    title: PluginGrant.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:15.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-deep-copy
+    title: PluginGrant.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:19.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-deep-copy-object
+    title: PluginGrant.DeepCopyObject
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:22.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-list-deep-copy-into
+    title: PluginGrantList.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:25.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-list-deep-copy
+    title: PluginGrantList.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:28.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-list-deep-copy-object
+    title: PluginGrantList.DeepCopyObject
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:32.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-status-deep-copy-into
+    title: PluginGrantStatus.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:35.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-grant-status-deep-copy
+    title: PluginGrantStatus.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:38.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-list-deep-copy-into
+    title: PluginList.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:42.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-list-deep-copy
+    title: PluginList.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:45.406Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-list-deep-copy-object
+    title: PluginList.DeepCopyObject
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:49.356Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-spec-deep-copy-into
+    title: PluginSpec.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:52.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-spec-deep-copy
+    title: PluginSpec.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:56.496Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-status-deep-copy-into
+    title: PluginStatus.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:45:59.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-plugin-status-deep-copy
+    title: PluginStatus.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:46:02.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-secret-mount-deep-copy-into
+    title: SecretMount.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:46:06.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-operator-api-secret-mount-deep-copy
+    title: SecretMount.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:46:09.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807

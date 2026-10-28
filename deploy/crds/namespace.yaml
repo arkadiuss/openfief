@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openfief
+  labels:
+    # Plugins and the operator run with the restricted Pod Security Standard.
+    pod-security.kubernetes.io/enforce: restricted
