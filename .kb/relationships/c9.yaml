@@ -111,3 +111,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ac25af4c9fc
+  - type: implements
+    from: SYM-valuation-nbp-table
+    to: REQ-valuation-nbp-decimal-exact
+    created_at: 2026-10-28T05:57:46.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c24b9f60e8b
+  - type: covered_by
+    from: SYM-valuation-nbp-table
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:57:46.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23b51ab5d2fc
+  - type: implements
+    from: SYM-valuation-nbp-map-rate
+    to: REQ-valuation-nbp-decimal-exact
+    created_at: 2026-10-28T05:58:01.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51922d2efeb1
+  - type: covered_by
+    from: SYM-valuation-nbp-map-rate
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:58:01.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23488889f95d

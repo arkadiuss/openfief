@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a7833547812
+  - type: implements
+    from: SYM-valuation-nbp-read-response
+    to: REQ-valuation-fx-no-data
+    created_at: 2026-10-28T05:57:42.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f10f81436059
+  - type: implements
+    from: SYM-valuation-nbp-read-response
+    to: REQ-valuation-nbp-request
+    created_at: 2026-10-28T05:57:42.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c174a84c05b
+  - type: covered_by
+    from: SYM-valuation-nbp-read-response
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:57:42.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aee715af2c2d

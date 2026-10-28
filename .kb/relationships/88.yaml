@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06561fa1287a
+  - type: constrains
+    from: REQ-valuation-nbp-request
+    to: FACT-SUBJECT-1234A04FD2D1B677
+    created_at: 2026-10-28T05:57:26.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d3a9704536
+  - type: requires_property
+    from: REQ-valuation-nbp-request
+    to: FACT-PROP-41ADB9320F97CB86
+    created_at: 2026-10-28T05:57:26.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1d55b9fdf84
+  - type: specified_by
+    from: REQ-valuation-nbp-request
+    to: SCEN-valuation-nbp-request
+    created_at: 2026-10-28T05:57:26.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-919b8bb0645a

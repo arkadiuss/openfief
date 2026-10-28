@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d444579f5463
+  - type: constrains
+    from: REQ-valuation-nbp-decimal-exact
+    to: FACT-SUBJECT-1234A04FD2D1B677
+    created_at: 2026-10-28T05:57:19.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b2578a59b0
+  - type: requires_property
+    from: REQ-valuation-nbp-decimal-exact
+    to: FACT-PROP-138E19A568472763
+    created_at: 2026-10-28T05:57:19.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-711d88b32aea
+  - type: specified_by
+    from: REQ-valuation-nbp-decimal-exact
+    to: SCEN-valuation-nbp-decimal-exact
+    created_at: 2026-10-28T05:57:19.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0e8da44ec56

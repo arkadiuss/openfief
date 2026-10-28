@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3cb1ed733f2
+  - type: executable_for
+    from: SYM-valuation-nbp-test-rates-sends-its-own-user-agent
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:58:25.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcc1bdc233b8

@@ -1,3 +1,5 @@
+github.com/areknoster/hypert v0.7.0 h1:U9n/JDiFpLoi5Vyfy9ksieyvFUBTwkiOEYmGpwWBZu0=
+github.com/areknoster/hypert v0.7.0/go.mod h1:NNdfmu3cNXhT2LksLEPI5ax+9pnInoHgKqTCRS8h8E0=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
 github.com/shopspring/decimal v1.4.0 h1:bxl37RwXBklmTi0C79JfXCEBD1cqqHt0bbgBAGFp81k=
