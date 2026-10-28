@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-db4875881359
+    type: verified_by
+    from: SCEN-ledger-isin-check-digit
+    to: TEST-ledger-instrument
+    created_at: "2026-10-28T05:23:53.147Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4d68862161b
+  - type: implements
+    from: SYM-ledger-new-fx-conversion
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-28T05:26:13.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f535fb2fd449
+  - type: implements
+    from: SYM-ledger-new-fx-conversion
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:26:13.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-360f2686828d
+  - type: covered_by
+    from: SYM-ledger-new-fx-conversion
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:13.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe133bb1d32e

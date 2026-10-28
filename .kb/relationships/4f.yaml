@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-6c7dbf490f26
+    type: implements
+    from: SYM-ledger-holding-book
+    to: REQ-ledger-posting-ledger-account
+    created_at: "2026-10-28T05:25:27.104Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-holding-book
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:27.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1af3d0761f43

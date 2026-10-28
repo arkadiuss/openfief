@@ -1,0 +1,50 @@
+relationships:
+  - id: rel-4ba4024b2f2e
+    type: verified_by
+    from: SCEN-ledger-posting-ledger-account
+    to: TEST-ledger-account
+    created_at: "2026-10-28T05:23:58.671Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-ledger-posting-ledger-account
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:23:58.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91d264b6e2a2
+  - type: implements
+    from: SYM-ledger-book-kind
+    to: REQ-ledger-posting-ledger-account
+    created_at: 2026-10-28T05:25:14.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3dc9f1a751b
+  - type: covered_by
+    from: SYM-ledger-book-kind
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:14.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e80eb7a61fc5
+  - type: implements
+    from: SYM-ledger-new-withdrawal
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-28T05:26:19.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9b24a3d168f
+  - type: implements
+    from: SYM-ledger-new-withdrawal
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:26:19.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c546c5fd189
+  - type: covered_by
+    from: SYM-ledger-new-withdrawal
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:19.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c412d3f664b7

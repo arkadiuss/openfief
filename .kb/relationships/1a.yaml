@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-118569a6d19f
+    type: executable_for
+    from: SYM-ledger-test-helper-ptr
+    to: TEST-ledger-transaction
+    created_at: "2026-10-28T05:28:11.071Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

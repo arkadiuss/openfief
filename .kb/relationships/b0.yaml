@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a77813945641
+  - type: implements
+    from: SYM-ledger-cash-book
+    to: REQ-ledger-posting-ledger-account
+    created_at: 2026-10-28T05:25:24.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fef1a255c40d
+  - type: covered_by
+    from: SYM-ledger-cash-book
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:24.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77d3b8581dbc

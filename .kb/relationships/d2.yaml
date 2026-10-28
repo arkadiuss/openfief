@@ -13,3 +13,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06e50807c987
+  - type: executable_for
+    from: SYM-ledger-test-account-validate
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:45.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-141932d1d429
+  - type: implements
+    from: SYM-ledger-transaction-header-build
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-28T05:25:57.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ce432e5b58e
+  - type: implements
+    from: SYM-ledger-transaction-header-build
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:25:57.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b32316b3a192
+  - type: covered_by
+    from: SYM-ledger-transaction-header-build
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:25:57.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de762fbbb950

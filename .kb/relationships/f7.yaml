@@ -1,0 +1,57 @@
+relationships:
+  - id: rel-dd08918c4f47
+    type: constrains
+    from: REQ-ledger-opening-lot-entry
+    to: FACT-SUBJECT-7674F14A65896C4F
+    created_at: "2026-10-28T05:25:00.351Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-ledger-opening-lot-entry
+    to: FACT-PROP-AFEFA22309D14801
+    created_at: 2026-10-28T05:25:00.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-885de9d520bd
+  - type: specified_by
+    from: REQ-ledger-opening-lot-entry
+    to: SCEN-ledger-opening-lot-entry
+    created_at: 2026-10-28T05:25:00.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b97c8be6260
+  - type: executable_for
+    from: SYM-ledger-test-helper-money
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:42.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6dda3950faa
+  - type: executable_for
+    from: SYM-ledger-test-helper-money
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:26:42.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94649e76a3d2
+  - type: executable_for
+    from: SYM-ledger-test-helper-money
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:26:42.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fabcde338f3
+  - type: executable_for
+    from: SYM-ledger-test-helper-money
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:42.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc9bc9fe731b
+  - type: executable_for
+    from: SYM-ledger-test-helper-money
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:26:42.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-135f70c405e5

@@ -27,3 +27,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3d10fd9c431
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:39.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1f3d28d96a1
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:26:39.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f614bdf4edd4
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:26:39.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-901a496e6704
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:39.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ce224b07dde
+  - type: executable_for
+    from: SYM-ledger-test-helper-cur
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:26:39.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e52a47c33ed6

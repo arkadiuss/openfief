@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-3bae495567d5
+    type: implements
+    from: SYM-ledger-new-opening-lot
+    to: REQ-ledger-opening-lot-entry
+    created_at: "2026-10-28T05:26:21.917Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-ledger-new-opening-lot
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T05:26:21.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85c6bbaaff27
+  - type: covered_by
+    from: SYM-ledger-new-opening-lot
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:21.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-742ec03e000f

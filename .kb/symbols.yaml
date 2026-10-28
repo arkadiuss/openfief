@@ -1448,3 +1448,1020 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-portfolio-sleeve
+  - id: SYM-ledger-account-id
+    title: AccountID
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:05.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-account-sleeve
+  - id: SYM-ledger-account
+    title: Account
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:08.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-account-sleeve
+  - id: SYM-ledger-account-validate
+    title: Account.Validate
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:11.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-account-sleeve
+  - id: SYM-ledger-book-kind
+    title: BookKind
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:13.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-book-kind-string
+    title: BookKind.String
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:17.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-book
+    title: Book
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:19.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-cash-book
+    title: CashBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:23.826Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-holding-book
+    title: HoldingBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:26.891Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-fee-book
+    title: FeeBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:29.582Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-withholding-tax-book
+    title: WithholdingTaxBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:32.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-fx-book
+    title: FXBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:34.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-equity-book
+    title: EquityBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:37.668Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-book-validate
+    title: Book.Validate
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:40.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-book-string
+    title: Book.String
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:43.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-test-account-validate
+    title: TestAccountValidate
+    sourceFile: internal/ledger/account_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:45.328Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+  - id: SYM-ledger-test-book-validate
+    title: TestBookValidate
+    sourceFile: internal/ledger/account_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:47.428Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+  - id: SYM-ledger-test-book-constructors
+    title: TestBookConstructors
+    sourceFile: internal/ledger/account_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:49.803Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+  - id: SYM-ledger-transaction-header
+    title: TransactionHeader
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:51.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-transaction-header-transaction
+    title: TransactionHeader.transaction
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:54.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-transaction-header-build
+    title: TransactionHeader.build
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:57.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-validated
+    title: validated
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:00.389Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-buy
+    title: NewBuy
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:02.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-sell
+    title: NewSell
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:05.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-dividend
+    title: NewDividend
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:07.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-fee
+    title: NewFee
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:10.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-fx-conversion
+    title: NewFXConversion
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:13.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-deposit
+    title: NewDeposit
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:16.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-withdrawal
+    title: NewWithdrawal
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:18.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-opening-lot
+    title: NewOpeningLot
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:21.721Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-ledger-opening-lot-entry
+  - id: SYM-ledger-fee-postings
+    title: feePostings
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:24.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-need-positive
+    title: needPositive
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:26.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-need-not-negative
+    title: needNotNegative
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:28.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-test-transaction-constructors
+    title: TestTransactionConstructors
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:30.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ledger-test-helper-check-built
+    title: checkBuilt
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:32.269Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ledger-test-kind-names
+    title: TestKindNames
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:34.249Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ledger-test-helper-dec
+    title: dec
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:36.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-cur
+    title: cur
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:39.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-money
+    title: money
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:41.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-qty
+    title: qty
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:44.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-date
+    title: date
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:48.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-instrument
+    title: instrument
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:51.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-header
+    title: header
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:54.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-isin
+    title: ISIN
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:55.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-parse-isin
+    title: ParseISIN
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:58.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-isin-digits
+    title: isinDigits
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:00.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-luhn-valid
+    title: luhnValid
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:02.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-isin-string
+    title: ISIN.String
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:05.134Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-isin-is-zero
+    title: ISIN.IsZero
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:07.343Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-isin-equal
+    title: ISIN.Equal
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:09.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-instrument
+    title: Instrument
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:11.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-instrument-validate
+    title: Instrument.Validate
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:14.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-instrument-string
+    title: Instrument.String
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:17.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-test-parse-isin
+    title: TestParseISIN
+    sourceFile: internal/ledger/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:19.993Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-instrument
+  - id: SYM-ledger-test-instrument-validate
+    title: TestInstrumentValidate
+    sourceFile: internal/ledger/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:22.283Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-instrument
+  - id: SYM-ledger-test-helper-rng
+    title: rng
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:25.146Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-rng-next
+    title: rng.next
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:27.949Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-rng-intn
+    title: rng.intn
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:30.935Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-rng-decimal
+    title: rng.decimal
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:34.012Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-random-transaction
+    title: randomTransaction
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:37.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-property-postings-sum-to-zero-per-currency
+    title: TestPropertyPostingsSumToZeroPerCurrency
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:39.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-transaction-key
+    title: TransactionKey
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:41.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+  - id: SYM-ledger-transaction-key-string
+    title: TransactionKey.String
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:43.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+  - id: SYM-ledger-transaction-kind
+    title: TransactionKind
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:44.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-transaction-kind-string
+    title: TransactionKind.String
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:47.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-posting
+    title: Posting
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:48.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-posting-validate
+    title: Posting.Validate
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:50.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-transaction
+    title: Transaction
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:52.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-unbalanced-error
+    title: UnbalancedError
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:53.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-unbalanced-error-error
+    title: UnbalancedError.Error
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:56.536Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-transaction-validate
+    title: Transaction.Validate
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:58.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-transaction-validate-header
+    title: Transaction.validateHeader
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:01.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-sums-by-currency
+    title: sumsByCurrency
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:04.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-test-transaction-validate
+    title: TestTransactionValidate
+    sourceFile: internal/ledger/transaction_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:06.440Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-check-validate-error
+    title: checkValidateError
+    sourceFile: internal/ledger/transaction_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:08.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-ptr
+    title: ptr
+    sourceFile: internal/ledger/transaction_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:10.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transaction

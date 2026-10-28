@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-b75005650c9b
+    type: executable_for
+    from: SYM-ledger-test-instrument-validate
+    to: TEST-ledger-instrument
+    created_at: "2026-10-28T05:27:22.552Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

@@ -55,3 +55,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b92455aa097a
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:44.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b39844284fc8
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:26:44.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7252278e1fe
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:26:44.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-113d12a70619
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:44.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-141541c20bd5
+  - type: executable_for
+    from: SYM-ledger-test-helper-qty
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:26:44.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6177bce97f88

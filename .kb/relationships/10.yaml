@@ -20,3 +20,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e631a2d2a178
+  - type: implements
+    from: SYM-ledger-unbalanced-error-error
+    to: REQ-ledger-postings-zero-sum
+    created_at: 2026-10-28T05:27:56.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65aada94ef78
+  - type: implements
+    from: SYM-ledger-unbalanced-error-error
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:27:56.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dccf77d17c1d
+  - type: covered_by
+    from: SYM-ledger-unbalanced-error-error
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:27:56.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a7833547812

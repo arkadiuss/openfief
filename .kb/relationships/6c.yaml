@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-26a50acb23d1
+    type: implements
+    from: SYM-ledger-account
+    to: REQ-ledger-account-sleeve
+    created_at: "2026-10-28T05:25:08.483Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-ledger-account
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:25:08.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7681c4c2d05

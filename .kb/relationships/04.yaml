@@ -6,3 +6,24 @@ relationships:
     created_at: "2026-10-28T04:51:38.465Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: constrains
+    from: REQ-ledger-postings-zero-sum
+    to: FACT-SUBJECT-7522D6C27E74C2F2
+    created_at: 2026-10-28T05:24:45.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f484434525f
+  - type: requires_property
+    from: REQ-ledger-postings-zero-sum
+    to: FACT-PROP-5504DCBAC9B29DC8
+    created_at: 2026-10-28T05:24:45.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91057eb38a92
+  - type: specified_by
+    from: REQ-ledger-postings-zero-sum
+    to: SCEN-ledger-postings-zero-sum
+    created_at: 2026-10-28T05:24:45.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32a899be71f5

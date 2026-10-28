@@ -10,7 +10,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 |---|---|---|---|---|
 | Institution | ingest | `ingest.Institution` | A broker, bank or registry that holds assets: IBKR, XTB, the treasury bond registry. | broker (for the registry) |
 | Account | ledger | `ledger.Account` | One account at an institution, such as one IBKR linked account. Belongs to one sleeve. | portfolio |
-| Ledger account | ledger | `ledger.LedgerAccount` | A double-entry account inside an account: cash per currency, a holding per instrument, fees, withholding tax, FX. | "account" alone |
+| Ledger account | ledger | `ledger.Book` | A double-entry account inside an account: cash per currency, a holding per instrument, fees, withholding tax, FX, and equity: the counterpart of what enters or leaves the account from outside (deposits, withdrawals, opening lots). The Go name avoids the `ledger.LedgerAccount` stutter that lint rejects. | "account" alone |
 | Transaction | ledger | `ledger.Transaction` | One economic event from a source. Append-only and versioned; keyed by source plus the institution's own ID. | trade, activity, operation |
 | Posting | ledger | `ledger.Posting` | One leg of a transaction. A transaction's postings sum to zero per currency. | entry, leg |
 | Instrument | ledger | `ledger.Instrument` | Something that can be held, identified by ISIN plus a venue symbol. A bond series is an instrument. | security, ticker, asset |

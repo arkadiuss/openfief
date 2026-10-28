@@ -20,3 +20,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-041a34842e1e
+  - type: executable_for
+    from: SYM-ledger-test-property-postings-sum-to-zero-per-currency
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:27:39.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c5445efebe
