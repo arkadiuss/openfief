@@ -6,3 +6,10 @@ relationships:
     created_at: "2026-10-28T05:26:21.404Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-plugins-test-compile-check-only-core-and-proxy
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:30:06.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f0763146f43

@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77b76b9bcf96
+  - type: validates
+    from: TEST-plugins-effective
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T05:27:55.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b802bbb1ee7
+  - type: validates
+    from: TEST-plugins-effective
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T05:27:56.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd5301517b5c

@@ -13,3 +13,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1175c484e79
+  - type: implements
+    from: SYM-plugins-service-account
+    to: REQ-plugins-workload-identity-secrets
+    created_at: 2026-10-28T05:29:33.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5ae58bf8be2
+  - type: implements
+    from: SYM-plugins-service-account
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T05:29:33.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3119bc8021f3
+  - type: covered_by
+    from: SYM-plugins-service-account
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:33.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f482e4e824b7
+  - type: executable_for
+    from: SYM-plugins-test-service-account-name
+    to: TEST-plugins-identity
+    created_at: 2026-10-28T05:31:01.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a29261b37e59

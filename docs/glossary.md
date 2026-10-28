@@ -35,6 +35,9 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Egress host | plugins | `plugins.EgressHost` | One hostname and port in a manifest, grant or egress allow-list. Never an IP address or a wildcard. | domain, URL |
 | Data tier | plugins | `plugins.DataTier` | A named class of data a plugin asks to see. Only a name in M0; what each tier holds is undecided (P-33). | |
 | Image reference | plugins | `plugins.ImageRef` | A plugin's container image, pinned by digest (`repository@sha256:...`), never by tag. | image tag |
+| Effective permissions | plugins | `plugins.EffectivePermissions` | What OpenFief enforces for a plugin: only what its Plugin requests and its Grant approves. | |
+| Workload | plugins | `plugins.Workload` | What the operator creates for one plugin, compiled from its effective permissions: identity, token, Secret mounts, environment, NetworkPolicy and egress allow-list. | deployment (the Kubernetes object is one part) |
+| Plugin identity | identity | `plugins.ServiceAccountName` | The ServiceAccount `plugin-<name>` in the `openfief` namespace, proven by its projected token with audience `openfief-core`. | |
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |
 | Currency | kernel | `kernel.Currency` | An ISO 4217 alphabetic code, such as PLN or USD. | |

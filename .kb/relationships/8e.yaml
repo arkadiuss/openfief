@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-3b49aa760abd
+    type: executable_for
+    from: SYM-plugins-test-effective-equal
+    to: TEST-plugins-effective
+    created_at: "2026-10-28T05:30:50.785Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
