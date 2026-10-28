@@ -125,7 +125,7 @@ flowchart LR
 ```
 
 - Every pull request and every push builds the docs as part of `task check`, so a broken page fails CI like a failing test.
-- Each push to `main` publishes the site to GitHub Pages from the same CI run that deploys the demo. It is served at [openfief.dev](https://openfief.dev/), the custom domain in the repository's Pages settings: the landing page at the root, the docs under [/docs/](https://openfief.dev/docs/). `docs.openfief.dev` redirects there, and the demo at `demo.openfief.dev` is separate.
+- Each push to `main` publishes the site to GitHub Pages from the same CI run that deploys the demo. It is served at [openfief.dev](https://openfief.dev/), the custom domain in the repository's Pages settings: the landing page at the root, the docs under [/docs/](https://openfief.dev/docs/). `docs.openfief.dev` has no DNS record: a redirect there needs a Cloudflare rule the DNS token can't create. The demo at `demo.openfief.dev` is separate.
 - Each release attaches `openfief-docs-<version>.tar.gz`, the site as it was at that version, for self-hosters who run that release.
 - Every link and asset is relative to its page (Hugo's `relativeURLs`). So one build works at the custom domain, at the GitHub Pages fallback address, and opened straight from disk out of the tarball. Docs pages link to generated pages by docs path, such as `/status/`, which the link hook resolves under `/docs/`.
 
