@@ -188,3 +188,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-409f9a8587cb
+  - type: verified_by
+    from: SCEN-portfolio-default-kinds
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:34:33.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-786d58a2bdb0

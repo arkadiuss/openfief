@@ -188,3 +188,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3df82ed6a0a4
+  - type: constrains
+    from: REQ-ledger-app-sleeve-kinds
+    to: FACT-SUBJECT-1059EB7F0A7938BA
+    created_at: 2026-10-28T09:53:17.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d09cd3e00c9
+  - type: requires_property
+    from: REQ-ledger-app-sleeve-kinds
+    to: FACT-PROP-A1717433E7CD0FB7
+    created_at: 2026-10-28T09:53:17.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-526b5158ac2e
+  - type: specified_by
+    from: REQ-ledger-app-sleeve-kinds
+    to: SCEN-ledger-app-kinds
+    created_at: 2026-10-28T09:53:17.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6518fcd0d887
+  - type: constrains
+    from: REQ-ledger-pg-sleeve-kinds
+    to: FACT-SUBJECT-1059EB7F0A7938BA
+    created_at: 2026-10-28T09:53:38.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f20a850dfc38
+  - type: requires_property
+    from: REQ-ledger-pg-sleeve-kinds
+    to: FACT-PROP-19429A62B278280C
+    created_at: 2026-10-28T09:53:38.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1534f59ab488
+  - type: specified_by
+    from: REQ-ledger-pg-sleeve-kinds
+    to: SCEN-ledger-pg-sleeve-kinds
+    created_at: 2026-10-28T09:53:38.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53a36885922b
+  - type: implements
+    from: SYM-ledger-pg-scan-kind
+    to: REQ-ledger-pg-sleeve-kinds
+    created_at: 2026-10-28T09:56:34.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de6e9c107267
+  - type: covered_by
+    from: SYM-ledger-pg-scan-kind
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:56:35.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9511b93d20ae

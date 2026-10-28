@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95162dd95101
+  - type: constrains
+    from: REQ-portfolio-allocation-by-kind
+    to: FACT-SUBJECT-5DC2172602284182
+    created_at: 2026-10-28T09:35:44.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1863c7783ce
+  - type: requires_property
+    from: REQ-portfolio-allocation-by-kind
+    to: FACT-PROP-3D655BFC138A38B7
+    created_at: 2026-10-28T09:35:44.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f42805124845
+  - type: specified_by
+    from: REQ-portfolio-allocation-by-kind
+    to: SCEN-portfolio-allocation-by-kind
+    created_at: 2026-10-28T09:35:44.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49abca528737

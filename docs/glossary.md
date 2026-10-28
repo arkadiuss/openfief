@@ -24,7 +24,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Target | portfolio | `portfolio.Target` | One instrument or index in the model portfolio, with its weight. The weights sum to 100%. | allocation |
 | Backtest | portfolio | `portfolio.Backtest` | The model portfolio's value series computed from end-of-day history, rebalanced to the target weights once a year. | simulation |
 | Max drawdown | portfolio | `portfolio.MaxDrawdown` | The worst fall from a peak to a later trough in a value series, with both dates. | max loss |
-| Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one role. Defensive: not available to agents. Offensive: the part fiefs are leased from. | bucket |
+| Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one sleeve kind and one role, which defaults to the kind's. Defensive: not available to agents. Offensive: the part fiefs are leased from. A sleeve is offensive in a defensive kind only when the owner explicitly overrides it. | bucket |
+| Sleeve kind | portfolio | `portfolio.Kind` | A named category of sleeve with a default role, such as core, bonds, retirement or agent-pool. Built-in kinds come with OpenFief; the owner can add and rename kinds, but a kind's default role never changes. | sleeve type |
 | Jurisdiction pack | jurisdiction | `jurisdiction.Pack` | The pluggable rules for one country (GR-13): bond terms, tax rules, and the default reporting currency. Poland first. | locale, country plugin |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
 | Statement | ingest | `app.StatementFetcher` | What an institution reports about an account, as a file or a pulled document, such as an IBKR Flex Query or an xStation export. A connector maps it. | report, export (alone) |

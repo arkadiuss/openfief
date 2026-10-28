@@ -139,3 +139,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5da48e83ca2a
+  - type: implements
+    from: SYM-ledger-app-ledger-ensure-defaults
+    to: REQ-ledger-app-ensure-defaults
+    created_at: 2026-10-28T09:55:38.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2848cc7fff8
+  - type: covered_by
+    from: SYM-ledger-app-ledger-ensure-defaults
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-28T09:55:38.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73738857a77c

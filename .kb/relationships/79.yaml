@@ -258,3 +258,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5988e31f0037
+  - type: verified_by
+    from: SCEN-ledger-pg-sleeve-kinds
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:53:03.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa6922292cbc

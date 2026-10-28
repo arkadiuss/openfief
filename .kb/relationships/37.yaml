@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68c99975f0c1
+  - type: executable_for
+    from: SYM-portfolio-test-default-sleeves
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:39:39.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cf9c4ce1099
+  - type: executable_for
+    from: SYM-ledger-pg-test-kind-round-trip
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-28T09:56:51.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43cb4cc3085e

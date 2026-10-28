@@ -28,9 +28,17 @@ func New(store Store, onImport ...ImportHook) *Ledger {
 	return &Ledger{store: store, onImport: onImport}
 }
 
-// SaveSleeve validates s and stores it, replacing a sleeve with its ID.
+// SaveSleeve checks s against the stored sleeve kinds and stores it,
+// replacing a sleeve with its ID. A sleeve with no role gets its kind's
+// default role; portfolio.CheckSleeve says when a sleeve's role may differ
+// from it.
 func (l *Ledger) SaveSleeve(ctx context.Context, s portfolio.Sleeve) error {
-	if err := s.Validate(); err != nil {
+	kinds, err := l.store.Kinds(ctx)
+	if err != nil {
+		return fmt.Errorf("loading sleeve kinds: %w", err)
+	}
+	s, err = portfolio.CheckSleeve(kinds, s)
+	if err != nil {
 		return fmt.Errorf("saving sleeve: %w", err)
 	}
 	if err := l.store.SaveSleeve(ctx, s); err != nil {

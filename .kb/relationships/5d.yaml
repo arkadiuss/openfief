@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-160d47e23090
+  - type: verified_by
+    from: SCEN-portfolio-sleeve-role-override
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-28T09:34:30.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e60b0925d50
