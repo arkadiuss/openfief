@@ -202,3 +202,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d29f043aabb9
+  - type: implements
+    from: SYM-plugins-eodhd-read-secret-file
+    to: REQ-plugins-eodhd-sync
+    created_at: 2026-10-28T21:43:26.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bb21a01e2c1
+  - type: implements
+    from: SYM-plugins-eodhd-read-secret-file
+    to: REQ-AUTO-0C514DFCDB36FBEB
+    created_at: 2026-10-28T21:43:26.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41c996a12f5f
+  - type: covered_by
+    from: SYM-plugins-eodhd-read-secret-file
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:43:26.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f33eb79f70b9

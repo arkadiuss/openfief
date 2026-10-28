@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d0c5fcf7590
+  - type: constrains
+    from: REQ-valuation-eodhd-request
+    to: FACT-SUBJECT-EC36255B7E1FD810
+    created_at: 2026-10-28T21:37:36.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-873682d7762a
+  - type: requires_property
+    from: REQ-valuation-eodhd-request
+    to: FACT-PROP-6916CC1C4FB936BB
+    created_at: 2026-10-28T21:37:36.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f71be29d519
+  - type: specified_by
+    from: REQ-valuation-eodhd-request
+    to: SCEN-valuation-eodhd-request
+    created_at: 2026-10-28T21:37:36.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5412f1f940f

@@ -293,3 +293,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67de21954457
+  - type: verified_by
+    from: SCEN-plugins-eodhd-config
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:37:16.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7de1be3f661

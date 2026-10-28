@@ -272,3 +272,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-edff8d60efbb
+  - type: implements
+    from: SYM-valuation-eodhd-client-listings
+    to: REQ-valuation-eodhd-listing
+    created_at: 2026-10-28T21:38:59.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c6ebfc39de0
+  - type: implements
+    from: SYM-valuation-eodhd-client-listings
+    to: REQ-valuation-eodhd-request
+    created_at: 2026-10-28T21:38:59.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c377adcfd2d9
+  - type: covered_by
+    from: SYM-valuation-eodhd-client-listings
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:38:59.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a838fbc6c75
+  - type: implements
+    from: SYM-plugins-eodhd-connector-sync
+    to: REQ-plugins-eodhd-sync
+    created_at: 2026-10-28T21:42:58.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0d085109589
+  - type: implements
+    from: SYM-plugins-eodhd-connector-sync
+    to: REQ-AUTO-0C514DFCDB36FBEB
+    created_at: 2026-10-28T21:42:58.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9b251a54917
+  - type: covered_by
+    from: SYM-plugins-eodhd-connector-sync
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:42:58.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d775c0dcfd7f

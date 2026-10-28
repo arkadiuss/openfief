@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2bbe1749f72
+  - type: implements
+    from: SYM-connector-gen-pb-index-level-string
+    to: REQ-ingest-delivery-market-data
+    created_at: 2026-10-28T21:50:53.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f05d8ae442a8
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-level-string
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T21:50:53.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-137106ef6f04

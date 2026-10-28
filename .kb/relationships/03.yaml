@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0760e021425
+  - type: implements
+    from: SYM-valuation-eodhd-listing
+    to: REQ-valuation-eodhd-listing
+    created_at: 2026-10-28T21:38:08.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3c37b8f3c4d
+  - type: covered_by
+    from: SYM-valuation-eodhd-listing
+    to: TEST-valuation-eodhd-listing
+    created_at: 2026-10-28T21:38:08.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dedf830c50d
+  - type: implements
+    from: SYM-connector-gen-pb-index-level-proto-reflect
+    to: REQ-ingest-delivery-market-data
+    created_at: 2026-10-28T21:51:04.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd275f59a6a3
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-level-proto-reflect
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T21:51:04.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b043d3b5775d

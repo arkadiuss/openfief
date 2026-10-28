@@ -188,3 +188,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-625cbd5736e9
+  - type: implements
+    from: SYM-valuation-eodhd-without-url
+    to: REQ-valuation-eodhd-request
+    created_at: 2026-10-28T21:39:18.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-743381bb25ea
+  - type: covered_by
+    from: SYM-valuation-eodhd-without-url
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:39:18.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b8ae06df591
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-helper-user-agent-and-headers-validator
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:40:35.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-456fff073e84
+  - type: implements
+    from: SYM-connector-gen-pb-index-level-get-index
+    to: REQ-ingest-delivery-market-data
+    created_at: 2026-10-28T21:51:15.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e362571cff2
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-level-get-index
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T21:51:15.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d33a8176a27

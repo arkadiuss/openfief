@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1cee0ac6f3d6
+  - type: verified_by
+    from: SCEN-valuation-eodhd-request
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:37:12.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3cf404a3889

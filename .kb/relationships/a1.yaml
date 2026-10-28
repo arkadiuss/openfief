@@ -251,3 +251,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1aa208cfb15
+  - type: implements
+    from: SYM-plugins-eodhd-watermark
+    to: REQ-plugins-eodhd-sync
+    created_at: 2026-10-28T21:43:30.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eba6cb556d12
+  - type: covered_by
+    from: SYM-plugins-eodhd-watermark
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:43:30.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e2b1bb5c196

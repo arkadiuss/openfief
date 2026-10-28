@@ -1,0 +1,5 @@
+GET https://eodhd.com/api/eod/FAKE20.INDX?api_token=SANITIZED&fmt=json&order=a&period=d&to=2001-01-04 HTTP/1.1
+Host: eodhd.com
+User-Agent: openfief
+Accept: application/json
+

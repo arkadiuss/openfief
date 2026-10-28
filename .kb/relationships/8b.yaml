@@ -307,3 +307,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f5a9a8a1e3b
+  - type: validates
+    from: TEST-plugins-eodhd-connector
+    to: REQ-AUTO-0C514DFCDB36FBEB
+    created_at: 2026-10-28T21:37:01.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2d19f893281
+  - type: validates
+    from: TEST-plugins-eodhd-connector
+    to: REQ-AUTO-A129ED289B2239A8
+    created_at: 2026-10-28T21:37:01.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-845b20927ad0
+  - type: constrains
+    from: REQ-valuation-eodhd-closes-exact
+    to: FACT-SUBJECT-EC36255B7E1FD810
+    created_at: 2026-10-28T21:37:31.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e818c682b77f
+  - type: requires_property
+    from: REQ-valuation-eodhd-closes-exact
+    to: FACT-PROP-1994751B710FCD2A
+    created_at: 2026-10-28T21:37:31.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3fa981c4385
+  - type: specified_by
+    from: REQ-valuation-eodhd-closes-exact
+    to: SCEN-valuation-eodhd-closes-exact
+    created_at: 2026-10-28T21:37:31.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5104ff7edb5
+  - type: implements
+    from: SYM-plugins-eodhd-today
+    to: REQ-plugins-eodhd-sync
+    created_at: 2026-10-28T21:42:06.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dcd8484aaf2
+  - type: covered_by
+    from: SYM-plugins-eodhd-today
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:42:06.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44457f15684e

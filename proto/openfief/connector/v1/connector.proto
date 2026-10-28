@@ -26,7 +26,7 @@ package openfief.connector.v1;
 service ConnectorService {
   // Sync pulls what the institution reports since the watermark of the
   // previous sync, such as new transactions with balance assertions, or
-  // end-of-day prices, FX rates and index readings.
+  // end-of-day prices, FX rates, index readings and index levels.
   rpc Sync(SyncRequest) returns (SyncResponse);
   // ImportFile maps one statement file, such as an uploaded export. The first
   // message carries the header, the rest carry the file's bytes in order.
@@ -195,10 +195,22 @@ message IndexReading {
   string value = 3;
 }
 
+// IndexLevel is one end-of-day closing level of a market index, such as
+// WIG20 (D-51). A market index can be a target of the model portfolio
+// (D-52, D-53) but is never held, so it has no instrument.
+message IndexLevel {
+  // The index's name as the connector instance's config gives it, such as
+  // "WIG20".
+  string index = 1;
+  string date = 2;
+  // The closing level, as a positive decimal string.
+  string level = 3;
+}
+
 // Delivery is what a connector returns for one import batch: its mapping of
 // what the institution reported (transactions with their postings, balance
-// assertions and the rows it left out), plus any prices, FX rates and index
-// readings.
+// assertions and the rows it left out), plus any prices, FX rates, index
+// readings and index levels.
 message Delivery {
   // The batch ID of the call, echoed back.
   string batch_id = 1;
@@ -210,6 +222,7 @@ message Delivery {
   repeated Price prices = 6;
   repeated FxRate fx_rates = 7;
   repeated IndexReading index_readings = 8;
+  repeated IndexLevel index_levels = 9;
 }
 
 message SyncRequest {

@@ -237,3 +237,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b3f2d4ba5ff
+  - type: implements
+    from: SYM-plugins-eodhd-connector
+    to: REQ-plugins-eodhd-sync
+    created_at: 2026-10-28T21:42:53.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1274a4801827
+  - type: implements
+    from: SYM-plugins-eodhd-connector
+    to: REQ-AUTO-0C514DFCDB36FBEB
+    created_at: 2026-10-28T21:42:53.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82bc4200e929
+  - type: covered_by
+    from: SYM-plugins-eodhd-connector
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:42:53.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b5d25f68766
+  - type: implements
+    from: SYM-connector-gen-pb-index-level-get-date
+    to: REQ-ingest-delivery-market-data
+    created_at: 2026-10-28T21:51:20.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cf8f114507d
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-level-get-date
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T21:51:20.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c3f9cbeeebb
