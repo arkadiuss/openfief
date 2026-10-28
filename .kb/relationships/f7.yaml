@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65a838d5988c
+  - type: implements
+    from: SYM-ingest-sched-check-bound
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:55:48.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b28c3af8fb7
+  - type: covered_by
+    from: SYM-ingest-sched-check-bound
+    to: TEST-ingest-binding
+    created_at: 2026-10-28T16:55:48.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-541d0e2c5f3a

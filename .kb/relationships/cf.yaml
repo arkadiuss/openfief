@@ -167,3 +167,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58a2a2ceb24d
+  - type: executable_for
+    from: SYM-ingest-conn-app-test-helper-fake-bindings
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T16:51:26.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43de949e82cd
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-mem-store-complete-sync
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:52:54.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac11cae4a50d

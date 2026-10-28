@@ -181,3 +181,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce43cf2e0109
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-mem-store-claim-sync
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:52:46.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eabd048901f6
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-scheduler-single-flight
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:54:25.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-890ce9745b75
+  - type: executable_for
+    from: SYM-ingest-sched-test-sync-policy-validate
+    to: TEST-ingest-schedule
+    created_at: 2026-10-28T16:59:01.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c8ff0f6199e

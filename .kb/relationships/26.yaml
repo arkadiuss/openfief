@@ -153,3 +153,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e1aea69b819
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-admin-exec
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:58:05.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deebc83fec55

@@ -209,3 +209,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aacb9930ff57
+  - type: implements
+    from: SYM-ingest-sched-unbound-accounts-error
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:55:25.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41aff0076e8b
+  - type: covered_by
+    from: SYM-ingest-sched-unbound-accounts-error
+    to: TEST-ingest-binding
+    created_at: 2026-10-28T16:55:25.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a45a1c4bcaa

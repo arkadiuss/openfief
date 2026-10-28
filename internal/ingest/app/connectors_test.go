@@ -14,6 +14,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
@@ -93,12 +94,27 @@ func delivery(t *testing.T) app.Delivery {
 	}
 }
 
+// fakeBindings binds every instance to its accounts, or fails with err.
+type fakeBindings struct {
+	accounts []ledger.AccountID
+	err      error
+	calls    int
+}
+
+func (f *fakeBindings) BoundAccounts(context.Context, string) ([]ledger.AccountID, error) {
+	f.calls++
+	return f.accounts, f.err
+}
+
+// connectors returns Connectors over the fakes, with the instance bound to
+// acc-1, the account of mapping(t).
 func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, stores *fakeStores) *app.Connectors {
 	t.Helper()
 	day := march2(t)
 	return &app.Connectors{
 		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores,
-		Today: func() kernel.Date { return day },
+		Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
+		Today:    func() kernel.Date { return day },
 	}
 }
 
@@ -141,9 +157,13 @@ func TestConnectorsImportFile(t *testing.T) {
 	caller := &fakeCaller{delivery: d}
 	stores := &fakeStores{}
 	file := app.NamedFile{Name: "statement.csv", Contents: strings.NewReader("synthetic")}
-	got, err := connectors(t, caller, &fakeLedger{}, stores).ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeOpening, file)
+	l := &fakeLedger{}
+	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeOpening, file)
 	if err != nil {
 		t.Fatalf("ImportFile: %v", err)
+	}
+	if l.seeds != 1 {
+		t.Errorf("an opening batch seeded %d times, want 1", l.seeds)
 	}
 	if got.ID != "b-2" || got.Source != app.SourceFile || got.Mode != ingest.ModeOpening || got.Transactions != 1 {
 		t.Errorf("ImportFile = %+v", got)

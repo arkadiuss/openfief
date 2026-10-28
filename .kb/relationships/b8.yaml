@@ -195,3 +195,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dc2f41e67c8
+  - type: validates
+    from: TEST-ingest-app-scheduler
+    to: REQ-ingest-core-owns-schedules
+    created_at: 2026-10-28T16:50:00.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bd16aab9340
+  - type: validates
+    from: TEST-ingest-app-scheduler
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T16:50:00.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec26404bbf61
+  - type: validates
+    from: TEST-ingest-app-scheduler
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-28T16:50:00.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08ea6e7acfd5

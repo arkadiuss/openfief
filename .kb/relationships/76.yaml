@@ -258,3 +258,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4beb04aa807c
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-new-mem-store
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:52:42.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92fa94128719

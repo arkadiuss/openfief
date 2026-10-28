@@ -209,3 +209,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14386bc6b106
+  - type: implements
+    from: SYM-ingest-sched-app-connectors-check-bound
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:51:22.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4074f48aa1b
+  - type: covered_by
+    from: SYM-ingest-sched-app-connectors-check-bound
+    to: TEST-ingest-app-bound
+    created_at: 2026-10-28T16:51:22.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce2714702f88
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-begin
+    to: REQ-ingest-scheduler-single-flight
+    created_at: 2026-10-28T16:52:13.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f53d08e38656
+  - type: covered_by
+    from: SYM-ingest-sched-app-scheduler-begin
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:52:13.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f2e969671c6

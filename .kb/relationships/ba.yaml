@@ -223,3 +223,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b185bd6b7d6d
+  - type: implements
+    from: SYM-ingest-pg-scan-claim
+    to: REQ-ingest-sync-store
+    created_at: 2026-10-28T16:57:21.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c63d4834d410
+  - type: covered_by
+    from: SYM-ingest-pg-scan-claim
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:57:21.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91e204005a13

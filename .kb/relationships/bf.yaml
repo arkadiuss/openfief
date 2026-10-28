@@ -209,3 +209,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52320857122a
+  - type: implements
+    from: SYM-ingest-sched-app-connector-bindings
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:51:18.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16e474babb79
+  - type: covered_by
+    from: SYM-ingest-sched-app-connector-bindings
+    to: TEST-ingest-app-bound
+    created_at: 2026-10-28T16:51:18.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98e46865b60d
+  - type: executable_for
+    from: SYM-ingest-pg-test-binding-store
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:58:39.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70b6ceb68f69

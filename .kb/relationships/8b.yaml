@@ -181,3 +181,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22b43c120949
+  - type: implements
+    from: SYM-ingest-sched-sync-policy-validate
+    to: REQ-ingest-scheduler-due
+    created_at: 2026-10-28T16:58:50.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4eacce89e2
+  - type: covered_by
+    from: SYM-ingest-sched-sync-policy-validate
+    to: TEST-ingest-schedule
+    created_at: 2026-10-28T16:58:50.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b142e3eaaaf

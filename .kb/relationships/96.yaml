@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f24efb1a2591
+  - type: verified_by
+    from: SCEN-ingest-sync-store-roundtrip
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:50:16.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b84cfacce657

@@ -97,3 +97,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52a4fad42408
+  - type: implements
+    from: SYM-ingest-sched-app-open-batch
+    to: REQ-ingest-scheduler-retry
+    created_at: 2026-10-28T16:51:38.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35735a7a4060
+  - type: covered_by
+    from: SYM-ingest-sched-app-open-batch
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:51:38.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e132c8c5bc2

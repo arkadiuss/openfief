@@ -384,3 +384,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-449779e57e8f
+  - type: verified_by
+    from: SCEN-ingest-retry-same-batch
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:50:12.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5475f29f3d13
+  - type: verified_by
+    from: SCEN-ingest-retry-same-batch
+    to: TEST-ingest-schedule
+    created_at: 2026-10-28T16:50:12.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a84f2d91d2ac
+  - type: verified_by
+    from: SCEN-ingest-retry-same-batch
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:50:12.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b11a82026466

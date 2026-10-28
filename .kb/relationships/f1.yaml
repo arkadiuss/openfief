@@ -251,3 +251,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8202d92b228b
+  - type: implements
+    from: SYM-ingest-sched-validate-instance-name
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:55:56.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d28af2781e7
+  - type: covered_by
+    from: SYM-ingest-sched-validate-instance-name
+    to: TEST-ingest-binding
+    created_at: 2026-10-28T16:55:56.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30fc5b7392b1

@@ -230,3 +230,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20b2529a3b57
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-connectors-refuse-unbound-accounts
+    to: TEST-ingest-app-bound
+    created_at: 2026-10-28T16:51:10.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-189877d9593f
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-t0
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:58:10.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf0edd671829
