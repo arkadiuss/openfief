@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dc83c21938f
+  - type: verified_by
+    from: SCEN-ui-demo-and-logout
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:48:52.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13d586d4eea5

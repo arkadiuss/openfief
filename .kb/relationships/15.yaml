@@ -342,3 +342,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be5cf5ad8d8d
+  - type: executable_for
+    from: SYM-ui-test-helper-want-no-body
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:02:38.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5310494d1135
+  - type: executable_for
+    from: SYM-ui-test-helper-want-no-body
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:02:38.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23f68d61b9aa
+  - type: executable_for
+    from: SYM-ui-test-helper-want-no-body
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:02:38.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c36df650377c

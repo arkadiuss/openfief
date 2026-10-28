@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb8a494b6d0d
+  - type: executable_for
+    from: SYM-ui-test-expired-session
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:01:07.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-903550ed2d17

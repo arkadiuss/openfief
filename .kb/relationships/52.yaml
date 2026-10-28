@@ -272,3 +272,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a11850b0063
+  - type: verified_by
+    from: SCEN-ui-allocation-switch
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:49:11.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-249b2b949844
+  - type: constrains
+    from: REQ-ui-account-pages
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-28T19:50:02.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cf4b14fb09e
+  - type: requires_property
+    from: REQ-ui-account-pages
+    to: FACT-PROP-16EDCEC852FFD1C2
+    created_at: 2026-10-28T19:50:02.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e8a919b11ad
+  - type: specified_by
+    from: REQ-ui-account-pages
+    to: SCEN-ui-account
+    created_at: 2026-10-28T19:50:02.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac1b5158b162
+  - type: specified_by
+    from: REQ-ui-account-pages
+    to: SCEN-ui-flagged-assertions
+    created_at: 2026-10-28T19:50:02.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dbaabc92c6a
+  - type: executable_for
+    from: SYM-ui-test-vendored-libraries
+    to: TEST-ui-boundary
+    created_at: 2026-10-28T20:00:15.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecccbefe9d19

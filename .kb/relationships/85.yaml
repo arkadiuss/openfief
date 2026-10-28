@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb2af4d82a48
+  - type: executable_for
+    from: SYM-ui-test-allocation-switch
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:01:19.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88740dd90ef1

@@ -209,3 +209,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56570924037f
+  - type: implements
+    from: SYM-ui-login-data
+    to: REQ-ui-login-flows
+    created_at: 2026-10-28T19:51:32.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-881dee1635cf
+  - type: covered_by
+    from: SYM-ui-login-data
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:51:32.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b073a4533c45
+  - type: implements
+    from: SYM-ui-server-show-template
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:58:23.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e1920bf2e98
+  - type: covered_by
+    from: SYM-ui-server-show-template
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:58:23.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ca2267c3a99

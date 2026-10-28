@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf331291d872
+  - type: verified_by
+    from: SCEN-ui-imports
+    to: TEST-ui-boundary
+    created_at: 2026-10-28T19:49:19.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d0c5fcf7590

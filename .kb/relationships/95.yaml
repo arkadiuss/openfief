@@ -251,3 +251,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a203be27d37
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-begin-login
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:03:10.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-404d902abbc8
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-begin-login
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:03:10.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ef132f2d1bc
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-begin-login
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:03:10.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a9e430ea40a
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-cash
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:05:40.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73d68eb786b6
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-cash
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:05:40.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e159f1ce5013
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-cash
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:05:40.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1652a8c814d1

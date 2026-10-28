@@ -146,3 +146,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3b251bb9123
+  - type: implements
+    from: SYM-ui-static-files
+    to: REQ-ui-browser-security
+    created_at: 2026-10-28T19:55:22.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76eed40e1e1c
+  - type: covered_by
+    from: SYM-ui-static-files
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:55:22.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbdafac4cce6

@@ -118,3 +118,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b5d2b9c12aa
+  - type: verified_by
+    from: SCEN-ui-strict-csp
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:49:03.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11c2d95a1b8c
+  - type: verified_by
+    from: SCEN-ui-strict-csp
+    to: TEST-ui-boundary
+    created_at: 2026-10-28T19:49:03.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55e2b740e0c1
+  - type: verified_by
+    from: SCEN-ui-strict-csp
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:49:03.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b05443cf5de3

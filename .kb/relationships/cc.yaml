@@ -244,3 +244,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8f954aabd6b
+  - type: executable_for
+    from: SYM-ui-test-session-cookie
+    to: TEST-ui-format
+    created_at: 2026-10-28T20:00:50.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c1bf01ce545

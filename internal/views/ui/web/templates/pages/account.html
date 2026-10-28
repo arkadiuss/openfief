@@ -1,0 +1,63 @@
+{{define "content"}}
+{{with .Data}}
+<p class="muted">{{.Account.Institution}} · sleeve {{.Account.Sleeve}} · {{status .Status}} · showing {{.Date}}</p>
+
+<section class="card" aria-labelledby="holdings-title">
+  <h2 id="holdings-title">Holdings</h2>
+  <table>
+    <thead><tr><th scope="col">Instrument</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Value</th><th scope="col" class="num">Reporting value</th><th scope="col">Basis</th></tr></thead>
+    <tbody>
+    {{range .Holdings}}
+    <tr>
+      <td>{{instrument .Holding.Instrument}}</td>
+      <td class="num">{{amount .Holding.Quantity}}</td>
+      {{with .Valuation}}
+      <td class="num">{{money .Value}}</td><td class="num">{{money .ValueReporting}}</td><td>{{enum .Basis.String "VALUATION_BASIS_"}}</td>
+      {{else}}
+      <td colspan="3">no valuation on this date</td>
+      {{end}}
+    </tr>
+    {{else}}
+    <tr><td colspan="5">No holdings.</td></tr>
+    {{end}}
+    </tbody>
+  </table>
+</section>
+
+<section class="card" aria-labelledby="cash-title">
+  <h2 id="cash-title">Cash</h2>
+  {{if .Cash}}<ul>{{range .Cash}}<li>{{money .}}</li>{{end}}</ul>{{else}}<p>No cash.</p>{{end}}
+</section>
+
+<section class="card" aria-labelledby="lots-title">
+  <h2 id="lots-title">Open lots</h2>
+  <table>
+    <thead><tr><th scope="col">Instrument</th><th scope="col">Opened</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Cost</th><th scope="col">Origin</th></tr></thead>
+    <tbody>
+    {{range .Lots}}
+    <tr><td>{{instrument .Instrument}}</td><td>{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
+      <td>{{if .Opening}}opening lot{{else}}{{.OriginSource}} {{.OriginExternalId}}{{end}}</td></tr>
+    {{else}}
+    <tr><td colspan="5">No open lots.</td></tr>
+    {{end}}
+    </tbody>
+  </table>
+</section>
+
+<section class="card" aria-labelledby="checks-title">
+  <h2 id="checks-title">Balance assertions</h2>
+  {{template "checks" .Checks}}
+</section>
+
+<section class="card" aria-labelledby="tx-title">
+  <h2 id="tx-title">Transactions</h2>
+  <table>
+    <thead><tr><th scope="col">Date</th><th scope="col">Kind</th><th scope="col">Description</th><th scope="col">Postings</th></tr></thead>
+    <tbody>
+    {{template "transaction-rows" .Transactions}}
+    </tbody>
+  </table>
+  {{if not .Transactions.Transactions}}<p>No transactions.</p>{{end}}
+</section>
+{{end}}
+{{end}}

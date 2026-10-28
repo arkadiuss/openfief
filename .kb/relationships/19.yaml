@@ -223,3 +223,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2db765f1e30
+  - type: executable_for
+    from: SYM-ui-test-helper-want-body
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:02:34.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a7b79fc94bf
+  - type: executable_for
+    from: SYM-ui-test-helper-want-body
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:02:34.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd352ae60085
+  - type: executable_for
+    from: SYM-ui-test-helper-want-body
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:02:34.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e71a7ef91fba
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-transactions
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:05:45.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d3e72269a6b
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-transactions
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:05:45.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6ecf9950342
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-transactions
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:05:45.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b4f81cc889e

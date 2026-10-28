@@ -300,3 +300,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a37b2432e0bb
+  - type: verified_by
+    from: SCEN-ui-manifest
+    to: TEST-ui-plugin
+    created_at: 2026-10-28T19:49:23.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71600402ffc3

@@ -342,3 +342,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c712acfc4f7b
+  - type: verified_by
+    from: SCEN-ui-enrollment
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:48:50.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b622788f918
+  - type: implements
+    from: SYM-ui-server
+    to: REQ-ui-core-credentials
+    created_at: 2026-10-28T19:55:08.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b276d92bb114
+  - type: covered_by
+    from: SYM-ui-server
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:55:08.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b266c588d754
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-begin-registration
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:03:24.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7e5904c08b0
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-begin-registration
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:03:24.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f58bb5dae9aa
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-begin-registration
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:03:24.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c6937879cad

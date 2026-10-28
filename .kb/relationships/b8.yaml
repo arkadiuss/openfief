@@ -307,3 +307,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ea2a12a196e
+  - type: implements
+    from: SYM-ui-allocation-view-link
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:54:03.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17d949f96c3b
+  - type: implements
+    from: SYM-ui-allocation-view-link
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T19:54:03.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b17624d5a9e
+  - type: covered_by
+    from: SYM-ui-allocation-view-link
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:54:03.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b5f3fa59aa
+  - type: implements
+    from: SYM-ui-server-show
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:58:18.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-787d0097ef79
+  - type: covered_by
+    from: SYM-ui-server-show
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:58:18.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81b7e5faddd1

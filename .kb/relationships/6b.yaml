@@ -223,3 +223,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a5875fe9ec2
+  - type: implements
+    from: SYM-ui-format-amount
+    to: REQ-ui-formatting
+    created_at: 2026-10-28T19:52:56.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9c61e5e79c2
+  - type: covered_by
+    from: SYM-ui-format-amount
+    to: TEST-ui-format
+    created_at: 2026-10-28T19:52:56.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a1a7e55ea30

@@ -8,7 +8,7 @@ covers:
   - gen/openapi/**
 ---
 
-The [read API](../glossary.md) is how anything outside the core reads the record: sleeves, accounts, transactions, holdings, tax lots, cash, balance assertion checks, stored valuations and the allocation. The built-in UI and every view plugin are meant to read through it, and so can the owner's own scripts. It only reads: data enters OpenFief through connectors, never through this API. This page explains the service, the pure rules behind its totals and the allocation, and the HTTP adapter that serves it. The core service, `cmd/core`, serves it on Service `openfief-core`, port `http` (8080).
+The [read API](../glossary.md) is how anything outside the core reads the record: sleeves, accounts, transactions, holdings, tax lots, cash, balance assertion checks, stored valuations and the allocation. The [built-in UI](ui.md) reads through it, with the owner's session as its bearer token, every other view plugin is meant to, and so can the owner's own scripts. It only reads: data enters OpenFief through connectors, never through this API. This page explains the service, the pure rules behind its totals and the allocation, and the HTTP adapter that serves it. The core service, `cmd/core`, serves it on Service `openfief-core`, port `http` (8080).
 
 ## Concepts
 
@@ -180,6 +180,7 @@ One text differs from the code: REQ-views-allocation-inputs says cash rounds hal
 ## Not built yet
 
 - **D-27**: accepting plugins' projected ServiceAccount tokens (audience `openfief-core`); the core's verifier accepts sessions and script tokens only.
-- **D-30**, **D-36**: the built-in UI's allocation and value-over-time charts and its valuation status display, and the view plugins that read through this API (D-3, D-4).
+- **D-4**: the Ghostfolio view. The [built-in UI](ui.md) reads this API with the owner's session token for D-30's charts and D-36's valuation status.
+- A time-weighted return endpoint (D-61); the UI shows "TWR: not built" instead of computing one.
 - Cash in value-over-time totals. Stored valuations have no cash, so `ListValuationTotals` counts holdings only.
 - **D-62**: a reporting currency other than PLN, waiting on T-12.

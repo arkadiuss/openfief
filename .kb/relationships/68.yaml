@@ -272,3 +272,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d79dcf9697e3
+  - type: implements
+    from: SYM-ui-server-enroll-page
+    to: REQ-ui-login-flows
+    created_at: 2026-10-28T19:52:10.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d943ea72c5d
+  - type: covered_by
+    from: SYM-ui-server-enroll-page
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:52:10.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9d65b15f075

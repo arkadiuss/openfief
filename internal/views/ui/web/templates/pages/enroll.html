@@ -1,0 +1,12 @@
+{{define "scripts"}}
+<script src="/static/webauthn.js" defer></script>
+{{end}}
+{{define "content"}}
+<section class="card narrow">
+  <p>Create a passkey for this host with this one-time link. The passkey will work here only, on this host name.</p>
+  <label for="passkey-name">Name for the passkey</label>
+  <input id="passkey-name" name="name" maxlength="64" placeholder="laptop" autocomplete="off">
+  <button type="button" class="primary" data-webauthn="register">Create passkey</button>
+  <p class="error" data-webauthn-error role="alert" hidden></p>
+</section>
+{{end}}

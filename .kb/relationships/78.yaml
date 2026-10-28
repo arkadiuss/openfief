@@ -293,3 +293,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dce3edf4972f
+  - type: implements
+    from: SYM-ui-safe-method
+    to: REQ-ui-browser-security
+    created_at: 2026-10-28T19:55:41.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f6618e50d4
+  - type: covered_by
+    from: SYM-ui-safe-method
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:55:41.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41c2abc0a8e5
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-accounts
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:04:54.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54bf1928f876
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-accounts
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:04:54.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2374116439a6
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-accounts
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:04:54.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2783d028ea29
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-get-allocation
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:05:12.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27655da38ee6
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-get-allocation
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:05:12.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c6d8cc377f
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-get-allocation
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:05:12.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7034651f8045

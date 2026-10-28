@@ -314,3 +314,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e0fab68e79a
+  - type: validates
+    from: TEST-ui-pages
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T19:48:30.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb1a51d13256
+  - type: validates
+    from: TEST-ui-pages
+    to: REQ-AUTO-718AA30AAFD0E6E8
+    created_at: 2026-10-28T19:48:30.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09be01460243
+  - type: validates
+    from: TEST-ui-pages
+    to: REQ-decision-d36-7-ui-valuation-status
+    created_at: 2026-10-28T19:48:30.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7f38715ef6e
+  - type: validates
+    from: TEST-ui-pages
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-28T19:48:30.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bdf47455916
+  - type: implements
+    from: SYM-ui-session-handler
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:35.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed37117d754d
+  - type: covered_by
+    from: SYM-ui-session-handler
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:56:35.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd5020957af9

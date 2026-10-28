@@ -237,3 +237,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f6b9b4daa79
+  - type: validates
+    from: TEST-ui-boundary
+    to: REQ-AUTO-A04740EC43D6F6BA
+    created_at: 2026-10-28T19:48:36.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c64e1eb1dac
+  - type: implements
+    from: SYM-ui-healthz
+    to: REQ-ui-plugin-packaging
+    created_at: 2026-10-28T19:55:27.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd4e72f4a49c
+  - type: covered_by
+    from: SYM-ui-healthz
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:55:27.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6084ea38a26b
+  - type: implements
+    from: SYM-ui-server-create-enrollment-link
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:57:51.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bd4280db358
+  - type: implements
+    from: SYM-ui-server-create-enrollment-link
+    to: REQ-identity-passkey-new-hostname
+    created_at: 2026-10-28T19:57:51.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a69a20b54da3
+  - type: covered_by
+    from: SYM-ui-server-create-enrollment-link
+    to: TEST-ui-settings
+    created_at: 2026-10-28T19:57:51.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f486707704e

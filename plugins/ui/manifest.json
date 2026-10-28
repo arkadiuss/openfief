@@ -1,0 +1,7 @@
+{
+  "capabilities": ["view"],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false
+  }
+}

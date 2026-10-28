@@ -286,3 +286,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c1a0d4e04ca
+  - type: constrains
+    from: REQ-ui-overview
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-28T19:49:57.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-800b41e5ee2c
+  - type: requires_property
+    from: REQ-ui-overview
+    to: FACT-PROP-676EAFC6A76D4230
+    created_at: 2026-10-28T19:49:57.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07e3801d2b51
+  - type: specified_by
+    from: REQ-ui-overview
+    to: SCEN-ui-overview
+    created_at: 2026-10-28T19:49:57.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efdcde2d79c1
+  - type: specified_by
+    from: REQ-ui-overview
+    to: SCEN-ui-allocation-switch
+    created_at: 2026-10-28T19:49:57.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8353752bb79
+  - type: implements
+    from: SYM-ui-account-data
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:50:46.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebe38afe7dc0
+  - type: covered_by
+    from: SYM-ui-account-data
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:50:46.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec9dc583b2d9

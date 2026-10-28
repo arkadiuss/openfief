@@ -209,3 +209,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-929042f50631
+  - type: implements
+    from: SYM-ui-server-overview
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:54:42.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b29fe7ecd609
+  - type: implements
+    from: SYM-ui-server-overview
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-28T19:54:42.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b8214e6cbee
+  - type: covered_by
+    from: SYM-ui-server-overview
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:54:42.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04a494acb5b9
+  - type: executable_for
+    from: SYM-ui-test-utctoday
+    to: TEST-ui-format
+    created_at: 2026-10-28T20:00:58.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9686b8a8695c

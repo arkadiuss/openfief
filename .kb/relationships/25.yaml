@@ -244,3 +244,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b45aed05b509
+  - type: verified_by
+    from: SCEN-ui-session-expired
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:48:59.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66099aea7da4
+  - type: executable_for
+    from: SYM-ui-test-transactions-paging
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:01:26.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2537a4e92eb

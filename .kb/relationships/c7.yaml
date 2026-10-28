@@ -237,3 +237,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa2dd4d443e3
+  - type: implements
+    from: SYM-ui-refusal-status
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:56:53.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-218ecc39b37f
+  - type: covered_by
+    from: SYM-ui-refusal-status
+    to: TEST-ui-settings
+    created_at: 2026-10-28T19:56:53.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c00f491f37e5

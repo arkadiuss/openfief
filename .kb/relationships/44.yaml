@@ -359,5 +359,68 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-f18ce06ce2b6
+      },
+    {
+        type: verified_by,
+        from: SCEN-ui-formatting,
+        to: TEST-ui-format,
+        created_at: 2026-10-28T19:49:21.233Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-cd3bc0d578e5
+      },
+    {
+        type: implements,
+        from: SYM-ui-server-account-rows,
+        to: REQ-ui-overview,
+        created_at: 2026-10-28T19:54:56.379Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-8636b2d24555
+      },
+    {
+        type: implements,
+        from: SYM-ui-server-account-rows,
+        to: REQ-decision-d36-7-ui-valuation-status,
+        created_at: 2026-10-28T19:54:56.407Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-1fe1c804a716
+      },
+    {
+        type: covered_by,
+        from: SYM-ui-server-account-rows,
+        to: TEST-ui-pages,
+        created_at: 2026-10-28T19:54:56.427Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-46bb814f6a6f
+      },
+    {
+        type: executable_for,
+        from: SYM-ui-test-helper-fake-auth-finish-login,
+        to: TEST-ui-auth,
+        created_at: 2026-10-28T20:03:14.910Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-133faecc8337
+      },
+    {
+        type: executable_for,
+        from: SYM-ui-test-helper-fake-auth-finish-login,
+        to: TEST-ui-pages,
+        created_at: 2026-10-28T20:03:14.945Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-d82f8f4d6c18
+      },
+    {
+        type: executable_for,
+        from: SYM-ui-test-helper-fake-auth-finish-login,
+        to: TEST-ui-settings,
+        created_at: 2026-10-28T20:03:14.971Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-c5be058fdb3d
       }
   ]

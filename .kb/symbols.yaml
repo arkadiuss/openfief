@@ -52447,3 +52447,2742 @@ symbols:
         target: TEST-identity-webauthn
       - type: implements
         target: REQ-identity-passkey-ceremonies
+  - id: SYM-ui-holding-row
+    title: holdingRow
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:26.237Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-transactions-view
+    title: transactionsView
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:29.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-transactions-view-next-link
+    title: transactionsView.NextLink
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:34.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-transactions-view-next-fragment
+    title: transactionsView.NextFragment
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:39.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-account-data
+    title: accountData
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:44.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-instrument-key
+    title: instrumentKey
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:49.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-join-valuations
+    title: joinValuations
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:54.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-server-account-page
+    title: server.accountPage
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:00.266Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-server-positions
+    title: server.positions
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:05.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-server-transactions
+    title: server.transactions
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:11.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-server-transactions-fragment
+    title: server.transactionsFragment
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:16.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-flagged-account
+    title: flaggedAccount
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:21.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-server-assertions-page
+    title: server.assertionsPage
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:26.431Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-login-data
+    title: loginData
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:31.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-login-page
+    title: server.loginPage
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:35.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-AUTO-585F02DB972C1660
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-ceremony-start
+    title: ceremonyStart
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:40.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-ceremony-end
+    title: ceremonyEnd
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:45.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-register-start
+    title: registerStart
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:50.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-login-begin
+    title: server.loginBegin
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:54.947Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-AUTO-585F02DB972C1660
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-login-finish
+    title: server.loginFinish
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:59.574Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-AUTO-585F02DB972C1660
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-demo-login
+    title: server.demoLogin
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:04.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-enroll-page
+    title: server.enrollPage
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:09.012Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-register-begin
+    title: server.registerBegin
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:13.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-AUTO-585F02DB972C1660
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-register-finish
+    title: server.registerFinish
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:19.002Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-AUTO-585F02DB972C1660
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-logout
+    title: server.logout
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:23.968Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-read-json
+    title: server.readJSON
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:28.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-write-json
+    title: server.writeJSON
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:34.249Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-json-redirect
+    title: server.jsonRedirect
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:39.064Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-json-error
+    title: server.jsonError
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:44.169Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-server-json-failed
+    title: server.jsonFailed
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:49.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-login-flows
+  - id: SYM-ui-format-amount
+    title: formatAmount
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:54.668Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+  - id: SYM-ui-format-money
+    title: formatMoney
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:00.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+  - id: SYM-ui-share
+    title: share
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:05.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-dimension
+    title: dimension
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:10.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-dimensions
+    title: dimensions
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:15.424Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-parse-dimension
+    title: parseDimension
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:20.440Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-valuation-state
+    title: valuationState
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:25.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-decision-d36-7-ui-valuation-status
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-book-label
+    title: bookLabel
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:30.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+  - id: SYM-ui-instrument-label
+    title: instrumentLabel
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:34.910Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+  - id: SYM-ui-enum-label
+    title: enumLabel
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:39.844Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+  - id: SYM-ui-scope-label
+    title: scopeLabel
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:44.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+  - id: SYM-ui-account-row
+    title: accountRow
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:49.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-decision-d36-7-ui-valuation-status
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-allocation-row
+    title: allocationRow
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:54.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-allocation-view
+    title: allocationView
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:57.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-allocation-view-link
+    title: allocationView.Link
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:02.535Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-allocation-view-fragment-link
+    title: allocationView.FragmentLink
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:07.351Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-history-view
+    title: historyView
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:12.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-718AA30AAFD0E6E8
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-overview-data
+    title: overviewData
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:16.298Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-chart-data
+    title: chartData
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:19.539Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-chart-data-encode
+    title: chartData.encode
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:23.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-as-of-date
+    title: asOfDate
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:28.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-build-allocation
+    title: buildAllocation
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:32.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-build-history
+    title: buildHistory
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:37.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-718AA30AAFD0E6E8
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-server-overview
+    title: server.overview
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:41.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-overview
+      - type: implements
+        target: REQ-valuation-reporting-currency
+  - id: SYM-ui-server-allocation
+    title: server.allocation
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:46.180Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-server-history
+    title: server.history
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:50.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-718AA30AAFD0E6E8
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-server-account-rows
+    title: server.accountRows
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:55.133Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-decision-d36-7-ui-valuation-status
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-server-allocation-fragment
+    title: server.allocationFragment
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:59.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-config
+    title: Config
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:04.256Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-core-credentials
+  - id: SYM-ui-server
+    title: server
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:07.745Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-core-credentials
+  - id: SYM-ui-new
+    title: New
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:12.164Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+      - type: implements
+        target: REQ-ui-core-credentials
+  - id: SYM-ui-server-routes
+    title: server.routes
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:16.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-static-files
+    title: staticFiles
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:21.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-healthz
+    title: healthz
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:25.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-plugin-packaging
+  - id: SYM-ui-security-headers
+    title: securityHeaders
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:30.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-same-origin
+    title: sameOrigin
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:34.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-safe-method
+    title: safeMethod
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:40.141Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-from-own-origin
+    title: fromOwnOrigin
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:44.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-session
+    title: session
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:47.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-session-owner
+    title: session.Owner
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:52.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-session-scope-label
+    title: session.ScopeLabel
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:55:57.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-request-origin
+    title: requestOrigin
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:01.811Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-local-http
+    title: localHTTP
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:06.490Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-session-cookie
+    title: sessionCookie
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:11.019Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-set-session
+    title: setSession
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:15.636Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-clear-session
+    title: clearSession
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:20.264Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-session-token
+    title: sessionToken
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:24.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-is-htmx
+    title: isHTMX
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:29.382Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-session-handler
+    title: sessionHandler
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:34.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-server-with-session
+    title: server.withSession
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:38.704Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-server-with-owner
+    title: server.withOwner
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:42.953Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-to-login
+    title: toLogin
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:47.452Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-refusal-status
+    title: refusalStatus
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:51.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-server-core-failed
+    title: server.coreFailed
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:56:56.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-session-cookie
+  - id: SYM-ui-connect-message
+    title: connectMessage
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:00.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-bearer
+    title: bearer
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:05.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-core-credentials
+  - id: SYM-ui-utc-today
+    title: utcToday
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:09.903Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-settings-data
+    title: settingsData
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:14.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-server-settings-page
+    title: server.settingsPage
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:18.803Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-server-render-settings
+    title: server.renderSettings
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:23.254Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-server-action-failed
+    title: server.actionFailed
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:27.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-server-remove-passkey
+    title: server.removePasskey
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:32.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-server-create-token
+    title: server.createToken
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:36.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-token-days
+    title: tokenDays
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:41.386Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-server-revoke-token
+    title: server.revokeToken
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:46.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-server-create-enrollment-link
+    title: server.createEnrollmentLink
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:50.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-settings
+      - type: implements
+        target: REQ-identity-passkey-new-hostname
+      - type: implements
+        target: REQ-ui-owner-actions
+  - id: SYM-ui-pages
+    title: pages
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:54.075Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-page
+    title: page
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:57:58.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-template-funcs
+    title: templateFuncs
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:03.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-parse-pages
+    title: parsePages
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:08.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-browser-security
+  - id: SYM-ui-pages-render
+    title: pages.render
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:12.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-server-show
+    title: server.show
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:17.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-server-show-template
+    title: server.showTemplate
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:21.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-ui-server-error-page
+    title: server.errorPage
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:26.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-pages
+  - id: SYM-uiplugin-main
+    title: main
+    sourceFile: plugins/ui/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:31.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugin
+      - type: implements
+        target: REQ-AUTO-902181B0129A6321
+      - type: implements
+        target: REQ-ui-plugin-packaging
+  - id: SYM-uiplugin-serve
+    title: serve
+    sourceFile: plugins/ui/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:35.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugin
+      - type: implements
+        target: REQ-AUTO-902181B0129A6321
+      - type: implements
+        target: REQ-ui-plugin-packaging
+  - id: SYM-uiplugin-run
+    title: run
+    sourceFile: plugins/ui/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:40.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugin
+      - type: implements
+        target: REQ-AUTO-902181B0129A6321
+      - type: implements
+        target: REQ-ui-plugin-packaging
+  - id: SYM-uiplugin-new-handler
+    title: newHandler
+    sourceFile: plugins/ui/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:45.242Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugin
+      - type: implements
+        target: REQ-AUTO-902181B0129A6321
+      - type: implements
+        target: REQ-ui-plugin-packaging
+  - id: SYM-uiplugin-read-client
+    title: readClient
+    sourceFile: plugins/ui/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:50.143Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugin
+      - type: implements
+        target: REQ-AUTO-902181B0129A6321
+      - type: implements
+        target: REQ-ui-plugin-packaging
+  - id: SYM-uiplugin-serve-until-done
+    title: serveUntilDone
+    sourceFile: plugins/ui/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:55.038Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugin
+      - type: implements
+        target: REQ-AUTO-902181B0129A6321
+      - type: implements
+        target: REQ-ui-plugin-packaging
+  - id: SYM-ui-test-login-page
+    title: TestLoginPage
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:58:59.582Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-auth-service-gets-plugin-token
+    title: TestAuthServiceGetsPluginToken
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:03.866Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-demo-login
+    title: TestDemoLogin
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:08.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-helper-cookie-attrs
+    title: cookieAttrs
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:12.766Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-helper-attrs-of
+    title: attrsOf
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:17.543Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-localhost-cookie
+    title: TestLocalhostCookie
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:22.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-passkey-login
+    title: TestPasskeyLogin
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:26.490Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-passkey-login-refused
+    title: TestPasskeyLoginRefused
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:31.057Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-enrollment
+    title: TestEnrollment
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:35.735Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-register-with-session
+    title: TestRegisterWithSession
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:40.256Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-logout
+    title: TestLogout
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:45.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-cross-origin-refused
+    title: TestCrossOriginRefused
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:49.951Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-security-headers
+    title: TestSecurityHeaders
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:54.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-no-inline-scripts-or-styles
+    title: TestNoInlineScriptsOrStyles
+    sourceFile: internal/views/ui/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:59:59.462Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+  - id: SYM-ui-test-reads-only-through-public-api
+    title: TestReadsOnlyThroughPublicAPI
+    sourceFile: internal/views/ui/boundary_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:03.390Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-boundary
+  - id: SYM-ui-test-helper-allowed-import
+    title: allowedImport
+    sourceFile: internal/views/ui/boundary_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:07.199Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-boundary
+  - id: SYM-ui-test-new-needs-clients
+    title: TestNewNeedsClients
+    sourceFile: internal/views/ui/boundary_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:10.894Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-boundary
+  - id: SYM-ui-test-vendored-libraries
+    title: TestVendoredLibraries
+    sourceFile: internal/views/ui/boundary_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:14.600Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-boundary
+  - id: SYM-ui-test-format-amount
+    title: TestFormatAmount
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:18.114Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-share
+    title: TestShare
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:21.724Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-parse-dimension
+    title: TestParseDimension
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:25.512Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-labels
+    title: TestLabels
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:29.451Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-as-of-date
+    title: TestAsOfDate
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:33.391Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-build-charts
+    title: TestBuildCharts
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:37.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-join-valuations
+    title: TestJoinValuations
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:41.078Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-request-origin
+    title: TestRequestOrigin
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:44.805Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-session-cookie
+    title: TestSessionCookie
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:48.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-token-days
+    title: TestTokenDays
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:52.792Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-utctoday
+    title: TestUTCToday
+    sourceFile: internal/views/ui/format_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:00:57.147Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-format
+  - id: SYM-ui-test-pages-need-session
+    title: TestPagesNeedSession
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:01.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-expired-session
+    title: TestExpiredSession
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:05.671Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-overview
+    title: TestOverview
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:09.925Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-overview-date
+    title: TestOverviewDate
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:13.901Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-allocation-switch
+    title: TestAllocationSwitch
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:17.855Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-account-page
+    title: TestAccountPage
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:21.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-transactions-paging
+    title: TestTransactionsPaging
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:25.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-assertions-page
+    title: TestAssertionsPage
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:29.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-read-scope-hides-owner-actions
+    title: TestReadScopeHidesOwnerActions
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:33.217Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-static-files
+    title: TestStaticFiles
+    sourceFile: internal/views/ui/pages_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:37.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-test-settings-page
+    title: TestSettingsPage
+    sourceFile: internal/views/ui/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:41.309Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-create-script-token
+    title: TestCreateScriptToken
+    sourceFile: internal/views/ui/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:45.138Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-revoke-and-remove
+    title: TestRevokeAndRemove
+    sourceFile: internal/views/ui/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:48.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-create-enrollment-link
+    title: TestCreateEnrollmentLink
+    sourceFile: internal/views/ui/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:52.624Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-uiplugin-test-manifest
+    title: TestManifest
+    sourceFile: plugins/ui/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:01:56.657Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugin
+  - id: SYM-uiplugin-test-read-client
+    title: TestReadClient
+    sourceFile: plugins/ui/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:00.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugin
+  - id: SYM-ui-test-helper-request
+    title: request
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:04.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-form
+    title: form
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:09.357Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-with-session
+    title: withSession
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:14.025Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-htmx
+    title: htmx
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:18.626Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-harness-serve
+    title: harness.serve
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:23.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-want-status
+    title: wantStatus
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:28.264Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-want-body
+    title: wantBody
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:32.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-want-no-body
+    title: wantNoBody
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:37.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-locker
+    title: locker
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:42.146Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-seen
+    title: seen
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:46.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-seen-one
+    title: seenOne
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:51.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-response-cookie
+    title: responseCookie
+    sourceFile: internal/views/ui/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:02:56.092Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-code-err
+    title: codeErr
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:00.648Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-get-login-methods
+    title: fakeAuth.GetLoginMethods
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:05.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-begin-login
+    title: fakeAuth.BeginLogin
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:09.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-finish-login
+    title: fakeAuth.FinishLogin
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:13.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-create-demo-session
+    title: fakeAuth.CreateDemoSession
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:18.217Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-begin-registration
+    title: fakeAuth.BeginRegistration
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:23.422Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-finish-registration
+    title: fakeAuth.FinishRegistration
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:28.346Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-logout
+    title: fakeAuth.Logout
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:33.352Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-who-am-i
+    title: fakeAuth.WhoAmI
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:38.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-list-passkeys
+    title: fakeAuth.ListPasskeys
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:44.244Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-remove-passkey
+    title: fakeAuth.RemovePasskey
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:49.980Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-create-script-token
+    title: fakeAuth.CreateScriptToken
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:03:55.498Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-list-script-tokens
+    title: fakeAuth.ListScriptTokens
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:00.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-revoke-script-token
+    title: fakeAuth.RevokeScriptToken
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:04.970Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-create-enrollment-link
+    title: fakeAuth.CreateEnrollmentLink
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:09.966Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-locked
+    title: fakeAuth.locked
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:14.744Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-flag
+    title: fakeAuth.flag
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:19.239Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth-record
+    title: fakeAuth.record
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:24.363Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-scope-of
+    title: scopeOf
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:29.802Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-owner
+    title: owner
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:35.041Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-issued
+    title: issued
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:39.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-pln
+    title: pln
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:44.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-synthetic-instrument
+    title: syntheticInstrument
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:48.485Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-accounts
+    title: fakeRead.ListAccounts
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:53.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-get-account
+    title: fakeRead.GetAccount
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:04:57.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-valuation-statuses
+    title: fakeRead.ListValuationStatuses
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:02.677Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-get-valuation-status
+    title: fakeRead.GetValuationStatus
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:07.169Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-get-allocation
+    title: fakeRead.GetAllocation
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:11.584Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-valuation-totals
+    title: fakeRead.ListValuationTotals
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:16.063Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-account-valuations
+    title: fakeRead.ListAccountValuations
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:20.682Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-assertion-checks
+    title: fakeRead.ListAssertionChecks
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:25.655Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-holdings
+    title: fakeRead.ListHoldings
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:30.277Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-lots
+    title: fakeRead.ListLots
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:34.975Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-cash
+    title: fakeRead.ListCash
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:39.597Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-list-transactions
+    title: fakeRead.ListTransactions
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:44.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-locked
+    title: fakeRead.locked
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:49.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-check
+    title: fakeRead.check
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:53.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read-status
+    title: fakeRead.status
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:05:58.450Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-new-harness
+    title: newHarness
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:06:03.102Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-harness-write-token
+    title: harness.writeToken
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:06:08.445Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-must-date
+    title: mustDate
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:06:13.225Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-auth
+    title: fakeAuth
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:06:17.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-fake-read
+    title: fakeRead
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:06:21.046Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings
+  - id: SYM-ui-test-helper-harness
+    title: harness
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T20:06:24.675Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-auth
+      - type: executable_for
+        target: TEST-ui-pages
+      - type: executable_for
+        target: TEST-ui-settings

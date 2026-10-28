@@ -153,3 +153,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40d597553813
+  - type: executable_for
+    from: SYM-ui-test-assertions-page
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:01:30.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4faeb85a6675
