@@ -4,6 +4,7 @@ description: How OpenFief describes, approves and runs a plugin, and how much of
 covers:
   - internal/plugins/*.go
   - internal/plugins/app/**
+  - internal/plugins/catalog/**
   - proto/**
   - sdk/**
 ---
@@ -12,11 +13,11 @@ A plugin is how OpenFief reaches the outside world: a connector brings data in, 
 
 ## Concepts
 
-**Plugin and instance.** A [plugin](../glossary.md) is one installed, named instance of a plugin image. The same image can be installed twice under two names, such as one instance per IBKR account, and each instance has its own config, Secrets, grant and [egress allow-list](../glossary.md) (D-48). Its ServiceAccount, objects, grant and allow-list entry are all keyed by its name. Secrets are the exception: their names come from the manifest, so two instances get different Secrets only if their manifests name different ones.
+**Plugin and instance.** A [plugin](../glossary.md) is one installed, named instance of a plugin image. The same image can be installed twice under two names, such as one instance per IBKR account, and each instance has its own config, Secrets, grant and [egress allow-list](../glossary.md) (D-48). Its ServiceAccount, objects, grant and allow-list entry are all keyed by its name. Secrets are the exception: their names come from the manifest, which must equal the image's signed label, so every instance of one image mounts the same Secret names (see [Decisions](#decisions)).
 
 **Capability.** What a plugin may act as: `connector` or `view` in M0. A plugin that ends up with no approved [capability](../glossary.md) has nothing it may do, so it does not run.
 
-**Manifest.** The [manifest](../glossary.md) is what a plugin declares: capabilities, [egress hosts](../glossary.md) (hostname and port), Secrets with the path to mount each at, [data tiers](../glossary.md), and a JSON Schema for its config. D-42 puts it in a label on the image config, so one signature covers both the code and the permissions it asks for, and the CLI can read it from the container registry without running the image.
+**Manifest.** The [manifest](../glossary.md) is what a plugin declares: capabilities, [egress hosts](../glossary.md) (hostname and port), Secrets with the path to mount each at, [data tiers](../glossary.md), and a JSON Schema for its config. D-42 puts it in a label on the image config, so one signature covers both the code and the permissions it asks for, and it can be read from the container registry without running the image. The `Plugin` resource carries a copy, which must equal the signed label.
 
 **Requested, granted and effective permissions.** The principle of least privilege (Saltzer and Schroeder, 1975) says every program should hold only the privileges its job needs. Capability-based security (Dennis and Van Horn, 1966) goes further: a permission is something you hold and can be shown, not something looked up from who you are. OpenFief splits a plugin's permissions in two (D-16). The `Plugin` resource carries what the vendor requests; the [grant](../glossary.md), a `PluginGrant` resource, carries what the [owner](../glossary.md) approved. Only what both hold is enforced: the plugin's [effective permissions](../glossary.md). A grant that approves more than requested adds nothing, and a request beyond the grant gets nothing.
 
@@ -49,6 +50,9 @@ Everything in [`internal/plugins`](../../internal/plugins/) is pure: no I/O, no 
 | [egress_host.go](../../internal/plugins/egress_host.go) | `EgressHost`, `ParseEgressHost` |
 | [allowlist.go](../../internal/plugins/allowlist.go), [allowlist_codec.go](../../internal/plugins/allowlist_codec.go) | `EgressAllowList.Allows`, `EncodeAllowLists`, `DecodeAllowLists` |
 | [identity.go](../../internal/plugins/identity.go) | `Namespace`, `CoreAudience`, `EgressAudience`, `ServiceAccountName`, `PluginForServiceAccount` |
+| [trust.go](../../internal/plugins/trust.go) | `Signer`, `SignerIdentity`, `TrustPolicy` and its `Decide`; `Verified` and `Unverified` |
+| [catalog.go](../../internal/plugins/catalog.go), [catalog/](../../internal/plugins/catalog/catalog.go) | `Catalog`, `ParseCatalog`, `ParseOwnerSigners`; the embedded catalog file and `catalog.Load` |
+| [manifest_label.go](../../internal/plugins/manifest_label.go) | `ManifestLabel`, `ParseManifestLabel`, `Manifest.Equal` |
 | [errors.go](../../internal/plugins/errors.go) | Sentinel errors and `FieldError` |
 | [app/egress.go](../../internal/plugins/app/egress.go), [app/tokencache.go](../../internal/plugins/app/tokencache.go) | The egress proxy's use case, `app.Egress`, and its token cache, `app.CachingTokenReviewer`; see [Egress](egress.md) |
 
@@ -153,7 +157,37 @@ stateDiagram-v2
   V2 --> [*]
 ```
 
-This is what `PlanRollout` decides and its tests check. In a cluster today every path ends in "nothing runs", because the operator's signature verifier refuses every image (see [Not built yet](#not-built-yet)).
+In a cluster, `CurrentDeployable` is false until the image passes the signature check in the next section, and a previous version runs only while its own image still passes it.
+
+### Signatures, trusted signers and the catalog
+
+Whether an image may run is decided by `TrustPolicy.Decide` in [trust.go](../../internal/plugins/trust.go), a pure function over what an adapter found in the registry: a `SignedImage` with the identities whose signatures over the digest verified, and the manifest from the image's signed label. The adapter, [`internal/plugins/cosign`](../../internal/plugins/cosign/doc.go), finds cosign bundles attached to the image as OCI referrers, verifies them offline with sigstore-go against an embedded Sigstore trust root, and reads the label only from a signed image. It and the operator's `PolicyVerifier`, which caches signed images by digest and retries an unreachable registry every minute, are on the [Operator](operator.md) page.
+
+```mermaid
+flowchart TD
+  img(["Plugin image, repository@sha256:..."]) --> insp["cosign Verifier.Inspect:<br/>bundles verified offline with sigstore-go"]
+  insp -- "registry unreachable" --> unk["SignatureVerified Unknown:<br/>RegistryUnavailable, retried"]
+  insp --> sig{"a signature over the digest<br/>by a policy signer?"}
+  sig -- no --> uns["False: Unsigned"]
+  sig -- yes --> lab{"valid io.openfief.plugin.manifest<br/>label on the signed image?"}
+  lab -- no --> badlab["False: InvalidManifestLabel"]
+  lab -- yes --> pin{"catalog pins this digest,<br/>signed by that entry's publisher?"}
+  pin -- yes --> ver["trust: Verified"]
+  pin -- no --> oth{"signed by any trusted signer:<br/>OpenFief CI, a catalog publisher, an owner signer?"}
+  oth -- no --> untr["False: UntrustedSigner"]
+  oth -- yes --> unv["trust: Unverified"]
+  ver --> eq{"label equals the Plugin's<br/>spec.manifest, as sets?"}
+  unv --> eq
+  eq -- no --> mis["False: ManifestMismatch"]
+  eq -- yes --> ok["True: Verified or SignedByTrustedSigner<br/>(may be deployed)"]
+```
+
+- **Signers.** A `Signer` has a name, one of D-45's three kinds (`SignerOpenFiefCI`, `SignerPublisher`, `SignerOwner`) and a `SignerIdentity`. A keyless identity is an `https` OIDC issuer plus either an exact subject or an RE2 `SubjectPattern` that must match the whole subject; a key identity is one PEM public key. `SignerIdentity.Matches` compares a verified signature's identity with it, and a malformed identity matches nothing.
+- **OpenFief's CI** is always trusted: `OpenFiefCI()` is the GitHub Actions issuer with the exact subject of the `images.yml` workflow on `main`.
+- **The catalog** is [plugins.json](../../internal/plugins/catalog/plugins.json), embedded in the operator binary with `go:embed` and read by `catalog.Load` (D-43). `ParseCatalog` reads it strictly: unknown fields, trailing data or any invalid entry refuse the whole file. An entry has a name, an image whose digest it pins, and a publisher with an exact identity, never a pattern (D-44). Only the digest counts, so a mirror of the same image is verified too. The file has no entries yet.
+- **Owner signers** come from `ParseOwnerSigners`, with the same strictness; they may use a subject pattern or a public key. The operator reads them at start from the optional ConfigMap `openfief-trusted-signers` and refuses to start when the file is invalid.
+- **The policy.** `NewTrustPolicy(catalog, owner)` trusts OpenFief's CI, every catalog publisher and every owner signer. `Decide` returns `ErrUnsigned` without signatures and `ErrUntrustedSigner` when none is by a trusted signer. Otherwise the image is `Verified` when a catalog entry pins its digest and that entry's publisher signed it, and `Unverified` when any other trusted signer did. With a declared manifest, it then returns `ErrManifestMismatch` unless `Manifest.Equal` holds. Nothing in the policy can admit an unsigned image (D-57).
+- **The manifest label** is `io.openfief.plugin.manifest` on the image config. `ParseManifestLabel` reads the same fields as `spec.manifest`, refuses unknown fields and validates the result. `Manifest.Equal` compares capabilities, egress hosts, Secret mounts and data tiers as sets, and config schemas as JSON values with exact numbers.
 
 ### Handing allow-lists to the egress proxy
 
@@ -214,19 +248,28 @@ Implemented, fully or in the part named:
 - **D-11** (part) Compiled manifests, a protobuf contract, the Go SDK. (RBAC compiles to none: a ServiceAccount without a Role.)
 - **D-13, D-15** `Plugin` resource; operator confined to `openfief`.
 - **D-16** Enforce only what request and grant share.
-- **D-17** (part) Images pinned by digest; tags refused.
+- **D-17** Images pinned by digest, signatures verified with cosign bundles.
 - **D-27** (part) Plugins get, and the SDK sends, `openfief-core` tokens.
 - **D-32** (part) Plugins reach only core and proxy, no DNS.
+- **D-42** Manifest in a signed image label; `spec.manifest` must match it.
+- **D-43** (part) One catalog file, embedded in the operator; still empty.
+- **D-44** Catalog entries pin a digest and the publisher's identity.
+- **D-45** Three signer kinds: OpenFief CI, catalog publishers, owner signers.
 - **D-47** Upgrades happen only when the owner edits.
-- **D-48** Every instance keyed by its own name.
+- **D-48** (part) Every instance keyed by its own name, except Secrets.
 - **D-49** (part) Connector contract: the core calls `Sync` and `ImportFile`.
+- **D-56** (part) Operator verifies offline; status tells verified from only signed.
+- **D-57** No setting deploys an image the policy refuses.
 - **D-59** (part) Only the core reaches a plugin; SDK refuses other callers.
 - **D-63** (part) Separate egress token, rebuilt into the proxy URL per request.
 - **D-5** Contracts and Go SDK licensed Apache-2.0.
 
-Implemented differently:
+Worth knowing when you check the code against the decisions:
 
-- **D-42** says the manifest is a label on the image config. In the code it is `PluginSpec.Manifest`, a field of the `Plugin` resource ([types.go](../../internal/plugins/operator/v1alpha1/types.go)), and the operator never reads the image. Until that changes, a signature does not cover the permissions a plugin asks for, and whoever writes the `Plugin` writes its request.
+- **D-42:** the `Plugin` still carries the manifest in `spec.manifest`, and the operator compares it with the signed label instead of taking the label as the request. A `Plugin` that declares anything else is refused with `ManifestMismatch`, so the signed label is what counts.
+- **D-44:** a catalog entry pins the digest, not the repository, so the same image pulled from a mirror is verified too.
+- **D-45:** a catalog publisher is trusted for any image it signs; images the catalog doesn't pin show as unverified.
+- **D-48** gives each instance its own Secrets, but Secret names come from the manifest, and D-42 makes the manifest the image's. Two instances of one image, such as one per IBKR account, therefore ask for the same Secret names, and nothing in the code gives each its own.
 
 ## Verification
 
@@ -250,14 +293,18 @@ Run `task test` from the repository root; it tests both Go modules, the core and
 | Every egress request carries the current token as the proxy URL's password; plain http and a missing proxy or token are refused | [egress_test.go](../../sdk/go/openfief/egress_test.go): `TestEgressSendsCurrentTokenOnEveryConnect`, `TestEgressRefusals`, `TestNewEgressClient` | REQ-sdk-go-egress-proxy-url, REQ-plugins-sdk-token-per-request |
 | Tokens are read from their file on every call, never cached | [token_test.go](../../sdk/go/openfief/token_test.go): `TestTokenFileRereadsRotatedToken`, `TestTokenFile`; [core_test.go](../../sdk/go/openfief/core_test.go): `TestCoreHTTPClientSendsCurrentToken` | REQ-sdk-go-token-rotation |
 | Environment names match what the operator sets | [env_test.go](../../sdk/go/openfief/env_test.go): `TestCoreURL`, `TestListenAddress`, `TestLoadConfig`, `TestTokenFileFromEnv` | REQ-sdk-go-plugin-environment |
+| Verified only when the catalog pins the digest and its publisher signed it; any other trusted signer gives unverified; unsigned, untrusted or a manifest mismatch is refused | [trust_test.go](../../internal/plugins/trust_test.go): `TestTrustPolicyDecide`, `TestNewTrustPolicy` | REQ-plugins-trust-decision, REQ-plugins-verified-entry-pins, REQ-plugins-trusted-signers-only, REQ-plugins-unsigned-never-deployed |
+| A signature counts only for the exact issuer and an exact or fully matching subject, or the same key | `TestSignerIdentityMatches`, `TestSignerIdentityValidate`, `TestSignerValidate` | REQ-plugins-signer-identity-match |
+| Catalog and owner signers parsed strictly; publishers need exact identities | [catalog_test.go](../../internal/plugins/catalog_test.go): `TestParseCatalog`, `TestCatalogValidate`, `TestParseOwnerSigners` | REQ-plugins-catalog-format |
+| The embedded catalog loads | [catalog/catalog_test.go](../../internal/plugins/catalog/catalog_test.go): `TestLoad` | REQ-plugins-catalog-in-repo |
+| The manifest label parses strictly and must equal the declared manifest as sets | [manifest_label_test.go](../../internal/plugins/manifest_label_test.go): `TestParseManifestLabel`, `TestManifestEqual` | REQ-plugins-manifest-label-match, REQ-plugins-manifest-in-image |
 
-The contract's message rules (REQ-connector-contract-messages) are verified by `TestConnectorServerSync` here and by the core's Connect adapter tests (`TEST-ingest-connectrpc-client`, `TEST-ingest-connectrpc-mapping`). To check by hand that an upgrade waits, read the "upgrade requesting a new host keeps the previous version" case in `TestPlanRollout`: the expected `Run` is the previous image with the old hosts, and `Pending` holds only the new host.
+The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and the operator's use of the decision (REQ-operator-policy-verifier) are tested with the operator. The contract's message rules (REQ-connector-contract-messages) are verified by `TestConnectorServerSync` here and by the core's Connect adapter tests (`TEST-ingest-connectrpc-client`, `TEST-ingest-connectrpc-mapping`). To check by hand that an upgrade waits, read the "upgrade requesting a new host keeps the previous version" case in `TestPlanRollout`: the expected `Run` is the previous image with the old hosts, and `Pending` holds only the new host.
 
 ## Not built yet
 
-- **Signature verification (D-17, D-56, D-57).** The operator has an `ImageVerifier` seam, but the only implementation is `UnimplementedVerifier`, which reports every image as `Unknown` ([verify.go](../../internal/plugins/operator/verify.go)). So the operator currently deploys no plugin at all. No trust root is bundled, and the status does not yet tell "verified" from "signed by a trusted signer" (REQ-plugins-verified-status).
-- **Trusted signers, catalog and verified plugins (D-43, D-44, D-45).** No catalog file and no `plugins.Catalog`, `plugins.Verified` or `plugins.Signer` types; the glossary's Go names for them are proposals.
-- **Manifest from the image label (D-42).** Nothing reads image labels or the registry; the manifest is typed into the `Plugin` spec.
+- **Verified plugins (D-43, D-44).** The catalog file exists but lists no plugin, so every image that runs today is unverified.
+- **Showing trust (D-56).** The `SignatureVerified` condition tells verified from only signed, but there is no UI yet to show it.
 - **The `openfief` CLI (D-46).** There is no `cmd/openfief`; `Plugin` and `PluginGrant` are applied by hand.
 - **More contracts and SDKs (D-11).** Only the connector contract exists: no view contract (P-9 outlines one, but it is a proposal), no TypeScript SDK, and no first-party plugin built on the SDK yet.
 - **Core-to-plugin auth (D-59).** The NetworkPolicy admits ingress from the core alone, and the SDK refuses callers its `CoreVerifier` rejects. But the SDK ships no `CoreVerifier`, so each plugin must supply one; the operator doesn't publish the cluster's token-signing keys in a ConfigMap for it to use; and the core's token issuer, the `CoreTokens` port in [ingest/app/connectors.go](../../internal/ingest/app/connectors.go), has no TokenRequest implementation.
