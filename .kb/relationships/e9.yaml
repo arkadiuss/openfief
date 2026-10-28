@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6fc10a559cce
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:38.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95acb6dce283
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:38.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f885e87fec76
+  - type: covered_by
+    from: SYM-connector-gen-pb-delivery-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:38.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d8ac915fecc

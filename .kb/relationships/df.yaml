@@ -27,3 +27,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e7a60130f7c
+  - type: implements
+    from: SYM-sdk-go-egress-transport-round-trip
+    to: REQ-sdk-go-egress-proxy-url
+    created_at: 2026-10-28T08:03:32.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8f96e0aade7
+  - type: implements
+    from: SYM-sdk-go-egress-transport-round-trip
+    to: REQ-AUTO-8CBFBD6A12E0865B
+    created_at: 2026-10-28T08:03:32.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46360b843492
+  - type: covered_by
+    from: SYM-sdk-go-egress-transport-round-trip
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:03:32.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a970ab1db385
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-get
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:06:31.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dada79db1c4
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-get
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:06:31.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6902f27ccbff

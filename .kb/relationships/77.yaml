@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-926e7242bf2d
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-new-egress-fixture
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:08:09.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4949aad84757

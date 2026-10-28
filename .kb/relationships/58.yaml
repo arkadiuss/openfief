@@ -55,3 +55,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3846b7845ec3
+  - type: implements
+    from: SYM-connector-gen-pb-problem
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:30.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a61e2ba5b73
+  - type: implements
+    from: SYM-connector-gen-pb-problem
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:30.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-255e90d4fe18
+  - type: covered_by
+    from: SYM-connector-gen-pb-problem
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:30.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8548ecfa589
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-response-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:44.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e9801a911b
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-response-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:44.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d389df82dd82
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-response-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:44.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd5965521a4

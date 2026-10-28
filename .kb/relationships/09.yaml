@@ -132,3 +132,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d858d89820b
+  - type: implements
+    from: SYM-sdk-go-bearer-transport
+    to: REQ-sdk-go-token-rotation
+    created_at: 2026-10-28T08:02:52.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47e5fc4415fd
+  - type: covered_by
+    from: SYM-sdk-go-bearer-transport
+    to: TEST-sdk-go-core-client
+    created_at: 2026-10-28T08:02:52.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65dc6cbbdfb7
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-header
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:21.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-803b16fea2fb
+  - type: implements
+    from: SYM-connector-gen-pb-import-file-request-header
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:21.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65215a387bd5
+  - type: covered_by
+    from: SYM-connector-gen-pb-import-file-request-header
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:21.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2b94bcd6c5b

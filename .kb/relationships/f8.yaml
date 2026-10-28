@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2be9a5dfe8ed
+  - type: implements
+    from: SYM-sdk-go-egress-transport
+    to: REQ-sdk-go-egress-proxy-url
+    created_at: 2026-10-28T08:03:14.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5659307efcc6
+  - type: implements
+    from: SYM-sdk-go-egress-transport
+    to: REQ-plugins-sdk-token-per-request
+    created_at: 2026-10-28T08:03:14.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b50f4501a0f9
+  - type: covered_by
+    from: SYM-sdk-go-egress-transport
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:03:14.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-380df51aa702

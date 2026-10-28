@@ -27,3 +27,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1070cd673bf8
+  - type: implements
+    from: SYM-sdk-go-core-url
+    to: REQ-sdk-go-plugin-environment
+    created_at: 2026-10-28T08:03:58.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c13e98f59a31
+  - type: covered_by
+    from: SYM-sdk-go-core-url
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:03:58.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f05746184da1
+  - type: implements
+    from: SYM-connector-gen-pb-price-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:17:05.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8da8851a5506
+  - type: implements
+    from: SYM-connector-gen-pb-price-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:17:06.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a42028c9429
+  - type: covered_by
+    from: SYM-connector-gen-pb-price-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:17:06.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daecb7e748eb
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-file-name
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:42.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9450ca4e6658
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-file-name
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:42.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c571661e02e
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-get-file-name
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:42.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8d08b217cf4
+  - type: implements
+    from: SYM-connector-gen-pb-init
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:02.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-546841247394
+  - type: implements
+    from: SYM-connector-gen-pb-init
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:02.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01d72b286afd
+  - type: covered_by
+    from: SYM-connector-gen-pb-init
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:02.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-480264d2ca36

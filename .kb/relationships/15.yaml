@@ -83,3 +83,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be76a1a81caf
+  - type: validates
+    from: TEST-sdk-go-env
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T08:00:36.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f3cad52f73c
+  - type: executable_for
+    from: SYM-sdk-go-test-load-config
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:08:58.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbf5d01ade6f
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-get-book
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:24.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-392eed4f93be
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-get-book
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:24.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bd18d90b767
+  - type: covered_by
+    from: SYM-connector-gen-pb-balance-assertion-get-book
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:24.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54e42ae0bce2

@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c574b2b224cd
+  - type: implements
+    from: SYM-sdk-go-require-core
+    to: REQ-sdk-go-core-only
+    created_at: 2026-10-28T08:04:29.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3928be361b42
+  - type: implements
+    from: SYM-sdk-go-require-core
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T08:04:29.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b2e860a7745
+  - type: covered_by
+    from: SYM-sdk-go-require-core
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:04:29.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-408592c1b836

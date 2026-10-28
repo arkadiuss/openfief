@@ -125,3 +125,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df91532fd4af
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:01.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-965b429dabf0
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:01.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f841a32fb140
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-kind
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:01.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06c2e0b569b0

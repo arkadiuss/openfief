@@ -48,3 +48,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f1811344ec2
+  - type: implements
+    from: SYM-connector-gen-pb-book-proto-reflect
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:54.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-949701f568e1
+  - type: implements
+    from: SYM-connector-gen-pb-book-proto-reflect
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:54.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acb01d195a5f
+  - type: covered_by
+    from: SYM-connector-gen-pb-book-proto-reflect
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:54.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bd30b60d699
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-get-postings
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:54.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d93775779e72
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-get-postings
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:54.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eff61a465ec
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-get-postings
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:54.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34cf67fc9f2a

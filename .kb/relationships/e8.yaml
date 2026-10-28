@@ -104,3 +104,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19ad03195574
+  - type: implements
+    from: SYM-connector-gen-pb-price
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:58.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb05a0f42d31
+  - type: implements
+    from: SYM-connector-gen-pb-price
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:58.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3421352c3dc6
+  - type: covered_by
+    from: SYM-connector-gen-pb-price
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:58.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e49a4cf69a13

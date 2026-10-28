@@ -34,3 +34,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02eb732067ec
+  - type: verified_by
+    from: SCEN-sdk-go-receive-file
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:00:48.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c0cea0a225d
+  - type: implements
+    from: SYM-connector-gen-pb-problem-proto-reflect
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:43.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-307d5d516cab
+  - type: implements
+    from: SYM-connector-gen-pb-problem-proto-reflect
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:43.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aac63a9b561
+  - type: covered_by
+    from: SYM-connector-gen-pb-problem-proto-reflect
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:43.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b449e31be4c9

@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e9c6f423ec2
+  - type: constrains
+    from: REQ-sdk-go-token-rotation
+    to: FACT-SUBJECT-65EEDB843F456030
+    created_at: 2026-10-28T08:02:15.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1b3dec058b8
+  - type: requires_property
+    from: REQ-sdk-go-token-rotation
+    to: FACT-PROP-B0915BFBC5CDB63A
+    created_at: 2026-10-28T08:02:15.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-346817907249
+  - type: specified_by
+    from: REQ-sdk-go-token-rotation
+    to: SCEN-sdk-go-token-rotation
+    created_at: 2026-10-28T08:02:15.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-069af6e7b070

@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f939f2d0f8fe
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:21.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-269446c02450
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:21.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e28141cc8768
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:21.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9ff2e73ec08

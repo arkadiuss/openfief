@@ -1,0 +1,254 @@
+syntax = "proto3";
+
+// The connector contract (D-11, D-49): a connector plugin serves
+// ConnectorService and the core calls it, to sync and to import files. The
+// core owns the schedules, retries and import batches. This is a connector's
+// ingest path (D-7); the public read API never takes data in.
+//
+// Conventions for every message in this package:
+//   - Amounts, prices, rates and quantities are exact decimal strings, such as
+//     "-1234.5600" or "0.049", never floating point: an optional minus sign,
+//     digits and an optional fractional part, with no exponent and no grouping.
+//   - Dates are calendar dates as ISO 8601 strings, "YYYY-MM-DD", with no time
+//     of day or time zone.
+//   - Currencies are ISO 4217 alphabetic codes, such as "PLN" or "USD".
+//   - Every call carries a batch ID the core generates. The core retries a
+//     failed call with the same batch ID, and importing the same delivery
+//     again has no further effect: the ledger keys transactions by source
+//     plus the institution's own ID (D-18), and the core scopes every source
+//     to the connector instance (D-48).
+//   - The core authenticates every call with a short-lived ServiceAccount
+//     token whose audience is "openfief-plugin:<instance>", in
+//     "Authorization: Bearer <token>" (D-59). The Go SDK verifies it.
+package openfief.connector.v1;
+
+// ConnectorService is served by a connector plugin and called by the core.
+service ConnectorService {
+  // Sync pulls what the institution reports since the watermark of the
+  // previous sync, such as new transactions with balance assertions, or
+  // end-of-day prices, FX rates and index readings.
+  rpc Sync(SyncRequest) returns (SyncResponse);
+  // ImportFile maps one statement file, such as an uploaded export. The first
+  // message carries the header, the rest carry the file's bytes in order.
+  rpc ImportFile(stream ImportFileRequest) returns (ImportFileResponse);
+}
+
+// Money is an exact amount in one currency.
+message Money {
+  // The amount as a decimal string, such as "-12.34".
+  string amount = 1;
+  // The ISO 4217 currency code.
+  string currency = 2;
+}
+
+// Instrument is identified by its ISIN, with a valid check digit, plus its
+// symbol on its trading venue (D-35).
+message Instrument {
+  string isin = 1;
+  string symbol = 2;
+}
+
+// BookKind is the kind of a ledger account inside an account (D-19, D-33).
+enum BookKind {
+  BOOK_KIND_UNSPECIFIED = 0;
+  // Cash in one currency.
+  BOOK_KIND_CASH = 1;
+  // A holding of one instrument; its postings carry a quantity.
+  BOOK_KIND_HOLDING = 2;
+  BOOK_KIND_FEE = 3;
+  BOOK_KIND_WITHHOLDING_TAX = 4;
+  BOOK_KIND_FX = 5;
+  // The counterpart of deposits, withdrawals and opening lots (D-33).
+  BOOK_KIND_EQUITY = 6;
+}
+
+// Book names a ledger account: a holding names its instrument and no
+// currency; every other kind names its currency and no instrument.
+message Book {
+  BookKind kind = 1;
+  string currency = 2;
+  Instrument instrument = 3;
+}
+
+// Posting is one leg of a transaction. A posting to a holding carries the
+// quantity of units and their cost as the amount; any other posting carries
+// only an amount, in its ledger account's currency.
+message Posting {
+  Book book = 1;
+  Money amount = 2;
+  // Units of the instrument, as a decimal string; empty for non-holdings.
+  string quantity = 3;
+}
+
+// TransactionKind is what economic event a transaction records.
+enum TransactionKind {
+  TRANSACTION_KIND_UNSPECIFIED = 0;
+  TRANSACTION_KIND_BUY = 1;
+  TRANSACTION_KIND_SELL = 2;
+  TRANSACTION_KIND_DIVIDEND = 3;
+  TRANSACTION_KIND_FEE = 4;
+  TRANSACTION_KIND_FX_CONVERSION = 5;
+  TRANSACTION_KIND_DEPOSIT = 6;
+  TRANSACTION_KIND_WITHDRAWAL = 7;
+  // A lot seeded from the institution's current positions at go-live (D-23).
+  TRANSACTION_KIND_OPENING_LOT = 8;
+}
+
+// TransactionKey identifies a transaction across re-imports (D-18). The core
+// prefixes the source with the connector instance's name, so a connector can
+// never write or supersede another instance's transactions.
+message TransactionKey {
+  // Where the transaction came from, such as the connector's import path for
+  // one account. Never an institution's account number.
+  string source = 1;
+  // The institution's own ID for the transaction.
+  string external_id = 2;
+}
+
+// Transaction is one economic event, recorded in one account as postings that
+// sum to zero per currency (D-19).
+message Transaction {
+  TransactionKey key = 1;
+  // The OpenFief account ID, never the institution's account number.
+  string account_id = 2;
+  TransactionKind kind = 3;
+  // The date the transaction takes effect, "YYYY-MM-DD".
+  string date = 4;
+  // For an opening lot only: the date the lot was opened, "YYYY-MM-DD".
+  string lot_opened = 5;
+  string description = 6;
+  repeated Posting postings = 7;
+}
+
+// BalanceAssertion is a balance the institution reports for a cash or
+// holding ledger account on a date; the derived balance must match it (D-18).
+message BalanceAssertion {
+  string account_id = 1;
+  string date = 2;
+  Book book = 3;
+  // The reported balance: an amount for cash, units for a holding.
+  string balance = 4;
+}
+
+// ProblemKind says why a statement row was left out of the ledger.
+enum ProblemKind {
+  PROBLEM_KIND_UNSPECIFIED = 0;
+  // The row cannot be booked yet, such as an option trade.
+  PROBLEM_KIND_UNSUPPORTED = 1;
+  // The row was left out on purpose, such as a summary row.
+  PROBLEM_KIND_SKIPPED = 2;
+}
+
+// Problem is a statement row the mapping left out of the ledger, with its
+// reason. It is not an error. Its text never carries amounts or account
+// numbers.
+message Problem {
+  ProblemKind kind = 1;
+  // Where the row is in the statement.
+  string ref = 2;
+  string reason = 3;
+}
+
+// Mode says what an import batch takes from its statement (D-23).
+enum Mode {
+  MODE_UNSPECIFIED = 0;
+  // Opening lots and opening cash at go-live, plus balance assertions.
+  MODE_OPENING = 1;
+  // Transactions from go-live on, plus balance assertions.
+  MODE_TRANSACTIONS = 2;
+}
+
+// Price is an end-of-day price of one unit of an instrument (D-21).
+message Price {
+  Instrument instrument = 1;
+  string date = 2;
+  // The closing price, in the currency the instrument is quoted in.
+  Money close = 3;
+}
+
+// FxRate is the value in PLN of one unit of a currency on a date. A source
+// that quotes per 100 units is normalized to one unit by the connector.
+message FxRate {
+  string currency = 1;
+  string date = 2;
+  // PLN per one unit of currency, as a positive decimal string.
+  string rate = 3;
+}
+
+// Index is a published index that sets treasury bond interest.
+enum Index {
+  INDEX_UNSPECIFIED = 0;
+  // CPI year on year from GUS, for one month.
+  INDEX_CPI = 1;
+  // The NBP reference rate.
+  INDEX_REFERENCE_RATE = 2;
+}
+
+// IndexReading is one published value of an index.
+message IndexReading {
+  Index index = 1;
+  // For CPI, the first day of the month the reading measures; for the
+  // reference rate, the day it takes effect.
+  string date = 2;
+  // A yearly fraction as a decimal string: CPI of 104.9 (previous year =
+  // 100) is "0.049", a 5.75% reference rate is "0.0575".
+  string value = 3;
+}
+
+// Delivery is what a connector returns for one import batch: its mapping of
+// what the institution reported (transactions with their postings, balance
+// assertions and the rows it left out), plus any prices, FX rates and index
+// readings.
+message Delivery {
+  // The batch ID of the call, echoed back.
+  string batch_id = 1;
+  // The institution the data is from, such as "ibkr" or "nbp".
+  string institution = 2;
+  repeated Transaction transactions = 3;
+  repeated BalanceAssertion balance_assertions = 4;
+  repeated Problem problems = 5;
+  repeated Price prices = 6;
+  repeated FxRate fx_rates = 7;
+  repeated IndexReading index_readings = 8;
+}
+
+message SyncRequest {
+  // The core's ID for this import batch; a retry reuses it.
+  string batch_id = 1;
+  Mode mode = 2;
+  // What the connector returned as watermark from the previous successful
+  // sync, or empty for the first one. Opaque to the core.
+  string watermark = 3;
+}
+
+message SyncResponse {
+  Delivery delivery = 1;
+  // Where the next sync continues from; the core stores it once the
+  // delivery is imported.
+  string watermark = 2;
+}
+
+// FileHeader describes the file an ImportFile call carries.
+message FileHeader {
+  // The core's ID for this import batch; a retry reuses it.
+  string batch_id = 1;
+  Mode mode = 2;
+  // The file's name as the owner gave it, such as "statement.csv"; only a
+  // hint, never a path.
+  string file_name = 3;
+  // The file's media type, such as "text/csv", when known.
+  string media_type = 4;
+}
+
+message ImportFileRequest {
+  oneof part {
+    // The first message's part.
+    FileHeader header = 1;
+    // Every later message's part: the next bytes of the file.
+    bytes chunk = 2;
+  }
+}
+
+message ImportFileResponse {
+  Delivery delivery = 1;
+}

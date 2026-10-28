@@ -125,3 +125,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf1123d64d56
+  - type: implements
+    from: SYM-connector-gen-pb-fx-rate-get-currency
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:17:49.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4aee9d7ac57
+  - type: implements
+    from: SYM-connector-gen-pb-fx-rate-get-currency
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:17:49.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b692c5e9b65
+  - type: covered_by
+    from: SYM-connector-gen-pb-fx-rate-get-currency
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:17:49.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ca8ac748349
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-reset
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:01.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91c416736e22
+  - type: implements
+    from: SYM-connector-gen-pb-index-reading-reset
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:01.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8491fce8680b
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-reading-reset
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:01.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e62cac696a

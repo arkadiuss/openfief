@@ -62,3 +62,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebf05ac06116
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-string
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:19.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-982d15adab37
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-string
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:19.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f82135dd92c0
+  - type: covered_by
+    from: SYM-connector-gen-pb-instrument-string
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:19.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-209dcd4f0b51

@@ -111,3 +111,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-175fa979b83e
+  - type: executable_for
+    from: SYM-sdk-go-test-listen-address
+    to: TEST-sdk-go-env
+    created_at: 2026-10-28T08:08:53.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f73587f69a67

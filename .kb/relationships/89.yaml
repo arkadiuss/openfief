@@ -69,3 +69,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f058e8ee7368
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-enum-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:26.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-925396b9d54b
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-enum-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:26.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c2f0da58fa9
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-kind-enum-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:26.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7adb5b0742c
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-reset
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:17.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c770255e9f5e
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-reset
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:17.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e8c915c178b
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-reset
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:17.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bffc8a164d6c

@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bff25fad4d9b
+  - type: implements
+    from: SYM-sdk-go-receive-file
+    to: REQ-sdk-go-receive-file
+    created_at: 2026-10-28T08:05:07.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2e150a17a21
+  - type: covered_by
+    from: SYM-sdk-go-receive-file
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:05:07.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96ce9e9da842
+  - type: executable_for
+    from: SYM-sdk-go-test-receive-file
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:10:13.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7231f334af77

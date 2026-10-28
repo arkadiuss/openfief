@@ -13,3 +13,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c83585a8857c
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-type
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:17.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f9a36424f9
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-kind-type
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:17.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62a0c74f9e99
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-kind-type
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:17.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bddb8ccd572f
+  - type: implements
+    from: SYM-connector-gen-pb-problem-kind-enum
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:11:33.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60b2bd7f155b
+  - type: implements
+    from: SYM-connector-gen-pb-problem-kind-enum
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:11:33.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0593c74eaca
+  - type: covered_by
+    from: SYM-connector-gen-pb-problem-kind-enum
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:11:33.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a625d50a03ea

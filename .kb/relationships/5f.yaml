@@ -132,3 +132,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7b0e22e9e31
+  - type: executable_for
+    from: SYM-sdk-go-test-helper-fake-proxy-serve-http
+    to: TEST-sdk-go-egress
+    created_at: 2026-10-28T08:07:14.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e8b9c33c038

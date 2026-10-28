@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4873caaba25a
+  - type: implements
+    from: SYM-connector-gen-pb-is-import-file-request-part
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:21:18.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3932fe2f9ba6
+  - type: implements
+    from: SYM-connector-gen-pb-is-import-file-request-part
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:21:18.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-350c0f3416ff
+  - type: covered_by
+    from: SYM-connector-gen-pb-is-import-file-request-part
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:21:18.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50ac6ba054bc

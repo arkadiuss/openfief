@@ -153,3 +153,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05991f16b917
+  - type: implements
+    from: SYM-connector-gen-pb-book
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:39.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7153d36a861
+  - type: implements
+    from: SYM-connector-gen-pb-book
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:39.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ebcd0826ab3
+  - type: covered_by
+    from: SYM-connector-gen-pb-book
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:39.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8707d3e453d6
+  - type: implements
+    from: SYM-connector-gen-pb-problem-proto-message
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:40.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b7f23f526ff
+  - type: implements
+    from: SYM-connector-gen-pb-problem-proto-message
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:40.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77c035dcad4d
+  - type: covered_by
+    from: SYM-connector-gen-pb-problem-proto-message
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:40.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85a22e20dd10
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-media-type
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:20:45.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-738fc1620cc1
+  - type: implements
+    from: SYM-connector-gen-pb-file-header-get-media-type
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:20:45.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a48f3d53aa9
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-header-get-media-type
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:20:45.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-559c8158d063
+  - type: implements
+    from: SYM-connector-gen-pb-file-openfief-connector-v1-connector-proto-init
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:05.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a030e770c8e9
+  - type: implements
+    from: SYM-connector-gen-pb-file-openfief-connector-v1-connector-proto-init
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:06.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40fd1639fff3
+  - type: covered_by
+    from: SYM-connector-gen-pb-file-openfief-connector-v1-connector-proto-init
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:06.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb780cbc1fd0

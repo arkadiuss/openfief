@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-670d1dc8f3dd
+  - type: implements
+    from: SYM-connector-gen-pb-book-get-currency
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:14:06.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c365fe96768c
+  - type: implements
+    from: SYM-connector-gen-pb-book-get-currency
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:14:06.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb97a43e9d70
+  - type: covered_by
+    from: SYM-connector-gen-pb-book-get-currency
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:14:06.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2663e5014b7c

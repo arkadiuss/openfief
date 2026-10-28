@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1fd2420c6a87
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:16:13.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71e55b47f9be
+  - type: implements
+    from: SYM-connector-gen-pb-balance-assertion-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:16:13.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b18536bbf04
+  - type: covered_by
+    from: SYM-connector-gen-pb-balance-assertion-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:16:13.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-251d9401d133

@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a809371817c
+  - type: implements
+    from: SYM-connector-gen-connect-new-connector-service-handler
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:22:32.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db1e0a3b587b
+  - type: implements
+    from: SYM-connector-gen-connect-new-connector-service-handler
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:22:32.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5259f31af390
+  - type: covered_by
+    from: SYM-connector-gen-connect-new-connector-service-handler
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:22:32.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-946832a374af

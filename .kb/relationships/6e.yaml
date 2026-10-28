@@ -90,3 +90,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7eec373ffec4
+  - type: executable_for
+    from: SYM-sdk-go-test-token-file-rereads-rotated-token
+    to: TEST-sdk-go-token
+    created_at: 2026-10-28T08:10:28.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccb00959fd31
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:13:29.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e47dbf4b2055
+  - type: implements
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:13:29.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f253021c971a
+  - type: covered_by
+    from: SYM-connector-gen-pb-instrument-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:13:30.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-666d82319cf2

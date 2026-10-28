@@ -62,3 +62,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f62588d7740
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-key-descriptor
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:15:02.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-974b8f435c65
+  - type: implements
+    from: SYM-connector-gen-pb-transaction-key-descriptor
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:15:02.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-220dc6bcfc6b
+  - type: covered_by
+    from: SYM-connector-gen-pb-transaction-key-descriptor
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:15:02.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9d2f1e8c0c6
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-get-balance-assertions
+    to: REQ-connector-contract-messages
+    created_at: 2026-10-28T08:18:58.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14abfa3468e9
+  - type: implements
+    from: SYM-connector-gen-pb-delivery-get-balance-assertions
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T08:18:58.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b14b0b37bbe1
+  - type: covered_by
+    from: SYM-connector-gen-pb-delivery-get-balance-assertions
+    to: TEST-sdk-go-serve
+    created_at: 2026-10-28T08:18:58.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-785da7b90ab2
