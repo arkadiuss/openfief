@@ -305,9 +305,13 @@ func deliveryFrom(d *connectorv1.Delivery, id ingest.BatchID, watermark string) 
 	if err != nil {
 		return app.Delivery{}, err
 	}
+	levels, err := translate("index_levels", d.GetIndexLevels(), indexLevelFrom)
+	if err != nil {
+		return app.Delivery{}, err
+	}
 	return app.Delivery{
 		Institution: ingest.InstitutionID(d.GetInstitution()), Mapping: m,
-		Prices: prices, FXRates: rates, IndexReadings: readings, Watermark: watermark,
+		Prices: prices, FXRates: rates, IndexReadings: readings, IndexLevels: levels, Watermark: watermark,
 	}, nil
 }
 
@@ -399,4 +403,23 @@ func indexReadingFrom(field string, r *connectorv1.IndexReading) (ingest.IndexRe
 		return ingest.IndexReading{}, err
 	}
 	return ingest.IndexReading{Index: index, Date: date, Value: value}, nil
+}
+
+// indexLevelFrom translates one market index level, keyed by the index's
+// name as the connector sends it; the level must be positive and its source
+// is set by the use case.
+func indexLevelFrom(field string, l *connectorv1.IndexLevel) (valuation.IndexLevel, error) {
+	date, err := dateFrom(field+".date", l.GetDate())
+	if err != nil {
+		return valuation.IndexLevel{}, err
+	}
+	level, err := decimalFrom(field+".level", l.GetLevel())
+	if err != nil {
+		return valuation.IndexLevel{}, err
+	}
+	out := valuation.IndexLevel{Index: l.GetIndex(), Date: date, Level: level}
+	if err := out.Validate(); err != nil {
+		return valuation.IndexLevel{}, invalid(field+" is not a valid index level", err)
+	}
+	return out, nil
 }

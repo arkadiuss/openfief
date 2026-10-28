@@ -76,6 +76,36 @@ func scanPrice(row pgx.CollectableRow) (valuation.Price, error) {
 	return valuation.Price{Instrument: instrument, Date: d, Close: m, Source: source}, nil
 }
 
+// IndexLevels returns every level of the market index named index dated on
+// or before through, in date order.
+func (s *Store) IndexLevels(ctx context.Context, index string, through kernel.Date) ([]valuation.IndexLevel, error) {
+	rows, err := s.pool.Query(ctx, `
+		SELECT index, date::text, level::text, source FROM valuation.index_levels
+		WHERE index = $1 AND date <= $2 ORDER BY date`, index, through.String())
+	if err != nil {
+		return nil, fmt.Errorf("loading levels of %s: %w", index, err)
+	}
+	out, err := pgx.CollectRows(rows, scanIndexLevel)
+	if err != nil {
+		return nil, fmt.Errorf("loading levels of %s: %w", index, err)
+	}
+	return out, nil
+}
+
+// scanIndexLevel reads one index level row.
+func scanIndexLevel(row pgx.CollectableRow) (valuation.IndexLevel, error) {
+	var index, day, level, source string
+	if err := row.Scan(&index, &day, &level, &source); err != nil {
+		return valuation.IndexLevel{}, fmt.Errorf("reading an index level: %w", err)
+	}
+	d, err1 := kernel.ParseDate(day)
+	v, err2 := kernel.ParseDecimal(level)
+	if err := errors.Join(err1, err2); err != nil {
+		return valuation.IndexLevel{}, fmt.Errorf("%w: level of %s: %w", ErrCorrupt, index, err)
+	}
+	return valuation.IndexLevel{Index: index, Date: d, Level: v, Source: source}, nil
+}
+
 // FXRates returns every rate of currency dated on or before through, in
 // date order.
 func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through kernel.Date) ([]valuation.FXRate, error) {

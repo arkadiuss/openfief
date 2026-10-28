@@ -41,7 +41,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Index reading | ingest | `ingest.IndexReading` | One published value of an index that sets treasury bond interest, as a yearly fraction: CPI year on year for a month (GUS), or the NBP reference rate from the day it takes effect. Period indices are picked from them. | rate (alone) |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
 | Index | valuation | `valuation.Index` | A market index, such as WIG20 or MSCI World, with an end-of-day level series from the market-data connector. It can be a target, but it can't be held. | benchmark |
-| Index level | valuation | `openfief.connector.v1.IndexLevel` | One end-of-day closing level of an index, named as the market-data connector's config names the index. Not an index reading. | index price, quote |
+| Index level | valuation | `valuation.IndexLevel` | One end-of-day closing level of an index, named as the market-data connector's config names the index; `openfief.connector.v1.IndexLevel` on the contract. Not an index reading. | index price, quote |
 | FX rate | valuation | `valuation.FXRate` | The value in PLN of one unit of a currency on a date, from a source; NBP table A in M0. The rate for a date is the latest one dated on or before it. | |
 | Reporting currency | valuation | `valuation.ReportingCurrency` | The currency totals, charts and the model comparison are shown in. A setting whose default comes from the jurisdiction pack: PLN for the Polish pack. | base currency, home currency |
 | Valuation | valuation | `valuation.Valuation` | The value of a holding on a date, with its basis and source. | |

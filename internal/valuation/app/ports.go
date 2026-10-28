@@ -67,6 +67,9 @@ type Recorder interface {
 	SaveFXRates(ctx context.Context, rates []valuation.FXRate, revals []valuation.Revaluation) error
 	// SaveIndexReadings upserts readings, keyed by kind, year and month.
 	SaveIndexReadings(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) error
+	// SaveIndexLevels upserts market index levels, keyed by index and date.
+	// No holding is valued from them, so they cause no revaluation.
+	SaveIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error
 	// SaveBondTerms upserts the series terms of the bond with isin.
 	SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, revals []valuation.Revaluation) error
 	// SaveTaxWrapper records account's tax wrapper.

@@ -58998,3 +58998,174 @@ symbols:
         target: TEST-ingest-delivery
       - type: implements
         target: REQ-ingest-delivery-market-data
+  - id: SYM-core-conn-valuation-inputs-store-index-levels
+    title: valuationInputs.StoreIndexLevels
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:19.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-ingest-app-index-level-store
+    title: IndexLevelStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:24.512Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-index-levels
+  - id: SYM-ingest-app-connectors-store-levels
+    title: Connectors.storeLevels
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:29.689Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-index-levels
+  - id: SYM-ingest-app-test-helper-fake-stores-store-index-levels
+    title: fakeStores.StoreIndexLevels
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:34.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-connectrpc-index-level-from
+    title: indexLevelFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:40.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-index-levels
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-index-levels
+    title: fakeRecorder.SaveIndexLevels
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:45.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-input-recorder-record-index-levels
+    title: InputRecorder.RecordIndexLevels
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:49.636Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-index-level-type
+    title: IndexLevel
+    sourceFile: internal/valuation/level.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:53.328Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index-level
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-index-level-validate
+    title: IndexLevel.Validate
+    sourceFile: internal/valuation/level.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:58.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index-level
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-test-index-level-validate
+    title: TestIndexLevelValidate
+    sourceFile: internal/valuation/level_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:01.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-index-level
+  - id: SYM-valuation-pg-test-index-levels-round-trip
+    title: TestIndexLevelsRoundTrip
+    sourceFile: internal/valuation/postgres/level_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:05.734Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-index-levels
+  - id: SYM-valuation-pg-store-save-index-levels
+    title: Store.SaveIndexLevels
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:10.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-index-levels
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-pg-store-index-levels
+    title: Store.IndexLevels
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:14.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-index-levels
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-pg-scan-index-level
+    title: scanIndexLevel
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:18.822Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-index-levels
+      - type: implements
+        target: REQ-valuation-index-levels

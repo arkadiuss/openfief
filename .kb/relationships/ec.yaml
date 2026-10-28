@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-779bdb340826
+  - type: implements
+    from: SYM-valuation-index-level-type
+    to: REQ-valuation-index-levels
+    created_at: 2026-10-28T22:46:54.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c97068b181d3
+  - type: covered_by
+    from: SYM-valuation-index-level-type
+    to: TEST-valuation-index-level
+    created_at: 2026-10-28T22:46:54.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05738f04a986

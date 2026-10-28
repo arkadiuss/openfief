@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a801c7d349d
+  - type: implements
+    from: SYM-ingest-app-connectors-store-levels
+    to: REQ-ingest-index-levels
+    created_at: 2026-10-28T22:46:31.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb36c02ac352
+  - type: covered_by
+    from: SYM-ingest-app-connectors-store-levels
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-28T22:46:31.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b14a15aeca3f

@@ -216,3 +216,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87f04d3d8e80
+  - type: implements
+    from: SYM-core-conn-valuation-inputs-store-index-levels
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T22:46:21.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0c7e74ab952
+  - type: covered_by
+    from: SYM-core-conn-valuation-inputs-store-index-levels
+    to: TEST-core-connectors
+    created_at: 2026-10-28T22:46:21.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-280b65489b0c

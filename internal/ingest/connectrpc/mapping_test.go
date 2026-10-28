@@ -41,6 +41,7 @@ func testDelivery() *connectorv1.Delivery {
 		}},
 		FxRates:       []*connectorv1.FxRate{{Currency: "USD", Date: "2026-03-02", Rate: "3.9876"}},
 		IndexReadings: []*connectorv1.IndexReading{{Index: connectorv1.Index_INDEX_CPI, Date: "2026-02-01", Value: "0.049"}},
+		IndexLevels:   []*connectorv1.IndexLevel{{Index: "FAKE20", Date: "2026-03-02", Level: "1522.60"}},
 	}
 }
 
@@ -96,6 +97,7 @@ func TestDeliveryFrom(t *testing.T) {
 		IndexReadings: []ingest.IndexReading{{
 			Index: ingest.IndexCPI, Date: mustDate(t, "2026-02-01"), Value: mustDecimal(t, "0.049"),
 		}},
+		IndexLevels: []valuation.IndexLevel{{Index: "FAKE20", Date: day, Level: mustDecimal(t, "1522.60")}},
 		Mapping: ingest.Mapping{
 			Transactions: []ledger.Transaction{{
 				Key: ledger.TransactionKey{Source: "acc-1", ExternalID: "T1"}, Account: "acc-1",
@@ -129,6 +131,10 @@ func TestDeliveryFromRejects(t *testing.T) {
 		{name: "bad price", edit: func(r *connectorv1.Delivery) { r.Prices[0].Close.Amount = "0" }},
 		{name: "bad FX rate", edit: func(r *connectorv1.Delivery) { r.FxRates[0].Rate = "-1" }},
 		{name: "bad index reading", edit: func(r *connectorv1.Delivery) { r.IndexReadings[0].Index = 0 }},
+		{name: "index level without an index", edit: func(r *connectorv1.Delivery) { r.IndexLevels[0].Index = "" }},
+		{name: "zero index level", edit: func(r *connectorv1.Delivery) { r.IndexLevels[0].Level = "0" }},
+		{name: "index level with a bad date", edit: func(r *connectorv1.Delivery) { r.IndexLevels[0].Date = "2026-3-2" }},
+		{name: "exponent index level", edit: func(r *connectorv1.Delivery) { r.IndexLevels[0].Level = "1.5e3" }},
 		{name: "exponent amount", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[0].Amount.Amount = "-1.005e2" }},
 		{name: "grouped amount", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[0].Amount.Amount = "1,000.50" }},
 		{name: "missing amount", edit: func(r *connectorv1.Delivery) { r.Transactions[0].Postings[0].Amount = nil }},

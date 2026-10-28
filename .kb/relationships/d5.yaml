@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e90a5bbe0e8a
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-index-levels
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T22:46:46.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d2623d00bb
