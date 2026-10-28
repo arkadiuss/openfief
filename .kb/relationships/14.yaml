@@ -83,3 +83,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc7ceb6cd9f9
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-keyless-bundle
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:20:12.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33c55cdd442e

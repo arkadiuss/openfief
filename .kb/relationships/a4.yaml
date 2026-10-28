@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c82787894f7a
+  - type: executable_for
+    from: SYM-cosign-test-inspect-unreachable-registry
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:24:18.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-419cc1b6bfcf

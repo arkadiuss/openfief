@@ -195,3 +195,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70462199c340
+  - type: executable_for
+    from: SYM-cosign-test-verifier-foreign-ca
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:23:12.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e25a6f83f689

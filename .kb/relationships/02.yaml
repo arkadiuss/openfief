@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28d7f88d0cdf
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-test-registry
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:18:50.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36e6fb8b3c8c

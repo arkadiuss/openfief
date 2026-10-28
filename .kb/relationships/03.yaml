@@ -153,3 +153,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2525b7677d3e
+  - type: verified_by
+    from: SCEN-plugins-cosign-bundle
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:16:53.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33ac1737bd64

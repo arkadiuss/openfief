@@ -153,3 +153,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b50ea2be461
+  - type: constrains
+    from: REQ-plugins-bundled-trust-root
+    to: FACT-SUBJECT-63C50F96EA316E12
+    created_at: 2026-10-28T09:17:22.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a46f6640ba06
+  - type: requires_property
+    from: REQ-plugins-bundled-trust-root
+    to: FACT-PROP-C3AC786A189CA3F4
+    created_at: 2026-10-28T09:17:22.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42abb432078d
+  - type: specified_by
+    from: REQ-plugins-bundled-trust-root
+    to: SCEN-plugins-bundled-trust-root
+    created_at: 2026-10-28T09:17:22.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d09b37621a3e

@@ -188,3 +188,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5862c6793d53
+  - type: implements
+    from: SYM-cosign-fn-key-verifier
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:21:54.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d056ae6d98a
+  - type: implements
+    from: SYM-cosign-fn-key-verifier
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T09:21:54.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3bec4fc7d92
+  - type: covered_by
+    from: SYM-cosign-fn-key-verifier
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:21:54.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a6861304dfe

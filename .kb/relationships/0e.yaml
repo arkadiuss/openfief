@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6afcaff22449
+  - type: executable_for
+    from: SYM-cosign-test-verifier-foreign-ca-fulcio-certificate-authorities
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:23:18.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b2be1dfd1cd

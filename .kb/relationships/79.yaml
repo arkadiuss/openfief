@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddfe6f434e8f
+  - type: executable_for
+    from: SYM-cosign-test-verifier-world-sign-ci
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:23:31.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16d23c8c5c13
