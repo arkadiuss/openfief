@@ -27,8 +27,11 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
 | Read API | views | `views` + `connectapi` | The public, read-only `/v1` API. | |
-| Plugin | plugins | `plugins.Plugin` | The custom resource holding what a plugin requests: image, manifest, config. | extension, addon |
+| Plugin | plugins | `plugins.Plugin` | The custom resource for one installed, named instance of a plugin image: what it requests (image, manifest, config). | extension, addon |
 | Grant | plugins | `plugins.Grant` | The custom resource holding what the owner approved for a plugin. | permission set |
+| Catalog | plugins | `plugins.Catalog` | The file in the OpenFief repository that lists first-party and verified plugins, with pinned image digests and signer identities. | marketplace, registry |
+| Verified plugin | plugins | `plugins.Verified` | A plugin whose catalog entry pins a version the author reviewed. Anything installed by image reference alone is unverified. | official, trusted |
+| Trusted signer | plugins | `plugins.Signer` | An identity whose image signatures the operator accepts: OpenFief's CI, a catalog publisher, or one the owner added. | |
 | Manifest | plugins | `plugins.Manifest` | A plugin's declared capabilities, egress hosts, secrets, data tiers and config schema. | |
 | Egress allow-list | plugins | `plugins.EgressAllowList` | The hostnames a plugin may reach through the egress proxy. | whitelist |
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |

@@ -9,6 +9,7 @@ Not decided. When the author decides an item, it moves into [DESIGN.md](../DESIG
 - **[P-5] The operator never touches money.** The operator manages plugin workloads only. Fiefs, intents, the ledger and approvals live in Postgres behind the core, never in custom resources or etcd: etcd is not a transactional ledger, and GR-6's guarantee must not depend on who holds Kubernetes API access.
 - **[P-6] Bootstrap install.** One small Helm chart or plain manifest installs the CRDs, the operator and the egress proxy. Everything after that is a `Plugin` and its `PluginGrant`.
 - **[P-7] Built-in UI stack.** Server-rendered Go templates with htmx, a small chart library served locally (no CDN), a strict CSP, and no JavaScript build chain.
+- **[P-44] Core-to-plugin authentication.** A plugin accepts calls only from the core (D-49): its NetworkPolicy admits ingress from the core pod alone, and the core presents a projected ServiceAccount token with the plugin instance as audience, which the SDK verifies.
 
 ## Plugin contracts for M0
 
@@ -18,7 +19,7 @@ Interface outlines, not code. Every plugin also follows D-11, D-13, D-16, D-17, 
 
   | Aspect | Outline |
   |---|---|
-  | Purpose | Bring broker, registry or data-source data into OpenFief. Execution connectors (M1) also carry orders. |
+  | Purpose | Bring broker, registry or data-source data into OpenFief. The connector serves the service and the core calls it (D-49). Execution connectors (M1) also carry orders. |
   | Manifest | Institution, version, capabilities (read holdings, read transactions, statement import with file formats, market data; later execute live and execute paper), authentication method. |
   | Read operations | List accounts. Get a holdings snapshot as of a date. Get transactions and tax lots since a date. Import a statement file into normalized transactions. Get quotes and reference data (data connectors). |
   | Normalization | Instruments by ISIN where available, plus venue symbol. Every amount with its currency. Every record tagged with its source and the institution's own ID, so re-imports are idempotent (D-18). |

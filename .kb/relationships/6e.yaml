@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7635975e1353
+  - type: constrains
+    from: REQ-plugins-core-cannot-grant
+    to: FACT-SUBJECT-33F2B4014D280B99
+    created_at: 2026-10-28T05:39:09.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14e6c8227c5d
+  - type: requires_property
+    from: REQ-plugins-core-cannot-grant
+    to: FACT-PROP-0A6DC36CAE549DEA
+    created_at: 2026-10-28T05:39:09.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7eec373ffec4

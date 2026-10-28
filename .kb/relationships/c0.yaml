@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-3315b9a01708
+    type: constrains
+    from: REQ-plugins-verified-entry-pins
+    to: FACT-SUBJECT-ED9EF256B6D41395
+    created_at: "2026-10-28T05:38:48.773Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-plugins-verified-entry-pins
+    to: FACT-PROP-28EFDBC47B0FA695
+    created_at: 2026-10-28T05:38:48.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c4f83b6cc5
