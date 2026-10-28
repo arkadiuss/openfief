@@ -223,3 +223,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49d32b622410
+  - type: implements
+    from: SYM-views-pb-transfer-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:08:57.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bcad6df3be1
+  - type: covered_by
+    from: SYM-views-pb-transfer-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:08:57.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeb443f8ace1

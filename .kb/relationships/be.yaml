@@ -272,3 +272,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b8d992b3819
+  - type: executable_for
+    from: SYM-views-test-helper-event
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:05:23.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75438a7c5a08
+  - type: executable_for
+    from: SYM-views-test-helper-rate
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:05:42.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71a7cd4b5414

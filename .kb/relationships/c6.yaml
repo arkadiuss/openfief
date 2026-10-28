@@ -328,3 +328,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0945d8f0509
+  - type: executable_for
+    from: SYM-views-app-test-helper-failing-statuses-status
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T21:01:15.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a7fb2b66d04

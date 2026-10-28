@@ -286,3 +286,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c1a0d4e04ca
+  - type: implements
+    from: SYM-views-day-builder-apply-through
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:03:45.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1753948eb85f
+  - type: covered_by
+    from: SYM-views-day-builder-apply-through
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:03:45.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-960355d47d0d

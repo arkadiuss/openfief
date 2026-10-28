@@ -246,3 +246,20 @@ func (s *readService) GetAllocation(ctx context.Context, req *connect.Request[vi
 	}
 	return connect.NewResponse(pbAllocation(&a)), nil
 }
+
+// GetPerformance answers GET /v1/performance.
+func (s *readService) GetPerformance(ctx context.Context, req *connect.Request[viewsv1.GetPerformanceRequest]) (*connect.Response[viewsv1.GetPerformanceResponse], error) {
+	from, err := parseOptionalDate(req.Msg.GetFrom())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	to, err := parseOptionalDate(req.Msg.GetTo())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	p, err := s.views.Performance(ctx, from, to)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	return connect.NewResponse(pbPerformance(&p, s.views.ReportingCurrency())), nil
+}

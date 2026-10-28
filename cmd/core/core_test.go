@@ -295,6 +295,21 @@ func waitValued(t *testing.T, srv *httptest.Server, token string, ds *demo.Datas
 	}
 }
 
+// checkPerformance checks that GET /v1/performance over the valued demo
+// data is a series in PLN that starts at 100 and reaches today with no gap.
+func checkPerformance(t *testing.T, srv *httptest.Server, token string, ds *demo.Dataset) {
+	t.Helper()
+	var perf viewsv1.GetPerformanceResponse
+	getJSON(t, srv, "/v1/performance", token, &perf)
+	days := perf.GetDays()
+	if len(days) == 0 || days[0].GetIndex() != "100" || days[len(days)-1].GetDate() != ds.Today.String() {
+		t.Errorf("GET /v1/performance days = %v, want a series from 100 through %s", days, ds.Today)
+	}
+	if perf.GetGap() != viewsv1.PerformanceGap_PERFORMANCE_GAP_UNSPECIFIED || perf.GetReportingCurrency() != "PLN" {
+		t.Errorf("GET /v1/performance = gap %v in %q, want no gap, in PLN", perf.GetGap(), perf.GetReportingCurrency())
+	}
+}
+
 func TestCoreServesTheReadAPI(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
@@ -326,6 +341,7 @@ func TestCoreServesTheReadAPI(t *testing.T) {
 		t.Errorf("GET holdings = %v, want the XTB account's holdings on %s", &holdings, ds.Today)
 	}
 	waitValued(t, srv, secret, ds)
+	checkPerformance(t, srv, secret, ds)
 
 	checkRefused(t, srv, "", "no token")
 	checkRefused(t, srv, "ofs_0123456789abcdef_"+strings.Repeat("A", 43), "an unknown token")

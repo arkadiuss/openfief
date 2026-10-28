@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a87b556bc90c
+  - type: implements
+    from: SYM-views-day-builder-cash-on
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:03:55.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c540759eab65
+  - type: covered_by
+    from: SYM-views-day-builder-cash-on
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:03:55.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ec644c844cb

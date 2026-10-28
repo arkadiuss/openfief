@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:views.allocation:values_holdings_and_c
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-47F6FBCADD21B983
-claim_text: The allocation must count each holding at its stored valuation on the date, list a holding without one as unvalued, and convert each cash balance to PLN at the latest FX rate dated on or before the date, rounded half-even to grosze, failing when a cash currency has no rate.
+claim_key: CLAIM-2F1750F1D6817487
+claim_text: The allocation must count each holding at its stored valuation on the date, list a holding without one as unvalued, and convert each cash balance to PLN at the latest FX rate dated on or before the date, rounded half up to grosze as holding values are, failing when a cash currency has no rate.
 origin:
   kind: agent
   recorded_at: '2026-10-28T07:26:06.997Z'

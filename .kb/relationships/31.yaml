@@ -160,3 +160,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-426590d53d15
+  - type: implements
+    from: SYM-views-app-views-cash-rates
+    to: REQ-views-performance-query
+    created_at: 2026-10-28T21:00:34.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-298d195e5d17
+  - type: implements
+    from: SYM-views-app-views-cash-rates
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:00:34.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eab05f4c8aea
+  - type: covered_by
+    from: SYM-views-app-views-cash-rates
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T21:00:34.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35709bca927b

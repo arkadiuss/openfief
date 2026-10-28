@@ -265,3 +265,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb2af4d82a48
+  - type: implements
+    from: SYM-views-performance-gap-string
+    to: REQ-views-performance-gaps
+    created_at: 2026-10-28T21:02:47.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48ebb7042f6f
+  - type: covered_by
+    from: SYM-views-performance-gap-string
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:02:47.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78d7f356bf81

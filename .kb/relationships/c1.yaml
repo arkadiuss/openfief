@@ -202,3 +202,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7be5eebbfd9
+  - type: executable_for
+    from: SYM-views-test-helper-row-build
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:05:36.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c686cffe167e

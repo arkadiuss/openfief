@@ -210,6 +210,64 @@ components:
           title: unvalued
       title: GetAllocationResponse
       additionalProperties: false
+    openfief.views.v1.GetPerformanceRequest:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: |-
+            The first date, YYYY-MM-DD; empty, or a date before go-live, means
+             go-live. The index is 100 on it.
+        to:
+          type: string
+          title: to
+          description: |-
+            The last date, inclusive, YYYY-MM-DD, at most 3700 days after from;
+             empty means the latest date any account is valued through.
+      title: GetPerformanceRequest
+      additionalProperties: false
+    openfief.views.v1.GetPerformanceResponse:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: |-
+            The range asked for, as resolved; both empty when nothing is recorded
+             yet.
+        to:
+          type: string
+          title: to
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.PerformanceDay'
+          title: days
+          description: One per day from from, in date order, up to to or the gap.
+        gap:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.PerformanceGap'
+          title: gap
+          description: Why days ends before to; unspecified when it doesn't.
+        revaluationPending:
+          type: boolean
+          title: revaluation_pending
+          description: |-
+            A revaluation of some account is pending or running, so the series
+             may change.
+        transfers:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Transfer'
+          title: transfers
+          description: The transfers between the owner's accounts with a leg in the range.
+        reportingCurrency:
+          type: string
+          title: reporting_currency
+          description: The currency of every *_reporting value.
+      title: GetPerformanceResponse
+      additionalProperties: false
     openfief.views.v1.GetValuationStatusRequest:
       type: object
       properties:
@@ -568,6 +626,63 @@ components:
       title: Money
       additionalProperties: false
       description: Money is an exact decimal amount in one currency.
+    openfief.views.v1.PerformanceDay:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        index:
+          type: string
+          title: index
+          description: |-
+            The time-weighted return since the first day as an index, 100 on the
+             first day, as a decimal string: 105 means 5% up.
+        valueReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: value_reporting
+        holdingsReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: holdings_reporting
+          description: The holdings at their stored valuations.
+        cashReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: cash_reporting
+          description: Every account's cash, converted at the FX rate for the day.
+        inTransitReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: in_transit_reporting
+          description: |-
+            Money withdrawn from one account and not yet deposited into another;
+             negative while the deposit is booked and the withdrawal not yet.
+        flowReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: flow_reporting
+          description: |-
+            The day's net external cash flow: deposits, opening cash and opening
+             lots in, withdrawals out. Taken at the end of the day.
+      title: PerformanceDay
+      additionalProperties: false
+      description: |-
+        PerformanceDay is the portfolio at the end of one day, in the reporting
+         currency. value_reporting is holdings_reporting plus cash_reporting plus
+         in_transit_reporting.
+    openfief.views.v1.PerformanceGap:
+      type: string
+      title: PerformanceGap
+      enum:
+        - PERFORMANCE_GAP_UNSPECIFIED
+        - PERFORMANCE_GAP_UNVALUED
+        - PERFORMANCE_GAP_NO_FX_RATE
+      description: |-
+        PerformanceGap says why a performance series ends before the last date
+         asked for.
     openfief.views.v1.Posting:
       type: object
       properties:
@@ -666,6 +781,33 @@ components:
         - TRANSACTION_KIND_WITHDRAWAL
         - TRANSACTION_KIND_OPENING_LOT
       description: TransactionKind is what kind of economic event a transaction is.
+    openfief.views.v1.Transfer:
+      type: object
+      properties:
+        withdrawalAccountId:
+          type: string
+          title: withdrawal_account_id
+        withdrawalDate:
+          type: string
+          title: withdrawal_date
+          description: YYYY-MM-DD.
+        depositAccountId:
+          type: string
+          title: deposit_account_id
+        depositDate:
+          type: string
+          title: deposit_date
+          description: YYYY-MM-DD.
+        amount:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: amount
+      title: Transfer
+      additionalProperties: false
+      description: |-
+        Transfer is a withdrawal from one of the owner's accounts matched with a
+         deposit of the same amount and currency into another, at most five days
+         apart: not a cash flow.
     openfief.views.v1.UnvaluedHolding:
       type: object
       properties:
@@ -1039,6 +1181,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetAllocationResponse'
+  /v1/performance:
+    get:
+      tags:
+        - ReadService
+      summary: GetPerformance
+      description: |-
+        GetPerformance returns the portfolio's time-weighted return per day
+         (D-61) as an index that starts at 100, with the portfolio's value
+         including cash, in the reporting currency. Deposits and withdrawals are
+         not performance; transfers between the owner's own accounts are not cash
+         flows. The series stops at the last day every account is valued for,
+         and says why.
+      operationId: openfief.views.v1.ReadService.GetPerformance
+      parameters:
+        - name: from
+          in: query
+          description: |-
+            The first date, YYYY-MM-DD; empty, or a date before go-live, means
+             go-live. The index is 100 on it.
+          schema:
+            type: string
+            title: from
+        - name: to
+          in: query
+          description: |-
+            The last date, inclusive, YYYY-MM-DD, at most 3700 days after from;
+             empty means the latest date any account is valued through.
+          schema:
+            type: string
+            title: to
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetPerformanceResponse'
   /v1/sleeves:
     get:
       tags:
@@ -1104,4 +1283,5 @@ tags:
   - name: ReadService
     description: |-
       ReadService reads the record: sleeves, accounts, transactions, holdings,
-       tax lots, cash, balance assertions, valuations and the allocation.
+       tax lots, cash, balance assertions, valuations, the allocation and the
+       portfolio's performance.

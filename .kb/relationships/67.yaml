@@ -335,3 +335,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79363361d9cf
+  - type: constrains
+    from: REQ-views-performance-query
+    to: FACT-SUBJECT-134DCCCDF96783CB
+    created_at: 2026-10-28T20:55:20.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a516568b1f8
+  - type: requires_property
+    from: REQ-views-performance-query
+    to: FACT-PROP-C2A4A21E545812F4
+    created_at: 2026-10-28T20:55:20.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e3143ba534
+  - type: specified_by
+    from: REQ-views-performance-query
+    to: SCEN-views-performance-query
+    created_at: 2026-10-28T20:55:20.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f64d607a018a

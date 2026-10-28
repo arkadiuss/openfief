@@ -223,3 +223,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-abcc1da975cb
+  - type: constrains
+    from: REQ-views-performance-twr
+    to: FACT-SUBJECT-134DCCCDF96783CB
+    created_at: 2026-10-28T20:54:52.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c428fd0a512
+  - type: requires_property
+    from: REQ-views-performance-twr
+    to: FACT-PROP-9567D4A395B2BA4A
+    created_at: 2026-10-28T20:54:52.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-262040491eab
+  - type: specified_by
+    from: REQ-views-performance-twr
+    to: SCEN-views-performance-twr
+    created_at: 2026-10-28T20:54:52.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b854440816a

@@ -363,3 +363,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4e5acb5be42
+  - type: executable_for
+    from: SYM-views-test-helper-rng
+    to: TEST-views-performance-properties
+    created_at: 2026-10-28T21:04:19.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8075ca3aca62
+  - type: implements
+    from: SYM-views-pb-performance-day-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:07:47.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f56e843de026
+  - type: covered_by
+    from: SYM-views-pb-performance-day-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:07:47.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3e95058281d

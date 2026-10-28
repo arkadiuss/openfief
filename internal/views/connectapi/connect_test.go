@@ -73,6 +73,19 @@ func TestConnectValuation(t *testing.T) {
 	}
 }
 
+func TestConnectPerformance(t *testing.T) {
+	t.Parallel()
+	c := newClient(t, newLedger(t))
+	got, err := c.GetPerformance(context.Background(), authed(goodToken, &viewsv1.GetPerformanceRequest{}))
+	if err != nil {
+		t.Fatalf("GetPerformance() error = %v", err)
+	}
+	days := got.Msg.GetDays()
+	if len(days) != 1 || days[0].GetDate() != "2026-03-02" || days[0].GetIndex() != "100" || got.Msg.GetGap() != viewsv1.PerformanceGap_PERFORMANCE_GAP_UNSPECIFIED {
+		t.Errorf("GetPerformance() = %v, want one day, 2026-03-02 at 100, no gap", got.Msg)
+	}
+}
+
 func TestConnectPages(t *testing.T) {
 	t.Parallel()
 	c := newClient(t, newLedger(t))
@@ -188,5 +201,8 @@ func TestEnumsMatch(t *testing.T) {
 	}
 	for _, d := range []views.Dimension{views.ByAssetClass, views.ByCurrency, views.ByInstitution, views.BySleeve} {
 		checkEnum(t, viewsv1.AllocationDimension(0).Descriptor(), "ALLOCATION_DIMENSION_", int(d), d.String())
+	}
+	for _, g := range []views.PerformanceGap{views.GapUnvalued, views.GapNoFXRate} {
+		checkEnum(t, viewsv1.PerformanceGap(0).Descriptor(), "PERFORMANCE_GAP_", int(g), g.String())
 	}
 }

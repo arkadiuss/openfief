@@ -321,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6eeced439d9a
+  - type: executable_for
+    from: SYM-views-test-helper-points
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:06:02.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2069e485cd9b
+  - type: implements
+    from: SYM-views-pb-transfer-get-withdrawal-account-id
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:09:12.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efdb9d3d0d50
+  - type: covered_by
+    from: SYM-views-pb-transfer-get-withdrawal-account-id
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:09:12.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0035dda816a9

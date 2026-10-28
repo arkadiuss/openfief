@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20cb6128ccf0
+  - type: implements
+    from: SYM-views-app-performance-type
+    to: REQ-views-performance-query
+    created_at: 2026-10-28T20:59:54.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a51946ef1d1c
+  - type: covered_by
+    from: SYM-views-app-performance-type
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T20:59:54.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91d9c3a8e2f5

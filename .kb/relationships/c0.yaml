@@ -216,3 +216,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-514a7c8f7890
+  - type: constrains
+    from: REQ-views-performance-transfers
+    to: FACT-SUBJECT-134DCCCDF96783CB
+    created_at: 2026-10-28T20:55:07.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a38f5463fabb
+  - type: requires_property
+    from: REQ-views-performance-transfers
+    to: FACT-PROP-ADF09B88F059E14E
+    created_at: 2026-10-28T20:55:07.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aeb1f855e48
+  - type: specified_by
+    from: REQ-views-performance-transfers
+    to: SCEN-views-performance-transfers
+    created_at: 2026-10-28T20:55:07.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1456079b0666
+  - type: executable_for
+    from: SYM-views-app-test-helper-val-row
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T21:01:20.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93d356be3735

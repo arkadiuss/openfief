@@ -356,3 +356,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5550cf944666
+  - type: implements
+    from: SYM-views-transfer
+    to: REQ-views-performance-transfers
+    created_at: 2026-10-28T21:02:13.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61e9e74b8161
+  - type: covered_by
+    from: SYM-views-transfer
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:02:13.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ab95a0f05fb
+  - type: implements
+    from: SYM-views-pb-get-performance-response-get-reporting-currency
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:11:27.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7de32117b550
+  - type: covered_by
+    from: SYM-views-pb-get-performance-response-get-reporting-currency
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:11:27.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eca70a7a740

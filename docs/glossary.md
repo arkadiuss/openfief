@@ -67,6 +67,10 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Allocation item | views | `views.AllocationItem` | One valued holding or cash balance of an account on a date: what an allocation groups. | position |
 | Asset class | views | `views.AssetClass` | The kind of asset an allocation item is: `cash`, `treasury_bond` (a bond series) or `listed` (any other instrument: a stock or ETF in M0). | asset type |
 | Date total | views | `views.DateTotal` | The sum of the stored valuations dated on one date, in the reporting currency and per original currency. | |
+| Time-weighted return | views | `views.Performance` | The portfolio's return chained day by day from its value, holdings plus cash, across external cash flows, so money put in or taken out is not performance (D-61). | performance (alone), profit |
+| Performance index | views | `views.PerformanceDay.Index` | The time-weighted return since a first day as an index that starts at 100 on it: 105 means 5% up. | |
+| External cash flow | views | `views.CashFlow` | Money entering or leaving the portfolio from outside it: a deposit, a withdrawal or opening cash; an opening lot is one too, at its valuation. A transfer is not one. | contribution |
+| Transfer | views | `views.Transfer` | A withdrawal from one of the owner's accounts matched with a deposit of the same amount and currency into another, at most five days apart: money moving inside the portfolio. | internal flow |
 | Plugin | plugins | `plugins.Plugin` | The custom resource for one installed, named instance of a plugin image: the image and its manifest (the vendor's) and the instance's name and config (the owner's). Its status says whether the image is verified. | extension, addon |
 | Grant | plugins | `plugins.Grant` | The custom resource holding what the owner approved for a plugin. | permission set |
 | Catalog | plugins | `plugins.Catalog` | The file in the OpenFief repository that lists first-party and verified plugins, with pinned image digests and signer identities. | marketplace, registry |

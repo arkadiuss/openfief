@@ -202,3 +202,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bd53fa561aa
+  - type: implements
+    from: SYM-views-app-views-valuations-for
+    to: REQ-views-performance-query
+    created_at: 2026-10-28T21:00:29.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5a143b267bf
+  - type: covered_by
+    from: SYM-views-app-views-valuations-for
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T21:00:29.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-425ce0bf2d83
+  - type: implements
+    from: SYM-views-pb-get-performance-request-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:09:53.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b5f700a1a4
+  - type: covered_by
+    from: SYM-views-pb-get-performance-request-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:09:53.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ba71dd5a666

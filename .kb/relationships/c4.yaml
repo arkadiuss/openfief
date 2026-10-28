@@ -342,3 +342,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-465c6c5d2da1
+  - type: executable_for
+    from: SYM-views-test-helper-rng-price
+    to: TEST-views-performance-properties
+    created_at: 2026-10-28T21:04:32.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bf4229b511a
