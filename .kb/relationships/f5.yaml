@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7c0b8a19f22
+  - type: executable_for
+    from: SYM-e2e-kube-pods-state
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:04:36.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b84abd2857b

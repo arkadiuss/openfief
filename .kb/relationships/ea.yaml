@@ -146,3 +146,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-609466ae2dd1
+  - type: executable_for
+    from: SYM-e2e-kube-is-k3s
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:06:25.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1404f0ff1ae6

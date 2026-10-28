@@ -300,3 +300,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be42e15f087d
+  - type: executable_for
+    from: SYM-e2e-job-finished
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:02:13.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2e61cd12c5f

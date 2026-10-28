@@ -230,3 +230,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02541cf8fc93
+  - type: executable_for
+    from: SYM-e2e-stuck-reasons
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:04:31.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-821e8477d021

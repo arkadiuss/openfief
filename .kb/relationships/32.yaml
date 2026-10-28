@@ -195,3 +195,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c26d46d6273
+  - type: executable_for
+    from: SYM-e2e-test-demo-seed-completes
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:01:48.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12b436611f7d
+  - type: executable_for
+    from: SYM-e2e-install-database
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:06:11.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f94f568f7e6

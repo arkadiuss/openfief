@@ -328,3 +328,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84500823a042
+  - type: executable_for
+    from: SYM-e2e-connect
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:03:22.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e28455bcfa9f

@@ -153,3 +153,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac49ae0d951c
+  - type: executable_for
+    from: SYM-e2e-test-core-ready-through-service
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:01:31.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7901ba475aa

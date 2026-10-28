@@ -181,3 +181,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4004cdf862c1
+  - type: executable_for
+    from: SYM-e2e-test-traefik-routes-to-core
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:01:37.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48921b7b2cef
+  - type: executable_for
+    from: SYM-e2e-call
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:02:23.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1bb8d631405

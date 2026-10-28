@@ -50,6 +50,14 @@ vars:
   # replace directives, so `go install` can't build it: the release archive is checked against these sha256s.
   FLUX_CLI_SHA256_LINUX_AMD64: b4d22673e9246cbd628881f1a9ef3b090085dced291e42d804555cee8e8d42c5
   FLUX_CLI_SHA256_LINUX_ARM64: 6663c154755b732f43dc993d72321f71c2fc1ff0bcb94b2696e0a8638fa562b4
+  # CloudNativePG for the end-to-end suite (task e2e): the operator version that the demo's chart pins
+  # (deploy/demo/cnpg/helmrelease.yaml, chart 0.29.1 ships 1.30.1), from its release manifest. Bump both together,
+  # with the manifest's new sha256.
+  CNPG_VERSION: 1.30.1
+  CNPG_MANIFEST_SHA256: 37237f145d8138256ea25ae830f87759255665ff08f8d552fdd8224a5ec032fb
+  E2E_CNPG_MANIFEST: '{{.ROOT_DIR}}/.bin/e2e/cnpg-{{.CNPG_VERSION}}.yaml'
+  # The cluster the CI e2e job creates (.github/workflows/ci.yml); task e2e:images loads the images into it.
+  E2E_CLUSTER_NAME: openfief-e2e
   # Generates the read API's OpenAPI document from its protobuf definitions (D-50).
   # renovate: datasource=go depName=github.com/sudorandom/protoc-gen-connect-openapi
   PROTOC_GEN_CONNECT_OPENAPI_VERSION: v0.28.0
@@ -384,10 +392,43 @@ tasks:
       - '{{.GO_GUARD}} bash scripts/test-pg.sh {{.CLI_ARGS}}'
 
   e2e:
-    desc: End-to-end tests on a local k3s; refuses non-local clusters
+    desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images; refuses non-local clusters'
+    deps: [tool:kustomize]
     cmds:
       - bash scripts/assert-local-cluster.sh
-      - 'if [ ! -d test/e2e ]; then echo "no e2e suite yet, skipping"; exit 0; fi; go test -tags e2e -count=1 ./test/e2e/...'
+      - task: e2e:cnpg
+      # -v streams each step and wait as it happens, so a CI log shows where a run stopped.
+      # The suite runs kustomize by name, so the pinned one goes first on PATH.
+      - PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}' go test -tags e2e -count=1 -v -timeout 20m ./test/e2e/...
+
+  e2e:images:
+    desc: 'Build the core, operator, egress-proxy and demo-seed images from this checkout (Docker) and load them into the local e2e cluster, e.g. task e2e:images CLUSTER=k3d'
+    requires:
+      vars: [CLUSTER]
+    cmds:
+      - bash scripts/assert-local-cluster.sh
+      - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}'
+
+  e2e:k3s-image:
+    desc: 'The k3s image the k3d e2e cluster runs: the demo machine''s pinned K3S_VERSION (CI passes it to k3d)'
+    silent: true
+    cmds:
+      - echo 'rancher/k3s:{{replace "+" "-" .K3S_VERSION}}'
+
+  e2e:cnpg:
+    internal: true
+    # The CloudNativePG release manifest the suite installs, checked against its pinned sha256 and kept in .bin.
+    cmds:
+      - |
+        set -e
+        mkdir -p '{{.BIN}}/e2e'
+        work="$(mktemp -d)"
+        trap 'rm -rf "$work"' EXIT
+        curl -fsSL --retry 3 -o "$work/cnpg.yaml" 'https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v{{.CNPG_VERSION}}/cnpg-{{.CNPG_VERSION}}.yaml'
+        echo '{{.CNPG_MANIFEST_SHA256}}  '"$work/cnpg.yaml" | sha256sum -c -
+        mv "$work/cnpg.yaml" '{{.E2E_CNPG_MANIFEST}}'
+    status:
+      - echo '{{.CNPG_MANIFEST_SHA256}}  {{.E2E_CNPG_MANIFEST}}' | sha256sum -c - >/dev/null 2>&1
 
   dco:
     desc: 'DCO sign-off check (D-5) on the commits in BASE..HEAD, e.g. task dco BASE=origin/main HEAD=HEAD'

@@ -1,0 +1,63 @@
+# The suite's HTTP clients, in their own namespace like Traefik in kube-system. client carries the label that
+# ../overlays/openfief/core-from-e2e-client.yaml admits; outsider doesn't, so the core's policies must refuse it.
+# The image is pinned by digest; it runs as a numeric non-root user, since its own user is a name.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openfief-e2e
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+  namespace: openfief-e2e
+  labels:
+    app.kubernetes.io/name: openfief-e2e-client
+spec:
+  automountServiceAccountToken: false
+  terminationGracePeriodSeconds: 0
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: curl
+      # curlimages/curl 8.22.0
+      image: docker.io/curlimages/curl@sha256:58adaa4e8dca9c988bae2aba4ab3434a0bb2da16bbe3f92dec39ec7785166777
+      command: ["sleep", "7200"]
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop: [ALL]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: outsider
+  namespace: openfief-e2e
+  labels:
+    app.kubernetes.io/name: openfief-e2e-outsider
+spec:
+  automountServiceAccountToken: false
+  terminationGracePeriodSeconds: 0
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: curl
+      # curlimages/curl 8.22.0
+      image: docker.io/curlimages/curl@sha256:58adaa4e8dca9c988bae2aba4ab3434a0bb2da16bbe3f92dec39ec7785166777
+      command: ["sleep", "7200"]
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop: [ALL]

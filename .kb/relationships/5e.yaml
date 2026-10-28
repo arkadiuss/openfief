@@ -202,3 +202,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4184a22649b6
+  - type: verified_by
+    from: SCEN-e2e-read-api-needs-token
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:01:07.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17fe77998a31
