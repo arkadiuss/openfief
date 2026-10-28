@@ -150,14 +150,11 @@ jobs:
   deploy-demo:
     # Deploys main to the Hetzner k3s demo environment (synthetic data only, GR-12) by GitOps pull: it publishes
     # deploy/demo/openfief, pinned to the signed image digests, as a signed OCI artifact that Flux on the machine
-    # applies automatically. No cluster credential exists outside the machine. SKIPPED until the demo machine
-    # exists. To enable it, the owner (docs/dev/demo.md#deploys):
-    #   1. creates the GitHub Environment `demo` (Settings > Environments), deployment branches limited to main,
-    #   2. creates the machine: task demo:up ENV=demo, or the Demo infrastructure workflow (demo-infra.yml),
-    #   3. makes the GHCR packages public after the first push, so the cluster pulls without credentials,
-    #   4. sets the repository variable DEMO_ENABLED=true.
+    # applies automatically. No cluster credential exists outside the machine. It runs on every push to main:
+    # publishing the artifact is harmless without a machine (nothing pulls it), so there is no on/off variable.
+    # To stop deploys, suspend Flux on the machine or remove the demo (task demo:down). docs/dev/demo.md#deploys
     name: deploy demo
-    if: github.event_name == 'push' && vars.DEMO_ENABLED == 'true'
+    if: github.event_name == 'push'
     needs: [check, e2e, images]
     permissions:
       contents: read

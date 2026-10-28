@@ -133,7 +133,7 @@ Each job first calls the composite [setup action](../../.github/actions/setup/ac
 - `e2e` is a matrix over `k3d` and `kind` (D-12), and one failure doesn't cancel the other. A third-party action creates the cluster. `task e2e` then runs [assert-local-cluster.sh](../../scripts/assert-local-cluster.sh), which refuses any API server not on `127.0.0.1`, `localhost`, `0.0.0.0` or `[::1]`, and then runs `go test -tags e2e ./test/e2e/...`.
 - `images` waits for `check` and calls [images.yml](../../.github/workflows/images.yml), with `push` true only on a push to `main`.
 - `docs` runs on a push to `main` after `check`. `check` has built the site in `task check` and uploaded `site/public` as a Pages artifact; `docs` publishes it with GitHub's `deploy-pages` action to the `github-pages` environment ([docs.md](docs.md)). It needs the repository's Pages source set to "GitHub Actions", with the custom domain `openfief.dev`. With "Deploy from a branch", the deploy fails with a 404 and GitHub serves the repository root through Jekyll instead.
-- `deploy-demo` runs on a push to `main` when the repository variable `DEMO_ENABLED` is `true`, after `check`, `e2e` and `images` succeed. It calls [deploy-demo.yml](../../.github/workflows/deploy-demo.yml), described in [The demo](#the-demo).
+- `deploy-demo` runs on every push to `main`, after `check`, `e2e` and `images` succeed. It has no on/off variable: publishing the artifact is harmless without a demo machine, because nothing pulls it. It calls [deploy-demo.yml](../../.github/workflows/deploy-demo.yml), described in [The demo](#the-demo).
 
 ```mermaid
 flowchart TD
@@ -148,9 +148,7 @@ flowchart TD
   e2e["e2e matrix (k3d, kind): task e2e"]
   images -->|"pull request"| build["build amd64 and arm64 with SBOM and provenance, not pushed"]
   images -->|"push to main"| pub["build, push to GHCR, task image:sign on the digest"]
-  check & e2e & pub --> gate{"deploy-demo job: DEMO_ENABLED is true?"}
-  gate -->|"yes"| demo["deploy-demo.yml: task deploy:demo publishes the signed demo-manifests artifact"]
-  gate -->|"no"| skip["deploy skipped"]
+  check & e2e & pub --> demo["deploy-demo.yml: task deploy:demo publishes the signed demo-manifests artifact"]
 ```
 
 **Images.** The `discover` job runs `task ci:images`. It lists each `cmd/<name>/Dockerfile` and `plugins/<name>/Dockerfile` as a JSON matrix and lowercases the registry prefix; today that is `core`, `demo-seed`, `egress-proxy` and `operator`. An empty list skips `build` rather than failing it. `build` runs once per image. Buildx builds `linux/amd64` and `linux/arm64` from the repository root, attaches an SBOM and a full (`mode=max`) provenance attestation, and caches layers per image. The Dockerfiles copy `go.work`, `go.work.sum` and `sdk/go` and build in workspace mode, as the repository does locally, because the core imports the SDK module, which a private repository can't serve as a module version. They cross-compile Go on the build machine and copy the binary into a distroless base pinned by digest. When pushing, the job logs in to GHCR with the job's token, pushes, and runs `task image:sign IMAGE=<image>@<digest>`, so cosign signs the digest just pushed, never a tag. cosign v3 stores the signature as a Sigstore bundle attached to the digest as an OCI referrer. The operator verifies plugin images in that format and trusts `images.yml` on `main` as OpenFief's own signer, so signing has to stay in that workflow. The tags depend on the caller:
@@ -203,7 +201,7 @@ sequenceDiagram
 1. `plan` refuses a real run unless the actor is the repository owner and the ref is `main`. It then runs three tasks on full history. `release:check` calls [release-version.sh](../../scripts/release-version.sh): stable must be `YYYY.M.N` and beta `YYYY.M.N-beta.K`, with no `v`, no leading zeros, a month from 1 to 12, `K` from 1 up, and no existing tag. `release:notes` writes the notes to the run's summary page. `release:assets` packs `deploy/` into `dist/openfief-deploy-<version>.tar.gz` and builds the docs site into `dist/openfief-docs-<version>.tar.gz`; these copies are only a trial and are discarded.
 2. `images` calls images.yml with the version as the tag, and pushes and signs only on a real run.
 3. `publish` runs only on a real run. `task release:publish` repeats the version check, rebuilds the tarball and notes, and creates the tag at the checked-out commit through the GitHub API. For `stable` it also creates a GitHub release with the notes and both tarballs. A beta gets a tag and no GitHub release.
-4. `deploy-demo` runs after a real beta when `DEMO_ENABLED` is `true`. It publishes the beta's verified digests as the demo artifact, as above, with the version as the tag.
+4. `deploy-demo` runs after every real beta. It publishes the beta's verified digests as the demo artifact, as above, with the version as the tag.
 
 [release-notes.sh](../../scripts/release-notes.sh) finds the previous release with `git describe`, limited to tags that start with four digits. A stable release skips beta tags, so its notes cover the whole cycle; a beta starts after the newest release of either channel. Each non-merge commit goes into Breaking changes (`!` or a `BREAKING CHANGE:` footer), Features (`feat`), Fixes (`fix`), Performance (`perf`) or Other changes, which also takes anything not in Conventional Commit form.
 
@@ -228,7 +226,7 @@ sequenceDiagram
     U->>H: create tag VERSION at the commit
     alt channel is stable
       U->>H: gh release create with notes, deploy and docs tarballs
-    else channel is beta and DEMO_ENABLED is true
+    else channel is beta
       U->>D: publish the beta digests as the demo artifact
     end
   else dry_run is true (default)
@@ -317,7 +315,7 @@ These are the gaps between [sdlc.md](sdlc.md) or [testing.md](testing.md) and th
 - **Conventional Commits aren't enforced** (sdlc.md:25). Nothing lints commit messages or PR titles, and a non-conforming commit lands under Other changes.
 - **No PR template** asks which requirements a PR implements or how it was verified (sdlc.md:26).
 - **End-to-end tests don't exist** (sdlc.md:11 and :31). `test/e2e` is missing, so both e2e jobs create a cluster, pass the local-cluster guard and skip (the `e2e` target). Nothing builds or loads images, or installs `deploy/`, into the cluster yet. The guard has no test, though REQ-tooling-e2e-local-only has a scenario.
-- **The demo serves no product yet** (sdlc.md:12 and :32). The deploy path is built, but whether it runs depends on settings outside the repository: the `demo` environment, public GHCR packages and `DEMO_ENABLED`. The app layer holds the operator and the egress proxy, and `demo-routes` stays suspended until a core service exists (deploy/demo/stack.yaml:107). The demo database stays empty too: deploy/demo-data/kustomization.yaml:2 says `deploy/demo` includes the seed Job, but nothing under `deploy/demo` refers to it, and `deploy/demo/openfief` doesn't pin the `demo-seed` image.
+- **The demo serves no product yet** (sdlc.md:12 and :32). The deploy path is built, but whether it runs depends on settings outside the repository: the `demo` environment and public GHCR packages. The app layer holds the operator and the egress proxy, and `demo-routes` stays suspended until a core service exists (deploy/demo/stack.yaml:107). The demo database stays empty too: deploy/demo-data/kustomization.yaml:2 says `deploy/demo` includes the seed Job, but nothing under `deploy/demo` refers to it, and `deploy/demo/openfief` doesn't pin the `demo-seed` image.
 - **Releases don't pin their images** (sdlc.md:41, D-17). images.yml exposes no digest output. The stable tarball ships `deploy/` with bases that name images without a tag or digest (deploy/operator/deployment.yaml:28, deploy/egress-proxy/deployment.yaml:26) and expect an overlay to pin them. Only the demo has such an overlay, and CI fills it in at deploy time. "The CRDs and the bootstrap install" are one archive of `deploy/`.
 - **The dry run is per run, not a gate** (sdlc.md:42). A run with `dry_run: false` validates in `plan`, then pushes and signs images straight away (release.yml:73-83). Nothing requires an earlier dry run of the same commit, or checks that the commit passed CI. Because image builds don't fail fast, one image can be pushed while another fails, which leaves pushed images with no tag.
 - **No SDK or contract releases** (sdlc.md:43). There's no `sdk/go/vX.Y.Z` tagging and no TypeScript SDK. `buf breaking` now has contracts to check (the connector contract and the read API) and runs on every change, not only before an SDK release.
