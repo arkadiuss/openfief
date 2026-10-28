@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b05d9117c19d
+  - type: validates
+    from: TEST-e2e-ui
+    to: REQ-AUTO-902181B0129A6321
+    created_at: 2026-10-28T20:20:54.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a2fb4510e57

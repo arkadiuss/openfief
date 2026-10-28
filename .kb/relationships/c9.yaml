@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a4839d965e6
+  - type: executable_for
+    from: SYM-e2e-test-helper-skip-unless-k3s
+    to: TEST-e2e-ui
+    created_at: 2026-10-28T20:21:20.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39f7d44003c3
+  - type: executable_for
+    from: SYM-e2e-test-helper-skip-unless-k3s
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T20:21:20.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4df0821da3f4

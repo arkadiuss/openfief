@@ -1,0 +1,28 @@
+# The demo's own way in to the built-in UI (D-28 leaves it to the installation): k3s's bundled Traefik, in
+# kube-system, may reach the ui plugin's port (the operator's --plugin-port, 8080) for the demo's Ingress (../routes).
+# It adds to the NetworkPolicy the operator compiles for the plugin, which admits only the core (D-59): a view plugin
+# that serves browsers needs this second way in, an open design question recorded in docs/concepts/ui.md.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: plugin-ui-from-traefik
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-ui
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      openfief.io/plugin: ui
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - protocol: TCP
+          port: 8080

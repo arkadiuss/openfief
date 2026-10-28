@@ -1,0 +1,97 @@
+# A stand-in for the workload the operator builds for the demo's Plugin ui (deploy/demo/plugins/ui.yaml). The operator
+# never deploys an image that a trusted signer didn't sign (D-57), and the images this suite builds are unsigned and
+# live in no registry, so kustomization.yaml drops the Plugin and its grant and this runs the same image the way the
+# operator would: Service and Deployment plugin-ui with the plugin labels, the core's address and port, the plugin
+# port 8080, a projected token with audience openfief-core, and the same hardened security context. Unlike a real
+# plugin pod it can resolve DNS, so it names the core's Service instead of its ClusterIP.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: plugin-ui
+  namespace: openfief
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plugin-ui
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-plugin
+    openfief.io/plugin: ui
+spec:
+  type: ClusterIP
+  selector:
+    openfief.io/plugin: ui
+  ports:
+    - name: connect
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plugin-ui
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-plugin
+    openfief.io/plugin: ui
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      openfief.io/plugin: ui
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: openfief-plugin
+        openfief.io/plugin: ui
+    spec:
+      serviceAccountName: plugin-ui
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: plugin
+          image: ghcr.io/arkadiuss/openfief/ui
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: OPENFIEF_CORE_ADDRESS
+              value: openfief-core.openfief.svc.cluster.local:8081
+            - name: OPENFIEF_LISTEN_PORT
+              value: '8080'
+            - name: OPENFIEF_TOKEN_FILE
+              value: /var/run/secrets/openfief/token
+          ports:
+            - name: connect
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: connect
+            periodSeconds: 5
+          volumeMounts:
+            - name: openfief-token
+              mountPath: /var/run/secrets/openfief
+              readOnly: true
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop: [ALL]
+      volumes:
+        - name: openfief-token
+          projected:
+            sources:
+              - serviceAccountToken:
+                  audience: openfief-core
+                  expirationSeconds: 3600
+                  path: token

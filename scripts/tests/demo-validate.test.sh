@@ -49,7 +49,7 @@ sed -i 's#path: ./deploy/demo/database#path: ./deploy/demo/missing#' "$work/repo
 expect "a Flux path that does not build" fail "kustomize build ./deploy/demo/missing failed"
 
 fresh
-sed -i 's/[$]{DEMO_HOST}/${DEMO_HOSTNAME}/' "$work/repo/deploy/demo/routes/core.yaml"
+sed -i 's/[$]{DEMO_HOST}/${DEMO_HOSTNAME}/' "$work/repo/deploy/demo/routes/openfief.yaml"
 expect "a variable the demo settings don't define" fail "uses variables the demo settings don't define: DEMO_HOSTNAME"
 
 if [ "$failures" -ne 0 ]; then

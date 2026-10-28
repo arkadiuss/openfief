@@ -1,5 +1,5 @@
-# The demo's route to the core (deploy/demo/routes/core.yaml) through k3s's bundled Traefik, as the demo machine
-# serves it, minus what needs a public name: Flux would substitute ${DEMO_HOST}, here it is a fixed .test name; and
+# The demo's routes to the core and the UI (deploy/demo/routes/openfief.yaml) through k3s's bundled Traefik,
+# as the demo machine serves them, minus what needs a public name: Flux would substitute ${DEMO_HOST}, here it is a fixed .test name; and
 # cert-manager would issue the certificate, so TLS is dropped and the route uses Traefik's plain-HTTP entry point.
 # Only applied on k3s (k3d), the cluster the demo runs; kind has no Traefik.
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -9,7 +9,7 @@ resources:
 patches:
   - target:
       kind: Ingress
-      name: openfief-core
+      name: openfief
     patch: |-
       - op: replace
         path: /spec/rules/0/host

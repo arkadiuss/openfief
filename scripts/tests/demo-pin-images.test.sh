@@ -13,6 +13,7 @@ eg='sha256:2222222222222222222222222222222222222222222222222222222222222222'
 co='sha256:3333333333333333333333333333333333333333333333333333333333333333'
 ds='sha256:4444444444444444444444444444444444444444444444444444444444444444'
 nf='sha256:5555555555555555555555555555555555555555555555555555555555555555'
+ui='sha256:6666666666666666666666666666666666666666666666666666666666666666'
 
 # The fake cosign logs its arguments and "verifies" only the images listed in FAKE_SIGNED (image:tag=digest).
 mkdir -p "$work/bin"
@@ -58,7 +59,7 @@ yes_if() {
 
 images="ghcr.io/arkadiuss/openfief/operator:sha-1a2b3c4=$op ghcr.io/arkadiuss/openfief/egress-proxy:sha-1a2b3c4=$eg"
 images="$images ghcr.io/arkadiuss/openfief/core:sha-1a2b3c4=$co ghcr.io/arkadiuss/openfief/demo-seed:sha-1a2b3c4=$ds"
-images="$images ghcr.io/arkadiuss/openfief/nbp-fx:sha-1a2b3c4=$nf"
+images="$images ghcr.io/arkadiuss/openfief/nbp-fx:sha-1a2b3c4=$nf ghcr.io/arkadiuss/openfief/ui:sha-1a2b3c4=$ui"
 if pin "$images" sha-1a2b3c4; then r=yes; else r=no; fi
 check "every image signed: pinning succeeds" "$r"
 check "operator digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$op" '.images[] | select(.name | endswith("/operator")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
@@ -72,6 +73,7 @@ cp -r "$root/deploy" "$work/deploy"
 cp "$work/demo/openfief/kustomization.yaml" "$work/deploy/demo/openfief/kustomization.yaml"
 kustomize build "$work/deploy/demo/openfief" >"$work/rendered.yaml" 2>"$work/out" || true
 check "the nbp Plugin runs the pinned plugin image" "$(yes_if gojq --yaml-input -e --arg i "ghcr.io/arkadiuss/openfief/nbp-fx@$nf" 'select(.kind == "Plugin" and .metadata.name == "nbp") | .spec.image == $i' "$work/rendered.yaml")"
+check "the ui Plugin runs the pinned plugin image" "$(yes_if gojq --yaml-input -e --arg i "ghcr.io/arkadiuss/openfief/ui@$ui" 'select(.kind == "Plugin" and .metadata.name == "ui") | .spec.image == $i' "$work/rendered.yaml")"
 check "comments survive" "$(yes_if grep -q '^# OpenFief on the demo machine' "$work/demo/openfief/kustomization.yaml")"
 check "no placeholder is left" "$(yes_if bash -c "! grep -q sha256:0000 '$work/demo/openfief/kustomization.yaml'")"
 check "only the images workflow on main is trusted" "$(yes_if grep -q -- '--certificate-identity https://github.com/example/openfief/.github/workflows/images.yml@refs/heads/main --certificate-oidc-issuer https://token.actions.githubusercontent.com' "$work/log")"

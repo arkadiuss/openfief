@@ -143,7 +143,7 @@ The install manifests are in `deploy/`: `crds/` for the definitions and the name
 
 ## The demo environment
 
-`deploy/demo` runs the same install on one Hetzner machine with k3s, holding synthetic data only (GR-12). Nothing pushes to it: cloud-init installs Flux, and Flux pulls each layer below, in dependency order. Five layers follow `main` in git. The `openfief` layer instead follows a signed OCI artifact that CI publishes after each push to `main`, with the images pinned to the digests whose signatures verified (D-17). The HTTPS route is the demo's own, at demo.openfief.dev on k3s's bundled Traefik with a Let's Encrypt certificate, to Service `openfief-core`, port `http`; a demo-only NetworkPolicy lets Traefik reach the core. Creating and destroying demos is in [demo.md](dev/demo.md).
+`deploy/demo` runs the same install on one Hetzner machine with k3s, holding synthetic data only (GR-12). Nothing pushes to it: cloud-init installs Flux, and Flux pulls each layer below, in dependency order. Five layers follow `main` in git. The `openfief` layer instead follows a signed OCI artifact that CI publishes after each push to `main`, with the images pinned to the digests whose signatures verified (D-17). The HTTPS routes are the demo's own, at demo.openfief.dev on k3s's bundled Traefik with a Let's Encrypt certificate: `/v1` and `/openfief.views.v1.ReadService` to Service `openfief-core`, port `http`, and everything else to the [built-in UI](concepts/ui.md)'s Service `plugin-ui`; demo-only NetworkPolicies let Traefik reach the core and the UI. Creating and destroying demos is in [demo.md](dev/demo.md).
 
 ```mermaid
 flowchart LR
@@ -156,8 +156,8 @@ flowchart LR
     db["demo-database<br/>one-instance cluster"]
     cm["demo-cert-manager"]
     ing["demo-ingress<br/>Let's Encrypt issuer"]
-    routes["demo-routes<br/>Traefik route to the core"]
-    of["demo-openfief<br/>operator, egress proxy,<br/>core, demo-seed Job"]
+    routes["demo-routes<br/>Traefik routes to the core and the UI"]
+    of["demo-openfief<br/>operator, egress proxy, core,<br/>demo-seed Job, nbp and ui plugins"]
   end
   git --> flux
   oci --> flux

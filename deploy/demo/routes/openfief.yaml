@@ -1,0 +1,46 @@
+# The demo's routes, on one host. cert-manager issues the certificate through HTTP-01.
+#   /v1 and /openfief.views.v1.ReadService  the core's public read API (D-50): REST and Connect, Service
+#                                           openfief-core, port http. Scripts call it with a script token (D-27).
+#   everything else                         the built-in UI (plugins/ui, D-3): Service plugin-ui, which the operator
+#                                           creates for the Plugin ui (deploy/demo/plugins), port connect (8080).
+# Nothing routes to the core's AuthService (/openfief.identity.v1.*): only view plugins call it, from inside the cluster.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openfief
+  namespace: openfief
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - ${DEMO_HOST}
+      secretName: openfief-demo-tls
+  rules:
+    - host: ${DEMO_HOST}
+      http:
+        paths:
+          - path: /v1
+            pathType: Prefix
+            backend:
+              service:
+                name: openfief-core
+                port:
+                  name: http
+          - path: /openfief.views.v1.ReadService
+            pathType: Prefix
+            backend:
+              service:
+                name: openfief-core
+                port:
+                  name: http
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: plugin-ui
+                port:
+                  name: connect

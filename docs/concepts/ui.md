@@ -104,6 +104,10 @@ sequenceDiagram
 - **The value over time** (D-30) asks `ListValuationTotals` for the 3650 days up to the date; the line starts at the first date with stored valuations, go-live (D-23). Stored valuations cover holdings only, so the line leaves out cash, and the page says so. The page also says "TWR: not built": the time-weighted return (D-61) needs a read API endpoint that doesn't exist yet, and the UI computes no performance itself.
 - **Amounts** stay the read API's exact decimal strings. The UI only groups their digits; a share is computed with the kernel's `Decimal.Quo`, half-even to one decimal place. The chart script turns the strings into numbers only to place the marks, and its tooltips show the exact strings.
 
+### The demo
+
+[`deploy/demo/plugins/ui.yaml`](../../deploy/demo/plugins/ui.yaml) installs the instance `ui` with a grant for exactly the `view` capability. The operator runs it as Service `plugin-ui`, port `connect` (8080). The demo's Ingress, [`deploy/demo/routes/openfief.yaml`](../../deploy/demo/routes/openfief.yaml), sends `/v1` and `/openfief.views.v1.ReadService` to the core and everything else to `plugin-ui`; nothing routes to the AuthService. The operator's NetworkPolicy for a plugin admits only the core (D-59), so a demo-only policy, [`ui-from-traefik.yaml`](../../deploy/demo/openfief/ui-from-traefik.yaml), also admits k3s's Traefik, like `core-from-traefik`.
+
 ## Decisions
 
 - **D-3** makes the UI the default view; **D-6** says it reads through the public API like any view. `TestReadsOnlyThroughPublicAPI` keeps the package from importing anything of OpenFief's but the kernel and the SDK.
@@ -111,7 +115,7 @@ sequenceDiagram
 - **D-28**: the UI is a ClusterIP Service; only the demo routes to it.
 - **D-30**, **D-36**, **D-62**: the two charts, the valuation status per account, the reporting currency.
 - **D-52**: the model portfolio is off, so the UI shows none of it. **D-61**: TWR is not built, and the page says so.
-- **Open question, D-59.** D-59 says only the core may call a plugin, and the operator's NetworkPolicy admits the core alone. A view plugin that serves browsers needs a second way in: through an Ingress controller such as the demo's Traefik, or, on an owner's installation, `kubectl port-forward`, which enters through the kubelet and needs no rule. The UI also doesn't check a core token on its pages, since browsers have none. Whether a view plugin's browser-facing port is an exception to D-59, and how an installation should admit its own Ingress, is for the author to decide; the operator's enforcement is unchanged.
+- **Open question, D-59.** D-59 says only the core may call a plugin, and the operator's NetworkPolicy admits the core alone. A view plugin that serves browsers needs a second way in: on the demo, Traefik through `ui-from-traefik`; on an owner's installation, `kubectl port-forward`, which enters through the kubelet and needs no rule. The UI also doesn't check a core token on its pages, since browsers have none. Whether a view plugin's browser-facing port is an exception to D-59, and how an installation should admit its own Ingress, is for the author to decide; the operator's enforcement is unchanged.
 - **The cookie is `Secure` on `http://localhost` too.** The AuthService contract says the cookie is Secure except on `http://localhost`. A `__Host-` cookie must be `Secure`, `gosec` (G124) refuses an insecure cookie, and current Chrome and Firefox keep `Secure` cookies on `localhost` as a secure context, so the UI sets one cookie everywhere. Safari's support for that is unverified here.
 - **The origin comes from `X-Forwarded-Proto` and `Host`.** Only Traefik and `kubectl port-forward` reach the pod, and the core checks the origin against its allow-list; a forged origin can't use a passkey or session made for another host.
 
@@ -125,12 +129,14 @@ sequenceDiagram
 | Amounts, shares, labels, the date, chart data, origin and cookie | [format_test.go](../../internal/views/ui/format_test.go) | REQ-ui-formatting, REQ-ui-overview |
 | Imports only the kernel and the SDK; vendored libraries pinned | [boundary_test.go](../../internal/views/ui/boundary_test.go) | REQ-ui-read-boundary, REQ-ui-browser-security, REQ-AUTO-A04740EC43D6F6BA |
 | The manifest asks for `view` only | [main_test.go](../../plugins/ui/main_test.go) | REQ-ui-plugin-packaging, REQ-AUTO-902181B0129A6321 |
+| The UI's pod becomes ready on k3d and kind; `/login` answers through Traefik | [ui_test.go](../../test/e2e/ui_test.go) | REQ-ui-plugin-packaging |
 
 The handler tests run the UI against both services as in-memory Connect servers, a fake AuthService and a fake read API over a synthetic record, with the AuthService client the plugin uses: the SDK's `CoreHTTPClient` over a token file the test rotates.
 
+In the end-to-end suite the UI runs from a stand-in Deployment ([ui-standin.yaml](../../test/e2e/overlays/openfief/ui-standin.yaml)), because the operator never deploys the suite's unsigned images (D-57). WebAuthn needs a browser with an authenticator and is not exercised end to end.
+
 ## Not built yet
 
-- The UI on the demo, behind its Ingress.
 - **The core's side.** The core doesn't serve the AuthService yet, its read API accepts script tokens but not sessions, and its `--demo-sessions` and `--auth-origin` flags don't exist yet. Until they do, the login page says the core couldn't answer, and nothing past it works against a real core.
 - The portfolio's time-weighted return (D-61) and the model portfolio's comparison and drawdowns (D-52 to D-54).
 - File uploads and manual bond-lot entry, which the UI hands to the core (D-49), and the list of installed plugins with their signature status (D-46, D-56).

@@ -1,5 +1,5 @@
 ---
-title: The demo's route through k3s's Traefik reaches the ready core
+title: The demo's route through k3s's Traefik reaches the read API on the core
 status: active
 origin:
   kind: agent
@@ -7,4 +7,4 @@ origin:
 id: SCEN-e2e-traefik-route
 type: scenario
 ---
-Given a k3s cluster at the demo machine's k3s version with its bundled Traefik, the demo's Ingress for the core without TLS and the demo's core-from-traefik policy, when the client pod sends GET /readyz to Traefik with the route's host, then Traefik answers 200 from the core within three minutes rather than 503 no available server.
+Given the demo's Ingress on k3s's Traefik and the core-from-traefik policy, when a client in another namespace asks /v1/accounts through Traefik without a token, then the core itself answers 401, not Traefik's 503 or the UI's 404, once Traefik has picked up the route.

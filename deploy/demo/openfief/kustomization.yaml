@@ -24,6 +24,7 @@ resources:
   - ../../demo-data
   - ../plugins
   - core-from-traefik.yaml
+  - ui-from-traefik.yaml
 configurations:
   - image-fields.yaml
 patches:
@@ -55,4 +56,6 @@ images:
   - name: ghcr.io/arkadiuss/openfief/demo-seed
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
   - name: ghcr.io/arkadiuss/openfief/nbp-fx
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+  - name: ghcr.io/arkadiuss/openfief/ui
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000

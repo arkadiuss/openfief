@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Builds the images the end-to-end suite runs (core, operator, egress-proxy, demo-seed) from this checkout and
-# loads them into the local cluster, so a pull request tests its own code instead of what GHCR holds.
+# Builds the images the end-to-end suite runs (core, operator, egress-proxy, demo-seed and the built-in UI plugin) from
+# this checkout and loads them into the local cluster, so a pull request tests its own code instead of what GHCR holds.
 # The tags match test/e2e/overlays/openfief: openfief.test/<name>:e2e (.test never resolves, so nothing pulls them).
 # Usage: e2e-images.sh <k3d|kind> <cluster name>
 set -euo pipefail
@@ -16,10 +16,12 @@ case "$cluster_kind" in
 esac
 
 images=()
-for name in core operator egress-proxy demo-seed; do
+for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile \
+  plugins/ui/Dockerfile; do
+  name="$(basename "$(dirname "$dockerfile")")"
   image="openfief.test/$name:e2e"
-  echo "e2e-images: building $image from cmd/$name/Dockerfile"
-  docker build --file "cmd/$name/Dockerfile" --tag "$image" .
+  echo "e2e-images: building $image from $dockerfile"
+  docker build --file "$dockerfile" --tag "$image" .
   images+=("$image")
 done
 

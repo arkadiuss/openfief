@@ -272,3 +272,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b03cefa378e
+  - type: executable_for
+    from: SYM-e2e-test-traefik-routes-to-ui
+    to: TEST-e2e-ui
+    created_at: 2026-10-28T20:21:08.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93b41d0af82e

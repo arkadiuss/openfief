@@ -1,0 +1,25 @@
+# The instance ui of the built-in UI (plugins/ui, D-3), with the owner's approval of exactly what it requests: the
+# view capability, no egress host and no Secret. The operator runs it as Service plugin-ui, port connect (the
+# operator's --plugin-port, 8080); ../routes sends the demo's browsers there. spec.manifest must equal the image's
+# signed label, plugins/ui/manifest.json (`task plugins:labels:check` compares them). The digest is a placeholder that
+# ../openfief's `images:` sets (scripts/demo/pin-images.sh).
+apiVersion: openfief.io/v1alpha1
+kind: Plugin
+metadata:
+  name: ui
+  namespace: openfief
+spec:
+  image: ghcr.io/arkadiuss/openfief/ui@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  manifest:
+    capabilities: [view]
+    configSchema:
+      type: object
+      additionalProperties: false
+---
+apiVersion: openfief.io/v1alpha1
+kind: PluginGrant
+metadata:
+  name: ui
+  namespace: openfief
+spec:
+  capabilities: [view]
