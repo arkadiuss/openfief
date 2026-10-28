@@ -62,3 +62,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f65f879dbd0d
+  - type: validates
+    from: TEST-operator-reconcile
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T06:59:49.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25eca2cc741e
+  - type: validates
+    from: TEST-operator-reconcile
+    to: REQ-AUTO-BBBDDCF207E884A1
+    created_at: 2026-10-28T06:59:49.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c0d18d7aded
+  - type: validates
+    from: TEST-operator-reconcile
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T06:59:49.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a704a6e28deb
+  - type: validates
+    from: TEST-operator-reconcile
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T06:59:49.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c62548b4e365
+  - type: validates
+    from: TEST-operator-reconcile
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T06:59:49.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eac906c1065a

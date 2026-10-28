@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b99c104d35b5
+  - type: executable_for
+    from: SYM-operator-test-reconciler-create
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:02:44.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e53322d5793e

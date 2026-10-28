@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d152e22bb40
+  - type: executable_for
+    from: SYM-operator-test-reconcile
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:19.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9bdf44bd68c

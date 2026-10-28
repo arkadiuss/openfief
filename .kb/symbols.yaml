@@ -12667,3 +12667,927 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-objects
+  - id: SYM-operator-plugin-from-spec
+    title: pluginFromSpec
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:05.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-grant-from-resource
+    title: grantFromResource
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:08.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-permissions-to-api
+    title: permissionsToAPI
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:10.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-effective-to-api
+    title: effectiveToAPI
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:13.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-parse-egress
+    title: parseEgress
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:15.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-capabilities
+    title: capabilities
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:18.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-data-tiers
+    title: dataTiers
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:20.720Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-raw-json
+    title: rawJSON
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:23.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-settings
+    title: Settings
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:26.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler
+    title: PluginReconciler
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:28.800Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-reconcile
+    title: PluginReconciler.Reconcile
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:33.768Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-observe
+    title: PluginReconciler.observe
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:37.373Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-config-schema
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-plan
+    title: PluginReconciler.plan
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:40.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-previous-version
+    title: previousVersion
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:43.608Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-plugin-reconciler-verify
+    title: PluginReconciler.verify
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:46.760Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-grant-result
+    title: grantResult
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:50.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-grant
+    title: PluginReconciler.grant
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:53.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-cluster
+    title: PluginReconciler.cluster
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:01:57.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-operator-cluster-peers
+  - id: SYM-operator-plugin-reconciler-apply
+    title: PluginReconciler.apply
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:00.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-deployment-available
+    title: deploymentAvailable
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:04.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-teardown
+    title: PluginReconciler.teardown
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:08.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-apply-owned
+    title: PluginReconciler.applyOwned
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:11.304Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-plugin-reconciler-apply-object
+    title: PluginReconciler.applyObject
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:14.499Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-workload-objects
+  - id: SYM-operator-plugin-reconciler-apply-object-as
+    title: PluginReconciler.applyObjectAs
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:17.773Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-allow-list-publish
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-publish-allow-list
+    title: PluginReconciler.publishAllowList
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:20.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-operator-allow-list-publish
+  - id: SYM-operator-allow-list-field-owner
+    title: allowListFieldOwner
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:23.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-allow-list-publish
+  - id: SYM-operator-plugin-reconciler-write-status
+    title: PluginReconciler.writeStatus
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:27.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-test-reconciler-signed-images
+    title: signedImages
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:31.068Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-signed-images-verify-image
+    title: signedImages.VerifyImage
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:33.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster
+    title: testCluster
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:37.865Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-start-cluster
+    title: startCluster
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:40.832Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-create
+    title: create
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:43.907Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster-reconciler
+    title: testCluster.reconciler
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:47.176Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster-reconcile
+    title: testCluster.reconcile
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:51.010Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-sample-plugin
+    title: samplePlugin
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:02:55.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-sample-grant
+    title: sampleGrant
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:00.372Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-state
+    title: state
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:04.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster-state
+    title: testCluster.state
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:07.963Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-cluster-object-state
+    title: testCluster.objectState
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:10.855Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-conditions
+    title: conditions
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:14.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconcile
+    title: TestReconcile
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:18.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-upgrade
+    title: testUpgrade
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:23.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-revoke
+    title: testRevoke
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:26.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-reconciler-test-invalid-grant
+    title: testInvalidGrant
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:29.145Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-deleted-plugin-leaves-the-allow-list
+    title: TestDeletedPluginLeavesTheAllowList
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:31.974Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-setup-with-manager
+    title: TestSetupWithManager
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:35.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-plugin-reconciler-setup-with-manager
+    title: PluginReconciler.SetupWithManager
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:37.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-same-plugin
+    title: samePlugin
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:40.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-plugin-reconciler-all-plugins-if-named
+    title: PluginReconciler.allPluginsIfNamed
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:43.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-grant-reconciler
+    title: GrantReconciler
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:45.501Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-grant-reconciler-reconcile
+    title: GrantReconciler.Reconcile
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:48.413Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-grant-status
+    title: grantStatus
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:51.571Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-grant-reconciler-setup-with-manager
+    title: GrantReconciler.SetupWithManager
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:54.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-grant-validity
+  - id: SYM-operator-observation
+    title: observation
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:56.414Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-observation-running
+    title: observation.running
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:03:59.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-plugin-status
+    title: pluginStatus
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:03.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-condition
+    title: condition
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:07.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-ready-condition
+    title: readyCondition
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:10.109Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-outcome-reason
+    title: outcomeReason
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:12.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-outcome-message
+    title: outcomeMessage
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:16.785Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-approval-condition
+    title: approvalCondition
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:20.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-describe
+    title: describe
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:23.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-truncate
+    title: truncate
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:25.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-operator-image-verifier
+    title: ImageVerifier
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:28.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-verification
+    title: Verification
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:31.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-verification-verified
+    title: Verification.Verified
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:35.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-unimplemented-verifier
+    title: UnimplementedVerifier
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:38.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required
+  - id: SYM-operator-unimplemented-verifier-verify-image
+    title: UnimplementedVerifier.VerifyImage
+    sourceFile: internal/plugins/operator/verify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:04:41.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-operator-signature-required

@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68092306a00d
+  - type: implements
+    from: SYM-operator-deployment-available
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:02:05.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c262473b3563
+  - type: implements
+    from: SYM-operator-deployment-available
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T07:02:05.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5679cdf419fe
+  - type: covered_by
+    from: SYM-operator-deployment-available
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:02:05.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-426e9943a875

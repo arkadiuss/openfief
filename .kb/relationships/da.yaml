@@ -55,3 +55,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fb9c393a4a4
+  - type: implements
+    from: SYM-operator-effective-to-api
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:13.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-798607061d0b
+  - type: implements
+    from: SYM-operator-effective-to-api
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T07:01:13.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24bc2294ec6e
+  - type: covered_by
+    from: SYM-operator-effective-to-api
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:13.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a4794a6a3f9

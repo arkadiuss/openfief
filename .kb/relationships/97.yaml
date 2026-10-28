@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c98f3d1a129e
+  - type: implements
+    from: SYM-operator-grant-result
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:50.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1abf4befd8b5
+  - type: implements
+    from: SYM-operator-grant-result
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T07:01:50.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29860db1267c
+  - type: covered_by
+    from: SYM-operator-grant-result
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:50.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-295a86a6227a

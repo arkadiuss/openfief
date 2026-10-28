@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1398fbad8d17
+  - type: executable_for
+    from: SYM-operator-test-setup-with-manager
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:35.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26636efaf5b3
+  - type: implements
+    from: SYM-operator-grant-status
+    to: REQ-operator-grant-validity
+    created_at: 2026-10-28T07:03:51.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8f12759a7da
+  - type: covered_by
+    from: SYM-operator-grant-status
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:51.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7854afaa91da

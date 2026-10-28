@@ -125,3 +125,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75e4fba18f76
+  - type: implements
+    from: SYM-operator-plugin-reconciler-reconcile
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:34.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a4ceaa1cbbb
+  - type: implements
+    from: SYM-operator-plugin-reconciler-reconcile
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T07:01:34.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3239909214e
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-reconcile
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:34.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79a98552c5f9

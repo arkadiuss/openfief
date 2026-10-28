@@ -48,3 +48,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8b093347606
+  - type: implements
+    from: SYM-operator-plugin-status
+    to: REQ-operator-upgrade-status
+    created_at: 2026-10-28T07:04:03.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-374404f9a80e
+  - type: implements
+    from: SYM-operator-plugin-status
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T07:04:03.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d540f97aac4c
+  - type: covered_by
+    from: SYM-operator-plugin-status
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:03.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-330a7fc2a01a
+  - type: implements
+    from: SYM-operator-ready-condition
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:04:10.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de0f682b40fe
+  - type: implements
+    from: SYM-operator-ready-condition
+    to: REQ-operator-signature-required
+    created_at: 2026-10-28T07:04:10.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da94811618bf
+  - type: covered_by
+    from: SYM-operator-ready-condition
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:04:10.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91fe280e663f

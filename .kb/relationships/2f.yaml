@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-867044287dbf
+  - type: verified_by
+    from: SCEN-operator-invalid-grant
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:00:00.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab5165f86313

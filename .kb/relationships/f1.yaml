@@ -55,3 +55,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91a5f1fe62a4
+  - type: implements
+    from: SYM-operator-parse-egress
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:16.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e414bac0ea9a
+  - type: implements
+    from: SYM-operator-parse-egress
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T07:01:16.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18dfa76cc224
+  - type: covered_by
+    from: SYM-operator-parse-egress
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:16.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78f9f83ad06a
+  - type: implements
+    from: SYM-operator-same-plugin
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:03:41.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-941dd6688ecc
+  - type: implements
+    from: SYM-operator-same-plugin
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T07:03:41.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7badc8f5734
+  - type: covered_by
+    from: SYM-operator-same-plugin
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:03:41.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8c5ab884d5b

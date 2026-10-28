@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0728a354d28
+  - type: implements
+    from: SYM-operator-allow-list-field-owner
+    to: REQ-operator-allow-list-publish
+    created_at: 2026-10-28T07:02:24.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-841b6a15807a
+  - type: covered_by
+    from: SYM-operator-allow-list-field-owner
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:02:24.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4358bc740be7

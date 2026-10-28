@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8adbcfb1255
+  - type: implements
+    from: SYM-operator-plugin-reconciler-cluster
+    to: REQ-operator-cluster-peers
+    created_at: 2026-10-28T07:01:57.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bb2deef899c
+  - type: implements
+    from: SYM-operator-plugin-reconciler-cluster
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-28T07:01:57.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7473d528d52b
+  - type: covered_by
+    from: SYM-operator-plugin-reconciler-cluster
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:57.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbf61117315f

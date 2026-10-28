@@ -139,3 +139,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3cc399429590
+  - type: implements
+    from: SYM-operator-raw-json
+    to: REQ-operator-runs-only-granted
+    created_at: 2026-10-28T07:01:23.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5ecd1a8529c
+  - type: implements
+    from: SYM-operator-raw-json
+    to: REQ-AUTO-4E891679754B3360
+    created_at: 2026-10-28T07:01:23.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f6b88fca7cc
+  - type: covered_by
+    from: SYM-operator-raw-json
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T07:01:23.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2348bb175789
