@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d1772611a39
+  - type: implements
+    from: SYM-demo-seed-table-exists
+    to: REQ-demo-guard-refuses-real-data
+    created_at: 2026-10-28T09:50:30.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4111f1dfe72
+  - type: covered_by
+    from: SYM-demo-seed-table-exists
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:50:30.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a50bc7169be1

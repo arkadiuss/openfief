@@ -118,3 +118,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4dda71d5d3b1
+  - type: implements
+    from: SYM-demo-ibkr-history
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:40:41.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90d316af094c
+  - type: covered_by
+    from: SYM-demo-ibkr-history
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:40:41.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d68cd30c2686

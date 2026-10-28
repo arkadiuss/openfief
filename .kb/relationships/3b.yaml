@@ -118,3 +118,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ef4be63223c
+  - type: executable_for
+    from: SYM-demo-test-helper-generate
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:49:13.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d7812ed9ce8
+  - type: executable_for
+    from: SYM-demo-test-helper-statement-isins
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:49:45.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-882695733bd1

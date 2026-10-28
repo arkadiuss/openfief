@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demo-seed
+  labels:
+    app.kubernetes.io/name: demo-seed
+    app.kubernetes.io/part-of: openfief
+spec:
+  # Retries cover a database that is still starting; the loader is idempotent per day.
+  backoffLimit: 6
+  activeDeadlineSeconds: 1800
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: demo-seed
+        app.kubernetes.io/part-of: openfief
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: demo-seed
+          image: ghcr.io/arkadiuss/openfief/demo-seed
+          # --reset-demo replaces an earlier demo load; a database without the demo marker is still refused.
+          # NBP rates are fetched from api.nbp.pl; without egress the loader uses its committed NBP rates.
+          args: ["--reset-demo"]
+          env:
+            - name: OPENFIEF_DEMO_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: openfief-db-app
+                  key: uri
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 512Mi

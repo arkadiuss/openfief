@@ -202,3 +202,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-399625b29a56
+  - type: implements
+    from: SYM-demo-direct-header
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:43:54.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7490e8bc3523
+  - type: covered_by
+    from: SYM-demo-direct-header
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:43:54.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e70119e1a9

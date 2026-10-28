@@ -167,3 +167,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3ff05272f71
+  - type: implements
+    from: SYM-demo-sim-dividend
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:39:16.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9faf3ccc522
+  - type: covered_by
+    from: SYM-demo-sim-dividend
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:39:16.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afc4da292e64

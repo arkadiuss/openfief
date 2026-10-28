@@ -209,3 +209,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95c47d1fdfd0
+  - type: verified_by
+    from: SCEN-demo-guard-marks-and-resets
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:30:32.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a517821b40c8
+  - type: verified_by
+    from: SCEN-demo-guard-marks-and-resets
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:30:32.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39595f0af20e

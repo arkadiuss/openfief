@@ -118,3 +118,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8bac6811e6d2
+  - type: implements
+    from: SYM-demo-is-synthetic
+    to: REQ-demo-synthetic-only
+    created_at: 2026-10-28T09:35:33.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281a485bde3c
+  - type: covered_by
+    from: SYM-demo-is-synthetic
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:35:33.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07e3e5a428f3
+  - type: implements
+    from: SYM-demo-accounts
+    to: REQ-demo-synthetic-only
+    created_at: 2026-10-28T09:36:12.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5719fc0b457d
+  - type: covered_by
+    from: SYM-demo-accounts
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:36:12.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d05edb09a679

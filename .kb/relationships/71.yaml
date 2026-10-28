@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4cd8028c371e
+  - type: implements
+    from: SYM-demo-seed-wait-valued
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:52:45.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1735dcd0bd1
+  - type: covered_by
+    from: SYM-demo-seed-wait-valued
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:52:45.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6431999308e

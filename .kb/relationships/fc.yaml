@@ -174,3 +174,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cdea0a679efd
+  - type: implements
+    from: SYM-demo-seed-loader
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:50:44.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16bd2f9a55c3
+  - type: covered_by
+    from: SYM-demo-seed-loader
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:50:44.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d56355fad1c

@@ -48,3 +48,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1cf65abdde48
+  - type: implements
+    from: SYM-demo-cpireadings
+    to: REQ-demo-synthetic-only
+    created_at: 2026-10-28T09:45:45.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7edbd07b1d8
+  - type: covered_by
+    from: SYM-demo-cpireadings
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:45:45.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc921715b7df

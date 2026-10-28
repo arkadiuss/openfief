@@ -25105,3 +25105,2181 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-policy-verifier
+  - id: SYM-demo-rng
+    title: rng
+    sourceFile: internal/demo/rng.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:48.209Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-new-rng
+    title: newRNG
+    sourceFile: internal/demo/rng.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:56.162Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-rng-next
+    title: rng.next
+    sourceFile: internal/demo/rng.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:02.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-rng-intn
+    title: rng.intn
+    sourceFile: internal/demo/rng.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:09.869Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-rng-between
+    title: rng.between
+    sourceFile: internal/demo/rng.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:17.099Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-synthetic-isin
+    title: SyntheticISIN
+    sourceFile: internal/demo/isin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:25.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-is-synthetic
+    title: IsSynthetic
+    sourceFile: internal/demo/isin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:31.509Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-instrument
+    title: Instrument
+    sourceFile: internal/demo/catalog.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:38.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-instrument-spec
+    title: instrumentSpec
+    sourceFile: internal/demo/catalog.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:44.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-instrument-specs
+    title: instrumentSpecs
+    sourceFile: internal/demo/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:49.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-instruments
+    title: Instruments
+    sourceFile: internal/demo/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:56.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-sleeves
+    title: Sleeves
+    sourceFile: internal/demo/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:03.541Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-accounts
+    title: Accounts
+    sourceFile: internal/demo/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:10.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-price-path
+    title: pricePath
+    sourceFile: internal/demo/prices.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:18.799Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-is-business-day
+    title: isBusinessDay
+    sourceFile: internal/demo/prices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:26.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-walk
+    title: walk
+    sourceFile: internal/demo/prices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:35.310Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-cents
+    title: cents
+    sourceFile: internal/demo/prices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:44.317Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-prices
+    title: prices
+    sourceFile: internal/demo/prices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:55.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-period
+    title: period
+    sourceFile: internal/demo/calendar.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:00.116Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-periods
+    title: periods
+    sourceFile: internal/demo/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:08.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-last-of-month
+    title: lastOfMonth
+    sourceFile: internal/demo/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:17.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-date-of
+    title: dateOf
+    sourceFile: internal/demo/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:26.268Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-period-business-day
+    title: period.businessDay
+    sourceFile: internal/demo/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:32.846Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-op-kind
+    title: opKind
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:37.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-op
+    title: op
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:45.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-lot
+    title: lot
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:52.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-snapshot
+    title: snapshot
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:00.662Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim
+    title: sim
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:06.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-new-sim
+    title: newSim
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:15.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-next-id
+    title: sim.nextID
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:23.932Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-open
+    title: sim.open
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:31.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-add
+    title: sim.add
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:38.156Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-deposit
+    title: sim.deposit
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:45.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-fee
+    title: sim.fee
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:54.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-buy
+    title: sim.buy
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:01.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-sell
+    title: sim.sell
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:08.571Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-dividend
+    title: sim.dividend
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:15.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-fx
+    title: sim.fx
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:21.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sim-snapshot
+    title: sim.snapshot
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:28.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-scheduled
+    title: scheduled
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:36.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-plan
+    title: plan
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:42.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-plan-on
+    title: plan.on
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:49.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-plan-run
+    title: plan.run
+    sourceFile: internal/demo/sim.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:56.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-market
+    title: market
+    sourceFile: internal/demo/ibkr.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:40:00.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-market-in
+    title: market.in
+    sourceFile: internal/demo/ibkr.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:40:06.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-lot-spec
+    title: lotSpec
+    sourceFile: internal/demo/ibkr.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:40:13.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-market-opening-lots
+    title: market.openingLots
+    sourceFile: internal/demo/ibkr.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:40:21.402Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-statement
+    title: statement
+    sourceFile: internal/demo/ibkr.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:40:30.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-ibkr-history
+    title: ibkrHistory
+    sourceFile: internal/demo/ibkr.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:40:39.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-simulate-ibkr
+    title: simulateIBKR
+    sourceFile: internal/demo/ibkr.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:40:48.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-ibkr-plan
+    title: ibkrPlan
+    sourceFile: internal/demo/ibkr.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:40:56.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-flex-doc
+    title: flexDoc
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:41:02.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-escape-attr
+    title: escapeAttr
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:41:12.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-flex-doc-elem
+    title: flexDoc.elem
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:41:23.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-flex-doc-end
+    title: flexDoc.end
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:41:33.460Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-flex-doc-begin
+    title: flexDoc.begin
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:41:44.793Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-flex-doc-finish
+    title: flexDoc.finish
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:41:54.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-stamp
+    title: stamp
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:42:04.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-amount
+    title: amount
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:42:11.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-opening-flex
+    title: openingFlex
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:42:20.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-activity-flex
+    title: activityFlex
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:42:27.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-position-attrs
+    title: positionAttrs
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:42:32.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-flex-doc-position
+    title: flexDoc.position
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:42:40.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-flex-doc-cash-report
+    title: flexDoc.cashReport
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:42:50.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-flex-doc-trade
+    title: flexDoc.trade
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:42:58.523Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-flex-doc-cash-transaction
+    title: flexDoc.cashTransaction
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:43:06.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-sorted-instruments
+    title: sortedInstruments
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:43:15.916Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-sorted-currencies
+    title: sortedCurrencies
+    sourceFile: internal/demo/flex.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:43:24.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-batch
+    title: Batch
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:43:32.811Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-history
+    title: history
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:43:39.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-direct
+    title: direct
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:43:44.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-direct-header
+    title: direct.header
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:43:52.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-direct-opening
+    title: direct.opening
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:44:06.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-direct-activity
+    title: direct.activity
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:44:16.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-direct-transaction
+    title: direct.transaction
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:44:24.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-direct-assertions
+    title: direct.assertions
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:44:31.613Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-quantity
+    title: quantity
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:44:41.145Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-op-kind-string
+    title: opKind.String
+    sourceFile: internal/demo/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:44:49.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-simulate-xtb
+    title: simulateXTB
+    sourceFile: internal/demo/xtb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:44:57.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-xtb-plan
+    title: xtbPlan
+    sourceFile: internal/demo/xtb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:45:06.940Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-bond-series
+    title: BondSeries
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:45:15.422Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-bond-spec
+    title: bondSpec
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:45:21.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-bond-specs
+    title: bondSpecs
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:45:32.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-cpi-tenths
+    title: cpiTenths
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:45:38.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-cpireadings
+    title: CPIReadings
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:45:44.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-bond-lot
+    title: bondLot
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:45:50.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-bonds
+    title: Bonds
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:45:56.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-bond-lots
+    title: bondLots
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:03.685Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-bond-spec-lot
+    title: bondSpec.lot
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:10.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-first-error
+    title: firstError
+    sourceFile: internal/demo/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:17.744Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-simulate-bonds
+    title: simulateBonds
+    sourceFile: internal/demo/bondsaccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:23.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-direct-coupons
+    title: direct.coupons
+    sourceFile: internal/demo/bondsaccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:28.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-direct-coupon
+    title: direct.coupon
+    sourceFile: internal/demo/bondsaccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:35.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-consistent-history
+  - id: SYM-demo-dataset
+    title: Dataset
+    sourceFile: internal/demo/dataset.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:41.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-go-live
+    title: GoLive
+    sourceFile: internal/demo/dataset.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:47.509Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-generate
+    title: Generate
+    sourceFile: internal/demo/dataset.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:46:54.139Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-demo-new-market
+    title: newMarket
+    sourceFile: internal/demo/dataset.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:00.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-deterministic
+  - id: SYM-demo-database-state
+    title: DatabaseState
+    sourceFile: internal/demo/guard.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:08.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-load-action
+    title: LoadAction
+    sourceFile: internal/demo/guard.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:15.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-load-action-string
+    title: LoadAction.String
+    sourceFile: internal/demo/guard.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:23.164Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-decide-load
+    title: DecideLoad
+    sourceFile: internal/demo/guard.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:29.708Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-test-bond-coupons-follow-the-published-rates
+    title: TestBondCouponsFollowThePublishedRates
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:35.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-cpireadings-are-published-gusvalues
+    title: TestCPIReadingsArePublishedGUSValues
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:39.075Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-dataset-is-synthetic-only
+    title: TestDatasetIsSyntheticOnly
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:43.607Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-decide-load
+    title: TestDecideLoad
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:48.770Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-direct-accounts-balance
+    title: TestDirectAccountsBalance
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:54.497Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-generate-is-deterministic
+    title: TestGenerateIsDeterministic
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:47:59.694Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-generate-refuses-adate-before-the-bonds
+    title: TestGenerateRefusesADateBeforeTheBonds
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:03.972Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-ibkrstatements-map-with-only-the-intended-problems
+    title: TestIBKRStatementsMapWithOnlyTheIntendedProblems
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:09.117Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-is-synthetic-refuses-real-isins
+    title: TestIsSyntheticRefusesRealISINs
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:14.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-load-action-string
+    title: TestLoadActionString
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:19.798Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-prices-cover-the-history-on-business-days
+    title: TestPricesCoverTheHistoryOnBusinessDays
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:25.186Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-synthetic-isin
+    title: TestSyntheticISIN
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:30.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-batch-isins
+    title: batchISINs
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:36.249Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-check-assertions
+    title: checkAssertions
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:43.484Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-check-priced-at-go-live
+    title: checkPricedAtGoLive
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:50.397Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-dataset-isins
+    title: datasetISINs
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:48:57.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-date
+    title: date
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:03.955Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-generate
+    title: generate
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:11.763Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-is-weekend
+    title: isWeekend
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:18.762Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-ledger-of
+    title: ledgerOf
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:25.766Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-map-activity
+    title: mapActivity
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:32.044Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-mapper
+    title: mapper
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:38.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-test-helper-statement-isins
+    title: statementISINs
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:44.491Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset
+  - id: SYM-demo-seed-config
+    title: config
+    sourceFile: cmd/demo-seed/main.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:51.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-main
+    title: main
+    sourceFile: cmd/demo-seed/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:49:57.198Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-parse-config
+    title: parseConfig
+    sourceFile: cmd/demo-seed/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:03.763Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-data-tables
+    title: dataTables
+    sourceFile: cmd/demo-seed/guard.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:10.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-seed-prepare
+    title: prepare
+    sourceFile: cmd/demo-seed/guard.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:16.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-seed-inspect
+    title: inspect
+    sourceFile: cmd/demo-seed/guard.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:22.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-seed-table-exists
+    title: tableExists
+    sourceFile: cmd/demo-seed/guard.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:29.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-seed-mark
+    title: mark
+    sourceFile: cmd/demo-seed/guard.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:35.106Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-guard-refuses-real-data
+  - id: SYM-demo-seed-run
+    title: run
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:41.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-loader
+    title: loader
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:43.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-load
+    title: load
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:48.777Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-idempotent-per-day
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-new-loader
+    title: newLoader
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:50:54.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-decision-d36-1-stored-valuations
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-loader-registry
+    title: loader.registry
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:01.436Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-loader-ibkr
+    title: loader.ibkr
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:07.869Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-loader-ingest
+    title: loader.ingest
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:15.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-loader-next-batch
+    title: loader.nextBatch
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:20.935Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-loader-direct
+    title: loader.direct
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:27.569Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-loader-inputs
+    title: loader.inputs
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:32.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-importer
+    title: importer
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:37.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-importer-import
+    title: importer.Import
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:44.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-importer-seed
+    title: importer.Seed
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:52.366Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-summary
+    title: summary
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:51:57.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-demo-currencies
+    title: demoCurrencies
+    sourceFile: cmd/demo-seed/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:52:02.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-fx-rates
+  - id: SYM-demo-seed-fx-rates
+    title: fxRates
+    sourceFile: cmd/demo-seed/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:52:07.738Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-AUTO-5769411DB9663682
+      - type: implements
+        target: REQ-demo-fx-rates
+  - id: SYM-demo-seed-only-demo-currencies
+    title: onlyDemoCurrencies
+    sourceFile: cmd/demo-seed/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:52:13.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-fx-rates
+  - id: SYM-demo-seed-parse-rates
+    title: parseRates
+    sourceFile: cmd/demo-seed/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:52:20.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-fx-rates
+  - id: SYM-demo-seed-parse-rate
+    title: parseRate
+    sourceFile: cmd/demo-seed/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:52:28.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-fx-rates
+  - id: SYM-demo-seed-revalue
+    title: revalue
+    sourceFile: cmd/demo-seed/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:52:35.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-decision-d36-1-stored-valuations
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-wait-valued
+    title: waitValued
+    sourceFile: cmd/demo-seed/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:52:43.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-all-valued
+    title: allValued
+    sourceFile: cmd/demo-seed/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:52:53.628Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-last-error
+    title: lastError
+    sourceFile: cmd/demo-seed/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:01.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-test-load-end-to-end
+    title: TestLoadEndToEnd
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:08.160Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-load-refuses-adatabase-that-is-not-ademo
+    title: TestLoadRefusesADatabaseThatIsNotADemo
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:13.688Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-admin-exec
+    title: adminExec
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:19.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-check-loaded
+    title: checkLoaded
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:24.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-check-refused
+    title: checkRefused
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:31.828Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-check-valued
+    title: checkValued
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:38.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-count
+    title: count
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:44.110Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-empty-pool
+    title: emptyPool
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:51.973Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-quiet
+    title: quiet
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:53:58.084Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-test-config
+    title: testConfig
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:03.142Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-all-valued
+    title: TestAllValued
+    sourceFile: cmd/demo-seed/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:08.528Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-demo-seed-test-committed-rates-parse
+    title: TestCommittedRatesParse
+    sourceFile: cmd/demo-seed/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:13.741Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-demo-seed-test-last-error
+    title: TestLastError
+    sourceFile: cmd/demo-seed/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:20.171Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-demo-seed-test-only-demo-currencies
+    title: TestOnlyDemoCurrencies
+    sourceFile: cmd/demo-seed/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:25.510Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-demo-seed-test-parse-config
+    title: TestParseConfig
+    sourceFile: cmd/demo-seed/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:30.789Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-demo-seed-test-parse-rates
+    title: TestParseRates
+    sourceFile: cmd/demo-seed/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:37.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-demo-seed-test-summary
+    title: TestSummary
+    sourceFile: cmd/demo-seed/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:42.907Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-demo-seed-test-helper-must-date
+    title: mustDate
+    sourceFile: cmd/demo-seed/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:54:48.202Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit

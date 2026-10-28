@@ -132,3 +132,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-812357222857
+  - type: verified_by
+    from: SCEN-demo-guard-refuses-unmarked
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:30:29.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5aae23623b4
+  - type: verified_by
+    from: SCEN-demo-guard-refuses-unmarked
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:30:29.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04a569d4fc78
+  - type: verified_by
+    from: SCEN-demo-synthetic-only
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:30:38.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b646f1641db8
+  - type: implements
+    from: SYM-demo-direct-transaction
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:44:25.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5809fd9ac13
+  - type: covered_by
+    from: SYM-demo-direct-transaction
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:44:25.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afbcbe140493
+  - type: implements
+    from: SYM-demo-seed-loader-ingest
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:51:16.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48ee939dce2d
+  - type: covered_by
+    from: SYM-demo-seed-loader-ingest
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:51:16.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67444f20e8cd

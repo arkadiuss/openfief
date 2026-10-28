@@ -86,6 +86,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Money | kernel | `kernel.Money` | An exact decimal amount in one currency. It keeps its original currency; arithmetic across currencies is an error, and conversion is an explicit FX step in valuation. | |
 | Quantity | kernel | `kernel.Quantity` | An exact, possibly fractional number of units of an instrument. | |
 | Date | kernel | `kernel.Date` | A calendar date with no time of day or time zone, written YYYY-MM-DD. | timestamp |
+| Demo dataset | demo (not a context: tooling) | `demo.Dataset` | A synthetic portfolio with about a year of history and its valuation inputs, generated from a seed and a date, for showing OpenFief on a demo database. Its instruments have synthetic ISINs; only public data is real: bond series terms, GUS CPI and NBP rates. Loaded by `cmd/demo-seed`, which refuses any database without its demo marker that already holds data. | sample data, test portfolio |
+| Demo marker | demo (not a context: tooling) | `demo.DatabaseState` | The row `demo = true` in the `demo` schema that marks a database as a demo database. Only the demo loader writes it, and only a marked database may be reset. | |
 
 ### Later milestones
 

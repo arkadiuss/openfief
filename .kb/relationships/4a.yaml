@@ -146,3 +146,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-178c9044ea80
+  - type: constrains
+    from: REQ-demo-synthetic-only
+    to: FACT-SUBJECT-0398A019C8DDC27F
+    created_at: 2026-10-28T09:31:24.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8bb0b847079
+  - type: requires_property
+    from: REQ-demo-synthetic-only
+    to: FACT-PROP-EAD7AED7D96A3512
+    created_at: 2026-10-28T09:31:24.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ffdc1a0614e
+  - type: specified_by
+    from: REQ-demo-synthetic-only
+    to: SCEN-demo-synthetic-only
+    created_at: 2026-10-28T09:31:24.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dea4c3635746

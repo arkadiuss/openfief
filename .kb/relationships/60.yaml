@@ -160,3 +160,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf86a4325903
+  - type: implements
+    from: SYM-demo-op
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:37:46.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d09991d234ae
+  - type: covered_by
+    from: SYM-demo-op
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:37:46.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b379908bd56

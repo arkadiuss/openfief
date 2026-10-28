@@ -118,3 +118,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b51c16ce66ea
+  - type: implements
+    from: SYM-demo-sim-next-id
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:38:25.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04d15812c188
+  - type: covered_by
+    from: SYM-demo-sim-next-id
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:38:25.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-022881b350bc
+  - type: executable_for
+    from: SYM-demo-test-ibkrstatements-map-with-only-the-intended-problems
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:48:10.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd46fdfdd4cb

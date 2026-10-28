@@ -69,3 +69,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2c55796c7b0
+  - type: executable_for
+    from: SYM-demo-test-cpireadings-are-published-gusvalues
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:47:39.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f3fa9d15f09
+  - type: executable_for
+    from: SYM-demo-seed-test-parse-config
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:54:32.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1517d13cd23

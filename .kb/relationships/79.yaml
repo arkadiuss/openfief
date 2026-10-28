@@ -300,3 +300,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16d23c8c5c13
+  - type: implements
+    from: SYM-demo-seed-importer-seed
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:51:53.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f29cae20de
+  - type: implements
+    from: SYM-demo-seed-importer-seed
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T09:51:53.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-675ede3d4a40
+  - type: covered_by
+    from: SYM-demo-seed-importer-seed
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:51:53.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-747eb6a26b86
+  - type: implements
+    from: SYM-demo-seed-revalue
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:52:37.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b020a4b2c694
+  - type: implements
+    from: SYM-demo-seed-revalue
+    to: REQ-decision-d36-1-stored-valuations
+    created_at: 2026-10-28T09:52:37.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90ee4c34fabf
+  - type: covered_by
+    from: SYM-demo-seed-revalue
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:52:37.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-719cf405c757

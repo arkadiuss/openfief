@@ -132,3 +132,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-640ba5b8e643
+  - type: executable_for
+    from: SYM-demo-seed-test-parse-rates
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:54:38.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a68d4d03d792

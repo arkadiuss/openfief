@@ -216,3 +216,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc5b9a578866
+  - type: implements
+    from: SYM-demo-seed-importer-import
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:51:46.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f5dcd6cc124
+  - type: covered_by
+    from: SYM-demo-seed-importer-import
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:51:46.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31dc17b80416

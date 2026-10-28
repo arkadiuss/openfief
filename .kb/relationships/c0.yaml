@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-728b87a2b448
+  - type: implements
+    from: SYM-demo-direct-coupon
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:46:36.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeec95cefa0b
+  - type: covered_by
+    from: SYM-demo-direct-coupon
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:46:36.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd6d9a2c13d0

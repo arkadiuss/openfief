@@ -209,3 +209,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a6861304dfe
+  - type: implements
+    from: SYM-demo-flex-doc
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:41:04.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4911c8fd86e
+  - type: covered_by
+    from: SYM-demo-flex-doc
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:41:04.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b3bea5678ff
+  - type: implements
+    from: SYM-demo-bond-spec-lot
+    to: REQ-demo-synthetic-only
+    created_at: 2026-10-28T09:46:11.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d9203302398
+  - type: covered_by
+    from: SYM-demo-bond-spec-lot
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:46:11.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2bf1fe462ae

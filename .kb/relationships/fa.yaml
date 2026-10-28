@@ -55,3 +55,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8271a1c17a21
+  - type: constrains
+    from: REQ-demo-guard-refuses-real-data
+    to: FACT-SUBJECT-8445428BF4E0E148
+    created_at: 2026-10-28T09:31:04.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9e84575a0cb
+  - type: requires_property
+    from: REQ-demo-guard-refuses-real-data
+    to: FACT-PROP-349ED2A3D03217C0
+    created_at: 2026-10-28T09:31:04.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d698598d6d1
+  - type: specified_by
+    from: REQ-demo-guard-refuses-real-data
+    to: SCEN-demo-guard-refuses-unmarked
+    created_at: 2026-10-28T09:31:04.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f6f007dd993
+  - type: specified_by
+    from: REQ-demo-guard-refuses-real-data
+    to: SCEN-demo-guard-marks-and-resets
+    created_at: 2026-10-28T09:31:04.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3129575f28e1
+  - type: executable_for
+    from: SYM-demo-seed-test-last-error
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:54:21.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ae85153bb69

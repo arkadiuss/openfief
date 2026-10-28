@@ -160,3 +160,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c16178eebb0
+  - type: executable_for
+    from: SYM-demo-test-bond-coupons-follow-the-published-rates
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:47:35.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72ab9518123f
+  - type: executable_for
+    from: SYM-demo-seed-test-helper-test-config
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:54:04.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac32715d74ae

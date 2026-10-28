@@ -125,3 +125,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0fe19ca9e7ce
+  - type: executable_for
+    from: SYM-demo-test-load-action-string
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:48:20.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf14efe5e781

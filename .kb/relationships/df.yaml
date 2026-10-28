@@ -111,3 +111,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35fa0dbba2d5
+  - type: implements
+    from: SYM-demo-bond-series
+    to: REQ-demo-synthetic-only
+    created_at: 2026-10-28T09:45:17.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-670c8259fbc7
+  - type: covered_by
+    from: SYM-demo-bond-series
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:45:17.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c27ad3e24b6
+  - type: implements
+    from: SYM-demo-seed-importer
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:51:39.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8565984073df
+  - type: covered_by
+    from: SYM-demo-seed-importer
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:51:39.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c009a4a78452
