@@ -48,3 +48,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ccda686c6eb
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-fn-basic
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:51:13.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-648722166559

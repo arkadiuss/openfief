@@ -188,3 +188,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0b3c6919431
+  - type: implements
+    from: SYM-operator-container
+    to: REQ-plugins-egress-token-projected
+    created_at: 2026-10-28T08:38:53.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-735f047f5ed4

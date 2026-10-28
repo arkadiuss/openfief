@@ -48,3 +48,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7bc3f6f0ec2
+  - type: executable_for
+    from: SYM-plugins-app-test-cache-fn-start
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:48:44.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b93f8b195e2

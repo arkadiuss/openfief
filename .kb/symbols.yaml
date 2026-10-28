@@ -3710,6 +3710,8 @@ symbols:
       - type: covered_by
         target: TEST-plugins-compile
       - type: implements
+        target: REQ-plugins-egress-token-projected
+      - type: implements
         target: REQ-plugins-network-policy-core-and-proxy
       - type: implements
         target: REQ-plugins-proxy-env-and-allow-list
@@ -6786,6 +6788,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-48C62B395F846700
       - type: implements
+        target: REQ-plugins-egress-fail-closed
+      - type: implements
         target: REQ-plugins-egress-proxy-connect-only-allow-list
   - id: SYM-plugins-app-test-fn-fake-reviewer
     title: fakeReviewer
@@ -7062,7 +7066,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-kube
       - type: implements
-        target: REQ-AUTO-C6544ADAF8F5AE65
+        target: REQ-AUTO-15828B9727AFA488
       - type: implements
         target: REQ-plugins-egress-proxy-identifies-plugin
   - id: SYM-plugins-kube-new-token-reviewer
@@ -7077,7 +7081,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-kube
       - type: implements
-        target: REQ-AUTO-C6544ADAF8F5AE65
+        target: REQ-AUTO-15828B9727AFA488
       - type: implements
         target: REQ-plugins-egress-proxy-identifies-plugin
   - id: SYM-plugins-kube-token-reviewer-review-token
@@ -7092,7 +7096,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-kube
       - type: implements
-        target: REQ-AUTO-C6544ADAF8F5AE65
+        target: REQ-AUTO-15828B9727AFA488
       - type: implements
         target: REQ-plugins-egress-proxy-identifies-plugin
   - id: SYM-plugins-smokescreen-options
@@ -7110,21 +7114,6 @@ symbols:
         target: REQ-AUTO-8CBFBD6A12E0865B
       - type: implements
         target: REQ-plugins-egress-proxy-connect-only-allow-list
-  - id: SYM-plugins-smokescreen-new-config
-    title: NewConfig
-    sourceFile: internal/plugins/smokescreen/proxy.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:13:21.824Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-smokescreen-proxy
-      - type: implements
-        target: REQ-plugins-egress-proxy-connect-only-allow-list
-      - type: implements
-        target: REQ-plugins-egress-proxy-identifies-plugin
   - id: SYM-plugins-smokescreen-fn-identify
     title: identify
     sourceFile: internal/plugins/smokescreen/proxy.go
@@ -7133,21 +7122,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T06:13:28.955Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-smokescreen-proxy
-      - type: implements
-        target: REQ-AUTO-15828B9727AFA488
-      - type: implements
-        target: REQ-plugins-egress-proxy-identifies-plugin
-  - id: SYM-plugins-smokescreen-fn-bearer-token
-    title: bearerToken
-    sourceFile: internal/plugins/smokescreen/proxy.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:13:35.554Z
     relationships:
       - type: covered_by
         target: TEST-plugins-smokescreen-proxy
@@ -7348,28 +7322,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-smokescreen-proxy
-  - id: SYM-plugins-smokescreen-test-fn-fake-lists
-    title: fakeLists
-    sourceFile: internal/plugins/smokescreen/proxy_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:14:35.937Z
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-smokescreen-proxy
-  - id: SYM-plugins-smokescreen-test-fn-fake-lists-allow-list
-    title: fakeLists.AllowList
-    sourceFile: internal/plugins/smokescreen/proxy_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:14:38.375Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-smokescreen-proxy
   - id: SYM-plugins-smokescreen-test-fn-fake-resolver
     title: fakeResolver
     sourceFile: internal/plugins/smokescreen/proxy_test.go
@@ -7543,26 +7495,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T06:15:38.066Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-smokescreen-proxy
-  - id: SYM-plugins-smokescreen-test-new-config-refuses-proxy-environment
-    title: TestNewConfigRefusesProxyEnvironment
-    sourceFile: internal/plugins/smokescreen/proxy_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:15:42.087Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-smokescreen-proxy
-  - id: SYM-plugins-smokescreen-test-new-config-needs-listener
-    title: TestNewConfigNeedsListener
-    sourceFile: internal/plugins/smokescreen/proxy_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:15:45.522Z
     relationships:
       - type: executable_for
         target: TEST-plugins-smokescreen-proxy
@@ -12450,6 +12382,8 @@ symbols:
         target: REQ-AUTO-761F6500ECFC0316
       - type: implements
         target: REQ-operator-workload-objects
+      - type: implements
+        target: REQ-plugins-egress-token-projected
   - id: SYM-operator-volumes
     title: volumes
     sourceFile: internal/plugins/operator/objects.go
@@ -12465,6 +12399,8 @@ symbols:
         target: REQ-AUTO-0455DAAE4C01C965
       - type: implements
         target: REQ-operator-workload-objects
+      - type: implements
+        target: REQ-plugins-egress-token-projected
   - id: SYM-operator-secret-volume
     title: secretVolume
     sourceFile: internal/plugins/operator/objects.go
@@ -16987,3 +16923,528 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-app
+  - id: SYM-operator-token-volume
+    title: tokenVolume
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:37:54.828Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-operator-workload-objects
+      - type: implements
+        target: REQ-plugins-egress-token-projected
+  - id: SYM-operator-test-objects-token-volume
+    title: tokenVolume
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:38:08.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-pod-volumes
+    title: podVolumes
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:38:19.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-reconciler-token-audiences
+    title: tokenAudiences
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:38:33.956Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-plugins-app-test-egress-decide-without-source
+    title: TestEgressDecideWithoutSource
+    sourceFile: internal/plugins/app/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:47:44.553Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-egress
+  - id: SYM-plugins-app-caching-token-reviewer
+    title: CachingTokenReviewer
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:47:49.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-egress-token-review-cache
+  - id: SYM-plugins-app-fn-cached-review
+    title: cachedReview
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:47:54.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-egress-token-review-cache
+  - id: SYM-plugins-app-new-caching-token-reviewer
+    title: NewCachingTokenReviewer
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:47:59.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-egress-token-review-cache
+  - id: SYM-plugins-app-caching-token-reviewer-review-token
+    title: CachingTokenReviewer.ReviewToken
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:05.571Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-egress-token-review-cache
+  - id: SYM-plugins-app-caching-token-reviewer-lookup
+    title: CachingTokenReviewer.lookup
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:10.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-egress-token-review-cache
+  - id: SYM-plugins-app-caching-token-reviewer-store
+    title: CachingTokenReviewer.store
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:16.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-egress-token-review-cache
+  - id: SYM-plugins-app-fn-token-expiry
+    title: tokenExpiry
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:24.446Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-egress-token-review-cache
+  - id: SYM-plugins-app-test-cache-fn-counting-reviewer
+    title: countingReviewer
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:28.532Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-cache-fn-counting-reviewer-review-token
+    title: countingReviewer.ReviewToken
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:36.099Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-cache-fn-start
+    title: start
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:43.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-cache-fn-cache-step
+    title: cacheStep
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:49.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-cache-fn-run-cache-steps
+    title: runCacheSteps
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:48:56.475Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-cache-fn-jwt-expiring
+    title: jwtExpiring
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:02.930Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-caching-token-reviewer
+    title: TestCachingTokenReviewer
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:09.071Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-caching-token-reviewer-bounded
+    title: TestCachingTokenReviewerBounded
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:14.392Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-new-caching-token-reviewer-ttl
+    title: TestNewCachingTokenReviewerTTL
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:20.102Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-smokescreen-proxy
+    title: Proxy
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:24.195Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-embedded-buildproxy
+  - id: SYM-plugins-smokescreen-new
+    title: New
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:31.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-fail-closed
+      - type: implements
+        target: REQ-plugins-egress-proxy-embedded-buildproxy
+  - id: SYM-plugins-smokescreen-fn-new-config
+    title: newConfig
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:37.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+      - type: implements
+        target: REQ-plugins-egress-proxy-embedded-buildproxy
+  - id: SYM-plugins-smokescreen-fn-dialer
+    title: dialer
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:43.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-proxy-serve
+    title: Proxy.Serve
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:48.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-embedded-buildproxy
+  - id: SYM-plugins-smokescreen-proxy-wait-for-tunnels
+    title: Proxy.waitForTunnels
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:53.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-embedded-buildproxy
+  - id: SYM-plugins-smokescreen-proxy-close-tunnels
+    title: Proxy.closeTunnels
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:49:59.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-embedded-buildproxy
+  - id: SYM-plugins-smokescreen-fn-proxy-token
+    title: proxyToken
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:50:05.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-smokescreen-test-fn-swappable-lists
+    title: swappableLists
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:50:09.827Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-new-lists
+    title: newLists
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:50:18.526Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-swappable-lists-allow-list
+    title: swappableLists.AllowList
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:50:28.406Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-sample-list
+    title: sampleList
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:50:38.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-running
+    title: running
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:50:48.894Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-serve
+    title: serve
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:50:59.334Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-basic
+    title: basic
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:51:12.070Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-opened
+    title: opened
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:51:22.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-proxy-fixture-open
+    title: proxyFixture.open
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:51:29.098Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-proxy-fixture-roots
+    title: proxyFixture.roots
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:51:37.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-go-client-proxy-url
+    title: TestProxyGoClientProxyURL
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:51:47.363Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-without-allow-list-source
+    title: TestProxyWithoutAllowListSource
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:51:54.693Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-follows-swapped-allow-list
+    title: TestProxyFollowsSwappedAllowList
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:52:02.217Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-healthcheck
+    title: TestProxyHealthcheck
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:52:10.952Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-serve-stops
+    title: TestProxyServeStops
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:52:19.373Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-new-refuses-proxy-environment
+    title: TestNewRefusesProxyEnvironment
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:52:26.941Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-new-needs-listener-and-egress
+    title: TestNewNeedsListenerAndEgress
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:52:35.890Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy

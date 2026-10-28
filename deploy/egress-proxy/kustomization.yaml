@@ -1,6 +1,8 @@
-# OpenFief egress proxy (D-32): a self-contained kustomize base. An overlay pins the image by digest
-# with `images:`. Plugins reach it at http://egress-proxy.openfief.svc:4750 (HTTPS_PROXY) and send
-# "Proxy-Authorization: Bearer <projected token, audience openfief-core>" on every CONNECT.
+# OpenFief egress proxy (D-32, D-63): a self-contained kustomize base. An overlay pins the image by digest
+# with `images:`. Plugins have no DNS, so they reach the proxy at its ClusterIP: the operator sets each
+# plugin's HTTPS_PROXY to http://<ClusterIP>:4750. A plugin puts its projected token (audience
+# openfief-egress) in the proxy URL as the password, which HTTP clients send as a Basic
+# Proxy-Authorization header on every CONNECT; the proxy checks it with TokenReview and caches the result.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: openfief

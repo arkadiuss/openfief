@@ -42,6 +42,9 @@ const (
 	EnvConfig = "OPENFIEF_CONFIG"
 	// EnvIdentityFile is the path of the plugin's projected token (D-27).
 	EnvIdentityFile = "OPENFIEF_TOKEN_FILE"
+	// EnvEgressIdentityFile is the path of the projected token the plugin
+	// presents to the egress proxy (D-63); set only when egress is granted.
+	EnvEgressIdentityFile = "OPENFIEF_EGRESS_TOKEN_FILE"
 	// EnvCoreAddress is the core's "ClusterIP:port"; plugins have no DNS.
 	EnvCoreAddress = "OPENFIEF_CORE_ADDRESS"
 	// EnvListenPort is the port the plugin serves Connect RPC on.
@@ -53,8 +56,11 @@ const (
 
 const (
 	identityVolume = "openfief-token"
-	// operatorEnvVars counts the variables the operator adds to the Workload's.
-	operatorEnvVars = 4
+	egressVolume   = "openfief-egress-token"
+	// operatorEnvVars counts the variables the operator may add to the Workload's.
+	operatorEnvVars = 5
+	// tokenVolumes is the most projected token volumes a plugin pod gets.
+	tokenVolumes = 2
 	// MaxPluginNameLen keeps "plugin-<name>" within the 63 characters of a
 	// Service name.
 	MaxPluginNameLen = 56
@@ -252,12 +258,16 @@ func container(w *plugins.Workload, c *Cluster) corev1.Container {
 			LocalObjectReference: corev1.LocalObjectReference{Name: configMapName(w.Plugin)}, Key: ConfigKey,
 		}}},
 	)
+	mounts := make([]corev1.VolumeMount, 0, tokenVolumes+len(w.Secrets))
+	mounts = append(mounts, corev1.VolumeMount{Name: identityVolume, MountPath: w.Token.MountPath, ReadOnly: true})
+	if t := w.EgressToken; t != nil {
+		env = append(env, corev1.EnvVar{Name: EnvEgressIdentityFile, Value: path.Join(t.MountPath, t.Path)})
+		mounts = append(mounts, corev1.VolumeMount{Name: egressVolume, MountPath: t.MountPath, ReadOnly: true})
+	}
 	for _, e := range w.Env {
 		env = append(env, corev1.EnvVar{Name: e.Name, Value: e.Value})
 	}
 	slices.SortFunc(env, func(a, b corev1.EnvVar) int { return cmp.Compare(a.Name, b.Name) })
-	mounts := make([]corev1.VolumeMount, 0, 1+len(w.Secrets))
-	mounts = append(mounts, corev1.VolumeMount{Name: identityVolume, MountPath: w.Token.MountPath, ReadOnly: true})
 	for i, s := range w.Secrets {
 		mounts = append(mounts, corev1.VolumeMount{Name: secretVolume(i), MountPath: s.MountPath, ReadOnly: s.ReadOnly})
 	}
@@ -281,16 +291,11 @@ func container(w *plugins.Workload, c *Cluster) corev1.Container {
 }
 
 func volumes(w *plugins.Workload) []corev1.Volume {
-	expiration := w.Token.ExpirationSeconds
-	vs := make([]corev1.Volume, 0, 1+len(w.Secrets))
-	vs = append(vs, corev1.Volume{
-		Name: identityVolume,
-		VolumeSource: corev1.VolumeSource{Projected: &corev1.ProjectedVolumeSource{
-			Sources: []corev1.VolumeProjection{{ServiceAccountToken: &corev1.ServiceAccountTokenProjection{
-				Audience: w.Token.Audience, ExpirationSeconds: &expiration, Path: w.Token.Path,
-			}}},
-		}},
-	})
+	vs := make([]corev1.Volume, 0, tokenVolumes+len(w.Secrets))
+	vs = append(vs, tokenVolume(identityVolume, w.Token))
+	if w.EgressToken != nil {
+		vs = append(vs, tokenVolume(egressVolume, *w.EgressToken))
+	}
 	for i, s := range w.Secrets {
 		vs = append(vs, corev1.Volume{
 			Name:         secretVolume(i),
@@ -298,6 +303,19 @@ func volumes(w *plugins.Workload) []corev1.Volume {
 		})
 	}
 	return vs
+}
+
+// tokenVolume is a projected ServiceAccount token volume named name.
+func tokenVolume(name string, t plugins.ProjectedToken) corev1.Volume {
+	expiration := t.ExpirationSeconds
+	return corev1.Volume{
+		Name: name,
+		VolumeSource: corev1.VolumeSource{Projected: &corev1.ProjectedVolumeSource{
+			Sources: []corev1.VolumeProjection{{ServiceAccountToken: &corev1.ServiceAccountTokenProjection{
+				Audience: t.Audience, ExpirationSeconds: &expiration, Path: t.Path,
+			}}},
+		}},
+	}
 }
 
 // secretVolume names the volume of the i-th Secret; Secret names can be too

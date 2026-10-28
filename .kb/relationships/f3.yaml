@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b216b0e481e
+  - type: implements
+    from: SYM-plugins-app-egress-decide
+    to: REQ-plugins-egress-fail-closed
+    created_at: 2026-10-28T08:52:44.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2053bf2f08d

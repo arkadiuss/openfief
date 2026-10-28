@@ -104,3 +104,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e53322d5793e
+  - type: constrains
+    from: REQ-plugins-egress-token-review-cache
+    to: FACT-SUBJECT-A197B520E58C9AE3
+    created_at: 2026-10-28T08:47:07.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cfe0ffc6112
+  - type: requires_property
+    from: REQ-plugins-egress-token-review-cache
+    to: FACT-PROP-9A14FBAF3BD7D6E8
+    created_at: 2026-10-28T08:47:07.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efff3dfbaf5f
+  - type: specified_by
+    from: REQ-plugins-egress-token-review-cache
+    to: SCEN-plugins-egress-token-review-cached
+    created_at: 2026-10-28T08:47:07.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-760eb5af4e48
+  - type: executable_for
+    from: SYM-plugins-app-test-caching-token-reviewer
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:49:09.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c5d81209693

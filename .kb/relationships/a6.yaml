@@ -111,3 +111,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc58d48db167
+  - type: executable_for
+    from: SYM-plugins-app-test-cache-fn-jwt-expiring
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:49:04.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-058c92680d2c

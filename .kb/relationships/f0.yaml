@@ -48,3 +48,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37610fed19e8
+  - type: verified_by
+    from: SCEN-plugins-egress-token-only-with-egress
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T08:37:31.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13993b9f7887
+  - type: verified_by
+    from: SCEN-plugins-egress-token-only-with-egress
+    to: TEST-operator-objects
+    created_at: 2026-10-28T08:37:31.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d30347dd0414
+  - type: verified_by
+    from: SCEN-plugins-egress-token-only-with-egress
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T08:37:31.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e81742362ea
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-fn-running
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T08:50:50.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9e29404ab1e

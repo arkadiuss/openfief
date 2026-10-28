@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28fe22d6bc33
+  - type: executable_for
+    from: SYM-operator-test-objects-token-volume
+    to: TEST-operator-objects
+    created_at: 2026-10-28T08:38:09.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70df152fa6f7

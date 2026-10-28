@@ -129,3 +129,14 @@ func TestEgressDecide(t *testing.T) {
 		})
 	}
 }
+
+// TestEgressDecideWithoutSource checks that with no AllowListSource at all,
+// nothing is allowed: never Smokescreen's allow-all (D-63).
+func TestEgressDecideWithoutSource(t *testing.T) {
+	t.Parallel()
+	got := app.NewEgress(fakeReviewer{}, nil).Decide("sample", "api.example.com", 443)
+	want := app.EgressDecision{Plugin: "sample", Host: "api.example.com", Port: 443, Reason: app.ReasonNoAllowList}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("Decide() (-want +got):\n%s", diff)
+	}
+}

@@ -104,3 +104,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd78d91d93b1
+  - type: implements
+    from: SYM-plugins-app-caching-token-reviewer-lookup
+    to: REQ-plugins-egress-token-review-cache
+    created_at: 2026-10-28T08:48:11.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e24b864a8cdc
+  - type: covered_by
+    from: SYM-plugins-app-caching-token-reviewer-lookup
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-10-28T08:48:11.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f924348bdff

@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"slices"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -155,9 +156,12 @@ func sampleGrant(name string, egress ...string) *v1alpha1.PluginGrant {
 
 // state is what a test checks after a reconcile.
 type state struct {
-	Image           string // the Deployment's image; "" when there is none
-	ServiceAccount  bool
-	ProxyRule       bool // the NetworkPolicy allows egress to the proxy
+	Image          string // the Deployment's image; "" when there is none
+	ServiceAccount bool
+	ProxyRule      bool // the NetworkPolicy allows egress to the proxy
+	// TokenAudiences are the pod's projected tokens, each as "<audience>
+	// <variable naming its file>".
+	TokenAudiences  []string
 	DenyAll         bool // the NetworkPolicy allows nothing
 	AllowList       string
 	Conditions      map[string]string // type -> "Status/Reason"
@@ -202,6 +206,7 @@ func (tc *testCluster) objectState(ctx context.Context, t *testing.T, name strin
 	switch err := tc.client.Get(ctx, key, &d); {
 	case err == nil:
 		s.Image = d.Spec.Template.Spec.Containers[0].Image
+		s.TokenAudiences = tokenAudiences(&d)
 	case !apierrors.IsNotFound(err):
 		t.Fatalf("get deployment: %v", err)
 	}
@@ -216,6 +221,35 @@ func (tc *testCluster) objectState(ctx context.Context, t *testing.T, name strin
 		s.ProxyRule = s.ProxyRule || cmp.Equal(e.To[0].PodSelector.MatchLabels, proxySelector())
 	}
 	return s
+}
+
+// tokenAudiences lists "<audience> <variable>" for each projected token
+// volume of d's pod, paired with the variable whose value is its file.
+func tokenAudiences(d *appsv1.Deployment) []string {
+	spec := &d.Spec.Template.Spec
+	c := &spec.Containers[0]
+	mountOf := map[string]string{}
+	for _, m := range c.VolumeMounts {
+		mountOf[m.Name] = m.MountPath
+	}
+	varOf := map[string]string{}
+	for _, e := range c.Env {
+		varOf[e.Value] = e.Name
+	}
+	var out []string
+	for i := range spec.Volumes {
+		v := &spec.Volumes[i]
+		if v.Projected == nil {
+			continue
+		}
+		for _, src := range v.Projected.Sources {
+			if t := src.ServiceAccountToken; t != nil {
+				out = append(out, t.Audience+" "+varOf[mountOf[v.Name]+"/"+t.Path])
+			}
+		}
+	}
+	slices.Sort(out)
+	return out
 }
 
 func conditions(ready, approval, signature string) map[string]string {
@@ -245,6 +279,22 @@ func TestReconcile(t *testing.T) {
 	t.Run("granted plugin runs, and an upgrade waits for approval", func(t *testing.T) {
 		t.Parallel()
 		testUpgrade(t, tc, signed)
+	})
+	t.Run("granted plugin without egress gets only the core token", func(t *testing.T) {
+		t.Parallel()
+		ctx := t.Context()
+		create(ctx, t, tc.client, samplePlugin("noegress", imageA))
+		create(ctx, t, tc.client, sampleGrant("noegress"))
+		tc.reconcile(ctx, t, signed, "noegress")
+		want := state{
+			Image: imageA, ServiceAccount: true,
+			TokenAudiences: []string{"openfief-core OPENFIEF_TOKEN_FILE"},
+			Conditions:     conditions("False/Progressing", "False/Approved", "True/Verified"),
+			DeployedImage:  imageA,
+		}
+		if diff := cmp.Diff(want, tc.state(ctx, t, "noegress"), cmpopts.EquateEmpty()); diff != "" {
+			t.Errorf("state mismatch (-want +got):\n%s", diff)
+		}
 	})
 	t.Run("revoking the grant removes the plugin", func(t *testing.T) {
 		t.Parallel()
@@ -294,8 +344,9 @@ func testUpgrade(t *testing.T, tc *testCluster, r *operator.PluginReconciler) {
 	tc.reconcile(ctx, t, r, "upgrade")
 	running := state{
 		Image: imageA, ServiceAccount: true, ProxyRule: true, AllowList: "api.example.com:443\n",
-		Conditions:    conditions("False/Progressing", "False/Approved", "True/Verified"),
-		DeployedImage: imageA, EffectiveEgress: []string{"api.example.com:443"},
+		TokenAudiences: []string{"openfief-core OPENFIEF_TOKEN_FILE", "openfief-egress OPENFIEF_EGRESS_TOKEN_FILE"},
+		Conditions:     conditions("False/Progressing", "False/Approved", "True/Verified"),
+		DeployedImage:  imageA, EffectiveEgress: []string{"api.example.com:443"},
 	}
 	if diff := cmp.Diff(running, tc.state(ctx, t, "upgrade"), cmpopts.EquateEmpty()); diff != "" {
 		t.Fatalf("after grant (-want +got):\n%s", diff)
