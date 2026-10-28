@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e696cd7e738
+  - type: executable_for
+    from: SYM-identity-pg-test-helper-admin-exec
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:16:47.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3424e8a82f32

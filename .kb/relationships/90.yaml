@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-117ba7a43de4
+  - type: implements
+    from: SYM-identity-scope
+    to: REQ-identity-script-token-issue
+    created_at: 2026-10-28T14:11:43.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f56e352a625
+  - type: covered_by
+    from: SYM-identity-scope
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:11:43.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f971b986a43
+  - type: executable_for
+    from: SYM-identity-test-script-token-check
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:13:55.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b15544a0f85b

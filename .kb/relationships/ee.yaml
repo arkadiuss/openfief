@@ -209,3 +209,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df67f1ef2667
+  - type: implements
+    from: SYM-identity-pg-migrations
+    to: REQ-identity-script-token-store
+    created_at: 2026-10-28T14:13:20.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28da0c4adef7
+  - type: covered_by
+    from: SYM-identity-pg-migrations
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:13:20.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fb2e42398ef

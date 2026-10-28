@@ -195,3 +195,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3000a38bca3f
+  - type: implements
+    from: SYM-identity-pg-migrate-tx
+    to: REQ-identity-script-token-store
+    created_at: 2026-10-28T14:13:12.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cf39ce5d84f
+  - type: covered_by
+    from: SYM-identity-pg-migrate-tx
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:13:12.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c01b41c4df3
+  - type: executable_for
+    from: SYM-identity-app-test-verify
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:14:33.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdd6516970a4

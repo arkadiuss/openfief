@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1353610d052
+  - type: executable_for
+    from: SYM-identity-pg-test-store-refuses-bad-rows
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:16:37.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25e52684c8ad

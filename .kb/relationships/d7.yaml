@@ -167,3 +167,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1adb22df80fb
+  - type: implements
+    from: SYM-identity-key-matches
+    to: REQ-identity-script-token-verify
+    created_at: 2026-10-28T14:12:36.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2e38ef59f50
+  - type: implements
+    from: SYM-identity-key-matches
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T14:12:36.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40d7e3da5cd6
+  - type: covered_by
+    from: SYM-identity-key-matches
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:12:36.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5cc6fe96d7f

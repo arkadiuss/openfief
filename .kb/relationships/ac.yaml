@@ -202,3 +202,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ade4b75a9a65
+  - type: executable_for
+    from: SYM-identity-app-test-revoke
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:14:37.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fadf7292422

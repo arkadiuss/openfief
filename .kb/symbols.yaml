@@ -37001,3 +37001,866 @@ symbols:
         target: TEST-docs-reference
       - type: implements
         target: REQ-docs-generated-reference
+  - id: SYM-identity-scope
+    title: Scope
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:42.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-scope-string
+    title: Scope.String
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:47.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-parse-scope
+    title: ParseScope
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:50.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-script-token-id
+    title: ScriptTokenID
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:54.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-parse-script-token-id
+    title: ParseScriptTokenID
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:58.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-script-token
+    title: ScriptToken
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:01.487Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+  - id: SYM-identity-new-script-token
+    title: NewScriptToken
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:05.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-check-name
+    title: checkName
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:09.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-name-rune
+    title: nameRune
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:12.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-script-token-check
+    title: ScriptToken.Check
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:16.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-script-token-status
+    title: ScriptToken.Status
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:20.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-format-secret
+    title: FormatSecret
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:24.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-parse-secret
+    title: ParseSecret
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:27.873Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-hash-key
+    title: HashKey
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:31.737Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-key-matches
+    title: KeyMatches
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:35.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-app-store
+    title: Store
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:39.240Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-app-tokens
+    title: Tokens
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:41.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+  - id: SYM-identity-app-new-tokens
+    title: NewTokens
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:45.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-app-tokens-issue
+    title: Tokens.Issue
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:49.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-app-tokens-verify
+    title: Tokens.Verify
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:53.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-app-tokens-revoke
+    title: Tokens.Revoke
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:56.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-app-tokens-list
+    title: Tokens.List
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:00.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-pg-migration
+    title: migration
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:04.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-migrate
+    title: Migrate
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:08.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-migrate-tx
+    title: migrateTx
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:11.980Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-applied-versions
+    title: appliedVersions
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:15.846Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-migrations
+    title: migrations
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:19.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-store
+    title: Store
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:22.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-new
+    title: New
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:26.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-store-save-script-token
+    title: Store.SaveScriptToken
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:30.835Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-issue
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-store-script-token
+    title: Store.ScriptToken
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:34.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-pg-store-revoke-script-token
+    title: Store.RevokeScriptToken
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:38.406Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-pg-store-script-tokens
+    title: Store.ScriptTokens
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:42.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-pg-scan-token
+    title: scanToken
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:46.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-test-new-script-token
+    title: TestNewScriptToken
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:50.493Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-script-token-check
+    title: TestScriptTokenCheck
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:54.523Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-scope
+    title: TestScope
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:58.685Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-parse-script-token-id
+    title: TestParseScriptTokenID
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:02.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-secret
+    title: TestSecret
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:06.843Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-key-matches
+    title: TestKeyMatches
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:11.103Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-helper-created-at
+    title: createdAt
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:15.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-helper-check-parsed
+    title: checkParsed
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:19.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-app-test-issue
+    title: TestIssue
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:24.005Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-issue-fails
+    title: TestIssueFails
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:28.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-verify
+    title: TestVerify
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:32.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-revoke
+    title: TestRevoke
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:36.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-stored
+    title: stored
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:41.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store
+    title: memStore
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:45.695Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-new-mem-store
+    title: newMemStore
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:50.099Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store-save-script-token
+    title: memStore.SaveScriptToken
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:54.516Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store-script-token
+    title: memStore.ScriptToken
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:59.011Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store-revoke-script-token
+    title: memStore.RevokeScriptToken
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:03.951Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store-script-tokens
+    title: memStore.ScriptTokens
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:08.704Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-clock
+    title: clock
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:13.708Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-clock-now
+    title: clock.now
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:18.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-clock-set
+    title: clock.set
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:24.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-issued-at
+    title: issuedAt
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:29.669Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fixture
+    title: fixture
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:36.310Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-new-fixture
+    title: newFixture
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:42.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-check-verified
+    title: checkVerified
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:48.175Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fixture-issued
+    title: fixture.issued
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:52.277Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fixture-other-id
+    title: fixture.otherID
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:57.370Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fixture-other-key
+    title: fixture.otherKey
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:02.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-at
+    title: at
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:08.683Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-revoke
+    title: revoke
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:14.802Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fail-store
+    title: failStore
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:20.484Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-pg-test-store-round-trip
+    title: TestStoreRoundTrip
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:25.938Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-store-unknown-token
+    title: TestStoreUnknownToken
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:31.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-store-refuses-bad-rows
+    title: TestStoreRefusesBadRows
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:36.459Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-new-pool
+    title: newPool
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:41.402Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-admin-exec
+    title: adminExec
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:46.417Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-issued-at
+    title: issuedAt
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:51.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-check-revoked
+    title: checkRevoked
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:56.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-check-no-secret-stored
+    title: checkNoSecretStored
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:17:01.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres

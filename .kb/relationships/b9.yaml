@@ -363,3 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9ba87cf8610
+  - type: executable_for
+    from: SYM-identity-app-test-helper-fixture-other-key
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:16:04.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d99f828d24a4

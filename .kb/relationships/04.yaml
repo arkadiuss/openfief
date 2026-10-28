@@ -174,3 +174,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1fa0914b2b5
+  - type: implements
+    from: SYM-identity-name-rune
+    to: REQ-identity-script-token-issue
+    created_at: 2026-10-28T14:12:13.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150347cc0450
+  - type: covered_by
+    from: SYM-identity-name-rune
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:12:13.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5f8e6b0725d

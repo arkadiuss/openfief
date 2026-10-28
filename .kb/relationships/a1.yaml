@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c13f8cba4313
+  - type: implements
+    from: SYM-identity-parse-script-token-id
+    to: REQ-identity-script-token-issue
+    created_at: 2026-10-28T14:11:59.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-661802e391cb
+  - type: implements
+    from: SYM-identity-parse-script-token-id
+    to: REQ-identity-script-token-revoke
+    created_at: 2026-10-28T14:11:59.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8002f21eb8d
+  - type: covered_by
+    from: SYM-identity-parse-script-token-id
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:11:59.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a847780a811d

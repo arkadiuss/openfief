@@ -230,3 +230,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81a6525e053e
+  - type: constrains
+    from: REQ-identity-script-token-store
+    to: FACT-SUBJECT-0BE260B3AF43B77F
+    created_at: 2026-10-28T14:11:37.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc2e8bcff9fb
+  - type: requires_property
+    from: REQ-identity-script-token-store
+    to: FACT-PROP-B006D9C5C776DD91
+    created_at: 2026-10-28T14:11:37.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-919546c6033f
+  - type: specified_by
+    from: REQ-identity-script-token-store
+    to: SCEN-identity-store-hash-only
+    created_at: 2026-10-28T14:11:37.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42c52a4bd1d7

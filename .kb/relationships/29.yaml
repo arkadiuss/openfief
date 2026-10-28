@@ -104,3 +104,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb0095eac3df
+  - type: implements
+    from: SYM-identity-app-tokens-verify
+    to: REQ-identity-script-token-verify
+    created_at: 2026-10-28T14:12:54.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8b22417028d
+  - type: covered_by
+    from: SYM-identity-app-tokens-verify
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:12:54.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4bed81a5cf6
+  - type: executable_for
+    from: SYM-identity-app-test-helper-stored
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:14:42.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29a18a982fb6

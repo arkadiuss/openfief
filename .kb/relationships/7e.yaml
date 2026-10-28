@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5a24ed61c7c
+  - type: executable_for
+    from: SYM-identity-app-test-helper-clock-set
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:15:25.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f02bb2ea8e7
