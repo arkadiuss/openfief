@@ -1,0 +1,22 @@
+{{- /*
+Mermaid diagrams are rendered to SVG at build time, never in the reader's browser:
+the first pass collects each block (home.diagrams.json), scripts/docs-diagrams.mjs renders it,
+the second pass inlines the light and dark SVGs. A block that failed to render fails the build.
+*/ -}}
+{{- $hash := substr (sha256 .Inner) 0 16 -}}
+{{- $from := "" -}}
+{{- with .Page.File -}}{{- $from = strings.TrimPrefix (printf "%s/" hugo.WorkingDir) .Filename -}}{{- end -}}
+{{- if site.Params.diagramsCollect -}}
+  {{- .Page.Store.Add "mermaid" (slice (dict "hash" $hash "code" .Inner "page" $from)) -}}
+<pre class="mermaid-source"><code>{{ .Inner }}</code></pre>
+{{- else -}}
+  {{- $light := resources.Get (printf "diagrams/%s-light.svg" $hash) -}}
+  {{- $dark := resources.Get (printf "diagrams/%s-dark.svg" $hash) -}}
+  {{- if not (and $light $dark) -}}
+    {{- errorf "%s: Mermaid diagram %s has no rendered SVG; run task docs:build" $from $hash -}}
+  {{- end -}}
+<figure class="diagram">
+  <div class="diagram-light">{{ $light.Content | safeHTML }}</div>
+  <div class="diagram-dark">{{ $dark.Content | safeHTML }}</div>
+</figure>
+{{- end -}}

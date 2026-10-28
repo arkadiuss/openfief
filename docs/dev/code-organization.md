@@ -31,6 +31,8 @@ sdk/go/, sdk/ts/         plugin SDKs (Apache-2.0, own LICENSE file, separate mod
 plugins/<name>/          first-party plugins, built on the SDK
 deploy/                  CRDs, bootstrap chart
 test/e2e/                end-to-end suites (local k3s)
+tools/<name>/            development tools, never shipped (docs generator)
+site/                    the docs site: Hugo config, theme, site-only pages (docs/dev/docs.md)
 ```
 
 ## Rules

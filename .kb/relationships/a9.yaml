@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a91bbbbd9fc
+  - type: constrains
+    from: REQ-docs-refs-exist
+    to: FACT-SUBJECT-25F001A16B317D39
+    created_at: 2026-10-28T09:33:00.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b786ae348d7
+  - type: requires_property
+    from: REQ-docs-refs-exist
+    to: FACT-PROP-EBC734ADC2C1CF3E
+    created_at: 2026-10-28T09:33:00.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cfc4c834269
+  - type: specified_by
+    from: REQ-docs-refs-exist
+    to: SCEN-docs-refs-exist
+    created_at: 2026-10-28T09:33:00.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa424a153af8

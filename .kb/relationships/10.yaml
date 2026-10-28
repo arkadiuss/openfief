@@ -69,3 +69,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aee715af2c2d
+  - type: implements
+    from: SYM-docgen-non-empty-lines
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:34:45.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32656235ed91
+  - type: covered_by
+    from: SYM-docgen-non-empty-lines
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:34:45.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a188513166a4

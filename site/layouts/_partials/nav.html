@@ -1,0 +1,49 @@
+{{- /* Sidebar groups from site/hugo.toml. Any top-level page or section left out of them goes under "More", so a new page is never hidden. */ -}}
+{{- $current := . -}}
+{{- $listed := slice -}}
+<nav aria-label="Documentation">
+  <ul class="nav">
+    <li><a href="{{ site.Home.RelPermalink }}"{{ if .IsHome }} aria-current="page"{{ end }}>Home</a></li>
+    {{- range site.Params.nav }}
+      {{- $group := . }}
+      {{- $head := false }}
+      {{- $items := slice }}
+      {{- with $group.section }}{{ with site.GetPage . }}
+        {{- $head = . }}
+        {{- $listed = $listed | append .RelPermalink }}
+        {{- range partial "pages.html" . }}{{ $items = $items | append (dict "page" .page "label" .title) }}{{ end }}
+      {{- end }}{{ end }}
+      {{- range $group.pages }}
+        {{- $key := lower . }}
+        {{- with site.GetPage . }}
+          {{- $listed = $listed | append .RelPermalink }}
+          {{- $items = $items | append (dict "page" . "label" (index site.Params.navLabels $key | default (partial "title.html" .))) }}
+        {{- end }}
+      {{- end }}
+    <li class="nav-group">
+      {{- if $head }}
+      <a class="nav-group-title" href="{{ $head.RelPermalink }}"{{ if eq $head $current }} aria-current="page"{{ end }}>{{ $group.title }}</a>
+      {{- else }}
+      <span class="nav-group-title">{{ $group.title }}</span>
+      {{- end }}
+      <ul>
+        {{- range $items }}
+        <li><a href="{{ .page.RelPermalink }}"{{ if or (eq .page $current) (and .page.IsSection ($current.IsDescendant .page)) }} aria-current="page"{{ end }}>{{ .label }}</a></li>
+        {{- end }}
+      </ul>
+    </li>
+    {{- end }}
+    {{- $more := slice }}
+    {{- range site.Home.Pages }}{{ if not (in $listed .RelPermalink) }}{{ $more = $more | append . }}{{ end }}{{ end }}
+    {{- with $more }}
+    <li class="nav-group">
+      <span class="nav-group-title">More</span>
+      <ul>
+        {{- range . }}
+        <li><a href="{{ .RelPermalink }}"{{ if eq . $current }} aria-current="page"{{ end }}>{{ partial "title.html" . }}</a></li>
+        {{- end }}
+      </ul>
+    </li>
+    {{- end }}
+  </ul>
+</nav>

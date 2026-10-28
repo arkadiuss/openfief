@@ -48,3 +48,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1181d1d95255
+  - type: implements
+    from: SYM-docgen-task-list
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:39:08.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43da5fba6769
+  - type: covered_by
+    from: SYM-docgen-task-list
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:39:08.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90e4dfdb1065

@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6db7ce819447
+  - type: implements
+    from: SYM-docgen-page
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:35:15.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c93fe914baf1
+  - type: covered_by
+    from: SYM-docgen-page
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:35:15.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-685d03948029

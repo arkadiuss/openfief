@@ -4,7 +4,7 @@
 
 Self-hosted portfolio tracker and orchestrator for AI investment agents. Each agent gets a revocable capital lease with hard limits enforced outside the LLM. Bring your own agents, models and brokers.
 
-**Status:** Design phase, no code yet.
+**Status:** M0 in progress. The domain libraries, the plugin operator and the egress proxy are built; the core service, UI and connector plugins are not yet. The [status page](https://arkadiuss.github.io/openfief/status/) tracks every decision.
 
 ## Documents
 
@@ -14,6 +14,8 @@ Self-hosted portfolio tracker and orchestrator for AI investment agents. Each ag
 - [docs/research.md](docs/research.md): external research the design draws on.
 - [docs/glossary.md](docs/glossary.md): domain terms and abbreviations.
 - Requirements live in kibi (`.kb/`); `task kibi:report` renders them as a page.
+
+The same documents, plus concept pages for each part as built and pages generated from the code, are published at **[arkadiuss.github.io/openfief](https://arkadiuss.github.io/openfief/)** on every push to `main`. `task docs:build` builds the site locally.
 
 ## Development
 

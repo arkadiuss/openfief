@@ -83,3 +83,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55b50e16583d
+  - type: implements
+    from: SYM-docgen-go-source-files
+    to: REQ-docs-packages-covered
+    created_at: 2026-10-28T09:36:43.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25bb441d60dc
+  - type: covered_by
+    from: SYM-docgen-go-source-files
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:36:43.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcdb5ec8c354

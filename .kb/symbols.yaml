@@ -13686,3 +13686,1296 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-proto-breaking
+  - id: SYM-docgen-layering-violation
+    title: layeringViolation
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:18.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-article
+    title: article
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:22.063Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-rel-path
+    title: relPath
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:25.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-go-package
+    title: goPackage
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:29.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-context-edges
+    title: contextEdges
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:33.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-code-map-page
+    title: codeMapPage
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:37.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-context-diagram
+    title: contextDiagram
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:41.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-node-id
+    title: nodeID
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:44.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-write-package-tables
+    title: writePackageTables
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:48.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-first-sentence
+    title: firstSentence
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:51.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-place
+    title: place
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:55.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-decode-packages
+    title: decodePackages
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:33:59.460Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-package-from-json
+    title: packageFromJSON
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:03.209Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-place-of
+    title: placeOf
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:07.099Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-layering-findings
+    title: layeringFindings
+    status: active
+    sourceFile: tools/docgen/codemap.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:10.666Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-write-version-table
+    title: writeVersionTable
+    status: active
+    sourceFile: tools/docgen/crds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:14.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-version-names
+    title: versionNames
+    status: active
+    sourceFile: tools/docgen/crds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:17.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-field
+    title: field
+    status: active
+    sourceFile: tools/docgen/crds.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:21.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-load-crds
+    title: loadCRDs
+    status: active
+    sourceFile: tools/docgen/crds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:25.508Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-schema-fields
+    title: schemaFields
+    status: active
+    sourceFile: tools/docgen/crds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:29.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-type-name
+    title: typeName
+    status: active
+    sourceFile: tools/docgen/crds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:33.289Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-crd-page
+    title: crdPage
+    status: active
+    sourceFile: tools/docgen/crds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:36.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-short-id
+    title: shortID
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:40.595Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-non-empty-lines
+    title: nonEmptyLines
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:44.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-stale-findings
+    title: staleFindings
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:48.317Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-is-test-file
+    title: isTestFile
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:52.077Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-covering-pages
+    title: coveringPages
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:55.859Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-uncovered-packages
+    title: uncoveredPackages
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:34:59.934Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-packages-covered
+  - id: SYM-docgen-report-fresh
+    title: reportFresh
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:03.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-match-glob
+    title: matchGlob
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:07.541Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-match-segments
+    title: matchSegments
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:11.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-page
+    title: page
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:15.022Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-commit
+    title: commit
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:18.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-finding
+    title: finding
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:22.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-run-fresh
+    title: runFresh
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:26.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-read-changes
+    title: readChanges
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:29.940Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-parse-log
+    title: parseLog
+    status: active
+    sourceFile: tools/docgen/fresh.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:33.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-test-parse-front-matter
+    title: TestParseFrontMatter
+    status: active
+    sourceFile: tools/docgen/fresh_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:36.108Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-fresh
+  - id: SYM-docgen-test-match-glob
+    title: TestMatchGlob
+    status: active
+    sourceFile: tools/docgen/fresh_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:38.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-fresh
+  - id: SYM-docgen-test-run-fresh-staged
+    title: TestRunFreshStaged
+    status: active
+    sourceFile: tools/docgen/fresh_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:41.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-fresh
+  - id: SYM-docgen-test-parse-log
+    title: TestParseLog
+    status: active
+    sourceFile: tools/docgen/fresh_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:44.467Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-fresh
+  - id: SYM-docgen-test-stale-findings
+    title: TestStaleFindings
+    status: active
+    sourceFile: tools/docgen/fresh_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:47.357Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-fresh
+  - id: SYM-docgen-test-uncovered-packages
+    title: TestUncoveredPackages
+    status: active
+    sourceFile: tools/docgen/fresh_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:50.375Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-fresh
+  - id: SYM-docgen-test-status-page
+    title: TestStatusPage
+    status: active
+    sourceFile: tools/docgen/generate_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:54.363Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-generate
+  - id: SYM-docgen-test-run-reference
+    title: TestRunReference
+    status: active
+    sourceFile: tools/docgen/generate_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:35:57.964Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-generate
+  - id: SYM-docgen-test-run-refs
+    title: TestRunRefs
+    status: active
+    sourceFile: tools/docgen/generate_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:01.940Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-generate
+  - id: SYM-docgen-test-run-usage
+    title: TestRunUsage
+    status: active
+    sourceFile: tools/docgen/generate_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:05.783Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-generate
+  - id: SYM-docgen-test-decode-packages
+    title: TestDecodePackages
+    status: active
+    sourceFile: tools/docgen/generate_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:09.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-generate
+  - id: SYM-docgen-test-crdpage
+    title: TestCRDPage
+    status: active
+    sourceFile: tools/docgen/generate_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:13.175Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-generate
+  - id: SYM-docgen-test-code-map-page
+    title: TestCodeMapPage
+    status: active
+    sourceFile: tools/docgen/generate_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:16.947Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-generate
+  - id: SYM-docgen-main
+    title: main
+    status: active
+    sourceFile: tools/docgen/main.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:20.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+      - type: implements
+        target: REQ-docs-refs-exist
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-run
+    title: run
+    status: active
+    sourceFile: tools/docgen/main.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:24.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+      - type: implements
+        target: REQ-docs-refs-exist
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-front-matter
+    title: frontMatter
+    status: active
+    sourceFile: tools/docgen/pages.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:28.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-packages-covered
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-skipped-dir
+    title: skippedDir
+    status: active
+    sourceFile: tools/docgen/pages.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:31.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-packages-covered
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-load-pages
+    title: loadPages
+    status: active
+    sourceFile: tools/docgen/pages.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:35.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-packages-covered
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-parse-front-matter
+    title: parseFrontMatter
+    status: active
+    sourceFile: tools/docgen/pages.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:38.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-packages-covered
+      - type: implements
+        target: REQ-docs-stale-gate
+  - id: SYM-docgen-go-source-files
+    title: goSourceFiles
+    status: active
+    sourceFile: tools/docgen/pages.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:42.701Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-fresh
+      - type: implements
+        target: REQ-docs-packages-covered
+  - id: SYM-docgen-read-json
+    title: readJSON
+    status: active
+    sourceFile: tools/docgen/reference.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:46.452Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-write-pages
+    title: writePages
+    status: active
+    sourceFile: tools/docgen/reference.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:49.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-write-all
+    title: writeAll
+    status: active
+    sourceFile: tools/docgen/reference.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:53.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-run-reference
+    title: runReference
+    status: active
+    sourceFile: tools/docgen/reference.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:36:57.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-reference-pages
+    title: referencePages
+    status: active
+    sourceFile: tools/docgen/reference.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:01.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-module-name
+    title: moduleName
+    status: active
+    sourceFile: tools/docgen/reference.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:05.448Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-read-tasks
+    title: readTasks
+    status: active
+    sourceFile: tools/docgen/reference.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:09.176Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-read-coverage
+    title: readCoverage
+    status: active
+    sourceFile: tools/docgen/reference.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:12.709Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-test-place-of
+    title: TestPlaceOf
+    status: active
+    sourceFile: tools/docgen/reference_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:15.575Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-reference
+  - id: SYM-docgen-test-summary-shortens-long-text
+    title: TestSummaryShortensLongText
+    status: active
+    sourceFile: tools/docgen/reference_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:18.252Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-reference
+  - id: SYM-docgen-test-page-ref-problems
+    title: TestPageRefProblems
+    status: active
+    sourceFile: tools/docgen/reference_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:20.878Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-reference
+  - id: SYM-docgen-test-tasks-page
+    title: TestTasksPage
+    status: active
+    sourceFile: tools/docgen/reference_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:23.568Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-reference
+  - id: SYM-docgen-test-layering-findings
+    title: TestLayeringFindings
+    status: active
+    sourceFile: tools/docgen/reference_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:26.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-reference
+  - id: SYM-docgen-test-status-by-decision
+    title: TestStatusByDecision
+    status: active
+    sourceFile: tools/docgen/reference_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:29.471Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-reference
+  - id: SYM-docgen-test-summary
+    title: TestSummary
+    status: active
+    sourceFile: tools/docgen/reference_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:32.373Z
+    relationships:
+      - type: executable_for
+        target: TEST-docs-reference
+  - id: SYM-docgen-page-ref-problems
+    title: pageRefProblems
+    status: active
+    sourceFile: tools/docgen/refs.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:36.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-refs-exist
+  - id: SYM-docgen-kb-folder
+    title: kbFolder
+    status: active
+    sourceFile: tools/docgen/refs.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:39.811Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-refs-exist
+  - id: SYM-docgen-run-refs
+    title: runRefs
+    status: active
+    sourceFile: tools/docgen/refs.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:43.523Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-refs-exist
+  - id: SYM-docgen-known-refs
+    title: knownRefs
+    status: active
+    sourceFile: tools/docgen/refs.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:47.344Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-refs-exist
+  - id: SYM-docgen-known-refs-has-entity
+    title: knownRefs.hasEntity
+    status: active
+    sourceFile: tools/docgen/refs.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:51.119Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-refs-exist
+  - id: SYM-docgen-check-pages
+    title: checkPages
+    status: active
+    sourceFile: tools/docgen/refs.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:54.887Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-refs-exist
+  - id: SYM-docgen-coverage-report
+    title: coverageReport
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:37:59.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-decision-status-add
+    title: decisionStatus.add
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:03.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-requirement-area
+    title: requirementArea
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:06.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-decision-status-label
+    title: decisionStatus.label
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:10.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-summary
+    title: summary
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:14.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-coverage-row
+    title: coverageRow
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:18.090Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-status-page
+    title: statusPage
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:21.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-status-colors
+    title: statusColors
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:25.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-status-pie
+    title: statusPie
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:29.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-evidence
+    title: evidence
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:33.403Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-decision-statuses
+    title: decisionStatuses
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:37.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-decision
+    title: decision
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:41.074Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-decision-status
+    title: decisionStatus
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:45.128Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-parse-decisions
+    title: parseDecisions
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:49.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-decision-of
+    title: decisionOf
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:53.311Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-status-by-decision
+    title: statusByDecision
+    status: active
+    sourceFile: tools/docgen/status.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:38:57.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-generate
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-task
+    title: task
+    status: active
+    sourceFile: tools/docgen/tasks.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:00.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-tasks-page
+    title: tasksPage
+    status: active
+    sourceFile: tools/docgen/tasks.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:04.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference
+  - id: SYM-docgen-task-list
+    title: taskList
+    status: active
+    sourceFile: tools/docgen/tasks.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T09:39:08.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-docs-reference
+      - type: implements
+        target: REQ-docs-generated-reference

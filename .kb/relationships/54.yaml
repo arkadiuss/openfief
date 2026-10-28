@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2f1eeb595e2
+  - type: executable_for
+    from: SYM-docgen-test-run-usage
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:36:06.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d3231c09dc8

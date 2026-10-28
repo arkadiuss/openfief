@@ -1,0 +1,83 @@
+# OpenFief docs site (docs/dev/docs.md). Built from the repository root by `task docs:build`:
+#   hugo --source . --config site/hugo.toml
+# so links to source files resolve against the real tree. docs/ is mounted as content unchanged.
+baseURL = 'https://arkadiuss.github.io/openfief/'
+title = 'OpenFief'
+locale = 'en'
+disableKinds = ['taxonomy', 'term', 'rss']
+enableGitInfo = true
+publishDir = 'site/public'
+resourceDir = 'site/resources'
+timeout = '120s'
+
+[params]
+  repoURL = 'https://github.com/arkadiuss/openfief'
+  # Set by task docs:build: HUGO_PARAMS_COMMIT (links to source files pin this commit) and
+  # HUGO_PARAMS_DIAGRAMSCOLLECT (the first pass collects Mermaid blocks instead of inlining SVGs).
+  commit = 'main'
+  diagramsCollect = false
+
+# Sidebar groups. A group lists pages, or a section whose pages are listed in weight-then-title order.
+# Any top-level page or section left out appears under "More", so a new page is never hidden.
+[[params.nav]]
+  title = 'Start here'
+  pages = ['/OVERVIEW.md', '/architecture.md', '/status.md']
+[[params.nav]]
+  title = 'Concepts'
+  section = '/concepts'
+[[params.nav]]
+  title = 'Design'
+  pages = ['/DESIGN.md', '/glossary.md', '/proposals', '/research.md']
+[[params.nav]]
+  title = 'Reference'
+  section = '/reference'
+[[params.nav]]
+  title = 'Development'
+  section = '/dev'
+
+# Short sidebar labels for pages whose title (their first heading) is long.
+[params.navLabels]
+  '/overview.md' = 'Overview'
+  '/design.md' = 'Design'
+  '/research.md' = 'Research'
+  '/proposals' = 'Proposals'
+
+[module]
+  [[module.mounts]]
+    source = 'docs'
+    target = 'content'
+  [[module.mounts]]
+    source = 'site/content'
+    target = 'content'
+  [[module.mounts]]
+    source = 'site/.gen/content'
+    target = 'content'
+  [[module.mounts]]
+    source = 'site/layouts'
+    target = 'layouts'
+  [[module.mounts]]
+    source = 'site/assets'
+    target = 'assets'
+  [[module.mounts]]
+    source = 'site/.gen/diagrams'
+    target = 'assets/diagrams'
+  [[module.mounts]]
+    source = 'site/.gen/static'
+    target = 'static'
+
+[markup.goldmark.renderer]
+  unsafe = false
+[markup.highlight]
+  noClasses = false
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 3
+
+[outputs]
+  home = ['html', 'diagrams']
+
+[outputFormats.diagrams]
+  mediaType = 'application/json'
+  baseName = 'diagrams'
+  isPlainText = true
+  notAlternative = true

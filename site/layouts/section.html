@@ -1,0 +1,17 @@
+{{ define "main" }}
+<article>
+  <h1>{{ partial "title.html" . }}</h1>
+  {{- with .Description }}
+  <p class="lede">{{ . }}</p>
+  {{- end }}
+  {{ .Content }}
+  <ul class="cards">
+    {{- range partial "pages.html" . }}
+    <li>
+      <a href="{{ .page.RelPermalink }}">{{ .title }}</a>
+      {{- with .page.Description }}<p>{{ . }}</p>{{ end }}
+    </li>
+    {{- end }}
+  </ul>
+</article>
+{{ end }}

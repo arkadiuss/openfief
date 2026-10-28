@@ -62,3 +62,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e90a97af9cc
+  - type: implements
+    from: SYM-docgen-evidence
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:38:33.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d588a41b0cc
+  - type: covered_by
+    from: SYM-docgen-evidence
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:38:33.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-154fa8474828
+  - type: covered_by
+    from: SYM-docgen-evidence
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:38:33.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76e5021d0ab5

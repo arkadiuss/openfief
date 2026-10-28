@@ -76,3 +76,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e482984c13a6
+  - type: verified_by
+    from: SCEN-docs-packages-covered
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:32:42.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5645dae682f8

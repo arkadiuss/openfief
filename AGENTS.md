@@ -18,6 +18,7 @@ Proposals (P), research (R), tensions (T) and open questions (OQ) are undecided:
 | Change behavior, or touch requirements and traceability | docs/dev/kibi.md |
 | Write or move Go code | docs/dev/code-organization.md, docs/glossary.md |
 | Write tests | docs/dev/testing.md |
+| Write a docs page, or change code a page covers | docs/dev/docs.md |
 | Record HTTP fixtures | `.claude/skills/hypert-recording/SKILL.md` |
 | Hit a lint failure | `.golangci.yml`: its comments give the reason for each choice |
 | Commit, open a PR, or work on CI, release or deploy | docs/dev/sdlc.md |

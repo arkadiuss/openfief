@@ -1,0 +1,4 @@
+{{- /* H1 is the page title, which the page template renders (docs/ files carry it as their first line). */ -}}
+{{- if ne .Level 1 -}}
+<h{{ .Level }} id="{{ .Anchor }}">{{ .Text }}<a class="anchor" href="#{{ .Anchor }}" aria-label="Link to this section">#</a></h{{ .Level }}>
+{{- end -}}
