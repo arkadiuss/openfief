@@ -55,3 +55,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de762fbbb950
+  - type: implements
+    from: SYM-ledger-app-ledger-import
+    to: REQ-ledger-app-import-append
+    created_at: 2026-10-28T06:08:11.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbf9876a8059
+  - type: covered_by
+    from: SYM-ledger-app-ledger-import
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:08:11.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82424057fe6a
+  - type: implements
+    from: SYM-ledger-app-ledger-import
+    to: REQ-ledger-app-import-atomic
+    created_at: 2026-10-28T06:35:46.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8adbcfb1255

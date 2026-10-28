@@ -17,6 +17,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Holding | ledger | `ledger.Holding` | The quantity of one instrument in one account on a date, derived from postings. | position (allowed only inside connector adapters, as the broker's word) |
 | Lot | ledger | `ledger.Lot` | A quantity acquired on a date at a cost; consumed FIFO. An opening lot is seeded from a broker's current positions instead of full history. | |
 | Balance assertion | ledger | `ledger.BalanceAssertion` | A broker-reported balance on a date that the derived balance must match; a mismatch is an error. | snapshot |
+| Assertion check | ledger | `app.AssertionCheck` | A balance assertion with the result of its latest check: matched, or flagged with the derived balance when they differ. A flagged check is an error for the owner to resolve; the import that found it is kept. | reconciliation |
 | Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one role. Defensive: not available to agents. Offensive: the part fiefs are leased from. | bucket |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
 | Statement | ingest | `app.StatementFetcher` | What an institution reports about an account, as a file or a pulled document, such as an IBKR Flex Query or an xStation export. A connector maps it. | report, export (alone) |

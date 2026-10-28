@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-721a57b975e1
+  - type: constrains
+    from: REQ-ledger-app-assertion-flag
+    to: FACT-SUBJECT-70F8289C4B07EE53
+    created_at: 2026-10-28T06:05:48.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7146648f99c0
+  - type: requires_property
+    from: REQ-ledger-app-assertion-flag
+    to: FACT-PROP-998BF6D15BC95055
+    created_at: 2026-10-28T06:05:48.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86f174166a82
+  - type: specified_by
+    from: REQ-ledger-app-assertion-flag
+    to: SCEN-ledger-app-assertion-flag
+    created_at: 2026-10-28T06:05:48.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df16ba409273

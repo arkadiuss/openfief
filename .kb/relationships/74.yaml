@@ -83,3 +83,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3cfa0ae32eb
+  - type: implements
+    from: SYM-ledger-app-ledger-current-transactions
+    to: REQ-ledger-app-queries
+    created_at: 2026-10-28T06:11:19.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a293760396
+  - type: implements
+    from: SYM-ledger-app-ledger-current-transactions
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T06:11:19.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e87f1061118
+  - type: covered_by
+    from: SYM-ledger-app-ledger-current-transactions
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:11:19.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b83bc536cbeb
+  - type: implements
+    from: SYM-ledger-app-lookup-account
+    to: REQ-ledger-app-registry
+    created_at: 2026-10-28T06:31:28.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d95da7236dfa
+  - type: covered_by
+    from: SYM-ledger-app-lookup-account
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T06:31:28.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97ad516798de

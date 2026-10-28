@@ -9356,3 +9356,2091 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-app
+  - id: SYM-ledger-app-assertion-status
+    title: AssertionStatus
+    sourceFile: internal/ledger/app/check.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:06:40.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-assertion-status-string
+    title: AssertionStatus.String
+    sourceFile: internal/ledger/app/check.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:06:45.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-assertion-check
+    title: AssertionCheck
+    sourceFile: internal/ledger/app/check.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:06:47.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-assertion-check-flagged
+    title: AssertionCheck.Flagged
+    sourceFile: internal/ledger/app/check.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:06:50.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-check-assertion
+    title: checkAssertion
+    sourceFile: internal/ledger/app/check.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:06:53.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-test-import-flags-assertion-mismatches
+    title: TestImportFlagsAssertionMismatches
+    sourceFile: internal/ledger/app/check_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:06:57.191Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+  - id: SYM-ledger-app-test-import-summary-flagged
+    title: TestImportSummaryFlagged
+    sourceFile: internal/ledger/app/check_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:00.420Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+  - id: SYM-ledger-app-test-import-rejects-bad-assertions
+    title: TestImportRejectsBadAssertions
+    sourceFile: internal/ledger/app/check_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:03.679Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+  - id: SYM-ledger-app-test-assertion-status-names
+    title: TestAssertionStatusNames
+    sourceFile: internal/ledger/app/check_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:06.576Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+  - id: SYM-ledger-app-test-helper-dec
+    title: dec
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:10.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-money
+    title: money
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:16.863Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-qty
+    title: qty
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:20.761Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-date
+    title: date
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:24.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-instrument
+    title: instrument
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:28.128Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-must
+    title: must
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:33.156Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-header
+    title: header
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:37.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-seeded
+    title: seeded
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:42.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-check-result
+    title: checkResult
+    sourceFile: internal/ledger/app/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:47.385Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-import-summary
+    title: ImportSummary
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:49.810Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-import-append
+  - id: SYM-ledger-app-import-summary-flagged
+    title: ImportSummary.Flagged
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:53.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-import-summary-count
+    title: ImportSummary.count
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:57.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-import-append
+  - id: SYM-ledger-app-version-conflict-error
+    title: VersionConflictError
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:00.280Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-version-conflict
+  - id: SYM-ledger-app-version-conflict-error-error
+    title: VersionConflictError.Error
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:04.177Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-version-conflict
+  - id: SYM-ledger-app-version-conflict-error-unwrap
+    title: VersionConflictError.Unwrap
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:07.793Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-version-conflict
+  - id: SYM-ledger-app-ledger-import
+    title: Ledger.Import
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:10.931Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-import-append
+      - type: implements
+        target: REQ-ledger-app-import-atomic
+  - id: SYM-ledger-app-assertion-key
+    title: assertionKey
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:23.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-sort-checks
+    title: sortChecks
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:28.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-test-helper-import-fixture
+    title: importFixture
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:31.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-helper-new-import-fixture
+    title: newImportFixture
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:35.211Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-helper-versioned
+    title: versioned
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:38.071Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-helper-check-summary
+    title: checkSummary
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:41.214Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-helper-check-log
+    title: checkLog
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:44.659Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-import-appends-versions
+    title: TestImportAppendsVersions
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:48.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-helper-relabeled
+    title: relabeled
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:53.749Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-import-retries-version-conflicts
+    title: TestImportRetriesVersionConflicts
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:08:59.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-helper-check-conflict
+    title: checkConflict
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:05.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-test-concurrent-imports-append-one-version
+    title: TestConcurrentImportsAppendOneVersion
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:10.716Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-ledger
+    title: Ledger
+    sourceFile: internal/ledger/app/ledger.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:14.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-new
+    title: New
+    sourceFile: internal/ledger/app/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:18.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-ledger-save-sleeve
+    title: Ledger.SaveSleeve
+    sourceFile: internal/ledger/app/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:23.614Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-ledger-save-account
+    title: Ledger.SaveAccount
+    sourceFile: internal/ledger/app/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:28.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-has-sleeve
+    title: hasSleeve
+    sourceFile: internal/ledger/app/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:31.894Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-test-save-sleeve
+    title: TestSaveSleeve
+    sourceFile: internal/ledger/app/ledger_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:39.399Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-save-account
+    title: TestSaveAccount
+    sourceFile: internal/ledger/app/ledger_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:43.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store
+    title: memStore
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:47.630Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-check-key
+    title: checkKey
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:52.564Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-new-mem-store
+    title: newMemStore
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:09:57.239Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-append
+    title: memStore.Append
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:02.278Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-versions
+    title: memStore.Versions
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:07.561Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-log
+    title: memStore.Log
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:12.539Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-save-sleeve
+    title: memStore.SaveSleeve
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:17.586Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-sleeves
+    title: memStore.Sleeves
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:21.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-save-account
+    title: memStore.SaveAccount
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:26.022Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-account
+    title: memStore.Account
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:30.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-accounts
+    title: memStore.Accounts
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:34.980Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-save-assertion-check
+    title: memStore.SaveAssertionCheck
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:38.742Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-assertion-checks
+    title: memStore.AssertionChecks
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:42.963Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-append-version
+    title: memStore.appendVersion
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:46.819Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-transaction-log
+    title: TransactionLog
+    sourceFile: internal/ledger/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:51.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-import-append
+      - type: implements
+        target: REQ-ledger-app-version-conflict
+  - id: SYM-ledger-app-registry
+    title: Registry
+    sourceFile: internal/ledger/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:10:56.389Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-assertion-store
+    title: AssertionStore
+    sourceFile: internal/ledger/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:01.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-store
+    title: Store
+    sourceFile: internal/ledger/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:05.074Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-import-append
+      - type: implements
+        target: REQ-ledger-app-import-atomic
+  - id: SYM-ledger-app-ledger-sleeves
+    title: Ledger.Sleeves
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:08.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-ledger-accounts
+    title: Ledger.Accounts
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:11.916Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-ledger-account
+    title: Ledger.Account
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:15.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-ledger-current-transactions
+    title: Ledger.CurrentTransactions
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:19.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-query
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-app-queries
+  - id: SYM-ledger-app-ledger-holdings-on
+    title: Ledger.HoldingsOn
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:22.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-query
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-app-queries
+  - id: SYM-ledger-app-ledger-lots-on
+    title: Ledger.LotsOn
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:26.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-query
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-app-queries
+  - id: SYM-ledger-app-ledger-cash-on
+    title: Ledger.CashOn
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:29.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-query
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-app-queries
+  - id: SYM-ledger-app-ledger-assertion-checks
+    title: Ledger.AssertionChecks
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:32.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-query
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-app-queries
+  - id: SYM-ledger-app-ledger-log
+    title: Ledger.log
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:36.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-query
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-app-queries
+  - id: SYM-ledger-app-current-in
+    title: currentIn
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:39.285Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-query
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-app-queries
+  - id: SYM-ledger-app-cash-currencies
+    title: cashCurrencies
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:42.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-query
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-app-queries
+  - id: SYM-ledger-app-test-helper-query-fixture
+    title: queryFixture
+    sourceFile: internal/ledger/app/query_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:46.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-query
+  - id: SYM-ledger-app-test-helper-new-query-fixture
+    title: newQueryFixture
+    sourceFile: internal/ledger/app/query_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:51.964Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-query
+  - id: SYM-ledger-app-test-current-transactions
+    title: TestCurrentTransactions
+    sourceFile: internal/ledger/app/query_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:55.278Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-query
+  - id: SYM-ledger-app-test-positions-on-a-date
+    title: TestPositionsOnADate
+    sourceFile: internal/ledger/app/query_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:59.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-query
+  - id: SYM-ledger-app-test-queries-of-an-unknown-account
+    title: TestQueriesOfAnUnknownAccount
+    sourceFile: internal/ledger/app/query_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:02.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-query
+  - id: SYM-ledger-app-test-helper-recording-hook
+    title: recordingHook
+    sourceFile: internal/ledger/app/hook_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:36.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-hook
+  - id: SYM-ledger-app-test-import-hooks-run-in-the-import-transaction
+    title: TestImportHooksRunInTheImportTransaction
+    sourceFile: internal/ledger/app/hook_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:41.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-hook
+  - id: SYM-ledger-app-import-summary-affect
+    title: ImportSummary.affect
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:47.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-hook
+      - type: implements
+        target: REQ-ledger-app-import-atomic
+  - id: SYM-ledger-app-import-hook
+    title: ImportHook
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:53.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-hook
+      - type: implements
+        target: REQ-ledger-app-import-atomic
+  - id: SYM-ledger-app-compare-keys
+    title: compareKeys
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:57.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-version-conflict
+  - id: SYM-ledger-app-import-tx
+    title: importTx
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:01.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-import-append
+      - type: implements
+        target: REQ-ledger-app-import-atomic
+  - id: SYM-ledger-app-validate-import
+    title: validateImport
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:06.351Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-import-one
+    title: importOne
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:10.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-app-version-conflict
+  - id: SYM-ledger-app-superseded-by
+    title: supersededBy
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:14.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-import
+      - type: implements
+        target: REQ-ledger-app-import-atomic
+  - id: SYM-ledger-app-check-account
+    title: checkAccount
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:18.799Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-app-assertion-flag
+  - id: SYM-ledger-app-test-helper-affected
+    title: affected
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:23.454Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ledger-app-lookup-account
+    title: lookupAccount
+    sourceFile: internal/ledger/app/ledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:27.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-registry
+      - type: implements
+        target: REQ-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-in-tx
+    title: memStore.InTx
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:31.627Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-app-test-helper-mem-store-append-outside
+    title: memStore.appendOutside
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:36.213Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-query
+      - type: executable_for
+        target: TEST-ledger-app-registry
+  - id: SYM-ledger-pg-test-append-refuses-a-stored-version
+    title: TestAppendRefusesAStoredVersion
+    sourceFile: internal/ledger/postgres/appendonly_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:40.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-log
+  - id: SYM-ledger-pg-test-log-is-append-only-in-the-database
+    title: TestLogIsAppendOnlyInTheDatabase
+    sourceFile: internal/ledger/postgres/appendonly_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:44.915Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-log
+  - id: SYM-ledger-pg-test-load-detects-a-changed-version
+    title: TestLoadDetectsAChangedVersion
+    sourceFile: internal/ledger/postgres/appendonly_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:49.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-log
+  - id: SYM-ledger-pg-test-import-over-postgres
+    title: TestImportOverPostgres
+    sourceFile: internal/ledger/postgres/appendonly_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:54.753Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-log
+  - id: SYM-ledger-pg-test-helper-winner
+    title: winner
+    sourceFile: internal/ledger/postgres/appendonly_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:31:58.259Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-log
+  - id: SYM-ledger-pg-store-save-assertion-check
+    title: Store.SaveAssertionCheck
+    sourceFile: internal/ledger/postgres/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:01.269Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-assertion-checks
+    title: Store.AssertionChecks
+    sourceFile: internal/ledger/postgres/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:04.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-scan-check
+    title: scanCheck
+    sourceFile: internal/ledger/postgres/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:07.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-parse-kind
+    title: parseKind
+    sourceFile: internal/ledger/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:11.328Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-parse-book-kind
+    title: parseBookKind
+    sourceFile: internal/ledger/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:15.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-parse-status
+    title: parseStatus
+    sourceFile: internal/ledger/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:19.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-parse-date
+    title: parseDate
+    sourceFile: internal/ledger/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:23.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-parse-decimal
+    title: parseDecimal
+    sourceFile: internal/ledger/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:27.487Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-decode-book
+    title: decodeBook
+    sourceFile: internal/ledger/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:30.916Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-decode-holding
+    title: decodeHolding
+    sourceFile: internal/ledger/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:35.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-decode-posting
+    title: decodePosting
+    sourceFile: internal/ledger/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:38.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-new-pool
+    title: newPool
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:44.293Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-admin-exec
+    title: adminExec
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:49.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-sql-state
+    title: sqlState
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:53.856Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-dec
+    title: dec
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:32:58.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-money
+    title: money
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:01.617Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-qty
+    title: qty
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:05.605Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-date
+    title: date
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:09.068Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-instrument
+    title: instrument
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:13.201Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-must
+    title: must
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:16.258Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-header
+    title: header
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:20.234Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-versioned
+    title: versioned
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:24.392Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-seeded-store
+    title: seededStore
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:28.597Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-append-all
+    title: appendAll
+    sourceFile: internal/ledger/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:33.779Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+      - type: executable_for
+        target: TEST-ledger-pg-log
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-enqueue-hook
+    title: enqueueHook
+    sourceFile: internal/ledger/postgres/hook_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:37.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+  - id: SYM-ledger-pg-test-import-hook-enqueues-in-the-same-transaction
+    title: TestImportHookEnqueuesInTheSameTransaction
+    sourceFile: internal/ledger/postgres/hook_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:41.925Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+  - id: SYM-ledger-pg-test-with-tx-needs-a-transaction
+    title: TestWithTxNeedsATransaction
+    sourceFile: internal/ledger/postgres/hook_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:45.297Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-hook
+  - id: SYM-ledger-pg-store-append
+    title: Store.Append
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:48.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-log
+      - type: implements
+        target: REQ-ledger-app-version-conflict
+      - type: implements
+        target: REQ-ledger-pg-append-only
+  - id: SYM-ledger-pg-lot-opened
+    title: lotOpened
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:51.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-instrument-columns
+    title: instrumentColumns
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:54.359Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-columns-of
+    title: columnsOf
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:57.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-versions
+    title: Store.Versions
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:33:59.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-log
+    title: Store.Log
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:02.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-stored-version
+    title: storedVersion
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:06.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-load
+    title: Store.load
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:10.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-log
+      - type: implements
+        target: REQ-AUTO-CACBF41A8E14837D
+      - type: implements
+        target: REQ-ledger-pg-append-only
+  - id: SYM-ledger-pg-store-attach-postings
+    title: Store.attachPostings
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:14.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-scan-version
+    title: scanVersion
+    sourceFile: internal/ledger/postgres/log.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:18.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-migration
+    title: migration
+    sourceFile: internal/ledger/postgres/migrate.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:22.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-migrate
+    title: Migrate
+    sourceFile: internal/ledger/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:26.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-migrate-tx
+    title: migrateTx
+    sourceFile: internal/ledger/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:30.437Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-applied-versions
+    title: appliedVersions
+    sourceFile: internal/ledger/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:33.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-migrations
+    title: migrations
+    sourceFile: internal/ledger/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:36.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store
+    title: Store
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:39.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-db
+    title: db
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:42.568Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-new
+    title: New
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:45.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-in-tx
+    title: Store.InTx
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:48.908Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-hook
+      - type: implements
+        target: REQ-ledger-app-import-atomic
+  - id: SYM-ledger-pg-store-with-tx
+    title: Store.WithTx
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:52.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-hook
+      - type: implements
+        target: REQ-ledger-app-import-atomic
+  - id: SYM-ledger-pg-store-save-sleeve
+    title: Store.SaveSleeve
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:55.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-sleeves
+    title: Store.Sleeves
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:34:59.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-scan-sleeve
+    title: scanSleeve
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:02.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-save-account
+    title: Store.SaveAccount
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:06.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-account
+    title: Store.Account
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:09.611Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-store-accounts
+    title: Store.Accounts
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:13.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-scan-account
+    title: scanAccount
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:16.610Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-pg-store
+  - id: SYM-ledger-pg-test-migrate-is-idempotent-and-owns-the-ledger-schema
+    title: TestMigrateIsIdempotentAndOwnsTheLedgerSchema
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:19.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-registry-round-trip
+    title: TestRegistryRoundTrip
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:23.980Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-log-fixture
+    title: logFixture
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:27.437Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-new-log-fixture
+    title: newLogFixture
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:31.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-log-round-trip
+    title: TestLogRoundTrip
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:34.551Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-assertion-checks-round-trip
+    title: TestAssertionChecksRoundTrip
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:37.846Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-pg-test-helper-check-result
+    title: checkResult
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:35:40.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store

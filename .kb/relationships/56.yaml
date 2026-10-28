@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55567930d814
+  - type: implements
+    from: SYM-ledger-app-assertion-store
+    to: REQ-ledger-app-assertion-flag
+    created_at: 2026-10-28T06:11:01.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89a3b66d8cc0
+  - type: implements
+    from: SYM-ledger-app-assertion-store
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T06:11:01.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b413a6409021
+  - type: covered_by
+    from: SYM-ledger-app-assertion-store
+    to: TEST-ledger-app-check
+    created_at: 2026-10-28T06:11:01.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cffcaaa11d67

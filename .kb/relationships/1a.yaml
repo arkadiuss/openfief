@@ -62,3 +62,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d64b135f74f0
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-dec
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:07:11.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f9f0e44d587
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-dec
+    to: TEST-ledger-app-check
+    created_at: 2026-10-28T06:07:11.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c25bdc86f833
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-dec
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:07:11.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ea7a8048da4
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-dec
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T06:07:11.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfd187634968

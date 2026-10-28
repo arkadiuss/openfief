@@ -13,3 +13,38 @@ relationships:
     created_at: "2026-10-28T06:30:05.142Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - id: rel-0f16193c09d4
+    type: executable_for
+    from: SYM-ledger-pg-test-helper-dec
+    to: TEST-ledger-pg-store
+    created_at: "2026-10-28T06:32:58.547Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-dec
+    to: TEST-ledger-pg-log
+    created_at: 2026-10-28T06:32:58.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-893711ece064
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-dec
+    to: TEST-ledger-pg-hook
+    created_at: 2026-10-28T06:32:58.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42f692b75a83
+  - type: implements
+    from: SYM-ledger-pg-store-save-account
+    to: REQ-ledger-pg-store
+    created_at: 2026-10-28T06:35:06.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8580b584ec0e
+  - type: covered_by
+    from: SYM-ledger-pg-store-save-account
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:35:06.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d876c9cac36

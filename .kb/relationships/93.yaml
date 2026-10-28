@@ -69,3 +69,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a17e6c29a46
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-save-account
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:10:26.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a10f148e8817
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-save-account
+    to: TEST-ledger-app-check
+    created_at: 2026-10-28T06:10:26.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2580ae7a51c1
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-save-account
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:10:26.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5c4c06b17a0
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-save-account
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T06:10:26.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32a592fcffbc
+  - type: implements
+    from: SYM-ledger-pg-store-append
+    to: REQ-ledger-pg-append-only
+    created_at: 2026-10-28T06:33:49.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bebac2793523
+  - type: implements
+    from: SYM-ledger-pg-store-append
+    to: REQ-ledger-app-version-conflict
+    created_at: 2026-10-28T06:33:49.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52cdf532928f
+  - type: covered_by
+    from: SYM-ledger-pg-store-append
+    to: TEST-ledger-pg-log
+    created_at: 2026-10-28T06:33:49.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cf3f10b5ebc

@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c583bbc2361
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-check-log
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:08:45.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e13d2c7f097

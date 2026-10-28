@@ -20,3 +20,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3413f9edfd8
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-append-version
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:10:47.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d41d7fc300f
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-append-version
+    to: TEST-ledger-app-check
+    created_at: 2026-10-28T06:10:47.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2e3842c909f
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-append-version
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:10:47.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c98c963adfe
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-append-version
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T06:10:47.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79a2382c49d8

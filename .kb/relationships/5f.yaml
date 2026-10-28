@@ -104,3 +104,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e2b69acb16b
+  - type: implements
+    from: SYM-ledger-app-ledger-assertion-checks
+    to: REQ-ledger-app-queries
+    created_at: 2026-10-28T06:11:33.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a5d13dfaef8
+  - type: implements
+    from: SYM-ledger-app-ledger-assertion-checks
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T06:11:33.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f6ed9b986a3
+  - type: covered_by
+    from: SYM-ledger-app-ledger-assertion-checks
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:11:33.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ea79401dc88

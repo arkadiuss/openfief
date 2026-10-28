@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b72840b0b70
+  - type: constrains
+    from: REQ-ledger-pg-append-only
+    to: FACT-SUBJECT-20EB0565F5698A4D
+    created_at: 2026-10-28T06:29:45.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f054c52ce844
+  - type: requires_property
+    from: REQ-ledger-pg-append-only
+    to: FACT-PROP-3EDBBEB7DDCD756D
+    created_at: 2026-10-28T06:29:45.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63df4b81d2b2
+  - type: specified_by
+    from: REQ-ledger-pg-append-only
+    to: SCEN-ledger-pg-append-only
+    created_at: 2026-10-28T06:29:45.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-323c71281ac4

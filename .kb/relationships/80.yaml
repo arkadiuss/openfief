@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a45151aec5d4
+  - type: constrains
+    from: REQ-ledger-pg-store
+    to: FACT-SUBJECT-20EB0565F5698A4D
+    created_at: 2026-10-28T06:29:35.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c1d84962eff
+  - type: requires_property
+    from: REQ-ledger-pg-store
+    to: FACT-PROP-87FC27BE4A80E73C
+    created_at: 2026-10-28T06:29:35.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93aa4c2536c1
+  - type: specified_by
+    from: REQ-ledger-pg-store
+    to: SCEN-ledger-pg-round-trip
+    created_at: 2026-10-28T06:29:35.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45f7969e9f65

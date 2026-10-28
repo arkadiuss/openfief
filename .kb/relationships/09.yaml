@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70d0713a3f34
+  - type: verified_by
+    from: SCEN-ledger-pg-round-trip
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:29:08.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b89bbd205d53
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-admin-exec
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:32:50.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e076b04bf98
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-admin-exec
+    to: TEST-ledger-pg-log
+    created_at: 2026-10-28T06:32:50.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-855321d48827
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-admin-exec
+    to: TEST-ledger-pg-hook
+    created_at: 2026-10-28T06:32:50.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3740a0480795

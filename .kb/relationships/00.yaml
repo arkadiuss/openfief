@@ -34,3 +34,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79e2dfa69c05
+  - type: implements
+    from: SYM-ledger-pg-store-account
+    to: REQ-ledger-pg-store
+    created_at: 2026-10-28T06:35:10.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09b98978a7d9
+  - type: covered_by
+    from: SYM-ledger-pg-store-account
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:35:10.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56b986c0af0b

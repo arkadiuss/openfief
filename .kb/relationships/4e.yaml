@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-7d390d83eb4d
+    type: executable_for
+    from: SYM-ledger-app-test-helper-relabeled
+    to: TEST-ledger-app-import
+    created_at: "2026-10-28T06:08:54.742Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-ledger-pg-columns-of
+    to: REQ-ledger-pg-store
+    created_at: 2026-10-28T06:33:57.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac633ea52ca
+  - type: covered_by
+    from: SYM-ledger-pg-columns-of
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:33:57.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4ebc0b5ada1
