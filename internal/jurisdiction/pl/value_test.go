@@ -21,6 +21,7 @@ type lotCase struct {
 	idx       map[int]string
 	quantity  string
 	purchased string
+	price     string // per bond; empty means the 100 PLN nominal
 	wrapper   pl.TaxWrapper
 	on        string
 	// want: gross, interest, fee, tax, net (PLN, whole lot), matured
@@ -48,10 +49,18 @@ func TestValueLot(t *testing.T) {
 			gross: "1030.20", interest: "30.20", wantFee: "20.00", tax: "1.94", net: "1008.26",
 		},
 		{
-			// Same lot in IKE: no tax, net = 1030.20 - 20.00 = 1010.20.
-			name: "same EDO lot inside IKE pays no Belka tax", series: "EDO0334", first: "0.06", margin: "0.02", fee: "2.00",
+			// Same lot in IKE: no fee on a withdrawal and no tax, net = gross 1030.20.
+			name: "same EDO lot inside IKE pays no fee and no Belka tax", series: "EDO0334", first: "0.06", margin: "0.02", fee: "2.00",
 			quantity: "10", purchased: "2024-03-15", wrapper: pl.IKE, on: "2024-09-15",
-			gross: "1030.20", interest: "30.20", wantFee: "20.00", tax: "0", net: "1010.20",
+			gross: "1030.20", interest: "30.20", wantFee: "0", tax: "0", net: "1030.20",
+		},
+		{
+			// Same lot bought by exchange at 99.90: the 0.10 discount per bond is taxed too.
+			// Tax = 19% × (30.20 - 20.00 + 10 × 0.10) = 19% × 11.20 = 2.128 -> 2.13.
+			// Net = 1030.20 - 20.00 - 2.13 = 1008.07.
+			name: "EDO lot bought by exchange at 99.90 is taxed on the discount", series: "EDO0334", first: "0.06", margin: "0.02", fee: "2.00",
+			quantity: "10", purchased: "2024-03-15", price: "99.90", wrapper: pl.Taxable, on: "2024-09-15",
+			gross: "1030.20", interest: "30.20", wantFee: "20.00", tax: "2.13", net: "1008.07",
 		},
 		{
 			// a = 31: W = 100 + 600 × 31/36500 = 100.5096 -> 100.51; interest 0.51 < fee 2.00,
@@ -128,6 +137,20 @@ func TestValueLot(t *testing.T) {
 			gross: "100.75", interest: "0.75", wantFee: "0", tax: "0.14", net: "100.61", matured: true,
 		},
 		{
+			// OTS0127 letter ust. 23 pkt 3-4: redeemed early, an OTS earns no interest
+			// and pays back its nominal.
+			name: "OTS before maturity is worth its nominal", series: "OTS0127", first: "0.02", margin: "0", fee: "0",
+			quantity: "3", purchased: "2026-10-15", wrapper: pl.Taxable, on: "2026-12-01",
+			gross: "300", interest: "0", wantFee: "0", tax: "0", net: "300",
+		},
+		{
+			// OTS0127 letter ust. 14 and 17: 0.50 PLN of interest, 100.50 PLN at maturity.
+			// Tax = 19% × 0.50 = 0.095 -> 0.10, net 100.40.
+			name: "OTS0127 issue letter: 100.50 at maturity", series: "OTS0127", first: "0.02", margin: "0", fee: "0",
+			quantity: "1", purchased: "2026-10-15", wrapper: pl.Taxable, on: "2027-01-15",
+			gross: "100.50", interest: "0.50", wantFee: "0", tax: "0.10", net: "100.40", matured: true,
+		},
+		{
 			// Leap-day purchase: period 2 is 2025-02-28..2026-02-28 (ACT 365), a = 30, fixed 5.95%.
 			// W = 105.95 × (1 + 0.0595 × 30/365) = 105.95 + 189.12075/365 = 106.4681 -> 106.47.
 			// Fee 1.00, tax = 19% × 5.47 = 1.0393 -> 1.04, net = 106.47 - 1.00 - 1.04 = 104.43.
@@ -136,17 +159,25 @@ func TestValueLot(t *testing.T) {
 			gross: "106.47", interest: "6.47", wantFee: "1.00", tax: "1.04", net: "104.43",
 		},
 		{
-			// IKZE: same as the TOS case without tax: net = 106.47 - 1.00 = 105.47.
-			name: "TOS inside IKZE withholds no tax", series: "TOS0227", first: "0.0595", margin: "0", fee: "1.00",
+			// IKZE: same as the TOS case without fee or tax: net = gross 106.47.
+			name: "TOS inside IKZE pays no fee and withholds no tax", series: "TOS0227", first: "0.0595", margin: "0", fee: "1.00",
 			quantity: "1", purchased: "2024-02-29", wrapper: pl.IKZE, on: "2025-03-30",
-			gross: "106.47", interest: "6.47", wantFee: "1.00", tax: "0", net: "105.47",
+			gross: "106.47", interest: "6.47", wantFee: "0", tax: "0", net: "106.47",
 		},
 	}
-	for _, tt := range tests {
+	runLotCases(t, tests)
+}
+
+// runLotCases values each case's lot in a parallel subtest and compares the
+// whole LotValue with the case's expected amounts.
+func runLotCases(t *testing.T, tests []lotCase) {
+	t.Helper()
+	for i := range tests {
+		tt := &tests[i]
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			a := parseLot(t, &tt)
-			got, err := pl.ValueLot(&a.terms, a.idx, a.quantity, a.purchased, a.wrapper, a.on)
+			a := parseLot(t, tt)
+			got, err := pl.ValueLot(&a.terms, a.idx, a.quantity, a.purchase, a.wrapper, a.on)
 			if err != nil {
 				t.Fatalf("ValueLot: %v", err)
 			}
@@ -176,13 +207,15 @@ func TestValueLotRejectsBadInput(t *testing.T) {
 		{name: "negative fee", edit: func(c lotCase) lotCase { c.fee = "-1"; return c }, wantErr: pl.ErrInvalidTerms},
 		{name: "negative first rate", edit: func(c lotCase) lotCase { c.first = "-0.01"; return c }, wantErr: pl.ErrInvalidTerms},
 		{name: "unknown wrapper", edit: func(c lotCase) lotCase { c.wrapper = pl.TaxWrapper(7); return c }, wantErr: pl.ErrUnknownTaxWrapper},
+		{name: "price above the nominal", edit: func(c lotCase) lotCase { c.price = "100.01"; return c }, wantErr: pl.ErrInvalidPrice},
+		{name: "zero price", edit: func(c lotCase) lotCase { c.price = "0"; return c }, wantErr: pl.ErrInvalidPrice},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			c := tt.edit(ok)
 			a := parseLot(t, &c)
-			_, err := pl.ValueLot(&a.terms, a.idx, a.quantity, a.purchased, a.wrapper, a.on)
+			_, err := pl.ValueLot(&a.terms, a.idx, a.quantity, a.purchase, a.wrapper, a.on)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("error (-want +got):\n%s", diff)
 			}
@@ -195,9 +228,16 @@ func TestValueLotRejectsBadInput(t *testing.T) {
 			t.Fatal(err)
 		}
 		terms := pl.Terms{Series: series(t, "EDO0334"), FirstPeriodRate: dec(t, "0.06"), EarlyRedemptionFee: kernel.NewMoney(dec(t, "2"), usd)}
-		_, err = pl.ValueLot(&terms, nil, kernel.NewQuantity(dec(t, "1")), date(t, "2024-03-15"), pl.Taxable, date(t, "2024-09-15"))
+		bought := pl.Purchase{Date: date(t, "2024-03-15"), Price: pl.Nominal()}
+		_, err = pl.ValueLot(&terms, nil, kernel.NewQuantity(dec(t, "1")), bought, pl.Taxable, date(t, "2024-09-15"))
 		if diff := cmp.Diff(pl.ErrInvalidTerms, err, cmpopts.EquateErrors()); diff != "" {
 			t.Errorf("error (-want +got):\n%s", diff)
+		}
+		terms.EarlyRedemptionFee = pl.Nominal()
+		bought.Price = kernel.NewMoney(dec(t, "99.90"), usd)
+		_, err = pl.ValueLot(&terms, nil, kernel.NewQuantity(dec(t, "1")), bought, pl.Taxable, date(t, "2024-09-15"))
+		if diff := cmp.Diff(pl.ErrInvalidPrice, err, cmpopts.EquateErrors()); diff != "" {
+			t.Errorf("price in USD: error (-want +got):\n%s", diff)
 		}
 	})
 	t.Run("missing CPI for the current period", func(t *testing.T) {
@@ -205,7 +245,7 @@ func TestValueLotRejectsBadInput(t *testing.T) {
 		c := ok
 		c.on = "2025-09-15"
 		a := parseLot(t, &c)
-		_, err := pl.ValueLot(&a.terms, a.idx, a.quantity, a.purchased, a.wrapper, a.on)
+		_, err := pl.ValueLot(&a.terms, a.idx, a.quantity, a.purchase, a.wrapper, a.on)
 		want := &pl.MissingIndexError{Series: series(t, "EDO0334"), Period: 2, Start: date(t, "2025-03-15")}
 		if diff := cmp.Diff(error(want), err); diff != "" {
 			t.Errorf("error (-want +got):\n%s", diff)
@@ -215,21 +255,27 @@ func TestValueLotRejectsBadInput(t *testing.T) {
 
 // lotArgs are a lotCase's inputs, parsed.
 type lotArgs struct {
-	terms         pl.Terms
-	idx           pl.Indices
-	quantity      kernel.Quantity
-	purchased, on kernel.Date
-	wrapper       pl.TaxWrapper
+	terms    pl.Terms
+	idx      pl.Indices
+	quantity kernel.Quantity
+	purchase pl.Purchase
+	on       kernel.Date
+	wrapper  pl.TaxWrapper
 }
 
 func parseLot(t *testing.T, c *lotCase) lotArgs {
 	t.Helper()
+	price := c.price
+	if price == "" {
+		price = "100"
+	}
 	return lotArgs{
 		terms: pl.Terms{
 			Series: series(t, c.series), FirstPeriodRate: dec(t, c.first), Margin: dec(t, c.margin),
 			EarlyRedemptionFee: plnMoney(t, c.fee),
 		},
 		idx: indices(t, c.idx), quantity: kernel.NewQuantity(dec(t, c.quantity)),
-		purchased: date(t, c.purchased), on: date(t, c.on), wrapper: c.wrapper,
+		purchase: pl.Purchase{Date: date(t, c.purchased), Price: plnMoney(t, price)},
+		on:       date(t, c.on), wrapper: c.wrapper,
 	}
 }

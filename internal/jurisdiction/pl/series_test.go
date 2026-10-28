@@ -60,7 +60,7 @@ func TestBondTypeStructure(t *testing.T) {
 		typ  pl.BondType
 		want pl.Structure
 	}{
-		{pl.OTS, pl.Structure{TenorMonths: 3, PeriodMonths: 3, Indexation: pl.Fixed, Payout: pl.Capitalized}},
+		{pl.OTS, pl.Structure{TenorMonths: 3, PeriodMonths: 3, Indexation: pl.Fixed, Payout: pl.AtMaturity}},
 		{pl.ROR, pl.Structure{TenorMonths: 12, PeriodMonths: 1, Indexation: pl.ReferenceRate, Payout: pl.Coupon}},
 		{pl.DOR, pl.Structure{TenorMonths: 24, PeriodMonths: 1, Indexation: pl.ReferenceRate, Payout: pl.Coupon}},
 		{pl.TOS, pl.Structure{TenorMonths: 36, PeriodMonths: 12, Indexation: pl.Fixed, Payout: pl.Capitalized}},

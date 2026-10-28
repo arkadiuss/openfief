@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:pl.belka_tax:nineteen_percent_of_inter
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-A48205296C783414
-claim_text: The net-if-redeemed value of a taxable bond lot must deduct Belka tax of 19% of accrued interest minus the early-redemption fee, rounded half up to whole grosze, and no tax when that is not positive.
+claim_key: CLAIM-11F2B03AA90BDEFA
+claim_text: The net-if-redeemed value of a taxable bond lot must deduct Belka tax of 19% of accrued interest minus the early-redemption fee plus the discount of a purchase below the nominal, rounded half up to whole grosze, and no tax when that is not positive.
 origin:
   kind: agent
   recorded_at: '2026-10-28T05:22:06.413Z'

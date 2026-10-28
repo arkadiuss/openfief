@@ -29,9 +29,10 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Interest period | jurisdiction/pl | `pl.PeriodStart` | One period of a bond's interest, counted from its own purchase date: a month (ROR, DOR), three months (OTS) or a year. | coupon period (for capitalized types) |
 | Period index | jurisdiction/pl | `pl.Indices` | The published reading that sets an interest period's rate after the first: CPI year on year for inflation-indexed types, the NBP reference rate for ROR and DOR. | |
 | Margin | jurisdiction/pl | `pl.Terms.Margin` | The fixed rate a series adds to its period index. | spread |
-| Early-redemption fee | jurisdiction/pl | `pl.Terms.EarlyRedemptionFee` | The per-bond fee for redeeming before maturity, capped at the bond's accrued interest except for coupon types after their first interest period. | penalty |
+| Early-redemption fee | jurisdiction/pl | `pl.Terms.EarlyRedemptionFee` | The per-bond fee for redeeming before maturity, capped at the bond's accrued interest except for coupon types after their first interest period, and not charged on a withdrawal from IKE or IKZE. OTS has none: redeemed early, it earns no interest. | penalty |
+| Exchange price | jurisdiction/pl | `pl.Purchase.Price` | The price per bond of a series bought by exchanging (zamiana) maturing bonds, set in its issue letter: usually 99.90 PLN, 100 PLN for OTS. The discount below the nominal is taxed with the interest. | rollover price |
 | Tax wrapper | jurisdiction/pl | `pl.TaxWrapper` | The tax regime of the account a lot is held in: taxable, IKE or IKZE. | account type |
-| Lot value | jurisdiction/pl | `pl.LotValue` | A bond lot's statutory value on a date: gross accrued value, and net-if-redeemed value after the early-redemption fee and Belka tax. | |
+| Lot value | jurisdiction/pl | `pl.LotValue` | A bond lot's statutory value on a date: gross accrued value, and net-if-redeemed value after the early-redemption fee and Belka tax on interest minus the fee plus any purchase discount. | |
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
 | Read API | views | `views` + `connectapi` | The public, read-only `/v1` API. | |

@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:pl.bond_value:period_rate_follows_inde
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-5C34FC18CE32ECEA
-claim_text: From the second interest period, an inflation-indexed bond's rate must be the CPI reading plus the series margin with a negative CPI counted as zero, a ROR or DOR bond's rate must be the NBP reference rate plus the margin, and OTS and TOS must keep their first-period rate.
+claim_key: CLAIM-F99B950926939D27
+claim_text: From the second interest period, an inflation-indexed bond's rate must be the CPI reading plus the series margin and a ROR or DOR bond's rate the NBP reference rate plus the margin, with a negative reading counted as zero in both cases, and OTS and TOS must keep their first-period rate.
 origin:
   kind: agent
   recorded_at: '2026-10-28T05:21:52.427Z'

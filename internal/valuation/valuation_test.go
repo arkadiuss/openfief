@@ -114,7 +114,8 @@ func TestBondValuation(t *testing.T) {
 	}
 	terms := pl.Terms{Series: s, FirstPeriodRate: dec(t, "0.06"), Margin: dec(t, "0.02"), EarlyRedemptionFee: money(t, "2.00", "PLN")}
 	on := date(t, "2024-09-15")
-	lot, err := pl.ValueLot(&terms, nil, kernel.NewQuantity(dec(t, "10")), date(t, "2024-03-15"), pl.Taxable, on)
+	bought := pl.Purchase{Date: date(t, "2024-03-15"), Price: pl.Nominal()}
+	lot, err := pl.ValueLot(&terms, nil, kernel.NewQuantity(dec(t, "10")), bought, pl.Taxable, on)
 	if err != nil {
 		t.Fatalf("ValueLot: %v", err)
 	}

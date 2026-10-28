@@ -25,6 +25,7 @@ func TestPeriodRate(t *testing.T) {
 		{name: "deflation -1% counts as 0, rate = margin 2%", series: "EDO0334", first: "0.06", margin: "0.02", idx: map[int]string{2: "-0.01"}, period: 2, want: "0.02"},
 		{name: "ROR period 2 = reference rate 5.75% + margin 0", series: "ROR0126", first: "0.0575", margin: "0", idx: map[int]string{2: "0.0575"}, period: 2, want: "0.0575"},
 		{name: "DOR period 3 = reference 5% + margin 0.15%", series: "DOR0227", first: "0.059", margin: "0.0015", idx: map[int]string{3: "0.05"}, period: 3, want: "0.0515"},
+		{name: "negative NBP reference rate counts as 0, rate = margin", series: "DOR0227", first: "0.059", margin: "0.0015", idx: map[int]string{3: "-0.001"}, period: 3, want: "0.0015"},
 		{name: "TOS is fixed for its whole term", series: "TOS0227", first: "0.0595", margin: "0", period: 3, want: "0.0595"},
 	}
 	for _, tt := range tests {
