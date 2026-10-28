@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-932b80822a1c
+  - type: executable_for
+    from: SYM-plugins-kube-test-instances-test-owner-signers
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:15:38.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf953dbb3d24

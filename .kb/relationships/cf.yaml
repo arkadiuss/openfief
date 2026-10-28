@@ -223,3 +223,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4b8a7802910
+  - type: implements
+    from: SYM-plugins-kube-clean-yaml
+    to: REQ-plugins-cli-print-resources
+    created_at: 2026-10-28T23:14:52.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c114c1f1c9db
+  - type: covered_by
+    from: SYM-plugins-kube-clean-yaml
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:14:52.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-651340af916c

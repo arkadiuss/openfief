@@ -230,3 +230,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8d7d9488e57
+  - type: implements
+    from: SYM-plugins-kube-resources
+    to: REQ-plugins-cli-print-resources
+    created_at: 2026-10-28T23:14:43.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f18b7a3ba939
+  - type: implements
+    from: SYM-plugins-kube-resources
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:14:43.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1acb1db274b
+  - type: covered_by
+    from: SYM-plugins-kube-resources
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:14:43.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed56f4ca2200

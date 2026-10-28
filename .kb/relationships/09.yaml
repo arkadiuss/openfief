@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19fdfe2bdac4
+  - type: verified_by
+    from: SCEN-plugins-cli-print-yaml
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:13:58.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a41c9c6ab933

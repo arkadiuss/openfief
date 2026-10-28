@@ -58729,3 +58729,238 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-app-install
+  - id: SYM-plugins-kube-instances
+    title: Instances
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:14.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+  - id: SYM-plugins-kube-instances-list
+    title: Instances.List
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:19.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-kube-describe-status
+    title: describeStatus
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:23.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-kube-instances-create
+    title: Instances.Create
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:28.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-kube-instances-delete
+    title: Instances.Delete
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:32.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-kube-owner-signers
+    title: OwnerSigners
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:37.431Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-owner-signers
+  - id: SYM-plugins-kube-resources
+    title: Resources
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:42.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-resources-yaml
+    title: ResourcesYAML
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:46.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-clean-yaml
+    title: cleanYAML
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:51.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-strs
+    title: strs
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:55.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-hosts
+    title: hosts
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:00.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-raw
+    title: raw
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:04.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-test-instances-sample-plan
+    title: samplePlan
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:08.816Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-fake-cluster
+    title: fakeCluster
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:13.231Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-secret
+    title: secret
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:17.507Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-test-resources-yaml
+    title: TestResourcesYAML
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:22.091Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-test-instances-create-and-list
+    title: TestInstancesCreateAndList
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:26.900Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-test-instances-delete
+    title: TestInstancesDelete
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:31.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-test-owner-signers
+    title: TestOwnerSigners
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:36.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
