@@ -206,9 +206,12 @@ render() {
 }
 
 template="$root/deploy/demo/cloud-init.yaml"
-if render "$template" cx23 | grep -q "$b64"; then r=yes; else r=no; fi
+# Output is captured before grep: with pipefail, grep -q closing the pipe early would fail render by SIGPIPE.
+amd64="$(render "$template" cx23 || true)"
+arm64="$(render "$template" cax11 || true)"
+if grep -q "$b64" <<<"$amd64"; then r=yes; else r=no; fi
 check "amd64 render uses the amd64 checksum" "$r"
-if render "$template" cax11 | grep -q 'flux2/releases/download/v2.9.6/install.yaml'; then r=yes; else r=no; fi
+if grep -q 'flux2/releases/download/v2.9.6/install.yaml' <<<"$arm64"; then r=yes; else r=no; fi
 check "render pins the Flux version" "$r"
 if render "$template" cax11 K3S_SHA256_ARM64= >/dev/null; then r=no; else r=yes; fi
 check "render refuses a missing checksum" "$r"
