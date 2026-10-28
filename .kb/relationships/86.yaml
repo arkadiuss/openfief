@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-48b0b19ae83e
+    type: executable_for
+    from: SYM-ibkrflex-test-map-trade-rows
+    to: TEST-ibkrflex-rows
+    created_at: "2026-10-28T06:30:11.182Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

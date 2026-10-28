@@ -83,3 +83,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75a0a6bb9149
+  - type: implements
+    from: SYM-ibkrflex-row-instrument
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:25:35.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf5a1a39771e
+  - type: covered_by
+    from: SYM-ibkrflex-row-instrument
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:25:35.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8c1ab89746c

@@ -13,3 +13,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d3dbe6e57f4
+  - type: implements
+    from: SYM-ibkrflex-decoder-attrs
+    to: REQ-ibkrflex-hostile-input
+    created_at: 2026-10-28T06:25:05.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f44e7128a63
+  - type: covered_by
+    from: SYM-ibkrflex-decoder-attrs
+    to: TEST-ibkrflex-hostile
+    created_at: 2026-10-28T06:25:05.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-572149ed4c38
+  - type: implements
+    from: SYM-ibkrflex-problem-of
+    to: REQ-ingest-problems-not-errors
+    created_at: 2026-10-28T06:26:03.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4c64d7c116f
+  - type: covered_by
+    from: SYM-ibkrflex-problem-of
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:26:03.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e9e41a5cf4b
+  - type: implements
+    from: SYM-ibkrflex-match-dividend
+    to: REQ-ibkrflex-withholding-pairing
+    created_at: 2026-10-28T06:28:32.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c7af0a7f398
+  - type: covered_by
+    from: SYM-ibkrflex-match-dividend
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:28:32.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fefc4a817e09

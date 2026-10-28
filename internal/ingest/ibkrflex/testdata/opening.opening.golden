@@ -1,0 +1,25 @@
+tx ibkr-flex:acc-ibkr/opening-lot:PLTEST000010:2024-01-15:6000001 opening-lot 2026-03-06 account=acc-ibkr lot-opened=2024-01-15 "opening lot"
+  holding:PLTEST000010/TSTA 1000.25 USD units=10
+  equity:USD -1000.25 USD
+tx ibkr-flex:acc-ibkr/opening-lot:PLTEST000010:2025-06-10:6000002 opening-lot 2026-03-06 account=acc-ibkr lot-opened=2025-06-10 "opening lot"
+  holding:PLTEST000010/TSTA 500.25 USD units=5
+  equity:USD -500.25 USD
+tx ibkr-flex:acc-ibkr/opening-lot:IETEST000026:2025-11-03:n1 opening-lot 2026-03-06 account=acc-ibkr lot-opened=2025-11-03 "opening lot"
+  holding:IETEST000026/TSTB 350 EUR units=3.5
+  equity:EUR -350 EUR
+tx ibkr-flex:acc-ibkr/opening-lot:IETEST000026:2025-11-03:n2 opening-lot 2026-03-06 account=acc-ibkr lot-opened=2025-11-03 "opening lot"
+  holding:IETEST000026/TSTB 160 EUR units=1.5
+  equity:EUR -160 EUR
+tx ibkr-flex:acc-ibkr/opening-cash:USD:2026-03-06 deposit 2026-03-06 account=acc-ibkr "opening cash"
+  cash:USD 1250.75 USD
+  equity:USD -1250.75 USD
+tx ibkr-flex:acc-ibkr/opening-cash:EUR:2026-03-06 withdrawal 2026-03-06 account=acc-ibkr "opening cash"
+  cash:EUR -40.1 EUR
+  equity:EUR 40.1 EUR
+assert acc-ibkr 2026-03-06 holding:PLTEST000010/TSTA 15
+assert acc-ibkr 2026-03-06 holding:IETEST000026/TSTB 5
+assert acc-ibkr 2026-03-06 cash:USD 1250.75
+assert acc-ibkr 2026-03-06 cash:EUR -40.1
+assert acc-ibkr 2026-03-06 cash:PLN 0
+problem unsupported FlexStatement#1/OpenPositions#6: asset category "OPT" is not supported
+problem skipped FlexStatement#1/Trades#1[tradeID=9000001]: opening mode: the opening lots and opening cash hold its effect

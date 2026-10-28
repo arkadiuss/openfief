@@ -7829,3 +7829,1033 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-batch
+  - id: SYM-ibkrflex-limits
+    title: Limits
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:20.316Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-limits-with-defaults
+    title: Limits.withDefaults
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:24.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-row
+    title: row
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:26.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-statement
+    title: statement
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:31.465Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-decoder
+    title: decoder
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:34.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-decode
+    title: decode
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:40.250Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-decoder-token
+    title: decoder.token
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:45.492Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-decoder-start
+    title: decoder.start
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:50.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-decoder-check
+    title: decoder.check
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:24:55.544Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-decoder-add-row
+    title: decoder.addRow
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:00.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-decoder-attrs
+    title: decoder.attrs
+    sourceFile: internal/ingest/ibkrflex/decode.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:05.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-hostile
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-row-text
+    title: row.text
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:08.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-row-decimal
+    title: row.decimal
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:11.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-plain-decimal
+    title: plainDecimal
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:15.797Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-hostile-input
+  - id: SYM-ibkrflex-row-currency
+    title: row.currency
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:21.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-row-money
+    title: row.money
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:25.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-row-date
+    title: row.date
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:30.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-row-instrument
+    title: row.instrument
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:34.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-parse-date
+    title: parseDate
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:39.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-mapper
+    title: Mapper
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:42.559Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-AUTO-FD618A602F7F9106
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-problem-error
+    title: problemError
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:45.404Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ingest-problems-not-errors
+  - id: SYM-ibkrflex-problem-error-error
+    title: problemError.Error
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:49.348Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ingest-problems-not-errors
+  - id: SYM-ibkrflex-unsupported
+    title: unsupported
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:52.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ingest-problems-not-errors
+  - id: SYM-ibkrflex-skipped
+    title: skipped
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:55.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ingest-problems-not-errors
+  - id: SYM-ibkrflex-booked
+    title: booked
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:25:59.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-problem-of
+    title: problemOf
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:03.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ingest-problems-not-errors
+  - id: SYM-ibkrflex-stmt
+    title: stmt
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:06.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-stmt-header
+    title: stmt.header
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:11.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-stmt-ref
+    title: stmt.ref
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:15.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ingest-problems-not-errors
+  - id: SYM-ibkrflex-stmt-add
+    title: stmt.add
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:18.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ingest-problems-not-errors
+  - id: SYM-ibkrflex-stmt-problem
+    title: stmt.problem
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:22.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ingest-problems-not-errors
+  - id: SYM-ibkrflex-mapper-map
+    title: Mapper.Map
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:24.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-AUTO-FD618A602F7F9106
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-mapper-map-statement
+    title: Mapper.mapStatement
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:27.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-held-units
+    title: heldUnits
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:32.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-ibkrflex-assertions
+  - id: SYM-ibkrflex-positions
+    title: positions
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:34.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-ibkrflex-assertions
+  - id: SYM-ibkrflex-stmt-open-positions
+    title: stmt.openPositions
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:38.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ibkrflex-assertions
+  - id: SYM-ibkrflex-positions-row
+    title: positions.row
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:43.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-ibkrflex-assertions
+      - type: implements
+        target: REQ-ibkrflex-opening
+  - id: SYM-ibkrflex-position
+    title: position
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:47.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-assertions
+  - id: SYM-ibkrflex-need-stock
+    title: needStock
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:51.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-assertions
+  - id: SYM-ibkrflex-positions-opening-lot
+    title: positions.openingLot
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:26:55.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-ibkrflex-opening
+  - id: SYM-ibkrflex-stmt-cash-report
+    title: stmt.cashReport
+    sourceFile: internal/ingest/ibkrflex/cashreport.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:00.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ibkrflex-assertions
+  - id: SYM-ibkrflex-ending-cash
+    title: endingCash
+    sourceFile: internal/ingest/ibkrflex/cashreport.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:04.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-ibkrflex-assertions
+  - id: SYM-ibkrflex-stmt-opening-cash
+    title: stmt.openingCash
+    sourceFile: internal/ingest/ibkrflex/cashreport.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:09.051Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-ibkrflex-opening
+  - id: SYM-ibkrflex-booked-trade-type
+    title: bookedTradeType
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:15.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-stmt-trades
+    title: stmt.trades
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:22.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-golden
+      - type: implements
+        target: REQ-AUTO-34242A3F858F647D
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-stmt-trade
+    title: stmt.trade
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:27.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-stmt-need-activity-row
+    title: stmt.needActivityRow
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:32.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-trade-side
+    title: tradeSide
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:36.875Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-stock-trade
+    title: stockTrade
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:41.870Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-trade-amounts
+    title: tradeAmounts
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:46.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-fx-trade
+    title: fxTrade
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:53.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-trade-fee
+    title: tradeFee
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:27:59.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-charge
+    title: charge
+    sourceFile: internal/ingest/ibkrflex/trades.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:05.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-stmt-cash-transactions
+    title: stmt.cashTransactions
+    sourceFile: internal/ingest/ibkrflex/cashtx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:10.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+      - type: implements
+        target: REQ-ibkrflex-withholding-pairing
+  - id: SYM-ibkrflex-stmt-cash-transaction
+    title: stmt.cashTransaction
+    sourceFile: internal/ingest/ibkrflex/cashtx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:15.269Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-fee
+    title: fee
+    sourceFile: internal/ingest/ibkrflex/cashtx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:19.469Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+  - id: SYM-ibkrflex-dividend
+    title: dividend
+    sourceFile: internal/ingest/ibkrflex/cashtx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:23.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-transactions
+      - type: implements
+        target: REQ-ibkrflex-withholding-pairing
+  - id: SYM-ibkrflex-stmt-pair-withholding
+    title: stmt.pairWithholding
+    sourceFile: internal/ingest/ibkrflex/cashtx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:27.964Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-withholding-pairing
+  - id: SYM-ibkrflex-match-dividend
+    title: matchDividend
+    sourceFile: internal/ingest/ibkrflex/cashtx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:32.344Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-withholding-pairing
+  - id: SYM-ibkrflex-same-action
+    title: sameAction
+    sourceFile: internal/ingest/ibkrflex/cashtx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:36.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-withholding-pairing
+  - id: SYM-ibkrflex-test-main
+    title: TestMain
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:40.725Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+  - id: SYM-ibkrflex-test-helper-updating
+    title: updating
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:45.557Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+  - id: SYM-ibkrflex-test-helper-test-mapper
+    title: testMapper
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:50.784Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+      - type: executable_for
+        target: TEST-ibkrflex-rows
+  - id: SYM-ibkrflex-test-helper-map-fixture
+    title: mapFixture
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:28:55.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+  - id: SYM-ibkrflex-test-helper-check-golden
+    title: checkGolden
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:00.660Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+  - id: SYM-ibkrflex-test-map-golden
+    title: TestMapGolden
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:05.923Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+  - id: SYM-ibkrflex-test-map-valid-transactions
+    title: TestMapValidTransactions
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:12.465Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+  - id: SYM-ibkrflex-test-helper-check-valid
+    title: checkValid
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:17.833Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+  - id: SYM-ibkrflex-test-helper-render
+    title: render
+    sourceFile: internal/ingest/ibkrflex/golden_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:23.136Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-golden
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+      - type: executable_for
+        target: TEST-ibkrflex-rows
+  - id: SYM-ibkrflex-test-map-refuses-hostile-input
+    title: TestMapRefusesHostileInput
+    sourceFile: internal/ingest/ibkrflex/hostile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:28.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+  - id: SYM-ibkrflex-test-map-at-the-limits
+    title: TestMapAtTheLimits
+    sourceFile: internal/ingest/ibkrflex/hostile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:34.018Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+  - id: SYM-ibkrflex-test-map-unknown-mode
+    title: TestMapUnknownMode
+    sourceFile: internal/ingest/ibkrflex/hostile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:39.699Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+  - id: SYM-ibkrflex-test-helper-err-reader
+    title: errReader
+    sourceFile: internal/ingest/ibkrflex/hostile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:46.306Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+  - id: SYM-ibkrflex-test-helper-err-reader-read
+    title: errReader.Read
+    sourceFile: internal/ingest/ibkrflex/hostile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:50.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+  - id: SYM-ibkrflex-test-map-read-failure
+    title: TestMapReadFailure
+    sourceFile: internal/ingest/ibkrflex/hostile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:29:55.043Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+  - id: SYM-ibkrflex-test-helper-statement-xml
+    title: statementXML
+    sourceFile: internal/ingest/ibkrflex/rows_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:00.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-hostile
+      - type: executable_for
+        target: TEST-ibkrflex-rows
+  - id: SYM-ibkrflex-test-helper-map-rendered
+    title: mapRendered
+    sourceFile: internal/ingest/ibkrflex/rows_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:04.590Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-rows
+  - id: SYM-ibkrflex-test-map-trade-rows
+    title: TestMapTradeRows
+    sourceFile: internal/ingest/ibkrflex/rows_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:10.444Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-rows
+  - id: SYM-ibkrflex-test-map-cash-transaction-rows
+    title: TestMapCashTransactionRows
+    sourceFile: internal/ingest/ibkrflex/rows_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:15.959Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-rows
+  - id: SYM-ibkrflex-test-map-open-position-rows
+    title: TestMapOpenPositionRows
+    sourceFile: internal/ingest/ibkrflex/rows_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:21.953Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-rows
+  - id: SYM-ibkrflex-test-map-cash-report-rows
+    title: TestMapCashReportRows
+    sourceFile: internal/ingest/ibkrflex/rows_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:30:25.802Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-rows

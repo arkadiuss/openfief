@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af4055ebf6e9
+  - type: implements
+    from: SYM-ibkrflex-problem-error-error
+    to: REQ-ingest-problems-not-errors
+    created_at: 2026-10-28T06:25:49.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebc9bcfcf78c
+  - type: covered_by
+    from: SYM-ibkrflex-problem-error-error
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:25:49.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-788ad7116b80

@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2692e3f4c49
+  - type: implements
+    from: SYM-ibkrflex-mapper-map
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:26:25.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63e911387c98
+  - type: implements
+    from: SYM-ibkrflex-mapper-map
+    to: REQ-AUTO-FD618A602F7F9106
+    created_at: 2026-10-28T06:26:25.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c1900e385dd
+  - type: covered_by
+    from: SYM-ibkrflex-mapper-map
+    to: TEST-ibkrflex-golden
+    created_at: 2026-10-28T06:26:25.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-017ef0081fe3

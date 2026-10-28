@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic Flex Query statement for tests: a fake account, fake IDs and synthetic ISINs with valid check digits. No real data. -->
+<FlexQueryResponse queryName="openfief-test" type="AF">
+<FlexStatements count="1">
+<FlexStatement accountId="U0000000" fromDate="20260302" toDate="20260306" period="LastBusinessWeek" whenGenerated="20260307;083000">
+<OpenPositions>
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" position="15" costBasisMoney="1500.5" levelOfDetail="SUMMARY" openDateTime="" side="Long" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" position="10" costBasisMoney="1000.25" levelOfDetail="LOT" openDateTime="20240115;093000" originatingTransactionID="6000001" side="Long" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" position="5" costBasisMoney="500.25" levelOfDetail="LOT" openDateTime="20250610;101500" originatingTransactionID="6000002" side="Long" />
+<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="20260306" position="3.5" costBasisMoney="350" levelOfDetail="LOT" openDateTime="2025-11-03;140000" side="Long" />
+<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="20260306" position="1.5" costBasisMoney="160" levelOfDetail="LOT" openDateTime="2025-11-03;150000" side="Long" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="OPT" symbol="TSTA 260619C00100000" isin="" multiplier="100" reportDate="20260306" position="1" costBasisMoney="250" levelOfDetail="LOT" openDateTime="20260105;100000" side="Long" />
+</OpenPositions>
+<CashReport>
+<CashReportCurrency accountId="U0000000" currency="BASE_SUMMARY" levelOfDetail="BaseCurrency" fromDate="20260302" toDate="20260306" startingCash="0" endingCash="2000" />
+<CashReportCurrency accountId="U0000000" currency="USD" levelOfDetail="Currency" fromDate="20260302" toDate="20260306" startingCash="1200" endingCash="1250.75" />
+<CashReportCurrency accountId="U0000000" currency="EUR" levelOfDetail="Currency" fromDate="20260302" toDate="20260306" startingCash="0" endingCash="-40.1" />
+<CashReportCurrency accountId="U0000000" currency="PLN" levelOfDetail="Currency" fromDate="20260302" toDate="20260306" startingCash="0" endingCash="0" />
+</CashReport>
+<Trades>
+<Trade accountId="U0000000" currency="USD" assetCategory="STK" symbol="TSTA" isin="PLTEST000010" multiplier="1" tradeID="9000001" tradeDate="20260303" dateTime="20260303;101500" transactionType="ExchTrade" buySell="BUY" quantity="5" tradePrice="100.05" tradeMoney="500.25" proceeds="-500.25" ibCommission="-1" ibCommissionCurrency="USD" taxes="0" levelOfDetail="EXECUTION" />
+</Trades>
+<ConversionRates>
+<ConversionRate reportDate="20260306" fromCurrency="EUR" toCurrency="USD" rate="1.0851" />
+</ConversionRates>
+</FlexStatement>
+</FlexStatements>
+</FlexQueryResponse>

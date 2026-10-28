@@ -13,3 +13,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22cb6eae9153
+  - type: implements
+    from: SYM-ibkrflex-decoder
+    to: REQ-ibkrflex-hostile-input
+    created_at: 2026-10-28T06:24:35.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb54f1e33803
+  - type: covered_by
+    from: SYM-ibkrflex-decoder
+    to: TEST-ibkrflex-hostile
+    created_at: 2026-10-28T06:24:35.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a35eeb8447f
+  - type: implements
+    from: SYM-ibkrflex-booked-trade-type
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:27:16.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50db20a58356
+  - type: covered_by
+    from: SYM-ibkrflex-booked-trade-type
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:27:16.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cd97c24ee99

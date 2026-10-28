@@ -55,3 +55,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc6ec95a8eba
+  - type: executable_for
+    from: SYM-ibkrflex-test-helper-updating
+    to: TEST-ibkrflex-golden
+    created_at: 2026-10-28T06:28:46.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b3eef90a183

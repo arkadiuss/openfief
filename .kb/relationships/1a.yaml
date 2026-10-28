@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0fe362724c19
+  - type: implements
+    from: SYM-ibkrflex-decoder-check
+    to: REQ-ibkrflex-hostile-input
+    created_at: 2026-10-28T06:24:56.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9b7186358e8
+  - type: covered_by
+    from: SYM-ibkrflex-decoder-check
+    to: TEST-ibkrflex-hostile
+    created_at: 2026-10-28T06:24:56.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b68a1193531

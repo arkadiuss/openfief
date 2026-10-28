@@ -41,3 +41,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56e1b1bd08bd
+  - type: executable_for
+    from: SYM-ibkrflex-test-helper-render
+    to: TEST-ibkrflex-golden
+    created_at: 2026-10-28T06:29:23.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-617515eec1ca
+  - type: executable_for
+    from: SYM-ibkrflex-test-helper-render
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:29:23.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db611c7b6ba8
+  - type: executable_for
+    from: SYM-ibkrflex-test-helper-render
+    to: TEST-ibkrflex-hostile
+    created_at: 2026-10-28T06:29:23.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ca0d36ff4b4

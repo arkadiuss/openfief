@@ -41,3 +41,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8cc5b98c441a
+  - type: implements
+    from: SYM-ibkrflex-trade-side
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:27:37.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-053af73fc70b
+  - type: covered_by
+    from: SYM-ibkrflex-trade-side
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:27:37.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2da8734f5ea9
+  - type: implements
+    from: SYM-ibkrflex-fee
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:28:19.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e156d4d14310
+  - type: covered_by
+    from: SYM-ibkrflex-fee
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:28:19.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c516377a3bab

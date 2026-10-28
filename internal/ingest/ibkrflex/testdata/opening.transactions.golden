@@ -1,0 +1,11 @@
+tx ibkr-flex:acc-ibkr/9000001 buy 2026-03-03 account=acc-ibkr "buy TSTA"
+  holding:PLTEST000010/TSTA 500.25 USD units=5
+  cash:USD -500.25 USD
+  fee:USD 1 USD
+  cash:USD -1 USD
+assert acc-ibkr 2026-03-06 holding:PLTEST000010/TSTA 15
+assert acc-ibkr 2026-03-06 holding:IETEST000026/TSTB 5
+assert acc-ibkr 2026-03-06 cash:USD 1250.75
+assert acc-ibkr 2026-03-06 cash:EUR -40.1
+assert acc-ibkr 2026-03-06 cash:PLN 0
+problem unsupported FlexStatement#1/OpenPositions#6: asset category "OPT" is not supported

@@ -34,3 +34,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23820d491649
+  - type: implements
+    from: SYM-ibkrflex-trade-fee
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:28:00.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc112d6909e6
+  - type: covered_by
+    from: SYM-ibkrflex-trade-fee
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:28:00.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-426b6d47ace8
