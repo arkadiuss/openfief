@@ -153,7 +153,7 @@ So on the same date the allocation's total includes cash and `ListValuationTotal
 
 These requirements refine the firm ones imported from D-6, D-7, D-30, D-36 #6 and D-50 (REQ-views-read-api-protobuf). Every test runs over in-memory fakes of the ports with synthetic accounts and ISINs, offline, under `task test`. The REST tests go through the real Vanguard transcoder and check each response body against `gen/openapi` with kin-openapi. `task proto:check` fails when the generated Go or OpenAPI differs from what the protobuf produces.
 
-Two texts differ from the code. REQ-views-allocation-inputs says cash rounds half-even; the code rounds half up with `valuation.ValueRounding`, and the tests use amounts where the two agree. The package comment in [doc.go](../../internal/views/doc.go) names the adapter `internal/views/restapi`; it is `internal/views/connectapi`.
+One text differs from the code: REQ-views-allocation-inputs says cash rounds half-even; the code rounds half up with `valuation.ValueRounding`, and the tests use amounts where the two agree.
 
 ## Not built yet
 

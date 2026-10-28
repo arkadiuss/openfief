@@ -5,5 +5,5 @@
 //
 // The use cases that load what these rules need are in internal/views/app;
 // the HTTP adapter that serves them as the read-only /v1 API is
-// internal/views/restapi.
+// internal/views/connectapi.
 package views
