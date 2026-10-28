@@ -9,15 +9,14 @@ External facts the design and proposals draw on, as found on the date shown. Thi
   - Ghostfolio: AGPL-3.0, Angular/NestJS/Postgres, multi-user, sells a hosted Premium tier. https://github.com/ghostfolio/ghostfolio
   - TradingAgents: Apache-2.0, LangGraph multi-agent analysis, no execution, supports Ollama and vLLM. https://github.com/TauricResearch/TradingAgents
   - virattt/ai-hedge-fund: MIT, paper trading by default, principle "the LLM never touches the trade". https://github.com/virattt/ai-hedge-fund/blob/main/VISION.md
-- **[R-10]** (2026-10-27) Wealthfolio has a self-hosted web edition: one Rust service serves the React UI and a REST API, with embedded SQLite on a volume (image `wealthfolio/wealthfolio`, port 8088). CSV import is documented only as a UI feature; no documented, stable HTTP API for writing activities was found. Community MCP servers write straight into its SQLite database. Secondary sources only; wealthfolio.app was unreachable.
-  - https://railway.com/deploy/wealthfolio-tracker
-  - https://dev.co/devops/open-source/wealthfolio
-  - https://glama.ai/mcp/servers/@datamoc/WFmcp/blob/811e011a3a13a81f175a8907da99d1fe00cf6b2c/docs/WRITE_OPERATIONS.md
-- **[R-11]** (2026-10-27) Ghostfolio: a user's security token is exchanged for a bearer token via `POST /api/v1/auth/anonymous`, and activities are imported via `POST /api/v1/import` with an `activities` array. A community guide says the bearer token lasts about 6 months. Its `MANUAL` data source prices custom assets with a scraper that reads HTML or, via JSONPath, JSON. Prior art: `agusalex/ghostfolio-sync` syncs IBKR Flex Queries into Ghostfolio, maps symbols in a `mapping.yaml`, and warns that data outside the Flex date window is lost if never synced. Secondary sources only; ghostfol.io was unreachable.
+- **[R-10]** (2026-10-28) Wealthfolio's web edition is one Docker image (`wealthfolio/wealthfolio`, also on GHCR) on port 8088, configured through `WF_*` environment variables, with SQLite on a volume and password or OIDC login; its HTTP endpoints live under `/api/v1`. Activities come in through CSV import in the UI, the paid Wealthfolio Connect broker sync, or its built-in MCP server, whose scoped, revocable tokens grant read access and, optionally, write scopes that draft and then commit activities. The docs describe no public REST API for writing activities.
+  - https://wealthfolio.app/docs/guide/self-hosting/
+  - https://wealthfolio.app/docs/guide/self-hosting/configuration/
+  - https://wealthfolio.app/docs/guide/mcp-server/
+  - https://wealthfolio.app/docs/guide/csv-import/
+- **[R-11]** (2026-10-28) Ghostfolio's `MANUAL` data source prices a custom asset by fetching the URL in its scraper configuration: a JSON response is read with a JSONPath expression, anything else as HTML with a CSS selector (`apps/api/src/services/data-provider/manual/manual.service.ts` at 9772282). Prior art: `agusalex/ghostfolio-sync` syncs IBKR Flex Queries into Ghostfolio, maps symbols in a `mapping.yaml`, and warns that data outside the Flex Query's date window is lost if it was never synced. Ghostfolio's API itself is R-15.
   - https://github.com/ghostfolio/ghostfolio
-  - https://gethomepage.dev/widgets/services/ghostfolio/
-  - https://deepwiki.com/ghostfolio/ghostfolio/5.2-market-data-sources
-  - https://hub.docker.com/r/agusalex/ghostfolio-sync
+  - https://github.com/agusalex/ghostfolio-sync
 - **[R-12]** (2026-10-27) OpenClaw plugins declare an `openclaw.plugin.json` manifest whose JSON Schema config is validated without running plugin code; the plugin itself is TypeScript loaded in-process and its docs say to treat plugins as trusted code. Its open skill registry, ClawHub, was hit by malware: Koi Security flagged 341 of 2,857 skills as malicious in late January 2026, and later counts ranged from about 900 to over 1,100.
   - https://docs.openclaw.ai/plugins
   - https://thehackernews.com/2026/02/researchers-find-341-malicious-clawhub.html

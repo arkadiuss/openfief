@@ -1,5 +1,5 @@
 ---
-title: Offline vulnerability check
+title: Unreachable vulnerability database fails the check
 status: active
 origin:
   kind: agent
@@ -7,4 +7,4 @@ origin:
 id: SCEN-tooling-vuln-offline
 type: scenario
 ---
-Given the npm registry is unreachable, when task vuln runs locally it warns and exits zero, and when it runs with CI=true it exits non-zero.
+Given the npm registry is unreachable, when task vuln runs, then it reports that npm audit failed and exits non-zero, locally and in CI alike.
