@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf159631f017
+  - type: implements
+    from: SYM-operator-volumes
+    to: REQ-plugins-egress-token-projected
+    created_at: 2026-10-28T08:39:02.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78f29a3c426c

@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a23fabc828a5
+  - type: implements
+    from: SYM-operator-token-volume
+    to: REQ-plugins-egress-token-projected
+    created_at: 2026-10-28T08:37:57.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f58d30ff3fc0
+  - type: implements
+    from: SYM-operator-token-volume
+    to: REQ-operator-workload-objects
+    created_at: 2026-10-28T08:37:57.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d1205e40505
+  - type: covered_by
+    from: SYM-operator-token-volume
+    to: TEST-operator-objects
+    created_at: 2026-10-28T08:37:57.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18bbed39526d
+  - type: executable_for
+    from: SYM-operator-test-reconciler-token-audiences
+    to: TEST-operator-reconcile
+    created_at: 2026-10-28T08:38:36.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75dd33d2641c

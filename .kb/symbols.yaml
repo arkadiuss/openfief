@@ -3710,6 +3710,8 @@ symbols:
       - type: covered_by
         target: TEST-plugins-compile
       - type: implements
+        target: REQ-plugins-egress-token-projected
+      - type: implements
         target: REQ-plugins-network-policy-core-and-proxy
       - type: implements
         target: REQ-plugins-proxy-env-and-allow-list
@@ -12450,6 +12452,8 @@ symbols:
         target: REQ-AUTO-761F6500ECFC0316
       - type: implements
         target: REQ-operator-workload-objects
+      - type: implements
+        target: REQ-plugins-egress-token-projected
   - id: SYM-operator-volumes
     title: volumes
     sourceFile: internal/plugins/operator/objects.go
@@ -12465,6 +12469,8 @@ symbols:
         target: REQ-AUTO-0455DAAE4C01C965
       - type: implements
         target: REQ-operator-workload-objects
+      - type: implements
+        target: REQ-plugins-egress-token-projected
   - id: SYM-operator-secret-volume
     title: secretVolume
     sourceFile: internal/plugins/operator/objects.go
@@ -13686,3 +13692,48 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-proto-breaking
+  - id: SYM-operator-token-volume
+    title: tokenVolume
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:37:54.828Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-operator-workload-objects
+      - type: implements
+        target: REQ-plugins-egress-token-projected
+  - id: SYM-operator-test-objects-token-volume
+    title: tokenVolume
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:38:08.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-objects-pod-volumes
+    title: podVolumes
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:38:19.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-operator-test-reconciler-token-audiences
+    title: tokenAudiences
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:38:33.956Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile

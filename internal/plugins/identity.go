@@ -5,10 +5,13 @@ import "strings"
 const (
 	// Namespace is the only namespace OpenFief's operator and plugins use (D-15).
 	Namespace = "openfief"
-	// CoreAudience is the audience of a plugin's projected ServiceAccount
-	// token, the only credential it presents to the core and the egress proxy
-	// (D-27, D-32).
+	// CoreAudience is the audience of the projected ServiceAccount token a
+	// plugin presents to the core (D-27).
 	CoreAudience = "openfief-core"
+	// EgressAudience is the audience of the projected ServiceAccount token a
+	// plugin presents to the egress proxy (D-63). A separate audience keeps
+	// the proxy from replaying a plugin's token to the core.
+	EgressAudience = "openfief-egress"
 
 	serviceAccountPrefix  = "plugin-"
 	serviceAccountUserFmt = "system:serviceaccount:" + Namespace + ":"
