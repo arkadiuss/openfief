@@ -112,8 +112,7 @@ func prefixed(prefix string, err error) []error {
 	}
 	out := make([]error, 0, len(errs))
 	for _, e := range errs {
-		var fe *FieldError
-		if errors.As(e, &fe) {
+		if fe, ok := errors.AsType[*FieldError](e); ok {
 			out = append(out, &FieldError{Field: prefix + fe.Field, Err: fe.Err})
 			continue
 		}

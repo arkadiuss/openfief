@@ -33,6 +33,7 @@ func TestTransactionValidate(t *testing.T) {
 	usdInPLNCash := money(t, "-1000.50", "USD")
 	someQty := qty(t, "1")
 	zeroUSD := money(t, "0", "USD")
+	usdCentShort, plnCentOver := money(t, "0.01", "USD"), money(t, "0.01", "PLN")
 	goLive, earlier, later := date(t, "2026-03-02"), date(t, "2019-05-17"), date(t, "2026-03-03")
 	tests := []struct {
 		name    string
@@ -41,8 +42,8 @@ func TestTransactionValidate(t *testing.T) {
 		wantSum *kernel.Money // set when the error is an *UnbalancedError
 	}{
 		{name: "balanced in two currencies", edit: func(*ledger.Transaction) {}},
-		{name: "one cent short in USD", edit: func(tx *ledger.Transaction) { tx.Postings[1].Amount = cashOneCentShort }, wantSum: ptr(money(t, "0.01", "USD"))},
-		{name: "PLN unbalanced while USD balances", edit: func(tx *ledger.Transaction) { tx.Postings[2].Amount = plnFeeTooHigh }, wantSum: ptr(money(t, "0.01", "PLN"))},
+		{name: "one cent short in USD", edit: func(tx *ledger.Transaction) { tx.Postings[1].Amount = cashOneCentShort }, wantSum: &usdCentShort},
+		{name: "PLN unbalanced while USD balances", edit: func(tx *ledger.Transaction) { tx.Postings[2].Amount = plnFeeTooHigh }, wantSum: &plnCentOver},
 		{name: "a single posting", edit: func(tx *ledger.Transaction) { tx.Postings = tx.Postings[:1] }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "no source", edit: func(tx *ledger.Transaction) { tx.Key.Source = "" }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "no external ID", edit: func(tx *ledger.Transaction) { tx.Key.ExternalID = "" }, wantErr: ledger.ErrInvalidTransaction},
@@ -94,5 +95,3 @@ func checkValidateError(t *testing.T, err, wantErr error, wantSum *kernel.Money)
 		t.Errorf("Error() = %q, want it to name %s", err, wantSum.Currency())
 	}
 }
-
-func ptr[T any](v T) *T { return &v }

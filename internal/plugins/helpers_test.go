@@ -65,8 +65,7 @@ func fieldErrors(err error) []fieldError {
 	}
 	out := make([]fieldError, 0, len(errs))
 	for _, e := range errs {
-		var fe *plugins.FieldError
-		if errors.As(e, &fe) {
+		if fe, ok := errors.AsType[*plugins.FieldError](e); ok {
 			out = append(out, fieldError{Field: fe.Field, Err: fe.Err})
 		} else {
 			out = append(out, fieldError{Err: e})

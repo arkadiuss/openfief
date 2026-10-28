@@ -106,8 +106,7 @@ func TestPropertyPostingsSumToZeroPerCurrency(t *testing.T) {
 		broken.Postings = append([]ledger.Posting(nil), tx.Postings...)
 		p := &broken.Postings[r.intn(len(broken.Postings))]
 		p.Amount = kernel.NewMoney(p.Amount.Amount().Add(kernel.NewDecimal(1, -3)), p.Amount.Currency())
-		var unbalanced *ledger.UnbalancedError
-		if !errors.As(broken.Validate(), &unbalanced) {
+		if _, ok := errors.AsType[*ledger.UnbalancedError](broken.Validate()); !ok {
 			t.Fatalf("seed %d case %d (%s): a posting off by 0.001 still validates", propertySeed, i, tx.Kind)
 		}
 	}

@@ -5275,16 +5275,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-transaction
-  - id: SYM-ledger-test-helper-ptr
-    title: ptr
-    sourceFile: internal/ledger/transaction_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:28:10.897Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-transaction
   - id: SYM-ledger-test-helper-must
     title: must
     sourceFile: internal/ledger/helpers_test.go
