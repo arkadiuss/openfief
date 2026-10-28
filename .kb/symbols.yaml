@@ -1312,3 +1312,39 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-release-notes
+  - id: SYM-kernel-decimal-quo
+    title: Decimal.Quo
+    sourceFile: internal/kernel/quotient.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:48.512Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal-quo
+      - type: implements
+        target: REQ-kernel-decimal-quotient
+  - id: SYM-kernel-last-digit-odd
+    title: lastDigitOdd
+    sourceFile: internal/kernel/quotient.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:50.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal-quo
+      - type: implements
+        target: REQ-kernel-decimal-quotient
+  - id: SYM-kernel-test-decimal-quo
+    title: TestDecimalQuo
+    sourceFile: internal/kernel/quotient_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:52.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal-quo
