@@ -13591,3 +13591,33 @@ symbols:
         target: REQ-AUTO-AC7E986366466A6A
       - type: implements
         target: REQ-operator-signature-required
+  - id: SYM-operator-test-manifests-kinds
+    title: kinds
+    sourceFile: internal/plugins/operator/manifests_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:09:00.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-manifests
+  - id: SYM-operator-test-manifests
+    title: TestManifests
+    sourceFile: internal/plugins/operator/manifests_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:09:03.037Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-manifests
+  - id: SYM-operator-test-manifests-declared
+    title: declared
+    sourceFile: internal/plugins/operator/manifests_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:09:58.210Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-manifests
