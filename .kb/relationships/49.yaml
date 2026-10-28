@@ -1,0 +1,36 @@
+relationships:
+  - id: rel-85b529f24c37
+    type: constrains
+    from: REQ-pl-tax-wrapper-exempt
+    to: FACT-SUBJECT-F8EB972928ACF530
+    created_at: "2026-10-28T05:22:15.439Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-pl-tax-wrapper-exempt
+    to: FACT-PROP-9B21800EE71D4DBE
+    created_at: 2026-10-28T05:22:15.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e5db2579d4e
+  - type: specified_by
+    from: REQ-pl-tax-wrapper-exempt
+    to: SCEN-pl-tax-wrapper-exempt
+    created_at: 2026-10-28T05:22:15.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66b37943c1af
+  - type: implements
+    from: SYM-pl-parse-series
+    to: REQ-pl-series-code
+    created_at: 2026-10-28T05:23:04.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0dc9685026c
+  - type: covered_by
+    from: SYM-pl-parse-series
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:23:04.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-266caf124360

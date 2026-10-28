@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d5cc20af2e5b
+  - type: verified_by
+    from: SCEN-pl-cpi-indexation
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:21:25.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56e643033483
+  - type: verified_by
+    from: SCEN-pl-cpi-indexation
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:21:25.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5527c7268af7
+  - type: verified_by
+    from: SCEN-pl-cpi-indexation
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:21:25.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10f0917ad325

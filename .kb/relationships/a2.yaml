@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5e5bf825f72
+  - type: constrains
+    from: REQ-pl-bond-accrual
+    to: FACT-SUBJECT-F735E9B48801B8D5
+    created_at: 2026-10-28T05:21:49.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f405300bc10
+  - type: requires_property
+    from: REQ-pl-bond-accrual
+    to: FACT-PROP-7A1756714211542D
+    created_at: 2026-10-28T05:21:49.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb9405f86108
+  - type: specified_by
+    from: REQ-pl-bond-accrual
+    to: SCEN-pl-bond-accrual
+    created_at: 2026-10-28T05:21:49.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5db3adbafa95

@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-7bf9fab795ae
+    type: executable_for
+    from: SYM-pl-test-helper-date
+    to: TEST-pl-calendar
+    created_at: "2026-10-28T05:25:17.312Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-pl-test-helper-date
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:25:17.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adedb862e4c1
+  - type: executable_for
+    from: SYM-pl-test-helper-date
+    to: TEST-pl-tax
+    created_at: 2026-10-28T05:25:17.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fccecdfae21
+  - type: executable_for
+    from: SYM-pl-test-helper-date
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:25:17.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43bd8b9a5574

@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb5147c50308
+  - type: implements
+    from: SYM-pl-missing-index-error
+    to: REQ-pl-cpi-indexation
+    created_at: 2026-10-28T05:23:33.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-962e43a6e55c
+  - type: covered_by
+    from: SYM-pl-missing-index-error
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:23:33.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb6861d0aee4

@@ -1,0 +1,36 @@
+relationships:
+  - id: rel-59e0e6777cee
+    type: verified_by
+    from: SCEN-pl-belka-tax
+    to: TEST-pl-tax
+    created_at: "2026-10-28T05:21:29.517Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-pl-belka-tax
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:21:29.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-360be06e13be
+  - type: constrains
+    from: REQ-pl-tax-fx-rate-date
+    to: FACT-SUBJECT-A569CA092DC19A95
+    created_at: 2026-10-28T05:22:23.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50f05dde816f
+  - type: requires_property
+    from: REQ-pl-tax-fx-rate-date
+    to: FACT-PROP-6D48A4E49E687FAC
+    created_at: 2026-10-28T05:22:23.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12d4bf98c17d
+  - type: specified_by
+    from: REQ-pl-tax-fx-rate-date
+    to: SCEN-pl-tax-fx-rate-date
+    created_at: 2026-10-28T05:22:23.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a67db043716

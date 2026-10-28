@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-289d2470ff58
+    type: implements
+    from: SYM-pl-indices
+    to: REQ-pl-cpi-indexation
+    created_at: "2026-10-28T05:23:31.722Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-pl-indices
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:23:31.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e55fc034eb8f

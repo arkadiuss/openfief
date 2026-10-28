@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-094bb182baab
+  - type: implements
+    from: SYM-pl-payout
+    to: REQ-pl-bond-accrual
+    created_at: 2026-10-28T05:22:52.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15abeab4e450
+  - type: covered_by
+    from: SYM-pl-payout
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:22:52.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de0e75a7f1f4

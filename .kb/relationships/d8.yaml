@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bd9f851e951
+  - type: implements
+    from: SYM-pl-bond-type-string
+    to: REQ-pl-series-code
+    created_at: 2026-10-28T05:22:47.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c71ee116759
+  - type: covered_by
+    from: SYM-pl-bond-type-string
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:22:47.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c1d5f24ebf

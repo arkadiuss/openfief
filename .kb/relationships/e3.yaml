@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-bae0193ea98b
+    type: executable_for
+    from: SYM-pl-test-value-lot-rejects-bad-input
+    to: TEST-pl-value
+    created_at: "2026-10-28T05:25:04.992Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T04:51:03.867Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-pl-period
+    to: REQ-pl-bond-accrual
+    created_at: 2026-10-28T05:24:19.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27f3759a336
+  - type: covered_by
+    from: SYM-pl-period
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:24:19.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d097495bce94

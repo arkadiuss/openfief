@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-41dbdaca4843
+    type: executable_for
+    from: SYM-pl-test-belka-tax
+    to: TEST-pl-tax
+    created_at: "2026-10-28T05:24:51.211Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
