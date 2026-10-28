@@ -1,0 +1,50 @@
+relationships:
+  - id: rel-118569a6d19f
+    type: executable_for
+    from: SYM-ledger-test-helper-ptr
+    to: TEST-ledger-transaction
+    created_at: "2026-10-28T05:28:11.071Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: constrains
+    from: REQ-ledger-oversell
+    to: FACT-SUBJECT-2DE79D898756870D
+    created_at: 2026-10-28T05:39:29.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e32fc201349
+  - type: requires_property
+    from: REQ-ledger-oversell
+    to: FACT-PROP-BAFBE4992EC31138
+    created_at: 2026-10-28T05:39:29.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10e4cfede8a4
+  - type: specified_by
+    from: REQ-ledger-oversell
+    to: SCEN-ledger-oversell
+    created_at: 2026-10-28T05:39:29.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a946a87c038
+  - type: implements
+    from: SYM-ledger-balance-assertion-validate
+    to: REQ-ledger-assertion-mismatch
+    created_at: 2026-10-28T05:44:16.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f284048fcbf
+  - type: implements
+    from: SYM-ledger-balance-assertion-validate
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T05:44:16.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91517ca45743
+  - type: covered_by
+    from: SYM-ledger-balance-assertion-validate
+    to: TEST-ledger-assertion
+    created_at: 2026-10-28T05:44:16.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fe362724c19

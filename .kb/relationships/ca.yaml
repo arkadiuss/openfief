@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-a8da89dc08f0
+    type: implements
+    from: SYM-plugins-effective-permissions-data-tiers
+    to: REQ-plugins-effective-intersection
+    created_at: "2026-10-28T05:30:34.585Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-effective-permissions-data-tiers
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T05:30:34.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d2763f9eeb0
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-data-tiers
+    to: TEST-plugins-effective
+    created_at: 2026-10-28T05:30:34.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71a15e25bc0b

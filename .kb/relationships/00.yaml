@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-d8da8d091b51
+    type: verified_by
+    from: SCEN-plugins-network-policy-no-egress
+    to: TEST-plugins-compile
+    created_at: "2026-10-28T05:28:07.481Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

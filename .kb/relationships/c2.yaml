@@ -13,3 +13,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee9afd46e404
+  - id: rel-b3936cc3526d
+    type: executable_for
+    from: SYM-kernel-test-decimal-arithmetic-is-exact
+    to: TEST-kernel-decimal
+    created_at: "2026-10-28T04:50:51.426Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

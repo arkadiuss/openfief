@@ -13,3 +13,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39bd51efca8c
+  - type: implements
+    from: SYM-plugins-effective-permissions-equal
+    to: REQ-plugins-effective-intersection
+    created_at: 2026-10-28T05:30:40.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15913ef45fe4
+  - type: implements
+    from: SYM-plugins-effective-permissions-equal
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T05:30:40.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11f64dc5a0a6
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-equal
+    to: TEST-plugins-effective
+    created_at: 2026-10-28T05:30:40.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac6a02856f9
+  - type: implements
+    from: SYM-ledger-current-of
+    to: REQ-ledger-import-supersede
+    created_at: 2026-10-28T05:32:53.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e6b1ea7754e
+  - type: implements
+    from: SYM-ledger-current-of
+    to: REQ-AUTO-CACBF41A8E14837D
+    created_at: 2026-10-28T05:32:53.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc9da535700f
+  - type: covered_by
+    from: SYM-ledger-current-of
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:32:53.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51ad05992fe1

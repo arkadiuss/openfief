@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-1b9d466d18f1
+    type: verified_by
+    from: SCEN-pl-tax-fx-rate-date
+    to: TEST-pl-tax
+    created_at: "2026-10-28T05:21:33.891Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - id: rel-2240fbc8da94
+    type: executable_for
+    from: SYM-plugins-test-needs-approval-nil
+    to: TEST-plugins-plugin-grant
+    created_at: "2026-10-28T05:26:21.404Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-plugins-test-compile-check-only-core-and-proxy
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:30:06.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f0763146f43
+  - type: executable_for
+    from: SYM-valuation-nbp-test-helper-rate
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:58:43.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5e785a744b3

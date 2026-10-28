@@ -1,0 +1,57 @@
+relationships:
+  - id: rel-c0dee9c14cf6
+    type: executable_for
+    from: SYM-kernel-test-parse-currency
+    to: TEST-kernel-currency
+    created_at: "2026-10-28T04:49:33.640Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - id: rel-119b0734a6f3
+    type: implements
+    from: SYM-release-version-valid-version
+    to: REQ-tooling-release-version
+    created_at: "2026-10-28T04:51:50.793Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-release-version-valid-version
+    to: TEST-tooling-release-version
+    created_at: 2026-10-28T04:51:50.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-041a34842e1e
+  - type: implements
+    from: SYM-valuation-convert-to-pln
+    to: REQ-valuation-pln-conversion
+    created_at: 2026-10-28T05:30:44.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62cde554fbc4
+  - type: implements
+    from: SYM-valuation-convert-to-pln
+    to: REQ-valuation-fx-rate-lookup
+    created_at: 2026-10-28T05:30:44.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be94f61de7fd
+  - type: covered_by
+    from: SYM-valuation-convert-to-pln
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:30:44.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03b203908396
+  - type: executable_for
+    from: SYM-ledger-test-property-postings-sum-to-zero-per-currency
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:27:39.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c5445efebe
+  - type: executable_for
+    from: SYM-ledger-test-consume-fifo
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:40:12.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7be286ec8c3

@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-f18c898bb51d
+    type: verified_by
+    from: SCEN-kernel-decimal-quotient-rounded-once
+    to: TEST-kernel-decimal-quo
+    created_at: "2026-10-28T05:11:41.359Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

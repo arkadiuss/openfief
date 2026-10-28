@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-4f46d8319446
+    type: implements
+    from: SYM-valuation-to-pln
+    to: REQ-valuation-pln-conversion
+    created_at: "2026-10-28T05:30:41.474Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-valuation-to-pln
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:30:41.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6286a1b67edc
+  - id: rel-b94e41779bdf
+    type: executable_for
+    from: SYM-plugins-test-check-address
+    to: TEST-plugins-egress-address
+    created_at: "2026-10-28T05:32:37.894Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

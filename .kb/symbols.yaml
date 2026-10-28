@@ -51,3 +51,6497 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-docs-check
+  - id: SYM-kernel-currency
+    title: Currency
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:23.792Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-parse-currency
+    title: ParseCurrency
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:25.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-currency-equal
+    title: Currency.Equal
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:27.943Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-currency-is-zero
+    title: Currency.IsZero
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:29.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-currency-string
+    title: Currency.String
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:31.980Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-test-parse-currency
+    title: TestParseCurrency
+    sourceFile: internal/kernel/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:33.607Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-currency
+  - id: SYM-kernel-date
+    title: Date
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:35.614Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-new-date
+    title: NewDate
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:37.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-parse-date
+    title: ParseDate
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:39.810Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-year
+    title: Date.Year
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:41.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-month
+    title: Date.Month
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:44.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-day
+    title: Date.Day
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:46.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-add-days
+    title: Date.AddDays
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:48.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-days-until
+    title: Date.DaysUntil
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:50.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-compare
+    title: Date.Compare
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:52.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-before
+    title: Date.Before
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:55.065Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-after
+    title: Date.After
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:57.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-equal
+    title: Date.Equal
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:59.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-is-zero
+    title: Date.IsZero
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:01.487Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-string
+    title: Date.String
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:03.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-midnight
+    title: Date.midnight
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:05.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-of
+    title: dateOf
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:07.807Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-test-parse-date
+    title: TestParseDate
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:09.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-test-new-date
+    title: TestNewDate
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:11.059Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-test-date-arithmetic
+    title: TestDateArithmetic
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:12.724Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-test-date-compare
+    title: TestDateCompare
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:14.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-test-date-zero-value
+    title: TestDateZeroValue
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:16.043Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-rounding-mode
+    title: RoundingMode
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:18.223Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal
+    title: Decimal
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:20.296Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-parse-decimal
+    title: ParseDecimal
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:22.665Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-new-decimal
+    title: NewDecimal
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:24.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-add
+    title: Decimal.Add
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:27.389Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-sub
+    title: Decimal.Sub
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:29.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-neg
+    title: Decimal.Neg
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:32.153Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-mul
+    title: Decimal.Mul
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:34.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-round
+    title: Decimal.Round
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:36.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-cmp
+    title: Decimal.Cmp
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:38.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-equal
+    title: Decimal.Equal
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:40.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-sign
+    title: Decimal.Sign
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:42.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-is-zero
+    title: Decimal.IsZero
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:44.984Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-string
+    title: Decimal.String
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:47.376Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-test-parse-decimal
+    title: TestParseDecimal
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:49.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-kernel-test-decimal-arithmetic-is-exact
+    title: TestDecimalArithmeticIsExact
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:51.365Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-kernel-test-decimal-round
+    title: TestDecimalRound
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:53.179Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-kernel-test-decimal-compare
+    title: TestDecimalCompare
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:54.994Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-kernel-test-helper-dec
+    title: dec
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:56.951Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+      - type: executable_for
+        target: TEST-kernel-money
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-test-helper-cur
+    title: cur
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:58.593Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-helper-money
+    title: money
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:00.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-helper-qty
+    title: qty
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:01.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-test-helper-date
+    title: date
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:03.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-currency-mismatch-error
+    title: CurrencyMismatchError
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:05.948Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-currency-mismatch-error-error
+    title: CurrencyMismatchError.Error
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:08.046Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-money
+    title: Money
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:10.062Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-new-money
+    title: NewMoney
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:12.108Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-parse-money
+    title: ParseMoney
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:14.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-amount
+    title: Money.Amount
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:16.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-currency
+    title: Money.Currency
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:18.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-add
+    title: Money.Add
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:21.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-money-sub
+    title: Money.Sub
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:23.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-money-neg
+    title: Money.Neg
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:25.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-mul
+    title: Money.Mul
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:28.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-money-round
+    title: Money.Round
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:30.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-money-cmp
+    title: Money.Cmp
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:32.991Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-money-equal
+    title: Money.Equal
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:35.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-sign
+    title: Money.Sign
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:37.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-is-zero
+    title: Money.IsZero
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:40.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-string
+    title: Money.String
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:42.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-same-currency
+    title: Money.sameCurrency
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:45.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-test-money-arithmetic-in-one-currency
+    title: TestMoneyArithmeticInOneCurrency
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:47.371Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-mul-and-round
+    title: TestMoneyMulAndRound
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:49.311Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-never-mixes-currencies
+    title: TestMoneyNeverMixesCurrencies
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:51.394Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-keeps-original-currency
+    title: TestMoneyKeepsOriginalCurrency
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:53.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-compare
+    title: TestMoneyCompare
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:55.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-equal-needs-same-currency
+    title: TestMoneyEqualNeedsSameCurrency
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:57.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-rejects-bad-input
+    title: TestMoneyRejectsBadInput
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:59.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-new-quantity
+    title: NewQuantity
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:03.975Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-parse-quantity
+    title: ParseQuantity
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:06.373Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-decimal
+    title: Quantity.Decimal
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:08.680Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-add
+    title: Quantity.Add
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:10.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-sub
+    title: Quantity.Sub
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:12.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-neg
+    title: Quantity.Neg
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:14.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-cmp
+    title: Quantity.Cmp
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:16.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-equal
+    title: Quantity.Equal
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:19.115Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-sign
+    title: Quantity.Sign
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:21.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-is-zero
+    title: Quantity.IsZero
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:23.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-string
+    title: Quantity.String
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:25.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-test-quantity-arithmetic
+    title: TestQuantityArithmetic
+    sourceFile: internal/kernel/quantity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:26.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-test-quantity-compare
+    title: TestQuantityCompare
+    sourceFile: internal/kernel/quantity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:28.303Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-test-parse-quantity
+    title: TestParseQuantity
+    sourceFile: internal/kernel/quantity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:29.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-quantity
+    title: Quantity
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:59:56.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-dco-check-unsigned
+    title: unsigned
+    status: active
+    sourceFile: scripts/dco-check.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:23.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-dco
+      - type: implements
+        target: REQ-tooling-dco-signoff
+  - id: SYM-dco-check-test-check
+    title: check
+    status: active
+    sourceFile: scripts/tests/dco-check.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:26.041Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-dco
+  - id: SYM-ci-images-images
+    title: images
+    status: active
+    sourceFile: scripts/ci-images.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:35.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-ci-images
+      - type: implements
+        target: REQ-tooling-ci-images
+  - id: SYM-ci-images-test-expect-output
+    title: expect_output
+    status: active
+    sourceFile: scripts/tests/ci-images.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:38.426Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images
+  - id: SYM-ci-images-test-expect-fail
+    title: expect_fail
+    status: active
+    sourceFile: scripts/tests/ci-images.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:40.693Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images
+  - id: SYM-release-version-valid-version
+    title: valid_version
+    status: active
+    sourceFile: scripts/release-version.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:50.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-version
+      - type: implements
+        target: REQ-tooling-release-version
+  - id: SYM-release-version-test-expect
+    title: expect
+    status: active
+    sourceFile: scripts/tests/release-version.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:53.053Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-version
+  - id: SYM-release-notes-previous-release
+    title: previous_release
+    status: active
+    sourceFile: scripts/release-notes.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:02.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-notes
+      - type: implements
+        target: REQ-tooling-release-notes
+  - id: SYM-release-notes-section
+    title: section
+    status: active
+    sourceFile: scripts/release-notes.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:04.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-notes
+      - type: implements
+        target: REQ-tooling-release-notes
+  - id: SYM-release-notes-test-commit
+    title: commit
+    status: active
+    sourceFile: scripts/tests/release-notes.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:07.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-notes
+  - id: SYM-release-notes-test-expect-notes
+    title: expect_notes
+    status: active
+    sourceFile: scripts/tests/release-notes.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:09.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-notes
+  - id: SYM-kernel-decimal-quo
+    title: Decimal.Quo
+    sourceFile: internal/kernel/quotient.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:48.512Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal-quo
+      - type: implements
+        target: REQ-kernel-decimal-quotient
+  - id: SYM-kernel-last-digit-odd
+    title: lastDigitOdd
+    sourceFile: internal/kernel/quotient.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:50.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal-quo
+      - type: implements
+        target: REQ-kernel-decimal-quotient
+  - id: SYM-kernel-test-decimal-quo
+    title: TestDecimalQuo
+    sourceFile: internal/kernel/quotient_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:52.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal-quo
+  - id: SYM-pl-bond-type
+    title: BondType
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:43.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-bond-type-structure
+    title: BondType.Structure
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:45.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-bond-type-string
+    title: BondType.String
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:47.752Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-indexation
+    title: Indexation
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:49.984Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-payout
+    title: Payout
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:52.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-structure
+    title: Structure
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:55.011Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-bond-type-code
+    title: bondTypeCode
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:57.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-bond-types
+    title: bondTypes
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:00.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-series
+    title: Series
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:01.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-parse-series
+    title: ParseSeries
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:04.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-two-digits
+    title: twoDigits
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:07.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-series-string
+    title: Series.String
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:09.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-add-months
+    title: addMonths
+    sourceFile: internal/jurisdiction/pl/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:12.370Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-calendar
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-maturity
+    title: Maturity
+    sourceFile: internal/jurisdiction/pl/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:15.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-calendar
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-period-start
+    title: PeriodStart
+    sourceFile: internal/jurisdiction/pl/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:17.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-calendar
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-cpimonth
+    title: CPIMonth
+    sourceFile: internal/jurisdiction/pl/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:21.083Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-calendar
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-nominal
+    title: Nominal
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:24.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-pln
+    title: pln
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:27.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-terms
+    title: Terms
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:28.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-bond-accrual
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-indices
+    title: Indices
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:31.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-missing-index-error
+    title: MissingIndexError
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:33.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-missing-index-error-error
+    title: MissingIndexError.Error
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:36.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-terms-period-rate
+    title: Terms.PeriodRate
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:39.236Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-terms-validate
+    title: Terms.validate
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:42.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-tax-wrapper
+    title: TaxWrapper
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:45.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-tax-wrapper-exempt
+  - id: SYM-pl-belka-rate
+    title: BelkaRate
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:48.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-belka-tax
+  - id: SYM-pl-belka-tax
+    title: BelkaTax
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:52.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-belka-tax
+      - type: implements
+        target: REQ-pl-tax-wrapper-exempt
+  - id: SYM-pl-tax-rate-cutoff
+    title: TaxRateCutoff
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:58.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-tax-fx-rate-date
+  - id: SYM-pl-lot-value
+    title: LotValue
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:01.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-accrual
+    title: accrual
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:04.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-value-lot
+    title: ValueLot
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:08.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+      - type: implements
+        target: REQ-pl-early-redemption-fee-cap
+  - id: SYM-pl-capped-fee
+    title: cappedFee
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:11.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-early-redemption-fee-cap
+  - id: SYM-pl-period
+    title: period
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:18.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-terms-period
+    title: Terms.period
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:22.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-accrue
+    title: accrue
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:25.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-round-accrual
+    title: roundAccrual
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:28.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-test-parse-series
+    title: TestParseSeries
+    sourceFile: internal/jurisdiction/pl/series_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:31.412Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-series
+  - id: SYM-pl-test-bond-type-structure
+    title: TestBondTypeStructure
+    sourceFile: internal/jurisdiction/pl/series_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:33.654Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-series
+  - id: SYM-pl-test-maturity
+    title: TestMaturity
+    sourceFile: internal/jurisdiction/pl/calendar_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:36.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+  - id: SYM-pl-test-period-start
+    title: TestPeriodStart
+    sourceFile: internal/jurisdiction/pl/calendar_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:38.635Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+  - id: SYM-pl-test-cpimonth
+    title: TestCPIMonth
+    sourceFile: internal/jurisdiction/pl/calendar_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:41.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+  - id: SYM-pl-test-period-rate
+    title: TestPeriodRate
+    sourceFile: internal/jurisdiction/pl/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:43.386Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+  - id: SYM-pl-test-period-rate-needs-the-index-reading
+    title: TestPeriodRateNeedsTheIndexReading
+    sourceFile: internal/jurisdiction/pl/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:46.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+  - id: SYM-pl-test-nominal
+    title: TestNominal
+    sourceFile: internal/jurisdiction/pl/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:48.648Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+  - id: SYM-pl-test-belka-tax
+    title: TestBelkaTax
+    sourceFile: internal/jurisdiction/pl/tax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:50.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-tax
+  - id: SYM-pl-test-belka-rate
+    title: TestBelkaRate
+    sourceFile: internal/jurisdiction/pl/tax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:53.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-tax
+  - id: SYM-pl-test-tax-rate-cutoff
+    title: TestTaxRateCutoff
+    sourceFile: internal/jurisdiction/pl/tax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:55.505Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-tax
+  - id: SYM-pl-test-helper-lot-case
+    title: lotCase
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:58.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-value-lot
+    title: TestValueLot
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:01.872Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-value-lot-rejects-bad-input
+    title: TestValueLotRejectsBadInput
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:04.793Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-lot-args
+    title: lotArgs
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:08.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-parse-lot
+    title: parseLot
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:11.955Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-dec
+    title: dec
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:14.466Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-series
+      - type: executable_for
+        target: TEST-pl-tax
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-date
+    title: date
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:17.128Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-tax
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-pln-money
+    title: plnMoney
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:19.494Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-tax
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-series
+    title: series
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:22.685Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-indices
+    title: indices
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:25.274Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-belka-tax-decimal
+    title: belkaTax
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:31.651Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-belka-tax
+      - type: implements
+        target: REQ-pl-tax-wrapper-exempt
+  - id: SYM-pl-lot-value-of-accrual
+    title: lotValue
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:36.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-belka-tax
+      - type: implements
+        target: REQ-pl-early-redemption-fee-cap
+  - id: SYM-valuation-pln
+    title: PLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:33.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-fxrate
+    title: FXRate
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:36.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+  - id: SYM-valuation-rate-on-or-before
+    title: RateOnOrBefore
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:38.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+  - id: SYM-valuation-to-pln
+    title: ToPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:41.303Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-convert-to-pln
+    title: ConvertToPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:43.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-round-pln
+    title: roundPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:46.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-price
+    title: Price
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:49.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-basis
+    title: Basis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:50.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-basis-string
+    title: Basis.String
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:53.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-parse-basis
+    title: ParseBasis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:56.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-valuation
+    title: Valuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:59.344Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-market-valuation
+    title: MarketValuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:01.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-bond-basis
+    title: BondBasis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:04.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-bond-valuation
+    title: BondValuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:08.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-test-helper-table
+    title: table
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:10.174Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-rate-on-or-before
+    title: TestRateOnOrBefore
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:11.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-rate-on-or-before-conflicts
+    title: TestRateOnOrBeforeConflicts
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:13.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-tax-rate-uses-the-table-before-the-event
+    title: TestTaxRateUsesTheTableBeforeTheEvent
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:16.156Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-to-pln
+    title: TestToPLN
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:18.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-to-plnneeds-the-amounts-currency
+    title: TestToPLNNeedsTheAmountsCurrency
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:19.967Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-convert-to-pln
+    title: TestConvertToPLN
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:22.204Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-basis-names
+    title: TestBasisNames
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:24.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-market-valuation
+    title: TestMarketValuation
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:26.429Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-bond-basis
+    title: TestBondBasis
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:28.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-bond-valuation
+    title: TestBondValuation
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:30.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-dec
+    title: dec
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:32.597Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-cur
+    title: cur
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:34.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-money
+    title: money
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:36.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-date
+    title: date
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:38.774Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-rate
+    title: rate
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:40.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-plugins-egress-host
+    title: EgressHost
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:52.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-parse-egress-host
+    title: ParseEgressHost
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:54.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-egress-host-string
+    title: EgressHost.String
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:57.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-compare-egress-hosts
+    title: compareEgressHosts
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:00.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-egress-host-validate
+    title: EgressHost.validate
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:02.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-validate-hostname
+    title: validateHostname
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:05.449Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-validate-label
+    title: validateLabel
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:07.958Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-is-lower-alnum
+    title: isLowerAlnum
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:10.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-is-digit
+    title: isDigit
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:13.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-is-digits
+    title: isDigits
+    sourceFile: internal/plugins/egress_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:16.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-host
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-host-canonical
+  - id: SYM-plugins-test-parse-egress-host
+    title: TestParseEgressHost
+    sourceFile: internal/plugins/egress_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:18.155Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-host
+  - id: SYM-plugins-test-egress-host-string
+    title: TestEgressHostString
+    sourceFile: internal/plugins/egress_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:20.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-host
+  - id: SYM-plugins-field-error
+    title: FieldError
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:22.705Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-field-error-error
+    title: FieldError.Error
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:25.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-field-error-unwrap
+    title: FieldError.Unwrap
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:28.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-field-err
+    title: fieldErr
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:31.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-indexed
+    title: indexed
+    sourceFile: internal/plugins/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:34.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-test-helper-host
+    title: host
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:36.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-helper-sample-plugin
+    title: samplePlugin
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:40.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-helper-full-grant
+    title: fullGrant
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:43.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-helper-field-error
+    title: fieldError
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:46.489Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-helper-field-errors
+    title: fieldErrors
+    sourceFile: internal/plugins/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:49.499Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-image-ref
+    title: ImageRef
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:51.426Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-parse-image-ref
+    title: ParseImageRef
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:54.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-repository
+    title: ImageRef.Repository
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:57.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-digest
+    title: ImageRef.Digest
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:01.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-string
+    title: ImageRef.String
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:04.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-is-zero
+    title: ImageRef.IsZero
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:07.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-image-ref-equal
+    title: ImageRef.Equal
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:10.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-valid-digest
+    title: validDigest
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:14.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-validate-repository
+    title: validateRepository
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:18.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-is-registry-host
+    title: isRegistryHost
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:21.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-validate-registry-host
+    title: validateRegistryHost
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:24.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-valid-path-component
+    title: validPathComponent
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:28.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-valid-separator
+    title: validSeparator
+    sourceFile: internal/plugins/image.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:31.126Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-image
+      - type: implements
+        target: REQ-AUTO-AC7E986366466A6A
+      - type: implements
+        target: REQ-plugins-image-digest-only
+  - id: SYM-plugins-test-parse-image-ref
+    title: TestParseImageRef
+    sourceFile: internal/plugins/image_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:33.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-image
+  - id: SYM-plugins-test-image-want
+    title: want
+    sourceFile: internal/plugins/image_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:35.896Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-image
+  - id: SYM-plugins-test-image-ref-equal
+    title: TestImageRefEqual
+    sourceFile: internal/plugins/image_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:38.300Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-image
+  - id: SYM-plugins-capability
+    title: Capability
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:40.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-capability-known
+    title: Capability.known
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:43.353Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-data-tier
+    title: DataTier
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:45.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-data-tier-valid
+    title: DataTier.valid
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:48.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-secret-mount
+    title: SecretMount
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:51.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-manifest
+    title: Manifest
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:53.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-manifest-validate
+    title: Manifest.Validate
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:56.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-manifest-requested
+    title: Manifest.Requested
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:59.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-capabilities
+    title: validateCapabilities
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:02.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-egress
+    title: validateEgress
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:06.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-data-tiers
+    title: validateDataTiers
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:09.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-secret-names
+    title: validateSecretNames
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:12.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-validate-secret-mounts
+    title: validateSecretMounts
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:16.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-valid-secret-name
+    title: validSecretName
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:19.921Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-valid-mount-path
+    title: validMountPath
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:24.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-paths-overlap
+    title: pathsOverlap
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:27.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-overlapping-paths
+    title: overlappingPaths
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:29.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-duplicates
+    title: duplicates
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:32.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-sorted-copy
+    title: sortedCopy
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:34.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-test-manifest-validate
+    title: TestManifestValidate
+    sourceFile: internal/plugins/manifest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:37.388Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+  - id: SYM-plugins-test-manifest-requested
+    title: TestManifestRequested
+    sourceFile: internal/plugins/manifest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:39.555Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+  - id: SYM-plugins-permissions
+    title: Permissions
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:41.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-permissions-is-empty
+    title: Permissions.IsEmpty
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:43.905Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-upgrade-approval-diff
+  - id: SYM-plugins-permissions-validate
+    title: Permissions.validate
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:46.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-permissions-sorted
+    title: Permissions.sorted
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:50.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-plugin
+    title: Plugin
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:51.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-plugin-validate
+    title: Plugin.Validate
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:54.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-grant
+    title: Grant
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:56.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-grant-validate
+    title: Grant.Validate
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:59.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-valid-plugin-name
+    title: validPluginName
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:02.317Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-prefixed
+    title: prefixed
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:04.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-check-pair
+    title: checkPair
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:07.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-upgrade-approval-diff
+  - id: SYM-plugins-needs-approval
+    title: NeedsApproval
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:09.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-upgrade-approval-diff
+  - id: SYM-plugins-missing
+    title: missing
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:12.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-plugins-upgrade-approval-diff
+  - id: SYM-plugins-test-plugin-validate
+    title: TestPluginValidate
+    sourceFile: internal/plugins/permissions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:14.539Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-grant-validate
+    title: TestGrantValidate
+    sourceFile: internal/plugins/permissions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:16.695Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-needs-approval
+    title: TestNeedsApproval
+    sourceFile: internal/plugins/permissions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:18.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-test-needs-approval-nil
+    title: TestNeedsApprovalNil
+    sourceFile: internal/plugins/permissions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:21.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-plugin-grant
+  - id: SYM-plugins-egress-allow-list
+    title: EgressAllowList
+    sourceFile: internal/plugins/allowlist.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:15.410Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-exact-match
+  - id: SYM-plugins-egress-allow-list-allows
+    title: EgressAllowList.Allows
+    sourceFile: internal/plugins/allowlist.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:17.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-exact-match
+  - id: SYM-plugins-test-egress-allow-list-allows
+    title: TestEgressAllowListAllows
+    sourceFile: internal/plugins/allowlist_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:19.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list
+  - id: SYM-plugins-service
+    title: Service
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:20.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-topology
+    title: Topology
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:22.580Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-peer
+    title: Peer
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:25.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-plugins-network-policy-core-and-proxy
+  - id: SYM-plugins-network-rule
+    title: NetworkRule
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:27.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-plugins-network-policy-core-and-proxy
+  - id: SYM-plugins-network-policy
+    title: NetworkPolicy
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:30.571Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-3C8B1ED0D820F0C9
+      - type: implements
+        target: REQ-plugins-network-policy-core-and-proxy
+  - id: SYM-plugins-service-account
+    title: ServiceAccount
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:33.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-projected-token
+    title: ProjectedToken
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:35.623Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-secret-volume
+    title: SecretVolume
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:38.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-env-var
+    title: EnvVar
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:40.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-workload
+    title: Workload
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:43.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-compile
+    title: Compile
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:47.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-plugins-network-policy-core-and-proxy
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+      - type: implements
+        target: REQ-plugins-workload-identity-secrets
+  - id: SYM-plugins-topology-validate
+    title: Topology.validate
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:50.236Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-service-validate
+    title: Service.validate
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:52.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-service-host-port
+    title: Service.hostPort
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:55.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-plugins-test-compile-topology
+    title: topology
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:29:57.888Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-identity-parts
+    title: identityParts
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:00.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile
+    title: TestCompile
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:02.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-never-allows-dns
+    title: TestCompileNeverAllowsDNS
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:04.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-check-only-core-and-proxy
+    title: checkOnlyCoreAndProxy
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:06.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-deterministic
+    title: TestCompileDeterministic
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:08.628Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-test-compile-nil
+    title: TestCompileNil
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:10.794Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-plugins-effective-permissions
+    title: EffectivePermissions
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:12.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective
+    title: Effective
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:15.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-both
+    title: both
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:18.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-plugin
+    title: EffectivePermissions.Plugin
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:21.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-image
+    title: EffectivePermissions.Image
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:23.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-capabilities
+    title: EffectivePermissions.Capabilities
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:26.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-egress
+    title: EffectivePermissions.Egress
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:28.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-secrets
+    title: EffectivePermissions.Secrets
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:31.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-data-tiers
+    title: EffectivePermissions.DataTiers
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:34.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-config
+    title: EffectivePermissions.Config
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:37.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-effective-permissions-equal
+    title: EffectivePermissions.Equal
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:39.887Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-test-effective-effective-view
+    title: effectiveView
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:42.428Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-test-effective-view-of
+    title: viewOf
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:45.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-test-effective
+    title: TestEffective
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:47.691Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-test-effective-equal
+    title: TestEffectiveEqual
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:50.519Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-test-effective-accessors-copy
+    title: TestEffectiveAccessorsCopy
+    sourceFile: internal/plugins/effective_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:53.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-effective
+  - id: SYM-plugins-service-account-name
+    title: ServiceAccountName
+    sourceFile: internal/plugins/identity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:56.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-identity
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-identity-service-account
+  - id: SYM-plugins-plugin-for-service-account
+    title: PluginForServiceAccount
+    sourceFile: internal/plugins/identity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:59.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-identity
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-identity-service-account
+  - id: SYM-plugins-test-service-account-name
+    title: TestServiceAccountName
+    sourceFile: internal/plugins/identity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:01.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-identity
+  - id: SYM-plugins-test-plugin-for-service-account
+    title: TestPluginForServiceAccount
+    sourceFile: internal/plugins/identity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:03.890Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-identity
+  - id: SYM-plugins-test-identity-result
+    title: result
+    sourceFile: internal/plugins/identity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:06.584Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-identity
+  - id: SYM-plugins-egress-forbidden-prefixes
+    title: ForbiddenPrefixes
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:28.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-egress-check-address
+    title: CheckAddress
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:31.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-egress-embedded-ipv4
+    title: embeddedIPv4
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:35.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-test-check-address
+    title: TestCheckAddress
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:37.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address
+  - id: SYM-plugins-test-check-address-invalid
+    title: TestCheckAddressInvalid
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:40.215Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address
+  - id: SYM-plugins-test-forbidden-prefixes
+    title: TestForbiddenPrefixes
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:43.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address
+  - id: SYM-portfolio-role
+    title: Role
+    sourceFile: internal/portfolio/sleeve.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:13:38.491Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve
+      - type: implements
+        target: REQ-portfolio-sleeve-role
+  - id: SYM-portfolio-parse-role
+    title: ParseRole
+    sourceFile: internal/portfolio/sleeve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:13:40.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve
+      - type: implements
+        target: REQ-portfolio-sleeve-role
+  - id: SYM-portfolio-role-string
+    title: Role.String
+    sourceFile: internal/portfolio/sleeve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:13:43.176Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve
+      - type: implements
+        target: REQ-portfolio-sleeve-role
+  - id: SYM-portfolio-sleeve-id
+    title: SleeveID
+    sourceFile: internal/portfolio/sleeve.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:13:45.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve
+      - type: implements
+        target: REQ-portfolio-sleeve-role
+  - id: SYM-portfolio-sleeve
+    title: Sleeve
+    sourceFile: internal/portfolio/sleeve.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:13:46.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve
+      - type: implements
+        target: REQ-portfolio-sleeve-role
+  - id: SYM-portfolio-sleeve-validate
+    title: Sleeve.Validate
+    sourceFile: internal/portfolio/sleeve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:13:48.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-sleeve
+      - type: implements
+        target: REQ-portfolio-sleeve-role
+  - id: SYM-portfolio-test-sleeve-validate
+    title: TestSleeveValidate
+    sourceFile: internal/portfolio/sleeve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:13:50.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve
+  - id: SYM-portfolio-test-parse-role
+    title: TestParseRole
+    sourceFile: internal/portfolio/sleeve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:13:52.540Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-sleeve
+  - id: SYM-ledger-account-id
+    title: AccountID
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:05.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-account-sleeve
+  - id: SYM-ledger-account
+    title: Account
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:08.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-account-sleeve
+  - id: SYM-ledger-account-validate
+    title: Account.Validate
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:11.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-account-sleeve
+  - id: SYM-ledger-book-kind
+    title: BookKind
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:13.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-book-kind-string
+    title: BookKind.String
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:17.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-book
+    title: Book
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:19.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-cash-book
+    title: CashBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:23.826Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-holding-book
+    title: HoldingBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:26.891Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-fee-book
+    title: FeeBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:29.582Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-withholding-tax-book
+    title: WithholdingTaxBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:32.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-fx-book
+    title: FXBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:34.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-equity-book
+    title: EquityBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:37.668Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-book-validate
+    title: Book.Validate
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:40.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-book-string
+    title: Book.String
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:43.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-test-account-validate
+    title: TestAccountValidate
+    sourceFile: internal/ledger/account_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:45.328Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+  - id: SYM-ledger-test-book-validate
+    title: TestBookValidate
+    sourceFile: internal/ledger/account_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:47.428Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+  - id: SYM-ledger-test-book-constructors
+    title: TestBookConstructors
+    sourceFile: internal/ledger/account_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:49.803Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+  - id: SYM-ledger-transaction-header
+    title: TransactionHeader
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:51.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-transaction-header-transaction
+    title: TransactionHeader.transaction
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:54.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-transaction-header-build
+    title: TransactionHeader.build
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:57.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-validated
+    title: validated
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:00.389Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-buy
+    title: NewBuy
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:02.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-sell
+    title: NewSell
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:05.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-dividend
+    title: NewDividend
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:07.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-fee
+    title: NewFee
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:10.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-fx-conversion
+    title: NewFXConversion
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:13.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-deposit
+    title: NewDeposit
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:16.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-withdrawal
+    title: NewWithdrawal
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:18.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-opening-lot
+    title: NewOpeningLot
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:21.721Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-ledger-opening-lot-entry
+  - id: SYM-ledger-fee-postings
+    title: feePostings
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:24.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-need-positive
+    title: needPositive
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:26.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-need-not-negative
+    title: needNotNegative
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:28.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-test-transaction-constructors
+    title: TestTransactionConstructors
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:30.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ledger-test-helper-check-built
+    title: checkBuilt
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:32.269Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ledger-test-kind-names
+    title: TestKindNames
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:34.249Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ledger-test-helper-dec
+    title: dec
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:36.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-cur
+    title: cur
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:39.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-money
+    title: money
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:41.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-qty
+    title: qty
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:44.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-date
+    title: date
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:48.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-instrument
+    title: instrument
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:51.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-header
+    title: header
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:54.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-isin
+    title: ISIN
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:55.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-parse-isin
+    title: ParseISIN
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:58.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-isin-digits
+    title: isinDigits
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:00.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-luhn-valid
+    title: luhnValid
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:02.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-isin-string
+    title: ISIN.String
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:05.134Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-isin-is-zero
+    title: ISIN.IsZero
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:07.343Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-isin-equal
+    title: ISIN.Equal
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:09.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-instrument
+    title: Instrument
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:11.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-instrument-validate
+    title: Instrument.Validate
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:14.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-instrument-string
+    title: Instrument.String
+    sourceFile: internal/ledger/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:17.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument
+      - type: implements
+        target: REQ-ledger-isin
+  - id: SYM-ledger-test-parse-isin
+    title: TestParseISIN
+    sourceFile: internal/ledger/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:19.993Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-instrument
+  - id: SYM-ledger-test-instrument-validate
+    title: TestInstrumentValidate
+    sourceFile: internal/ledger/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:22.283Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-instrument
+  - id: SYM-ledger-test-helper-rng
+    title: rng
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:25.146Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-rng-next
+    title: rng.next
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:27.949Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-rng-intn
+    title: rng.intn
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:30.935Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-rng-decimal
+    title: rng.decimal
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:34.012Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-random-transaction
+    title: randomTransaction
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:37.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-property-postings-sum-to-zero-per-currency
+    title: TestPropertyPostingsSumToZeroPerCurrency
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:39.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-transaction-key
+    title: TransactionKey
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:41.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+  - id: SYM-ledger-transaction-key-string
+    title: TransactionKey.String
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:43.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+  - id: SYM-ledger-transaction-kind
+    title: TransactionKind
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:44.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-transaction-kind-string
+    title: TransactionKind.String
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:47.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-posting
+    title: Posting
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:48.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-posting-validate
+    title: Posting.Validate
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:50.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-ledger-posting-ledger-account
+  - id: SYM-ledger-transaction
+    title: Transaction
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:52.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-unbalanced-error
+    title: UnbalancedError
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:53.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-unbalanced-error-error
+    title: UnbalancedError.Error
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:56.536Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-transaction-validate
+    title: Transaction.Validate
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:27:58.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-transaction-validate-header
+    title: Transaction.validateHeader
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:01.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-sums-by-currency
+    title: sumsByCurrency
+    sourceFile: internal/ledger/transaction.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:04.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transaction
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-postings-zero-sum
+  - id: SYM-ledger-test-transaction-validate
+    title: TestTransactionValidate
+    sourceFile: internal/ledger/transaction_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:06.440Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-check-validate-error
+    title: checkValidateError
+    sourceFile: internal/ledger/transaction_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:08.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-ptr
+    title: ptr
+    sourceFile: internal/ledger/transaction_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:28:10.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-must
+    title: must
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:36.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-versioned-transaction
+    title: VersionedTransaction
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:40.249Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-import-decision
+    title: ImportDecision
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:42.685Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-import-decision-string
+    title: ImportDecision.String
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:45.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-import-result
+    title: ImportResult
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:47.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-decide-import
+    title: DecideImport
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:50.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-ledger-import-idempotent
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-current-of
+    title: currentOf
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:53.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-CACBF41A8E14837D
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-current-transactions
+    title: CurrentTransactions
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:57.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-current-versions
+  - id: SYM-ledger-fingerprint
+    title: Fingerprint
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:59.966Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+      - type: implements
+        target: REQ-ledger-import-idempotent
+  - id: SYM-ledger-field
+    title: field
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:03.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+      - type: implements
+        target: REQ-ledger-import-idempotent
+  - id: SYM-ledger-date-or-empty
+    title: dateOrEmpty
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:06.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+      - type: implements
+        target: REQ-ledger-import-idempotent
+  - id: SYM-ledger-test-decide-import
+    title: TestDecideImport
+    sourceFile: internal/ledger/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:08.922Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-test-current-transactions
+    title: TestCurrentTransactions
+    sourceFile: internal/ledger/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:10.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-test-fingerprint-covers-every-field
+    title: TestFingerprintCoversEveryField
+    sourceFile: internal/ledger/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:12.977Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-test-import-decision-names
+    title: TestImportDecisionNames
+    sourceFile: internal/ledger/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:14.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-holding
+    title: Holding
+    sourceFile: internal/ledger/holding.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:31.395Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-holding
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-holding-derivation
+  - id: SYM-ledger-holding-on
+    title: HoldingOn
+    sourceFile: internal/ledger/holding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:33.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-holding
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-holding-derivation
+  - id: SYM-ledger-holdings-on
+    title: HoldingsOn
+    sourceFile: internal/ledger/holding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:36.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-holding
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-holding-derivation
+  - id: SYM-ledger-current-in-account
+    title: currentInAccount
+    sourceFile: internal/ledger/holding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:38.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-holding
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-current-versions
+  - id: SYM-ledger-test-helper-holding-log
+    title: holdingLog
+    sourceFile: internal/ledger/holding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:40.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-holding
+  - id: SYM-ledger-test-holding-on
+    title: TestHoldingOn
+    sourceFile: internal/ledger/holding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:41.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-holding
+  - id: SYM-ledger-test-holdings-on
+    title: TestHoldingsOn
+    sourceFile: internal/ledger/holding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:43.652Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-holding
+  - id: SYM-ledger-test-holdings-on-invalid-log
+    title: TestHoldingsOnInvalidLog
+    sourceFile: internal/ledger/holding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:45.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-holding
+  - id: SYM-ledger-lot
+    title: Lot
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:48.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-fifo
+  - id: SYM-ledger-oversell-error
+    title: OversellError
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:49.533Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-oversell
+  - id: SYM-ledger-oversell-error-error
+    title: OversellError.Error
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:51.912Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-oversell
+  - id: SYM-ledger-lot-consumption
+    title: LotConsumption
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:54.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-fifo
+  - id: SYM-ledger-consume-fifo
+    title: ConsumeFIFO
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:56.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-fifo
+      - type: implements
+        target: REQ-ledger-oversell
+  - id: SYM-ledger-consumed-cost
+    title: consumedCost
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:39:59.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-lot-cost-split
+  - id: SYM-ledger-sorted-lots
+    title: sortedLots
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:01.580Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-fifo
+  - id: SYM-ledger-lots-on
+    title: LotsOn
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:03.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-fifo
+  - id: SYM-ledger-acquisitions
+    title: acquisitions
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:06.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-fifo
+      - type: implements
+        target: REQ-ledger-opening-lot-entry
+  - id: SYM-ledger-apply-disposals
+    title: applyDisposals
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:08.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-fifo
+      - type: implements
+        target: REQ-ledger-oversell
+  - id: SYM-ledger-test-helper-lot
+    title: lot
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:10.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-consume-fifo
+    title: TestConsumeFIFO
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:12.326Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-helper-check-oversell
+    title: checkOversell
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:14.122Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-consume-fifo-cost-split-adds-up
+    title: TestConsumeFIFOCostSplitAddsUp
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:15.979Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-helper-lot-log
+    title: lotLog
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:18.381Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-lots-on
+    title: TestLotsOn
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:21.662Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-lots-on-oversell
+    title: TestLotsOnOversell
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:24.069Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-helper-random-lots
+    title: randomLots
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:27.266Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-total-units
+    title: totalUnits
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:30.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-cost-by-origin
+    title: costByOrigin
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:33.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-fifo-before
+    title: fifoBefore
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:36.933Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-property-fifo-consumes-oldest-first-and-conserves-cost
+    title: TestPropertyFIFOConsumesOldestFirstAndConservesCost
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:40.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-check-fifo-case
+    title: checkFIFOCase
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:43.287Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-check-fifo-order
+    title: checkFIFOOrder
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:46.865Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-property-oversell-consumes-nothing
+    title: TestPropertyOversellConsumesNothing
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:49.380Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-property-lots-match-holding
+    title: TestPropertyLotsMatchHolding
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:51.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-test-helper-check-lots-match-holding
+    title: checkLotsMatchHolding
+    sourceFile: internal/ledger/property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:40:54.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-properties
+  - id: SYM-ledger-balance-assertion
+    title: BalanceAssertion
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:04.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-cash-assertion
+    title: CashAssertion
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:08.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-holding-assertion
+    title: HoldingAssertion
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:12.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-balance-assertion-validate
+    title: BalanceAssertion.Validate
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:15.717Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-assertion-mismatch-error
+    title: AssertionMismatchError
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:17.943Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-assertion-mismatch-error-error
+    title: AssertionMismatchError.Error
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:22.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-check-balance-assertion
+    title: CheckBalanceAssertion
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:25.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-cash-on
+    title: CashOn
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:28.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-balance-on
+    title: balanceOn
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:31.005Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-test-check-balance-assertion
+    title: TestCheckBalanceAssertion
+    sourceFile: internal/ledger/assertion_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:33.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-assertion
+  - id: SYM-ledger-test-helper-check-mismatch
+    title: checkMismatch
+    sourceFile: internal/ledger/assertion_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:36.891Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-assertion
+  - id: SYM-ledger-test-cash-on
+    title: TestCashOn
+    sourceFile: internal/ledger/assertion_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:39.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-assertion
+  - id: SYM-valuation-app-rate-provider
+    title: RateProvider
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:33.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-AUTO-D1568676DF81CAF7
+      - type: implements
+        target: REQ-valuation-fx-no-data
+  - id: SYM-valuation-app-date-range
+    title: DateRange
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:37.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-valuation-fx-range-splitting
+  - id: SYM-valuation-app-split-range
+    title: SplitRange
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:41.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-valuation-fx-range-splitting
+  - id: SYM-valuation-app-fetch-rates
+    title: FetchRates
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:46.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-AUTO-D1568676DF81CAF7
+      - type: implements
+        target: REQ-valuation-fx-range-splitting
+  - id: SYM-valuation-app-compare-rates
+    title: compareRates
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:50.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-valuation-fx-range-splitting
+  - id: SYM-valuation-app-test-split-range
+    title: TestSplitRange
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:55.033Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-fetch-rates
+    title: TestFetchRates
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:59.468Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-fetch-rates-with-no-tables
+    title: TestFetchRatesWithNoTables
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:04.082Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-fetch-rates-stops-at-the-first-failure
+    title: TestFetchRatesStopsAtTheFirstFailure
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:08.367Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-fake-provider
+    title: fakeProvider
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:12.276Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-fake-provider-rates
+    title: fakeProvider.Rates
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:16.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-date
+    title: date
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:20.034Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-ranges
+    title: ranges
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:23.891Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-rate
+    title: rate
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:27.676Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-nbp-client
+    title: Client
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:28.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-AUTO-D1568676DF81CAF7
+      - type: implements
+        target: REQ-valuation-nbp-request
+  - id: SYM-valuation-nbp-new
+    title: New
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:32.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-request
+  - id: SYM-valuation-nbp-client-rates
+    title: Client.Rates
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:36.752Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-fx-no-data
+      - type: implements
+        target: REQ-valuation-nbp-request
+  - id: SYM-valuation-nbp-read-response
+    title: readResponse
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:41.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-fx-no-data
+      - type: implements
+        target: REQ-valuation-nbp-request
+  - id: SYM-valuation-nbp-table
+    title: table
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:46.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-decimal-exact
+  - id: SYM-valuation-nbp-rate
+    title: rate
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:50.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-decimal-exact
+  - id: SYM-valuation-nbp-parse-tables
+    title: parseTables
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:56.152Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-decimal-exact
+  - id: SYM-valuation-nbp-map-rate
+    title: mapRate
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:00.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-decimal-exact
+  - id: SYM-valuation-nbp-test-helper-recording-client
+    title: recordingClient
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:05.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-user-agent-and-headers-validator
+    title: userAgentAndHeadersValidator
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:08.986Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-table-a
+    title: TestRatesTableA
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:13.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-no-data
+    title: TestRatesNoData
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:17.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-keeps-every-digit
+    title: TestRatesKeepsEveryDigit
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:20.825Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-sends-its-own-user-agent
+    title: TestRatesSendsItsOwnUserAgent
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:24.683Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-rejects
+    title: TestRatesRejects
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:27.940Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-stub-transport-round-trip
+    title: stubTransport.RoundTrip
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:31.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-stub-client
+    title: stubClient
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:34.971Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-date
+    title: date
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:38.695Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-rate
+    title: rate
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:43.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-stub-transport
+    title: stubTransport
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:45.705Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-pl-purchase
+    title: Purchase
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:05:02.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-belka-tax
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-validate-lot
+    title: validateLot
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:05:05.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-test-helper-run-lot-cases
+    title: runLotCases
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:05:09.461Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-value-lot-matches-interest-tables
+    title: TestValueLotMatchesInterestTables
+    sourceFile: internal/jurisdiction/pl/official_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:05:12.383Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+  - id: SYM-pl-test-value-lot-matches-worked-examples
+    title: TestValueLotMatchesWorkedExamples
+    sourceFile: internal/jurisdiction/pl/official_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:05:15.135Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official
+  - id: SYM-pl-test-helper-at
+    title: at
+    sourceFile: internal/jurisdiction/pl/official_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:05:17.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-official

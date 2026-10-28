@@ -13,3 +13,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2c4f83b6cc5
+  - id: rel-3158d7d60270
+    type: executable_for
+    from: SYM-kernel-test-decimal-round
+    to: TEST-kernel-decimal
+    created_at: "2026-10-28T04:50:53.241Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-ledger-field
+    to: REQ-ledger-import-idempotent
+    created_at: 2026-10-28T05:33:03.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cdf189abba3
+  - type: implements
+    from: SYM-ledger-field
+    to: REQ-AUTO-F19F621B67F14F4F
+    created_at: 2026-10-28T05:33:03.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa64f7269c10
+  - type: covered_by
+    from: SYM-ledger-field
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:33:03.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d444579f5463
+  - type: constrains
+    from: REQ-valuation-nbp-decimal-exact
+    to: FACT-SUBJECT-1234A04FD2D1B677
+    created_at: 2026-10-28T05:57:19.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b2578a59b0
+  - type: requires_property
+    from: REQ-valuation-nbp-decimal-exact
+    to: FACT-PROP-138E19A568472763
+    created_at: 2026-10-28T05:57:19.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-711d88b32aea
+  - type: specified_by
+    from: REQ-valuation-nbp-decimal-exact
+    to: SCEN-valuation-nbp-decimal-exact
+    created_at: 2026-10-28T05:57:19.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0e8da44ec56

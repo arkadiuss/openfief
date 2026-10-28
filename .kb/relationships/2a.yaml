@@ -1,0 +1,50 @@
+relationships:
+  - id: rel-2f592734efdb
+    type: executable_for
+    from: SYM-ledger-test-holdings-on
+    to: TEST-ledger-holding
+    created_at: "2026-10-28T05:39:43.806Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: constrains
+    from: REQ-valuation-fx-no-data
+    to: FACT-SUBJECT-D433B5FCB6CC2162
+    created_at: 2026-10-28T05:54:30.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c3b7e659a92
+  - type: requires_property
+    from: REQ-valuation-fx-no-data
+    to: FACT-PROP-33DFA6F1083EAE4F
+    created_at: 2026-10-28T05:54:30.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e36439b1e2fa
+  - type: specified_by
+    from: REQ-valuation-fx-no-data
+    to: SCEN-valuation-fx-no-data
+    created_at: 2026-10-28T05:54:30.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c193de7dd45b
+  - type: implements
+    from: SYM-valuation-app-fetch-rates
+    to: REQ-valuation-fx-range-splitting
+    created_at: 2026-10-28T05:54:47.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-432e68d3e172
+  - type: implements
+    from: SYM-valuation-app-fetch-rates
+    to: REQ-AUTO-D1568676DF81CAF7
+    created_at: 2026-10-28T05:54:47.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e9022e88ef
+  - type: covered_by
+    from: SYM-valuation-app-fetch-rates
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:54:47.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8818b5e6745e

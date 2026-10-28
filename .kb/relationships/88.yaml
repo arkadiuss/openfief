@@ -1,0 +1,71 @@
+relationships:
+  - id: rel-413d828022a4
+    type: executable_for
+    from: SYM-ledger-test-helper-date
+    to: TEST-ledger-instrument
+    created_at: "2026-10-28T05:26:48.285Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-ledger-test-helper-date
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:26:48.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3007bc058a41
+  - type: executable_for
+    from: SYM-ledger-test-helper-date
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:26:48.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cfe6c564885
+  - type: executable_for
+    from: SYM-ledger-test-helper-date
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:48.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e95d31787b0e
+  - type: executable_for
+    from: SYM-ledger-test-helper-date
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:26:48.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7574117e4d0
+  - type: implements
+    from: SYM-ledger-instrument-validate
+    to: REQ-ledger-isin
+    created_at: 2026-10-28T05:27:14.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d61fee89271
+  - type: covered_by
+    from: SYM-ledger-instrument-validate
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:27:14.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06561fa1287a
+  - type: constrains
+    from: REQ-valuation-nbp-request
+    to: FACT-SUBJECT-1234A04FD2D1B677
+    created_at: 2026-10-28T05:57:26.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d3a9704536
+  - type: requires_property
+    from: REQ-valuation-nbp-request
+    to: FACT-PROP-41ADB9320F97CB86
+    created_at: 2026-10-28T05:57:26.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1d55b9fdf84
+  - type: specified_by
+    from: REQ-valuation-nbp-request
+    to: SCEN-valuation-nbp-request
+    created_at: 2026-10-28T05:57:26.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-919b8bb0645a

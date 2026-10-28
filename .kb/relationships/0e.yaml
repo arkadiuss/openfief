@@ -13,3 +13,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04ae3754da98
+  - type: constrains
+    from: REQ-kernel-currency-code
+    to: FACT-SUBJECT-524E18219804106C
+    created_at: 2026-10-28T04:48:52.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27a7288aea4e
+  - type: requires_property
+    from: REQ-kernel-currency-code
+    to: FACT-PROP-D8A2187483F7A51C
+    created_at: 2026-10-28T04:48:52.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e290e67e1b9
+  - type: specified_by
+    from: REQ-kernel-currency-code
+    to: SCEN-kernel-currency-code
+    created_at: 2026-10-28T04:48:52.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ce91932e284
+  - type: implements
+    from: SYM-valuation-app-compare-rates
+    to: REQ-valuation-fx-range-splitting
+    created_at: 2026-10-28T05:54:51.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa00f7fe46e4
+  - type: covered_by
+    from: SYM-valuation-app-compare-rates
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:54:51.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91ef3f5c466e

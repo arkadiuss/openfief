@@ -13,3 +13,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1175c484e79
+  - type: implements
+    from: SYM-pl-cpimonth
+    to: REQ-pl-cpi-indexation
+    created_at: 2026-10-28T05:23:21.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04afc40022ab
+  - type: covered_by
+    from: SYM-pl-cpimonth
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:23:21.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03749218ad17
+  - type: implements
+    from: SYM-plugins-service-account
+    to: REQ-plugins-workload-identity-secrets
+    created_at: 2026-10-28T05:29:33.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5ae58bf8be2
+  - type: implements
+    from: SYM-plugins-service-account
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T05:29:33.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3119bc8021f3
+  - type: covered_by
+    from: SYM-plugins-service-account
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:33.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f482e4e824b7
+  - type: executable_for
+    from: SYM-plugins-test-service-account-name
+    to: TEST-plugins-identity
+    created_at: 2026-10-28T05:31:01.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a29261b37e59
+  - type: verified_by
+    from: SCEN-ledger-holding-derivation
+    to: TEST-ledger-holding
+    created_at: 2026-10-28T05:39:01.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69b662a1d931
+  - type: verified_by
+    from: SCEN-ledger-holding-derivation
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:39:01.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abbf3c44bfab

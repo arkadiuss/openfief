@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Tests for scripts/check-docs.sh against a throwaway copy of the docs (kibi: TEST-tooling-docs-check).
 set -euo pipefail
+# A git hook exports these for the outer repository; the throwaway repository below must not inherit them.
+unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
 
 root="$(git rev-parse --show-toplevel)"
 work="$(mktemp -d)"

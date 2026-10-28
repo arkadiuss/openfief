@@ -13,3 +13,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe3d9b817ede
+  - type: implements
+    from: SYM-kernel-parse-date
+    to: REQ-kernel-calendar-date
+    created_at: 2026-10-28T04:49:39.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54a146d7a461
+  - type: covered_by
+    from: SYM-kernel-parse-date
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:49:39.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0029ad2b9e83
+  - type: executable_for
+    from: SYM-pl-test-bond-type-structure
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:24:33.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec94cc4e7476
+  - type: executable_for
+    from: SYM-pl-test-maturity
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:24:36.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-853668fbb8d6
+  - type: implements
+    from: SYM-plugins-validate-capabilities
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:25:02.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41f38ebd8677
+  - type: implements
+    from: SYM-plugins-validate-capabilities
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:25:02.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad46ae9e1f6
+  - type: covered_by
+    from: SYM-plugins-validate-capabilities
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:25:02.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adda1764f625
+  - type: implements
+    from: SYM-ledger-holdings-on
+    to: REQ-ledger-holding-derivation
+    created_at: 2026-10-28T05:39:36.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0cebf07e8ce
+  - type: implements
+    from: SYM-ledger-holdings-on
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T05:39:36.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52b8244b2257
+  - type: covered_by
+    from: SYM-ledger-holdings-on
+    to: TEST-ledger-holding
+    created_at: 2026-10-28T05:39:36.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a23fabc828a5

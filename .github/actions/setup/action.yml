@@ -1,0 +1,58 @@
+name: Set up OpenFief tooling
+description: >-
+  Go and Task (at the Taskfile's TASK_VERSION); unless `tools` is false, also Node and `task setup:ci`
+  (pinned tools, kibi and this branch's knowledge base). Every later step only calls task targets.
+inputs:
+  tools:
+    description: Also install Node, the pinned tools and kibi through `task setup:ci`
+    required: false
+    default: 'true'
+runs:
+  using: composite
+  steps:
+    - name: Set up Go (go.mod)
+      if: hashFiles('go.mod') != ''
+      uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+      with:
+        go-version-file: go.mod
+        cache-dependency-path: |
+          **/go.sum
+          Taskfile.yml
+
+    - name: Set up Go (no go.mod yet)
+      if: hashFiles('go.mod') == ''
+      uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+      with:
+        # renovate: datasource=golang-version depName=go
+        go-version: 1.27.3
+        cache-dependency-path: Taskfile.yml
+
+    # The only tool installed outside a task target: Task must exist before any target can run.
+    # The version is read from Taskfile.yml, so it stays pinned in one place.
+    - name: Install Task
+      shell: bash
+      run: |
+        version="$(sed -nE 's/^  TASK_VERSION: *([^ #]+).*/\1/p' Taskfile.yml)"
+        GOBIN="$GITHUB_WORKSPACE/.bin" go install "github.com/go-task/task/v3/cmd/task@${version}"
+        echo "$GITHUB_WORKSPACE/.bin" >>"$GITHUB_PATH"
+
+    # kibi compiles one store per branch and refuses to write on a detached HEAD, which is what
+    # actions/checkout gives (a PR's merge ref, or a pushed commit). KIBI_BRANCH names the branch.
+    - name: Name the kibi branch
+      shell: bash
+      env:
+        BRANCH: ${{ github.head_ref || github.ref_name }}
+      run: echo "KIBI_BRANCH=$BRANCH" >>"$GITHUB_ENV"
+
+    - name: Set up Node
+      if: inputs.tools == 'true'
+      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        # renovate: datasource=node-version depName=node
+        node-version: 22.23.4
+        cache: npm
+
+    - name: task setup:ci
+      if: inputs.tools == 'true'
+      shell: bash
+      run: task setup:ci

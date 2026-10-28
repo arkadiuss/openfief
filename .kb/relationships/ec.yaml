@@ -1,0 +1,43 @@
+relationships:
+  - id: rel-8e1c6d0da391
+    type: implements
+    from: SYM-kernel-quantity-string
+    to: REQ-kernel-decimal-exact
+    created_at: "2026-10-28T04:52:25.110Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-quantity-string
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:25.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-317162818add
+  - id: rel-6f275ad8f0a7
+    type: executable_for
+    from: SYM-release-notes-test-expect-notes
+    to: TEST-tooling-release-notes
+    created_at: "2026-10-28T04:52:09.508Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: constrains
+    from: REQ-ledger-posting-ledger-account
+    to: FACT-SUBJECT-8B6CCDF464EA6977
+    created_at: 2026-10-28T05:24:36.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e60b224a986
+  - type: requires_property
+    from: REQ-ledger-posting-ledger-account
+    to: FACT-PROP-1E5435CCDFFAE89C
+    created_at: 2026-10-28T05:24:37.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83aacbbde597
+  - type: specified_by
+    from: REQ-ledger-posting-ledger-account
+    to: SCEN-ledger-posting-ledger-account
+    created_at: 2026-10-28T05:24:37.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3356c0c517cf

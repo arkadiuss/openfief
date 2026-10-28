@@ -1,0 +1,43 @@
+relationships:
+  - id: rel-1ab184b54b06
+    type: implements
+    from: SYM-pl-accrue
+    to: REQ-pl-bond-accrual
+    created_at: "2026-10-28T05:24:26.025Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-pl-accrue
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:24:26.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04e59d1d5fa6
+  - id: rel-078aaae531fe
+    type: implements
+    from: SYM-plugins-field-err
+    to: REQ-plugins-manifest-validation
+    created_at: "2026-10-28T05:23:31.652Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-plugins-field-err
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:23:31.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d399c37735a8
+  - type: implements
+    from: SYM-valuation-app-date-range
+    to: REQ-valuation-fx-range-splitting
+    created_at: 2026-10-28T05:54:37.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66c5fb73fb80
+  - type: covered_by
+    from: SYM-valuation-app-date-range
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:54:37.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d512526eb6

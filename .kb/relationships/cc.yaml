@@ -13,3 +13,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5272c86b661
+  - type: constrains
+    from: REQ-kernel-calendar-date
+    to: FACT-SUBJECT-0BC452734091A8CF
+    created_at: 2026-10-28T04:48:59.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61f06ac0091f
+  - type: requires_property
+    from: REQ-kernel-calendar-date
+    to: FACT-PROP-CA78F85A3A88AC04
+    created_at: 2026-10-28T04:48:59.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de00490c28c6
+  - type: specified_by
+    from: REQ-kernel-calendar-date
+    to: SCEN-kernel-calendar-date
+    created_at: 2026-10-28T04:48:59.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eaf64df907f
+  - type: implements
+    from: SYM-plugins-image-ref
+    to: REQ-plugins-image-digest-only
+    created_at: 2026-10-28T05:23:51.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18d8b1726d1c
+  - type: implements
+    from: SYM-plugins-image-ref
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T05:23:51.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02561a5968a4
+  - type: covered_by
+    from: SYM-plugins-image-ref
+    to: TEST-plugins-image
+    created_at: 2026-10-28T05:23:51.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc699ba4ed4e
+  - type: implements
+    from: SYM-plugins-valid-separator
+    to: REQ-plugins-image-digest-only
+    created_at: 2026-10-28T05:24:31.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b318c8e3b906
+  - type: implements
+    from: SYM-plugins-valid-separator
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T05:24:31.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff0668d6074c
+  - type: covered_by
+    from: SYM-plugins-valid-separator
+    to: TEST-plugins-image
+    created_at: 2026-10-28T05:24:31.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd0968b6a780
+  - type: executable_for
+    from: SYM-ledger-test-helper-random-lots
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:40:27.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ba6dfae601b

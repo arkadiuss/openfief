@@ -1,0 +1,64 @@
+relationships:
+  - id: rel-3bede28b5a78
+    type: implements
+    from: SYM-kernel-date-month
+    to: REQ-kernel-calendar-date
+    created_at: "2026-10-28T04:49:44.116Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-date-month
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:49:44.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6a400220486
+  - type: implements
+    from: SYM-plugins-network-policy
+    to: REQ-plugins-network-policy-core-and-proxy
+    created_at: 2026-10-28T05:29:30.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ebe1c6f5cba
+  - type: implements
+    from: SYM-plugins-network-policy
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-28T05:29:30.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa8408ddde36
+  - type: covered_by
+    from: SYM-plugins-network-policy
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T05:29:30.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1a97bc1e2d0
+  - type: implements
+    from: SYM-ledger-import-decision
+    to: REQ-ledger-import-supersede
+    created_at: 2026-10-28T05:32:43.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-876d815dd5b6
+  - type: implements
+    from: SYM-ledger-import-decision
+    to: REQ-AUTO-22E70B6530E994B1
+    created_at: 2026-10-28T05:32:43.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0934e2524a05
+  - type: covered_by
+    from: SYM-ledger-import-decision
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:32:43.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f646a235e57e
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-provider-rates
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:55:16.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3579ac03f52

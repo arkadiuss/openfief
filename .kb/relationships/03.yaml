@@ -13,3 +13,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1dcd783087f
+  - type: validates
+    from: TEST-plugins-compile
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-28T05:27:58.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dc1f864b68b
+  - type: validates
+    from: TEST-plugins-compile
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:27:58.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9d135164cf2
+  - type: validates
+    from: TEST-plugins-compile
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T05:27:58.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2ece0fa2adc
+  - type: validates
+    from: TEST-plugins-compile
+    to: REQ-AUTO-8CBFBD6A12E0865B
+    created_at: 2026-10-28T05:27:58.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a895086391c
+  - type: implements
+    from: SYM-plugins-effective-permissions-capabilities
+    to: REQ-plugins-effective-intersection
+    created_at: 2026-10-28T05:30:26.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6f28c9d2e7f
+  - type: implements
+    from: SYM-plugins-effective-permissions-capabilities
+    to: REQ-AUTO-12177128A788CEDC
+    created_at: 2026-10-28T05:30:26.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0970ae0abe41
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-capabilities
+    to: TEST-plugins-effective
+    created_at: 2026-10-28T05:30:26.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06d87721ce9d

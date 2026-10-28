@@ -1,0 +1,50 @@
+relationships:
+  - id: rel-52f1f8758faf
+    type: implements
+    from: SYM-pl-maturity
+    to: REQ-pl-series-code
+    created_at: "2026-10-28T05:23:15.254Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-pl-maturity
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:23:15.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-613cb6b48290
+  - id: rel-55d74ce5a598
+    type: implements
+    from: SYM-plugins-egress-check-address
+    to: REQ-plugins-egress-forbidden-addresses
+    created_at: "2026-10-28T05:32:32.069Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-egress-check-address
+    to: REQ-AUTO-79189DB32149E23F
+    created_at: 2026-10-28T05:32:32.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ff928999a20
+  - type: covered_by
+    from: SYM-plugins-egress-check-address
+    to: TEST-plugins-egress-address
+    created_at: 2026-10-28T05:32:32.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e51f5c6e0871
+  - id: rel-5466a8dfc2c0
+    type: implements
+    from: SYM-portfolio-role-string
+    to: REQ-portfolio-sleeve-role
+    created_at: "2026-10-28T05:13:43.299Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-portfolio-role-string
+    to: TEST-portfolio-sleeve
+    created_at: 2026-10-28T05:13:43.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce9bb1d000e1

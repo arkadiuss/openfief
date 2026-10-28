@@ -1,0 +1,57 @@
+relationships:
+  - id: rel-9dfccffac6a8
+    type: constrains
+    from: REQ-valuation-market-value
+    to: FACT-SUBJECT-716249F643A39736
+    created_at: "2026-10-28T05:30:26.671Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-valuation-market-value
+    to: FACT-PROP-0573285B2027FECA
+    created_at: 2026-10-28T05:30:26.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7a1348589f0
+  - type: specified_by
+    from: REQ-valuation-market-value
+    to: SCEN-valuation-market-value
+    created_at: 2026-10-28T05:30:26.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1c48ad1e288
+  - id: rel-ed429be23f0e
+    type: implements
+    from: SYM-plugins-validate-data-tiers
+    to: REQ-plugins-manifest-validation
+    created_at: "2026-10-28T05:25:09.969Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-validate-data-tiers
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:25:09.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d042314d6f4e
+  - type: covered_by
+    from: SYM-plugins-validate-data-tiers
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:25:09.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53991d826566
+  - id: rel-a9a55499eb97
+    type: verified_by
+    from: SCEN-ledger-opening-lot-entry
+    to: TEST-ledger-events
+    created_at: "2026-10-28T05:24:09.416Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-ledger-opening-lot-entry
+    to: TEST-ledger-lot
+    created_at: 2026-10-28T05:38:59.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43c6a73358e0

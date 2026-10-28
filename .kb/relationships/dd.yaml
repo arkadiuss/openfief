@@ -1,0 +1,92 @@
+relationships:
+  - id: rel-931aa510bc8c
+    type: implements
+    from: SYM-kernel-currency-mismatch-error
+    to: REQ-kernel-money-currency-mismatch
+    created_at: "2026-10-28T04:51:06.027Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-kernel-currency-mismatch-error
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:06.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-131b9633010c
+  - type: covered_by
+    from: SYM-kernel-currency-mismatch-error
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:06.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0bbae866c2c
+  - type: constrains
+    from: REQ-valuation-fx-rate-lookup
+    to: FACT-SUBJECT-1F1960A35C9FB983
+    created_at: 2026-10-28T05:30:05.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6314d1b296b7
+  - type: requires_property
+    from: REQ-valuation-fx-rate-lookup
+    to: FACT-PROP-D159EFA34903A097
+    created_at: 2026-10-28T05:30:05.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a8d17bc03bb
+  - type: specified_by
+    from: REQ-valuation-fx-rate-lookup
+    to: SCEN-valuation-fx-rate-lookup
+    created_at: 2026-10-28T05:30:05.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74175baa573a
+  - type: executable_for
+    from: SYM-plugins-test-helper-field-errors
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:23:49.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-942016f0675d
+  - type: executable_for
+    from: SYM-plugins-test-helper-field-errors
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:23:49.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc4eed67e1a7
+  - type: implements
+    from: SYM-ledger-new-fee
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-28T05:26:10.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab171f500f21
+  - type: implements
+    from: SYM-ledger-new-fee
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-10-28T05:26:10.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd1e941ed694
+  - type: covered_by
+    from: SYM-ledger-new-fee
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:26:10.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14004eb5411d
+  - type: verified_by
+    from: SCEN-valuation-fx-no-data
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:54:17.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75955b0bf8d9
+  - type: verified_by
+    from: SCEN-valuation-fx-no-data
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:57:07.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90d13c32fd7a

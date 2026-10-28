@@ -1,0 +1,40 @@
+# Deploys to the Hetzner k3s demo environment (docs/dev/sdlc.md): main from ci.yml, betas from release.yml.
+# Callers gate it on the repository variable DEMO_ENABLED; see the deploy-demo job in ci.yml for setup.
+# The kubeconfig is the DEMO_KUBECONFIG secret of the protected `demo` environment, never the repository.
+name: Deploy demo
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: Release version being deployed; empty for main
+        type: string
+        required: false
+        default: ''
+
+permissions: {}
+
+jobs:
+  deploy:
+    name: deploy to demo
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: demo
+    concurrency:
+      group: deploy-demo
+      cancel-in-progress: false
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: task deploy:demo
+        run: task deploy:demo
+        env:
+          DEMO_KUBECONFIG: ${{ secrets.DEMO_KUBECONFIG }}
+          VERSION: ${{ inputs.version }}

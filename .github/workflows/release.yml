@@ -1,0 +1,118 @@
+# Release workflow (docs/dev/sdlc.md#releases): started by hand, always plans and builds as a dry run first,
+# and publishes only when dry_run is false, from main, by the repository owner.
+#   beta:   YYYY.M.N-beta.K, signed images and a tag; deploys to demo (skipped until DEMO_ENABLED is set).
+#   stable: YYYY.M.N, signed images, a tag and a GitHub release with the CRDs and bootstrap install
+#           (packaged from deploy/ once it exists).
+# Release notes come from Conventional Commits through scripts/release-notes.sh (task release:notes).
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Release channel
+        type: choice
+        options: [beta, stable]
+        required: true
+      version:
+        description: YYYY.M.N for stable, YYYY.M.N-beta.K for beta (no v prefix)
+        type: string
+        required: true
+      dry_run:
+        description: Validate and build only; publish nothing
+        type: boolean
+        default: true
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    name: plan (dry run)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    outputs:
+      publish: ${{ !inputs.dry_run }}
+    steps:
+      - name: Only the owner publishes, from main
+        if: ${{ !inputs.dry_run && (github.actor != github.repository_owner || github.ref != 'refs/heads/main') }}
+        run: |
+          echo "release: only $OWNER publishes, and only from main (actor $ACTOR, ref $REF); use dry_run" >&2
+          exit 1
+        env:
+          OWNER: ${{ github.repository_owner }}
+          ACTOR: ${{ github.actor }}
+          REF: ${{ github.ref }}
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Release notes and the tag check need every commit and tag.
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: task release:check
+        run: task release:check CHANNEL="$CHANNEL" VERSION="$VERSION"
+        env:
+          CHANNEL: ${{ inputs.channel }}
+          VERSION: ${{ inputs.version }}
+      - name: task release:notes
+        run: task release:notes VERSION="$VERSION" >>"$GITHUB_STEP_SUMMARY"
+        env:
+          VERSION: ${{ inputs.version }}
+      - name: task release:assets
+        run: task release:assets VERSION="$VERSION"
+        env:
+          VERSION: ${{ inputs.version }}
+
+  images:
+    name: images
+    needs: plan
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    uses: ./.github/workflows/images.yml
+    with:
+      push: ${{ needs.plan.outputs.publish == 'true' }}
+      version: ${{ inputs.version }}
+
+  publish:
+    name: publish
+    needs: [plan, images]
+    if: needs.plan.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write # create the tag and the GitHub release
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: task release:publish
+        run: task release:publish CHANNEL="$CHANNEL" VERSION="$VERSION"
+        env:
+          CHANNEL: ${{ inputs.channel }}
+          VERSION: ${{ inputs.version }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+
+  deploy-demo:
+    # Betas deploy to demo. Skipped until the demo machine exists: see the deploy-demo job in ci.yml.
+    name: deploy demo
+    needs: [plan, publish]
+    if: needs.plan.outputs.publish == 'true' && inputs.channel == 'beta' && vars.DEMO_ENABLED == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-demo.yml
+    with:
+      version: ${{ inputs.version }}

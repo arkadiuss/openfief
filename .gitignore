@@ -8,9 +8,11 @@
 .env.kibi
 
 # Node dev tooling (kibi)
-node_modules/
+/node_modules
 
 # Pinned dev tools and generated reports
-.bin/
+/.bin
 kibi-report/
 .task/
+dist/
+/.claude/worktrees/

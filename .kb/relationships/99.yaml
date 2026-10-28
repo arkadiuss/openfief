@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4873caaba25a
+  - id: rel-40c92e2db8c9
+    type: implements
+    from: SYM-kernel-date-equal
+    to: REQ-kernel-calendar-date
+    created_at: "2026-10-28T04:49:59.366Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-date-equal
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:49:59.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1ee468f6da1
+  - type: executable_for
+    from: SYM-pl-test-belka-rate
+    to: TEST-pl-tax
+    created_at: 2026-10-28T05:24:53.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30b5e56851ff

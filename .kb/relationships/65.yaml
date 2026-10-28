@@ -1,0 +1,57 @@
+relationships:
+  - id: rel-62a2a53e0563
+    type: implements
+    from: SYM-kernel-money-add
+    to: REQ-kernel-money-currency-mismatch
+    created_at: "2026-10-28T04:51:21.101Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-kernel-money-add
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:21.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-474f83ea52b2
+  - type: covered_by
+    from: SYM-kernel-money-add
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:21.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-767466ae1bab
+  - type: implements
+    from: SYM-pl-bond-type-structure
+    to: REQ-pl-bond-accrual
+    created_at: 2026-10-28T05:22:45.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60a469e822ea
+  - type: covered_by
+    from: SYM-pl-bond-type-structure
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:22:45.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-255e174f19de
+  - type: implements
+    from: SYM-ledger-date-or-empty
+    to: REQ-ledger-import-idempotent
+    created_at: 2026-10-28T05:33:06.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb05dd070482
+  - type: implements
+    from: SYM-ledger-date-or-empty
+    to: REQ-AUTO-F19F621B67F14F4F
+    created_at: 2026-10-28T05:33:06.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96fed926315c
+  - type: covered_by
+    from: SYM-ledger-date-or-empty
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:33:06.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0379cbe30877

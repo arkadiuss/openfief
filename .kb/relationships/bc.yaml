@@ -1,0 +1,50 @@
+relationships:
+  - id: rel-ec45b61797ea
+    type: executable_for
+    from: SYM-kernel-test-parse-quantity
+    to: TEST-kernel-quantity
+    created_at: "2026-10-28T04:52:29.928Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: constrains
+    from: REQ-plugins-proxy-env-and-allow-list
+    to: FACT-SUBJECT-927927C04D44139D
+    created_at: 2026-10-28T05:28:41.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46c83e705bbb
+  - type: requires_property
+    from: REQ-plugins-proxy-env-and-allow-list
+    to: FACT-PROP-A6E61A86C4B8338E
+    created_at: 2026-10-28T05:28:41.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f9ad5a51acb
+  - type: specified_by
+    from: REQ-plugins-proxy-env-and-allow-list
+    to: SCEN-plugins-network-policy-no-egress
+    created_at: 2026-10-28T05:28:41.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1df8670f2192
+  - type: implements
+    from: SYM-ledger-balance-assertion
+    to: REQ-ledger-assertion-mismatch
+    created_at: 2026-10-28T05:44:04.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7462d2ac9d15
+  - type: implements
+    from: SYM-ledger-balance-assertion
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T05:44:04.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2040a508437e
+  - type: covered_by
+    from: SYM-ledger-balance-assertion
+    to: TEST-ledger-assertion
+    created_at: 2026-10-28T05:44:05.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d72613b78c4

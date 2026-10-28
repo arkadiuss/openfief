@@ -7,4 +7,4 @@ origin:
 id: SCEN-tooling-vuln-offline
 type: scenario
 ---
-Given the npm registry is unreachable, when task vuln runs, then it reports that npm audit failed and exits non-zero, locally and in CI alike.
+Given the npm registry refuses connections, or an egress proxy refuses vuln.go.dev with 403 Forbidden, when task vuln runs, then it reports which check failed and exits non-zero, locally and in CI alike.

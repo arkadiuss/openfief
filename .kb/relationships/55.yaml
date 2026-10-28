@@ -1,0 +1,85 @@
+relationships:
+  - id: rel-ff626a25f4c8
+    type: implements
+    from: SYM-kernel-date-before
+    to: REQ-kernel-calendar-date
+    created_at: "2026-10-28T04:49:55.120Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-date-before
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:49:55.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b978923e585
+  - type: implements
+    from: SYM-plugins-parse-image-ref
+    to: REQ-plugins-image-digest-only
+    created_at: 2026-10-28T05:23:55.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42d9ab41b376
+  - type: implements
+    from: SYM-plugins-parse-image-ref
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T05:23:55.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c336bf0781e7
+  - type: covered_by
+    from: SYM-plugins-parse-image-ref
+    to: TEST-plugins-image
+    created_at: 2026-10-28T05:23:55.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60050ea71f97
+  - type: implements
+    from: SYM-plugins-capability
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:24:40.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe8afc4e1a39
+  - type: implements
+    from: SYM-plugins-capability
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:24:40.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef38d71d298d
+  - type: covered_by
+    from: SYM-plugins-capability
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:24:40.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-596ec925892e
+  - type: executable_for
+    from: SYM-plugins-test-identity-result
+    to: TEST-plugins-identity
+    created_at: 2026-10-28T05:31:07.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01cf09e62d15
+  - type: implements
+    from: SYM-ledger-parse-isin
+    to: REQ-ledger-isin
+    created_at: 2026-10-28T05:26:58.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47cf8c7562af
+  - type: covered_by
+    from: SYM-ledger-parse-isin
+    to: TEST-ledger-instrument
+    created_at: 2026-10-28T05:26:58.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5321c282c760
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-ranges
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:55:24.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7975edc04a57

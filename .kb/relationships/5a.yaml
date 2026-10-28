@@ -13,3 +13,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fc574710c64
+  - type: executable_for
+    from: SYM-pl-test-helper-series
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:25:22.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59a4cada66f6
+  - type: executable_for
+    from: SYM-pl-test-helper-series
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:25:22.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f7921b27b1
+  - type: executable_for
+    from: SYM-pl-test-helper-series
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:25:22.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bd7f2aeaf44
+  - type: implements
+    from: SYM-plugins-egress-host
+    to: REQ-plugins-egress-host-canonical
+    created_at: 2026-10-28T05:22:52.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0f5add6c8d
+  - type: implements
+    from: SYM-plugins-egress-host
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:22:52.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13105a459366
+  - type: covered_by
+    from: SYM-plugins-egress-host
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:22:52.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f44373fc5f3
+  - type: executable_for
+    from: SYM-pl-test-helper-series
+    to: TEST-pl-official
+    created_at: 2026-10-28T06:05:29.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c4564d3a443

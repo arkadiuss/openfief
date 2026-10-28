@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-d28d1e41ace2
+    type: implements
+    from: SYM-release-notes-previous-release
+    to: REQ-tooling-release-notes
+    created_at: "2026-10-28T04:52:02.802Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-release-notes-previous-release
+    to: TEST-tooling-release-notes
+    created_at: 2026-10-28T04:52:02.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55567930d814
