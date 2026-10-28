@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-f9aab106f339
+    type: implements
+    from: SYM-pl-bond-type-code
+    to: REQ-pl-series-code
+    created_at: "2026-10-28T05:22:57.977Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-pl-bond-type-code
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:22:57.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6972fa4524d1

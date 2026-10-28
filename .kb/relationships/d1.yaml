@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T04:51:33.312Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-kernel-test-decimal-quo
+    to: TEST-kernel-decimal-quo
+    created_at: 2026-10-28T05:11:52.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90ed919dbcca
+  - type: executable_for
+    from: SYM-valuation-test-to-plnneeds-the-amounts-currency
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:31:20.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b91601697849

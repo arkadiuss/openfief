@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-9b0202b319f2
+    type: implements
+    from: SYM-pl-pln
+    to: REQ-pl-bond-accrual
+    created_at: "2026-10-28T05:23:27.468Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-pl-pln
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:23:27.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e655e25b9e4

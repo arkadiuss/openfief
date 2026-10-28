@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fc574710c64
+  - type: executable_for
+    from: SYM-pl-test-helper-series
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:25:22.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59a4cada66f6
+  - type: executable_for
+    from: SYM-pl-test-helper-series
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:25:22.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f7921b27b1
+  - type: executable_for
+    from: SYM-pl-test-helper-series
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:25:22.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bd7f2aeaf44

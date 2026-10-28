@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-2c8ba26cbd96
+    type: executable_for
+    from: SYM-pl-test-helper-parse-lot
+    to: TEST-pl-value
+    created_at: "2026-10-28T05:25:12.158Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-pl-lot-value-of-accrual
+    to: REQ-pl-belka-tax
+    created_at: 2026-10-28T05:26:36.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4a6b3247745
+  - type: implements
+    from: SYM-pl-lot-value-of-accrual
+    to: REQ-pl-early-redemption-fee-cap
+    created_at: 2026-10-28T05:26:36.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19bc9fb1fa64
+  - type: covered_by
+    from: SYM-pl-lot-value-of-accrual
+    to: TEST-pl-value
+    created_at: 2026-10-28T05:26:36.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b43431a7109b

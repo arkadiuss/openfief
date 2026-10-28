@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-0e856fcde08f
+    type: validates
+    from: TEST-valuation-valuation
+    to: REQ-AUTO-0C90AD924924F4F6
+    created_at: "2026-10-28T05:29:48.216Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: validates
+    from: TEST-valuation-valuation
+    to: REQ-AUTO-E10BE8CE13E67657
+    created_at: 2026-10-28T05:29:48.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ffedaa235f7
+  - type: validates
+    from: TEST-valuation-valuation
+    to: REQ-AUTO-A129ED289B2239A8
+    created_at: 2026-10-28T05:29:48.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-742570f64ba2

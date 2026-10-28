@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0029ad2b9e83
+  - type: executable_for
+    from: SYM-pl-test-bond-type-structure
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:24:33.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec94cc4e7476
+  - type: executable_for
+    from: SYM-pl-test-maturity
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:24:36.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-853668fbb8d6

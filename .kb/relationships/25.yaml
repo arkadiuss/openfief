@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cfa3c924effa
+  - type: implements
+    from: SYM-pl-tax-wrapper
+    to: REQ-pl-tax-wrapper-exempt
+    created_at: 2026-10-28T05:23:45.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91aec2fc2856
+  - type: covered_by
+    from: SYM-pl-tax-wrapper
+    to: TEST-pl-tax
+    created_at: 2026-10-28T05:23:45.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95c86387b34f

@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94c4e84e43f4
+  - type: verified_by
+    from: SCEN-pl-series-code
+    to: TEST-pl-series
+    created_at: 2026-10-28T05:21:20.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fd7a5ca3c57
+  - type: verified_by
+    from: SCEN-pl-series-code
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:21:20.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a93687b2b05a
+  - type: executable_for
+    from: SYM-pl-test-tax-rate-cutoff
+    to: TEST-pl-tax
+    created_at: 2026-10-28T05:24:55.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eda0eb8502f9

@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1175c484e79
+  - type: implements
+    from: SYM-pl-cpimonth
+    to: REQ-pl-cpi-indexation
+    created_at: 2026-10-28T05:23:21.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04afc40022ab
+  - type: covered_by
+    from: SYM-pl-cpimonth
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:23:21.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03749218ad17

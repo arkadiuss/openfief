@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e59ba445fbd
+  - type: implements
+    from: SYM-valuation-basis
+    to: REQ-valuation-bond-basis
+    created_at: 2026-10-28T05:30:51.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2176874d4e59
+  - type: covered_by
+    from: SYM-valuation-basis
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:30:51.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cf5a3114664
+  - type: executable_for
+    from: SYM-valuation-test-helper-rate
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:31:40.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcd9f501aa05

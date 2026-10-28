@@ -1312,3 +1312,1134 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-release-notes
+  - id: SYM-kernel-decimal-quo
+    title: Decimal.Quo
+    sourceFile: internal/kernel/quotient.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:48.512Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal-quo
+      - type: implements
+        target: REQ-kernel-decimal-quotient
+  - id: SYM-kernel-last-digit-odd
+    title: lastDigitOdd
+    sourceFile: internal/kernel/quotient.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:50.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal-quo
+      - type: implements
+        target: REQ-kernel-decimal-quotient
+  - id: SYM-kernel-test-decimal-quo
+    title: TestDecimalQuo
+    sourceFile: internal/kernel/quotient_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:11:52.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal-quo
+  - id: SYM-pl-bond-type
+    title: BondType
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:43.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-bond-type-structure
+    title: BondType.Structure
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:45.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-bond-type-string
+    title: BondType.String
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:47.752Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-indexation
+    title: Indexation
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:49.984Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-payout
+    title: Payout
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:52.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-structure
+    title: Structure
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:55.011Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-bond-type-code
+    title: bondTypeCode
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:22:57.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-bond-types
+    title: bondTypes
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:00.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-series
+    title: Series
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:01.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-parse-series
+    title: ParseSeries
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:04.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-two-digits
+    title: twoDigits
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:07.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-series-string
+    title: Series.String
+    sourceFile: internal/jurisdiction/pl/series.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:09.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-series
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-add-months
+    title: addMonths
+    sourceFile: internal/jurisdiction/pl/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:12.370Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-calendar
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-maturity
+    title: Maturity
+    sourceFile: internal/jurisdiction/pl/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:15.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-calendar
+      - type: implements
+        target: REQ-pl-series-code
+  - id: SYM-pl-period-start
+    title: PeriodStart
+    sourceFile: internal/jurisdiction/pl/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:17.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-calendar
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-cpimonth
+    title: CPIMonth
+    sourceFile: internal/jurisdiction/pl/calendar.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:21.083Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-calendar
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-nominal
+    title: Nominal
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:24.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-pln
+    title: pln
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:27.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-terms
+    title: Terms
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:28.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-bond-accrual
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-indices
+    title: Indices
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:31.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-missing-index-error
+    title: MissingIndexError
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:33.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-missing-index-error-error
+    title: MissingIndexError.Error
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:36.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-terms-period-rate
+    title: Terms.PeriodRate
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:39.236Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-pl-cpi-indexation
+  - id: SYM-pl-terms-validate
+    title: Terms.validate
+    sourceFile: internal/jurisdiction/pl/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:42.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-tax-wrapper
+    title: TaxWrapper
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:45.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-tax-wrapper-exempt
+  - id: SYM-pl-belka-rate
+    title: BelkaRate
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:48.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-belka-tax
+  - id: SYM-pl-belka-tax
+    title: BelkaTax
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:52.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-belka-tax
+      - type: implements
+        target: REQ-pl-tax-wrapper-exempt
+  - id: SYM-pl-tax-rate-cutoff
+    title: TaxRateCutoff
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:23:58.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-tax-fx-rate-date
+  - id: SYM-pl-lot-value
+    title: LotValue
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:01.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-accrual
+    title: accrual
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:04.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-value-lot
+    title: ValueLot
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:08.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+      - type: implements
+        target: REQ-pl-early-redemption-fee-cap
+  - id: SYM-pl-capped-fee
+    title: cappedFee
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:11.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-early-redemption-fee-cap
+  - id: SYM-pl-period
+    title: period
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:18.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-terms-period
+    title: Terms.period
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:22.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-accrue
+    title: accrue
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:25.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-round-accrual
+    title: roundAccrual
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:28.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-bond-accrual
+  - id: SYM-pl-test-parse-series
+    title: TestParseSeries
+    sourceFile: internal/jurisdiction/pl/series_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:31.412Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-series
+  - id: SYM-pl-test-bond-type-structure
+    title: TestBondTypeStructure
+    sourceFile: internal/jurisdiction/pl/series_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:33.654Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-series
+  - id: SYM-pl-test-maturity
+    title: TestMaturity
+    sourceFile: internal/jurisdiction/pl/calendar_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:36.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+  - id: SYM-pl-test-period-start
+    title: TestPeriodStart
+    sourceFile: internal/jurisdiction/pl/calendar_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:38.635Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+  - id: SYM-pl-test-cpimonth
+    title: TestCPIMonth
+    sourceFile: internal/jurisdiction/pl/calendar_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:41.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+  - id: SYM-pl-test-period-rate
+    title: TestPeriodRate
+    sourceFile: internal/jurisdiction/pl/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:43.386Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+  - id: SYM-pl-test-period-rate-needs-the-index-reading
+    title: TestPeriodRateNeedsTheIndexReading
+    sourceFile: internal/jurisdiction/pl/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:46.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+  - id: SYM-pl-test-nominal
+    title: TestNominal
+    sourceFile: internal/jurisdiction/pl/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:48.648Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+  - id: SYM-pl-test-belka-tax
+    title: TestBelkaTax
+    sourceFile: internal/jurisdiction/pl/tax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:50.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-tax
+  - id: SYM-pl-test-belka-rate
+    title: TestBelkaRate
+    sourceFile: internal/jurisdiction/pl/tax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:53.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-tax
+  - id: SYM-pl-test-tax-rate-cutoff
+    title: TestTaxRateCutoff
+    sourceFile: internal/jurisdiction/pl/tax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:55.505Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-tax
+  - id: SYM-pl-test-helper-lot-case
+    title: lotCase
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:24:58.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-value-lot
+    title: TestValueLot
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:01.872Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-value-lot-rejects-bad-input
+    title: TestValueLotRejectsBadInput
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:04.793Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-lot-args
+    title: lotArgs
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:08.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-parse-lot
+    title: parseLot
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:11.955Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-dec
+    title: dec
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:14.466Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-series
+      - type: executable_for
+        target: TEST-pl-tax
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-date
+    title: date
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:17.128Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+      - type: executable_for
+        target: TEST-pl-tax
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-pln-money
+    title: plnMoney
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:19.494Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-tax
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-series
+    title: series
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:22.685Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-calendar
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-indices
+    title: indices
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:25:25.274Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-belka-tax-decimal
+    title: belkaTax
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:31.651Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-belka-tax
+      - type: implements
+        target: REQ-pl-tax-wrapper-exempt
+  - id: SYM-pl-lot-value-of-accrual
+    title: lotValue
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:26:36.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-belka-tax
+      - type: implements
+        target: REQ-pl-early-redemption-fee-cap
+  - id: SYM-valuation-pln
+    title: PLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:33.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-fxrate
+    title: FXRate
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:36.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+  - id: SYM-valuation-rate-on-or-before
+    title: RateOnOrBefore
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:38.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+  - id: SYM-valuation-to-pln
+    title: ToPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:41.303Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-convert-to-pln
+    title: ConvertToPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:43.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-round-pln
+    title: roundPLN
+    sourceFile: internal/valuation/fx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:46.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-pln-conversion
+  - id: SYM-valuation-price
+    title: Price
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:49.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-basis
+    title: Basis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:50.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-basis-string
+    title: Basis.String
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:53.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-parse-basis
+    title: ParseBasis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:56.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-valuation
+    title: Valuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:30:59.344Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-market-valuation
+    title: MarketValuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:01.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-market-value
+  - id: SYM-valuation-bond-basis
+    title: BondBasis
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:04.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-bond-valuation
+    title: BondValuation
+    sourceFile: internal/valuation/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:08.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-valuation
+      - type: implements
+        target: REQ-valuation-bond-basis
+  - id: SYM-valuation-test-helper-table
+    title: table
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:10.174Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-rate-on-or-before
+    title: TestRateOnOrBefore
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:11.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-rate-on-or-before-conflicts
+    title: TestRateOnOrBeforeConflicts
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:13.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-tax-rate-uses-the-table-before-the-event
+    title: TestTaxRateUsesTheTableBeforeTheEvent
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:16.156Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-to-pln
+    title: TestToPLN
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:18.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-to-plnneeds-the-amounts-currency
+    title: TestToPLNNeedsTheAmountsCurrency
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:19.967Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-convert-to-pln
+    title: TestConvertToPLN
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:22.204Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-basis-names
+    title: TestBasisNames
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:24.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-market-valuation
+    title: TestMarketValuation
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:26.429Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-bond-basis
+    title: TestBondBasis
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:28.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-bond-valuation
+    title: TestBondValuation
+    sourceFile: internal/valuation/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:30.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-dec
+    title: dec
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:32.597Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-cur
+    title: cur
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:34.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-money
+    title: money
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:36.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-date
+    title: date
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:38.774Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+      - type: executable_for
+        target: TEST-valuation-valuation
+  - id: SYM-valuation-test-helper-rate
+    title: rate
+    sourceFile: internal/valuation/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:31:40.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx

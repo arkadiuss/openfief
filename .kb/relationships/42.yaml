@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-31e923e1fa8d
+    type: implements
+    from: SYM-valuation-pln
+    to: REQ-valuation-pln-conversion
+    created_at: "2026-10-28T05:30:33.444Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-valuation-pln
+    to: TEST-valuation-fx
+    created_at: 2026-10-28T05:30:33.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d3dbe6e57f4

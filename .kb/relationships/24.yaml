@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1bebf2dc86c
+  - type: implements
+    from: SYM-valuation-price
+    to: REQ-valuation-market-value
+    created_at: 2026-10-28T05:30:49.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69cabec1c855
+  - type: covered_by
+    from: SYM-valuation-price
+    to: TEST-valuation-valuation
+    created_at: 2026-10-28T05:30:49.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36397442e2a8

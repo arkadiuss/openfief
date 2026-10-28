@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cca56e8e1448
+  - type: constrains
+    from: REQ-pl-early-redemption-fee-cap
+    to: FACT-SUBJECT-0DCF0E5888E9E6B0
+    created_at: 2026-10-28T05:22:01.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c2443cc9469
+  - type: requires_property
+    from: REQ-pl-early-redemption-fee-cap
+    to: FACT-PROP-EC2249412A76A32C
+    created_at: 2026-10-28T05:22:01.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55da5ab1c108
+  - type: specified_by
+    from: REQ-pl-early-redemption-fee-cap
+    to: SCEN-pl-early-redemption-fee-cap
+    created_at: 2026-10-28T05:22:01.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6c3b81e2421

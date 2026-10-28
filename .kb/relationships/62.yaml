@@ -55,3 +55,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b92455aa097a
+  - type: implements
+    from: SYM-pl-belka-tax
+    to: REQ-pl-belka-tax
+    created_at: 2026-10-28T05:23:52.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dbd5cfe82ee
+  - type: implements
+    from: SYM-pl-belka-tax
+    to: REQ-pl-tax-wrapper-exempt
+    created_at: 2026-10-28T05:23:52.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac8f84695cd
+  - type: covered_by
+    from: SYM-pl-belka-tax
+    to: TEST-pl-tax
+    created_at: 2026-10-28T05:23:52.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4f4c007ec43

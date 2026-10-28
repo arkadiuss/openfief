@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9218ef2a14ef
+  - type: implements
+    from: SYM-pl-add-months
+    to: REQ-pl-bond-accrual
+    created_at: 2026-10-28T05:23:12.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79c082d5b9ed
+  - type: covered_by
+    from: SYM-pl-add-months
+    to: TEST-pl-calendar
+    created_at: 2026-10-28T05:23:12.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6214571828c0

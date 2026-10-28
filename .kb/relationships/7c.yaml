@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-54b99d230561
+    type: executable_for
+    from: SYM-pl-test-helper-lot-case
+    to: TEST-pl-value
+    created_at: "2026-10-28T05:24:58.909Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

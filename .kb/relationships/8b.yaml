@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T04:48:15.495Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-pl-terms-period-rate
+    to: REQ-pl-cpi-indexation
+    created_at: 2026-10-28T05:23:39.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd757664861
+  - type: covered_by
+    from: SYM-pl-terms-period-rate
+    to: TEST-pl-terms
+    created_at: 2026-10-28T05:23:39.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c737f8e9edb
