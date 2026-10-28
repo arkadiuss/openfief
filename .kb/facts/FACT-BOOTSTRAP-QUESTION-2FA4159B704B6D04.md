@@ -13,4 +13,4 @@ origin:
 id: FACT-BOOTSTRAP-QUESTION-2FA4159B704B6D04
 type: fact
 ---
-Open question OQ-25, answered by the author in decisions D-52, D-53 and D-54 (docs/DESIGN.md): M0 has an optional model portfolio, off by default, as a weighted basket with a yearly-rebalanced backtest and historical max drawdowns.
+Open question OQ-25, answered by the author in decisions D-52, D-53, D-54 and D-61 (docs/DESIGN.md): M0 has an optional model portfolio, off by default, as a weighted basket with a yearly-rebalanced backtest and historical max drawdowns, compared with the portfolio's time-weighted return in the reporting currency.

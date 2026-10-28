@@ -22,10 +22,12 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Backtest | portfolio | `portfolio.Backtest` | The model portfolio's value series computed from end-of-day history, rebalanced to the target weights once a year. | simulation |
 | Max drawdown | portfolio | `portfolio.MaxDrawdown` | The worst fall from a peak to a later trough in a value series, with both dates. | max loss |
 | Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one role. Defensive: not available to agents. Offensive: the part fiefs are leased from. | bucket |
+| Jurisdiction pack | jurisdiction | `jurisdiction.Pack` | The pluggable rules for one country (GR-13): bond terms, tax rules, and the default reporting currency. Poland first. | locale, country plugin |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
 | Index | valuation | `valuation.Index` | A market index, such as WIG20 or MSCI World, with an end-of-day level series from the market-data connector. It can be a target, but it can't be held. | benchmark |
 | FX rate | valuation | `valuation.FXRate` | A rate to PLN; NBP table A in M0. | |
+| Reporting currency | valuation | `valuation.ReportingCurrency` | The currency totals, charts and the model comparison are shown in. A setting whose default comes from the jurisdiction pack: PLN for the Polish pack. | base currency, home currency |
 | Valuation | valuation | `valuation.Valuation` | The value of a holding on a date, with its basis and source. | |
 | Valuation basis | valuation | `valuation.Basis` | `market`, `gross_accrued` or `net_if_redeemed`. | |
 | Bond series | valuation | `valuation.Series` | A Polish treasury bond series code, such as EDO0536, with its terms. | bond (ambiguous) |

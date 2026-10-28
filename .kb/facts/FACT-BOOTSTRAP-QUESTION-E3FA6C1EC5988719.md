@@ -13,4 +13,4 @@ origin:
 id: FACT-BOOTSTRAP-QUESTION-E3FA6C1EC5988719
 type: fact
 ---
-Open question OQ-23, answered by research note R-15 (docs/research.md), read from Ghostfolio's source on 2026-10-28. D-4 holds; the sync mechanics it implies are proposal P-46 (docs/proposals/platform.md).
+Open question OQ-23, answered by research note R-15 (docs/research.md), read from Ghostfolio's source on 2026-10-28. D-4 holds; the author decided the sync mechanics it implies in D-64 (docs/DESIGN.md).

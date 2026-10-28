@@ -13,4 +13,4 @@ origin:
 id: FACT-BOOTSTRAP-QUESTION-AC9BEAE3D07D91C6
 type: fact
 ---
-Open question OQ-27, answered by research note R-14 (docs/research.md), read from Smokescreen's source on 2026-10-28: MIT licensed, maintained, and embeddable with a custom role function and per-role allow-lists. D-32 holds; how to embed it is proposal P-45 (docs/proposals/platform.md).
+Open question OQ-27, answered by research note R-14 (docs/research.md), read from Smokescreen's source on 2026-10-28: MIT licensed, maintained, and embeddable with a custom role function and per-role allow-lists. D-32 holds; the author decided how to embed it in D-63 (docs/DESIGN.md).
