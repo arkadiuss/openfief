@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1ec131849a8
+  - type: executable_for
+    from: SYM-valuation-nbp-test-helper-user-agent-and-headers-validator
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:58:09.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c433cf8078b

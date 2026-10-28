@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36397442e2a8
+  - type: implements
+    from: SYM-valuation-nbp-rate
+    to: REQ-valuation-nbp-decimal-exact
+    created_at: 2026-10-28T05:57:51.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-114aeb90a124
+  - type: covered_by
+    from: SYM-valuation-nbp-rate
+    to: TEST-valuation-nbp-client
+    created_at: 2026-10-28T05:57:51.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a60df34fe8f5

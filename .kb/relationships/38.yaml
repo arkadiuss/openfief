@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d6c29750d20
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-date
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:55:20.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bbdf663b6f8

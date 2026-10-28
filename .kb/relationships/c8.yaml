@@ -27,3 +27,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9d2ce21e26e
+  - type: verified_by
+    from: SCEN-valuation-fx-range-splitting
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:54:14.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b21e3e036dff

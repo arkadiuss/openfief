@@ -76,3 +76,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5321c282c760
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-ranges
+    to: TEST-valuation-app-rates
+    created_at: 2026-10-28T05:55:24.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7975edc04a57

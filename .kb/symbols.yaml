@@ -6078,3 +6078,397 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-assertion
+  - id: SYM-valuation-app-rate-provider
+    title: RateProvider
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:33.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-AUTO-D1568676DF81CAF7
+      - type: implements
+        target: REQ-valuation-fx-no-data
+  - id: SYM-valuation-app-date-range
+    title: DateRange
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:37.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-valuation-fx-range-splitting
+  - id: SYM-valuation-app-split-range
+    title: SplitRange
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:41.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-valuation-fx-range-splitting
+  - id: SYM-valuation-app-fetch-rates
+    title: FetchRates
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:46.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-AUTO-D1568676DF81CAF7
+      - type: implements
+        target: REQ-valuation-fx-range-splitting
+  - id: SYM-valuation-app-compare-rates
+    title: compareRates
+    sourceFile: internal/valuation/app/rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:50.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-rates
+      - type: implements
+        target: REQ-valuation-fx-range-splitting
+  - id: SYM-valuation-app-test-split-range
+    title: TestSplitRange
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:55.033Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-fetch-rates
+    title: TestFetchRates
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:54:59.468Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-fetch-rates-with-no-tables
+    title: TestFetchRatesWithNoTables
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:04.082Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-fetch-rates-stops-at-the-first-failure
+    title: TestFetchRatesStopsAtTheFirstFailure
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:08.367Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-fake-provider
+    title: fakeProvider
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:12.276Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-fake-provider-rates
+    title: fakeProvider.Rates
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:16.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-date
+    title: date
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:20.034Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-ranges
+    title: ranges
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:23.891Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-app-test-helper-rate
+    title: rate
+    sourceFile: internal/valuation/app/rates_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:55:27.676Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-rates
+  - id: SYM-valuation-nbp-client
+    title: Client
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:28.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-AUTO-D1568676DF81CAF7
+      - type: implements
+        target: REQ-valuation-nbp-request
+  - id: SYM-valuation-nbp-new
+    title: New
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:32.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-request
+  - id: SYM-valuation-nbp-client-rates
+    title: Client.Rates
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:36.752Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-fx-no-data
+      - type: implements
+        target: REQ-valuation-nbp-request
+  - id: SYM-valuation-nbp-read-response
+    title: readResponse
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:41.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-fx-no-data
+      - type: implements
+        target: REQ-valuation-nbp-request
+  - id: SYM-valuation-nbp-table
+    title: table
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:46.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-decimal-exact
+  - id: SYM-valuation-nbp-rate
+    title: rate
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:50.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-decimal-exact
+  - id: SYM-valuation-nbp-parse-tables
+    title: parseTables
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:57:56.152Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-decimal-exact
+  - id: SYM-valuation-nbp-map-rate
+    title: mapRate
+    sourceFile: internal/valuation/nbp/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:00.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-nbp-decimal-exact
+  - id: SYM-valuation-nbp-test-helper-recording-client
+    title: recordingClient
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:05.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-user-agent-and-headers-validator
+    title: userAgentAndHeadersValidator
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:08.986Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-table-a
+    title: TestRatesTableA
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:13.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-no-data
+    title: TestRatesNoData
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:17.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-keeps-every-digit
+    title: TestRatesKeepsEveryDigit
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:20.825Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-sends-its-own-user-agent
+    title: TestRatesSendsItsOwnUserAgent
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:24.683Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-rates-rejects
+    title: TestRatesRejects
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:27.940Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-stub-transport-round-trip
+    title: stubTransport.RoundTrip
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:31.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-stub-client
+    title: stubClient
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:34.971Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-date
+    title: date
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:38.695Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-rate
+    title: rate
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:43.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
+  - id: SYM-valuation-nbp-test-helper-stub-transport
+    title: stubTransport
+    sourceFile: internal/valuation/nbp/client_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:58:45.705Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-client
