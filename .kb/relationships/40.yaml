@@ -76,3 +76,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0833f19d9e4
+  - type: implements
+    from: SYM-ledger-pg-decode-holding
+    to: REQ-ledger-pg-store
+    created_at: 2026-10-28T06:32:35.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84cd7a1e2656
+  - type: covered_by
+    from: SYM-ledger-pg-decode-holding
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:32:35.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5b57aafde50
+  - type: implements
+    from: SYM-ledger-pg-scan-sleeve
+    to: REQ-ledger-pg-store
+    created_at: 2026-10-28T06:35:03.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4971da403004
+  - type: covered_by
+    from: SYM-ledger-pg-scan-sleeve
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:35:03.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76262db7f37f

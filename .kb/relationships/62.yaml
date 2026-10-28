@@ -139,3 +139,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95cfea9060f0
+  - type: implements
+    from: SYM-ledger-pg-migrate
+    to: REQ-ledger-pg-store
+    created_at: 2026-10-28T06:34:27.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5d4571f9e4c
+  - type: covered_by
+    from: SYM-ledger-pg-migrate
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:34:27.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74e045e043e9
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-check-result
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:35:41.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a38b5cd43dc

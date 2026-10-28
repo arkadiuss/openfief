@@ -155,6 +155,11 @@ tasks:
       - bash scripts/tests/release-version.test.sh
       - bash scripts/tests/release-notes.test.sh
 
+  test:pg:
+    desc: 'PostgreSQL integration tests on a disposable server (OPENFIEF_PG_DSN, or local PostgreSQL binaries), e.g. task test:pg -- -run TestAppend'
+    cmds:
+      - '{{.GO_GUARD}} bash scripts/test-pg.sh {{.CLI_ARGS}}'
+
   e2e:
     desc: End-to-end tests on a local k3s; refuses non-local clusters
     cmds:

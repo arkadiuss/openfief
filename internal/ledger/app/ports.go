@@ -62,4 +62,10 @@ type Store interface {
 	TransactionLog
 	Registry
 	AssertionStore
+	// InTx runs fn with a Store whose every call belongs to one database
+	// transaction, committed when fn returns nil and rolled back otherwise.
+	// On a Store that InTx passed in, it runs fn in that same transaction.
+	// It is the seam for work that must commit with an import, such as
+	// enqueueing a revaluation (D-36).
+	InTx(ctx context.Context, fn func(tx Store) error) error
 }

@@ -18,12 +18,14 @@ var ErrUnknownAccount = errors.New("unknown account")
 
 // Ledger runs the ledger context's use cases over a Store.
 type Ledger struct {
-	store Store
+	store    Store
+	onImport []ImportHook
 }
 
-// New returns the use cases over store.
-func New(store Store) *Ledger {
-	return &Ledger{store: store}
+// New returns the use cases over store. Every successful import calls
+// onImport, in order, inside its database transaction.
+func New(store Store, onImport ...ImportHook) *Ledger {
+	return &Ledger{store: store, onImport: onImport}
 }
 
 // SaveSleeve validates s and stores it, replacing a sleeve with its ID.
@@ -66,10 +68,10 @@ func hasSleeve(sleeves []portfolio.Sleeve, id portfolio.SleeveID) bool {
 	return false
 }
 
-// account returns the stored account id, or an error wrapping
+// lookupAccount returns the account id stored in store, or an error wrapping
 // ErrUnknownAccount.
-func (l *Ledger) account(ctx context.Context, id ledger.AccountID) (ledger.Account, error) {
-	a, err := l.store.Account(ctx, id)
+func lookupAccount(ctx context.Context, store Registry, id ledger.AccountID) (ledger.Account, error) {
+	a, err := store.Account(ctx, id)
 	if errors.Is(err, ErrNotFound) {
 		return ledger.Account{}, fmt.Errorf("%w: %s", ErrUnknownAccount, id)
 	}

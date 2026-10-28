@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9692fca51ad
+  - type: implements
+    from: SYM-ledger-pg-store-save-assertion-check
+    to: REQ-ledger-pg-store
+    created_at: 2026-10-28T06:32:01.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b589b385e975
+  - type: implements
+    from: SYM-ledger-pg-store-save-assertion-check
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T06:32:01.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b40691d78e2
+  - type: covered_by
+    from: SYM-ledger-pg-store-save-assertion-check
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:32:01.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-622eb534276d

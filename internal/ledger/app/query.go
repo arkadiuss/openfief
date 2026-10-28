@@ -30,7 +30,7 @@ func (l *Ledger) Accounts(ctx context.Context) ([]ledger.Account, error) {
 
 // Account returns the account id, or an error wrapping ErrUnknownAccount.
 func (l *Ledger) Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error) {
-	return l.account(ctx, id)
+	return lookupAccount(ctx, l.store, id)
 }
 
 // CurrentTransactions returns the current version of each of account's
@@ -106,7 +106,7 @@ func (l *Ledger) CashOn(ctx context.Context, account ledger.AccountID, on kernel
 // AssertionChecks returns account's balance assertions with the result of
 // their latest check, in date then ledger account order.
 func (l *Ledger) AssertionChecks(ctx context.Context, account ledger.AccountID) ([]AssertionCheck, error) {
-	if _, err := l.account(ctx, account); err != nil {
+	if _, err := lookupAccount(ctx, l.store, account); err != nil {
 		return nil, err
 	}
 	c, err := l.store.AssertionChecks(ctx, account)
@@ -118,7 +118,7 @@ func (l *Ledger) AssertionChecks(ctx context.Context, account ledger.AccountID) 
 
 // log returns the stored log of account, which must be stored.
 func (l *Ledger) log(ctx context.Context, account ledger.AccountID) ([]ledger.VersionedTransaction, error) {
-	if _, err := l.account(ctx, account); err != nil {
+	if _, err := lookupAccount(ctx, l.store, account); err != nil {
 		return nil, err
 	}
 	log, err := l.store.Log(ctx, account)

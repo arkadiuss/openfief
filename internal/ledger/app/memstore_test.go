@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"maps"
 	"slices"
 	"sort"
 	"sync"
@@ -28,6 +29,9 @@ type memStore struct {
 	// beforeAppend, when set, runs at the start of every Append, standing in
 	// for another import that appends between this one's read and write.
 	beforeAppend func(s *memStore, v *ledger.VersionedTransaction) error
+	// outside are versions that another import committed, which a rollback
+	// of this one keeps.
+	outside []ledger.VersionedTransaction
 }
 
 // checkKey identifies a stored balance assertion check.
@@ -53,6 +57,30 @@ func (s *memStore) Append(_ context.Context, v *ledger.VersionedTransaction) err
 		}
 	}
 	return s.appendVersion(v)
+}
+
+// InTx runs fn on s itself and, if fn fails, restores what s held before,
+// keeping versions appended outside. Unlike a database it does not isolate
+// fn from concurrent calls, so tests that roll back run alone.
+func (s *memStore) InTx(_ context.Context, fn func(tx app.Store) error) error {
+	s.mu.Lock()
+	versions, checks := maps.Clone(s.versions), maps.Clone(s.checks)
+	s.mu.Unlock()
+	if err := fn(s); err != nil {
+		s.mu.Lock()
+		s.versions, s.checks = versions, checks
+		outside := s.outside
+		s.mu.Unlock()
+		for i := range outside {
+			if v := &outside[i]; v.Version > len(s.versions[v.Transaction.Key]) {
+				if appendErr := s.appendVersion(v); appendErr != nil {
+					return appendErr
+				}
+			}
+		}
+		return err
+	}
+	return nil
 }
 
 func (s *memStore) Versions(_ context.Context, key ledger.TransactionKey) ([]ledger.VersionedTransaction, error) {
@@ -166,5 +194,16 @@ func (s *memStore) appendVersion(v *ledger.VersionedTransaction) error {
 	c := *v
 	c.Transaction.Postings = slices.Clone(v.Transaction.Postings)
 	s.versions[key] = append(s.versions[key], c)
+	return nil
+}
+
+// appendOutside appends v as another import's committed work.
+func (s *memStore) appendOutside(v *ledger.VersionedTransaction) error {
+	if err := s.appendVersion(v); err != nil {
+		return err
+	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.outside = append(s.outside, *v)
 	return nil
 }

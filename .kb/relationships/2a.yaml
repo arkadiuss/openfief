@@ -90,3 +90,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5453ae0b3f2d
+  - type: implements
+    from: SYM-ledger-pg-store-in-tx
+    to: REQ-ledger-app-import-atomic
+    created_at: 2026-10-28T06:34:49.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bacc837d80d
+  - type: covered_by
+    from: SYM-ledger-pg-store-in-tx
+    to: TEST-ledger-pg-hook
+    created_at: 2026-10-28T06:34:49.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a312cef2f2f2

@@ -1,6 +1,7 @@
 package app
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
@@ -24,6 +25,11 @@ type ImportSummary struct {
 	Unchanged   int
 	New         int
 	NewVersions int
+	// EarliestAffected is, per account whose current transactions the import
+	// changed, the earliest date it changed: the date of every appended
+	// version and of every version it superseded, in that version's account.
+	// Holdings, lots and valuations from that date on may differ (D-36).
+	EarliestAffected map[ledger.AccountID]kernel.Date
 	// Checks are the balance assertions of every account the import touched,
 	// stored and incoming, as checked after it, in account, date and ledger
 	// account order.
@@ -53,8 +59,24 @@ func (s *ImportSummary) count(d ledger.ImportDecision) {
 	}
 }
 
+// affect records that account's current transactions changed on day.
+func (s *ImportSummary) affect(account ledger.AccountID, day kernel.Date) {
+	if s.EarliestAffected == nil {
+		s.EarliestAffected = map[ledger.AccountID]kernel.Date{}
+	}
+	if earliest, ok := s.EarliestAffected[account]; !ok || day.Before(earliest) {
+		s.EarliestAffected[account] = day
+	}
+}
+
+// ImportHook is work that must commit or roll back with an import, such as
+// enqueueing a revaluation from sum.EarliestAffected (D-36). Import calls it
+// after appending and checking, inside the import's database transaction,
+// with the Store of that transaction; an error rolls the whole import back.
+type ImportHook func(ctx context.Context, tx Store, sum *ImportSummary) error
+
 // VersionConflictError reports a transaction that lost the race for its next
-// version MaxAppendAttempts times in a row. Nothing of it was appended;
+// version MaxAppendAttempts times in a row. The import was rolled back;
 // importing it again is safe.
 type VersionConflictError struct {
 	Key      ledger.TransactionKey
@@ -69,34 +91,76 @@ func (e *VersionConflictError) Error() string {
 // Unwrap returns ErrVersionConflict.
 func (e *VersionConflictError) Unwrap() error { return ErrVersionConflict }
 
-// Import adds txs to the log and checks balance assertions (D-18). Every
-// transaction and assertion is validated, and its account must be stored,
-// before anything is written. Then each transaction, in order, is decided
-// against all stored versions of its key: unchanged content is a no-op, a new
-// key is appended as version 1, and changed content is appended as the next
-// version, superseding the current one, which is kept. Importing the same
-// input again changes nothing.
+// Import adds txs to the log and checks balance assertions (D-18), all in
+// one database transaction: it commits whole or not at all. Every
+// transaction and assertion is validated, and its account must be stored.
+// Then each transaction, in key order (the given order within one key), is
+// decided against all stored versions of its key: unchanged content is a
+// no-op, a new key is appended as version 1, and changed content is appended
+// as the next version, superseding the current one, which is kept. Importing
+// the same input again changes nothing.
 //
-// Finally every account the import touched has its balance assertions
-// checked, the stored ones and assertions, which replace stored ones for the
-// same date and ledger account. A mismatch is stored as a flagged check and
-// does not fail the import. If Import fails part way, what it appended stays
-// and running it again completes it.
+// Then every account the import touched has its balance assertions checked,
+// the stored ones and assertions, which replace stored ones for the same
+// date and ledger account. A mismatch is stored as a flagged check and does
+// not fail the import. Last, the Ledger's import hooks run in the same
+// transaction.
 func (l *Ledger) Import(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ImportSummary, error) {
-	accounts, err := l.validateImport(ctx, txs, assertions)
+	ordered := slices.Clone(txs)
+	slices.SortStableFunc(ordered, func(a, b ledger.Transaction) int { return compareKeys(a.Key, b.Key) })
+	var sum ImportSummary
+	err := l.store.InTx(ctx, func(tx Store) error {
+		var err error
+		sum, err = importTx(ctx, tx, ordered, assertions)
+		if err != nil {
+			return err
+		}
+		for _, hook := range l.onImport {
+			if err := hook(ctx, tx, &sum); err != nil {
+				return fmt.Errorf("import hook: %w", err)
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		return ImportSummary{}, fmt.Errorf("importing: %w", err)
+	}
+	return sum, nil
+}
+
+// compareKeys orders transaction keys by source, then external ID. Appending
+// in one order everywhere keeps two concurrent imports from waiting on each
+// other's keys in a cycle.
+func compareKeys(a, b ledger.TransactionKey) int {
+	if c := cmp.Compare(a.Source, b.Source); c != 0 {
+		return c
+	}
+	return cmp.Compare(a.ExternalID, b.ExternalID)
+}
+
+// importTx is Import's work inside its database transaction tx.
+func importTx(ctx context.Context, tx Store, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ImportSummary, error) {
+	accounts, err := validateImport(ctx, tx, txs, assertions)
 	if err != nil {
 		return ImportSummary{}, err
 	}
 	var sum ImportSummary
 	for i := range txs {
-		d, err := l.importOne(ctx, &txs[i])
+		t := &txs[i]
+		d, superseded, err := importOne(ctx, tx, t)
 		if err != nil {
 			return ImportSummary{}, err
 		}
 		sum.count(d)
+		if d != ledger.ImportUnchanged {
+			sum.affect(t.Account, t.Date)
+		}
+		if superseded != nil {
+			sum.affect(superseded.Account, superseded.Date)
+		}
 	}
 	for _, id := range accounts {
-		checks, err := l.checkAccount(ctx, id, assertions)
+		checks, err := checkAccount(ctx, tx, id, assertions)
 		if err != nil {
 			return ImportSummary{}, err
 		}
@@ -107,7 +171,7 @@ func (l *Ledger) Import(ctx context.Context, txs []ledger.Transaction, assertion
 
 // validateImport validates txs and assertions and returns their accounts, in
 // ID order, after checking that each is stored.
-func (l *Ledger) validateImport(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) ([]ledger.AccountID, error) {
+func validateImport(ctx context.Context, store Registry, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) ([]ledger.AccountID, error) {
 	seen := map[ledger.AccountID]bool{}
 	for i := range txs {
 		if err := txs[i].Validate(); err != nil {
@@ -127,7 +191,7 @@ func (l *Ledger) validateImport(ctx context.Context, txs []ledger.Transaction, a
 	}
 	slices.Sort(accounts)
 	for _, id := range accounts {
-		if _, err := l.account(ctx, id); err != nil {
+		if _, err := lookupAccount(ctx, store, id); err != nil {
 			return nil, err
 		}
 	}
@@ -135,30 +199,41 @@ func (l *Ledger) validateImport(ctx context.Context, txs []ledger.Transaction, a
 }
 
 // importOne decides t against its key's stored versions and appends it
-// unless it is unchanged. On a version conflict it reloads and decides
+// unless it is unchanged. It returns the decision and, for a new version,
+// the version it superseded. On a version conflict it reloads and decides
 // again, up to MaxAppendAttempts times.
-func (l *Ledger) importOne(ctx context.Context, t *ledger.Transaction) (ledger.ImportDecision, error) {
+func importOne(ctx context.Context, store TransactionLog, t *ledger.Transaction) (ledger.ImportDecision, *ledger.Transaction, error) {
 	for range MaxAppendAttempts {
-		versions, err := l.store.Versions(ctx, t.Key)
+		versions, err := store.Versions(ctx, t.Key)
 		if err != nil {
-			return 0, fmt.Errorf("loading versions of %s: %w", t.Key, err)
+			return 0, nil, fmt.Errorf("loading versions of %s: %w", t.Key, err)
 		}
 		res, err := ledger.DecideImport(versions, t)
 		if err != nil {
-			return 0, fmt.Errorf("importing %s: %w", t.Key, err)
+			return 0, nil, fmt.Errorf("importing %s: %w", t.Key, err)
 		}
 		if res.Decision == ledger.ImportUnchanged {
-			return res.Decision, nil
+			return res.Decision, nil, nil
 		}
-		err = l.store.Append(ctx, &ledger.VersionedTransaction{Transaction: *t, Version: res.Version})
+		err = store.Append(ctx, &ledger.VersionedTransaction{Transaction: *t, Version: res.Version})
 		if err == nil {
-			return res.Decision, nil
+			return res.Decision, supersededBy(versions, res.Supersedes), nil
 		}
 		if !errors.Is(err, ErrVersionConflict) {
-			return 0, fmt.Errorf("appending %s version %d: %w", t.Key, res.Version, err)
+			return 0, nil, fmt.Errorf("importing %s: %w", t.Key, err)
 		}
 	}
-	return 0, &VersionConflictError{Key: t.Key, Attempts: MaxAppendAttempts}
+	return 0, nil, &VersionConflictError{Key: t.Key, Attempts: MaxAppendAttempts}
+}
+
+// supersededBy returns version n among versions, or nil for 0.
+func supersededBy(versions []ledger.VersionedTransaction, n int) *ledger.Transaction {
+	for i := range versions {
+		if n != 0 && versions[i].Version == n {
+			return &versions[i].Transaction
+		}
+	}
+	return nil
 }
 
 // assertionKey identifies one balance assertion: its date and ledger
@@ -168,15 +243,15 @@ type assertionKey struct {
 	book ledger.Book
 }
 
-// checkAccount checks every balance assertion of account, its stored ones
-// and those among incoming, against its log, stores each result and returns
-// them in date and ledger account order.
-func (l *Ledger) checkAccount(ctx context.Context, account ledger.AccountID, incoming []ledger.BalanceAssertion) ([]AssertionCheck, error) {
-	log, err := l.store.Log(ctx, account)
+// checkAccount checks every balance assertion of account in store, its
+// stored ones and those among incoming, against its log, stores each result
+// and returns them in date and ledger account order.
+func checkAccount(ctx context.Context, store Store, account ledger.AccountID, incoming []ledger.BalanceAssertion) ([]AssertionCheck, error) {
+	log, err := store.Log(ctx, account)
 	if err != nil {
 		return nil, fmt.Errorf("loading the log of %s: %w", account, err)
 	}
-	stored, err := l.store.AssertionChecks(ctx, account)
+	stored, err := store.AssertionChecks(ctx, account)
 	if err != nil {
 		return nil, fmt.Errorf("loading balance assertions of %s: %w", account, err)
 	}
@@ -196,12 +271,14 @@ func (l *Ledger) checkAccount(ctx context.Context, account ledger.AccountID, inc
 		if err != nil {
 			return nil, err
 		}
-		if err := l.store.SaveAssertionCheck(ctx, &c); err != nil {
-			return nil, fmt.Errorf("saving the balance assertion check of %s: %w", account, err)
-		}
 		checks = append(checks, c)
 	}
 	sortChecks(checks)
+	for i := range checks {
+		if err := store.SaveAssertionCheck(ctx, &checks[i]); err != nil {
+			return nil, fmt.Errorf("saving the balance assertion check of %s: %w", account, err)
+		}
+	}
 	return checks, nil
 }
 

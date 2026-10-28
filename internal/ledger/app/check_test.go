@@ -34,7 +34,7 @@ func TestImportFlagsAssertionMismatches(t *testing.T) {
 			name:       "a mismatch is flagged and the import is kept",
 			txs:        []ledger.Transaction{f.deposit, f.buy},
 			assertions: []ledger.BalanceAssertion{cash("2026-03-02", "999"), cash("2026-03-03", "499"), units10},
-			want: app.ImportSummary{New: 2, Checks: []app.AssertionCheck{
+			want: app.ImportSummary{New: 2, EarliestAffected: affected(t, "acc-1", "2026-03-02"), Checks: []app.AssertionCheck{
 				check(cash("2026-03-02", "999"), app.AssertionFlagged, "1000"),
 				check(cash("2026-03-03", "499"), app.AssertionMatched, "499"),
 				check(units10, app.AssertionMatched, "10"),
@@ -43,7 +43,7 @@ func TestImportFlagsAssertionMismatches(t *testing.T) {
 		{
 			name: "a correction re-checks the stored assertions",
 			txs:  []ledger.Transaction{depositCorrected},
-			want: app.ImportSummary{NewVersions: 1, Checks: []app.AssertionCheck{
+			want: app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-02"), Checks: []app.AssertionCheck{
 				check(cash("2026-03-02", "999"), app.AssertionMatched, "999"),
 				check(cash("2026-03-03", "499"), app.AssertionFlagged, "498"),
 				check(units10, app.AssertionMatched, "10"),

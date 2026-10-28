@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4aef8556eb7
+  - type: executable_for
+    from: SYM-ledger-pg-test-assertion-checks-round-trip
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:35:38.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1a802ac6fce

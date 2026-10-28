@@ -41,3 +41,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c65680040e6
+  - type: executable_for
+    from: SYM-ledger-pg-test-migrate-is-idempotent-and-owns-the-ledger-schema
+    to: TEST-ledger-pg-store
+    created_at: 2026-10-28T06:35:20.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-beab8ef63fb9

@@ -90,3 +90,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6996762d7436
+  - type: executable_for
+    from: SYM-ledger-pg-test-import-over-postgres
+    to: TEST-ledger-pg-log
+    created_at: 2026-10-28T06:31:55.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6069c4a0b10d

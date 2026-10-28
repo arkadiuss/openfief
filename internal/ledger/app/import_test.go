@@ -18,7 +18,7 @@ import (
 // importFixture holds synthetic transactions in acc-1 that the import tests
 // combine.
 type importFixture struct {
-	deposit, buy, buyCorrected, buyReordered, elsewhere, undated ledger.Transaction
+	deposit, buy, buyCorrected, buyMoved, buyReordered, elsewhere, undated ledger.Transaction
 }
 
 func newImportFixture(t *testing.T) importFixture {
@@ -28,6 +28,7 @@ func newImportFixture(t *testing.T) importFixture {
 		deposit:      must(t)(ledger.NewDeposit(header(t, acc1, "d1", "2026-03-02"), money(t, "1000", "USD"))),
 		buy:          must(t)(ledger.NewBuy(header(t, acc1, "b1", "2026-03-03"), a, qty(t, "10"), money(t, "500", "USD"), money(t, "1", "USD"))),
 		buyCorrected: must(t)(ledger.NewBuy(header(t, acc1, "b1", "2026-03-03"), a, qty(t, "12"), money(t, "600", "USD"), money(t, "1", "USD"))),
+		buyMoved:     must(t)(ledger.NewBuy(header(t, acc2, "b1", "2026-03-01"), a, qty(t, "10"), money(t, "500", "USD"), money(t, "1", "USD"))),
 		elsewhere:    must(t)(ledger.NewDeposit(header(t, "acc-9", "d9", "2026-03-02"), money(t, "5", "USD"))),
 	}
 	f.buyReordered = f.buy
@@ -38,6 +39,16 @@ func newImportFixture(t *testing.T) importFixture {
 	f.undated.Key.ExternalID = "d2"
 	f.undated.Date = kernel.Date{}
 	return f
+}
+
+// affected returns an EarliestAffected map from account and date pairs.
+func affected(t *testing.T, pairs ...string) map[ledger.AccountID]kernel.Date {
+	t.Helper()
+	out := map[ledger.AccountID]kernel.Date{}
+	for i := 0; i+1 < len(pairs); i += 2 {
+		out[ledger.AccountID(pairs[i])] = date(t, pairs[i+1])
+	}
+	return out
 }
 
 func versioned(t *ledger.Transaction, version int) ledger.VersionedTransaction {
@@ -77,7 +88,7 @@ func TestImportAppendsVersions(t *testing.T) {
 		{
 			name:    "new keys become version 1",
 			imports: [][]ledger.Transaction{{f.deposit, f.buy}},
-			want:    app.ImportSummary{New: 2},
+			want:    app.ImportSummary{New: 2, EarliestAffected: affected(t, "acc-1", "2026-03-02")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.deposit, 1)},
 		},
 		{
@@ -95,20 +106,26 @@ func TestImportAppendsVersions(t *testing.T) {
 		{
 			name:    "a changed row supersedes and the old version stays",
 			imports: [][]ledger.Transaction{{f.buy}, {f.buyCorrected}},
-			want:    app.ImportSummary{NewVersions: 1},
+			want:    app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.buyCorrected, 2)},
 		},
 		{
 			name:    "changing a row back is another version",
 			imports: [][]ledger.Transaction{{f.buy}, {f.buyCorrected}, {f.buy}},
-			want:    app.ImportSummary{NewVersions: 1},
+			want:    app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.buyCorrected, 2), versioned(&f.buy, 3)},
 		},
 		{
 			name:    "one key twice in one import",
 			imports: [][]ledger.Transaction{{f.buy, f.buyCorrected}},
-			want:    app.ImportSummary{New: 1, NewVersions: 1},
+			want:    app.ImportSummary{New: 1, NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.buyCorrected, 2)},
+		},
+		{
+			name:    "a correction to another account and date affects both",
+			imports: [][]ledger.Transaction{{f.buy}, {f.buyMoved}},
+			want:    app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03", "acc-2", "2026-03-01")},
+			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.buyMoved, 2)},
 		},
 		{
 			name:    "an unknown account writes nothing",
@@ -161,7 +178,7 @@ func TestImportRetriesVersionConflicts(t *testing.T) {
 			name: "the other import appended the same content",
 			race: func(s *memStore, v *ledger.VersionedTransaction) error {
 				s.beforeAppend = nil
-				return s.appendVersion(v)
+				return s.appendOutside(v)
 			},
 			want:    app.ImportSummary{Unchanged: 1},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1)},
@@ -171,16 +188,16 @@ func TestImportRetriesVersionConflicts(t *testing.T) {
 			race: func(s *memStore, _ *ledger.VersionedTransaction) error {
 				s.beforeAppend = nil
 				other := versioned(&f.buyCorrected, 1)
-				return s.appendVersion(&other)
+				return s.appendOutside(&other)
 			},
-			want:    app.ImportSummary{NewVersions: 1},
+			want:    app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buyCorrected, 1), versioned(&f.buy, 2)},
 		},
 		{
 			name: "every attempt loses",
 			race: func(s *memStore, v *ledger.VersionedTransaction) error {
 				other := versioned(relabeled(&f.buy, "other "+strconv.Itoa(v.Version)), v.Version)
-				return s.appendVersion(&other)
+				return s.appendOutside(&other)
 			},
 			wantErr: &app.VersionConflictError{Key: f.buy.Key, Attempts: app.MaxAppendAttempts},
 			wantLog: []ledger.VersionedTransaction{
@@ -212,8 +229,8 @@ func checkConflict(t *testing.T, want *app.VersionConflictError, err error) {
 		}
 		return
 	}
-	var conflict *app.VersionConflictError
-	if !errors.As(err, &conflict) || !errors.Is(err, app.ErrVersionConflict) {
+	conflict, ok := errors.AsType[*app.VersionConflictError](err)
+	if !ok || !errors.Is(err, app.ErrVersionConflict) {
 		t.Fatalf("Import error = %v, want a *VersionConflictError", err)
 	}
 	if diff := cmp.Diff(want, conflict); diff != "" {
