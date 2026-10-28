@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3d10fd9c431
+  - type: constrains
+    from: REQ-plugins-egress-forbidden-addresses
+    to: FACT-SUBJECT-339B4D0C660B3313
+    created_at: 2026-10-28T05:32:04.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12bf31bbae43
+  - type: requires_property
+    from: REQ-plugins-egress-forbidden-addresses
+    to: FACT-PROP-2BFA6A97F8BED4CE
+    created_at: 2026-10-28T05:32:04.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2414ed2920d3
+  - type: specified_by
+    from: REQ-plugins-egress-forbidden-addresses
+    to: SCEN-plugins-egress-metadata-refused
+    created_at: 2026-10-28T05:32:04.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a18173670c3c

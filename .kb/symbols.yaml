@@ -2962,3 +2962,78 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-identity
+  - id: SYM-plugins-egress-forbidden-prefixes
+    title: ForbiddenPrefixes
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:28.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-egress-check-address
+    title: CheckAddress
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:31.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-egress-embedded-ipv4
+    title: embeddedIPv4
+    sourceFile: internal/plugins/egress/address.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:35.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-address
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-forbidden-addresses
+  - id: SYM-plugins-test-check-address
+    title: TestCheckAddress
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:37.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address
+  - id: SYM-plugins-test-check-address-invalid
+    title: TestCheckAddressInvalid
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:40.215Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address
+  - id: SYM-plugins-test-forbidden-prefixes
+    title: TestForbiddenPrefixes
+    sourceFile: internal/plugins/egress/address_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:43.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-address

@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77b5dbb7f22e
+  - type: implements
+    from: SYM-plugins-egress-forbidden-prefixes
+    to: REQ-plugins-egress-forbidden-addresses
+    created_at: 2026-10-28T05:32:29.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34ec996b13f7
+  - type: implements
+    from: SYM-plugins-egress-forbidden-prefixes
+    to: REQ-AUTO-79189DB32149E23F
+    created_at: 2026-10-28T05:32:29.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe433cb5798d
+  - type: covered_by
+    from: SYM-plugins-egress-forbidden-prefixes
+    to: TEST-plugins-egress-address
+    created_at: 2026-10-28T05:32:29.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cd61c8d36a2
