@@ -55,3 +55,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-125c7aeb4cec
+  - type: implements
+    from: SYM-ibkrflex-client-wait
+    to: REQ-ibkrflex-web-service-pull
+    created_at: 2026-10-28T06:34:34.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee372b607979
+  - type: covered_by
+    from: SYM-ibkrflex-client-wait
+    to: TEST-ibkrflex-webservice
+    created_at: 2026-10-28T06:34:34.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e2f807f5a9c
+  - type: executable_for
+    from: SYM-ingest-app-test-pull-failures
+    to: TEST-ingest-app
+    created_at: 2026-10-28T06:38:36.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4aa88c83015

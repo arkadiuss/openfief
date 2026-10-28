@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Content-Type: text/xml;charset=UTF-8
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic Flex Query statement for tests, written by hand: fake account, fake IDs, synthetic ISIN. -->
+<FlexQueryResponse queryName="openfief-test" type="AF">
+<FlexStatements count="1">
+<FlexStatement accountId="U0000000" fromDate="20260306" toDate="20260306" period="LastBusinessDay" whenGenerated="20260306;173000">
+<CashReport>
+<CashReportCurrency accountId="U0000000" currency="USD" levelOfDetail="Currency" endingCash="250" />
+</CashReport>
+<Trades>
+<Trade accountId="U0000000" currency="USD" assetCategory="STK" symbol="TSTA" isin="PLTEST000010" multiplier="1" tradeID="9000201" tradeDate="20260306" transactionType="ExchTrade" buySell="BUY" quantity="1" proceeds="-100" ibCommission="-1" ibCommissionCurrency="USD" levelOfDetail="EXECUTION" />
+</Trades>
+</FlexStatement>
+</FlexStatements>
+</FlexQueryResponse>

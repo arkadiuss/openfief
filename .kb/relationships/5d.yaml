@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71cca8b51e41
+  - type: constrains
+    from: REQ-ibkrflex-withholding-pairing
+    to: FACT-SUBJECT-4417410D7D0B92B1
+    created_at: 2026-10-28T06:23:55.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42b0f4148568
+  - type: requires_property
+    from: REQ-ibkrflex-withholding-pairing
+    to: FACT-PROP-8C141E7C6F1ED697
+    created_at: 2026-10-28T06:23:55.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb47896fe9e8
+  - type: specified_by
+    from: REQ-ibkrflex-withholding-pairing
+    to: SCEN-ibkrflex-withholding
+    created_at: 2026-10-28T06:23:55.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e20306c36179

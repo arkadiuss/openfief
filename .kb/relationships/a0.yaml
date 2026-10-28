@@ -55,3 +55,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9533710bac2c
+  - type: implements
+    from: SYM-ibkrflex-stmt-open-positions
+    to: REQ-ibkrflex-assertions
+    created_at: 2026-10-28T06:26:39.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-262e31187846
+  - type: implements
+    from: SYM-ibkrflex-stmt-open-positions
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T06:26:39.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6b8c038acaa
+  - type: covered_by
+    from: SYM-ibkrflex-stmt-open-positions
+    to: TEST-ibkrflex-golden
+    created_at: 2026-10-28T06:26:39.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3207f1c75635

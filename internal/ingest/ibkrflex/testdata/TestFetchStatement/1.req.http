@@ -1,0 +1,4 @@
+GET https://ndcdyn.interactivebrokers.com/AccountManagement/FlexWebService/GetStatement?q=1111111111&t=SANITIZED&v=3 HTTP/1.1
+Host: ndcdyn.interactivebrokers.com
+User-Agent: openfief-ibkr-flex
+

@@ -48,3 +48,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-982aa88908f0
+  - type: implements
+    from: SYM-ibkrflex-stmt-cash-transaction
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:28:15.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c29ca1cc3578
+  - type: covered_by
+    from: SYM-ibkrflex-stmt-cash-transaction
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:28:15.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-418749a5600f

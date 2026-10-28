@@ -34,3 +34,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7e8868793d7
+  - type: implements
+    from: SYM-ibkrflex-positions-row
+    to: REQ-ibkrflex-assertions
+    created_at: 2026-10-28T06:26:44.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c65ae05bc485
+  - type: implements
+    from: SYM-ibkrflex-positions-row
+    to: REQ-ibkrflex-opening
+    created_at: 2026-10-28T06:26:44.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14bf2afdc0fa
+  - type: covered_by
+    from: SYM-ibkrflex-positions-row
+    to: TEST-ibkrflex-golden
+    created_at: 2026-10-28T06:26:44.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08b8026163d9
+  - type: constrains
+    from: REQ-ingest-app-ingest-path
+    to: FACT-SUBJECT-EF78119FF140D389
+    created_at: 2026-10-28T06:37:29.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d859d75dd4a1
+  - type: requires_property
+    from: REQ-ingest-app-ingest-path
+    to: FACT-PROP-AC9E68FB7221D8B7
+    created_at: 2026-10-28T06:37:29.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aff1ffcf93cb
+  - type: specified_by
+    from: REQ-ingest-app-ingest-path
+    to: SCEN-ingest-app-ingest-path
+    created_at: 2026-10-28T06:37:29.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e969ffdc59f

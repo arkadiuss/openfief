@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic Flex Query statement for tests: fake accounts, fake IDs and synthetic ISINs with valid check digits. No real data. -->
+<FlexQueryResponse queryName="openfief-test" type="AF">
+<FlexStatements count="2">
+<FlexStatement accountId="U0000000" fromDate="2026-03-09" toDate="2026-03-13" period="LastBusinessWeek" whenGenerated="2026-03-14;083000">
+<OpenPositions>
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="2026-03-13" position="20" costBasisMoney="2001" levelOfDetail="SUMMARY" side="Long" />
+<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="2026-03-13" position="3" costBasisMoney="300" levelOfDetail="LOT" openDateTime="2025-11-03;140000" side="Long" />
+<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="2026-03-13" position="1.5" costBasisMoney="160" levelOfDetail="LOT" openDateTime="2025-11-03;150000" side="Long" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="COMMON" symbol="TSTS" isin="XSFAKE000034" multiplier="1" reportDate="2026-03-13" position="-2" costBasisMoney="-210" levelOfDetail="SUMMARY" side="Short" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="FUT" symbol="TSTFUT" isin="" multiplier="50" reportDate="2026-03-13" position="1" costBasisMoney="5000" levelOfDetail="SUMMARY" side="Long" />
+</OpenPositions>
+<CashReport>
+<CashReportCurrency accountId="U0000000" currency="BASE_SUMMARY" levelOfDetail="BaseCurrency" fromDate="2026-03-09" toDate="2026-03-13" endingCash="1500" />
+<CashReportCurrency accountId="U0000000" currency="USD" levelOfDetail="Currency" fromDate="2026-03-09" toDate="2026-03-13" endingCash="664.37" />
+<CashReportCurrency accountId="U0000000" currency="EUR" levelOfDetail="Currency" fromDate="2026-03-09" toDate="2026-03-13" endingCash="1.2" />
+<CashReportCurrency accountId="U0000000" currency="GBP" levelOfDetail="Currency" fromDate="2026-03-09" toDate="2026-03-13" endingCash="n/a" />
+</CashReport>
+<Trades>
+<Order accountId="U0000000" currency="USD" assetCategory="STK" symbol="TSTA" isin="PLTEST000010" buySell="BUY" quantity="5" levelOfDetail="ORDER" />
+<Trade accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" tradeID="9000101" tradeDate="2026-03-09" dateTime="2026-03-09;101500" transactionType="ExchTrade" buySell="BUY" quantity="5" tradePrice="100.1" tradeMoney="500.5" proceeds="-500.5" ibCommission="-1.25" ibCommissionCurrency="USD" taxes="0" levelOfDetail="EXECUTION" />
+<Trade accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" tradeID="9000102" tradeDate="2026-03-10" dateTime="2026-03-10;113000" transactionType="ExchTrade" buySell="SELL" quantity="-0.5" tradePrice="110" tradeMoney="-55" proceeds="55" ibCommission="-1.1" ibCommissionCurrency="USD" taxes="0" levelOfDetail="EXECUTION" />
+<Lot accountId="U0000000" currency="EUR" assetCategory="STK" symbol="TSTB" isin="IETEST000026" tradeID="9000102" quantity="-0.5" levelOfDetail="CLOSED_LOT" />
+<Trade accountId="U0000000" currency="USD" assetCategory="CASH" symbol="EUR.USD" isin="" tradeID="9000103" tradeDate="2026-03-11" dateTime="2026-03-11;090000" transactionType="ExchTrade" buySell="BUY" quantity="100" tradePrice="1.085" tradeMoney="108.5" proceeds="-108.5" ibCommission="-2" ibCommissionCurrency="USD" levelOfDetail="EXECUTION" />
+<Trade accountId="U0000000" currency="USD" assetCategory="CASH" symbol="EUR.USD" isin="" tradeID="9000104" tradeDate="2026-03-12" dateTime="2026-03-12;090000" transactionType="ExchTrade" buySell="SELL" quantity="-50" tradePrice="1.09" tradeMoney="-54.5" proceeds="54.5" ibCommission="0" ibCommissionCurrency="USD" levelOfDetail="EXECUTION" />
+<Trade accountId="U0000000" currency="GBP" assetCategory="STK" subCategory="COMMON" symbol="TSTC" isin="XSFAKE000034" multiplier="1" tradeID="9000105" tradeDate="20260312" dateTime="20260312;100000" transactionType="ExchTrade" buySell="BUY" quantity="10" tradePrice="5" tradeMoney="50" proceeds="-50" ibCommission="-1" ibCommissionCurrency="GBP" taxes="-0.25" levelOfDetail="EXECUTION" />
+<Trade accountId="U0000000" currency="USD" assetCategory="OPT" symbol="TSTA 260619C00100000" isin="" multiplier="100" tradeID="9000106" tradeDate="2026-03-12" transactionType="ExchTrade" buySell="BUY" quantity="1" proceeds="-250" ibCommission="-0.7" ibCommissionCurrency="USD" levelOfDetail="EXECUTION" />
+<Trade accountId="U0000000" currency="USD" assetCategory="STK" symbol="TSTA" isin="PLTEST000010" multiplier="1" tradeID="9000107" tradeDate="2026-03-12" transactionType="TradeCancel" buySell="BUY (Ca.)" quantity="-1" proceeds="100" ibCommission="0" ibCommissionCurrency="USD" levelOfDetail="EXECUTION" />
+<Trade accountId="U0000000" currency="USD" assetCategory="STK" symbol="TSTX" isin="PLTEST000011" multiplier="1" tradeID="9000108" tradeDate="2026-03-12" transactionType="ExchTrade" buySell="BUY" quantity="1" proceeds="-10" ibCommission="-1" ibCommissionCurrency="USD" levelOfDetail="EXECUTION" />
+</Trades>
+<CashTransactions>
+<CashTransaction accountId="U0000000" currency="USD" type="Deposits/Withdrawals" assetCategory="" symbol="" isin="" description="CASH RECEIPTS / ELECTRONIC FUND TRANSFERS" amount="1000" dateTime="2026-03-09;120000" transactionID="8000101" actionID="" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="USD" type="Deposits/Withdrawals" assetCategory="" symbol="" isin="" description="DISBURSEMENT" amount="-200" dateTime="2026-03-10" transactionID="8000102" actionID="" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="USD" type="Dividends" assetCategory="STK" symbol="TSTA" isin="PLTEST000010" description="TSTA CASH DIVIDEND USD 0.50 PER SHARE" amount="7.5" dateTime="2026-03-11;202000" transactionID="8000103" actionID="7000101" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="USD" type="Withholding Tax" assetCategory="STK" symbol="TSTA" isin="PLTEST000010" description="TSTA CASH DIVIDEND - US TAX" amount="-1.13" dateTime="2026-03-11;202000" transactionID="8000104" actionID="7000101" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="EUR" type="Dividends" assetCategory="STK" symbol="TSTB" isin="IETEST000026" description="TSTB CASH DIVIDEND EUR 0.40 PER SHARE" amount="1.8" dateTime="2026-03-12" transactionID="8000105" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="EUR" type="Withholding Tax" assetCategory="STK" symbol="TSTB" isin="IETEST000026" description="TSTB CASH DIVIDEND - TAX" amount="-0.27" dateTime="2026-03-12" transactionID="8000106" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="EUR" type="Withholding Tax" assetCategory="STK" symbol="TSTB" isin="IETEST000026" description="TSTB CASH DIVIDEND - TAX ADJUSTMENT" amount="-0.03" dateTime="2026-03-12" transactionID="8000107" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="USD" type="Withholding Tax" assetCategory="STK" symbol="TSTS" isin="XSFAKE000034" description="TSTS CASH DIVIDEND - US TAX" amount="-0.5" dateTime="2026-03-12" transactionID="8000108" actionID="7000199" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="USD" type="Other Fees" assetCategory="" symbol="" isin="" description="MARKET DATA FEE" amount="-4.5" dateTime="2026-03-13" transactionID="8000109" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="USD" type="Broker Interest Received" assetCategory="" symbol="" isin="" description="USD CREDIT INT" amount="0.42" dateTime="2026-03-13" transactionID="8000110" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000000" currency="USD" type="Dividends" assetCategory="STK" symbol="TSTA" isin="PLTEST000010" description="TSTA DIVIDEND TOTAL" amount="7.5" dateTime="2026-03-11" transactionID="" levelOfDetail="SUMMARY" />
+</CashTransactions>
+<ConversionRates>
+<ConversionRate reportDate="2026-03-13" fromCurrency="EUR" toCurrency="USD" rate="1.0899" />
+</ConversionRates>
+</FlexStatement>
+<FlexStatement accountId="U0000001" fromDate="2026-03-09" toDate="2026-03-13" period="LastBusinessWeek" whenGenerated="2026-03-14;083000">
+<CashReport>
+<CashReportCurrency accountId="U0000001" currency="USD" levelOfDetail="Currency" endingCash="10" />
+</CashReport>
+</FlexStatement>
+</FlexStatements>
+</FlexQueryResponse>

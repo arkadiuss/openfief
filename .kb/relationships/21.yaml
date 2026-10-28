@@ -55,3 +55,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69fb5b1cf77f
+  - type: implements
+    from: SYM-ibkrflex-stmt-opening-cash
+    to: REQ-ibkrflex-opening
+    created_at: 2026-10-28T06:27:09.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-911f4116bc2f
+  - type: implements
+    from: SYM-ibkrflex-stmt-opening-cash
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T06:27:09.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ec3218d90e4
+  - type: covered_by
+    from: SYM-ibkrflex-stmt-opening-cash
+    to: TEST-ibkrflex-golden
+    created_at: 2026-10-28T06:27:09.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9162c5436034
+  - type: executable_for
+    from: SYM-ibkrflex-test-fetch-statement-failures
+    to: TEST-ibkrflex-webservice
+    created_at: 2026-10-28T06:35:11.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f7e378ef5a7

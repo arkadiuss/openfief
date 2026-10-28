@@ -20,3 +20,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c089fb2a0a1f
+  - type: implements
+    from: SYM-ingest-app-mapper
+    to: REQ-ingest-app-ingest-path
+    created_at: 2026-10-28T06:37:37.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99fbb684eb11
+  - type: covered_by
+    from: SYM-ingest-app-mapper
+    to: TEST-ingest-app
+    created_at: 2026-10-28T06:37:37.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6fb151bd8de

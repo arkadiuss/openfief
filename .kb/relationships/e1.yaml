@@ -48,3 +48,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd06c8780eab
+  - type: implements
+    from: SYM-ibkrflex-limits
+    to: REQ-ibkrflex-hostile-input
+    created_at: 2026-10-28T06:24:20.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77791be224dd
+  - type: covered_by
+    from: SYM-ibkrflex-limits
+    to: TEST-ibkrflex-hostile
+    created_at: 2026-10-28T06:24:20.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80f826eb055e
+  - type: implements
+    from: SYM-ibkrflex-client-fetch-statement
+    to: REQ-ibkrflex-web-service-pull
+    created_at: 2026-10-28T06:34:27.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10f61033ae1d
+  - type: implements
+    from: SYM-ibkrflex-client-fetch-statement
+    to: REQ-AUTO-FD618A602F7F9106
+    created_at: 2026-10-28T06:34:27.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeeadb8270c1
+  - type: covered_by
+    from: SYM-ibkrflex-client-fetch-statement
+    to: TEST-ibkrflex-webservice
+    created_at: 2026-10-28T06:34:27.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b2ae7806ca1

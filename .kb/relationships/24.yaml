@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a60df34fe8f5
+  - type: implements
+    from: SYM-ibkrflex-plain-decimal
+    to: REQ-ibkrflex-hostile-input
+    created_at: 2026-10-28T06:25:16.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7823adf3370a
+  - type: covered_by
+    from: SYM-ibkrflex-plain-decimal
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:25:16.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a79450b436ad
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-must-currency
+    to: TEST-ingest-app
+    created_at: 2026-10-28T06:38:15.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-135753624211

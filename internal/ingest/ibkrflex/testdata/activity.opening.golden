@@ -1,0 +1,41 @@
+tx ibkr-flex:acc-ibkr/opening-lot:IETEST000026:2025-11-03:n1 opening-lot 2026-03-13 account=acc-ibkr lot-opened=2025-11-03 "opening lot"
+  holding:IETEST000026/TSTB 300 EUR units=3
+  equity:EUR -300 EUR
+tx ibkr-flex:acc-ibkr/opening-lot:IETEST000026:2025-11-03:n2 opening-lot 2026-03-13 account=acc-ibkr lot-opened=2025-11-03 "opening lot"
+  holding:IETEST000026/TSTB 160 EUR units=1.5
+  equity:EUR -160 EUR
+tx ibkr-flex:acc-ibkr/opening-cash:USD:2026-03-13 deposit 2026-03-13 account=acc-ibkr "opening cash"
+  cash:USD 664.37 USD
+  equity:USD -664.37 USD
+tx ibkr-flex:acc-ibkr/opening-cash:EUR:2026-03-13 deposit 2026-03-13 account=acc-ibkr "opening cash"
+  cash:EUR 1.2 EUR
+  equity:EUR -1.2 EUR
+assert acc-ibkr 2026-03-13 holding:PLTEST000010/TSTA 20
+assert acc-ibkr 2026-03-13 holding:IETEST000026/TSTB 4.5
+assert acc-ibkr 2026-03-13 cash:USD 664.37
+assert acc-ibkr 2026-03-13 cash:EUR 1.2
+problem unsupported FlexStatement#1/OpenPositions#4: short or empty positions are not supported
+problem unsupported FlexStatement#1/OpenPositions#5: asset category "FUT" is not supported
+problem unsupported FlexStatement#1/CashReport#4[currency=GBP]: missing or unreadable attribute: endingCash
+problem skipped FlexStatement#1/Trades#1: <Order> is not a <Trade> row
+problem skipped FlexStatement#1/Trades#2[tradeID=9000101]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/Trades#3[tradeID=9000102]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/Trades#4[tradeID=9000102]: <Lot> is not a <Trade> row
+problem skipped FlexStatement#1/Trades#5[tradeID=9000103]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/Trades#6[tradeID=9000104]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/Trades#7[tradeID=9000105]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/Trades#8[tradeID=9000106]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/Trades#9[tradeID=9000107]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/Trades#10[tradeID=9000108]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#1[transactionID=8000101]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#2[transactionID=8000102]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#3[transactionID=8000103]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#4[transactionID=8000104]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#5[transactionID=8000105]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#6[transactionID=8000106]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#7[transactionID=8000107]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#8[transactionID=8000108]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#9[transactionID=8000109]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#10[transactionID=8000110]: opening mode: the opening lots and opening cash hold its effect
+problem skipped FlexStatement#1/CashTransactions#11: level of detail "SUMMARY" is not read
+problem skipped FlexStatement#2: statement of an IBKR account that feeds no ledger account

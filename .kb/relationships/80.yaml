@@ -6,3 +6,24 @@ relationships:
     created_at: "2026-10-28T04:48:31.687Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: constrains
+    from: REQ-ibkrflex-hostile-input
+    to: FACT-SUBJECT-4417410D7D0B92B1
+    created_at: 2026-10-28T06:24:09.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72987e08cc12
+  - type: requires_property
+    from: REQ-ibkrflex-hostile-input
+    to: FACT-PROP-0C2B94510D94FB96
+    created_at: 2026-10-28T06:24:09.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c42904ec8ca
+  - type: specified_by
+    from: REQ-ibkrflex-hostile-input
+    to: SCEN-ibkrflex-hostile
+    created_at: 2026-10-28T06:24:09.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a45151aec5d4

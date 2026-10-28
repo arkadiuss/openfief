@@ -1,0 +1,60 @@
+tx ibkr-flex:acc-ibkr/9000101 buy 2026-03-09 account=acc-ibkr "buy TSTA"
+  holding:PLTEST000010/TSTA 500.5 USD units=5
+  cash:USD -500.5 USD
+  fee:USD 1.25 USD
+  cash:USD -1.25 USD
+tx ibkr-flex:acc-ibkr/9000102 sell 2026-03-10 account=acc-ibkr "sell TSTB"
+  holding:IETEST000026/TSTB -55 EUR units=-0.5
+  cash:EUR 55 EUR
+  fee:USD 1.1 USD
+  cash:USD -1.1 USD
+tx ibkr-flex:acc-ibkr/9000103 fx-conversion 2026-03-11 account=acc-ibkr "fx EUR.USD"
+  cash:USD -108.5 USD
+  fx:USD 108.5 USD
+  fx:EUR -100 EUR
+  cash:EUR 100 EUR
+  fee:USD 2 USD
+  cash:USD -2 USD
+tx ibkr-flex:acc-ibkr/9000104 fx-conversion 2026-03-12 account=acc-ibkr "fx EUR.USD"
+  cash:EUR -50 EUR
+  fx:EUR 50 EUR
+  fx:USD -54.5 USD
+  cash:USD 54.5 USD
+tx ibkr-flex:acc-ibkr/9000105 buy 2026-03-12 account=acc-ibkr "buy TSTC"
+  holding:XSFAKE000034/TSTC 50 GBP units=10
+  cash:GBP -50 GBP
+  fee:GBP 1.25 GBP
+  cash:GBP -1.25 GBP
+tx ibkr-flex:acc-ibkr/8000101 deposit 2026-03-09 account=acc-ibkr "CASH RECEIPTS / ELECTRONIC FUND TRANSFERS"
+  cash:USD 1000 USD
+  equity:USD -1000 USD
+tx ibkr-flex:acc-ibkr/8000102 withdrawal 2026-03-10 account=acc-ibkr "DISBURSEMENT"
+  cash:USD -200 USD
+  equity:USD 200 USD
+tx ibkr-flex:acc-ibkr/8000103 dividend 2026-03-11 account=acc-ibkr "TSTA CASH DIVIDEND USD 0.50 PER SHARE"
+  holding:PLTEST000010/TSTA -7.5 USD
+  withholding-tax:USD 1.13 USD
+  cash:USD 6.37 USD
+tx ibkr-flex:acc-ibkr/8000105 dividend 2026-03-12 account=acc-ibkr "TSTB CASH DIVIDEND EUR 0.40 PER SHARE"
+  holding:IETEST000026/TSTB -1.8 EUR
+  withholding-tax:EUR 0.3 EUR
+  cash:EUR 1.5 EUR
+tx ibkr-flex:acc-ibkr/8000109 fee 2026-03-13 account=acc-ibkr "MARKET DATA FEE"
+  fee:USD 4.5 USD
+  cash:USD -4.5 USD
+assert acc-ibkr 2026-03-13 holding:PLTEST000010/TSTA 20
+assert acc-ibkr 2026-03-13 holding:IETEST000026/TSTB 4.5
+assert acc-ibkr 2026-03-13 cash:USD 664.37
+assert acc-ibkr 2026-03-13 cash:EUR 1.2
+problem unsupported FlexStatement#1/OpenPositions#4: short or empty positions are not supported
+problem unsupported FlexStatement#1/OpenPositions#5: asset category "FUT" is not supported
+problem unsupported FlexStatement#1/CashReport#4[currency=GBP]: missing or unreadable attribute: endingCash
+problem skipped FlexStatement#1/Trades#1: <Order> is not a <Trade> row
+problem skipped FlexStatement#1/Trades#4[tradeID=9000102]: <Lot> is not a <Trade> row
+problem unsupported FlexStatement#1/Trades#8[tradeID=9000106]: asset category "OPT" is not supported
+problem unsupported FlexStatement#1/Trades#9[tradeID=9000107]: trade type "TradeCancel" is not supported
+problem unsupported FlexStatement#1/Trades#10[tradeID=9000108]: missing or unreadable attribute: isin
+problem skipped FlexStatement#1/CashTransactions#11: level of detail "SUMMARY" is not read
+problem unsupported FlexStatement#1/CashTransactions#8[transactionID=8000108]: withholding tax without its dividend in this statement
+problem unsupported FlexStatement#1/CashTransactions#10[transactionID=8000110]: cash transaction type "Broker Interest Received" is not supported
+problem skipped FlexStatement#2: statement of an IBKR account that feeds no ledger account

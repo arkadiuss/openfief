@@ -62,3 +62,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b48265e556e
+  - type: implements
+    from: SYM-ingest-import-summary
+    to: REQ-ingest-batch-record
+    created_at: 2026-10-28T06:18:04.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1568a981d937
+  - type: implements
+    from: SYM-ingest-import-summary
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T06:18:04.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-506e6ace28cc
+  - type: covered_by
+    from: SYM-ingest-import-summary
+    to: TEST-ingest-batch
+    created_at: 2026-10-28T06:18:04.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75a0a6bb9149
+  - type: implements
+    from: SYM-ibkrflex-row-instrument
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:25:35.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf5a1a39771e
+  - type: covered_by
+    from: SYM-ibkrflex-row-instrument
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:25:35.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8c1ab89746c

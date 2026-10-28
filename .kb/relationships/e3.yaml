@@ -48,3 +48,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce925faeff50
+  - type: implements
+    from: SYM-ibkrflex-positions-opening-lot
+    to: REQ-ibkrflex-opening
+    created_at: 2026-10-28T06:26:56.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9563a9b4eebd
+  - type: implements
+    from: SYM-ibkrflex-positions-opening-lot
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T06:26:56.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1335c1bbd9a7
+  - type: covered_by
+    from: SYM-ibkrflex-positions-opening-lot
+    to: TEST-ibkrflex-golden
+    created_at: 2026-10-28T06:26:56.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf521a0fbdae
+  - type: executable_for
+    from: SYM-ibkrflex-test-map-unknown-mode
+    to: TEST-ibkrflex-hostile
+    created_at: 2026-10-28T06:29:40.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a6d82015f52

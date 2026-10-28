@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a5bb873a4b1
+  - type: implements
+    from: SYM-ibkrflex-trade-amounts
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:27:47.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3b413afcda4
+  - type: covered_by
+    from: SYM-ibkrflex-trade-amounts
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:27:47.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64e4eaa9a51a

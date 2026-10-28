@@ -19,6 +19,11 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Balance assertion | ledger | `ledger.BalanceAssertion` | A broker-reported balance on a date that the derived balance must match; a mismatch is an error. | snapshot |
 | Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one role. Defensive: not available to agents. Offensive: the part fiefs are leased from. | bucket |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
+| Statement | ingest | `app.StatementFetcher` | What an institution reports about an account, as a file or a pulled document, such as an IBKR Flex Query or an xStation export. A connector maps it. | report, export (alone) |
+| Ingest mode | ingest | `ingest.Mode` | What an import batch takes from a statement: `opening` seeds an account at go-live with opening lots and its opening cash (D-23); `transactions` imports transactions from go-live on. Both import balance assertions. | |
+| Mapping | ingest | `ingest.Mapping` | What a connector makes of one statement: transactions, balance assertions and ingest problems. | |
+| Ingest problem | ingest | `ingest.Problem` | A statement row the mapping left out of the ledger, with its reason: `unsupported` (can't be booked yet, such as an option trade) or `skipped` (left out on purpose, such as a summary row). Not an error. | warning |
+| Import summary | ingest | `ingest.ImportSummary` | What the ledger did with a batch's mapping: new transactions, new versions, unchanged ones, and failed balance assertions. | |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
 | FX rate | valuation | `valuation.FXRate` | The value in PLN of one unit of a currency on a date, from a source; NBP table A in M0. The rate for a date is the latest one dated on or before it. | |
 | Valuation | valuation | `valuation.Valuation` | The value of a holding on a date, with its basis and source. | |

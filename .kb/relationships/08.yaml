@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86a2bd46c761
+  - type: implements
+    from: SYM-ibkrflex-row-decimal
+    to: REQ-ibkrflex-hostile-input
+    created_at: 2026-10-28T06:25:11.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ee9207b5dc
+  - type: covered_by
+    from: SYM-ibkrflex-row-decimal
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-28T06:25:11.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1053952ba5c7

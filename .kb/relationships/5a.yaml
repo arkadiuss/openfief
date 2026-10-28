@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c4564d3a443
+  - type: validates
+    from: TEST-ingest-batch
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T06:17:28.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61d8d694d42f
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-ledger-import
+    to: TEST-ingest-app
+    created_at: 2026-10-28T06:37:59.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3632ca87c78

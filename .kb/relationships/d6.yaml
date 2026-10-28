@@ -41,3 +41,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-517d257de785
+  - type: implements
+    from: SYM-ibkrflex-statement
+    to: REQ-ibkrflex-transactions
+    created_at: 2026-10-28T06:24:31.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7654e588bbd
+  - type: covered_by
+    from: SYM-ibkrflex-statement
+    to: TEST-ibkrflex-golden
+    created_at: 2026-10-28T06:24:32.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf21a2029588
