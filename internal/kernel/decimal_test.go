@@ -136,3 +136,45 @@ func TestDecimalCompare(t *testing.T) {
 		})
 	}
 }
+
+func TestDecimalDiv(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		a, b    string
+		places  int32
+		mode    kernel.RoundingMode
+		want    string
+		wantErr error
+	}{
+		{name: "exact", a: "10", b: "4", places: 2, mode: kernel.RoundHalfEven, want: "2.5"},
+		{name: "a third, half even", a: "1", b: "3", places: 4, mode: kernel.RoundHalfEven, want: "0.3333"},
+		{name: "two thirds, half even rounds up", a: "2", b: "3", places: 2, mode: kernel.RoundHalfEven, want: "0.67"},
+		{name: "two thirds, down truncates", a: "2", b: "3", places: 2, mode: kernel.RoundDown, want: "0.66"},
+		{name: "half even, tie to even down", a: "0.125", b: "1", places: 2, mode: kernel.RoundHalfEven, want: "0.12"},
+		{name: "half even, tie to even up", a: "0.375", b: "1", places: 2, mode: kernel.RoundHalfEven, want: "0.38"},
+		{name: "half up, tie away from zero", a: "0.125", b: "1", places: 2, mode: kernel.RoundHalfUp, want: "0.13"},
+		{name: "half up, negative tie away from zero", a: "-1", b: "8", places: 2, mode: kernel.RoundHalfUp, want: "-0.13"},
+		{name: "half even, negative divisor", a: "2", b: "-3", places: 2, mode: kernel.RoundHalfEven, want: "-0.67"},
+		{name: "down, negative toward zero", a: "-2", b: "3", places: 2, mode: kernel.RoundDown, want: "-0.66"},
+		{name: "zero places", a: "7", b: "2", places: 0, mode: kernel.RoundHalfEven, want: "4"},
+		{name: "zero dividend", a: "0", b: "7", places: 2, mode: kernel.RoundHalfUp, want: "0"},
+		{name: "division by zero", a: "1", b: "0", places: 2, mode: kernel.RoundHalfEven, wantErr: kernel.ErrDivisionByZero},
+		{name: "unknown mode", a: "1", b: "3", places: 2, mode: kernel.RoundingMode(0), wantErr: kernel.ErrUnknownRoundingMode},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := dec(t, tt.a).Div(dec(t, tt.b), tt.places, tt.mode)
+			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
+				t.Fatalf("Div error (-want +got):\n%s", diff)
+			}
+			if err != nil {
+				return
+			}
+			if diff := cmp.Diff(dec(t, tt.want), got); diff != "" {
+				t.Errorf("%s / %s (-want +got):\n%s", tt.a, tt.b, diff)
+			}
+		})
+	}
+}

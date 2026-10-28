@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-5466a8dfc2c0
+    type: implements
+    from: SYM-portfolio-role-string
+    to: REQ-portfolio-sleeve-role
+    created_at: "2026-10-28T05:13:43.299Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-portfolio-role-string
+    to: TEST-portfolio-sleeve
+    created_at: 2026-10-28T05:13:43.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce9bb1d000e1

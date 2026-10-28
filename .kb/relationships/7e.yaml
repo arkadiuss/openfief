@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-009aac0a3b9a
+  - type: implements
+    from: SYM-portfolio-sleeve-id
+    to: REQ-portfolio-sleeve-role
+    created_at: 2026-10-28T05:13:45.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e61d9fdad5b
+  - type: covered_by
+    from: SYM-portfolio-sleeve-id
+    to: TEST-portfolio-sleeve
+    created_at: 2026-10-28T05:13:45.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d32c4ef57014
