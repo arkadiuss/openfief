@@ -2465,3 +2465,214 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-transaction
+  - id: SYM-ledger-test-helper-must
+    title: must
+    sourceFile: internal/ledger/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:36.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-account
+      - type: executable_for
+        target: TEST-ledger-events
+      - type: executable_for
+        target: TEST-ledger-instrument
+      - type: executable_for
+        target: TEST-ledger-properties
+      - type: executable_for
+        target: TEST-ledger-transaction
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-versioned-transaction
+    title: VersionedTransaction
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:40.249Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-import-decision
+    title: ImportDecision
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:42.685Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-import-decision-string
+    title: ImportDecision.String
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:45.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-import-result
+    title: ImportResult
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:47.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-22E70B6530E994B1
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-decide-import
+    title: DecideImport
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:50.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-ledger-import-idempotent
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-current-of
+    title: currentOf
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:53.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-CACBF41A8E14837D
+      - type: implements
+        target: REQ-ledger-import-supersede
+  - id: SYM-ledger-current-transactions
+    title: CurrentTransactions
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:57.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-current-versions
+  - id: SYM-ledger-fingerprint
+    title: Fingerprint
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:32:59.966Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+      - type: implements
+        target: REQ-ledger-import-idempotent
+  - id: SYM-ledger-field
+    title: field
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:03.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+      - type: implements
+        target: REQ-ledger-import-idempotent
+  - id: SYM-ledger-date-or-empty
+    title: dateOrEmpty
+    sourceFile: internal/ledger/version.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:06.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-AUTO-F19F621B67F14F4F
+      - type: implements
+        target: REQ-ledger-import-idempotent
+  - id: SYM-ledger-test-decide-import
+    title: TestDecideImport
+    sourceFile: internal/ledger/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:08.922Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-test-current-transactions
+    title: TestCurrentTransactions
+    sourceFile: internal/ledger/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:10.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-test-fingerprint-covers-every-field
+    title: TestFingerprintCoversEveryField
+    sourceFile: internal/ledger/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:12.977Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-version
+  - id: SYM-ledger-test-import-decision-names
+    title: TestImportDecisionNames
+    sourceFile: internal/ledger/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:33:14.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-version

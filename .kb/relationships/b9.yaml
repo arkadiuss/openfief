@@ -55,3 +55,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70bdd9d19e57
+  - type: verified_by
+    from: SCEN-ledger-changed-row-supersedes
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:32:10.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f2a87c39f9f

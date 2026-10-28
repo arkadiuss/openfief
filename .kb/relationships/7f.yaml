@@ -1,0 +1,43 @@
+relationships:
+  - id: rel-2bc51521e13c
+    type: executable_for
+    from: SYM-ledger-test-helper-must
+    to: TEST-ledger-instrument
+    created_at: "2026-10-28T05:32:37.160Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-ledger-test-helper-must
+    to: TEST-ledger-account
+    created_at: 2026-10-28T05:32:37.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc614d24a450
+  - type: executable_for
+    from: SYM-ledger-test-helper-must
+    to: TEST-ledger-transaction
+    created_at: 2026-10-28T05:32:37.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8d9394a7732
+  - type: executable_for
+    from: SYM-ledger-test-helper-must
+    to: TEST-ledger-events
+    created_at: 2026-10-28T05:32:37.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-324f7c778571
+  - type: executable_for
+    from: SYM-ledger-test-helper-must
+    to: TEST-ledger-properties
+    created_at: 2026-10-28T05:32:37.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8122e35b461e
+  - type: executable_for
+    from: SYM-ledger-test-helper-must
+    to: TEST-ledger-version
+    created_at: 2026-10-28T05:32:37.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d152e22bb40

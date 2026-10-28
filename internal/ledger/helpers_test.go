@@ -62,6 +62,19 @@ func instrument(t *testing.T, isin, symbol string) ledger.Instrument {
 	return ledger.Instrument{ISIN: i, Symbol: symbol}
 }
 
+// must returns a function that unwraps a constructor's result and fails the
+// test on its error: must(t)(ledger.NewBuy(...)).
+func must(t *testing.T) func(ledger.Transaction, error) ledger.Transaction {
+	t.Helper()
+	return func(tx ledger.Transaction, err error) ledger.Transaction {
+		t.Helper()
+		if err != nil {
+			t.Fatalf("building transaction: %v", err)
+		}
+		return tx
+	}
+}
+
 // header returns a header in testAccount from source "test".
 func header(t *testing.T, id, day string) ledger.TransactionHeader {
 	t.Helper()

@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-543f7a9dbba7
+    type: verified_by
+    from: SCEN-ledger-current-versions
+    to: TEST-ledger-version
+    created_at: "2026-10-28T05:32:12.995Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

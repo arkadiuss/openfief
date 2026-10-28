@@ -34,3 +34,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe133bb1d32e
+  - type: constrains
+    from: REQ-ledger-import-supersede
+    to: FACT-SUBJECT-5AAB42074DC95646
+    created_at: 2026-10-28T05:32:25.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6525deb6b5da
+  - type: requires_property
+    from: REQ-ledger-import-supersede
+    to: FACT-PROP-69742B6CBA51C1EF
+    created_at: 2026-10-28T05:32:25.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001cde297a96
+  - type: specified_by
+    from: REQ-ledger-import-supersede
+    to: SCEN-ledger-changed-row-supersedes
+    created_at: 2026-10-28T05:32:25.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b79918125e2b
