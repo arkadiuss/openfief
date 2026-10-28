@@ -315,7 +315,9 @@ func checkNoAuthSecretStored(t *testing.T, pool *pgxpool.Pool, secrets []string)
 		t.Fatalf("dumping: %v", err)
 	}
 	for _, secret := range secrets {
-		keyText := secret[strings.LastIndex(secret, "_")+1:]
+		// The prefix (ofsess, ofenroll) ends at the first "_"; the base64url
+		// key itself may contain "_".
+		_, keyText, _ := strings.Cut(secret, "_")
 		key, err := base64.RawURLEncoding.DecodeString(keyText)
 		if err != nil {
 			t.Fatalf("decoding a key: %v", err)
