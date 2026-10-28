@@ -40895,3 +40895,657 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-kube
+  - id: SYM-operator-cmd-test-test-parse-flags-signing-keys-refresh
+    title: TestParseFlagsSigningKeysRefresh
+    sourceFile: cmd/operator/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:09.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cmd
+  - id: SYM-plugins-config-map-volume
+    title: ConfigMapVolume
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:13.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-plugins-workload-core-auth
+  - id: SYM-plugins-test-core-auth-env
+    title: coreAuthEnv
+    sourceFile: internal/plugins/compile_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:16.971Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-compile
+  - id: SYM-operator-apply-as
+    title: applyAs
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:20.954Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-allow-list-publish
+      - type: implements
+        target: REQ-operator-runs-only-granted
+  - id: SYM-operator-issuer-discovery
+    title: IssuerDiscovery
+    sourceFile: internal/plugins/operator/signingkeys.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:23.726Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-operator-issuer-discovery-signing-keys
+    title: IssuerDiscovery.SigningKeys
+    sourceFile: internal/plugins/operator/signingkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:27.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-operator-signing-key-source
+    title: SigningKeySource
+    sourceFile: internal/plugins/operator/signingkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:31.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-operator-signing-keys-publisher
+    title: SigningKeysPublisher
+    sourceFile: internal/plugins/operator/signingkeys.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:34.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-operator-signing-keys-publisher-reconcile
+    title: SigningKeysPublisher.Reconcile
+    sourceFile: internal/plugins/operator/signingkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:38.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-operator-signing-keys-publisher-publish
+    title: SigningKeysPublisher.Publish
+    sourceFile: internal/plugins/operator/signingkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:41.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-operator-signing-keys-config-map
+    title: SigningKeysConfigMap
+    sourceFile: internal/plugins/operator/signingkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:45.966Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-operator-signing-keys-publisher-setup-with-manager
+    title: SigningKeysPublisher.SetupWithManager
+    sourceFile: internal/plugins/operator/signingkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:49.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-operator-test-failing-source
+    title: failingSource
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:53.342Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-operator-test-failing-source-signing-keys
+    title: failingSource.SigningKeys
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:48:56.962Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-operator-test-test-cluster-discovery-as
+    title: testCluster.discoveryAs
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:00.620Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-operator-test-test-signing-keys
+    title: TestSigningKeys
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:04.575Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-operator-test-test-cluster-republish
+    title: testCluster.republish
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:08.290Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-operator-test-test-cluster-signing-keys
+    title: testCluster.signingKeys
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:12.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-operator-test-test-cluster-verify-core-tokens
+    title: testCluster.verifyCoreTokens
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:15.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-operator-test-test-signing-keys-publisher-runs
+    title: TestSigningKeysPublisherRuns
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:19.591Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-operator-test-test-cluster-wait-for-signing-keys
+    title: testCluster.waitForSigningKeys
+    sourceFile: internal/plugins/operator/signingkeys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:23.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-signing-keys
+  - id: SYM-plugins-private-key-members
+    title: privateKeyMembers
+    sourceFile: internal/plugins/signing_keys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:26.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-plugins-signing-keys
+    title: SigningKeys
+    sourceFile: internal/plugins/signing_keys.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:29.675Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-plugins-parse-signing-keys
+    title: ParseSigningKeys
+    sourceFile: internal/plugins/signing_keys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:33.349Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-plugins-check-public-key
+    title: checkPublicKey
+    sourceFile: internal/plugins/signing_keys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:37.249Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-plugins-signing-keys-data
+    title: SigningKeys.Data
+    sourceFile: internal/plugins/signing_keys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:40.953Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-signing-keys
+      - type: implements
+        target: REQ-plugins-signing-keys-published
+  - id: SYM-plugins-test-test-parse-signing-keys
+    title: TestParseSigningKeys
+    sourceFile: internal/plugins/signing_keys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:44.590Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-signing-keys
+  - id: SYM-plugins-test-test-signing-keys-data
+    title: TestSigningKeysData
+    sourceFile: internal/plugins/signing_keys_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:48.179Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-signing-keys
+  - id: SYM-sdk-go-core-token-algorithms
+    title: coreTokenAlgorithms
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:51.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-jwks-verifier
+    title: JWKSVerifier
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:54.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-key-set
+    title: keySet
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:49:57.970Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-new-core-verifier
+    title: NewCoreVerifier
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:02.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-jwks-verifier-verify-core
+    title: JWKSVerifier.VerifyCore
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:06.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-jwks-verifier-verify
+    title: JWKSVerifier.verify
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:10.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-key-set-claims
+    title: keySet.claims
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:15.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-jwks-verifier-load
+    title: JWKSVerifier.load
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:19.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-parse-key-set
+    title: parseKeySet
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:23.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-usable-key
+    title: usableKey
+    sourceFile: sdk/go/openfief/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:28.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-jwks-verifier
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-test-now
+    title: testNow
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:32.346Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-test-keys
+    title: testKeys
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:36.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-new-test-keys
+    title: newTestKeys
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:40.516Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-write-keys
+    title: writeKeys
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:44.501Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-write-file
+    title: writeFile
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:48.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-public-jwk
+    title: publicJWK
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:52.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-claims
+    title: claims
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:50:56.311Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-sign
+    title: sign
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:00.583Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-unsigned
+    title: unsigned
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:04.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-check-refusal
+    title: checkRefusal
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:09.210Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-new-verifier
+    title: newVerifier
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:13.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-test-jwks-verifier
+    title: TestJWKSVerifier
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:17.748Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-test-jwks-verifier-key-set
+    title: TestJWKSVerifierKeySet
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:21.973Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-test-jwks-verifier-rotated-keys
+    title: TestJWKSVerifierRotatedKeys
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:26.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-test-jwks-verifier-without-audience
+    title: TestJWKSVerifierWithoutAudience
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:30.278Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-test-require-core-with-jwks-verifier
+    title: TestRequireCoreWithJWKSVerifier
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:34.357Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier
+  - id: SYM-sdk-go-test-test-new-core-verifier
+    title: TestNewCoreVerifier
+    sourceFile: sdk/go/openfief/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T16:51:38.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-jwks-verifier

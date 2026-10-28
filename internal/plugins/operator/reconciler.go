@@ -25,14 +25,16 @@ import (
 // operator writes.
 const FieldOwner = "openfief-operator"
 
-// Settings name the core's and the egress proxy's Services and ports, and
-// the port plugins serve on.
+// Settings name the core's and the egress proxy's Services and ports, the
+// port plugins serve on, and the core's ServiceAccount, whose tokens plugins
+// accept (D-59).
 type Settings struct {
 	CoreService        string
 	CorePort           string
 	EgressProxyService string
 	EgressProxyPort    string
 	PluginPort         uint16
+	CoreServiceAccount string
 }
 
 // The operator's Role in the openfief namespace (D-15), generated into
@@ -213,7 +215,9 @@ func (r *PluginReconciler) cluster(ctx context.Context) (Cluster, error) {
 	if err := r.Client.Get(ctx, types.NamespacedName{Namespace: plugins.Namespace, Name: s.EgressProxyService}, &proxy); err != nil {
 		return Cluster{}, fmt.Errorf("egress proxy service %s: %w", s.EgressProxyService, err)
 	}
-	return ClusterFromServices(&core, &proxy, s.CorePort, s.EgressProxyPort, s.PluginPort)
+	c, err := ClusterFromServices(&core, &proxy, s.CorePort, s.EgressProxyPort, s.PluginPort)
+	c.Topology.CoreServiceAccount = s.CoreServiceAccount
+	return c, err
 }
 
 // apply compiles the running version's workload and applies its objects,
@@ -289,6 +293,12 @@ func (r *PluginReconciler) applyObject(ctx context.Context, obj client.Object) e
 // applyObjectAs server-side applies obj as the given field manager and reads
 // the result back into obj.
 func (r *PluginReconciler) applyObjectAs(ctx context.Context, obj client.Object, owner string) error {
+	return applyAs(ctx, r.Client, obj, owner)
+}
+
+// applyAs server-side applies obj with c as the given field manager and
+// reads the result back into obj.
+func applyAs(ctx context.Context, c client.Client, obj client.Object, owner string) error {
 	u, err := runtime.DefaultUnstructuredConverter.ToUnstructured(obj)
 	if err != nil {
 		return fmt.Errorf("convert %s: %w", obj.GetName(), err)
@@ -298,7 +308,7 @@ func (r *PluginReconciler) applyObjectAs(ctx context.Context, obj client.Object,
 	unstructured.RemoveNestedField(u, "spec", "template", "metadata", "creationTimestamp")
 	unstructured.RemoveNestedField(u, "status")
 	applied := &unstructured.Unstructured{Object: u}
-	if err := r.Client.Apply(ctx, client.ApplyConfigurationFromUnstructured(applied), client.FieldOwner(owner), client.ForceOwnership); err != nil {
+	if err := c.Apply(ctx, client.ApplyConfigurationFromUnstructured(applied), client.FieldOwner(owner), client.ForceOwnership); err != nil {
 		return fmt.Errorf("apply %s %s: %w", obj.GetObjectKind().GroupVersionKind().Kind, obj.GetName(), err)
 	}
 	if err := runtime.DefaultUnstructuredConverter.FromUnstructured(applied.Object, obj); err != nil {

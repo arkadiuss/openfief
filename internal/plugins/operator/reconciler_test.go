@@ -117,7 +117,7 @@ func (tc *testCluster) reconciler(v operator.ImageVerifier) *operator.PluginReco
 		Settings: operator.Settings{
 			CoreService: "openfief-core", CorePort: "connect",
 			EgressProxyService: "openfief-egress-proxy", EgressProxyPort: "proxy",
-			PluginPort: 9090,
+			PluginPort: 9090, CoreServiceAccount: "openfief-core",
 		},
 	}
 }

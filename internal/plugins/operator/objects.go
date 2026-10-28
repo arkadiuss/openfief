@@ -55,12 +55,15 @@ const (
 )
 
 const (
-	identityVolume = "openfief-token"
-	egressVolume   = "openfief-egress-token"
+	kindConfigMap     = "ConfigMap"
+	identityVolume    = "openfief-token"
+	egressVolume      = "openfief-egress-token"
+	signingKeysVolume = "openfief-sa-jwks"
 	// operatorEnvVars counts the variables the operator may add to the Workload's.
 	operatorEnvVars = 5
-	// tokenVolumes is the most projected token volumes a plugin pod gets.
-	tokenVolumes = 2
+	// operatorVolumes is the most volumes a plugin pod gets besides its
+	// Secrets: two projected tokens and the signing keys.
+	operatorVolumes = 3
 	// MaxPluginNameLen keeps "plugin-<name>" within the 63 characters of a
 	// Service name.
 	MaxPluginNameLen = 56
@@ -83,6 +86,8 @@ type Objects struct {
 //   - a ServiceAccount that mounts no API token, and a pod that mounts only
 //     the projected token with the core's audience (D-27);
 //   - the granted Secrets, mounted read-only;
+//   - the ServiceAccount signing keys ConfigMap, mounted read-only, for
+//     verifying the core's token (D-59);
 //   - a NetworkPolicy denying all ingress and egress except the Workload's
 //     rules, whose peers are the core's and egress proxy's pods, selected by
 //     their Services' selectors, on pod ports (D-32);
@@ -105,7 +110,7 @@ func BuildObjects(w *plugins.Workload, c *Cluster) (Objects, error) {
 			AutomountServiceAccountToken: &automount,
 		},
 		ConfigMap: &corev1.ConfigMap{
-			TypeMeta:   metav1.TypeMeta{APIVersion: "v1", Kind: "ConfigMap"},
+			TypeMeta:   metav1.TypeMeta{APIVersion: "v1", Kind: kindConfigMap},
 			ObjectMeta: objectMeta(configMapName(w.Plugin), w.Plugin),
 			Data:       map[string]string{ConfigKey: string(w.Config)},
 		},
@@ -150,7 +155,7 @@ func AllowListConfigMap(lists []plugins.EgressAllowList) (*corev1.ConfigMap, err
 		return nil, fmt.Errorf("encode egress allow-lists: %w", err)
 	}
 	return &corev1.ConfigMap{
-		TypeMeta: metav1.TypeMeta{APIVersion: "v1", Kind: "ConfigMap"},
+		TypeMeta: metav1.TypeMeta{APIVersion: "v1", Kind: kindConfigMap},
 		ObjectMeta: metav1.ObjectMeta{
 			Name: plugins.EgressAllowListConfigMap, Namespace: plugins.Namespace,
 			Labels: map[string]string{labelManagedBy: managerName},
@@ -258,8 +263,11 @@ func container(w *plugins.Workload, c *Cluster) corev1.Container {
 			LocalObjectReference: corev1.LocalObjectReference{Name: configMapName(w.Plugin)}, Key: ConfigKey,
 		}}},
 	)
-	mounts := make([]corev1.VolumeMount, 0, tokenVolumes+len(w.Secrets))
-	mounts = append(mounts, corev1.VolumeMount{Name: identityVolume, MountPath: w.Token.MountPath, ReadOnly: true})
+	mounts := make([]corev1.VolumeMount, 0, operatorVolumes+len(w.Secrets))
+	mounts = append(mounts,
+		corev1.VolumeMount{Name: identityVolume, MountPath: w.Token.MountPath, ReadOnly: true},
+		corev1.VolumeMount{Name: signingKeysVolume, MountPath: w.SigningKeys.MountPath, ReadOnly: true},
+	)
 	if t := w.EgressToken; t != nil {
 		env = append(env, corev1.EnvVar{Name: EnvEgressIdentityFile, Value: path.Join(t.MountPath, t.Path)})
 		mounts = append(mounts, corev1.VolumeMount{Name: egressVolume, MountPath: t.MountPath, ReadOnly: true})
@@ -291,8 +299,13 @@ func container(w *plugins.Workload, c *Cluster) corev1.Container {
 }
 
 func volumes(w *plugins.Workload) []corev1.Volume {
-	vs := make([]corev1.Volume, 0, tokenVolumes+len(w.Secrets))
-	vs = append(vs, tokenVolume(identityVolume, w.Token))
+	vs := make([]corev1.Volume, 0, operatorVolumes+len(w.Secrets))
+	vs = append(vs, tokenVolume(identityVolume, w.Token), corev1.Volume{
+		Name: signingKeysVolume,
+		VolumeSource: corev1.VolumeSource{ConfigMap: &corev1.ConfigMapVolumeSource{
+			LocalObjectReference: corev1.LocalObjectReference{Name: w.SigningKeys.ConfigMapName},
+		}},
+	})
 	if w.EgressToken != nil {
 		vs = append(vs, tokenVolume(egressVolume, *w.EgressToken))
 	}

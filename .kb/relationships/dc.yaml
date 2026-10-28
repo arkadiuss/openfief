@@ -202,3 +202,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d6f11fbd05d
+  - type: implements
+    from: SYM-sdk-go-jwks-verifier-load
+    to: REQ-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:20.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6da79698d6f0
+  - type: implements
+    from: SYM-sdk-go-jwks-verifier-load
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:50:20.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4485788b575f
+  - type: covered_by
+    from: SYM-sdk-go-jwks-verifier-load
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:20.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b621becea4e7

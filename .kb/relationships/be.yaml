@@ -209,3 +209,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8da891eb312
+  - type: implements
+    from: SYM-operator-signing-key-source
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:48:32.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e4f466efa14
+  - type: covered_by
+    from: SYM-operator-signing-key-source
+    to: TEST-operator-signing-keys
+    created_at: 2026-10-28T16:48:32.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1679f397947b
+  - type: executable_for
+    from: SYM-sdk-go-test-check-refusal
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:51:10.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef75befe3607

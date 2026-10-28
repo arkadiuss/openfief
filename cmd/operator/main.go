@@ -10,8 +10,10 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"time"
 
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/discovery"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
@@ -33,11 +35,18 @@ const (
 	defaultTrustedSigners = "/etc/openfief/trust/signers.json"
 )
 
-// errPluginPort reports a plugin port outside 1 to 65535.
-var errPluginPort = errors.New("plugin port must be 1 to 65535")
+// Flag errors.
+var (
+	// errPluginPort reports a plugin port outside 1 to 65535.
+	errPluginPort = errors.New("plugin port must be 1 to 65535")
+	// errKeysRefresh reports a signing keys refresh interval that is not
+	// positive.
+	errKeysRefresh = errors.New("signing keys refresh must be positive")
+)
 
 type options struct {
 	settings       operator.Settings
+	keysRefresh    time.Duration
 	pluginPort     uint
 	trustedSigners string
 	leaderElect    bool
@@ -61,6 +70,10 @@ func parseFlags(args []string) (*options, error) {
 	fs.StringVar(&o.settings.EgressProxyService, "egress-proxy-service", "egress-proxy", "the egress proxy's Service in the openfief namespace")
 	fs.StringVar(&o.settings.EgressProxyPort, "egress-proxy-port", "proxy", "the name of the egress proxy Service's port")
 	fs.UintVar(&o.pluginPort, "plugin-port", defaultPluginPort, "the port every plugin serves Connect RPC on")
+	fs.StringVar(&o.settings.CoreServiceAccount, "core-service-account", "openfief-core",
+		"the core's ServiceAccount in the openfief namespace, whose tokens plugins accept (D-59)")
+	fs.DurationVar(&o.keysRefresh, "signing-keys-refresh", operator.DefaultSigningKeysRefresh,
+		"how often to publish the cluster's ServiceAccount signing keys for plugins again")
 	fs.StringVar(&o.trustedSigners, "trusted-signers", defaultTrustedSigners,
 		"JSON file of the signers the owner trusts besides OpenFief's CI and the catalog (D-45); a missing file adds none")
 	fs.BoolVar(&o.leaderElect, "leader-elect", true, "elect one active operator with a Lease in the openfief namespace")
@@ -72,6 +85,9 @@ func parseFlags(args []string) (*options, error) {
 	}
 	if o.pluginPort == 0 || o.pluginPort > math.MaxUint16 {
 		return nil, fmt.Errorf("%w: %d", errPluginPort, o.pluginPort)
+	}
+	if o.keysRefresh <= 0 {
+		return nil, fmt.Errorf("%w: %s", errKeysRefresh, o.keysRefresh)
 	}
 	o.settings.PluginPort = uint16(o.pluginPort)
 	return &o, nil
@@ -107,9 +123,17 @@ func run(args []string) error {
 	pr := &operator.PluginReconciler{
 		Client: mgr.GetClient(), Scheme: scheme, Settings: o.settings, Verifier: verifier,
 	}
+	dc, err := discovery.NewDiscoveryClientForConfig(mgr.GetConfig())
+	if err != nil {
+		return fmt.Errorf("discovery client: %w", err)
+	}
+	keys := &operator.SigningKeysPublisher{
+		Client: mgr.GetClient(), Source: operator.IssuerDiscovery{Client: dc.RESTClient()}, Refresh: o.keysRefresh,
+	}
 	if setupErr := errors.Join(
 		pr.SetupWithManager(mgr),
 		(&operator.GrantReconciler{Client: mgr.GetClient()}).SetupWithManager(mgr),
+		keys.SetupWithManager(mgr),
 	); setupErr != nil {
 		return fmt.Errorf("controllers: %w", setupErr)
 	}

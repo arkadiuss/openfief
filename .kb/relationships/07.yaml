@@ -195,3 +195,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c3f252f06d1
+  - type: implements
+    from: SYM-operator-signing-keys-publisher-setup-with-manager
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:48:50.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f8890e04150
+  - type: covered_by
+    from: SYM-operator-signing-keys-publisher-setup-with-manager
+    to: TEST-operator-signing-keys
+    created_at: 2026-10-28T16:48:50.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78a0b9880190

@@ -32,6 +32,8 @@ spec:
             - --egress-proxy-service=egress-proxy
             - --egress-proxy-port=proxy
             - --plugin-port=8080
+            # Plugins accept only this ServiceAccount's tokens (D-59); deploy/core creates it.
+            - --core-service-account=openfief-core
             # Signers the owner trusts besides OpenFief's CI and the catalog (D-45); see kustomization.yaml.
             - --trusted-signers=/etc/openfief/trust/signers.json
           ports:

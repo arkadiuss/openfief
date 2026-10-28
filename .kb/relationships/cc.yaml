@@ -146,3 +146,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df364af39654
+  - type: implements
+    from: SYM-plugins-config-map-volume
+    to: REQ-plugins-workload-core-auth
+    created_at: 2026-10-28T16:48:14.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4637b5be92d
+  - type: covered_by
+    from: SYM-plugins-config-map-volume
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T16:48:14.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29048544349f

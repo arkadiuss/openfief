@@ -38,7 +38,7 @@ func cluster() operator.Cluster {
 		Topology: plugins.Topology{
 			Core:        plugins.Service{Address: "192.0.2.10", Port: 80, TargetPort: 8080},
 			EgressProxy: plugins.Service{Address: "192.0.2.20", Port: 4750, TargetPort: 4751},
-			PluginPort:  9090,
+			PluginPort:  9090, CoreServiceAccount: "openfief-core",
 		},
 		CoreSelector:        coreSelector(),
 		EgressProxySelector: proxySelector(),
@@ -120,12 +120,15 @@ func env(withProxy bool) []corev1.EnvVar {
 			LocalObjectReference: corev1.LocalObjectReference{Name: "plugin-sample-config"}, Key: "config.json",
 		}}},
 		corev1.EnvVar{Name: "OPENFIEF_CORE_ADDRESS", Value: "192.0.2.10:80"},
+		corev1.EnvVar{Name: "OPENFIEF_CORE_SUBJECT", Value: "system:serviceaccount:openfief:openfief-core"},
 	)
 	if withProxy {
 		out = append(out, corev1.EnvVar{Name: "OPENFIEF_EGRESS_TOKEN_FILE", Value: "/var/run/secrets/openfief-egress/token"})
 	}
 	return append(out,
+		corev1.EnvVar{Name: "OPENFIEF_INSTANCE", Value: "sample"},
 		corev1.EnvVar{Name: "OPENFIEF_LISTEN_PORT", Value: "9090"},
+		corev1.EnvVar{Name: "OPENFIEF_SA_JWKS_DIR", Value: "/var/run/secrets/openfief-sa-jwks"},
 		corev1.EnvVar{Name: "OPENFIEF_TOKEN_FILE", Value: "/var/run/secrets/openfief/token"},
 	)
 }
@@ -140,10 +143,19 @@ func tokenVolume(name, audience string) corev1.Volume {
 }
 
 // podVolumes are the pod's volumes and the container's mounts: the core
-// token, the egress token only with egress granted, and the one Secret.
+// token, the signing keys, the egress token only with egress granted, and
+// the one Secret.
 func podVolumes(withProxy bool) ([]corev1.Volume, []corev1.VolumeMount) {
-	vols := []corev1.Volume{tokenVolume("openfief-token", "openfief-core")}
-	mounts := []corev1.VolumeMount{{Name: "openfief-token", MountPath: "/var/run/secrets/openfief", ReadOnly: true}}
+	vols := []corev1.Volume{
+		tokenVolume("openfief-token", "openfief-core"),
+		{Name: "openfief-sa-jwks", VolumeSource: corev1.VolumeSource{ConfigMap: &corev1.ConfigMapVolumeSource{
+			LocalObjectReference: corev1.LocalObjectReference{Name: "openfief-sa-jwks"},
+		}}},
+	}
+	mounts := []corev1.VolumeMount{
+		{Name: "openfief-token", MountPath: "/var/run/secrets/openfief", ReadOnly: true},
+		{Name: "openfief-sa-jwks", MountPath: "/var/run/secrets/openfief-sa-jwks", ReadOnly: true},
+	}
 	if withProxy {
 		vols = append(vols, tokenVolume("openfief-egress-token", "openfief-egress"))
 		mounts = append(mounts, corev1.VolumeMount{Name: "openfief-egress-token", MountPath: "/var/run/secrets/openfief-egress", ReadOnly: true})

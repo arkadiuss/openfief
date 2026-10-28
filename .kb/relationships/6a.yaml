@@ -104,3 +104,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-415639aba028
+  - type: executable_for
+    from: SYM-sdk-go-test-unsigned
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:51:06.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-248c0b71d231
+  - type: executable_for
+    from: SYM-sdk-go-test-test-new-core-verifier
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:51:39.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cb06f101594

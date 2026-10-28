@@ -125,3 +125,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b84cfacce657
+  - type: validates
+    from: TEST-operator-signing-keys
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:47:23.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f49e91c4ed7

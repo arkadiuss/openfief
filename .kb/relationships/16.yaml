@@ -195,3 +195,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c919a023f819
+  - type: validates
+    from: TEST-plugins-signing-keys
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:47:22.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd2437edaa8c

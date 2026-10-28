@@ -86,6 +86,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Rollout | plugins | `plugins.Rollout` | Which version of a plugin runs under its grant: the current one, the previously deployed one while an upgrade waits for approval, or none. | deployment (the Kubernetes object) |
 | Pending approval | plugins | `plugins.Rollout.Pending` | What a plugin's current version requests that its grant does not approve. The owner approves it by adding it to the grant. | diff |
 | Plugin identity | identity | `plugins.ServiceAccountName` | The ServiceAccount `plugin-<name>` in the `openfief` namespace, proven to the core by its projected token with audience `openfief-core`, and to the egress proxy by a second one with audience `openfief-egress`. | |
+| Signing keys | plugins | `plugins.SigningKeys` | The cluster's ServiceAccount token issuer and the public keys that verify its tokens. The operator publishes them in the ConfigMap `openfief-sa-jwks`, which every plugin mounts, so a plugin can check the core's token without reaching the Kubernetes API (D-59). | JWKS (that is their file format) |
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |
 | Script token secret | identity | `identity.FormatSecret` | What a script presents as its bearer token: `ofs_`, the script token's ID, `_` and a random key. Shown once when the token is issued; only the SHA-256 hash of the key is stored. | API key, password |
@@ -162,6 +163,7 @@ Don't create code for these before their milestone.
 | Issue letter (list emisyjny) | The Minister of Finance's document that sets one bond series' terms and how its interest and value are computed. |
 | IKE / IKZE | Polish tax-advantaged retirement accounts with annual contribution limits. IKE: gains tax-exempt if withdrawal conditions are met. IKZE: contributions deductible, withdrawals taxed at a reduced flat rate. |
 | Ingress | The Kubernetes resource that exposes an HTTP service outside the cluster. |
+| JWT / JWKS | A JSON Web Token (RFC 7519) is a signed set of claims, such as issuer, subject, audience and expiry; Kubernetes ServiceAccount tokens are JWTs. A JSON Web Key Set (RFC 7517) is a JSON list of the public keys that verify them. |
 | kind / k3d / k3s | kind and k3d run Kubernetes clusters in containers for testing; k3s is a lightweight Kubernetes distribution. |
 | KNF | Komisja Nadzoru Finansowego, the Polish Financial Supervision Authority. |
 | KV | Key-value store. |

@@ -223,3 +223,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4ac6bdf546f
+  - type: executable_for
+    from: SYM-sdk-go-test-test-keys
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:37.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4276dc94898f

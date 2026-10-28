@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -25,18 +26,21 @@ func TestParseFlags(t *testing.T) {
 			want: operator.Settings{
 				CoreService: "openfief-core", CorePort: "connect",
 				EgressProxyService: "egress-proxy", EgressProxyPort: "proxy", PluginPort: 8080,
+				CoreServiceAccount: "openfief-core",
 			},
 		},
 		{
 			name: "every setting",
 			args: []string{
 				"--core-service=core", "--core-port=rpc", "--egress-proxy-service=proxy",
-				"--egress-proxy-port=connect", "--plugin-port=9090",
+				"--egress-proxy-port=connect", "--plugin-port=9090", "--core-service-account=core-sa",
 			},
 			want: operator.Settings{
 				CoreService: "core", CorePort: "rpc", EgressProxyService: "proxy", EgressProxyPort: "connect", PluginPort: 9090,
+				CoreServiceAccount: "core-sa",
 			},
 		},
+		{name: "signing keys refresh 0", args: []string{"--signing-keys-refresh=0s"}, wantErr: errKeysRefresh},
 		{name: "plugin port 0", args: []string{"--plugin-port=0"}, wantErr: errPluginPort},
 		{name: "plugin port above 65535", args: []string{"--plugin-port=70000"}, wantErr: errPluginPort},
 	}
@@ -57,6 +61,23 @@ func TestParseFlags(t *testing.T) {
 				t.Errorf("leader election %v, metrics %q; want leader election on and metrics off", o.leaderElect, o.metricsAddr)
 			}
 		})
+	}
+}
+
+func TestParseFlagsSigningKeysRefresh(t *testing.T) {
+	t.Parallel()
+	for args, want := range map[string]time.Duration{"": 10 * time.Minute, "--signing-keys-refresh=1m": time.Minute} {
+		var argv []string
+		if args != "" {
+			argv = []string{args}
+		}
+		o, err := parseFlags(argv)
+		if err != nil {
+			t.Fatalf("parseFlags(%q): %v", args, err)
+		}
+		if o.keysRefresh != want {
+			t.Errorf("parseFlags(%q) signing keys refresh %v, want %v", args, o.keysRefresh, want)
+		}
 	}
 }
 
