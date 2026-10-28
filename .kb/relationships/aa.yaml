@@ -97,3 +97,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd94df2f2677
+  - type: implements
+    from: SYM-plugins-app-egress-decision
+    to: REQ-plugins-egress-proxy-connect-only-allow-list
+    created_at: 2026-10-28T06:11:34.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1650a31098b2
+  - type: implements
+    from: SYM-plugins-app-egress-decision
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T06:11:34.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b5f03427bd7
+  - type: covered_by
+    from: SYM-plugins-app-egress-decision
+    to: TEST-plugins-app-egress
+    created_at: 2026-10-28T06:11:34.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa08534da7a9
+  - type: implements
+    from: SYM-plugins-kube-allow-lists-update
+    to: REQ-plugins-egress-allow-lists-fail-closed
+    created_at: 2026-10-28T06:12:21.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fd31ee51985
+  - type: implements
+    from: SYM-plugins-kube-allow-lists-update
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T06:12:21.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c5d504edbbe
+  - type: covered_by
+    from: SYM-plugins-kube-allow-lists-update
+    to: TEST-plugins-kube
+    created_at: 2026-10-28T06:12:21.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d3e04ad1658

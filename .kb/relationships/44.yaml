@@ -1,1 +1,84 @@
-relationships: [ { type: implements, from: SYM-kernel-quantity, to: REQ-kernel-decimal-exact, created_at: 2026-10-28T04:59:56.565Z, created_by: kibi/upsert, source: mcp://kibi/upsert, id: rel-dad26d32f166 }, { type: covered_by, from: SYM-kernel-quantity, to: TEST-kernel-quantity, created_at: 2026-10-28T04:59:56.573Z, created_by: kibi/upsert, source: mcp://kibi/upsert, id: rel-7552a1844999 }, { type: verified_by, from: SCEN-plugins-workload-identity-secrets, to: TEST-plugins-compile, created_at: 2026-10-28T05:28:09.842Z, created_by: kibi/upsert, source: mcp://kibi/upsert, id: rel-a32e44679ada }, { type: implements, from: SYM-plugins-effective-permissions-secrets, to: REQ-plugins-effective-intersection, created_at: 2026-10-28T05:30:31.635Z, created_by: kibi/upsert, source: mcp://kibi/upsert, id: rel-e40542509e47 }, { type: implements, from: SYM-plugins-effective-permissions-secrets, to: REQ-AUTO-12177128A788CEDC, created_at: 2026-10-28T05:30:31.653Z, created_by: kibi/upsert, source: mcp://kibi/upsert, id: rel-58c6afc57256 }, { type: covered_by, from: SYM-plugins-effective-permissions-secrets, to: TEST-plugins-effective, created_at: 2026-10-28T05:30:31.657Z, created_by: kibi/upsert, source: mcp://kibi/upsert, id: rel-813f32a0e073 }, { type: implements, from: SYM-ledger-withholding-tax-book, to: REQ-ledger-posting-ledger-account, created_at: 2026-10-28T05:25:32.196Z, created_by: kibi/upsert, source: mcp://kibi/upsert, id: rel-57582dab2fc3 }, { type: covered_by, from: SYM-ledger-withholding-tax-book, to: TEST-ledger-account, created_at: 2026-10-28T05:25:32.210Z, created_by: kibi/upsert, source: mcp://kibi/upsert, id: rel-4ad8278d410c } ]
+relationships:
+  [
+    {
+        type: implements,
+        from: SYM-kernel-quantity,
+        to: REQ-kernel-decimal-exact,
+        created_at: 2026-10-28T04:59:56.565Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-dad26d32f166
+      },
+    {
+        type: covered_by,
+        from: SYM-kernel-quantity,
+        to: TEST-kernel-quantity,
+        created_at: 2026-10-28T04:59:56.573Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-7552a1844999
+      },
+    {
+        type: verified_by,
+        from: SCEN-plugins-workload-identity-secrets,
+        to: TEST-plugins-compile,
+        created_at: 2026-10-28T05:28:09.842Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-a32e44679ada
+      },
+    {
+        type: implements,
+        from: SYM-plugins-effective-permissions-secrets,
+        to: REQ-plugins-effective-intersection,
+        created_at: 2026-10-28T05:30:31.635Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-e40542509e47
+      },
+    {
+        type: implements,
+        from: SYM-plugins-effective-permissions-secrets,
+        to: REQ-AUTO-12177128A788CEDC,
+        created_at: 2026-10-28T05:30:31.653Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-58c6afc57256
+      },
+    {
+        type: covered_by,
+        from: SYM-plugins-effective-permissions-secrets,
+        to: TEST-plugins-effective,
+        created_at: 2026-10-28T05:30:31.657Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-813f32a0e073
+      },
+    {
+        type: implements,
+        from: SYM-ledger-withholding-tax-book,
+        to: REQ-ledger-posting-ledger-account,
+        created_at: 2026-10-28T05:25:32.196Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-57582dab2fc3
+      },
+    {
+        type: covered_by,
+        from: SYM-ledger-withholding-tax-book,
+        to: TEST-ledger-account,
+        created_at: 2026-10-28T05:25:32.210Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-4ad8278d410c
+      },
+    {
+        type: executable_for,
+        from: SYM-plugins-app-test-fn-fake-reviewer,
+        to: TEST-plugins-app-egress,
+        created_at: 2026-10-28T06:11:53.337Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-e47e02878de3
+      }
+  ]

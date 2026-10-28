@@ -20,3 +20,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1152b1f25dac
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-fn-fake-resolver-lookup-port
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T06:14:43.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-888ae5f03ecb

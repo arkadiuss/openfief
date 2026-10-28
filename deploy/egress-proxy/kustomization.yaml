@@ -1,0 +1,10 @@
+# OpenFief egress proxy (D-32): a self-contained kustomize base. An overlay pins the image by digest
+# with `images:`. Plugins reach it at http://egress-proxy.openfief.svc:4750 (HTTPS_PROXY) and send
+# "Proxy-Authorization: Bearer <projected token, audience openfief-core>" on every CONNECT.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: openfief
+resources:
+  - rbac.yaml
+  - deployment.yaml
+  - service.yaml

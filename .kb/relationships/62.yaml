@@ -118,3 +118,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a84e94d4b5b9
+  - type: implements
+    from: SYM-plugins-app-egress
+    to: REQ-plugins-egress-proxy-identifies-plugin
+    created_at: 2026-10-28T06:11:36.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aee17d97274
+  - type: implements
+    from: SYM-plugins-app-egress
+    to: REQ-plugins-egress-proxy-connect-only-allow-list
+    created_at: 2026-10-28T06:11:36.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e28e48d310b
+  - type: covered_by
+    from: SYM-plugins-app-egress
+    to: TEST-plugins-app-egress
+    created_at: 2026-10-28T06:11:36.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95cfea9060f0

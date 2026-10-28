@@ -20,3 +20,38 @@ relationships:
     created_at: "2026-10-28T05:30:50.785Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-plugins-app-test-fn-fake-lists-allow-list
+    to: TEST-plugins-app-egress
+    created_at: 2026-10-28T06:12:03.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ddfc5a04f11
+  - type: implements
+    from: SYM-plugins-kube-allow-lists-allow-list
+    to: REQ-plugins-egress-allow-lists-fail-closed
+    created_at: 2026-10-28T06:12:19.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52a6029f1bb1
+  - type: implements
+    from: SYM-plugins-kube-allow-lists-allow-list
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T06:12:19.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1c4be8031b2
+  - type: covered_by
+    from: SYM-plugins-kube-allow-lists-allow-list
+    to: TEST-plugins-kube
+    created_at: 2026-10-28T06:12:19.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05aed98cb1bd
+  - type: executable_for
+    from: SYM-plugins-kube-test-fn-error-log-count
+    to: TEST-plugins-kube
+    created_at: 2026-10-28T06:12:40.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53fd1e5759c2

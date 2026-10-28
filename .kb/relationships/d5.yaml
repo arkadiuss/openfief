@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-92ef0cbaceee
+    type: implements
+    from: SYM-plugins-smokescreen-fn-connect-port
+    to: REQ-plugins-egress-proxy-connect-only-allow-list
+    created_at: "2026-10-28T06:13:51.537Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-connect-port
+    to: REQ-AUTO-8CBFBD6A12E0865B
+    created_at: 2026-10-28T06:13:51.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa1bb97d755f
+  - type: covered_by
+    from: SYM-plugins-smokescreen-fn-connect-port
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T06:13:51.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34190634e602

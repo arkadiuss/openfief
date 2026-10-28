@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a468749e24cc
+  - type: implements
+    from: SYM-plugins-kube-token-reviewer
+    to: REQ-plugins-egress-proxy-identifies-plugin
+    created_at: 2026-10-28T06:12:59.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddc0f9d33b0c
+  - type: implements
+    from: SYM-plugins-kube-token-reviewer
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T06:12:59.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a0765a3df05
+  - type: covered_by
+    from: SYM-plugins-kube-token-reviewer
+    to: TEST-plugins-kube
+    created_at: 2026-10-28T06:12:59.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d33777c6b301

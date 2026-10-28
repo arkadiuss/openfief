@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a623d8041b88
+  - type: implements
+    from: SYM-plugins-kube-watch-allow-lists
+    to: REQ-plugins-egress-allow-lists-fail-closed
+    created_at: 2026-10-28T06:12:16.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee1df805935d
+  - type: implements
+    from: SYM-plugins-kube-watch-allow-lists
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T06:12:16.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6df9d54c8897
+  - type: covered_by
+    from: SYM-plugins-kube-watch-allow-lists
+    to: TEST-plugins-kube
+    created_at: 2026-10-28T06:12:16.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1414a000adcb
