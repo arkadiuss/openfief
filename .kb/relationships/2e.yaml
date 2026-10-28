@@ -209,3 +209,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41216b68fd50
+  - type: verified_by
+    from: SCEN-tooling-demo-dns-docs
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T14:35:30.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13fa8cd11074

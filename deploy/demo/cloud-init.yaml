@@ -5,7 +5,8 @@
 # Synthetic data only (GR-12).
 #
 # What it does:
-#   - SSH: keys only (Hetzner injects the keys labelled openfief-ssh=true), no root password, no password logins.
+#   - SSH: keys only (Hetzner injects the keys labelled openfief-ssh=true, or with DEMO_SSH=off a throwaway key whose
+#     private half nobody has), no root password, no password logins.
 #   - unattended-upgrades for security updates, with an automatic reboot at 04:00 UTC when one needs it.
 #   - k3s @@K3S_VERSION@@: the release binary and install script, each checked against a pinned sha256.
 #     Flannel with k3s's NetworkPolicy controller (D-12), local-path storage, and the bundled Traefik and

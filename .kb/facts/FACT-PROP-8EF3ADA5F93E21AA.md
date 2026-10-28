@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:demo.server:inbound_only_from_allowed_
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-895A6F8BE6B71F16
-claim_text: A demo server must accept SSH only with the project's keys labelled openfief-ssh=true and only from DEMO_SSH_CIDRS, and HTTP and HTTPS only from DEMO_HTTP_CIDRS, which default to everyone, through a Hetzner firewall with no other inbound rule; the automation must refuse to create a server when no key has that label.
+claim_key: CLAIM-15F096C98BCFD6AB
+claim_text: A demo server must accept SSH only with the project's keys labelled openfief-ssh=true and only from DEMO_SSH_CIDRS, and HTTP and HTTPS only from DEMO_HTTP_CIDRS, which default to everyone, through a Hetzner firewall with no other inbound rule; the automation must refuse to create a server when SSH sources are allowed but no key has that label, or when DEMO_SSH=keys finds no such key.
 origin:
   kind: agent
   recorded_at: '2026-10-28T09:34:44.836Z'

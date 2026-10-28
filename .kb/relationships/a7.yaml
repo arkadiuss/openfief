@@ -153,3 +153,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3de04815829
+  - type: constrains
+    from: REQ-tooling-demo-dns-docs
+    to: FACT-SUBJECT-4B0BE286D22CA552
+    created_at: 2026-10-28T14:36:20.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fbf9ac1d06b
+  - type: requires_property
+    from: REQ-tooling-demo-dns-docs
+    to: FACT-PROP-04561E496879DDFF
+    created_at: 2026-10-28T14:36:20.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfd2300e0a69
+  - type: specified_by
+    from: REQ-tooling-demo-dns-docs
+    to: SCEN-tooling-demo-dns-docs
+    created_at: 2026-10-28T14:36:20.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-609eaebac1b1

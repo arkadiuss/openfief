@@ -90,3 +90,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7fdc1c95640
+  - type: implements
+    from: SYM-demo-demo-dns-down
+    to: REQ-tooling-demo-dns
+    created_at: 2026-10-28T14:37:27.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001fcadc22fb
+  - type: covered_by
+    from: SYM-demo-demo-dns-down
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T14:37:27.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbbdd9e3c616
