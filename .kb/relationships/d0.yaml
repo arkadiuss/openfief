@@ -188,3 +188,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e2f020b0c5a
+  - type: executable_for
+    from: SYM-views-test-validate-range
+    to: TEST-views-valuation
+    created_at: 2026-10-28T07:22:32.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a57212fe7101

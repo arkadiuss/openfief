@@ -174,3 +174,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b44ea32adcbe
+  - type: implements
+    from: SYM-views-allocate
+    to: REQ-views-allocation
+    created_at: 2026-10-28T07:20:05.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1da1d85d4a33
+  - type: implements
+    from: SYM-views-allocate
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T07:20:05.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0517d321b6af
+  - type: covered_by
+    from: SYM-views-allocate
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:05.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc6e9d048bdd

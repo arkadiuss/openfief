@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8f857c57189
+  - type: verified_by
+    from: SCEN-views-transaction-pages
+    to: TEST-views-page
+    created_at: 2026-10-28T07:18:09.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-207227b04d0e

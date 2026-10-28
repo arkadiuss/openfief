@@ -104,3 +104,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80a5ca952060
+  - type: executable_for
+    from: SYM-views-test-helper-item
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:17.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a048f1a05874
+  - type: executable_for
+    from: SYM-views-test-helper-val
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:46.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c205adba2ecd
+  - type: executable_for
+    from: SYM-views-test-helper-val
+    to: TEST-views-valuation
+    created_at: 2026-10-28T07:20:46.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5425661b2c4d
+  - type: executable_for
+    from: SYM-views-test-helper-val
+    to: TEST-views-page
+    created_at: 2026-10-28T07:20:46.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4409c5bcb25

@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64786643b7ba
+  - type: verified_by
+    from: SCEN-views-valuation-totals
+    to: TEST-views-valuation
+    created_at: 2026-10-28T07:18:07.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-921a41df906a

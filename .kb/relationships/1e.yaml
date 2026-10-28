@@ -125,3 +125,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13f89e27b50e
+  - type: executable_for
+    from: SYM-views-test-helper-instrument
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:44.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bc912971224
+  - type: executable_for
+    from: SYM-views-test-helper-instrument
+    to: TEST-views-valuation
+    created_at: 2026-10-28T07:20:44.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-014e245425b6
+  - type: executable_for
+    from: SYM-views-test-helper-instrument
+    to: TEST-views-page
+    created_at: 2026-10-28T07:20:44.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a37da65dc11

@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02ea8dc6e51d
+  - type: implements
+    from: SYM-views-page-transactions
+    to: REQ-views-transaction-pages
+    created_at: 2026-10-28T07:21:11.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d77258b98169
+  - type: covered_by
+    from: SYM-views-page-transactions
+    to: TEST-views-page
+    created_at: 2026-10-28T07:21:11.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e65f64cecb5f

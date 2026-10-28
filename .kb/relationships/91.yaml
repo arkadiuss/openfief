@@ -202,3 +202,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d09b37621a3e
+  - type: validates
+    from: TEST-views-valuation
+    to: REQ-AUTO-718AA30AAFD0E6E8
+    created_at: 2026-10-28T07:17:58.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62883e7f51d1
+  - type: validates
+    from: TEST-views-valuation
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T07:17:58.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-970357a4499b

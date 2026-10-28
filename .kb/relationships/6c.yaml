@@ -202,3 +202,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c677214280ae
+  - type: implements
+    from: SYM-views-asset-class-string
+    to: REQ-views-allocation
+    created_at: 2026-10-28T07:19:49.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4825b77f76e
+  - type: implements
+    from: SYM-views-asset-class-string
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T07:19:49.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b61b2e70b452
+  - type: covered_by
+    from: SYM-views-asset-class-string
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:19:49.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a67fade11dfc
+  - type: executable_for
+    from: SYM-views-test-asset-class-of
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:33.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26c62820ba61

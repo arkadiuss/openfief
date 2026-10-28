@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b342ad95c357
+  - type: executable_for
+    from: SYM-views-test-helper-page-fixture
+    to: TEST-views-page
+    created_at: 2026-10-28T07:21:23.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0009cc478b6

@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a79a19adbb29
+  - type: executable_for
+    from: SYM-views-test-helper-item-build
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:20.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2037353a4088

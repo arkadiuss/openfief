@@ -209,3 +209,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92a3dec5f4bb
+  - type: executable_for
+    from: SYM-views-test-value-holdings
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:36.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9254a6e2f1b5
+  - type: executable_for
+    from: SYM-views-test-helper-val-build
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:49.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f3dd94a584f
+  - type: executable_for
+    from: SYM-views-test-helper-val-build
+    to: TEST-views-valuation
+    created_at: 2026-10-28T07:20:49.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bc091559119
+  - type: executable_for
+    from: SYM-views-test-helper-val-build
+    to: TEST-views-page
+    created_at: 2026-10-28T07:20:49.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c9a71ac6cc4

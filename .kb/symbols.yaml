@@ -27283,3 +27283,656 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-demo-seed-unit
+  - id: SYM-views-dimension
+    title: Dimension
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:19:31.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-dimension-string
+    title: Dimension.String
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:19:36.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-parse-dimension
+    title: ParseDimension
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:19:41.045Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-asset-class
+    title: AssetClass
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:19:44.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-asset-class-string
+    title: AssetClass.String
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:19:48.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-asset-class-of
+    title: AssetClassOf
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:19:52.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-allocation-item
+    title: AllocationItem
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:19:55.496Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-allocation-group
+    title: AllocationGroup
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:19:59.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-allocation
+    title: Allocation
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:02.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-allocate
+    title: Allocate
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:05.195Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-group-key
+    title: groupKey
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:08.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-value-holdings
+    title: ValueHoldings
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:11.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-valuation-of
+    title: valuationOf
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:14.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-allocation
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-views-allocation
+  - id: SYM-views-test-helper-item
+    title: item
+    sourceFile: internal/views/allocation_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:16.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+  - id: SYM-views-test-helper-item-build
+    title: item.build
+    sourceFile: internal/views/allocation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:20.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+  - id: SYM-views-test-allocate
+    title: TestAllocate
+    sourceFile: internal/views/allocation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:23.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+  - id: SYM-views-test-allocate-edges
+    title: TestAllocateEdges
+    sourceFile: internal/views/allocation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:26.618Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+  - id: SYM-views-test-parse-dimension
+    title: TestParseDimension
+    sourceFile: internal/views/allocation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:30.034Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+  - id: SYM-views-test-asset-class-of
+    title: TestAssetClassOf
+    sourceFile: internal/views/allocation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:33.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+  - id: SYM-views-test-value-holdings
+    title: TestValueHoldings
+    sourceFile: internal/views/allocation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:35.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+  - id: SYM-views-test-helper-money
+    title: money
+    sourceFile: internal/views/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:38.666Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+      - type: executable_for
+        target: TEST-views-page
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-helper-date
+    title: date
+    sourceFile: internal/views/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:41.525Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+      - type: executable_for
+        target: TEST-views-page
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-helper-instrument
+    title: instrument
+    sourceFile: internal/views/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:44.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+      - type: executable_for
+        target: TEST-views-page
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-helper-val
+    title: val
+    sourceFile: internal/views/helpers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:46.046Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+      - type: executable_for
+        target: TEST-views-page
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-helper-val-build
+    title: val.build
+    sourceFile: internal/views/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:48.934Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+      - type: executable_for
+        target: TEST-views-page
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-helper-vals
+    title: vals
+    sourceFile: internal/views/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:51.908Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+      - type: executable_for
+        target: TEST-views-page
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-transaction-cursor
+    title: TransactionCursor
+    sourceFile: internal/views/page.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:54.264Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-page
+      - type: implements
+        target: REQ-views-transaction-pages
+  - id: SYM-views-cursor-json
+    title: cursorJSON
+    sourceFile: internal/views/page.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:20:57.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-page
+      - type: implements
+        target: REQ-views-transaction-pages
+  - id: SYM-views-transaction-cursor-encode
+    title: TransactionCursor.Encode
+    sourceFile: internal/views/page.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:01.232Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-page
+      - type: implements
+        target: REQ-views-transaction-pages
+  - id: SYM-views-parse-transaction-cursor
+    title: ParseTransactionCursor
+    sourceFile: internal/views/page.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:04.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-page
+      - type: implements
+        target: REQ-views-transaction-pages
+  - id: SYM-views-transaction-page
+    title: TransactionPage
+    sourceFile: internal/views/page.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:07.583Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-page
+      - type: implements
+        target: REQ-views-transaction-pages
+  - id: SYM-views-page-transactions
+    title: PageTransactions
+    sourceFile: internal/views/page.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:10.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-page
+      - type: implements
+        target: REQ-views-transaction-pages
+  - id: SYM-views-compare-at
+    title: compareAt
+    sourceFile: internal/views/page.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:14.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-page
+      - type: implements
+        target: REQ-views-transaction-pages
+  - id: SYM-views-test-helper-tx-at
+    title: txAt
+    sourceFile: internal/views/page_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:17.127Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-page
+  - id: SYM-views-test-helper-keys
+    title: keys
+    sourceFile: internal/views/page_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:20.056Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-page
+  - id: SYM-views-test-helper-page-fixture
+    title: pageFixture
+    sourceFile: internal/views/page_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:22.847Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-page
+  - id: SYM-views-test-helper-cursor-at
+    title: cursorAt
+    sourceFile: internal/views/page_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:25.259Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-page
+  - id: SYM-views-test-helper-next-id
+    title: nextID
+    sourceFile: internal/views/page_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:27.731Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-page
+  - id: SYM-views-test-page-transactions
+    title: TestPageTransactions
+    sourceFile: internal/views/page_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:30.002Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-page
+  - id: SYM-views-test-page-transactions-size
+    title: TestPageTransactionsSize
+    sourceFile: internal/views/page_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:32.373Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-page
+  - id: SYM-views-test-transaction-cursor
+    title: TestTransactionCursor
+    sourceFile: internal/views/page_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:35.101Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-page
+  - id: SYM-views-holding-valuation
+    title: HoldingValuation
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:39.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-valuation
+      - type: implements
+        target: REQ-views-valuation-totals
+  - id: SYM-views-date-total
+    title: DateTotal
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:42.705Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-valuation
+      - type: implements
+        target: REQ-views-valuation-totals
+  - id: SYM-views-validate-range
+    title: ValidateRange
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:46.595Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-valuation
+      - type: implements
+        target: REQ-views-valuation-totals
+  - id: SYM-views-totals-by-date
+    title: TotalsByDate
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:53.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-valuation
+      - type: implements
+        target: REQ-views-valuation-totals
+  - id: SYM-views-add-pln
+    title: addPLN
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:21:57.937Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-valuation
+      - type: implements
+        target: REQ-views-valuation-totals
+  - id: SYM-views-sum-per-currency
+    title: sumPerCurrency
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:22:03.213Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-valuation
+      - type: implements
+        target: REQ-views-valuation-totals
+  - id: SYM-views-test-helper-total
+    title: total
+    sourceFile: internal/views/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:22:08.607Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-helper-totals
+    title: totals
+    sourceFile: internal/views/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:22:13.266Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-totals-by-date
+    title: TestTotalsByDate
+    sourceFile: internal/views/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:22:18.709Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-totals-by-date-not-pln
+    title: TestTotalsByDateNotPLN
+    sourceFile: internal/views/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:22:24.702Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-test-validate-range
+    title: TestValidateRange
+    sourceFile: internal/views/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:22:32.146Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-valuation

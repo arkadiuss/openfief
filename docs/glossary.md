@@ -61,6 +61,10 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
 | Read API | views | `views` + `connectapi` | The public, read-only `/v1` API. | |
+| Allocation | views | `views.Allocation` | The portfolio's value in PLN on a date, split into groups by asset class, currency, institution or sleeve (D-30). | breakdown |
+| Allocation item | views | `views.AllocationItem` | One valued holding or cash balance of an account on a date: what an allocation groups. | position |
+| Asset class | views | `views.AssetClass` | The kind of asset an allocation item is: `cash`, `treasury_bond` (a bond series) or `listed` (any other instrument: a stock or ETF in M0). | asset type |
+| Date total | views | `views.DateTotal` | The sum of the stored valuations dated on one date, in PLN and per original currency. | |
 | Plugin | plugins | `plugins.Plugin` | The custom resource for one installed, named instance of a plugin image: the image and its manifest (the vendor's) and the instance's name and config (the owner's). Its status says whether the image is verified. | extension, addon |
 | Grant | plugins | `plugins.Grant` | The custom resource holding what the owner approved for a plugin. | permission set |
 | Catalog | plugins | `plugins.Catalog` | The file in the OpenFief repository that lists first-party and verified plugins, with pinned image digests and signer identities. | marketplace, registry |

@@ -97,3 +97,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-433daccd4bca
+  - type: executable_for
+    from: SYM-views-test-helper-date
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:41.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00553d6a48ca
+  - type: executable_for
+    from: SYM-views-test-helper-date
+    to: TEST-views-valuation
+    created_at: 2026-10-28T07:20:41.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d971bf81714f
+  - type: executable_for
+    from: SYM-views-test-helper-date
+    to: TEST-views-page
+    created_at: 2026-10-28T07:20:41.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff07d30c0063

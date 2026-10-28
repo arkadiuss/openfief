@@ -90,3 +90,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9eed86ff7bd
+  - type: implements
+    from: SYM-views-valuation-of
+    to: REQ-views-allocation
+    created_at: 2026-10-28T07:20:15.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7459308e342
+  - type: implements
+    from: SYM-views-valuation-of
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T07:20:15.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-143d49c9c60b
+  - type: covered_by
+    from: SYM-views-valuation-of
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:15.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d11a392388f0

@@ -188,3 +188,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d00fbf047047
+  - type: implements
+    from: SYM-views-allocation-group
+    to: REQ-views-allocation
+    created_at: 2026-10-28T07:19:59.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1dcb9c80121
+  - type: implements
+    from: SYM-views-allocation-group
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T07:19:59.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd82b4a71b30
+  - type: covered_by
+    from: SYM-views-allocation-group
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:19:59.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67062b7100ea
