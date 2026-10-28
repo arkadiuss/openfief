@@ -251,3 +251,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00f8bef0f2ef
+  - type: implements
+    from: SYM-identity-passkey-new-owner
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:46:32.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33567c3cd8dc
+  - type: implements
+    from: SYM-identity-passkey-new-owner
+    to: REQ-AUTO-DBE65341C3D9DBFD
+    created_at: 2026-10-28T19:46:32.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-287467872778
+  - type: covered_by
+    from: SYM-identity-passkey-new-owner
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:46:32.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e135a09dbd95

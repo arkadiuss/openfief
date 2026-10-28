@@ -244,3 +244,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8172ecc50c74
+  - type: verified_by
+    from: SCEN-identity-view-callers
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:27:01.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb291a70073c
+  - type: verified_by
+    from: SCEN-identity-view-callers
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:27:01.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a26114e70634
+  - type: implements
+    from: SYM-identity-secret-format-secret
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:49:32.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67396eb049e5
+  - type: covered_by
+    from: SYM-identity-secret-format-secret
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:49:32.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cdcd32cee2d
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-authenticator-credential-id
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:53:27.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b25f7fcb5e78
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-authenticator-credential-id
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:27.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dc83c21938f

@@ -258,3 +258,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23b53e588325
+  - type: executable_for
+    from: SYM-identity-app-auth-test-check-login-after-an-hour
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:57.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-066cced115af

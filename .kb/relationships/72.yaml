@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0576f8c7ebdb
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-host-passkeys
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:38:41.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b997d98cd77e
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-host-passkeys
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:41.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96134439a0d0
+  - type: executable_for
+    from: SYM-identity-webauthn-ceremonies-test-register
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:52:50.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26a1ebdbb79d

@@ -216,3 +216,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2ed5636085c
+  - type: implements
+    from: SYM-identity-app-auth-auth-login
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:31:52.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cfbe91db4aa
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-login
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:31:52.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8158f86dde2
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:41:04.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b8028dc64d
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:41:04.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e18a78328d3e
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:04.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58565833d73

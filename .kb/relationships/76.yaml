@@ -328,3 +328,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d89ce77f2c5a
+  - type: implements
+    from: SYM-identity-enrollment-parse-enrollment-code
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:44:40.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa74dfeb4287
+  - type: covered_by
+    from: SYM-identity-enrollment-parse-enrollment-code
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:44:40.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23c312e0e235
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-test-enrollment-code-used-once
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:58.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-415cbc11eceb

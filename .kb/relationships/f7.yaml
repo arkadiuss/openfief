@@ -153,3 +153,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac49ae0d951c
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-login-methods
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:34:02.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0501d99d449
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-take-ceremony
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:38:50.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2826c5f7d0
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-take-ceremony
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:50.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c93d998a0ee3
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-credentials
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:51:52.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cb70c7901fe
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-credentials
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:51:52.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7821f6ae97dd
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-credentials
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:51:52.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cca3e1a4e138

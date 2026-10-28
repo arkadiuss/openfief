@@ -83,3 +83,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71ea5e59d986
+  - type: constrains
+    from: REQ-identity-passkey-ceremonies
+    to: FACT-SUBJECT-A3B522D038115825
+    created_at: 2026-10-28T19:27:27.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb4c5546695d
+  - type: requires_property
+    from: REQ-identity-passkey-ceremonies
+    to: FACT-PROP-A79FD6834FC95740
+    created_at: 2026-10-28T19:27:27.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b842b78aa4b9
+  - type: specified_by
+    from: REQ-identity-passkey-ceremonies
+    to: SCEN-identity-passkey-login
+    created_at: 2026-10-28T19:27:27.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25ae6b22300f
+  - type: implements
+    from: SYM-identity-origin-origin-is-zero
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:46:03.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-996fbcf178ef
+  - type: covered_by
+    from: SYM-identity-origin-origin-is-zero
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:46:03.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b5d2b9c12aa

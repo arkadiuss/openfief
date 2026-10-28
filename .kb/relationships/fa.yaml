@@ -181,3 +181,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-245737f98b9a
+  - type: implements
+    from: SYM-identity-origin-default-port
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:35.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95f260040799
+  - type: covered_by
+    from: SYM-identity-origin-default-port
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:35.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5177f24fa624
+  - type: implements
+    from: SYM-identity-secret-parse-secret
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:49:36.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48aa41a4f759
+  - type: covered_by
+    from: SYM-identity-secret-parse-secret
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:49:36.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecc18caac9d5

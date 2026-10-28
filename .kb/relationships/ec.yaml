@@ -384,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd0e178749d1
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-script-tokens-from-session
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:35:12.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2f8774223eb

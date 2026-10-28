@@ -279,3 +279,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10a7e00e2587
+  - type: implements
+    from: SYM-identity-secret-is-hex-id
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:49:46.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5d1bbe8d949
+  - type: covered_by
+    from: SYM-identity-secret-is-hex-id
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:49:46.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67de21954457

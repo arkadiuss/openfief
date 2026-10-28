@@ -307,3 +307,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8235ec1037fe
+  - type: implements
+    from: SYM-identity-app-auth-authenticator
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:31:44.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7c9a9dadd66
+  - type: covered_by
+    from: SYM-identity-app-auth-authenticator
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:31:44.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-417fa5c1bfa7
+  - type: implements
+    from: SYM-identity-origin-valid-label
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:45.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2dcdc6708d2
+  - type: covered_by
+    from: SYM-identity-origin-valid-label
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:45.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465c6c5d2da1

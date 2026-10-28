@@ -356,3 +356,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dccd7a9e7d16
+  - type: verified_by
+    from: SCEN-identity-session-lifetime
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:26:46.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8240cf502400
+  - type: verified_by
+    from: SCEN-identity-session-lifetime
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:26:46.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7593125cde9e
+  - type: verified_by
+    from: SCEN-identity-session-lifetime
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:26:46.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c697f9edc3ed
+  - type: verified_by
+    from: SCEN-identity-session-lifetime
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:26:46.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21fded54b19c
+  - type: verified_by
+    from: SCEN-identity-session-lifetime
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:26:46.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a8182a9b72

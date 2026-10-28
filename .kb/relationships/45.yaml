@@ -293,3 +293,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d5a04c350d8
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-save-session
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:42.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d448804d273

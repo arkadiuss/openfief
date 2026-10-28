@@ -50,7 +50,28 @@ func defaultServe(t *testing.T) serveConfig {
 			Timeout:        5 * time.Minute,
 			ServiceAccount: "openfief-core",
 		},
+		Auth: authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
 	}
+}
+
+// mustOrigins returns the allow-list of texts.
+func mustOrigins(t *testing.T, texts ...string) identity.Origins {
+	t.Helper()
+	o, err := identity.NewOrigins(texts)
+	if err != nil {
+		t.Fatalf("NewOrigins: %v", err)
+	}
+	return o
+}
+
+// mustOrigin parses text.
+func mustOrigin(t *testing.T, text string) identity.Origin {
+	t.Helper()
+	o, err := identity.ParseOrigin(text)
+	if err != nil {
+		t.Fatalf("ParseOrigin: %v", err)
+	}
+	return o
 }
 
 func TestParseArgs(t *testing.T) {
@@ -66,6 +87,12 @@ func TestParseArgs(t *testing.T) {
 	tuned.Sync = syncConfig{
 		Policy:  ingest.SyncPolicy{Interval: time.Hour, Jitter: 0, RetryFirst: time.Minute, RetryMax: 2 * time.Minute},
 		Timeout: time.Minute, ServiceAccount: "core-sa",
+	}
+	authed := def
+	authed.Auth = authConfig{
+		Origins:      mustOrigins(t, "https://dev.example.com", "http://localhost:9000"),
+		Sessions:     identity.SessionPolicy{Idle: time.Hour, Max: 48 * time.Hour},
+		DemoSessions: true,
 	}
 	tests := []struct {
 		name    string
@@ -95,6 +122,30 @@ func TestParseArgs(t *testing.T) {
 			},
 			want: command{Name: cmdServe, DSN: testDSN, Serve: tuned},
 		},
+		{
+			name: "auth flags", dsn: testDSN,
+			args: []string{
+				"--auth-origin=https://dev.example.com", "--auth-origin", "http://localhost:9000",
+				"--session-idle=1h", "--session-max=48h", "--demo-sessions",
+			},
+			want: command{Name: cmdServe, DSN: testDSN, Serve: authed},
+		},
+		{name: "plain http off localhost", args: []string{"--auth-origin=http://dev.example.com"}, dsn: testDSN, wantErr: identity.ErrInvalidOrigin},
+		{name: "idle above max", args: []string{"--session-idle=10h", "--session-max=1h"}, dsn: testDSN, wantErr: identity.ErrInvalidSessionPolicy},
+		{
+			name: "enroll-link", args: []string{"enroll-link"}, dsn: testDSN,
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "http://localhost:8080"), TTL: 15 * time.Minute}},
+		},
+		{
+			name: "enroll-link for a host", args: []string{"enroll-link", "--host=dev.example.com", "--ttl=1h"}, dsn: testDSN,
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "https://dev.example.com"), TTL: time.Hour}},
+		},
+		{
+			name: "enroll-link for an origin", args: []string{"enroll-link", "--host=https://dev.example.com:8443"}, dsn: testDSN,
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "https://dev.example.com:8443"), TTL: 15 * time.Minute}},
+		},
+		{name: "enroll-link for an IP", args: []string{"enroll-link", "--host=192.0.2.1"}, dsn: testDSN, wantErr: identity.ErrInvalidOrigin},
+		{name: "enroll-link with an argument", args: []string{"enroll-link", "now"}, dsn: testDSN, wantErr: errUsage},
 		{name: "retry max below first", args: []string{"--sync-retry-first=1h", "--sync-retry-max=1m"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
 		{name: "zero sync interval", args: []string{"--sync-every=0s"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
 		{

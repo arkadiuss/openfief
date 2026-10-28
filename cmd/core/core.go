@@ -12,8 +12,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 
-	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
+	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
@@ -87,9 +87,10 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 // valuation's import hook (D-36), the River revaluation workers, the views
 // and the read API with script tokens as its verifier (D-27). It stores
 // the built-in sleeve kinds and sleeves when cfg asks, and records the bond
-// basis, which revalues everything when it changed. Start the River client
-// to run the workers.
-func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger) (*core, error) {
+// basis, which revalues everything when it changed. Next to the read API it
+// serves the AuthService to the view plugins callers accepts (author
+// decision, auth split). Start the River client to run the workers.
+func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger, callers identityconnect.Callers) (*core, error) {
 	vstore, err := valuationpg.NewStore(pool)
 	if err != nil {
 		return nil, fmt.Errorf("valuation store: %w", err)
@@ -117,7 +118,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
 	}
-	api, err := connectapi.New(views, readTokens{tokens: newTokens(pool, now)}, connectapi.WithLogger(log))
+	auth, err := newAuth(pool, &cfg.Auth, now)
+	if err != nil {
+		return nil, err
+	}
+	api, err := connectapi.New(views, readTokens{auth: auth}, connectapi.WithLogger(log))
 	if err != nil {
 		return nil, fmt.Errorf("read API: %w", err)
 	}
@@ -125,19 +130,21 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		pool: pool, ledger: l, recorder: recorder, now: now, log: log,
 		today: valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 	}
-	return &core{api: api, river: client, deps: deps}, nil
+	return &core{api: withAuthService(api, auth, callers, log), river: client, deps: deps}, nil
 }
 
-// readTokens is the read API's token verifier: a read-scoped script token
-// (D-27). Plugins' projected ServiceAccount tokens aren't accepted yet.
+// readTokens is the read API's token verifier: the owner's session, of any
+// scope, or a read-scoped script token (D-27), both through
+// identityapp.Auth.Authenticate. Plugins' projected ServiceAccount tokens
+// aren't accepted yet.
 type readTokens struct {
-	tokens *identityapp.Tokens
+	auth *identityapp.Auth
 }
 
-// VerifyToken accepts a script token with the read scope; an invalid one
-// fails with an error wrapping viewsapp.ErrInvalidToken.
+// VerifyToken accepts a session or a read-scoped script token; an invalid
+// one fails with an error wrapping viewsapp.ErrInvalidToken.
 func (r readTokens) VerifyToken(ctx context.Context, token string) error {
-	err := r.tokens.Verify(ctx, token, identity.ScopeRead)
+	_, err := r.auth.Authenticate(ctx, token)
 	switch {
 	case err == nil:
 		return nil

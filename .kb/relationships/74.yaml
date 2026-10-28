@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ade1b9058a7c
+  - type: implements
+    from: SYM-identity-session-session-touched
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:51:09.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a02d7a759e6b
+  - type: covered_by
+    from: SYM-identity-session-session-touched
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:51:09.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-443eae53fb5b

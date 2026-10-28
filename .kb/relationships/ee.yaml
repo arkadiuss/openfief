@@ -223,3 +223,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fb2e42398ef
+  - type: implements
+    from: SYM-identity-session-session-policy-validate
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:50:38.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de36972cc567
+  - type: covered_by
+    from: SYM-identity-session-session-policy-validate
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:50:38.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-602f8e2b68b5

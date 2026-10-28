@@ -265,3 +265,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14a64093c328
+  - type: implements
+    from: SYM-identity-postgres-auth-store-save-session
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:48:01.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c289173219f
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-save-session
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:01.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88c798741259
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-test-auth-over-postgres
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:49:07.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54cdef0ff948
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-enrolled
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:49:12.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-158cf3f19614
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-display-name
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:51:47.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b810894fe30
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-display-name
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:51:47.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-995b5e325d59
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-display-name
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:51:47.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ffca14b5818

@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5df543881bb
+  - type: implements
+    from: SYM-identity-connectapi-service-auth-service-get-login-methods
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:42:51.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-728642c34668
+  - type: covered_by
+    from: SYM-identity-connectapi-service-auth-service-get-login-methods
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:42:51.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-716930b3ef2b

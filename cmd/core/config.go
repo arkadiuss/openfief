@@ -10,6 +10,7 @@ import (
 	"time"
 	_ "time/tzdata" // the distroless image has no zoneinfo
 
+	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -34,6 +35,7 @@ const (
 	cmdTokenRevoke = "token revoke"
 	cmdBind        = "connector bind"
 	cmdSync        = "connector sync"
+	cmdEnrollLink  = "enroll-link"
 )
 
 // Defaults of the serve flags.
@@ -51,11 +53,13 @@ const (
 	defaultRetryFirst      = 5 * time.Minute
 	defaultRetryMax        = time.Hour
 	defaultServiceAccount  = "openfief-core"
+	defaultAuthOrigin      = "http://localhost:8080"
+	defaultEnrollHost      = "localhost:8080"
 )
 
 var (
 	// errUsage reports a command line the core does not understand.
-	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync] [flags]")
+	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link] [flags]")
 	// errNoDSN reports a missing connection string.
 	errNoDSN = errors.New(dsnEnv + " is not set")
 	// errNoInstance reports a connector command without --instance.
@@ -81,6 +85,15 @@ type command struct {
 	TokenID   string
 	// Connector is what connector bind and connector sync need.
 	Connector connectorArgs
+	// Enroll is what enroll-link needs.
+	Enroll enrollArgs
+}
+
+// enrollArgs are enroll-link's flags: the origin the passkey is for, and
+// how long the link lasts.
+type enrollArgs struct {
+	Origin identity.Origin
+	TTL    time.Duration
 }
 
 // connectorArgs are the connector commands' flags.
@@ -109,6 +122,8 @@ type serveConfig struct {
 	// Connectors runs the connector scheduler (D-49); it needs the cluster.
 	Connectors bool
 	Sync       syncConfig
+	// Auth is the AuthService's configuration.
+	Auth authConfig
 }
 
 // syncConfig is the connector scheduler's configuration.
@@ -130,17 +145,17 @@ func parseArgs(args []string, getenv func(string) string) (command, error) {
 	var err error
 	switch name {
 	case cmdServe:
-		cmd.Serve, err = parseServe(rest, getenv(inClusterEnv) != "")
-	case cmdMigrate:
+		cmd.Serve, err = parseServe(rest, getenv)
+	case cmdMigrate, cmdTokenList:
 		err = parseNone(name, rest)
 	case cmdTokenIssue:
 		cmd.TokenName, cmd.TTL, err = parseIssue(rest)
-	case cmdTokenList:
-		err = parseNone(name, rest)
 	case cmdTokenRevoke:
 		cmd.TokenID, err = parseRevoke(rest)
 	case cmdBind, cmdSync:
 		cmd.Connector, err = parseConnector(name, rest)
+	case cmdEnrollLink:
+		cmd.Enroll, err = parseEnrollLink(rest)
 	default:
 		err = fmt.Errorf("%w: unknown command %q", errUsage, name)
 	}
@@ -178,9 +193,11 @@ func newFlags(name string) *flag.FlagSet {
 	return fs
 }
 
-// parseServe parses serve's flags; inCluster is the default of
-// --connectors.
-func parseServe(args []string, inCluster bool) (serveConfig, error) {
+// parseServe parses serve's flags, reading the environment through getenv:
+// in a cluster --connectors is on by default, and the dev caller token
+// comes from OPENFIEF_AUTH_CALLER_TOKEN.
+func parseServe(args []string, getenv func(string) string) (serveConfig, error) {
+	inCluster := getenv(inClusterEnv) != ""
 	fs := newFlags(cmdServe)
 	c := serveConfig{}
 	fs.StringVar(&c.Listen, "listen", defaultListen, "address of the read API and the health endpoints")
@@ -198,8 +215,13 @@ func parseServe(args []string, inCluster bool) (serveConfig, error) {
 	fs.DurationVar(&c.Sync.Policy.RetryMax, "sync-retry-max", defaultRetryMax, "the longest retry delay")
 	fs.DurationVar(&c.Sync.Timeout, "sync-timeout", defaultSyncTimeout, "how long one sync, call and import, may take")
 	fs.StringVar(&c.Sync.ServiceAccount, "service-account", defaultServiceAccount, "the core's own ServiceAccount, whose tokens it presents to plugins (D-59)")
+	origins := authFlags(fs, &c.Auth)
 	if err := fs.Parse(args); err != nil {
 		return serveConfig{}, fmt.Errorf("serve: %w", err)
+	}
+	c.Auth.DevCallerToken = getenv(devCallerEnv)
+	if err := parseAuth(&c.Auth, *origins); err != nil {
+		return serveConfig{}, err
 	}
 	if fs.NArg() > 0 {
 		return serveConfig{}, fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
@@ -222,6 +244,50 @@ func parseServe(args []string, inCluster bool) (serveConfig, error) {
 		return serveConfig{}, fmt.Errorf("--end-of-day: %w", err)
 	}
 	return c, nil
+}
+
+// authFlags defines serve's authentication flags on fs, into a, and returns
+// the allowed origins' flag.
+func authFlags(fs *flag.FlagSet, a *authConfig) *stringsFlag {
+	var origins stringsFlag
+	fs.Var(&origins, "auth-origin", "an origin the owner's browser may use, such as https://dev.example.com; repeat for more (default "+defaultAuthOrigin+")")
+	fs.DurationVar(&a.Sessions.Idle, "session-idle", identity.DefaultSessionIdle, "how long a session lasts unused")
+	fs.DurationVar(&a.Sessions.Max, "session-max", identity.DefaultSessionMax, "how long a session lasts at most")
+	fs.BoolVar(&a.DemoSessions, "demo-sessions", false, "issue read-only sessions without credentials on a database with the demo marker")
+	return &origins
+}
+
+// parseAuth checks the session lifetimes and parses the allowed origins
+// into a, defaulting to defaultAuthOrigin.
+func parseAuth(a *authConfig, origins []string) error {
+	if err := a.Sessions.Validate(); err != nil {
+		return fmt.Errorf("--session-idle, --session-max: %w", err)
+	}
+	if len(origins) == 0 {
+		origins = []string{defaultAuthOrigin}
+	}
+	var err error
+	if a.Origins, err = identity.NewOrigins(origins); err != nil {
+		return fmt.Errorf("--auth-origin: %w", err)
+	}
+	return nil
+}
+
+// parseEnrollLink parses enroll-link's flags.
+func parseEnrollLink(args []string) (enrollArgs, error) {
+	fs := newFlags(cmdEnrollLink)
+	host := fs.String("host", defaultEnrollHost, "the host[:port] (or origin) the owner opens the link on: http for localhost, https otherwise")
+	var e enrollArgs
+	fs.DurationVar(&e.TTL, "ttl", identity.DefaultEnrollmentTTL, "how long the link works, at most 24h")
+	if err := fs.Parse(args); err != nil {
+		return enrollArgs{}, fmt.Errorf("enroll-link: %w", err)
+	}
+	if fs.NArg() > 0 {
+		return enrollArgs{}, fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
+	}
+	var err error
+	e.Origin, err = originForHost(*host)
+	return e, err
 }
 
 // parseBondBasis parses a basis name and checks that it can value bonds.

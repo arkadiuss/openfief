@@ -209,3 +209,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75b62f4e8178
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-ceremony-refused
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:34:36.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d63c474fa887

@@ -50,6 +50,11 @@ spec:
             - --sync-jitter=30m
             - --sync-timeout=5m
             - --service-account=openfief-core
+            # The origins the owner's browser may use (D-60): port-forward to localhost:8080 by default. An
+            # installation with its own Ingress adds its https origin; repeat the flag. Sessions: 12h idle, 7d at most.
+            - --auth-origin=http://localhost:8080
+            - --session-idle=12h
+            - --session-max=168h
           env:
             - name: OPENFIEF_DSN
               valueFrom:

@@ -223,3 +223,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0921982659c
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-test-session-store-refuses
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:53.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb4ba1e032d1
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies-finish-registration
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:52:11.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfc772e8b813
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies-finish-registration
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:52:11.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0439c2e55f05
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-ceremonies-finish-registration
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:52:11.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a203be27d37

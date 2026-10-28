@@ -153,3 +153,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-510defcb89fd
+  - type: implements
+    from: SYM-identity-enrollment-enrollment-code
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:44:20.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45f21e8fa927
+  - type: covered_by
+    from: SYM-identity-enrollment-enrollment-code
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:44:20.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2967375fe115
+  - type: implements
+    from: SYM-identity-enrollment-new-ceremony
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:45:07.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b06eec0c86c9
+  - type: covered_by
+    from: SYM-identity-enrollment-new-ceremony
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:07.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f728b61e962
+  - type: implements
+    from: SYM-identity-postgres-auth-store-passkeys
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:47:22.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff54cf9e5fb8
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-passkeys
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:47:22.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-743f245bc6fe
+  - type: implements
+    from: SYM-identity-session-authenticator-string
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:50:14.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a894be8c90a6
+  - type: covered_by
+    from: SYM-identity-session-authenticator-string
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:50:14.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2995cacf47b

@@ -272,3 +272,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8b8ce5674949
+  - type: implements
+    from: SYM-identity-origin-origin
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:16.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-418c3ec93786
+  - type: covered_by
+    from: SYM-identity-origin-origin
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:16.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fbb9b4d2e9d

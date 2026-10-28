@@ -237,3 +237,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb258c33d32e
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-session-lifetime
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:34:40.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc85f4690175
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-demo-sessions
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:35:26.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a5db8e977a8

@@ -160,3 +160,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-018fd06bcb35
+  - type: implements
+    from: SYM-core-auth-cmd-core-config-enroll-args
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:30:43.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd690c9abeec
+  - type: covered_by
+    from: SYM-core-auth-cmd-core-config-enroll-args
+    to: TEST-core-unit
+    created_at: 2026-10-28T19:30:43.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a955b51d7cb3
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies-begin-login
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:52:16.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a5d2ad6a3f1
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-ceremonies-begin-login
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:52:16.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0def03816da6
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-ceremonies-begin-login
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:52:16.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a98bcf812d1c

@@ -335,3 +335,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76d5728a6a1b
+  - type: implements
+    from: SYM-identity-enrollment-ceremony-kind-string
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:44:54.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a90994a60f32
+  - type: covered_by
+    from: SYM-identity-enrollment-ceremony-kind-string
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:44:54.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0afffcdaf0e

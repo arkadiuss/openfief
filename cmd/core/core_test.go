@@ -113,6 +113,12 @@ func tokenCmd(t *testing.T, dsn string, args ...string) string {
 // it with its HTTP server; both stop when the test ends.
 func startCore(t *testing.T, dsn string) (*core, *httptest.Server, *pgxpool.Pool) {
 	t.Helper()
+	return startCoreWith(t, dsn, func(*serveConfig) {})
+}
+
+// startCoreWith is startCore with the serve configuration edited by edit.
+func startCoreWith(t *testing.T, dsn string, edit func(cfg *serveConfig)) (*core, *httptest.Server, *pgxpool.Pool) {
+	t.Helper()
 	ctx := t.Context()
 	pool, err := pgxpool.New(ctx, dsn)
 	if err != nil {
@@ -121,6 +127,7 @@ func startCore(t *testing.T, dsn string) (*core, *httptest.Server, *pgxpool.Pool
 	t.Cleanup(pool.Close)
 	cfg := defaultServe(t)
 	cfg.Workers = 3
+	edit(&cfg)
 	c, err := start(ctx, pool, &cfg, coreNow, quiet(), nil)
 	if err != nil {
 		t.Fatalf("start: %v", err)

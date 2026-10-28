@@ -195,3 +195,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9909896a118
+  - type: implements
+    from: SYM-identity-app-auth-auth-session-on
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:32:44.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca610491bdf5
+  - type: implements
+    from: SYM-identity-app-auth-auth-session-on
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:32:44.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7702792c90bd
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-session-on
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:44.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9822d9320a88
+  - type: implements
+    from: SYM-identity-app-ports-assertion
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:39:30.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3a126fb25cd
+  - type: covered_by
+    from: SYM-identity-app-ports-assertion
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:39:30.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b281b89a1ffe

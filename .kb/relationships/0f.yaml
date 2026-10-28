@@ -300,3 +300,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f97c86c02e38
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-passkeys
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:06.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa29ead082cb
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-begin-login
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:37:58.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce3f592f7574
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-begin-login
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:37:58.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a977acd14b7f
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:40:47.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f53c9f3a758
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:40:47.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e915ac00921
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-caller-interceptor
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:40:47.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7949fd76a862
+  - type: implements
+    from: SYM-identity-postgres-auth-scan-session
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:48:11.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd6782172d53
+  - type: covered_by
+    from: SYM-identity-postgres-auth-scan-session
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:11.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69e6c7d20118

@@ -230,3 +230,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbcf86e961d0
+  - type: implements
+    from: SYM-identity-app-auth-demo-authenticator
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:32:32.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04948063b557
+  - type: covered_by
+    from: SYM-identity-app-auth-demo-authenticator
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:32.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca21611dacc7

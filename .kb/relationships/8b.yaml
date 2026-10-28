@@ -237,3 +237,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a07152c7e9b5
+  - type: implements
+    from: SYM-identity-passkey-passkey-same-credential
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:47:05.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7a627148957
+  - type: covered_by
+    from: SYM-identity-passkey-passkey-same-credential
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:47:05.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f7a84920cf6
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-new
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:51:28.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91feb5888699
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-new
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:51:28.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a53e617a400
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-new
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:51:28.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09997eff53b0

@@ -209,3 +209,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fed934ec98ff
+  - type: executable_for
+    from: SYM-identity-app-auth-test-auth-fixture-begun-login
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:43.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8b5b28f8e9b
+  - type: implements
+    from: SYM-identity-session-session-check
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:51:03.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5370a559f253
+  - type: implements
+    from: SYM-identity-session-session-check
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:51:03.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a1a19e6531
+  - type: covered_by
+    from: SYM-identity-session-session-check
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:51:03.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa2dd4d443e3

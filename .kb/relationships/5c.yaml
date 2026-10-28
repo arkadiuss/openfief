@@ -335,3 +335,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7706ccc370b3
+  - type: validates
+    from: TEST-core-auth
+    to: REQ-AUTO-585F02DB972C1660
+    created_at: 2026-10-28T19:26:44.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-893a3c3c7666
+  - type: validates
+    from: TEST-core-auth
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-28T19:26:44.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a975f13d7cd
+  - type: validates
+    from: TEST-core-auth
+    to: REQ-identity-install-without-hostname
+    created_at: 2026-10-28T19:26:44.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d2932a06a3e
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-test-callers
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:42:34.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10cbfd770630
+  - type: executable_for
+    from: SYM-identity-webauthn-ceremonies-test-test-origin
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:52:41.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82580fe062a4

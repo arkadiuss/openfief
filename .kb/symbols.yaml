@@ -47689,3 +47689,4199 @@ symbols:
         target: REQ-AUTO-BC327C2200FC820F
       - type: implements
         target: REQ-identity-auth-contract
+  - id: SYM-core-auth-cmd-core-auth-auth-config
+    title: authConfig
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:02.395Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-origins-per-host
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-core-auth-cmd-core-auth-strings-flag
+    title: stringsFlag
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:05.510Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-core-auth-cmd-core-auth-strings-flag-string
+    title: stringsFlag.String
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:10.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-core-auth-cmd-core-auth-strings-flag-set
+    title: stringsFlag.Set
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:16.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-core-auth-cmd-core-auth-new-auth
+    title: newAuth
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:21.500Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-contract
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-core-auth-cmd-core-auth-with-auth-service
+    title: withAuthService
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:26.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-core-auth-cmd-core-auth-callers
+    title: callers
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:30.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-callers-verify-caller
+    title: callers.VerifyCaller
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:36.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-new-callers
+    title: newCallers
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:42.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-kube-callers
+    title: kubeCallers
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:46.437Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-kube-callers-verify-caller
+    title: kubeCallers.VerifyCaller
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:52.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-view-reviewer
+    title: viewReviewer
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:28:56.198Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-view-reviewer-review-token
+    title: viewReviewer.ReviewToken
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:02.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-is-view
+    title: isView
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:08.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-dev-callers
+    title: devCallers
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:13.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-dev-callers-verify-caller
+    title: devCallers.VerifyCaller
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:20.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-auth-callers
+  - id: SYM-core-auth-cmd-core-auth-demo-marker
+    title: demoMarker
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:25.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-demo-sessions
+  - id: SYM-core-auth-cmd-core-auth-demo-marker-demo-marked
+    title: demoMarker.DemoMarked
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:31.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-demo-sessions
+  - id: SYM-core-auth-cmd-core-auth-enroll-link
+    title: enrollLink
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:36.703Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-enrollment-code
+      - type: implements
+        target: REQ-identity-install-without-hostname
+  - id: SYM-core-auth-cmd-core-auth-origin-for-host
+    title: originForHost
+    sourceFile: cmd/core/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:41.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-auth
+      - type: implements
+        target: REQ-identity-enrollment-code
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-core-auth-cmd-core-auth-test-auth-api
+    title: authAPI
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:48.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-auth-client
+    title: authClient
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:53.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-enroll-cmd
+    title: enrollCmd
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:29:58.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-test-passkey-login-end-to-end
+    title: TestPasskeyLoginEndToEnd
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:03.187Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-passkey-enroll
+    title: passkeyEnroll
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:08.004Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-passkey-login
+    title: passkeyLogin
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:12.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-test-demo-sessions-need-the-marker
+    title: TestDemoSessionsNeedTheMarker
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:16.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-test-demo-sessions-off-by-default
+    title: TestDemoSessionsOffByDefault
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:22.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-test-dev-callers
+    title: TestDevCallers
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:28.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-auth-test-test-kube-callers
+    title: TestKubeCallers
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:35.620Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-auth-cmd-core-config-enroll-args
+    title: enrollArgs
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:41.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-core-auth-cmd-core-config-auth-flags
+    title: authFlags
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:48.326Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-identity-demo-sessions
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-core-auth-cmd-core-config-parse-auth
+    title: parseAuth
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:30:55.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-identity-origins-per-host
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-core-auth-cmd-core-config-parse-enroll-link
+    title: parseEnrollLink
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:02.215Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-identity-enrollment-code
+      - type: implements
+        target: REQ-identity-install-without-hostname
+  - id: SYM-core-auth-cmd-core-core-test-start-core-with
+    title: startCoreWith
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:08.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-auth-cmd-core-main-test-must-origins
+    title: mustOrigins
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:14.271Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-core-auth-cmd-core-main-test-must-origin
+    title: mustOrigin
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:19.288Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-identity-app-auth-auth-config
+    title: AuthConfig
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:23.419Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-auth
+    title: Auth
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:26.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-new-auth
+    title: NewAuth
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:31.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-authenticated
+    title: Authenticated
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:35.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-proof
+    title: Proof
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:40.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-authenticator
+    title: Authenticator
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:43.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-new-session
+    title: NewSession
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:47.600Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-auth-login
+    title: Auth.Login
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:51.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-auth-session
+    title: Auth.Session
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:31:56.116Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-app-auth-auth-logout
+    title: Auth.Logout
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:00.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-auth-who-am-i
+    title: Auth.WhoAmI
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:04.818Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-principal
+    title: Principal
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:09.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-read-api-sessions
+  - id: SYM-identity-app-auth-auth-authenticate
+    title: Auth.Authenticate
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:13.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-read-api-sessions
+  - id: SYM-identity-app-auth-login-methods
+    title: LoginMethods
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:18.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-demo-sessions
+  - id: SYM-identity-app-auth-auth-login-methods
+    title: Auth.LoginMethods
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:23.007Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-demo-sessions
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-auth-auth-demo
+    title: Auth.Demo
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:27.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-demo-sessions
+  - id: SYM-identity-app-auth-demo-authenticator
+    title: DemoAuthenticator
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:30.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-demo-authenticator-authenticate
+    title: DemoAuthenticator.Authenticate
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:35.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-auth-issue-session
+    title: Auth.issueSession
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:39.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-auth-session-on
+    title: Auth.sessionOn
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:43.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-app-auth-auth-origin
+    title: Auth.origin
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:47.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-app-auth-auth-random-hex
+    title: Auth.randomHex
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:51.872Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-auth-now-second
+    title: Auth.nowSecond
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:56.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-auth-auth-demo-available
+    title: Auth.demoAvailable
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:32:59.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-demo-sessions
+  - id: SYM-identity-app-auth-auth-ensure-owner
+    title: Auth.ensureOwner
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:03.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-AUTO-DBE65341C3D9DBFD
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-auth-test-auth-start
+    title: authStart
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:08.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-auth-fixture
+    title: authFixture
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:12.628Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-demo-config
+    title: demoConfig
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:16.798Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-new-auth-fixture
+    title: newAuthFixture
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:21.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-origin
+    title: origin
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:25.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-auth-fixture-link
+    title: authFixture.link
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:29.449Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-auth-fixture-register
+    title: authFixture.register
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:33.760Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-auth-fixture-enroll
+    title: authFixture.enroll
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:38.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-auth-fixture-begun-login
+    title: authFixture.begunLogin
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:42.753Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-auth-fixture-login
+    title: authFixture.login
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:47.221Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-enroll-then-login
+    title: TestEnrollThenLogin
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:51.534Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-check-login-after-an-hour
+    title: checkLoginAfterAnHour
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:33:56.402Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-login-methods
+    title: TestLoginMethods
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:00.900Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-enrollment-code-refused
+    title: TestEnrollmentCodeRefused
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:05.496Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-enrollment-code-used-once-across-ceremonies
+    title: TestEnrollmentCodeUsedOnceAcrossCeremonies
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:10.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-begun
+    title: begun
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:14.866Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-passkeys-per-host
+    title: TestPasskeysPerHost
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:19.780Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-sign-count-regressed
+    title: TestSignCountRegressed
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:24.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-synced-passkey-keeps-azero-counter
+    title: TestSyncedPasskeyKeepsAZeroCounter
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:29.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-ceremony-refused
+    title: TestCeremonyRefused
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:34.521Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-session-lifetime
+    title: TestSessionLifetime
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:39.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-auth-fixture-who-at
+    title: authFixture.whoAt
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:44.064Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-logout
+    title: TestLogout
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:48.716Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-owner-action
+    title: ownerAction
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:53.174Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-owner-actions
+    title: ownerActions
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:34:57.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-wrap
+    title: wrap
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:02.769Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-owner-actions
+    title: TestOwnerActions
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:07.100Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-script-tokens-from-session
+    title: TestScriptTokensFromSession
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:11.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-authenticate-refuses-junk
+    title: TestAuthenticateRefusesJunk
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:15.749Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-remove-passkey
+    title: TestRemovePasskey
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:20.392Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-test-demo-sessions
+    title: TestDemoSessions
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:25.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-auth-test-check-demo-session
+    title: checkDemoSession
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:29.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-session
+    title: memSession
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:33.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-code
+    title: memCode
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:38.151Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store
+    title: memAuthStore
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:42.407Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-new-mem-auth-store
+    title: newMemAuthStore
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:46.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-owner
+    title: memAuthStore.Owner
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:51.244Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-ensure-owner
+    title: memAuthStore.EnsureOwner
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:35:55.736Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-save-passkey
+    title: memAuthStore.SavePasskey
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:00.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-passkeys
+    title: memAuthStore.Passkeys
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:04.952Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-update-passkey-use
+    title: memAuthStore.UpdatePasskeyUse
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:09.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-delete-passkey
+    title: memAuthStore.DeletePasskey
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:13.928Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-save-ceremony
+    title: memAuthStore.SaveCeremony
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:18.329Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-take-ceremony
+    title: memAuthStore.TakeCeremony
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:22.716Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-save-enrollment-code
+    title: memAuthStore.SaveEnrollmentCode
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:27.121Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-enrollment-code
+    title: memAuthStore.EnrollmentCode
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:31.783Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-use-enrollment-code
+    title: memAuthStore.UseEnrollmentCode
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:36.350Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-save-session
+    title: memAuthStore.SaveSession
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:40.873Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-session
+    title: memAuthStore.Session
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:45.253Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-touch-session
+    title: memAuthStore.TouchSession
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:49.522Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-revoke-session
+    title: memAuthStore.RevokeSession
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:53.856Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-demo-marker
+    title: demoMarker
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:36:58.190Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-demo-marker-demo-marked
+    title: demoMarker.DemoMarked
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:02.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-owner-auth-create-script-token
+    title: Auth.CreateScriptToken
+    sourceFile: internal/identity/app/owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:06.943Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-script-token-from-session
+  - id: SYM-identity-app-owner-auth-script-tokens
+    title: Auth.ScriptTokens
+    sourceFile: internal/identity/app/owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:12.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-script-token-from-session
+  - id: SYM-identity-app-owner-auth-revoke-script-token
+    title: Auth.RevokeScriptToken
+    sourceFile: internal/identity/app/owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:17.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-script-token-from-session
+  - id: SYM-identity-app-owner-enrollment-link
+    title: EnrollmentLink
+    sourceFile: internal/identity/app/owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:21.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-app-owner-auth-create-enrollment-link
+    title: Auth.CreateEnrollmentLink
+    sourceFile: internal/identity/app/owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:26.203Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-app-owner-issue-enrollment-link
+    title: IssueEnrollmentLink
+    sourceFile: internal/identity/app/owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:30.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-app-passkeys-started
+    title: Started
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:35.223Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-registration-grant
+    title: RegistrationGrant
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:39.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-app-passkeys-auth-begin-registration
+    title: Auth.BeginRegistration
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:43.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-registered
+    title: Registered
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:48.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-finish-registration
+    title: Auth.FinishRegistration
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:52.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-begin-login
+    title: Auth.BeginLogin
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:37:56.878Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-passkey
+    title: Auth.Passkey
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:01.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-passkey-authenticator
+    title: PasskeyAuthenticator
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:05.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-passkey-authenticator-authenticate
+    title: PasskeyAuthenticator.Authenticate
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:09.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-used-passkey
+    title: usedPasskey
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:13.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-origins-per-host
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-passkeys
+    title: Auth.Passkeys
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:18.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-remove-passkey
+    title: Auth.RemovePasskey
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:23.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-check-grant
+    title: Auth.checkGrant
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:27.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-enrollment-code
+    title: Auth.enrollmentCode
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:32.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-app-passkeys-auth-store-registration
+    title: Auth.storeRegistration
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:36.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-host-passkeys
+    title: Auth.hostPasskeys
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:40.657Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-app-passkeys-auth-save-ceremony
+    title: Auth.saveCeremony
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:44.937Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-passkeys-auth-take-ceremony
+    title: Auth.takeCeremony
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:49.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-ports-auth-store
+    title: AuthStore
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:53.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-ports-owner-store
+    title: OwnerStore
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:38:58.369Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-ports-passkey-store
+    title: PasskeyStore
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:02.622Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-ports-ceremony-store
+    title: CeremonyStore
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:06.917Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-ports-enrollment-store
+    title: EnrollmentStore
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:11.499Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-ports-session-store
+    title: SessionStore
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:16.392Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-ports-ceremonies
+    title: Ceremonies
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:19.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-ports-begun
+    title: Begun
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:24.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-app-ports-assertion
+    title: Assertion
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:28.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-app-ports-demo-marker
+    title: DemoMarker
+    sourceFile: internal/identity/app/ports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:33.194Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-demo-sessions
+  - id: SYM-identity-auth-test-must-origin
+    title: mustOrigin
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:36.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-parse-origin
+    title: TestParseOrigin
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:40.544Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-origins
+    title: TestOrigins
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:44.213Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-session-at
+    title: sessionAt
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:47.705Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-new-session
+    title: TestNewSession
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:51.266Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-session-check
+    title: TestSessionCheck
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:54.832Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-session-touched
+    title: TestSessionTouched
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:39:58.711Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-session-scopes
+    title: TestSessionScopes
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:02.620Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-authenticators
+    title: TestAuthenticators
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:06.320Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-session-token
+    title: TestSessionToken
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:09.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-passkey-used
+    title: TestPasskeyUsed
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:13.461Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-passkey-checks
+    title: TestPasskeyChecks
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:17.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-passkey-validate
+    title: TestPasskeyValidate
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:20.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-enrollment-code
+    title: TestEnrollmentCode
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:24.216Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-new-enrollment-code-refused
+    title: TestNewEnrollmentCodeRefused
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:27.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-enrollment-code-text
+    title: TestEnrollmentCodeText
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:31.454Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-auth-test-test-ceremony
+    title: TestCeremony
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:34.986Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-connectapi-handler-callers
+    title: Callers
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:39.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-new
+    title: New
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:43.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-caller-interceptor
+    title: callerInterceptor
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:46.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-caller-interceptor-wrap-unary
+    title: callerInterceptor.WrapUnary
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:50.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-caller-interceptor-wrap-streaming-client
+    title: callerInterceptor.WrapStreamingClient
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:54.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-caller-interceptor-wrap-streaming-handler
+    title: callerInterceptor.WrapStreamingHandler
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:40:58.958Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-caller-interceptor-verify
+    title: callerInterceptor.verify
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:03.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-code-of
+    title: codeOf
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:07.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-to-connect-error
+    title: toConnectError
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:11.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-handler-test-callers
+    title: callers
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:16.074Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-callers-verify-caller
+    title: callers.VerifyCaller
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:20.303Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store
+    title: sessionStore
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:24.811Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store-owner
+    title: sessionStore.Owner
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:29.135Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store-ensure-owner
+    title: sessionStore.EnsureOwner
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:33.311Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store-passkeys
+    title: sessionStore.Passkeys
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:37.636Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store-take-ceremony
+    title: sessionStore.TakeCeremony
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:41.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store-save-session
+    title: sessionStore.SaveSession
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:46.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store-session
+    title: sessionStore.Session
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:50.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store-touch-session
+    title: sessionStore.TouchSession
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:54.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-session-store-revoke-session
+    title: sessionStore.RevokeSession
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:41:59.798Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-marked
+    title: marked
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:04.398Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-marked-demo-marked
+    title: marked.DemoMarked
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:09.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-api-client
+    title: apiClient
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:13.673Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-new-client
+    title: newClient
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:18.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-bearer
+    title: bearer
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:23.683Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-want-code
+    title: wantCode
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:28.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-test-callers
+    title: TestCallers
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:33.267Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-demo-session
+    title: demoSession
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:38.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-handler-test-test-demo-session-over-connect
+    title: TestDemoSessionOverConnect
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:42.688Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-service-auth-service
+    title: authService
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:45.874Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-get-login-methods
+    title: authService.GetLoginMethods
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:50.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-begin-registration
+    title: authService.BeginRegistration
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:54.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-finish-registration
+    title: authService.FinishRegistration
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:42:58.878Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-begin-login
+    title: authService.BeginLogin
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:03.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-finish-login
+    title: authService.FinishLogin
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:08.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-create-demo-session
+    title: authService.CreateDemoSession
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:12.970Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-logout
+    title: authService.Logout
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:17.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-who-am-i
+    title: authService.WhoAmI
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:22.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-list-passkeys
+    title: authService.ListPasskeys
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:27.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-remove-passkey
+    title: authService.RemovePasskey
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:32.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-create-script-token
+    title: authService.CreateScriptToken
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:36.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-list-script-tokens
+    title: authService.ListScriptTokens
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:41.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-revoke-script-token
+    title: authService.RevokeScriptToken
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:46.402Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-create-enrollment-link
+    title: authService.CreateEnrollmentLink
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:51.365Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-pb-session
+    title: pbSession
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:43:56.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-pb-passkey
+    title: pbPasskey
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:01.330Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-pb-script-token
+    title: pbScriptToken
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:06.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-service-auth-service-fail
+    title: authService.fail
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:11.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-enrollment-enrollment-code-id
+    title: EnrollmentCodeID
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:15.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-enrollment-enrollment-code
+    title: EnrollmentCode
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:19.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-enrollment-new-enrollment-code
+    title: NewEnrollmentCode
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:24.793Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-enrollment-enrollment-code-check
+    title: EnrollmentCode.Check
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:30.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-enrollment-format-enrollment-code
+    title: FormatEnrollmentCode
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:34.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-enrollment-parse-enrollment-code
+    title: ParseEnrollmentCode
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:39.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-enrollment-enrollment-url
+    title: EnrollmentURL
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:44.181Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-enrollment-ceremony-kind
+    title: CeremonyKind
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:48.282Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-enrollment-ceremony-kind-string
+    title: CeremonyKind.String
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:53.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-enrollment-parse-ceremony-kind
+    title: ParseCeremonyKind
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:44:58.293Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-enrollment-ceremony
+    title: Ceremony
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:01.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-enrollment-new-ceremony
+    title: NewCeremony
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:06.564Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-enrollment-ceremony-check
+    title: Ceremony.Check
+    sourceFile: internal/identity/enrollment.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:11.510Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-origin-origin
+    title: Origin
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:14.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-parse-origin
+    title: ParseOrigin
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:19.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-check-host
+    title: checkHost
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:24.383Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-parse-port
+    title: parsePort
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:29.042Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-default-port
+    title: defaultPort
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:33.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-valid-host
+    title: validHost
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:39.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-valid-label
+    title: validLabel
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:44.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-origin-string
+    title: Origin.String
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:49.034Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-origin-rpid
+    title: Origin.RPID
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:53.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-origin-equal
+    title: Origin.Equal
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:45:57.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-origin-is-zero
+    title: Origin.IsZero
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:02.048Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-origins
+    title: Origins
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:05.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-new-origins
+    title: NewOrigins
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:09.801Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-origins-allowed
+    title: Origins.Allowed
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:14.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-origins-equal
+    title: Origins.Equal
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:18.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-origin-origins-list
+    title: Origins.List
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:22.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-passkey-owner
+    title: Owner
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:26.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-AUTO-DBE65341C3D9DBFD
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-passkey-new-owner
+    title: NewOwner
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:30.885Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-AUTO-DBE65341C3D9DBFD
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-passkey-passkey
+    title: Passkey
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:34.152Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-passkey-passkey-id
+    title: Passkey.ID
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:38.571Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-passkey-parse-passkey-id
+    title: ParsePasskeyID
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:42.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-passkey-passkey-validate
+    title: Passkey.Validate
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:46.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-passkey-check-passkey-name
+    title: CheckPasskeyName
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:51.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-passkey-passkey-check-host
+    title: Passkey.CheckHost
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:55.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-per-host
+  - id: SYM-identity-passkey-passkey-used
+    title: Passkey.Used
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:46:59.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-passkey-passkey-same-credential
+    title: Passkey.SameCredential
+    sourceFile: internal/identity/passkey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:04.282Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-owner
+    title: Store.Owner
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:08.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-ensure-owner
+    title: Store.EnsureOwner
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:12.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-save-passkey
+    title: Store.SavePasskey
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:17.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-passkeys
+    title: Store.Passkeys
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:21.491Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-scan-passkey
+    title: scanPasskey
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:25.745Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-update-passkey-use
+    title: Store.UpdatePasskeyUse
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:30.005Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-delete-passkey
+    title: Store.DeletePasskey
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:34.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-save-ceremony
+    title: Store.SaveCeremony
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:38.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-take-ceremony
+    title: Store.TakeCeremony
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:42.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-postgres-auth-store-save-enrollment-code
+    title: Store.SaveEnrollmentCode
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:47.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-postgres-auth-store-enrollment-code
+    title: Store.EnrollmentCode
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:51.811Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-postgres-auth-store-use-enrollment-code
+    title: Store.UseEnrollmentCode
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:47:56.051Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-enrollment-code
+  - id: SYM-identity-postgres-auth-store-save-session
+    title: Store.SaveSession
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:00.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-postgres-auth-store-session
+    title: Store.Session
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:05.272Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-postgres-auth-scan-session
+    title: scanSession
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:09.859Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-postgres-auth-store-touch-session
+    title: Store.TouchSession
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:14.426Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-postgres-auth-store-revoke-session
+    title: Store.RevokeSession
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:18.853Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-postgres-auth-test-local-origin
+    title: localOrigin
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:23.089Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-owner-stored-once
+    title: TestOwnerStoredOnce
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:27.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-passkey-store
+    title: TestPasskeyStore
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:32.389Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-ceremony-store
+    title: TestCeremonyStore
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:37.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-session-key
+    title: sessionKey
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:41.743Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-session-store
+    title: TestSessionStore
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:46.792Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-session-store-refuses
+    title: TestSessionStoreRefuses
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:52.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-enrollment-code-used-once
+    title: TestEnrollmentCodeUsedOnce
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:48:56.951Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-use-concurrently
+    title: useConcurrently
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:01.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-auth-over-postgres
+    title: TestAuthOverPostgres
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:06.516Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-enrolled
+    title: enrolled
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:11.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-enroll-over
+    title: enrollOver
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:15.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-login-over
+    title: loginOver
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:20.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-check-no-auth-secret-stored
+    title: checkNoAuthSecretStored
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:25.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-secret-format-secret
+    title: formatSecret
+    sourceFile: internal/identity/secret.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:30.738Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-secret-parse-secret
+    title: parseSecret
+    sourceFile: internal/identity/secret.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:35.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-secret-secret-parts
+    title: secretParts
+    sourceFile: internal/identity/secret.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:40.608Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-secret-is-hex-id
+    title: isHexID
+    sourceFile: internal/identity/secret.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:45.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-session-scope
+    title: SessionScope
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:49.569Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-session-scope-string
+    title: SessionScope.String
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:54.573Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-parse-session-scope
+    title: ParseSessionScope
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:49:59.209Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-session-scope-includes
+    title: SessionScope.Includes
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:04.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-authenticator
+    title: Authenticator
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:08.086Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-authenticator-string
+    title: Authenticator.String
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:13.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-parse-authenticator
+    title: ParseAuthenticator
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:18.349Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-authenticator-scope
+    title: Authenticator.Scope
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:22.872Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-session-policy
+    title: SessionPolicy
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:26.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-default-session-policy
+    title: DefaultSessionPolicy
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:31.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-session-policy-validate
+    title: SessionPolicy.Validate
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:37.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-session-id
+    title: SessionID
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:42.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-session
+    title: Session
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:46.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-new-session
+    title: NewSession
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:51.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-session-idle-expires-at
+    title: Session.IdleExpiresAt
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:50:56.643Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-session-check
+    title: Session.Check
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:01.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+      - type: implements
+        target: REQ-identity-session-scopes
+  - id: SYM-identity-session-session-touched
+    title: Session.Touched
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:07.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-format-session-token
+    title: FormatSessionToken
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:13.583Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-session-parse-session-token
+    title: ParseSessionToken
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:18.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-session-opaque
+  - id: SYM-identity-webauthn-ceremonies-ceremonies
+    title: Ceremonies
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:22.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-new
+    title: New
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:27.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-user
+    title: user
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:31.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-user-web-authn-id
+    title: user.WebAuthnID
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:36.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-user-web-authn-name
+    title: user.WebAuthnName
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:41.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-user-web-authn-display-name
+    title: user.WebAuthnDisplayName
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:46.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-user-web-authn-credentials
+    title: user.WebAuthnCredentials
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:51.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-new-user
+    title: newUser
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:51:55.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-credential
+    title: credential
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:00.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-ceremonies-begin-registration
+    title: Ceremonies.BeginRegistration
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:05.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-ceremonies-finish-registration
+    title: Ceremonies.FinishRegistration
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:09.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-ceremonies-begin-login
+    title: Ceremonies.BeginLogin
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:14.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-ceremonies-finish-login
+    title: Ceremonies.FinishLogin
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:20.077Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-marshal-pair
+    title: marshalPair
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:24.970Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-refused
+    title: refused
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:30.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-ceremonies-relying-party
+    title: Ceremonies.relyingParty
+    sourceFile: internal/identity/webauthn/ceremonies.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:35.717Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-ceremonies-test-test-origin
+    title: testOrigin
+    sourceFile: internal/identity/webauthn/ceremonies_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:39.971Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-webauthn
+  - id: SYM-identity-webauthn-ceremonies-test-test-owner
+    title: testOwner
+    sourceFile: internal/identity/webauthn/ceremonies_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:44.434Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-webauthn
+  - id: SYM-identity-webauthn-ceremonies-test-register
+    title: register
+    sourceFile: internal/identity/webauthn/ceremonies_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:49.169Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-webauthn
+  - id: SYM-identity-webauthn-ceremonies-test-login
+    title: login
+    sourceFile: internal/identity/webauthn/ceremonies_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:53.540Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-webauthn
+  - id: SYM-identity-webauthn-ceremonies-test-test-registration-options
+    title: TestRegistrationOptions
+    sourceFile: internal/identity/webauthn/ceremonies_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:52:58.002Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-webauthn
+  - id: SYM-identity-webauthn-ceremonies-test-test-register-and-login
+    title: TestRegisterAndLogin
+    sourceFile: internal/identity/webauthn/ceremonies_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:02.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-webauthn
+  - id: SYM-identity-webauthn-ceremonies-test-test-login-refused
+    title: TestLoginRefused
+    sourceFile: internal/identity/webauthn/ceremonies_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:07.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-webauthn
+  - id: SYM-identity-webauthn-ceremonies-test-test-registration-refused
+    title: TestRegistrationRefused
+    sourceFile: internal/identity/webauthn/ceremonies_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:11.671Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-webauthn
+  - id: SYM-identity-webauthn-virtual-virtual-authenticator
+    title: Authenticator
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:15.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-new
+    title: New
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:20.891Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-authenticator-credential-id
+    title: Authenticator.CredentialID
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:25.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-creation-options
+    title: creationOptions
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:30.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-authenticator-create
+    title: Authenticator.Create
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:35.340Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-request-options
+    title: requestOptions
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:40.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-authenticator-get
+    title: Authenticator.Get
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:45.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-authenticator-auth-data
+    title: Authenticator.authData
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:50.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-authenticator-cose-key
+    title: Authenticator.coseKey
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:53:55.189Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-authenticator-response
+    title: Authenticator.response
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:00.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-client-data-json
+    title: clientDataJSON
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:04.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies
+  - id: SYM-identity-webauthn-virtual-virtual-b64
+    title: b64
+    sourceFile: internal/identity/webauthn/virtual/virtual.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T19:54:09.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-webauthn
+      - type: implements
+        target: REQ-identity-passkey-ceremonies

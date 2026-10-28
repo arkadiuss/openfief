@@ -244,3 +244,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56e849cae19d
+  - type: implements
+    from: SYM-core-auth-cmd-core-config-parse-auth
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:30:56.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d40d90d54c4d
+  - type: implements
+    from: SYM-core-auth-cmd-core-config-parse-auth
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:30:56.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efcfddcfe954
+  - type: covered_by
+    from: SYM-core-auth-cmd-core-config-parse-auth
+    to: TEST-core-unit
+    created_at: 2026-10-28T19:30:56.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cffaecea43e
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-local-origin
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:24.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d79dcf9697e3

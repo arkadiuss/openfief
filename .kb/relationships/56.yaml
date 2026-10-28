@@ -132,3 +132,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66a70589655d
+  - type: implements
+    from: SYM-identity-app-passkeys-passkey-authenticator-authenticate
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:38:10.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-439f58dc866e
+  - type: covered_by
+    from: SYM-identity-app-passkeys-passkey-authenticator-authenticate
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:10.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3b251bb9123

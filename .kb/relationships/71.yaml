@@ -167,3 +167,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2074f51bde3f
+  - type: implements
+    from: SYM-identity-passkey-passkey-validate
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:46:48.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e16aebb38d9
+  - type: covered_by
+    from: SYM-identity-passkey-passkey-validate
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:46:48.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dc0b0767624
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-name
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:51:42.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-060b74c7b3bb
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-name
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:51:42.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65d74f8309be
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-name
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:51:42.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36909d64740d
+  - type: executable_for
+    from: SYM-identity-webauthn-ceremonies-test-test-registration-refused
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:13.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc051f67684e

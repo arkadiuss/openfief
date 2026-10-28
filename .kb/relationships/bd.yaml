@@ -160,3 +160,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8adee34ce638
+  - type: implements
+    from: SYM-identity-app-auth-auth-random-hex
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:32:52.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6da924b671a
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-random-hex
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:52.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0250d4355366
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-touch-session
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:50.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cd7571493c7
+  - type: executable_for
+    from: SYM-identity-auth-test-test-passkey-used
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:14.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c64d53c4b43
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-client-data-json
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:54:06.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84e122e39fc9
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-client-data-json
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:54:06.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dd2aecfe483

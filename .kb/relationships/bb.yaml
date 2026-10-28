@@ -195,3 +195,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e4480b9c7df
+  - type: constrains
+    from: REQ-identity-script-token-from-session
+    to: FACT-SUBJECT-1FFB20E6DF879F3F
+    created_at: 2026-10-28T19:27:45.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32760cd41567
+  - type: requires_property
+    from: REQ-identity-script-token-from-session
+    to: FACT-PROP-C19AD22EE2422389
+    created_at: 2026-10-28T19:27:45.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8936861382ae
+  - type: specified_by
+    from: REQ-identity-script-token-from-session
+    to: SCEN-identity-token-from-session
+    created_at: 2026-10-28T19:27:45.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-940f70cc0a2f
+  - type: implements
+    from: SYM-identity-app-auth-auth-logout
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:32:01.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc804b12ad2a
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-logout
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:01.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91da5eedb4aa
+  - type: implements
+    from: SYM-identity-app-auth-auth-demo-available
+    to: REQ-identity-demo-sessions
+    created_at: 2026-10-28T19:33:00.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30a6656e21a7
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-demo-available
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:01.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53bf8d55b77b
+  - type: implements
+    from: SYM-identity-origin-check-host
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:25.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c83d905f259a
+  - type: covered_by
+    from: SYM-identity-origin-check-host
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:25.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47cfa83192e8

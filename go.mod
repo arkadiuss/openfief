@@ -7,6 +7,7 @@ toolchain go1.27.3
 require (
 	connectrpc.com/connect v1.21.1
 	github.com/areknoster/hypert v0.7.0
+	github.com/go-webauthn/webauthn v0.18.2
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-containerregistry v0.22.1
 	github.com/jackc/pgx/v5 v5.11.0
@@ -30,6 +31,17 @@ require (
 )
 
 require (
+	github.com/go-jose/go-jose/v4 v4.1.6 // indirect
+	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
+	github.com/go-webauthn/x v0.3.1 // indirect
+	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
+	github.com/google/go-tpm v0.9.8 // indirect
+	github.com/philhofer/fwd v1.2.0 // indirect
+	github.com/tinylib/msgp v1.6.4 // indirect
+	golang.org/x/crypto v0.58.0 // indirect
+)
+
+require (
 	connectrpc.com/vanguard v0.4.0
 	github.com/DataDog/datadog-go/v5 v5.9.1 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
@@ -39,7 +51,7 @@ require (
 	github.com/emicklei/go-restful/v3 v3.13.0 // indirect
 	github.com/evanphx/json-patch/v5 v5.9.11 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
-	github.com/fxamacker/cbor/v2 v2.9.1 // indirect
+	github.com/fxamacker/cbor/v2 v2.9.4 // indirect
 	github.com/getkin/kin-openapi v0.150.0
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/zapr v1.3.0 // indirect

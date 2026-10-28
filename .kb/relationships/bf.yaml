@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49d9b915e7d2
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-enrollment-code
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:32.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-526d5c91ce30

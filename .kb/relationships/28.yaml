@@ -328,3 +328,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d874cb76251
+  - type: executable_for
+    from: SYM-identity-auth-test-test-authenticators
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:07.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e3ed47acef3

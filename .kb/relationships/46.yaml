@@ -342,3 +342,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3d234a95ee6
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-session-store-save-session
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:47.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-042a9a67e0bf

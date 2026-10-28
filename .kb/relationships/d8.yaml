@@ -195,3 +195,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99399add574f
+  - type: implements
+    from: SYM-identity-postgres-auth-store-session
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:48:06.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adfc5761acf0
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-session
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:06.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c97d3cad2e5

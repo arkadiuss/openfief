@@ -342,3 +342,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b018d0196f89
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-update-passkey-use
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:10.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9b87e56ee48

@@ -230,3 +230,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07e287b779c6
+  - type: executable_for
+    from: SYM-identity-webauthn-ceremonies-test-test-register-and-login
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:04.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f6b9b4daa79

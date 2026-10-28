@@ -279,3 +279,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6a940d89ac4
+  - type: implements
+    from: SYM-identity-app-owner-auth-script-tokens
+    to: REQ-identity-script-token-from-session
+    created_at: 2026-10-28T19:37:13.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21a581cd164e
+  - type: covered_by
+    from: SYM-identity-app-owner-auth-script-tokens
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:37:13.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dce3edf4972f

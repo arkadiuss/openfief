@@ -272,3 +272,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-baf1a082f5cb
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-authenticate-refuses-junk
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:35:16.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd7be36c498b
+  - type: implements
+    from: SYM-identity-connectapi-handler-code-of
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:41:08.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9002abde9b1b
+  - type: implements
+    from: SYM-identity-connectapi-handler-code-of
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:41:08.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a278eeac2d02
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-code-of
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:08.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-873392fcef8a

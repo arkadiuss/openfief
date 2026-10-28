@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ea0675994f1
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-b64
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:54:10.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4131a679928
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-b64
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:54:10.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d795cbc7a07b

@@ -517,3 +517,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae33ee763243
+  - type: implements
+    from: SYM-core-auth-cmd-core-config-parse-enroll-link
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:31:03.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-027d9089b5e2
+  - type: implements
+    from: SYM-core-auth-cmd-core-config-parse-enroll-link
+    to: REQ-identity-install-without-hostname
+    created_at: 2026-10-28T19:31:03.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-852e12a59d6d
+  - type: covered_by
+    from: SYM-core-auth-cmd-core-config-parse-enroll-link
+    to: TEST-core-unit
+    created_at: 2026-10-28T19:31:03.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ae3a33a653a
+  - type: implements
+    from: SYM-identity-postgres-auth-store-ensure-owner
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:47:14.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58a6f7a02bb6
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-ensure-owner
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:47:14.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-547d89c1f39c

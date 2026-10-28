@@ -216,3 +216,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8b797f9b3d7
+  - type: verified_by
+    from: SCEN-identity-read-scope
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:26:48.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e748737a988
+  - type: verified_by
+    from: SCEN-identity-read-scope
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:26:48.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee43402f74c1
+  - type: verified_by
+    from: SCEN-identity-read-scope
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:26:48.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d9ee30a65ad
+  - type: verified_by
+    from: SCEN-identity-read-scope
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:26:48.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05edad014014
+  - type: executable_for
+    from: SYM-identity-auth-test-test-parse-origin
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:39:41.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-558c91406b5c
+  - type: implements
+    from: SYM-identity-origin-origins-list
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:46:23.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77d26670abb6
+  - type: covered_by
+    from: SYM-identity-origin-origins-list
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:46:23.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-945d75d7dfb9

@@ -209,3 +209,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a183cf4f3df
+  - type: constrains
+    from: REQ-identity-origins-per-host
+    to: FACT-SUBJECT-C60A9C11A734E9E6
+    created_at: 2026-10-28T19:27:40.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b9154137ec7
+  - type: requires_property
+    from: REQ-identity-origins-per-host
+    to: FACT-PROP-7351251D9F4491CC
+    created_at: 2026-10-28T19:27:40.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d07db544454e
+  - type: specified_by
+    from: REQ-identity-origins-per-host
+    to: SCEN-identity-per-host
+    created_at: 2026-10-28T19:27:40.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07b0ed9aaa52
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-wrap-unary
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:40:51.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ee944795f4e
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-wrap-unary
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:40:51.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38a83f30efa7
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-caller-interceptor-wrap-unary
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:40:51.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e96671971b8
