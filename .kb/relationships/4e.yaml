@@ -48,3 +48,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12cefc40a511
+  - type: implements
+    from: SYM-demo-flex-doc-cash-report
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:42:52.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78ea36948031
+  - type: covered_by
+    from: SYM-demo-flex-doc-cash-report
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:42:52.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a24e497161b7

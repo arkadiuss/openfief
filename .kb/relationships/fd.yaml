@@ -62,3 +62,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef6085e2e2b0
+  - type: executable_for
+    from: SYM-demo-test-is-synthetic-refuses-real-isins
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:48:15.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-736f722f4959
+  - type: implements
+    from: SYM-demo-seed-parse-config
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:50:05.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ff3075b9a13
+  - type: covered_by
+    from: SYM-demo-seed-parse-config
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:50:05.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ab578561c19

@@ -125,3 +125,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31fc3e9453fc
+  - type: validates
+    from: TEST-demo-seed-unit
+    to: REQ-AUTO-5769411DB9663682
+    created_at: 2026-10-28T09:30:25.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc51413817f1
+  - type: implements
+    from: SYM-demo-flex-doc-finish
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:41:56.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d304434d836e
+  - type: covered_by
+    from: SYM-demo-flex-doc-finish
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:41:56.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d7db4a78d48
+  - type: implements
+    from: SYM-demo-amount
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:42:13.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbb5b67f7b40
+  - type: covered_by
+    from: SYM-demo-amount
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:42:13.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57a993899d08

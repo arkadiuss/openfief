@@ -76,3 +76,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-477078c0082b
+  - type: implements
+    from: SYM-demo-flex-doc-trade
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:42:59.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bdb42934cc5
+  - type: covered_by
+    from: SYM-demo-flex-doc-trade
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:42:59.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150a6a0b4867

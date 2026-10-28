@@ -27,3 +27,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46939ece5536
+  - type: implements
+    from: SYM-demo-date-of
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:37:27.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db212f85e916
+  - type: covered_by
+    from: SYM-demo-date-of
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:37:27.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09937a80badb
+  - type: implements
+    from: SYM-demo-flex-doc-position
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:42:42.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-784818010477
+  - type: covered_by
+    from: SYM-demo-flex-doc-position
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:42:42.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5550e943dc0

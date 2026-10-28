@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Runs the PostgreSQL integration tests (every internal/*/postgres package) against a disposable server.
-# Each test creates its own database, applies all migrations, and drops it afterwards.
+# Runs the PostgreSQL integration tests (every internal/*/postgres package, plus the cmd/ packages listed below)
+# against a disposable server. Each test creates its own database and drops it afterwards.
 #
 # - OPENFIEF_PG_DSN set: use that server. It must allow CREATE DATABASE; never point it at real data.
 # - Otherwise: start a throwaway cluster from the local PostgreSQL binaries (initdb and pg_ctl on PATH, or the newest
@@ -11,7 +11,8 @@ set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
-mapfile -t pkgs < <(go list ./internal/... | grep '/postgres$')
+# cmd/demo-seed loads the demo dataset end to end into a fresh database.
+mapfile -t pkgs < <(go list ./internal/... | grep '/postgres$'; go list ./cmd/demo-seed)
 if [ "${#pkgs[@]}" -eq 0 ]; then
   echo "test:pg: no postgres packages"
   exit 0

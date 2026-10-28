@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0c6a51e46a2
+  - type: implements
+    from: SYM-demo-period
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:37:02.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f040ed8885a
+  - type: covered_by
+    from: SYM-demo-period
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:37:02.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f95e87d75b1

@@ -69,3 +69,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e5dc5fa07b7
+  - type: implements
+    from: SYM-demo-sim-deposit
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:38:46.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-780b06841ac6
+  - type: covered_by
+    from: SYM-demo-sim-deposit
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:38:46.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddd7c09c4ddf

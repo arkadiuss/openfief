@@ -202,3 +202,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61f5d2d4c85f
+  - type: implements
+    from: SYM-demo-seed-new-loader
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:50:55.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46744f2bc1a3
+  - type: implements
+    from: SYM-demo-seed-new-loader
+    to: REQ-decision-d36-1-stored-valuations
+    created_at: 2026-10-28T09:50:55.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c470abf7c70c
+  - type: covered_by
+    from: SYM-demo-seed-new-loader
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:50:55.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee0f6dfb105b

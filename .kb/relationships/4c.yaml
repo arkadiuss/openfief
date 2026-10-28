@@ -139,3 +139,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-452d752a9c4f
+  - type: executable_for
+    from: SYM-demo-test-direct-accounts-balance
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:47:55.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b5a98b29f4
+  - type: implements
+    from: SYM-demo-seed-data-tables
+    to: REQ-demo-guard-refuses-real-data
+    created_at: 2026-10-28T09:50:11.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19f66617250b
+  - type: covered_by
+    from: SYM-demo-seed-data-tables
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:50:11.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c0c24214577

@@ -146,3 +146,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fafba48b3eb3
+  - type: implements
+    from: SYM-demo-cents
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:36:45.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feb920c31d4e
+  - type: covered_by
+    from: SYM-demo-cents
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:36:45.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52303762e3f8
+  - type: implements
+    from: SYM-demo-sorted-instruments
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:43:17.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d6d1bcafdc5
+  - type: covered_by
+    from: SYM-demo-sorted-instruments
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:43:17.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00ff83216b65
+  - type: implements
+    from: SYM-demo-seed-parse-rates
+    to: REQ-demo-fx-rates
+    created_at: 2026-10-28T09:52:22.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64360b416c70
+  - type: covered_by
+    from: SYM-demo-seed-parse-rates
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:52:22.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d5693656150

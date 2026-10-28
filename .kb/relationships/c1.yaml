@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18be9cc64651
+  - type: implements
+    from: SYM-demo-go-live
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:46:48.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75e9871ccda1
+  - type: implements
+    from: SYM-demo-go-live
+    to: REQ-AUTO-34242A3F858F647D
+    created_at: 2026-10-28T09:46:48.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d78957e2ead
+  - type: covered_by
+    from: SYM-demo-go-live
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:46:48.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab12007bb382

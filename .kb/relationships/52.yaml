@@ -20,3 +20,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-607052bf2bef
+  - type: implements
+    from: SYM-demo-seed-last-error
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-28T09:53:02.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89d4ed356de4
+  - type: covered_by
+    from: SYM-demo-seed-last-error
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:53:02.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdfe0ba869b1

@@ -90,3 +90,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e0f1de4e14d
+  - type: implements
+    from: SYM-demo-plan-run
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:39:57.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad7b213952cb
+  - type: covered_by
+    from: SYM-demo-plan-run
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:39:57.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d418b62c6c

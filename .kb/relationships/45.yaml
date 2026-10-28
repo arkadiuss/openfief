@@ -153,3 +153,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f6470494464
+  - type: executable_for
+    from: SYM-demo-seed-test-load-end-to-end
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:53:09.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af4e96ee19f3

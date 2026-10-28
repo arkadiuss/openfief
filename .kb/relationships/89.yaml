@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f058e8ee7368
+  - type: implements
+    from: SYM-demo-bond-lot
+    to: REQ-demo-synthetic-only
+    created_at: 2026-10-28T09:45:51.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-339a5536ca6e
+  - type: covered_by
+    from: SYM-demo-bond-lot
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:45:51.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da97937322f9
+  - type: executable_for
+    from: SYM-demo-test-helper-check-assertions
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:48:44.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fedd1cc43c06

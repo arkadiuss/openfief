@@ -181,3 +181,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31d9615ed00e
+  - type: implements
+    from: SYM-demo-seed-demo-currencies
+    to: REQ-demo-fx-rates
+    created_at: 2026-10-28T09:52:03.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aa4f4b04c09
+  - type: covered_by
+    from: SYM-demo-seed-demo-currencies
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:52:03.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32d088da31d5

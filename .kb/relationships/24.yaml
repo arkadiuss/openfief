@@ -167,3 +167,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63d4140dfe1f
+  - type: implements
+    from: SYM-demo-scheduled
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:39:37.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb708e6e48dd
+  - type: covered_by
+    from: SYM-demo-scheduled
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:39:37.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a9dbf92cb17
+  - type: implements
+    from: SYM-demo-plan
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:39:43.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b881d05a9079
+  - type: covered_by
+    from: SYM-demo-plan
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:39:43.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e1096643c45

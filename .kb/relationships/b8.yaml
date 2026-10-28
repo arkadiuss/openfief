@@ -90,3 +90,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bab34c5e3293
+  - type: implements
+    from: SYM-demo-periods
+    to: REQ-demo-deterministic
+    created_at: 2026-10-28T09:37:10.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb3e022309e6
+  - type: implements
+    from: SYM-demo-periods
+    to: REQ-AUTO-34242A3F858F647D
+    created_at: 2026-10-28T09:37:10.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1eb24e25c029
+  - type: covered_by
+    from: SYM-demo-periods
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:37:10.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1846f8232d2f
+  - type: implements
+    from: SYM-demo-sim-sell
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:39:09.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fbb5d60c708
+  - type: covered_by
+    from: SYM-demo-sim-sell
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:39:09.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62442121f82e
+  - type: implements
+    from: SYM-demo-simulate-xtb
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:44:59.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0827d9d3f7eb
+  - type: implements
+    from: SYM-demo-simulate-xtb
+    to: REQ-AUTO-34242A3F858F647D
+    created_at: 2026-10-28T09:44:59.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03574896b991
+  - type: covered_by
+    from: SYM-demo-simulate-xtb
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:44:59.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fa30b3dd693

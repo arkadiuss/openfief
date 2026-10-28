@@ -139,3 +139,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a267d463069
+  - type: implements
+    from: SYM-demo-opening-flex
+    to: REQ-demo-consistent-history
+    created_at: 2026-10-28T09:42:21.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-713b3715675c
+  - type: implements
+    from: SYM-demo-opening-flex
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T09:42:21.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c37a5b2f936
+  - type: covered_by
+    from: SYM-demo-opening-flex
+    to: TEST-demo-dataset
+    created_at: 2026-10-28T09:42:21.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abf929817914
+  - type: executable_for
+    from: SYM-demo-seed-test-helper-count
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:53:45.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f16899e8f22

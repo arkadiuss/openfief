@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T06:15:32.156Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-demo-idempotent-per-day
+    to: TEST-demo-seed-load
+    created_at: 2026-10-28T09:30:48.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f454eb861c88
+  - type: executable_for
+    from: SYM-demo-seed-test-all-valued
+    to: TEST-demo-seed-unit
+    created_at: 2026-10-28T09:54:09.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-501877b842f4
