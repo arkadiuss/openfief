@@ -125,3 +125,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94d4b4d58ac9
+  - type: implements
+    from: SYM-views-pb-lot-get-cost
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:14:05.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62bfb47d69e3
+  - type: covered_by
+    from: SYM-views-pb-lot-get-cost
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:14:05.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8a88e987810
+  - type: implements
+    from: SYM-views-pb-list-holdings-request-get-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:28:24.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f46c9d51def
+  - type: covered_by
+    from: SYM-views-pb-list-holdings-request-get-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:28:24.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64fd4ed8d597
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-get-account
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:53:50.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb4b5c5d3dbd
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-get-account
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:53:50.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-004e72e864bb

@@ -69,3 +69,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b342ad95c357
+  - type: executable_for
+    from: SYM-views-test-helper-page-fixture
+    to: TEST-views-page
+    created_at: 2026-10-28T07:21:23.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0009cc478b6
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-check-enum
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:48:19.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f11d58dbd62e
+  - type: implements
+    from: SYM-views-pb-list-valuation-statuses-response-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:42:22.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90dcd8e92e8e
+  - type: covered_by
+    from: SYM-views-pb-list-valuation-statuses-response-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:42:22.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34efc8a6d43e

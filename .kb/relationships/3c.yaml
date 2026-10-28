@@ -153,3 +153,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da33e2401568
+  - type: executable_for
+    from: SYM-views-connectapi-test-connect-pages
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:47:44.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9734cbbb29a7
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-holdings
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:57:22.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6c1e83df003
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-holdings
+    to: REQ-AUTO-6BEF2198D156F4F0
+    created_at: 2026-10-28T08:57:22.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f081c568a8c2
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-holdings
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:57:22.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-393502b8ef54
+  - type: implements
+    from: SYM-views-pb-allocation-group-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:19:17.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fabac4a9b64a
+  - type: covered_by
+    from: SYM-views-pb-allocation-group-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:19:17.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baa5793d357a
+  - type: implements
+    from: SYM-views-pb-list-transactions-request-get-account-id
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:26:24.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ccee513a6fb
+  - type: covered_by
+    from: SYM-views-pb-list-transactions-request-get-account-id
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:26:24.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f949d772c6e
+  - type: implements
+    from: SYM-views-pb-get-valuation-status-response-get-status
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:37:45.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f00407c35cdf
+  - type: covered_by
+    from: SYM-views-pb-get-valuation-status-response-get-status
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:37:45.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a72fa0a5c8c9

@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95333f5a43cf
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-ledger-accounts
+    to: TEST-views-app
+    created_at: 2026-10-28T07:27:02.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e858940acb8

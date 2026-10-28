@@ -223,3 +223,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af5b22a0e42f
+  - type: constrains
+    from: REQ-views-api-contract
+    to: FACT-SUBJECT-5D5273B6E7DF2D96
+    created_at: 2026-10-28T08:43:45.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e5e414744b6
+  - type: requires_property
+    from: REQ-views-api-contract
+    to: FACT-PROP-A0A73C80204CB2B7
+    created_at: 2026-10-28T08:43:45.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc860d43a5c1
+  - type: specified_by
+    from: REQ-views-api-contract
+    to: SCEN-views-api-contract
+    created_at: 2026-10-28T08:43:45.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c76fa9683814
+  - type: implements
+    from: SYM-views-pb-valuation-get-value-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:16:49.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a90b5c455565
+  - type: covered_by
+    from: SYM-views-pb-valuation-get-value-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:16:49.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2011796f7071

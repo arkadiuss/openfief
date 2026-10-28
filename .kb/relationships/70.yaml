@@ -76,3 +76,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-031ba06d539f
+  - type: implements
+    from: SYM-views-pb-sleeve
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:05:06.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a56a0c6045f4
+  - type: covered_by
+    from: SYM-views-pb-sleeve
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:05:06.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e9330ac46d5
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-assertion-checks
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:54:24.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa43cc4cb041
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-assertion-checks
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:54:24.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-722dff9e5c53

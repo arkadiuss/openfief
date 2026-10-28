@@ -1,0 +1,472 @@
+// OpenFief's public read API (docs/DESIGN.md D-6, D-50): read-only, served
+// as Connect and, through transcoding, as REST under /v1. Data enters only
+// through connectors' ingest paths, never through this API (D-7), so every
+// method only reads and declares no side effects.
+//
+// Conventions:
+// - Money is a Money message: an exact decimal amount as a string, never a
+//   number, with its ISO 4217 currency code. Quantities are decimal strings.
+// - Dates are calendar dates as strings, YYYY-MM-DD, with no time of day.
+// - Every amount keeps its original currency (D-20); totals, valuations and
+//   the allocation also carry their value in the reporting currency (D-62).
+syntax = "proto3";
+
+package openfief.views.v1;
+
+import "google/api/annotations.proto";
+
+// ReadService reads the record: sleeves, accounts, transactions, holdings,
+// tax lots, cash, balance assertions, valuations and the allocation.
+service ReadService {
+  // ListSleeves returns every sleeve, in ID order.
+  rpc ListSleeves(ListSleevesRequest) returns (ListSleevesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/sleeves"};
+  }
+
+  // ListAccounts returns every account, in ID order.
+  rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts"};
+  }
+
+  // GetAccount returns one account.
+  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts/{account_id}"};
+  }
+
+  // ListTransactions returns one page of the current version of each of an
+  // account's transactions, in date then key order. Superseded versions are
+  // left out.
+  rpc ListTransactions(ListTransactionsRequest) returns (ListTransactionsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts/{account_id}/transactions"};
+  }
+
+  // ListHoldings returns an account's non-zero holdings at the end of a date,
+  // in ISIN then venue symbol order.
+  rpc ListHoldings(ListHoldingsRequest) returns (ListHoldingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts/{account_id}/holdings"};
+  }
+
+  // ListLots returns an account's open tax lots at the end of a date, per
+  // instrument, oldest first.
+  rpc ListLots(ListLotsRequest) returns (ListLotsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts/{account_id}/lots"};
+  }
+
+  // ListCash returns an account's non-zero cash at the end of a date, one
+  // balance per currency, in currency order.
+  rpc ListCash(ListCashRequest) returns (ListCashResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts/{account_id}/cash"};
+  }
+
+  // ListAssertionChecks returns an account's balance assertions with the
+  // result of their latest check, in date then ledger account order. A
+  // flagged check is an error for the owner to resolve.
+  rpc ListAssertionChecks(ListAssertionChecksRequest) returns (ListAssertionChecksResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts/{account_id}/balance-assertions"};
+  }
+
+  // ListAccountValuations returns an account's stored valuations in a date
+  // range, with their totals per date.
+  rpc ListAccountValuations(ListAccountValuationsRequest) returns (ListAccountValuationsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts/{account_id}/valuations"};
+  }
+
+  // GetValuationStatus returns the date an account is valued through and
+  // whether a revaluation is pending or running (D-36).
+  rpc GetValuationStatus(GetValuationStatusRequest) returns (GetValuationStatusResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/accounts/{account_id}/valuation-status"};
+  }
+
+  // ListValuationTotals returns the whole portfolio's value per date in a
+  // date range, summed over every account's stored valuations.
+  rpc ListValuationTotals(ListValuationTotalsRequest) returns (ListValuationTotalsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/valuations"};
+  }
+
+  // ListValuationStatuses returns every account's valuation status, in
+  // account ID order.
+  rpc ListValuationStatuses(ListValuationStatusesRequest) returns (ListValuationStatusesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/valuation-status"};
+  }
+
+  // GetAllocation returns the portfolio's value on a date in the reporting
+  // currency, split by asset class, currency, institution or sleeve (D-30).
+  // Holdings count at their stored valuation on the date and cash at the FX
+  // rate for the date; holdings without a valuation are listed as unvalued.
+  rpc GetAllocation(GetAllocationRequest) returns (GetAllocationResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/allocation"};
+  }
+}
+
+// Money is an exact decimal amount in one currency.
+message Money {
+  // The amount as a decimal string, such as "-1234.56". Never a number.
+  string amount = 1;
+  // The ISO 4217 alphabetic code, such as "PLN".
+  string currency = 2;
+}
+
+// Instrument is something that can be held: an ISIN plus a venue symbol.
+message Instrument {
+  string isin = 1;
+  string symbol = 2;
+}
+
+// SleeveRole is what a sleeve is for.
+enum SleeveRole {
+  SLEEVE_ROLE_UNSPECIFIED = 0;
+  // Never available to agents.
+  SLEEVE_ROLE_DEFENSIVE = 1;
+  // The sleeve fiefs are leased from.
+  SLEEVE_ROLE_OFFENSIVE = 2;
+}
+
+// Sleeve is a part of the portfolio with one role.
+message Sleeve {
+  string id = 1;
+  string name = 2;
+  SleeveRole role = 3;
+  // The key of the sleeve's kind, such as "core" or "agent-pool".
+  string kind = 4;
+}
+
+// Account is one account at an institution. It belongs to one sleeve.
+message Account {
+  string id = 1;
+  string institution = 2;
+  string name = 3;
+  // The ID of the account's sleeve.
+  string sleeve = 4;
+}
+
+// BookKind is the kind of a ledger account inside an account.
+enum BookKind {
+  BOOK_KIND_UNSPECIFIED = 0;
+  BOOK_KIND_CASH = 1;
+  BOOK_KIND_HOLDING = 2;
+  BOOK_KIND_FEE = 3;
+  BOOK_KIND_WITHHOLDING_TAX = 4;
+  BOOK_KIND_FX = 5;
+  BOOK_KIND_EQUITY = 6;
+}
+
+// Book is a ledger account inside an account: a holding names its
+// instrument, every other kind its currency.
+message Book {
+  BookKind kind = 1;
+  // Set for every kind but a holding.
+  string currency = 2;
+  // Set for a holding only.
+  Instrument instrument = 3;
+}
+
+// Posting is one leg of a transaction.
+message Posting {
+  Book book = 1;
+  Money amount = 2;
+  // The units a posting to a holding moves, as a decimal string; empty for
+  // any other ledger account.
+  string quantity = 3;
+}
+
+// TransactionKind is what kind of economic event a transaction is.
+enum TransactionKind {
+  TRANSACTION_KIND_UNSPECIFIED = 0;
+  TRANSACTION_KIND_BUY = 1;
+  TRANSACTION_KIND_SELL = 2;
+  TRANSACTION_KIND_DIVIDEND = 3;
+  TRANSACTION_KIND_FEE = 4;
+  TRANSACTION_KIND_FX_CONVERSION = 5;
+  TRANSACTION_KIND_DEPOSIT = 6;
+  TRANSACTION_KIND_WITHDRAWAL = 7;
+  TRANSACTION_KIND_OPENING_LOT = 8;
+}
+
+// Transaction is the current version of one economic event, keyed by its
+// source and the institution's own ID.
+message Transaction {
+  string source = 1;
+  string external_id = 2;
+  TransactionKind kind = 3;
+  // YYYY-MM-DD.
+  string date = 4;
+  // The date an opening lot was acquired, YYYY-MM-DD; empty for any other
+  // kind.
+  string lot_opened = 5;
+  string description = 6;
+  repeated Posting postings = 7;
+}
+
+// Holding is the quantity of one instrument held.
+message Holding {
+  Instrument instrument = 1;
+  // A decimal string.
+  string quantity = 2;
+}
+
+// Lot is an open tax lot. An opening lot was seeded at go-live from what the
+// institution reported held.
+message Lot {
+  Instrument instrument = 1;
+  // YYYY-MM-DD.
+  string opened = 2;
+  // A decimal string.
+  string quantity = 3;
+  Money cost = 4;
+  bool opening = 5;
+  // The key of the transaction that opened the lot.
+  string origin_source = 6;
+  string origin_external_id = 7;
+}
+
+// AssertionStatus is the result of checking a balance assertion.
+enum AssertionStatus {
+  ASSERTION_STATUS_UNSPECIFIED = 0;
+  // The derived balance equals the reported one.
+  ASSERTION_STATUS_MATCHED = 1;
+  // They differ: an error for the owner to resolve.
+  ASSERTION_STATUS_FLAGGED = 2;
+}
+
+// AssertionCheck is a balance an institution reported on a date with the
+// result of its latest check. Reported and derived are in the ledger
+// account's unit: an amount of its currency for cash, units for a holding.
+message AssertionCheck {
+  // YYYY-MM-DD.
+  string date = 1;
+  Book book = 2;
+  // A decimal string.
+  string reported = 3;
+  // A decimal string.
+  string derived = 4;
+  AssertionStatus status = 5;
+}
+
+// ValuationBasis says which value of a holding a valuation is.
+enum ValuationBasis {
+  VALUATION_BASIS_UNSPECIFIED = 0;
+  VALUATION_BASIS_MARKET = 1;
+  VALUATION_BASIS_GROSS_ACCRUED = 2;
+  VALUATION_BASIS_NET_IF_REDEEMED = 3;
+}
+
+// Valuation is the stored value of a holding on a date, with its basis and
+// source, in its original currency and in the reporting currency.
+message Valuation {
+  // YYYY-MM-DD.
+  string date = 1;
+  Instrument instrument = 2;
+  ValuationBasis basis = 3;
+  string source = 4;
+  Money value = 5;
+  Money value_reporting = 6;
+}
+
+// DateTotal is the sum of the valuations dated on one date, in the
+// reporting currency and per original currency, in currency order.
+message DateTotal {
+  // YYYY-MM-DD.
+  string date = 1;
+  Money value_reporting = 2;
+  repeated Money by_currency = 3;
+}
+
+// ValuationStatus says how current an account's stored valuations are.
+message ValuationStatus {
+  string account_id = 1;
+  // The last date the account's valuations are complete for, YYYY-MM-DD;
+  // empty until it has been valued.
+  string valued_through = 2;
+  // A revaluation is queued and not started.
+  bool pending = 3;
+  // A revaluation is in progress.
+  bool running = 4;
+}
+
+// AllocationDimension is what an allocation groups by.
+enum AllocationDimension {
+  ALLOCATION_DIMENSION_UNSPECIFIED = 0;
+  ALLOCATION_DIMENSION_ASSET_CLASS = 1;
+  ALLOCATION_DIMENSION_CURRENCY = 2;
+  ALLOCATION_DIMENSION_INSTITUTION = 3;
+  ALLOCATION_DIMENSION_SLEEVE = 4;
+}
+
+// AllocationGroup is one group's value in the reporting currency. Its key is
+// an asset class (cash, treasury_bond, listed), a currency code, an
+// institution or a sleeve ID.
+message AllocationGroup {
+  string key = 1;
+  Money value_reporting = 2;
+}
+
+// UnvaluedHolding is a holding with no stored valuation on the date asked
+// for, left out of the allocation.
+message UnvaluedHolding {
+  string account_id = 1;
+  Instrument instrument = 2;
+  // A decimal string.
+  string quantity = 3;
+}
+
+message ListSleevesRequest {}
+
+message ListSleevesResponse {
+  repeated Sleeve sleeves = 1;
+}
+
+message ListAccountsRequest {}
+
+message ListAccountsResponse {
+  repeated Account accounts = 1;
+}
+
+message GetAccountRequest {
+  string account_id = 1;
+}
+
+message GetAccountResponse {
+  Account account = 1;
+}
+
+message ListTransactionsRequest {
+  string account_id = 1;
+  // The most transactions to return, 1 to 500; 0 means 100.
+  int32 page_size = 2;
+  // The next_page_token of the previous page; empty for the first page.
+  string page_token = 3;
+}
+
+message ListTransactionsResponse {
+  repeated Transaction transactions = 1;
+  // Pass as page_token to get the next page; empty on the last page.
+  string next_page_token = 2;
+}
+
+message ListHoldingsRequest {
+  string account_id = 1;
+  // YYYY-MM-DD.
+  string date = 2;
+}
+
+message ListHoldingsResponse {
+  string account_id = 1;
+  string date = 2;
+  repeated Holding holdings = 3;
+}
+
+message ListLotsRequest {
+  string account_id = 1;
+  // YYYY-MM-DD.
+  string date = 2;
+}
+
+message ListLotsResponse {
+  string account_id = 1;
+  string date = 2;
+  repeated Lot lots = 3;
+}
+
+message ListCashRequest {
+  string account_id = 1;
+  // YYYY-MM-DD.
+  string date = 2;
+}
+
+message ListCashResponse {
+  string account_id = 1;
+  string date = 2;
+  repeated Money balances = 3;
+}
+
+message ListAssertionChecksRequest {
+  string account_id = 1;
+  // Only checks with this status, such as flagged; unspecified for all.
+  AssertionStatus status = 2;
+}
+
+message ListAssertionChecksResponse {
+  string account_id = 1;
+  repeated AssertionCheck checks = 2;
+}
+
+message ListAccountValuationsRequest {
+  string account_id = 1;
+  // The first date of the range, YYYY-MM-DD.
+  string from = 2;
+  // The last date of the range, inclusive, YYYY-MM-DD; at most 3700 days
+  // after from.
+  string to = 3;
+}
+
+message ListAccountValuationsResponse {
+  string account_id = 1;
+  string from = 2;
+  string to = 3;
+  // In date then instrument order.
+  repeated Valuation valuations = 4;
+  // One per date that has valuations, in date order.
+  repeated DateTotal totals = 5;
+  // The currency of every value_reporting.
+  string reporting_currency = 6;
+}
+
+message GetValuationStatusRequest {
+  string account_id = 1;
+}
+
+message GetValuationStatusResponse {
+  ValuationStatus status = 1;
+}
+
+message ListValuationTotalsRequest {
+  // The first date of the range, YYYY-MM-DD.
+  string from = 1;
+  // The last date of the range, inclusive, YYYY-MM-DD; at most 3700 days
+  // after from.
+  string to = 2;
+}
+
+message ListValuationTotalsResponse {
+  string from = 1;
+  string to = 2;
+  // One per date that has valuations, in date order.
+  repeated DateTotal totals = 3;
+  // The currency of every value_reporting.
+  string reporting_currency = 4;
+}
+
+message ListValuationStatusesRequest {}
+
+message ListValuationStatusesResponse {
+  repeated ValuationStatus statuses = 1;
+}
+
+message GetAllocationRequest {
+  // YYYY-MM-DD.
+  string date = 1;
+  AllocationDimension by = 2;
+}
+
+message GetAllocationResponse {
+  string date = 1;
+  AllocationDimension by = 2;
+  // The sum of all groups, in the reporting currency.
+  Money total_reporting = 3;
+  // Largest value first, then by key.
+  repeated AllocationGroup groups = 4;
+  repeated UnvaluedHolding unvalued = 5;
+}

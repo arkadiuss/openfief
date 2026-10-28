@@ -153,3 +153,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e257eef71c52
+  - type: implements
+    from: SYM-views-connectapi-status-recorder-flush
+    to: REQ-views-api-logs
+    created_at: 2026-10-28T08:54:20.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67c0dea61375
+  - type: covered_by
+    from: SYM-views-connectapi-status-recorder-flush
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:54:20.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c088bef00d5
+  - type: implements
+    from: SYM-views-pb-get-account-response-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:25:10.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf2fbc4a5464
+  - type: covered_by
+    from: SYM-views-pb-get-account-response-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:25:10.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eba79a99120
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-get-valuation-status
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:54:39.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eba5b0e2e50
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-get-valuation-status
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:54:39.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-094eaac422e4

@@ -5,8 +5,11 @@
 # Base images are pinned by digest; Renovate updates tag and digest together.
 FROM --platform=$BUILDPLATFORM golang:1.27.3-trixie@sha256:c124b9ad3452f46061b5054607d26ea51730dae5372c5e469920063ba2bc6dcc AS build
 WORKDIR /src
-COPY go.mod go.sum ./
-RUN go mod download
+# The core module and the SDK module build as one Go workspace (go.work). The repository is private, so
+# the SDK can't be fetched as a module version: it is copied in, and the workspace's checksums are in go.work.sum.
+COPY go.mod go.sum go.work go.work.sum ./
+RUN GOWORK=off go mod download
+COPY sdk/go/ sdk/go/
 COPY cmd/ cmd/
 COPY internal/ internal/
 ARG TARGETOS

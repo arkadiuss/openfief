@@ -1,0 +1,20 @@
+# What protoc-gen-connect-openapi merges into the read API's generated OpenAPI document (buf.gen.yaml).
+openapi: 3.1.0
+info:
+  title: OpenFief read API
+  version: v1
+  description: >-
+    The read-only REST/JSON API over OpenFief's record (D-6, D-50), transcoded from the same protobuf
+    definitions as its Connect service. Money is {amount, currency} with the amount as a decimal string;
+    dates are YYYY-MM-DD. Every request needs a bearer token.
+  license:
+    name: Apache-2.0
+    identifier: Apache-2.0
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: A script token (D-27) or a plugin's projected ServiceAccount token.

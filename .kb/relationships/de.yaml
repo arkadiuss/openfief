@@ -90,3 +90,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5550e943dc0
+  - type: implements
+    from: SYM-views-pb-assertion-status-type
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:01:50.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5978a6207640
+  - type: covered_by
+    from: SYM-views-pb-assertion-status-type
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:01:50.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b0b26448ea3
+  - type: implements
+    from: SYM-views-pb-money-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:03:50.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ee977702c57
+  - type: covered_by
+    from: SYM-views-pb-money-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:03:50.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e2d9dd9a723
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client-list-account-valuations
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:52:32.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b39aaca376a5
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client-list-account-valuations
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:52:32.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-424cd39600b9
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-rates-fx-rates
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T10:10:49.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b67d9701a9b7
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-rates-fx-rates
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T10:10:49.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15070b86c3f8

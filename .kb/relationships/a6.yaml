@@ -174,3 +174,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a79a19adbb29
+  - type: executable_for
+    from: SYM-views-test-helper-item-build
+    to: TEST-views-allocation
+    created_at: 2026-10-28T07:20:20.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2037353a4088
+  - type: implements
+    from: SYM-views-connectapi-pb-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:48:43.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9705de4c398
+  - type: covered_by
+    from: SYM-views-connectapi-pb-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:48:43.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2663ba20faf
+  - type: implements
+    from: SYM-views-connectapi-with-logger
+    to: REQ-views-api-logs
+    created_at: 2026-10-28T08:53:42.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73f77dc583c3
+  - type: covered_by
+    from: SYM-views-connectapi-with-logger
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:53:42.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07148d344dd4

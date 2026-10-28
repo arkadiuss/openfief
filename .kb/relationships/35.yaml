@@ -167,3 +167,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e070a2b8fc1
+  - type: executable_for
+    from: SYM-views-app-test-helper-date
+    to: TEST-views-app
+    created_at: 2026-10-28T07:27:55.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adab79048654
+  - type: implements
+    from: SYM-views-connectapi-pb-lot
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:49:22.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d553201772e
+  - type: covered_by
+    from: SYM-views-connectapi-pb-lot
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T08:49:22.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57d40b987a59
+  - type: implements
+    from: SYM-views-connectapi-with-request-log
+    to: REQ-views-api-logs
+    created_at: 2026-10-28T08:54:32.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f970c4552d2b
+  - type: covered_by
+    from: SYM-views-connectapi-with-request-log
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:54:32.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d61af6678710
+  - type: implements
+    from: SYM-views-pb-posting-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:09:06.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66e9de4cff40
+  - type: covered_by
+    from: SYM-views-pb-posting-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:09:06.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8cafd745062
+  - type: implements
+    from: SYM-views-pb-allocation-group-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:19:30.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07ccd3d519d0
+  - type: covered_by
+    from: SYM-views-pb-allocation-group-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:19:30.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd40958298e5

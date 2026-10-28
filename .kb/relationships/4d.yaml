@@ -181,3 +181,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22616ce03507
+  - type: implements
+    from: SYM-views-pb-sleeve-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:05:14.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18598c8b006f
+  - type: covered_by
+    from: SYM-views-pb-sleeve-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:05:14.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebb6d5e0b10e
+  - type: implements
+    from: SYM-views-pb-list-account-valuations-request-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:33:48.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49de2c418b74
+  - type: covered_by
+    from: SYM-views-pb-list-account-valuations-request-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:33:48.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-340352f4a9b3
+  - type: implements
+    from: SYM-views-pb-list-account-valuations-response
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:34:17.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a9da1961fea
+  - type: covered_by
+    from: SYM-views-pb-list-account-valuations-response
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:34:17.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b865a945e67b
+  - type: implements
+    from: SYM-views-app-views-cash-in-reporting
+    to: REQ-views-allocation-inputs
+    created_at: 2026-10-28T10:10:29.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b81ca608311
+  - type: implements
+    from: SYM-views-app-views-cash-in-reporting
+    to: REQ-views-reporting-currency
+    created_at: 2026-10-28T10:10:29.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04c514529e8a
+  - type: covered_by
+    from: SYM-views-app-views-cash-in-reporting
+    to: TEST-views-app
+    created_at: 2026-10-28T10:10:29.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4d36f451f95

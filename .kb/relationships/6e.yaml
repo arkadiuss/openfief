@@ -174,3 +174,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac32715d74ae
+  - type: constrains
+    from: REQ-views-reporting-currency
+    to: FACT-SUBJECT-6A61D8332D2C5521
+    created_at: 2026-10-28T08:06:29.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2817b8fc339
+  - type: requires_property
+    from: REQ-views-reporting-currency
+    to: FACT-PROP-1A9EFD7C336E98BB
+    created_at: 2026-10-28T08:06:29.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7519f65596fc
+  - type: specified_by
+    from: REQ-views-reporting-currency
+    to: SCEN-views-reporting-currency
+    created_at: 2026-10-28T08:06:29.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b10bfc49384
+  - type: implements
+    from: SYM-views-pb-instrument-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:04:46.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5b4bd4bab24
+  - type: covered_by
+    from: SYM-views-pb-instrument-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:04:46.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0a78570e427
+  - type: implements
+    from: SYM-views-pb-get-account-response-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:25:25.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62e853c4c966
+  - type: covered_by
+    from: SYM-views-pb-get-account-response-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:25:25.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b1ce1c7af58

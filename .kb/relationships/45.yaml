@@ -216,3 +216,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af4e96ee19f3
+  - type: implements
+    from: SYM-views-pb-assertion-status-enum-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:02:00.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bdef94b7d3a
+  - type: covered_by
+    from: SYM-views-pb-assertion-status-enum-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:02:00.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-721399c44dba
+  - type: implements
+    from: SYM-views-pb-get-account-response-get-account
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:25:36.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18a59cacd710
+  - type: covered_by
+    from: SYM-views-pb-get-account-response-get-account
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:25:36.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e99ccea505cb

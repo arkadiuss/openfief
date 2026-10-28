@@ -132,3 +132,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c0fa7ee0c4e
+  - type: implements
+    from: SYM-views-app-views-sleeves
+    to: REQ-views-app-queries
+    created_at: 2026-10-28T07:28:47.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cf3c8d80067
+  - type: covered_by
+    from: SYM-views-app-views-sleeves
+    to: TEST-views-app
+    created_at: 2026-10-28T07:28:47.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d649f8dd7bc9
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-accounts
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:57:03.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d4e708fd37b
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-accounts
+    to: REQ-views-read-api-protobuf
+    created_at: 2026-10-28T08:57:03.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b60bc4a0b27
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-accounts
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:57:03.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-113ed09e302f
+  - type: implements
+    from: SYM-views-pb-transaction-get-lot-opened
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:11:29.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f4edb685439
+  - type: covered_by
+    from: SYM-views-pb-transaction-get-lot-opened
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:11:29.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2f07c6d9637

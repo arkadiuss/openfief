@@ -202,3 +202,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0839f69fc25
+  - type: implements
+    from: SYM-views-connectapi-read-service-get-allocation
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T08:58:30.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0173879e0521
+  - type: implements
+    from: SYM-views-connectapi-read-service-get-allocation
+    to: REQ-views-read-api-protobuf
+    created_at: 2026-10-28T08:58:30.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77f76ec07731
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-get-allocation
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T08:58:30.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bb975173368
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-valuations-valuations
+    to: TEST-views-app
+    created_at: 2026-10-28T10:10:11.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1808a6f1e0c

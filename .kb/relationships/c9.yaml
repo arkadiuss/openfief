@@ -272,3 +272,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18e1b8ff52a1
+  - type: implements
+    from: SYM-views-pb-assertion-check-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:15:12.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e7745faa974
+  - type: covered_by
+    from: SYM-views-pb-assertion-check-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:15:12.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f3145dac46
+  - type: implements
+    from: SYM-views-pb-list-transactions-request
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:25:40.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32cde077253f
+  - type: covered_by
+    from: SYM-views-pb-list-transactions-request
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:25:40.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7de6993b2ee4
+  - type: implements
+    from: SYM-views-pb-list-assertion-checks-response-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:33:21.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b98c00417d0
+  - type: covered_by
+    from: SYM-views-pb-list-assertion-checks-response-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:33:21.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0c127990793

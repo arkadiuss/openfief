@@ -50,6 +50,9 @@ vars:
   # replace directives, so `go install` can't build it: the release archive is checked against these sha256s.
   FLUX_CLI_SHA256_LINUX_AMD64: b4d22673e9246cbd628881f1a9ef3b090085dced291e42d804555cee8e8d42c5
   FLUX_CLI_SHA256_LINUX_ARM64: 6663c154755b732f43dc993d72321f71c2fc1ff0bcb94b2696e0a8638fa562b4
+  # Generates the read API's OpenAPI document from its protobuf definitions (D-50).
+  # renovate: datasource=go depName=github.com/sudorandom/protoc-gen-connect-openapi
+  PROTOC_GEN_CONNECT_OPENAPI_VERSION: v0.28.0
   # Every Go module in the repository (go.work lists the same): the core, then the Apache-2.0 Go SDK (D-5).
   GO_MODULES: . sdk/go
   GO_GUARD: 'if [ ! -f go.mod ]; then echo "no Go module yet, skipping"; exit 0; fi;'
@@ -172,7 +175,7 @@ tasks:
 
   tool:proto:
     internal: true
-    deps: [tool:buf, tool:protoc-gen-go, tool:protoc-gen-connect-go]
+    deps: [tool:buf, tool:protoc-gen-go, tool:protoc-gen-connect-go, tool:protoc-gen-connect-openapi]
 
   tool:buf:
     internal: true
@@ -194,6 +197,13 @@ tasks:
       - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install connectrpc.com/connect/cmd/protoc-gen-connect-go@{{.PROTOC_GEN_CONNECT_GO_VERSION}}
     status:
       - '{{.BIN}}/protoc-gen-connect-go --version 2>&1 | grep -qx "{{trimPrefix "v" .PROTOC_GEN_CONNECT_GO_VERSION}}"'
+
+  tool:protoc-gen-connect-openapi:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/sudorandom/protoc-gen-connect-openapi@{{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}}
+    status:
+      - '{{.BIN}}/protoc-gen-connect-openapi --version 2>&1 | grep -q "^protoc-gen-connect-openapi {{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}} "'
 
   tool:task:
     internal: true
@@ -313,13 +323,13 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" bash scripts/proto-breaking.sh
 
   proto:gen:
-    desc: Generate the Go code for the contracts into sdk/go/gen (pinned local plugins, no remote BSR)
+    desc: Generate the Go code for the contracts into sdk/go/gen and the read API's OpenAPI into gen/openapi (pinned local plugins, no remote BSR)
     deps: [tool:proto]
     cmds:
       - '{{.PROTO_GUARD}} PATH="{{.BIN}}:$PATH" "{{.BIN}}/buf" generate'
 
   proto:check:
-    desc: Fail if sdk/go/gen is not what proto:gen generates
+    desc: Fail if sdk/go/gen or gen/openapi is not what proto:gen generates
     deps: [tool:proto]
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/proto-check.sh

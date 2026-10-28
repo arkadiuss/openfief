@@ -125,3 +125,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-158ca51ece8f
+  - type: implements
+    from: SYM-views-pb-assertion-check-get-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:15:29.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-191a529fb648
+  - type: covered_by
+    from: SYM-views-pb-assertion-check-get-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:15:29.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f309ef7ae7be
+  - type: implements
+    from: SYM-views-pb-list-valuation-totals-response-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T09:39:19.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc455cd64e78
+  - type: covered_by
+    from: SYM-views-pb-list-valuation-totals-response-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T09:39:19.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3de04815829
