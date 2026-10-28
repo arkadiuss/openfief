@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-251fa0260f2d
+  - type: executable_for
+    from: SYM-core-test-helper-save-registry
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:37:05.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2267c4517b26

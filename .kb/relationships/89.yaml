@@ -230,3 +230,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2cc9de8c0d7
+  - type: verified_by
+    from: SCEN-identity-store-hash-only
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:11:15.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf99b2a7bfe0

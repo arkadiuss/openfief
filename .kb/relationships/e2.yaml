@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42f41c75b2f2
+  - type: executable_for
+    from: SYM-identity-test-helper-created-at
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:14:16.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-449779e57e8f

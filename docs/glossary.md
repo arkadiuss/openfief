@@ -86,6 +86,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Plugin identity | identity | `plugins.ServiceAccountName` | The ServiceAccount `plugin-<name>` in the `openfief` namespace, proven to the core by its projected token with audience `openfief-core`, and to the egress proxy by a second one with audience `openfief-egress`. | |
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |
+| Script token secret | identity | `identity.FormatSecret` | What a script presents as its bearer token: `ofs_`, the script token's ID, `_` and a random key. Shown once when the token is issued; only the SHA-256 hash of the key is stored. | API key, password |
 | Currency | kernel | `kernel.Currency` | An ISO 4217 alphabetic code, such as PLN or USD. | |
 | Money | kernel | `kernel.Money` | An exact decimal amount in one currency. It keeps its original currency; arithmetic across currencies is an error, and conversion is an explicit FX step in valuation. | |
 | Quantity | kernel | `kernel.Quantity` | An exact, possibly fractional number of units of an instrument. | |

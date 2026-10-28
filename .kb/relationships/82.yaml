@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a61e02c7d329
+  - type: implements
+    from: SYM-core-plain
+    to: REQ-core-health-endpoints
+    created_at: 2026-10-28T14:35:19.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae1dca47475f
+  - type: covered_by
+    from: SYM-core-plain
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:35:19.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b1055400777

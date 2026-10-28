@@ -300,3 +300,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ceb20f842e71
+  - type: implements
+    from: SYM-core-server-serve-api
+    to: REQ-core-health-endpoints
+    created_at: 2026-10-28T14:35:15.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88ba2ff89f6e
+  - type: covered_by
+    from: SYM-core-server-serve-api
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:35:15.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97b75f29a893

@@ -216,3 +216,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95c4a318fe45
+  - type: implements
+    from: SYM-core-serve
+    to: REQ-core-serves-read-api
+    created_at: 2026-10-28T14:35:23.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fd9660375c2
+  - type: implements
+    from: SYM-core-serve
+    to: REQ-core-graceful-shutdown
+    created_at: 2026-10-28T14:35:23.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e81bbc5306e
+  - type: covered_by
+    from: SYM-core-serve
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:35:23.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-037b66c7fc5b

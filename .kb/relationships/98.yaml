@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-adb13ae665d3
+  - type: executable_for
+    from: SYM-core-test-helper-load-demo
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:37:00.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a00c46af3791

@@ -10,6 +10,8 @@ failures=0
 cases=0
 op='sha256:1111111111111111111111111111111111111111111111111111111111111111'
 eg='sha256:2222222222222222222222222222222222222222222222222222222222222222'
+co='sha256:3333333333333333333333333333333333333333333333333333333333333333'
+ds='sha256:4444444444444444444444444444444444444444444444444444444444444444'
 
 # The fake cosign logs its arguments and "verifies" only the images listed in FAKE_SIGNED (image:tag=digest).
 mkdir -p "$work/bin"
@@ -54,10 +56,13 @@ yes_if() {
 }
 
 images="ghcr.io/arkadiuss/openfief/operator:sha-1a2b3c4=$op ghcr.io/arkadiuss/openfief/egress-proxy:sha-1a2b3c4=$eg"
+images="$images ghcr.io/arkadiuss/openfief/core:sha-1a2b3c4=$co ghcr.io/arkadiuss/openfief/demo-seed:sha-1a2b3c4=$ds"
 if pin "$images" sha-1a2b3c4; then r=yes; else r=no; fi
 check "every image signed: pinning succeeds" "$r"
 check "operator digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$op" '.images[] | select(.name | endswith("/operator")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
 check "egress-proxy digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$eg" '.images[] | select(.name | endswith("/egress-proxy")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
+check "core digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$co" '.images[] | select(.name | endswith("/core")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
+check "demo-seed digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$ds" '.images[] | select(.name | endswith("/demo-seed")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
 check "comments survive" "$(yes_if grep -q '^# OpenFief on the demo machine' "$work/demo/openfief/kustomization.yaml")"
 check "no placeholder is left" "$(yes_if bash -c "! grep -q sha256:0000 '$work/demo/openfief/kustomization.yaml'")"
 check "only the images workflow on main is trusted" "$(yes_if grep -q -- '--certificate-identity https://github.com/example/openfief/.github/workflows/images.yml@refs/heads/main --certificate-oidc-issuer https://token.actions.githubusercontent.com' "$work/log")"

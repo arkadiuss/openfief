@@ -202,3 +202,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-465c6ecf1dab
+  - type: implements
+    from: SYM-identity-script-token-status
+    to: REQ-identity-script-token-revoke
+    created_at: 2026-10-28T14:12:21.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e53e03e53522
+  - type: covered_by
+    from: SYM-identity-script-token-status
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:12:21.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26b337036d39

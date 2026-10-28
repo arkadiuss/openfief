@@ -223,3 +223,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b1ce1c7af58
+  - type: constrains
+    from: REQ-core-token-commands
+    to: FACT-SUBJECT-8F08E14446E68C09
+    created_at: 2026-10-28T14:33:25.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a780c62c645a
+  - type: requires_property
+    from: REQ-core-token-commands
+    to: FACT-PROP-61C320A8FE33CBCB
+    created_at: 2026-10-28T14:33:25.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6593e9e266c3
+  - type: specified_by
+    from: REQ-core-token-commands
+    to: SCEN-core-token-commands
+    created_at: 2026-10-28T14:33:25.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8eca19c21ef6

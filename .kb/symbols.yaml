@@ -37333,3 +37333,1560 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-demo
+  - id: SYM-identity-scope
+    title: Scope
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:42.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-scope-string
+    title: Scope.String
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:47.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-parse-scope
+    title: ParseScope
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:50.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-script-token-id
+    title: ScriptTokenID
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:54.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-parse-script-token-id
+    title: ParseScriptTokenID
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:11:58.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-script-token
+    title: ScriptToken
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:01.487Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+  - id: SYM-identity-new-script-token
+    title: NewScriptToken
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:05.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-check-name
+    title: checkName
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:09.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-name-rune
+    title: nameRune
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:12.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-script-token-check
+    title: ScriptToken.Check
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:16.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-script-token-status
+    title: ScriptToken.Status
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:20.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-format-secret
+    title: FormatSecret
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:24.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-parse-secret
+    title: ParseSecret
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:27.873Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-hash-key
+    title: HashKey
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:31.737Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-key-matches
+    title: KeyMatches
+    sourceFile: internal/identity/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:35.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-domain
+      - type: implements
+        target: REQ-AUTO-F311FB1545F33607
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-app-store
+    title: Store
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:39.240Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-app-tokens
+    title: Tokens
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:41.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+  - id: SYM-identity-app-new-tokens
+    title: NewTokens
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:45.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-app-tokens-issue
+    title: Tokens.Issue
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:49.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-issue
+  - id: SYM-identity-app-tokens-verify
+    title: Tokens.Verify
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:53.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-app-tokens-revoke
+    title: Tokens.Revoke
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:12:56.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-app-tokens-list
+    title: Tokens.List
+    sourceFile: internal/identity/app/tokens.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:00.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-pg-migration
+    title: migration
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:04.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-migrate
+    title: Migrate
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:08.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-migrate-tx
+    title: migrateTx
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:11.980Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-applied-versions
+    title: appliedVersions
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:15.846Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-migrations
+    title: migrations
+    sourceFile: internal/identity/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:19.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-store
+    title: Store
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:22.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-new
+    title: New
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:26.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-store-save-script-token
+    title: Store.SaveScriptToken
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:30.835Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-issue
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-pg-store-script-token
+    title: Store.ScriptToken
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:34.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+      - type: implements
+        target: REQ-identity-script-token-verify
+  - id: SYM-identity-pg-store-revoke-script-token
+    title: Store.RevokeScriptToken
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:38.406Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-pg-store-script-tokens
+    title: Store.ScriptTokens
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:42.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-revoke
+  - id: SYM-identity-pg-scan-token
+    title: scanToken
+    sourceFile: internal/identity/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:46.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-postgres
+      - type: implements
+        target: REQ-identity-script-token-store
+  - id: SYM-identity-test-new-script-token
+    title: TestNewScriptToken
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:50.493Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-script-token-check
+    title: TestScriptTokenCheck
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:54.523Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-scope
+    title: TestScope
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:13:58.685Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-parse-script-token-id
+    title: TestParseScriptTokenID
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:02.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-secret
+    title: TestSecret
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:06.843Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-key-matches
+    title: TestKeyMatches
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:11.103Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-helper-created-at
+    title: createdAt
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:15.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-test-helper-check-parsed
+    title: checkParsed
+    sourceFile: internal/identity/token_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:19.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-domain
+  - id: SYM-identity-app-test-issue
+    title: TestIssue
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:24.005Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-issue-fails
+    title: TestIssueFails
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:28.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-verify
+    title: TestVerify
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:32.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-revoke
+    title: TestRevoke
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:36.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-stored
+    title: stored
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:41.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store
+    title: memStore
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:45.695Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-new-mem-store
+    title: newMemStore
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:50.099Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store-save-script-token
+    title: memStore.SaveScriptToken
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:54.516Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store-script-token
+    title: memStore.ScriptToken
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:14:59.011Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store-revoke-script-token
+    title: memStore.RevokeScriptToken
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:03.951Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-mem-store-script-tokens
+    title: memStore.ScriptTokens
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:08.704Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-clock
+    title: clock
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:13.708Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-clock-now
+    title: clock.now
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:18.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-clock-set
+    title: clock.set
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:24.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-issued-at
+    title: issuedAt
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:29.669Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fixture
+    title: fixture
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:36.310Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-new-fixture
+    title: newFixture
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:42.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-check-verified
+    title: checkVerified
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:48.175Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fixture-issued
+    title: fixture.issued
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:52.277Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fixture-other-id
+    title: fixture.otherID
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:15:57.370Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fixture-other-key
+    title: fixture.otherKey
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:02.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-at
+    title: at
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:08.683Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-revoke
+    title: revoke
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:14.802Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-app-test-helper-fail-store
+    title: failStore
+    sourceFile: internal/identity/app/tokens_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:20.484Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-identity-pg-test-store-round-trip
+    title: TestStoreRoundTrip
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:25.938Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-store-unknown-token
+    title: TestStoreUnknownToken
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:31.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-store-refuses-bad-rows
+    title: TestStoreRefusesBadRows
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:36.459Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-new-pool
+    title: newPool
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:41.402Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-admin-exec
+    title: adminExec
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:46.417Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-issued-at
+    title: issuedAt
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:51.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-check-revoked
+    title: checkRevoked
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:16:56.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-identity-pg-test-helper-check-no-secret-stored
+    title: checkNoSecretStored
+    sourceFile: internal/identity/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:17:01.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-core-command
+    title: command
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:33:33.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-serve-config
+    title: serveConfig
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:33:36.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+      - type: implements
+        target: REQ-decision-d36-8-revaluation-settings
+  - id: SYM-core-parse-args
+    title: parseArgs
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:33:40.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-command-line
+    title: commandLine
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:33:44.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-split-command
+    title: splitCommand
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:33:48.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-new-flags
+    title: newFlags
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:33:52.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-parse-serve
+    title: parseServe
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:33:56.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+      - type: implements
+        target: REQ-decision-d36-8-revaluation-settings
+  - id: SYM-core-parse-bond-basis
+    title: parseBondBasis
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:01.231Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-parse-end-of-day
+    title: parseEndOfDay
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:05.533Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-parse-issue
+    title: parseIssue
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:09.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-core-parse-revoke
+    title: parseRevoke
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:14.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-core-parse-none
+    title: parseNone
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:18.705Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-deps
+    title: deps
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:22.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-with-pool
+    title: withPool
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:26.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-migrate
+    title: migrate
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:30.622Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-new-tokens
+    title: newTokens
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:34.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-core-core
+    title: core
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:38.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-new-core
+    title: newCore
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:42.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+      - type: implements
+        target: REQ-decision-d36-4-river-job-queue
+  - id: SYM-core-read-tokens
+    title: readTokens
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:45.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-read-tokens-verify-token
+    title: readTokens.VerifyToken
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:49.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-AUTO-2D0C3CC0151C3C5C
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-main
+    title: main
+    sourceFile: cmd/core/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:52.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-run
+    title: run
+    sourceFile: cmd/core/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:56.727Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-core-server
+    title: server
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:34:59.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-health-endpoints
+  - id: SYM-core-server-handler
+    title: server.handler
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:03.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-health-endpoints
+  - id: SYM-core-server-healthz
+    title: server.healthz
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:07.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-health-endpoints
+  - id: SYM-core-server-readyz
+    title: server.readyz
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:10.677Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-graceful-shutdown
+      - type: implements
+        target: REQ-core-health-endpoints
+  - id: SYM-core-server-serve-api
+    title: server.serveAPI
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:14.610Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-health-endpoints
+  - id: SYM-core-plain
+    title: plain
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:18.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-health-endpoints
+  - id: SYM-core-serve
+    title: serve
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:22.899Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-graceful-shutdown
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-start
+    title: start
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:27.655Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-core-shutdown
+    title: shutdown
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:32.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-graceful-shutdown
+  - id: SYM-core-token-command
+    title: tokenCommand
+    sourceFile: cmd/core/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:36.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-core-list-tokens
+    title: listTokens
+    sourceFile: cmd/core/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:41.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-core-write-err
+    title: writeErr
+    sourceFile: cmd/core/token.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:46.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-core-test-parse-args
+    title: TestParseArgs
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:51.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-core-test-list-tokens
+    title: TestListTokens
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:35:56.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-core-test-health-before-ready
+    title: TestHealthBeforeReady
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:00.684Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-core-test-run-refuses-unknown-command
+    title: TestRunRefusesUnknownCommand
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:05.214Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-core-test-helper-warsaw
+    title: warsaw
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:09.550Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-core-test-helper-default-serve
+    title: defaultServe
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:13.887Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-core-test-helper-same-location
+    title: sameLocation
+    sourceFile: cmd/core/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:18.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-core-test-core-serves-the-read-api
+    title: TestCoreServesTheReadAPI
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:23.132Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-empty-database
+    title: emptyDatabase
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:28.366Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-with-database
+    title: withDatabase
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:32.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-admin-exec
+    title: adminExec
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:37.518Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-quiet
+    title: quiet
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:42.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-core-now
+    title: coreNow
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:46.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-token-cmd
+    title: tokenCmd
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:51.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-start-core
+    title: startCore
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:55.429Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-load-demo
+    title: loadDemo
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:36:59.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-save-registry
+    title: saveRegistry
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:37:03.979Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-record-inputs
+    title: recordInputs
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:37:08.745Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-reply
+    title: reply
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:37:13.517Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-get
+    title: get
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:37:18.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-get-json
+    title: getJSON
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:37:23.097Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-wait-valued
+    title: waitValued
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:37:27.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-core-test-helper-check-refused
+    title: checkRefused
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:37:32.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api

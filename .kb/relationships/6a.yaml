@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9926b173cbcd
+  - type: executable_for
+    from: SYM-identity-test-secret
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:14:07.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-415639aba028

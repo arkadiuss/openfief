@@ -65,7 +65,7 @@ One demo is a CAX11: 2 Arm64 vCPUs, 4 GB of RAM and 40 GB of disk, with one prim
 
 The API reports gross prices at the account's VAT rate, and the scripts use those, so the check matches the invoice. Servers are billed by the hour up to the monthly price, so a deleted demo stops costing money. A CX23 (x86, 4 GB) is €0.50 cheaper and works the same way (`DEMO_SERVER_TYPE=cx23`). A CAX21 (8 GB, €10.99 net) is already over the budget alone.
 
-Why 4 GB is enough: Ubuntu plus k3s (API server, SQLite datastore, kubelet, flannel, CoreDNS, local-path, metrics-server) uses about 1 GB; Flux's controllers about 0.4 GB; Traefik about 0.1 GB; cert-manager's three controllers are capped at 0.5 GB together; the CloudNativePG operator and PostgreSQL are capped at 256 MB and 512 MB in `deploy/demo`; and the OpenFief operator and egress proxy are capped at 256 MB each. That is about 3 GB at the limits, which leaves room for the core and a few small plugins.
+Why 4 GB is enough: Ubuntu plus k3s (API server, SQLite datastore, kubelet, flannel, CoreDNS, local-path, metrics-server) uses about 1 GB; Flux's controllers about 0.4 GB; Traefik about 0.1 GB; cert-manager's three controllers are capped at 0.5 GB together; the CloudNativePG operator and PostgreSQL are capped at 256 MB and 512 MB in `deploy/demo`; and the OpenFief operator, egress proxy and core are capped at 256 MB each, with the one-off demo-seed Job at 512 MB. That is about 3.3 GB at the limits, which leaves room for a few small plugins.
 
 ## What the machine runs
 
@@ -77,7 +77,7 @@ Why 4 GB is enough: Ubuntu plus k3s (API server, SQLite datastore, kubelet, flan
 - reads its public IPv4 from Hetzner's metadata service and writes the ConfigMap `flux-system/demo-settings` with `DEMO_HOST` (`<ENV>.<DEMO_DOMAIN>`, or `<ipv4-with-dashes>.sslip.io` with `DEMO_DOMAIN=none`) and `DEMO_ACME_SERVER`, which Flux substitutes into the demo's TLS and route layers;
 - places Flux's pinned `install.yaml` (checked against its sha256), plus a `GitRepository` and `Kustomization` for `./deploy/demo`, in k3s's auto-deploy manifests directory, so even the bootstrap is declared rather than applied by hand.
 
-Flux then applies `deploy/demo/stack.yaml` in dependency order: the namespace and CRDs (`deploy/crds`), the CloudNativePG operator from a pinned Helm chart, a one-instance PostgreSQL cluster whose password CloudNativePG generates in the cluster, cert-manager and its Let's Encrypt issuer, the HTTP routes ([URL and TLS](#url-and-tls)), and finally the OpenFief operator and egress proxy from the signed artifact CI publishes, with images pinned by digest (D-17; see [Deploys](#deploys)).
+Flux then applies `deploy/demo/stack.yaml` in dependency order: the namespace and CRDs (`deploy/crds`), the CloudNativePG operator from a pinned Helm chart, a one-instance PostgreSQL cluster whose password CloudNativePG generates in the cluster, cert-manager and its Let's Encrypt issuer, the HTTP routes ([URL and TLS](#url-and-tls)), and finally the OpenFief operator, egress proxy, core and demo-seed Job from the signed artifact CI publishes, with images pinned by digest (D-17; see [Deploys](#deploys)).
 
 The Hetzner disk isn't encrypted by us, so a demo must only ever hold synthetic data: never real broker credentials, account numbers or portfolio data (GR-12).
 
@@ -86,7 +86,7 @@ The Hetzner disk isn't encrypted by us, so a demo must only ever hold synthetic 
 OpenFief itself ships Services only (D-28): `deploy/crds`, `deploy/operator`, `deploy/egress-proxy` and the future `deploy/core` hold no Ingress, and a test in `internal/plugins/operator` keeps it that way. The demo installation adds its own routes on k3s's bundled Traefik, in `deploy/demo/routes`:
 
 - **URL.** `https://<ENV>.<DEMO_DOMAIN>`: `https://demo.openfief.dev` for the demo named `demo`. `task demo:up` prints it, and with `CLOUDFLARE_API_TOKEN` points the name at the machine's IPv4 ([DNS](#dns)); without the token, it prints the `A` record to create by hand, not proxied, so Let's Encrypt's HTTP-01 check reaches the machine. A recreated machine usually gets a new IPv4, and `up` moves the record to it. With `DEMO_DOMAIN=none`, the URL is `https://<ipv4-with-dashes>.sslip.io` instead, such as `https://192-0-2-10.sslip.io` for 192.0.2.10: sslip.io answers that name with the IP inside it, so no DNS record is needed, and the URL changes with the IPv4.
-- **Routes.** Everything under the host goes to Service `openfief-core`, port `http`: the read API, REST under `/v1` and Connect under `/openfief.*` (D-50). The UI gets its own rule when it exists. The `demo-routes` layer stays suspended until `deploy/core` lands; unsuspend it in `deploy/demo/stack.yaml` then, and correct the Service name or port there if the core's differ.
+- **Routes.** Everything under the host goes to Service `openfief-core`, port `http`: the read API, REST under `/v1` and Connect under `/openfief.*` (D-50). The UI gets its own rule when it exists. A demo-only NetworkPolicy in `deploy/demo/openfief` lets Traefik, in `kube-system`, reach the core's port; the core's own policy admits only plugins. Every read API call needs a script token ([Use the read API](#use-the-read-api)).
 - **TLS.** cert-manager, from a pinned Helm chart, requests the certificate from Let's Encrypt with an HTTP-01 challenge on port 80 through Traefik. `DEMO_ACME=prod` (the default) gives a browser-trusted certificate; `DEMO_ACME=staging` gives an untrusted one under much higher rate limits. Use staging while you recreate demos repeatedly: production allows only 5 certificates a week for the same set of names, and a demo on `DEMO_DOMAIN` keeps its name across recreations. The ACME account has no email address, so no personal data goes to Let's Encrypt and no expiry mail comes back; cert-manager renews on its own.
 - **Firewall.** 80 and 443/tcp are open to `DEMO_HTTP_CIDRS` (everyone by default); SSH stays limited to `DEMO_SSH_CIDRS`. There's no paid load balancer: servicelb binds Traefik to the machine's own IPv4.
 
@@ -132,6 +132,28 @@ KUBECONFIG=~/.kube/openfief-demo.yaml kubectl -n openfief port-forward svc/<serv
 
 The tunnelled kubeconfig points at `127.0.0.1`, which `task e2e` takes for a local cluster. Keep it in its own file and never run the end-to-end tests with it.
 
+## Use the read API
+
+The core serves the read API (D-50) at `https://demo.openfief.dev`: REST under `/v1` and Connect under `/openfief.views.v1.ReadService/`. Every call needs a [script token](../glossary.md) (D-27); `/healthz` and `/readyz` need none and return no data. The core's image has no shell, so issue a token by running the binary itself in its pod:
+
+```bash
+ssh root@"$ip" k3s kubectl -n openfief exec deploy/openfief-core -- /core token issue --name demo --ttl 168h
+```
+
+It prints the secret, `ofs_...`, once on the first line; the database keeps only its hash, so copy it then. Keep it in your shell, never in a file in the repository:
+
+```bash
+read -rs OPENFIEF_TOKEN && export OPENFIEF_TOKEN
+curl -fsS -H "Authorization: Bearer $OPENFIEF_TOKEN" https://demo.openfief.dev/v1/accounts
+curl -fsS -H "Authorization: Bearer $OPENFIEF_TOKEN" https://demo.openfief.dev/v1/valuation-status
+curl -fsS -H "Authorization: Bearer $OPENFIEF_TOKEN" "https://demo.openfief.dev/v1/accounts/demo-xtb/holdings?date=$(date +%F)"
+curl -fsS -H "Authorization: Bearer $OPENFIEF_TOKEN" "https://demo.openfief.dev/v1/valuations?from=2026-10-01&to=$(date +%F)"
+curl -fsS -H "Authorization: Bearer $OPENFIEF_TOKEN" "https://demo.openfief.dev/v1/allocation?date=$(date +%F)&by=ALLOCATION_DIMENSION_SLEEVE"
+curl -fsS https://demo.openfief.dev/readyz
+```
+
+A call without a token, or with an unknown, expired or revoked one, gets 401. `/core token list` shows every token with its status, and `/core token revoke <id>` revokes one. Without the route, `kubectl -n openfief port-forward svc/openfief-core 8080:http` serves the same API at `http://localhost:8080`.
+
 ## Deploys
 
 Deploys are automatic GitOps pulls: a merge to `main` reaches the demo with no manual step, and nothing outside the machine holds a credential for the cluster. Flux follows two sources:
@@ -145,7 +167,7 @@ To enable the job, the owner:
 
 1. creates the GitHub Environment `demo` (Settings > Environments) with deployment branches limited to `main` and a required reviewer (see [From the pipeline](#from-the-pipeline));
 2. creates the machine, with `task demo:up ENV=demo` or the Demo infrastructure workflow;
-3. after the first push to `main`, makes the GHCR packages `operator`, `egress-proxy`, `demo-seed` and `demo-manifests` public (the package's settings > Change visibility), so the cluster pulls them without credentials. A public repository doesn't make its packages public: on 2026-10-28 GHCR refused anonymous pulls of `operator`, `egress-proxy` and `demo-seed`, and `demo-manifests` didn't exist yet. `curl -s "https://ghcr.io/token?scope=repository:arkadiuss/openfief/operator:pull"` returns a token only for a public package;
+3. after the first push to `main`, makes the GHCR packages `operator`, `egress-proxy`, `core`, `demo-seed` and `demo-manifests` public (the package's settings > Change visibility), so the cluster pulls them without credentials. A public repository doesn't make its packages public: on 2026-10-28 GHCR refused anonymous pulls of `operator`, `egress-proxy` and `demo-seed`, and `demo-manifests` didn't exist yet. `curl -s "https://ghcr.io/token?scope=repository:arkadiuss/openfief/operator:pull"` returns a token only for a public package;
 4. sets the repository variable `DEMO_ENABLED=true`.
 
 Every push to `main` and every beta then deploys on its own. A required reviewer on `demo` also gates these deploy jobs; leave it off if deploys should never wait for approval, since the deploy job can't touch the machine itself.
@@ -191,9 +213,26 @@ Before it writes anything, the loader checks the database. It refuses a database
 | `--nbp-url` | NBP's Web API | Where to fetch NBP rates. If the fetch fails, the loader falls back to the committed rates. |
 | `--wait` | `10m` | How long to wait for the revaluations. |
 
-**The Job.** `deploy/demo-data` is a kustomize base with one Job, `demo-seed`, in the `openfief` namespace. It runs the loader with `--reset-demo` and reads the URL from the key `uri` of `openfief-db-app`, the app secret CloudNativePG creates for the demo's `openfief-db` cluster. It retries up to six times while the database starts, gives up after 30 minutes, and runs as non-root with a read-only root filesystem and a 512 MiB memory limit. CI builds and signs its image, `ghcr.io/<owner>/<repo>/demo-seed`, like the others.
+**The Job.** `deploy/demo-data` is a kustomize base with one Job, `demo-seed`, in the `openfief` namespace. The base runs the loader with `--reset-demo` (the demo drops it, below) and reads the URL from the key `uri` of `openfief-db-app`, the app secret CloudNativePG creates for the demo's `openfief-db` cluster. It retries up to six times while the database starts, gives up after 30 minutes, and runs as non-root with a read-only root filesystem and a 512 MiB memory limit. CI builds and signs its image, `ghcr.io/<owner>/<repo>/demo-seed`, like the others.
 
-The Job isn't wired into the demo yet. The base's comment says `deploy/demo` includes it, but no layer in `deploy/demo/stack.yaml` applies it, and `deploy/demo/openfief` doesn't pin the `demo-seed` image, so a new demo's database stays empty. Until then, load it by hand: in a scratch copy of `deploy/demo-data`, pin the image by digest as the base's comment shows, and apply it through the tunnel from [Reach the demo](#reach-the-demo). A Job's pod template can't change, so to load again, delete the Job and apply it again; `--reset-demo` replaces the earlier load.
+**On the demo.** `deploy/demo/openfief` includes `deploy/core` and `deploy/demo-data`, pins both images by digest like the others, and patches each so they can start together on a fresh database:
+
+- The Job runs **without** `--reset-demo`. A reset drops the ledger, valuation and River schemas, and the running core's River workers would lose their tables under them. Without it, the loader marks and loads an empty database, and loading the same day again changes nothing.
+- The core runs with `--ensure-defaults=false`. Its default sleeves would be ledger data without the demo marker, and the loader would then refuse the database as a real one. The demo dataset brings its own sleeves.
+- Both migrate under advisory locks and both run River workers on the same queue, which River allows; the core serves whatever is loaded so far, and its workers keep the valuations current from then on, end of day included.
+
+Each deploy that changes the Job's image re-creates it (the annotation `kustomize.toolkit.fluxcd.io/force: enabled`, since a Job's pod template can't change). On a later day that run fails with "run with --reset-demo" and leaves the loaded data alone. To refresh the data to today, pause Flux, stop the core so nothing uses the schemas, empty them (the script tokens in the `identity` schema stay), and let Flux start the Job and the core again on the empty database:
+
+```bash
+k() { ssh root@"$ip" k3s kubectl "$@"; }
+k -n flux-system patch kustomization demo-openfief --type=merge -p '{"spec":{"suspend":true}}'
+k -n openfief scale deploy/openfief-core --replicas=0
+k -n openfief exec openfief-db-1 -- psql -d openfief -c 'DROP SCHEMA IF EXISTS demo, ledger, valuation, river CASCADE'
+k -n openfief delete job demo-seed --ignore-not-found
+k -n flux-system patch kustomization demo-openfief --type=merge -p '{"spec":{"suspend":false}}'
+```
+
+Flux re-applies the layer within its interval, which re-creates the Job and scales the core back to one replica. Or replace the machine: `task demo:recreate ENV=demo CONFIRM=demo` gives a fresh machine whose empty database the Job loads for the new day.
 
 **How it's tested.** `task test` runs the dataset's tests (TEST-demo-dataset): it's deterministic, every ISIN is synthetic, the IBKR statements map with only the intended skipped summary rows, the other accounts' balance assertions match, and bond coupons follow the published rates. It also runs the loader's flag and rate tests (TEST-demo-seed-unit). `task test:pg` loads the dataset end to end into a throwaway PostgreSQL (TEST-demo-seed-load). That test checks that every account has holdings valued through today with no flagged balance assertion, that a second load of the same day changes nothing, and that a database that isn't a demo is refused.
 
@@ -209,7 +248,7 @@ For `down` and `recreate`, type the demo's name again in the `confirm` input; it
 
 ## Recreate and destroy
 
-`task demo:recreate ENV=demo CONFIRM=demo` replaces the machine. Everything in the cluster comes back from git, but the database starts empty, because a demo holds only synthetic data; load the [demo dataset](#demo-data) again. `up` doesn't change an existing server's cloud-init, so a new k3s or Flux pin takes effect only on recreate. `task demo:down ENV=demo CONFIRM=demo` removes the demo and stops its cost. Both refuse without `CONFIRM` set to the demo's name.
+`task demo:recreate ENV=demo CONFIRM=demo` replaces the machine. Everything in the cluster comes back from git and the signed artifact, and the database starts empty; the demo-seed Job loads the [demo dataset](#demo-data) for the new day on its own. Issue a new script token afterwards ([Use the read API](#use-the-read-api)): tokens live in the database. `up` doesn't change an existing server's cloud-init, so a new k3s or Flux pin takes effect only on recreate. `task demo:down ENV=demo CONFIRM=demo` removes the demo and stops its cost. Both refuse without `CONFIRM` set to the demo's name.
 
 ## Update the pinned versions
 

@@ -181,3 +181,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee4ff1a7853f
+  - type: implements
+    from: SYM-core-parse-end-of-day
+    to: REQ-core-config
+    created_at: 2026-10-28T14:34:06.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84e32ecaa126
+  - type: covered_by
+    from: SYM-core-parse-end-of-day
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:34:06.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d69613d59f60

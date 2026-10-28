@@ -230,3 +230,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e89912318f98
+  - type: verified_by
+    from: SCEN-identity-verify-valid
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:11:10.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeb30a72a459
+  - type: verified_by
+    from: SCEN-identity-verify-valid
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:11:10.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd79677ae487
+  - type: verified_by
+    from: SCEN-identity-verify-valid
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:11:10.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19a12b409abb
+  - type: executable_for
+    from: SYM-identity-test-scope
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:13:59.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f355483ce62

@@ -1,7 +1,7 @@
 # HTTP routes into the demo (docs/dev/demo.md#url-and-tls), through k3s's bundled Traefik. OpenFief's own bases
 # ship Services only (D-28); this demo-only layer exposes them at https://${DEMO_HOST}, substituted by Flux from
 # the ConfigMap flux-system/demo-settings that the machine's cloud-init writes.
-# demo-routes in ../stack.yaml is suspended until the core's Service exists.
+# demo-routes in ../stack.yaml applies this once Flux reconciles; it routes to the core in deploy/core.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:

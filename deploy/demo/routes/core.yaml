@@ -1,5 +1,5 @@
 # The core's read API (D-50): Connect at /openfief.<package>.<Service>/<Method> and REST at /v1/..., both served by
-# Service openfief-core, port name http (an assumption until deploy/core lands). Everything goes to the core for
+# Service openfief-core, port name http. Everything goes to the core for
 # now; the UI gets its own rule when it exists. cert-manager issues the certificate through HTTP-01.
 apiVersion: networking.k8s.io/v1
 kind: Ingress

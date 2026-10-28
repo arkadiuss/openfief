@@ -167,3 +167,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49100de640ca
+  - type: implements
+    from: SYM-identity-pg-store-revoke-script-token
+    to: REQ-identity-script-token-revoke
+    created_at: 2026-10-28T14:13:39.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2ab7caac6d7
+  - type: covered_by
+    from: SYM-identity-pg-store-revoke-script-token
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:13:39.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-032411690520

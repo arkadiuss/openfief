@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openfief-core
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+spec:
+  replicas: 1
+  # One pod at a time: on a small machine a rolling update would briefly need two. River works the revaluation
+  # queue safely from several pods, so more replicas are possible; each drains on shutdown.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-core
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: openfief-core
+        app.kubernetes.io/part-of: openfief
+    spec:
+      serviceAccountName: openfief-core
+      automountServiceAccountToken: false
+      # Longer than --shutdown-timeout, so requests and running revaluations can finish before the kill.
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: core
+          # An overlay pins the image by digest with `images:` (see kustomization.yaml).
+          image: ghcr.io/arkadiuss/openfief/core
+          args:
+            - serve
+            - --listen=:8080
+            - --reporting-currency=PLN
+            - --time-zone=Europe/Warsaw
+            - --end-of-day=23:30
+            - --workers=2
+            - --bond-basis=net_if_redeemed
+            - --shutdown-timeout=25s
+          env:
+            - name: OPENFIEF_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: openfief-db-app
+                  key: uri
+          ports:
+            - name: http
+              containerPort: 8080
+          # /healthz answers as soon as the process listens, also while it waits for the database and migrates;
+          # /readyz only once it is migrated and the database answers. Neither needs a token or returns data.
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 10
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi

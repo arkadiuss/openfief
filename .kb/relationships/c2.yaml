@@ -118,3 +118,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b8ff07ebdd3
+  - type: implements
+    from: SYM-core-migrate
+    to: REQ-core-serves-read-api
+    created_at: 2026-10-28T14:34:31.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74209022cf7c
+  - type: covered_by
+    from: SYM-core-migrate
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:34:31.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8bc527b7576
+  - type: implements
+    from: SYM-core-main
+    to: REQ-core-serves-read-api
+    created_at: 2026-10-28T14:34:53.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2358aee201d
+  - type: covered_by
+    from: SYM-core-main
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:34:53.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c425576bc0d9
