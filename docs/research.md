@@ -23,6 +23,16 @@ External facts the design and proposals draw on, as found on the date shown. Thi
   - https://thehackernews.com/2026/02/researchers-find-341-malicious-clawhub.html
   - https://www.bitdoze.com/openclaw-security-guide/
 
+- **[R-15]** (2026-10-28) Ghostfolio's API, read from its source (main at 9772282 and release 3.93.0, 2026-10-25):
+  - Accounts: `POST /api/v1/account` takes `name`, `currency`, `platformId` (may be null), optional `balance`, `comment`, `tags` and a client-chosen `id`, which must be a UUID to be usable in filters. The `isExcluded` flag was removed in 3.39.0; a tag replaces it.
+  - Activities: `/api/v1/order` was removed in 3.5.0. `GET /api/v1/activities?accounts=<uuids>` lists them with their `comment`, all at once when `take` is omitted. `DELETE /api/v1/activities/:id` deletes one; `DELETE /api/v1/activities` with filters deletes in bulk, and with no filter deletes everything. Deleting an asset's last activity also deletes the asset and its market prices.
+  - Import: `POST /api/v1/import?dryRun=true` validates without writing. The body holds `activities` (comment up to 2000 characters, no client-chosen ID, unknown fields rejected) and optionally `accounts`, `assetProfiles`, `platforms` and `tags`. Duplicates, matched on comment, currency, data source, date, fee, quantity, symbol, type and unit price, are skipped silently. An import isn't rolled back on error. The body is capped at 10 MB.
+  - Manual assets: a `MANUAL` symbol must be a UUID (a `GF_` prefix is replaced by a random UUID). Prices are set through `assetProfiles[].marketData` in an import or `POST /api/v1/market-data/MANUAL/:symbol`, by a normal user for their own assets.
+  - Comments are blanked in responses when the user's "restricted view" setting is on.
+  - Auth: `POST /api/v1/auth/anonymous` exchanges the security token for a bearer token valid for 180 days; rotating the security token doesn't revoke issued ones.
+  - Stability: the README's public API covers only auth, health, import, export and public portfolio pages. Accounts, activities and market-data are the web app's internal endpoints, renamed within `/v1` without notice; there is no OpenAPI spec.
+  - https://github.com/ghostfolio/ghostfolio (apps/api/src/app/endpoints/import, apps/api/src/app/activities, apps/api/src/services/import/import.service.ts)
+
 ## Brokers and data sources
 
 - **[R-2]** (2026-10-25) XTB disabled its public xAPI on 2025-03-14. The only options left are statement import or reverse-engineered clients that breach its terms. http://developers.xstore.pro/
@@ -34,6 +44,19 @@ External facts the design and proposals draw on, as found on the date shown. Thi
 - **[R-4]** (2026-10-25) Trading 212's public API has scoped keys (such as `orders:execute`), an optional IP allow-list, and live orders in the main account currency. https://helpcentre.trading212.com/hc/en-us/articles/14584770928157-Trading-212-API-key
 - **[R-5]** (2026-10-25) Polish treasury bonds have no API from obligacjeskarbowe.pl or PKO BP. Valuation is deterministic from series terms plus GUS CPI data. Open-source valuers: https://github.com/maciekmm/obligacje (MIT) and https://github.com/krbob/edo-calculator
 
+- **[R-16]** (2026-10-28) End-of-day market data for Warsaw, LSE, Xetra and Euronext holdings, bring-your-own-key:
+  - EODHD: Warsaw as exchange `WAR`; LSE, Xetra and Euronext covered; ISIN search; its EOD Historical All-World plan ($19.99 a month) includes 30+ years of stock, ETF and index prices; its terms permit storing and analysing the data for private, non-commercial use, and forbid sharing access or redistributing the data to others. Its closes are aggregated (VWAP-based), not taken from exchange feeds.
+  - Twelve Data: almost all Warsaw symbols need its Ultra plan (from $329 a month); ISIN data is a paid add-on; its cheaper plans forbid programmatic processing and storage.
+  - Alpha Vantage: no documented Warsaw or Euronext coverage.
+  - Stooq: no published API terms; downloads have needed a CAPTCHA-issued key since about April 2026.
+  - https://eodhd.com/pricing
+  - https://eodhd.com/financial-apis/terms-conditions
+  - https://eodhd.com/financial-apis/commercial-vs-personal-license-use
+  - https://twelvedata.com/pricing
+  - https://twelvedata.com/terms
+  - https://www.alphavantage.co/documentation/
+- **[R-17]** (2026-10-28) NBP's web API serves table A exchange rates from 2002-01-02; a request for an earlier date returns 404. https://api.nbp.pl/
+
 ## Security
 
 - **[R-6]** (2026-10-25) Prompt injection against agents that move money is documented in real incidents, such as the May 2026 Grok/Bankrbot wallet drain. There is research on adversarial news attacks against multi-agent trading systems: https://arxiv.org/pdf/2608.24069
@@ -42,6 +65,15 @@ External facts the design and proposals draw on, as found on the date shown. Thi
   - https://docs.cloud.google.com/kubernetes-engine/docs/how-to/fqdn-network-policies
   - https://docs.tigera.io/calico-cloud/network-policy/domain-based-policy
   - https://github.com/nais/fqdn-policy
+  - https://github.com/stripe/smokescreen
+
+- **[R-14]** (2026-10-28) Smokescreen, read from its source (master at 68e7b82, 2026-10-22):
+  - MIT licensed; its vendored dependencies are BSD-3-Clause, MIT and Apache-2.0.
+  - Maintained by Stripe: 57 commits in the past year, no open issues. Tags are sparse (v0.1.0 on 2026-09-18, the one before in 2022), and fixes since v0.1.0 include blocking connections to the proxy's own addresses. It is v0, with no API stability promise.
+  - Embeddable: package `pkg/smokescreen` exports `NewConfig`, `StartWithConfig` and `BuildProxy`. `Config.RoleFromRequest` receives the CONNECT request with its `Proxy-Authorization` header. `Config.EgressACL` takes a per-role allow-list, which can be built in code; it isn't reloaded at runtime.
+  - If `EgressACL` is nil, every destination is allowed. `StartWithConfig` exits the process on errors and handles SIGHUP, SIGTERM and SIGUSR2 itself.
+  - It denies loopback, link-local (including cloud metadata addresses), private, CGNAT and IPv4-embedding IPv6 ranges by default, resolves hostnames itself, and logs one decision line per request with role, host and outcome.
+  - Go's `net/http` and undici's `ProxyAgent` send `user:password` from the proxy URL as a Basic `Proxy-Authorization` header on CONNECT; Node's built-in client reads `HTTPS_PROXY` only with `NODE_USE_ENV_PROXY=1`.
   - https://github.com/stripe/smokescreen
 
 ## Regulation and tax (not legal advice)

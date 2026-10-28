@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-92dab6a00c12
+    type: constrains
+    from: REQ-identity-install-without-hostname
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: "2026-10-28T06:09:44.528Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-identity-install-without-hostname
+    to: FACT-PROP-ABA1FAFE9F9CC8FF
+    created_at: 2026-10-28T06:09:44.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d69fdb369a77

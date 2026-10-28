@@ -1,6 +1,6 @@
 ---
 title: What is OpenFief's canonical hostname, given that passkeys are bound to it and M1's phone approvals need it reachable over HTTPS? (T-11, P-CC-29.)
-status: active
+status: closed
 fact_kind: observation
 text_ref: design-open-questions:OQ-24
 tags:
@@ -13,10 +13,4 @@ origin:
 id: FACT-BOOTSTRAP-QUESTION-117B9FF7C9642CF1
 type: fact
 ---
-What is OpenFief's canonical hostname, given that passkeys are bound to it and M1's phone approvals need it reachable over HTTPS? (T-11, P-CC-29.)
-
-## Source
-
-> What is OpenFief's canonical hostname, given that passkeys are bound to it and M1's phone approvals need it reachable over HTTPS? (T-11, P-CC-29.)
-
-Source: OpenFief open questions (DESIGN.md section 8) - OQ-24
+Open question OQ-24, answered by the author in decision D-60 (docs/DESIGN.md): OpenFief installs with no hostname, the first passkey is created on localhost, and a logged-in session issues a one-time link for a passkey on each hostname added later.

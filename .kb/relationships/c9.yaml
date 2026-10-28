@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-e56d5bed1013
+    type: constrains
+    from: REQ-portfolio-model-weights
+    to: FACT-SUBJECT-1FEA6AF758EE9559
+    created_at: "2026-10-28T06:09:02.454Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-portfolio-model-weights
+    to: FACT-PROP-883AFD83236787B0
+    created_at: 2026-10-28T06:09:02.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0c89a971d60
+  - type: constrains
+    from: REQ-plugins-unsigned-never-deployed
+    to: FACT-SUBJECT-214A9B817AE7B025
+    created_at: 2026-10-28T06:09:31.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faa1ad2c4724
+  - type: requires_property
+    from: REQ-plugins-unsigned-never-deployed
+    to: FACT-PROP-25298B4ECE4E4D0C
+    created_at: 2026-10-28T06:09:31.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-800074b8b991
