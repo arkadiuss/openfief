@@ -237,3 +237,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f2e969671c6
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:51:07.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0089ecbddf73
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:51:07.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d9b83f4e9ab
+  - type: covered_by
+    from: SYM-identity-gen-pb-remove-passkey-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:51:07.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f74025f0d22
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:58:36.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fb768184653
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:58:36.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-362cfb3b00df
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:58:36.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2df4b8f8e333
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-remove-passkey
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:59:21.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7970e28601d9
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-remove-passkey
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:59:21.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1bef6a387b1
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-remove-passkey
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:59:21.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76fb225c672d

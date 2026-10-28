@@ -237,3 +237,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de816fd85403
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:46:32.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acc35b744de7
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:46:32.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f62ad5a8b82a
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-demo-session-request-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:46:32.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-351d90952abe
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-revoke-script-token
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:59:37.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c01b6ab019da
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-revoke-script-token
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:59:37.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63eddf0d6ec9
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-revoke-script-token
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:59:37.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-565c896ac303

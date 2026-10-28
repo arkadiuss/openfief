@@ -118,3 +118,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6d6d4d4e696
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-request
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:44:12.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e844e9877299
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-request
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:44:12.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c2a0a0d336f
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-login-request
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:44:12.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d3c7e33e027
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:44:46.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6408d9e757c0
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:44:46.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90d9d47762e3
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-login-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:44:46.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a4b6a0cc0f4
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-get-session-token
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:51:22.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2cf678ed5e8
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-get-session-token
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:51:22.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ed2dc46ce90
+  - type: covered_by
+    from: SYM-identity-gen-pb-remove-passkey-request-get-session-token
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:51:22.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-294411f1b4ff

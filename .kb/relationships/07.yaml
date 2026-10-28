@@ -209,3 +209,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78a0b9880190
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-iresponse-get-owner
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:49:30.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4904981043c
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-iresponse-get-owner
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:49:30.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee028b475256
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-iresponse-get-owner
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:49:30.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3585bd2804f5

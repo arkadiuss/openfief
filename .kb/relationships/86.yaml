@@ -97,3 +97,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7b3e2695617
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-get-origin
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:51:17.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44af51b29584
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-get-origin
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:51:17.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d09cc05f46fc
+  - type: covered_by
+    from: SYM-identity-gen-pb-remove-passkey-request-get-origin
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:51:17.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-880b72be73ac

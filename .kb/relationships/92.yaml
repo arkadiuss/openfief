@@ -223,3 +223,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1697b8e45026
+  - type: implements
+    from: SYM-identity-gen-pb-finish-registration-response-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:43:55.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9090ffde4f1
+  - type: implements
+    from: SYM-identity-gen-pb-finish-registration-response-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:43:55.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4dbc5b807ad
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-registration-response-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:43:55.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d78cf7400a94

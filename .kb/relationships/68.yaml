@@ -202,3 +202,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f028a5d0ade
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:46:44.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67fade75f500
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:46:44.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c30fc36f7d1c
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-demo-session-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:46:44.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-379658a93314
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-who-am-i
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:59:12.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b07ac466217
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-who-am-i
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:59:12.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15b9744071fa
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-who-am-i
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:59:12.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56e849cae19d

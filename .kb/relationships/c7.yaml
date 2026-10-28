@@ -188,3 +188,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ae5b500361
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-response-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:44:58.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc6f7eaf16f5
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-response-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:44:58.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b1490e94642
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-login-response-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:44:58.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fed934ec98ff

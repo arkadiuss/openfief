@@ -384,3 +384,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c695014a99bb
+  - type: implements
+    from: SYM-identity-gen-pb-authenticator-enum-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:36:05.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55ca203535d7
+  - type: implements
+    from: SYM-identity-gen-pb-authenticator-enum-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:36:05.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-392e2c6c47ba
+  - type: covered_by
+    from: SYM-identity-gen-pb-authenticator-enum-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:36:05.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bf6e5e5f6db
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:48:52.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be820e03c0d2
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:48:52.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d547f39b65d
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-irequest-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:48:52.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c151e1b739d

@@ -132,3 +132,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5332afa0188
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-status-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:36:21.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce37071bfc0c
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-status-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:36:21.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bee3e8b2da4
+  - type: covered_by
+    from: SYM-identity-gen-pb-script-token-status-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:36:21.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7512b89646c2
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:41:08.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4b323f5dea9
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:41:08.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43e2dbf4fcde
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-request-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:41:08.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47e32bd7e1b0

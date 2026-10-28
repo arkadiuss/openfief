@@ -181,3 +181,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac11cae4a50d
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-script-token
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:59:28.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd2f6d27e1c
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-script-token
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:59:28.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a65fbc71489
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-script-token
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:59:28.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb2d6d9ad343

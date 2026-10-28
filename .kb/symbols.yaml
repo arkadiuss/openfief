@@ -42570,3 +42570,5122 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-plugin-labels
+  - id: SYM-identity-test-auth-service-contract
+    title: TestAuthServiceContract
+    sourceFile: internal/identity/connectapi/contract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:07.533Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-scope
+    title: SessionScope
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:10.664Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-scope-enum
+    title: SessionScope.Enum
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:14.926Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-scope-string
+    title: SessionScope.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:19.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-scope-descriptor
+    title: SessionScope.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:23.602Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-scope-type
+    title: SessionScope.Type
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:28.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-scope-number
+    title: SessionScope.Number
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:32.235Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-scope-enum-descriptor
+    title: SessionScope.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:36.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-authenticator
+    title: Authenticator
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:39.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-authenticator-enum
+    title: Authenticator.Enum
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:43.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-authenticator-string
+    title: Authenticator.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:48.073Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-authenticator-descriptor
+    title: Authenticator.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:52.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-authenticator-type
+    title: Authenticator.Type
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:35:56.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-authenticator-number
+    title: Authenticator.Number
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:00.460Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-authenticator-enum-descriptor
+    title: Authenticator.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:04.544Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-status
+    title: ScriptTokenStatus
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:07.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-status-enum
+    title: ScriptTokenStatus.Enum
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:11.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-status-string
+    title: ScriptTokenStatus.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:16.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-status-descriptor
+    title: ScriptTokenStatus.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:20.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-status-type
+    title: ScriptTokenStatus.Type
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:24.583Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-status-number
+    title: ScriptTokenStatus.Number
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:28.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-status-enum-descriptor
+    title: ScriptTokenStatus.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:33.478Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session
+    title: Session
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:36.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-reset
+    title: Session.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:41.394Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-string
+    title: Session.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:45.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-proto-message
+    title: Session.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:50.153Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-proto-reflect
+    title: Session.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:54.517Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-descriptor
+    title: Session.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:36:58.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-get-id
+    title: Session.GetId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:02.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-get-scope
+    title: Session.GetScope
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:07.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-get-authenticator
+    title: Session.GetAuthenticator
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:11.405Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-get-rp-id
+    title: Session.GetRpId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:15.685Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-get-created-at
+    title: Session.GetCreatedAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:20.088Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-get-last-seen-at
+    title: Session.GetLastSeenAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:24.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-get-idle-expires-at
+    title: Session.GetIdleExpiresAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:28.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-session-get-expires-at
+    title: Session.GetExpiresAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:33.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-owner
+    title: Owner
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:36.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-owner-reset
+    title: Owner.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:40.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-owner-string
+    title: Owner.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:45.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-owner-proto-message
+    title: Owner.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:49.425Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-owner-proto-reflect
+    title: Owner.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:53.583Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-owner-descriptor
+    title: Owner.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:37:57.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-owner-get-created-at
+    title: Owner.GetCreatedAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:02.213Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey
+    title: Passkey
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:05.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-reset
+    title: Passkey.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:10.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-string
+    title: Passkey.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:14.352Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-proto-message
+    title: Passkey.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:18.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-proto-reflect
+    title: Passkey.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:23.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-descriptor
+    title: Passkey.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:27.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-get-id
+    title: Passkey.GetId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:32.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-get-name
+    title: Passkey.GetName
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:36.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-get-rp-id
+    title: Passkey.GetRpId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:40.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-get-created-at
+    title: Passkey.GetCreatedAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:44.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-get-last-used-at
+    title: Passkey.GetLastUsedAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:49.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-get-transports
+    title: Passkey.GetTransports
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:53.306Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-get-backed-up
+    title: Passkey.GetBackedUp
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:38:57.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token
+    title: ScriptToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:00.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-reset
+    title: ScriptToken.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:04.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-string
+    title: ScriptToken.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:08.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-proto-message
+    title: ScriptToken.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:13.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-proto-reflect
+    title: ScriptToken.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:17.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-descriptor
+    title: ScriptToken.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:21.826Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-get-id
+    title: ScriptToken.GetId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:25.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-get-name
+    title: ScriptToken.GetName
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:30.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-get-scope
+    title: ScriptToken.GetScope
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:34.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-get-created-at
+    title: ScriptToken.GetCreatedAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:39.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-get-expires-at
+    title: ScriptToken.GetExpiresAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:43.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-get-revoked-at
+    title: ScriptToken.GetRevokedAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:47.521Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-script-token-get-status
+    title: ScriptToken.GetStatus
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:51.846Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-request
+    title: GetLoginMethodsRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:55.351Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-request-reset
+    title: GetLoginMethodsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:39:59.675Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-request-string
+    title: GetLoginMethodsRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:03.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-request-proto-message
+    title: GetLoginMethodsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:08.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-request-proto-reflect
+    title: GetLoginMethodsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:12.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-request-descriptor
+    title: GetLoginMethodsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:16.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-request-get-origin
+    title: GetLoginMethodsRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:21.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-response
+    title: GetLoginMethodsResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:24.404Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-response-reset
+    title: GetLoginMethodsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:28.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-response-string
+    title: GetLoginMethodsResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:33.003Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-response-proto-message
+    title: GetLoginMethodsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:37.340Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-response-proto-reflect
+    title: GetLoginMethodsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:41.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-response-descriptor
+    title: GetLoginMethodsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:45.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-response-get-passkey-registered
+    title: GetLoginMethodsResponse.GetPasskeyRegistered
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:50.493Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-get-login-methods-response-get-demo-sessions
+    title: GetLoginMethodsResponse.GetDemoSessions
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:55.534Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request
+    title: BeginRegistrationRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:40:58.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-reset
+    title: BeginRegistrationRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:02.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-string
+    title: BeginRegistrationRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:07.491Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-proto-message
+    title: BeginRegistrationRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:11.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-proto-reflect
+    title: BeginRegistrationRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:16.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-descriptor
+    title: BeginRegistrationRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:21.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-get-origin
+    title: BeginRegistrationRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:25.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-get-authorization
+    title: BeginRegistrationRequest.GetAuthorization
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:29.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-get-enrollment-code
+    title: BeginRegistrationRequest.GetEnrollmentCode
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:34.253Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-get-session-token
+    title: BeginRegistrationRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:38.629Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-is-begin-registration-request-authorization
+    title: isBeginRegistrationRequest_Authorization
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:43.036Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-enrollment-code
+    title: BeginRegistrationRequest_EnrollmentCode
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:47.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-session-token
+    title: BeginRegistrationRequest_SessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:51.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-enrollment-code-is-begin-registration-request-authorization
+    title: BeginRegistrationRequest_EnrollmentCode.isBeginRegistrationRequest_Authorization
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:41:57.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-request-session-token-is-begin-registration-request-authorization
+    title: BeginRegistrationRequest_SessionToken.isBeginRegistrationRequest_Authorization
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:03.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response
+    title: BeginRegistrationResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:08.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response-reset
+    title: BeginRegistrationResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:13.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response-string
+    title: BeginRegistrationResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:19.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response-proto-message
+    title: BeginRegistrationResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:25.317Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response-proto-reflect
+    title: BeginRegistrationResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:29.548Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response-descriptor
+    title: BeginRegistrationResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:34.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response-get-ceremony-id
+    title: BeginRegistrationResponse.GetCeremonyId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:38.543Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response-get-options-json
+    title: BeginRegistrationResponse.GetOptionsJson
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:42.724Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-registration-response-get-expires-at
+    title: BeginRegistrationResponse.GetExpiresAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:47.070Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request
+    title: FinishRegistrationRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:50.366Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-reset
+    title: FinishRegistrationRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:54.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-string
+    title: FinishRegistrationRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:42:59.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-proto-message
+    title: FinishRegistrationRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:03.369Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-proto-reflect
+    title: FinishRegistrationRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:07.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-descriptor
+    title: FinishRegistrationRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:11.889Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-get-origin
+    title: FinishRegistrationRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:16.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-get-ceremony-id
+    title: FinishRegistrationRequest.GetCeremonyId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:20.611Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-get-credential-json
+    title: FinishRegistrationRequest.GetCredentialJson
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:24.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-request-get-name
+    title: FinishRegistrationRequest.GetName
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:29.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response
+    title: FinishRegistrationResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:32.704Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response-reset
+    title: FinishRegistrationResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:37.075Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response-string
+    title: FinishRegistrationResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:41.828Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response-proto-message
+    title: FinishRegistrationResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:45.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response-proto-reflect
+    title: FinishRegistrationResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:50.108Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response-descriptor
+    title: FinishRegistrationResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:54.539Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response-get-passkey
+    title: FinishRegistrationResponse.GetPasskey
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:43:58.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response-get-session-token
+    title: FinishRegistrationResponse.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:03.224Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-registration-response-get-session
+    title: FinishRegistrationResponse.GetSession
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:07.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-request
+    title: BeginLoginRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:11.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-request-reset
+    title: BeginLoginRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:15.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-request-string
+    title: BeginLoginRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:19.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-request-proto-message
+    title: BeginLoginRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:24.446Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-request-proto-reflect
+    title: BeginLoginRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:29.015Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-request-descriptor
+    title: BeginLoginRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:33.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-request-get-origin
+    title: BeginLoginRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:37.539Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response
+    title: BeginLoginResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:40.869Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response-reset
+    title: BeginLoginResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:45.276Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response-string
+    title: BeginLoginResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:49.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response-proto-message
+    title: BeginLoginResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:53.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response-proto-reflect
+    title: BeginLoginResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:44:57.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response-descriptor
+    title: BeginLoginResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:02.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response-get-ceremony-id
+    title: BeginLoginResponse.GetCeremonyId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:06.228Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response-get-options-json
+    title: BeginLoginResponse.GetOptionsJson
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:10.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-login-response-get-expires-at
+    title: BeginLoginResponse.GetExpiresAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:14.927Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request
+    title: FinishLoginRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:18.012Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request-reset
+    title: FinishLoginRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:22.063Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request-string
+    title: FinishLoginRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:26.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request-proto-message
+    title: FinishLoginRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:30.291Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request-proto-reflect
+    title: FinishLoginRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:34.439Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request-descriptor
+    title: FinishLoginRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:38.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request-get-origin
+    title: FinishLoginRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:42.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request-get-ceremony-id
+    title: FinishLoginRequest.GetCeremonyId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:46.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-request-get-credential-json
+    title: FinishLoginRequest.GetCredentialJson
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:51.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-response
+    title: FinishLoginResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:54.433Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-response-reset
+    title: FinishLoginResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:45:58.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-response-string
+    title: FinishLoginResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:02.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-response-proto-message
+    title: FinishLoginResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:07.041Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-response-proto-reflect
+    title: FinishLoginResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:11.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-response-descriptor
+    title: FinishLoginResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:15.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-response-get-session-token
+    title: FinishLoginResponse.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:19.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-login-response-get-session
+    title: FinishLoginResponse.GetSession
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:24.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-request
+    title: CreateDemoSessionRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:27.176Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-request-reset
+    title: CreateDemoSessionRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:31.247Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-request-string
+    title: CreateDemoSessionRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:35.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-request-proto-message
+    title: CreateDemoSessionRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:39.717Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-request-proto-reflect
+    title: CreateDemoSessionRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:43.783Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-request-descriptor
+    title: CreateDemoSessionRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:47.844Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-request-get-origin
+    title: CreateDemoSessionRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:52.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-response
+    title: CreateDemoSessionResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:55.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-response-reset
+    title: CreateDemoSessionResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:46:59.424Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-response-string
+    title: CreateDemoSessionResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:03.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-response-proto-message
+    title: CreateDemoSessionResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:07.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-response-proto-reflect
+    title: CreateDemoSessionResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:12.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-response-descriptor
+    title: CreateDemoSessionResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:16.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-response-get-session-token
+    title: CreateDemoSessionResponse.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:20.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-demo-session-response-get-session
+    title: CreateDemoSessionResponse.GetSession
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:24.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-request
+    title: LogoutRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:27.755Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-request-reset
+    title: LogoutRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:31.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-request-string
+    title: LogoutRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:36.141Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-request-proto-message
+    title: LogoutRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:41.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-request-proto-reflect
+    title: LogoutRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:46.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-request-descriptor
+    title: LogoutRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:52.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-request-get-origin
+    title: LogoutRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:47:58.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-request-get-session-token
+    title: LogoutRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:03.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-response
+    title: LogoutResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:06.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-response-reset
+    title: LogoutResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:10.433Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-response-string
+    title: LogoutResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:14.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-response-proto-message
+    title: LogoutResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:18.909Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-response-proto-reflect
+    title: LogoutResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:23.180Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-logout-response-descriptor
+    title: LogoutResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:27.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-irequest
+    title: WhoAmIRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:30.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-irequest-reset
+    title: WhoAmIRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:34.745Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-irequest-string
+    title: WhoAmIRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:39.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-irequest-proto-message
+    title: WhoAmIRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:43.405Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-irequest-proto-reflect
+    title: WhoAmIRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:47.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-irequest-descriptor
+    title: WhoAmIRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:51.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-irequest-get-origin
+    title: WhoAmIRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:48:56.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-irequest-get-session-token
+    title: WhoAmIRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:00.349Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-iresponse
+    title: WhoAmIResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:03.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-iresponse-reset
+    title: WhoAmIResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:07.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-iresponse-string
+    title: WhoAmIResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:11.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-iresponse-proto-message
+    title: WhoAmIResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:16.357Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-iresponse-proto-reflect
+    title: WhoAmIResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:20.662Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-iresponse-descriptor
+    title: WhoAmIResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:24.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-iresponse-get-owner
+    title: WhoAmIResponse.GetOwner
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:29.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-who-am-iresponse-get-session
+    title: WhoAmIResponse.GetSession
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:33.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-request
+    title: ListPasskeysRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:36.700Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-request-reset
+    title: ListPasskeysRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:41.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-request-string
+    title: ListPasskeysRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:45.298Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-request-proto-message
+    title: ListPasskeysRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:49.463Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-request-proto-reflect
+    title: ListPasskeysRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:53.543Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-request-descriptor
+    title: ListPasskeysRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:49:57.835Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-request-get-origin
+    title: ListPasskeysRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:02.184Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-request-get-session-token
+    title: ListPasskeysRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:06.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-response
+    title: ListPasskeysResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:09.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-response-reset
+    title: ListPasskeysResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:14.109Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-response-string
+    title: ListPasskeysResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:18.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-response-proto-message
+    title: ListPasskeysResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:23.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-response-proto-reflect
+    title: ListPasskeysResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:28.756Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-response-descriptor
+    title: ListPasskeysResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:34.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-passkeys-response-get-passkeys
+    title: ListPasskeysResponse.GetPasskeys
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:40.289Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request
+    title: RemovePasskeyRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:44.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request-reset
+    title: RemovePasskeyRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:49.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request-string
+    title: RemovePasskeyRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:50:55.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request-proto-message
+    title: RemovePasskeyRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:01.371Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request-proto-reflect
+    title: RemovePasskeyRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:06.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request-descriptor
+    title: RemovePasskeyRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:10.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request-get-origin
+    title: RemovePasskeyRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:16.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request-get-session-token
+    title: RemovePasskeyRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:21.012Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-request-get-passkey-id
+    title: RemovePasskeyRequest.GetPasskeyId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:25.468Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-response
+    title: RemovePasskeyResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:28.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-response-reset
+    title: RemovePasskeyResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:33.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-response-string
+    title: RemovePasskeyResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:37.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-response-proto-message
+    title: RemovePasskeyResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:41.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-response-proto-reflect
+    title: RemovePasskeyResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:46.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-response-descriptor
+    title: RemovePasskeyResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:50.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request
+    title: CreateScriptTokenRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:54.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-reset
+    title: CreateScriptTokenRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:51:58.877Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-string
+    title: CreateScriptTokenRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:03.437Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-proto-message
+    title: CreateScriptTokenRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:08.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-proto-reflect
+    title: CreateScriptTokenRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:12.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-descriptor
+    title: CreateScriptTokenRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:17.508Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-get-origin
+    title: CreateScriptTokenRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:22.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-get-session-token
+    title: CreateScriptTokenRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:26.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-get-name
+    title: CreateScriptTokenRequest.GetName
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:31.126Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-request-get-ttl
+    title: CreateScriptTokenRequest.GetTtl
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:35.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-response
+    title: CreateScriptTokenResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:39.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-response-reset
+    title: CreateScriptTokenResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:43.671Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-response-string
+    title: CreateScriptTokenResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:48.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-response-proto-message
+    title: CreateScriptTokenResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:52.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-response-proto-reflect
+    title: CreateScriptTokenResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:52:57.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-response-descriptor
+    title: CreateScriptTokenResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:01.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-response-get-token
+    title: CreateScriptTokenResponse.GetToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:05.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-script-token-response-get-secret
+    title: CreateScriptTokenResponse.GetSecret
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:09.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-request
+    title: ListScriptTokensRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:13.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-request-reset
+    title: ListScriptTokensRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:17.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-request-string
+    title: ListScriptTokensRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:22.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-request-proto-message
+    title: ListScriptTokensRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:27.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-request-proto-reflect
+    title: ListScriptTokensRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:31.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-request-descriptor
+    title: ListScriptTokensRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:36.242Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-request-get-origin
+    title: ListScriptTokensRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:41.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-request-get-session-token
+    title: ListScriptTokensRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:45.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-response
+    title: ListScriptTokensResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:48.859Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-response-reset
+    title: ListScriptTokensResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:53.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-response-string
+    title: ListScriptTokensResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:53:57.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-response-proto-message
+    title: ListScriptTokensResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:02.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-response-proto-reflect
+    title: ListScriptTokensResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:06.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-response-descriptor
+    title: ListScriptTokensResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:10.940Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-list-script-tokens-response-get-tokens
+    title: ListScriptTokensResponse.GetTokens
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:15.192Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request
+    title: RevokeScriptTokenRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:18.611Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request-reset
+    title: RevokeScriptTokenRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:23.595Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request-string
+    title: RevokeScriptTokenRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:29.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request-proto-message
+    title: RevokeScriptTokenRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:35.869Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request-proto-reflect
+    title: RevokeScriptTokenRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:42.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request-descriptor
+    title: RevokeScriptTokenRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:46.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request-get-origin
+    title: RevokeScriptTokenRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:51.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request-get-session-token
+    title: RevokeScriptTokenRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:54:56.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-request-get-token-id
+    title: RevokeScriptTokenRequest.GetTokenId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:00.558Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-response
+    title: RevokeScriptTokenResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:03.894Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-response-reset
+    title: RevokeScriptTokenResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:08.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-response-string
+    title: RevokeScriptTokenResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:12.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-response-proto-message
+    title: RevokeScriptTokenResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:17.285Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-response-proto-reflect
+    title: RevokeScriptTokenResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:21.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-revoke-script-token-response-descriptor
+    title: RevokeScriptTokenResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:26.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request
+    title: CreateEnrollmentLinkRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:30.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-reset
+    title: CreateEnrollmentLinkRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:34.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-string
+    title: CreateEnrollmentLinkRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:39.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-proto-message
+    title: CreateEnrollmentLinkRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:43.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-proto-reflect
+    title: CreateEnrollmentLinkRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:48.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-descriptor
+    title: CreateEnrollmentLinkRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:53.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-get-origin
+    title: CreateEnrollmentLinkRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:55:57.989Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-get-session-token
+    title: CreateEnrollmentLinkRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:02.404Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-get-target-origin
+    title: CreateEnrollmentLinkRequest.GetTargetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:06.911Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-request-get-ttl
+    title: CreateEnrollmentLinkRequest.GetTtl
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:11.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-response
+    title: CreateEnrollmentLinkResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:14.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-response-reset
+    title: CreateEnrollmentLinkResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:19.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-response-string
+    title: CreateEnrollmentLinkResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:24.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-response-proto-message
+    title: CreateEnrollmentLinkResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:28.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-response-proto-reflect
+    title: CreateEnrollmentLinkResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:34.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-response-descriptor
+    title: CreateEnrollmentLinkResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:40.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-response-get-url
+    title: CreateEnrollmentLinkResponse.GetUrl
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:44.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-create-enrollment-link-response-get-expires-at
+    title: CreateEnrollmentLinkResponse.GetExpiresAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:49.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-file-openfief-identity-v1-auth-proto-raw-desc-gzip
+    title: file_openfief_identity_v1_auth_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:54.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:56:58.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-file-openfief-identity-v1-auth-proto-init
+    title: file_openfief_identity_v1_auth_proto_init
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:03.548Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:08.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client
+    title: AuthServiceClient
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:12.909Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-new-auth-service-client
+    title: NewAuthServiceClient
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:17.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-2
+    title: authServiceClient
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:20.738Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-get-login-methods
+    title: authServiceClient.GetLoginMethods
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:25.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-begin-registration
+    title: authServiceClient.BeginRegistration
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:29.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-finish-registration
+    title: authServiceClient.FinishRegistration
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:34.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-begin-login
+    title: authServiceClient.BeginLogin
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:38.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-finish-login
+    title: authServiceClient.FinishLogin
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:43.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-create-demo-session
+    title: authServiceClient.CreateDemoSession
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:47.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-logout
+    title: authServiceClient.Logout
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:51.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-who-am-i
+    title: authServiceClient.WhoAmI
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:57:55.943Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-list-passkeys
+    title: authServiceClient.ListPasskeys
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:00.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-remove-passkey
+    title: authServiceClient.RemovePasskey
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:04.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-create-script-token
+    title: authServiceClient.CreateScriptToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:08.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-list-script-tokens
+    title: authServiceClient.ListScriptTokens
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:13.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-revoke-script-token
+    title: authServiceClient.RevokeScriptToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:18.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-create-enrollment-link
+    title: authServiceClient.CreateEnrollmentLink
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:22.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-handler
+    title: AuthServiceHandler
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:27.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-new-auth-service-handler
+    title: NewAuthServiceHandler
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:31.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler
+    title: UnimplementedAuthServiceHandler
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:34.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-get-login-methods
+    title: UnimplementedAuthServiceHandler.GetLoginMethods
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:39.376Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-begin-registration
+    title: UnimplementedAuthServiceHandler.BeginRegistration
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:43.713Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-registration
+    title: UnimplementedAuthServiceHandler.FinishRegistration
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:47.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-begin-login
+    title: UnimplementedAuthServiceHandler.BeginLogin
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:52.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-login
+    title: UnimplementedAuthServiceHandler.FinishLogin
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:58:56.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-demo-session
+    title: UnimplementedAuthServiceHandler.CreateDemoSession
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:00.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-logout
+    title: UnimplementedAuthServiceHandler.Logout
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:05.793Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-who-am-i
+    title: UnimplementedAuthServiceHandler.WhoAmI
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:10.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-passkeys
+    title: UnimplementedAuthServiceHandler.ListPasskeys
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:15.196Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-remove-passkey
+    title: UnimplementedAuthServiceHandler.RemovePasskey
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:20.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-script-token
+    title: UnimplementedAuthServiceHandler.CreateScriptToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:27.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-script-tokens
+    title: UnimplementedAuthServiceHandler.ListScriptTokens
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:31.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-revoke-script-token
+    title: UnimplementedAuthServiceHandler.RevokeScriptToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:36.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-create-enrollment-link
+    title: UnimplementedAuthServiceHandler.CreateEnrollmentLink
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:59:40.744Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract

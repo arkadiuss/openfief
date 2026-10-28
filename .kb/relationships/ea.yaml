@@ -146,3 +146,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-609466ae2dd1
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:51:12.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd978e5cb5aa
+  - type: implements
+    from: SYM-identity-gen-pb-remove-passkey-request-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:51:12.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b739f6824f9
+  - type: covered_by
+    from: SYM-identity-gen-pb-remove-passkey-request-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:51:12.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9a21d65e358

@@ -3,6 +3,8 @@ title: Identity
 description: Script tokens, the scoped, expiring, read-only personal tokens the owner's scripts present to the read API, and how they are issued, checked and revoked.
 covers:
   - internal/identity/**
+  - proto/openfief/identity/**
+  - sdk/go/gen/openfief/identity/**
 ---
 
 The identity context decides who may use OpenFief. In M0 it will hold the [owner](../glossary.md)'s passkeys (D-26), the [plugin identities](../glossary.md) the core accepts (D-27) and [script tokens](../glossary.md). Built today: script tokens, which the owner's scripts present to the read API, and the core's own identity towards plugins, the tokens it presents when it calls one (D-59).
@@ -89,6 +91,8 @@ sequenceDiagram
 - TEST-core-read-api: under `task test:pg`, the core issues a token from its command line, serves the read API with it, and answers 401 with no token, an unknown one and a revoked one.
 
 ## Not built yet
+
+- The core's side of the authentication contract, [`openfief.identity.v1.AuthService`](../../proto/openfief/identity/v1/auth.proto): the contract is defined (passkey registration and login, demo read-only sessions, sessions with a `read` or `owner` scope, script tokens and enrollment links for view plugins), and the core doesn't serve it yet.
 
 - Passkeys for people (D-26) and the owner.
 - The core accepting plugins' projected ServiceAccount tokens with audience `openfief-core` (D-27). Plugins can reach the core's `connect` port, but the read API accepts script tokens only.

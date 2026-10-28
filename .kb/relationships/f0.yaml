@@ -167,3 +167,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82f0658660b2
+  - type: implements
+    from: SYM-identity-gen-pb-finish-login-request-get-credential-json
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:45:52.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-096054c302be
+  - type: implements
+    from: SYM-identity-gen-pb-finish-login-request-get-credential-json
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:45:52.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a270a70ef7d2
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-login-request-get-credential-json
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:45:52.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4de2776c6413
+  - type: implements
+    from: SYM-identity-gen-pb-logout-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:47:48.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-434f3819f458
+  - type: implements
+    from: SYM-identity-gen-pb-logout-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:47:48.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fa271910c30
+  - type: covered_by
+    from: SYM-identity-gen-pb-logout-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:47:48.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f85bd2b49806
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-response
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:50:10.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dfa52d3bec0
+  - type: implements
+    from: SYM-identity-gen-pb-list-passkeys-response
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:50:10.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4afc7f81968e
+  - type: covered_by
+    from: SYM-identity-gen-pb-list-passkeys-response
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:50:10.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3603b7ff5fa
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-response-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:52:58.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1202854a3464
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-response-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:52:58.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-873172b80f43
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-script-token-response-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:52:58.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a18e6555c2c
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client-remove-passkey
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:58:05.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c980c83203e
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client-remove-passkey
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:58:05.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d37fea2cdbfd
+  - type: covered_by
+    from: SYM-identity-gen-connect-auth-service-client-remove-passkey
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:58:05.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fceb565e590b

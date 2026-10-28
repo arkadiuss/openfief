@@ -132,3 +132,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21e1a8a0e424
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-passkeys
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:59:16.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6dae80a5de1
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-passkeys
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:59:16.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c956e3d7ac9b
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-list-passkeys
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:59:16.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6087a765bc54

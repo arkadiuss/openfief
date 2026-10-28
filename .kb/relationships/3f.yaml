@@ -188,3 +188,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c22ff984287d
+  - type: implements
+    from: SYM-identity-gen-pb-session-get-id
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:37:04.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fb388907ca0
+  - type: implements
+    from: SYM-identity-gen-pb-session-get-id
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:37:04.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b04c695c78f6
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-get-id
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:37:04.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b742b752b12
+  - type: implements
+    from: SYM-identity-gen-pb-script-token
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:39:01.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a9e1971066f
+  - type: implements
+    from: SYM-identity-gen-pb-script-token
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:39:01.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0cb7c28f960
+  - type: covered_by
+    from: SYM-identity-gen-pb-script-token
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:39:01.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1156c82ee7fb
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-request-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:40:17.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-891e4fc83d57
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-request-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:40:17.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e03e5db083b
+  - type: covered_by
+    from: SYM-identity-gen-pb-get-login-methods-request-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:40:17.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9ca41d83bcb

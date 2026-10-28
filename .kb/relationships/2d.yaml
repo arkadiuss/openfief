@@ -244,3 +244,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cccbfcfbddd
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-enrollment-code-is-begin-registration-request-authorization
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:41:58.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8cb32e32297
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-enrollment-code-is-begin-registration-request-authorization
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:41:58.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f978ddc7c7a3
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-request-enrollment-code-is-begin-registration-request-authorization
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:41:58.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-048a894d1a37
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:47:00.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0618882d4b5c
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:47:00.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1023d23aed6
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-demo-session-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:47:00.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3794094f4c34
