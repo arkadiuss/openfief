@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e2fd1b9b7a8
+  - type: implements
+    from: SYM-plugin-labels-demo-manifests
+    to: REQ-plugins-first-party-manifest-label
+    created_at: 2026-10-28T17:29:08.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4be4a1b89da3
+  - type: covered_by
+    from: SYM-plugin-labels-demo-manifests
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:29:08.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0283adf267fc

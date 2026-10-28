@@ -111,3 +111,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed73e54e60fe
+  - type: implements
+    from: SYM-ibkr-flex-statement-source
+    to: REQ-plugins-ibkr-flex-connector
+    created_at: 2026-10-28T17:21:41.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b04050a6075a
+  - type: covered_by
+    from: SYM-ibkr-flex-statement-source
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:21:41.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a184c2d12758
+  - type: implements
+    from: SYM-nbp-fx-connector
+    to: REQ-plugins-nbp-fx-sync
+    created_at: 2026-10-28T17:23:53.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001b2119f25d
+  - type: covered_by
+    from: SYM-nbp-fx-connector
+    to: TEST-plugins-nbp-fx
+    created_at: 2026-10-28T17:23:53.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b11691480011
+  - type: implements
+    from: SYM-nbp-fx-config
+    to: REQ-plugins-nbp-fx-sync
+    created_at: 2026-10-28T17:24:43.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5001e515368e
+  - type: covered_by
+    from: SYM-nbp-fx-config
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:24:43.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a36a8c09ccf5
+  - type: implements
+    from: SYM-nbp-fx-serve
+    to: REQ-plugins-nbp-fx-sync
+    created_at: 2026-10-28T17:24:53.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b48fb3b0953e
+  - type: covered_by
+    from: SYM-nbp-fx-serve
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:24:53.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ab9356c4d68

@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9fddc996dd05
+  - type: implements
+    from: SYM-ibkr-flex-flex-credentials
+    to: REQ-plugins-ibkr-flex-connector
+    created_at: 2026-10-28T17:22:04.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76e1c8cca315
+  - type: covered_by
+    from: SYM-ibkr-flex-flex-credentials
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:22:04.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdf2ad53caa6

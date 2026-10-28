@@ -251,3 +251,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec33f54c2e08
+  - type: constrains
+    from: REQ-sdk-go-serve-connector
+    to: FACT-SUBJECT-D9990F90A0163DCF
+    created_at: 2026-10-28T17:07:15.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc8457d6454b
+  - type: requires_property
+    from: REQ-sdk-go-serve-connector
+    to: FACT-PROP-0F5D492B06BA52B7
+    created_at: 2026-10-28T17:07:15.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f9cb9b8528
+  - type: specified_by
+    from: REQ-sdk-go-serve-connector
+    to: SCEN-sdk-go-serve-connector
+    created_at: 2026-10-28T17:07:15.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd6a8cb72b48
+  - type: implements
+    from: SYM-nbp-fx-new-connector
+    to: REQ-plugins-nbp-fx-sync
+    created_at: 2026-10-28T17:25:02.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f456858a9a1
+  - type: covered_by
+    from: SYM-nbp-fx-new-connector
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:25:02.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f57036859a9

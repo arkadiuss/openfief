@@ -272,3 +272,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c6d4d107bfa
+  - type: executable_for
+    from: SYM-ibkr-flex-test-test-import-file
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:23:13.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7a768f1a148
+  - type: implements
+    from: SYM-sdk-go-serve-connector
+    to: REQ-sdk-go-serve-connector
+    created_at: 2026-10-28T17:25:28.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64cc9e91d2ed
+  - type: implements
+    from: SYM-sdk-go-serve-connector
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T17:25:28.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-269654d94ebe
+  - type: covered_by
+    from: SYM-sdk-go-serve-connector
+    to: TEST-sdk-go-serve-connector
+    created_at: 2026-10-28T17:25:28.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f25effd2646c

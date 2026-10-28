@@ -160,3 +160,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ecd03853a36
+  - type: validates
+    from: TEST-sdk-go-serve-connector
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T17:06:41.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c37f37740df
+  - type: validates
+    from: TEST-sdk-go-serve-connector
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T17:06:41.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19b6dc323bcb
+  - type: executable_for
+    from: SYM-nbp-fx-test-test-today
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:25:23.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-245737f98b9a

@@ -153,3 +153,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45b298a23395
+  - type: executable_for
+    from: SYM-plugin-labels-test-helper-expect
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:29:22.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e91f1fae20a

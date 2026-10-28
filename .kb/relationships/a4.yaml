@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5db7340e4223
+  - type: constrains
+    from: REQ-ingest-delivery-contract-messages
+    to: FACT-SUBJECT-6AA5A769142ADE96
+    created_at: 2026-10-28T17:07:08.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d943890745ea
+  - type: requires_property
+    from: REQ-ingest-delivery-contract-messages
+    to: FACT-PROP-BA7C08844CDF0BEA
+    created_at: 2026-10-28T17:07:08.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1639444b8e09
+  - type: specified_by
+    from: REQ-ingest-delivery-contract-messages
+    to: SCEN-ingest-delivery-exact
+    created_at: 2026-10-28T17:07:08.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150853219e53

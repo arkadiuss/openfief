@@ -195,3 +195,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5cde3c3773ff
+  - type: implements
+    from: SYM-ibkr-flex-main
+    to: REQ-plugins-ibkr-flex-connector
+    created_at: 2026-10-28T17:23:35.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc914d509fce
+  - type: covered_by
+    from: SYM-ibkr-flex-main
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:23:35.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9b2a1a573bb
+  - type: implements
+    from: SYM-ibkr-flex-run
+    to: REQ-plugins-ibkr-flex-connector
+    created_at: 2026-10-28T17:23:45.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-312ff5d8db35
+  - type: covered_by
+    from: SYM-ibkr-flex-run
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:23:45.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72488903bb5d

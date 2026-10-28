@@ -41549,3 +41549,1024 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-sdk-go-jwks-verifier
+  - id: SYM-delivery-mode
+    title: Mode
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:15.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-from-mapping
+    title: FromMapping
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:19.959Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-fx-rates
+    title: FXRates
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:24.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-transaction
+    title: transaction
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:29.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-posting
+    title: posting
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:33.568Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-assertion
+    title: assertion
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:37.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-book
+    title: book
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:41.966Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-money
+    title: money
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:46.231Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-optional-date
+    title: optionalDate
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:50.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-book-kind
+    title: bookKind
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:54.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-transaction-kind
+    title: transactionKind
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:20:59.066Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-problem
+    title: problem
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:03.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-delivery-test-dec
+    title: dec
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:06.770Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-cur
+    title: cur
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:10.285Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-date
+    title: date
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:13.625Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-synthetic
+    title: synthetic
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:16.835Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-test-from-mapping
+    title: TestFromMapping
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:19.936Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-test-from-mapping-refuses
+    title: TestFromMappingRefuses
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:23.273Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-test-from-mapping-ibkr-statement
+    title: TestFromMappingIBKRStatement
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:26.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-check-written
+    title: checkWritten
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:30.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-test-fx-rates
+    title: TestFXRates
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:33.349Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-delivery-test-test-mode
+    title: TestMode
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:36.634Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-ibkr-flex-statement-source
+    title: statementSource
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:40.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-connector
+    title: connector
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:43.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-connector-sync
+    title: connector.Sync
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:47.685Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-connector-import-file
+    title: connector.ImportFile
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:51.665Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-connector-map-statement
+    title: connector.mapStatement
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:55.635Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-status
+    title: status
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:21:59.774Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-flex-credentials
+    title: flexCredentials
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:03.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-connector-credentials
+    title: connector.credentials
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:07.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-read-secret-file
+    title: readSecretFile
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:11.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-fetch-code
+    title: fetchCode
+    sourceFile: plugins/ibkr-flex/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:15.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-test-statement
+    title: statement
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:19.384Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-credentials
+    title: credentials
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:23.481Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-flex-service
+    title: flexService
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:26.448Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-flex-service-fetch
+    title: flexService.fetch
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:31.019Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-new-connector
+    title: newConnector
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:35.592Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-test-sync
+    title: TestSync
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:40.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-check-sync
+    title: checkSync
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:44.593Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-check-delivery
+    title: checkDelivery
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:49.243Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-test-sync-modes
+    title: TestSyncModes
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:53.806Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-fake-verifier
+    title: fakeVerifier
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:22:57.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-fake-verifier-verify-core
+    title: fakeVerifier.VerifyCore
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:02.338Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-import-file
+    title: importFile
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:07.388Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-test-import-file
+    title: TestImportFile
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:12.085Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-test-fetch-code
+    title: TestFetchCode
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:16.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-test-manifest
+    title: TestManifest
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:21.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-test-test-ledger-accounts
+    title: TestLedgerAccounts
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:26.580Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-ibkr-flex-config
+    title: config
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:29.913Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-main
+    title: main
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:34.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-serve
+    title: serve
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:39.444Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-run
+    title: run
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:44.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-ibkr-flex-config-ledger-accounts
+    title: config.ledgerAccounts
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:49.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex
+      - type: implements
+        target: REQ-plugins-ibkr-flex-connector
+  - id: SYM-nbp-fx-connector
+    title: connector
+    sourceFile: plugins/nbp-fx/connector.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:52.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-connector-sync
+    title: connector.Sync
+    sourceFile: plugins/nbp-fx/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:23:57.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-status
+    title: status
+    sourceFile: plugins/nbp-fx/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:02.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-connector-from
+    title: connector.from
+    sourceFile: plugins/nbp-fx/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:07.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-test-day
+    title: day
+    sourceFile: plugins/nbp-fx/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:12.334Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx
+  - id: SYM-nbp-fx-test-fake-rates
+    title: fakeRates
+    sourceFile: plugins/nbp-fx/connector_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:15.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx
+  - id: SYM-nbp-fx-test-fake-rates-rates
+    title: fakeRates.Rates
+    sourceFile: plugins/nbp-fx/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:20.295Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx
+  - id: SYM-nbp-fx-test-test-sync
+    title: TestSync
+    sourceFile: plugins/nbp-fx/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:25.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx
+  - id: SYM-nbp-fx-test-fake-verifier
+    title: fakeVerifier
+    sourceFile: plugins/nbp-fx/connector_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:29.052Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx
+  - id: SYM-nbp-fx-test-fake-verifier-verify-core
+    title: fakeVerifier.VerifyCore
+    sourceFile: plugins/nbp-fx/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:34.200Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx
+  - id: SYM-nbp-fx-test-test-served-connector
+    title: TestServedConnector
+    sourceFile: plugins/nbp-fx/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:39.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx
+  - id: SYM-nbp-fx-config
+    title: config
+    sourceFile: plugins/nbp-fx/main.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:42.436Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-main
+    title: main
+    sourceFile: plugins/nbp-fx/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:47.406Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-serve
+    title: serve
+    sourceFile: plugins/nbp-fx/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:52.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-run
+    title: run
+    sourceFile: plugins/nbp-fx/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:24:56.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-new-connector
+    title: newConnector
+    sourceFile: plugins/nbp-fx/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:00.905Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-config-start-date
+    title: config.startDate
+    sourceFile: plugins/nbp-fx/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:05.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-today
+    title: today
+    sourceFile: plugins/nbp-fx/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:10.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-plugins-nbp-fx-sync
+  - id: SYM-nbp-fx-test-test-manifest
+    title: TestManifest
+    sourceFile: plugins/nbp-fx/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:14.584Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx-main
+  - id: SYM-nbp-fx-test-test-start-date
+    title: TestStartDate
+    sourceFile: plugins/nbp-fx/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:18.157Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx-main
+  - id: SYM-nbp-fx-test-test-today
+    title: TestToday
+    sourceFile: plugins/nbp-fx/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:22.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx-main
+  - id: SYM-sdk-go-serve-connector
+    title: ServeConnector
+    sourceFile: sdk/go/openfief/run.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:26.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve-connector
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-serve-connector
+  - id: SYM-sdk-go-serve-until-done
+    title: serveUntilDone
+    sourceFile: sdk/go/openfief/run.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:31.911Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve-connector
+      - type: implements
+        target: REQ-plugins-core-only-caller
+      - type: implements
+        target: REQ-sdk-go-serve-connector
+  - id: SYM-sdk-go-test-free-port
+    title: freePort
+    sourceFile: sdk/go/openfief/run_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:35.476Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve-connector
+  - id: SYM-sdk-go-test-test-serve-connector
+    title: TestServeConnector
+    sourceFile: sdk/go/openfief/run_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:39.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve-connector
+  - id: SYM-sdk-go-test-test-serve-connector-needs-environment
+    title: TestServeConnectorNeedsEnvironment
+    sourceFile: sdk/go/openfief/run_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:25:42.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve-connector
+  - id: SYM-plugin-labels-manifest-label
+    title: manifest_label
+    sourceFile: scripts/plugin-labels.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:28:57.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-plugin-labels
+      - type: implements
+        target: REQ-plugins-first-party-manifest-label
+  - id: SYM-plugin-labels-dockerfile-label
+    title: dockerfile_label
+    sourceFile: scripts/plugin-labels.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:29:00.574Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-plugin-labels
+      - type: implements
+        target: REQ-plugins-first-party-manifest-label
+  - id: SYM-plugin-labels-write-label
+    title: write_label
+    sourceFile: scripts/plugin-labels.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:29:03.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-plugin-labels
+      - type: implements
+        target: REQ-plugins-first-party-manifest-label
+  - id: SYM-plugin-labels-demo-manifests
+    title: demo_manifests
+    sourceFile: scripts/plugin-labels.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:29:07.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-plugin-labels
+      - type: implements
+        target: REQ-plugins-first-party-manifest-label
+  - id: SYM-plugin-labels-plugin-labels
+    title: plugin_labels
+    sourceFile: scripts/plugin-labels.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:29:10.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-plugin-labels
+      - type: implements
+        target: REQ-plugins-first-party-manifest-label
+  - id: SYM-plugin-labels-test-helper-fresh
+    title: fresh
+    sourceFile: scripts/tests/plugin-labels.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:29:13.819Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-plugin-labels
+  - id: SYM-plugin-labels-test-helper-run
+    title: run
+    sourceFile: scripts/tests/plugin-labels.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:29:17.589Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-plugin-labels
+  - id: SYM-plugin-labels-test-helper-expect
+    title: expect
+    sourceFile: scripts/tests/plugin-labels.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T17:29:21.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-plugin-labels

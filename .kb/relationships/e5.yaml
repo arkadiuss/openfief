@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5959a7e531a
+  - type: executable_for
+    from: SYM-ibkr-flex-test-test-manifest
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:23:22.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f84c2f2ca427

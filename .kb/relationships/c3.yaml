@@ -300,3 +300,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12a219f2a292
+  - type: implements
+    from: SYM-nbp-fx-main
+    to: REQ-plugins-nbp-fx-sync
+    created_at: 2026-10-28T17:24:48.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-477bea6644fe
+  - type: covered_by
+    from: SYM-nbp-fx-main
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:24:48.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a58457880e5d

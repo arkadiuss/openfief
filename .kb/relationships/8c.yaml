@@ -181,3 +181,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32421b3eb449
+  - type: constrains
+    from: REQ-plugins-ibkr-flex-connector
+    to: FACT-SUBJECT-5E0FEE059B9E9693
+    created_at: 2026-10-28T17:07:31.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f506affb001
+  - type: requires_property
+    from: REQ-plugins-ibkr-flex-connector
+    to: FACT-PROP-2DBEEAA051C48C35
+    created_at: 2026-10-28T17:07:31.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54102317a646
+  - type: specified_by
+    from: REQ-plugins-ibkr-flex-connector
+    to: SCEN-plugins-ibkr-flex-modes
+    created_at: 2026-10-28T17:07:31.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-674fb37f7731

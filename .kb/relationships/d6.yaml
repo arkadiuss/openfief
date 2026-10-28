@@ -314,3 +314,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2267c4517b26
+  - type: executable_for
+    from: SYM-nbp-fx-test-test-served-connector
+    to: TEST-plugins-nbp-fx
+    created_at: 2026-10-28T17:24:40.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5d64714a9bc
+  - type: executable_for
+    from: SYM-nbp-fx-test-test-start-date
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:25:19.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f8b612ef7cc

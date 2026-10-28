@@ -314,3 +314,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-044c416fc0af
+  - type: executable_for
+    from: SYM-delivery-test-check-written
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:21:31.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45693579d6af

@@ -139,3 +139,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f26d56633fcb
+  - type: executable_for
+    from: SYM-ibkr-flex-test-test-ledger-accounts
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:23:27.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bdd3376802d

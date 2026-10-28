@@ -139,3 +139,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc00ee5c809f
+  - type: implements
+    from: SYM-ibkr-flex-serve
+    to: REQ-plugins-ibkr-flex-connector
+    created_at: 2026-10-28T17:23:40.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e85d525e6f
+  - type: covered_by
+    from: SYM-ibkr-flex-serve
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:23:40.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-419f83a63310
+  - type: executable_for
+    from: SYM-plugin-labels-test-helper-fresh
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:29:14.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8adee34ce638

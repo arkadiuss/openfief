@@ -230,3 +230,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef75befe3607
+  - type: executable_for
+    from: SYM-sdk-go-test-test-serve-connector-needs-environment
+    to: TEST-sdk-go-serve-connector
+    created_at: 2026-10-28T17:25:43.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee2e862e17d2

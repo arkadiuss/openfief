@@ -125,3 +125,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bbed729aa6a
+  - type: constrains
+    from: REQ-plugins-first-party-manifest-label
+    to: FACT-SUBJECT-57B03311DFB635B0
+    created_at: 2026-10-28T17:07:40.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de8a7f1e1a0a
+  - type: requires_property
+    from: REQ-plugins-first-party-manifest-label
+    to: FACT-PROP-A3A93445001658A0
+    created_at: 2026-10-28T17:07:40.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1117a6f51f4
+  - type: specified_by
+    from: REQ-plugins-first-party-manifest-label
+    to: SCEN-plugins-first-party-manifest-label
+    created_at: 2026-10-28T17:07:40.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2dc826a7b6
