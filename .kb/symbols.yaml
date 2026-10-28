@@ -13621,3 +13621,71 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-manifests
+  - id: SYM-operator-cmd-options
+    title: options
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:30.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-BBBDDCF207E884A1
+  - id: SYM-operator-cmd-main
+    title: main
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:34.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-BBBDDCF207E884A1
+  - id: SYM-operator-cmd-parse-flags
+    title: parseFlags
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:38.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-BBBDDCF207E884A1
+  - id: SYM-operator-cmd-run
+    title: run
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:42.389Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-AUTO-BBBDDCF207E884A1
+  - id: SYM-operator-cmd-test-parse-flags
+    title: TestParseFlags
+    sourceFile: cmd/operator/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:13:45.508Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cmd

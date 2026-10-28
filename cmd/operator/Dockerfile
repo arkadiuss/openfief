@@ -1,0 +1,18 @@
+# OpenFief plugin operator (D-13). Built by CI from the repository root (scripts/ci-images.sh), for
+# linux/amd64 and linux/arm64: the Go build runs on the build platform and cross-compiles.
+# Base images are pinned by digest; Renovate updates tag and digest together.
+FROM --platform=$BUILDPLATFORM golang:1.27.3-trixie@sha256:c124b9ad3452f46061b5054607d26ea51730dae5372c5e469920063ba2bc6dcc AS build
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download
+COPY cmd/ cmd/
+COPY internal/ internal/
+ARG TARGETOS
+ARG TARGETARCH
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags='-s -w' -o /out/operator ./cmd/operator
+
+FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
+COPY --from=build /out/operator /operator
+USER nonroot:nonroot
+EXPOSE 8081
+ENTRYPOINT ["/operator"]

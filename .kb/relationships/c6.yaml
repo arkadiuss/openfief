@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4527b890e60a
+  - type: implements
+    from: SYM-operator-cmd-parse-flags
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T07:13:38.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a676a9b943b9
+  - type: implements
+    from: SYM-operator-cmd-parse-flags
+    to: REQ-AUTO-BBBDDCF207E884A1
+    created_at: 2026-10-28T07:13:38.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ab26584d0e2
+  - type: covered_by
+    from: SYM-operator-cmd-parse-flags
+    to: TEST-operator-cmd
+    created_at: 2026-10-28T07:13:38.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b9645219479

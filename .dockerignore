@@ -1,0 +1,10 @@
+# Image builds (cmd/*/Dockerfile, plugins/*/Dockerfile) use the repository root as context;
+# they need only Go sources, so tooling, history and the knowledge base stay out.
+.git
+.bin
+.kb
+.claude
+node_modules
+kibi-report
+dist
+docs

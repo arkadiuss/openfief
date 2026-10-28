@@ -83,3 +83,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c7c5f6b1104
+  - type: validates
+    from: TEST-operator-cmd
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-28T07:13:05.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-745b39df4ffc
+  - type: validates
+    from: TEST-operator-cmd
+    to: REQ-AUTO-BBBDDCF207E884A1
+    created_at: 2026-10-28T07:13:05.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d82b5f16988a
