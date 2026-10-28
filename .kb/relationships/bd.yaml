@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-66979814d456
+    type: constrains
+    from: REQ-tooling-dco-signoff
+    to: FACT-SUBJECT-CC79B35BF1386A8C
+    created_at: "2026-10-28T04:51:04.178Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-tooling-dco-signoff
+    to: FACT-PROP-C129B881A51EE7F5
+    created_at: 2026-10-28T04:51:04.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c78cb1228478
+  - type: specified_by
+    from: REQ-tooling-dco-signoff
+    to: SCEN-tooling-dco-unsigned
+    created_at: 2026-10-28T04:51:22.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df24b75c9c11

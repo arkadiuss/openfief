@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-36503eb9ca78
+    type: verified_by
+    from: SCEN-tooling-release-version-invalid
+    to: TEST-tooling-release-version
+    created_at: "2026-10-28T04:51:47.956Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

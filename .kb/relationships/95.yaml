@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-35f6f3437794
+    type: constrains
+    from: REQ-tooling-release-version
+    to: FACT-SUBJECT-B27A8B10D4931BCB
+    created_at: "2026-10-28T04:51:45.848Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-tooling-release-version
+    to: FACT-PROP-1D1C57E367226333
+    created_at: 2026-10-28T04:51:45.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10b2ff1987b2
+  - type: specified_by
+    from: REQ-tooling-release-version
+    to: SCEN-tooling-release-version-invalid
+    created_at: 2026-10-28T04:51:49.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aefdc025572
