@@ -188,3 +188,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1041eb86ccb
+  - type: implements
+    from: SYM-ui-server-settings-page
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:57:20.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0913f475dae5
+  - type: covered_by
+    from: SYM-ui-server-settings-page
+    to: TEST-ui-settings
+    created_at: 2026-10-28T19:57:20.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feaf33a47f41

@@ -174,3 +174,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2fde18a3d13
+  - type: verified_by
+    from: SCEN-ui-overview
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:49:09.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4f82ec38abe
+  - type: verified_by
+    from: SCEN-ui-overview
+    to: TEST-ui-format
+    created_at: 2026-10-28T19:49:09.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-375c243834f1
+  - type: implements
+    from: SYM-ui-server-transactions-fragment
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:51:17.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e53b32cdf386
+  - type: covered_by
+    from: SYM-ui-server-transactions-fragment
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:51:17.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d15aeea03045

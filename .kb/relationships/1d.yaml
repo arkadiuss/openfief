@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e84d594b068b
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-list-script-tokens
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:04:01.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b06ed4dfcb34
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-list-script-tokens
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:04:01.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e25fc6f83b3
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-list-script-tokens
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:04:01.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d62c87a6944c

@@ -202,3 +202,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70fee23186fb
+  - type: implements
+    from: SYM-uiplugin-serve-until-done
+    to: REQ-ui-plugin-packaging
+    created_at: 2026-10-28T19:58:56.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eee7d9159082
+  - type: implements
+    from: SYM-uiplugin-serve-until-done
+    to: REQ-AUTO-902181B0129A6321
+    created_at: 2026-10-28T19:58:56.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a601b9d20f00
+  - type: covered_by
+    from: SYM-uiplugin-serve-until-done
+    to: TEST-ui-plugin
+    created_at: 2026-10-28T19:58:56.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-482d01938044

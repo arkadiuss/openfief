@@ -125,3 +125,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb389adaf1ee
+  - type: implements
+    from: SYM-ui-server-core-failed
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:57.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18c474dd94a5
+  - type: covered_by
+    from: SYM-ui-server-core-failed
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:56:57.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f1b0dea03f8
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-get-valuation-status
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:05:08.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fe6226115e1
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-get-valuation-status
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:05:08.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc5db0fb3031
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-get-valuation-status
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:05:08.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-827e6b78e855

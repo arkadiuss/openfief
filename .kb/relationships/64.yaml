@@ -328,3 +328,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8471468932cf
+  - type: implements
+    from: SYM-ui-server-transactions
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:51:12.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffde1a5d294c
+  - type: covered_by
+    from: SYM-ui-server-transactions
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:51:12.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5f3cc09e044
+  - type: implements
+    from: SYM-ui-allocation-view
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:53:58.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-222290dc2b8d
+  - type: implements
+    from: SYM-ui-allocation-view
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T19:53:58.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3625d31f3f79
+  - type: covered_by
+    from: SYM-ui-allocation-view
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:53:58.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e3608e3448a

@@ -202,3 +202,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb2d6d9ad343
+  - type: implements
+    from: SYM-ui-join-valuations
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:50:56.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea927c479635
+  - type: covered_by
+    from: SYM-ui-join-valuations
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:50:56.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-007cc3f447d4

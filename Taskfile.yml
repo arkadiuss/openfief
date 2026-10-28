@@ -402,7 +402,7 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}' go test -tags e2e -count=1 -v -timeout 20m ./test/e2e/...
 
   e2e:images:
-    desc: 'Build the core, operator, egress-proxy and demo-seed images from this checkout (Docker) and load them into the local e2e cluster, e.g. task e2e:images CLUSTER=k3d'
+    desc: 'Build the core, operator, egress-proxy, demo-seed and ui images from this checkout (Docker) and load them into the local e2e cluster, e.g. task e2e:images CLUSTER=k3d'
     requires:
       vars: [CLUSTER]
     cmds:

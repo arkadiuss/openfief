@@ -370,3 +370,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-716930b3ef2b
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-locked
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:04:15.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2e34dee83c6
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-locked
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:04:15.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-672702bec0e5
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-locked
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:04:15.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-853b1a3b204d

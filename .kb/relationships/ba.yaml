@@ -286,3 +286,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0e0d73aebbc
+  - type: implements
+    from: SYM-ui-server-account-page
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:51:01.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-322b9ec880c9
+  - type: covered_by
+    from: SYM-ui-server-account-page
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:51:01.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb19165496d2
+  - type: implements
+    from: SYM-ui-to-login
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:48.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8417c60427ef
+  - type: covered_by
+    from: SYM-ui-to-login
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:56:48.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-865b7d44a9cc

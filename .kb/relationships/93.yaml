@@ -363,3 +363,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d141e7a379f9
+  - type: executable_for
+    from: SYM-ui-test-helper-want-status
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:02:29.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45b31354178c
+  - type: executable_for
+    from: SYM-ui-test-helper-want-status
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:02:29.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c3f67176169
+  - type: executable_for
+    from: SYM-ui-test-helper-want-status
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:02:29.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8af4076647db
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-holdings
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:05:31.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b875f74fd83
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-holdings
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:05:31.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e33d6afe2b8
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-holdings
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:05:31.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-813ee1289a5e

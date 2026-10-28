@@ -293,3 +293,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bacad6b8ce9d
+  - type: implements
+    from: SYM-uiplugin-new-handler
+    to: REQ-ui-plugin-packaging
+    created_at: 2026-10-28T19:58:46.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aebb6b5f2663
+  - type: implements
+    from: SYM-uiplugin-new-handler
+    to: REQ-AUTO-902181B0129A6321
+    created_at: 2026-10-28T19:58:46.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-717ed06a26c9
+  - type: covered_by
+    from: SYM-uiplugin-new-handler
+    to: TEST-ui-plugin
+    created_at: 2026-10-28T19:58:46.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93c9fff31976

@@ -75,37 +75,30 @@ func TestCoreReadyThroughService(t *testing.T) {
 	}
 }
 
-// TestTraefikRoutesToCore checks the demo machine's own way in: k3s's
-// bundled Traefik, routing the demo's Ingress (overlays/routes) to the core
-// through the core-from-traefik policy, answers /readyz with 200 rather than
-// 503 "no available server" (SCEN-e2e-traefik-route). Only k3s bundles
-// Traefik, so on kind there is nothing to check.
+// TestTraefikRoutesToCore checks the demo machine's own way in to the read
+// API: k3s's bundled Traefik routes /v1 of the demo's Ingress
+// (overlays/routes) to the core through the core-from-traefik policy, which
+// answers a call without a token with its own 401 rather than Traefik's 503
+// "no available server" or the UI's 404 (SCEN-e2e-traefik-route). Only k3s
+// bundles Traefik, so on kind there is nothing to check.
 func TestTraefikRoutesToCore(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)
-	isK3s, err := k.isK3s(t.Context())
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !isK3s {
-		t.Skip("not k3s: no bundled Traefik; the demo's route is checked on k3d")
-	}
+	skipUnlessK3s(t, k)
 	waitCoreAvailable(t, k)
-	if waitErr := waitFor(t.Context(), traefikTimeout, k.deploymentAvailable("kube-system", "traefik")); waitErr != nil {
-		t.Fatalf("waiting for Traefik: %v", waitErr)
-	}
+	waitTraefik(t, k)
 	// Traefik picks up the Ingress and the core's endpoints on its own
 	// schedule; until then it answers 404 or 503.
-	err = waitFor(t.Context(), traefikTimeout, func(ctx context.Context) (string, bool, error) {
-		r, getErr := get(ctx, k, clientPod, traefikURL+"/readyz", "Host: "+routeHost)
+	err := waitFor(t.Context(), traefikTimeout, func(ctx context.Context) (string, bool, error) {
+		r, getErr := get(ctx, k, clientPod, traefikURL+"/v1/accounts", "Host: "+routeHost)
 		if getErr != nil {
 			return "", false, getErr
 		}
-		return fmt.Sprintf("status %d, body %q", r.status, r.body), r.status == http.StatusOK, nil
+		return fmt.Sprintf("status %d, body %q", r.status, r.body), r.status == http.StatusUnauthorized, nil
 	})
 	if err != nil {
-		t.Fatalf("GET /readyz through Traefik: %v", err)
+		t.Fatalf("GET /v1/accounts through Traefik: %v", err)
 	}
 }
 

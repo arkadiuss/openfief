@@ -188,3 +188,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c859c0ca2fd3
+  - type: implements
+    from: SYM-ui-request-origin
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:02.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c45ff67c46b0
+  - type: covered_by
+    from: SYM-ui-request-origin
+    to: TEST-ui-format
+    created_at: 2026-10-28T19:56:03.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26b75e76f6f2

@@ -265,3 +265,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-689d556dab3e
+  - type: executable_for
+    from: SYM-ui-test-helper-request
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:02:06.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb705a8e681a
+  - type: executable_for
+    from: SYM-ui-test-helper-request
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:02:06.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d069f4b88fc
+  - type: executable_for
+    from: SYM-ui-test-helper-request
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:02:06.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e03ec0672620
+  - type: verified_by
+    from: SCEN-e2e-ui-login-through-traefik
+    to: TEST-e2e-ui
+    created_at: 2026-10-28T20:20:59.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-265b24a80cb6

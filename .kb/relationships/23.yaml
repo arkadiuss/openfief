@@ -188,3 +188,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc9a66f9c01d
+  - type: implements
+    from: SYM-ui-ceremony-end
+    to: REQ-ui-login-flows
+    created_at: 2026-10-28T19:51:46.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08fbe4bdd2a4
+  - type: covered_by
+    from: SYM-ui-ceremony-end
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:51:46.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e82dacb8298d

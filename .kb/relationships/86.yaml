@@ -167,3 +167,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9624a84d37cb
+  - type: implements
+    from: SYM-ui-server-positions
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:51:07.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e267aa167c4d
+  - type: covered_by
+    from: SYM-ui-server-positions
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:51:07.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f4e91304573
+  - type: implements
+    from: SYM-ui-dimensions
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:53:16.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca7a11a4e925
+  - type: implements
+    from: SYM-ui-dimensions
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T19:53:16.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b49676f4acfc
+  - type: covered_by
+    from: SYM-ui-dimensions
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:53:16.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-239bcbb58560
+  - type: implements
+    from: SYM-ui-allocation-row
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:53:55.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-749bb8fa6d59
+  - type: implements
+    from: SYM-ui-allocation-row
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T19:53:55.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e81b57fa5b3
+  - type: covered_by
+    from: SYM-ui-allocation-row
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:53:55.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a096b2e0f539

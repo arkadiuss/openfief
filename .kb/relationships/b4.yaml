@@ -244,3 +244,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05e7e90af6ff
+  - type: implements
+    from: SYM-ui-server-with-session
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:39.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddf803dfc1b0
+  - type: covered_by
+    from: SYM-ui-server-with-session
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:56:39.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9b1441569dc

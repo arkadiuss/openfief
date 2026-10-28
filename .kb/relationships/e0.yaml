@@ -300,3 +300,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c602fcf5cce6
+  - type: executable_for
+    from: SYM-ui-test-login-page
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:59:00.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dcf748cc5fa
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-create-demo-session
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:03:19.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3971f6035dcc
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-create-demo-session
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:03:19.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4160c55edddb
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-create-demo-session
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:03:19.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fce2e0ea509

@@ -321,3 +321,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6eeced439d9a
+  - type: executable_for
+    from: SYM-ui-test-create-script-token
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:01:46.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db647a81e9e4

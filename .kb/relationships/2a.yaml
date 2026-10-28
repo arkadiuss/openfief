@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49aca010783a
+  - type: implements
+    from: SYM-ui-instrument-key
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:50:51.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e4f0564c819
+  - type: covered_by
+    from: SYM-ui-instrument-key
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:50:51.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3b4f5289b6b

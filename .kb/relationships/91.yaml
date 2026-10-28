@@ -272,3 +272,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b83d8a527993
+  - type: verified_by
+    from: SCEN-ui-session-cookie
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:48:56.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fb0205a7b0f
+  - type: verified_by
+    from: SCEN-ui-session-cookie
+    to: TEST-ui-format
+    created_at: 2026-10-28T19:48:56.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5c1e8054095
+  - type: constrains
+    from: REQ-ui-browser-security
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-28T19:49:46.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c65c93d984c
+  - type: requires_property
+    from: REQ-ui-browser-security
+    to: FACT-PROP-DB3A4017DE2B5713
+    created_at: 2026-10-28T19:49:46.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a1376824107
+  - type: specified_by
+    from: REQ-ui-browser-security
+    to: SCEN-ui-cross-origin-refused
+    created_at: 2026-10-28T19:49:46.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-464953a5858f
+  - type: specified_by
+    from: REQ-ui-browser-security
+    to: SCEN-ui-strict-csp
+    created_at: 2026-10-28T19:49:46.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88fec4ba975a
+  - type: implements
+    from: SYM-ui-server-register-finish
+    to: REQ-ui-login-flows
+    created_at: 2026-10-28T19:52:20.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0400a8c20b29
+  - type: implements
+    from: SYM-ui-server-register-finish
+    to: REQ-AUTO-585F02DB972C1660
+    created_at: 2026-10-28T19:52:20.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c0f4bf8526f
+  - type: covered_by
+    from: SYM-ui-server-register-finish
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:52:20.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a69090ae7d4d
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-status
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:05:59.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4060a72e480f
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-status
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:05:59.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82c9185b6d01
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-status
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:05:59.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c598ec928937
+  - type: executable_for
+    from: SYM-ui-test-helper-must-date
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:06:14.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-508a581fe66b
+  - type: executable_for
+    from: SYM-ui-test-helper-must-date
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:06:14.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-823601c3cd94
+  - type: executable_for
+    from: SYM-ui-test-helper-must-date
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:06:14.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ff7a7574bc2

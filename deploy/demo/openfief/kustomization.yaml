@@ -24,6 +24,7 @@ resources:
   - ../../demo-data
   - ../plugins
   - core-from-traefik.yaml
+  - ui-from-traefik.yaml
 configurations:
   - image-fields.yaml
 patches:
@@ -34,6 +35,15 @@ patches:
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --ensure-defaults=false
+      # The built-in UI's sign-in (docs/concepts/ui.md): the demo's public origin next to the base's
+      # http://localhost:8080 (kubectl port-forward), and the read-only demo sessions behind "View demo", which the core
+      # issues only on a database with the demo marker.
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --auth-origin=https://demo.openfief.dev
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --demo-sessions
   - target:
       kind: Job
       name: demo-seed
@@ -55,4 +65,6 @@ images:
   - name: ghcr.io/arkadiuss/openfief/demo-seed
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
   - name: ghcr.io/arkadiuss/openfief/nbp-fx
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+  - name: ghcr.io/arkadiuss/openfief/ui
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000

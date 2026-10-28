@@ -293,3 +293,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-888d9d701886
+  - type: executable_for
+    from: SYM-ui-test-build-charts
+    to: TEST-ui-format
+    created_at: 2026-10-28T20:00:38.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef44895ecbea

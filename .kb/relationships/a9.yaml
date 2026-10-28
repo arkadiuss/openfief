@@ -230,3 +230,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b281b89a1ffe
+  - type: implements
+    from: SYM-uiplugin-caller-token
+    to: REQ-ui-core-credentials
+    created_at: 2026-10-28T20:42:26.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e24475eac2c5
+  - type: covered_by
+    from: SYM-uiplugin-caller-token
+    to: TEST-ui-plugin
+    created_at: 2026-10-28T20:42:26.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed0978c6025a

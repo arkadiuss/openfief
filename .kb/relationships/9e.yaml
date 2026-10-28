@@ -454,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6138a722e7f1
+  - type: executable_for
+    from: SYM-ui-test-pages-need-session
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:01:02.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7e63da17563

@@ -419,3 +419,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-986bfbca1228
+  - type: implements
+    from: SYM-ui-flagged-account
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:51:23.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15e47ea4026a
+  - type: covered_by
+    from: SYM-ui-flagged-account
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:51:23.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c4813c68015
+  - type: implements
+    from: SYM-ui-valuation-state
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:53:26.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-194f2fefe85a
+  - type: implements
+    from: SYM-ui-valuation-state
+    to: REQ-decision-d36-7-ui-valuation-status
+    created_at: 2026-10-28T19:53:26.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad788e06c2c8
+  - type: covered_by
+    from: SYM-ui-valuation-state
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:53:26.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4c30120980a
+  - type: implements
+    from: SYM-ui-token-days
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:57:42.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bda0d9c3039f
+  - type: covered_by
+    from: SYM-ui-token-days
+    to: TEST-ui-settings
+    created_at: 2026-10-28T19:57:42.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-495767bc3e29
+  - type: implements
+    from: SYM-uiplugin-caller-token-token
+    to: REQ-ui-core-credentials
+    created_at: 2026-10-28T20:42:30.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cda723b167b
+  - type: covered_by
+    from: SYM-uiplugin-caller-token-token
+    to: TEST-ui-plugin
+    created_at: 2026-10-28T20:42:30.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-982ea0289615

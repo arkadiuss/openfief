@@ -293,3 +293,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d91e6b034ea
+  - type: executable_for
+    from: SYM-ui-test-helper-locker
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:02:43.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baa93d2d49bd
+  - type: executable_for
+    from: SYM-ui-test-helper-locker
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:02:43.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1be35a7c1ed
+  - type: executable_for
+    from: SYM-ui-test-helper-locker
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:02:43.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ab9c5cb9c49

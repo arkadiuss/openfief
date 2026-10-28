@@ -307,3 +307,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-873392fcef8a
+  - type: implements
+    from: SYM-ui-session-token
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:25.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-558abeeae709
+  - type: covered_by
+    from: SYM-ui-session-token
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:56:25.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d43dc7023306
+  - type: executable_for
+    from: SYM-ui-test-helper-scope-of
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:04:31.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c293e42c0ac3
+  - type: executable_for
+    from: SYM-ui-test-helper-scope-of
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:04:31.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-380351c34450
+  - type: executable_for
+    from: SYM-ui-test-helper-scope-of
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:04:31.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd91719511be

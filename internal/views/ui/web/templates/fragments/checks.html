@@ -1,0 +1,15 @@
+{{define "checks"}}
+<table>
+  <thead><tr><th scope="col">Date</th><th scope="col">Ledger account</th><th scope="col" class="num">Reported</th><th scope="col" class="num">Derived</th><th scope="col">Result</th></tr></thead>
+  <tbody>
+  {{range .}}
+  <tr>
+    <td>{{.Date}}</td><td>{{book .Book}}</td><td class="num">{{amount .Reported}}</td><td class="num">{{amount .Derived}}</td>
+    <td>{{if eq .Status.String "ASSERTION_STATUS_FLAGGED"}}<strong class="warn">flagged</strong>{{else}}{{enum .Status.String "ASSERTION_STATUS_"}}{{end}}</td>
+  </tr>
+  {{else}}
+  <tr><td colspan="5">No balance assertions.</td></tr>
+  {{end}}
+  </tbody>
+</table>
+{{end}}

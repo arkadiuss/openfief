@@ -356,3 +356,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69e6c7d20118
+  - type: implements
+    from: SYM-ui-server-remove-passkey
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:57:33.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2c7c4447c8a
+  - type: covered_by
+    from: SYM-ui-server-remove-passkey
+    to: TEST-ui-settings
+    created_at: 2026-10-28T19:57:33.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-633deff00619
+  - type: executable_for
+    from: SYM-ui-test-helper-synthetic-instrument
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:04:49.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c747195de29
+  - type: executable_for
+    from: SYM-ui-test-helper-synthetic-instrument
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:04:49.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21b9915f8be0
+  - type: executable_for
+    from: SYM-ui-test-helper-synthetic-instrument
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:04:49.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd143bfdacc

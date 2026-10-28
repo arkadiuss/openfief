@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-363297309d6e
+  - type: implements
+    from: SYM-ui-session
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:55:49.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b6f5eca1b26
+  - type: covered_by
+    from: SYM-ui-session
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:55:49.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54745fa4d159
