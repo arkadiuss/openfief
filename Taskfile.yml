@@ -434,7 +434,7 @@ tasks:
         vars: {ACTION: plan}
 
   demo:up:
-    desc: 'Create the demo machine ENV in Hetzner Cloud, or what is missing of it, within DEMO_BUDGET_EUR (HCLOUD_TOKEN), e.g. task demo:up ENV=demo'
+    desc: 'Create the demo machine ENV in Hetzner Cloud, or what is missing of it, within DEMO_BUDGET_EUR, and point its DNS name at it (HCLOUD_TOKEN, optional CLOUDFLARE_API_TOKEN), e.g. task demo:up ENV=demo'
     requires:
       vars: [ENV]
     cmds:
@@ -450,7 +450,7 @@ tasks:
         vars: {ACTION: status}
 
   demo:down:
-    desc: 'Delete every resource of the demo ENV; needs CONFIRM=<ENV>, e.g. task demo:down ENV=demo CONFIRM=demo'
+    desc: 'Delete every resource of the demo ENV and its DNS records; needs CONFIRM=<ENV>, e.g. task demo:down ENV=demo CONFIRM=demo'
     requires:
       vars: [ENV]
     cmds:
@@ -468,7 +468,8 @@ tasks:
   demo:run:
     internal: true
     deps: [tool:hcloud, tool:gojq]
-    # HCLOUD_TOKEN is inherited from the environment and never templated here, so Task never prints it.
+    # HCLOUD_TOKEN (or HETZNER_API_TOKEN) and CLOUDFLARE_API_TOKEN are inherited from the environment and never
+    # templated here, so Task never prints them.
     env:
       ENV: '{{.ENV}}'
       CONFIRM: '{{.CONFIRM}}'
@@ -481,6 +482,8 @@ tasks:
       DEMO_HTTP_CIDRS: '{{.DEMO_HTTP_CIDRS}}'
       DEMO_ACME: '{{.DEMO_ACME}}'
       DEMO_DOMAIN: '{{.DEMO_DOMAIN}}'
+      DEMO_DNS_AAAA: '{{.DEMO_DNS_AAAA}}'
+      DEMO_SSH: '{{.DEMO_SSH}}'
       DEMO_GIT_URL: '{{.DEMO_GIT_URL}}'
       DEMO_GIT_BRANCH: '{{.DEMO_GIT_BRANCH}}'
       K3S_VERSION: '{{.K3S_VERSION}}'
@@ -491,6 +494,27 @@ tasks:
       FLUX_INSTALL_SHA256: '{{.FLUX_INSTALL_SHA256}}'
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh '{{.ACTION}}'
+
+  dns:docs:plan:
+    desc: 'What `task dns:docs` would change in the docs site''s DNS record docs.<DEMO_DOMAIN>, without changing anything (CLOUDFLARE_API_TOKEN), e.g. task dns:docs:plan'
+    cmds:
+      - task: dns:docs:run
+        vars: {ACTION: plan}
+
+  dns:docs:
+    desc: 'Make docs.<DEMO_DOMAIN> (docs.openfief.dev) a DNS-only CNAME to GitHub Pages, touching only the record commented managed-by=openfief-docs (CLOUDFLARE_API_TOKEN), e.g. task dns:docs'
+    cmds:
+      - task: dns:docs:run
+        vars: {ACTION: apply}
+
+  dns:docs:run:
+    internal: true
+    deps: [tool:gojq]
+    # CLOUDFLARE_API_TOKEN is inherited from the environment and never templated here, so Task never prints it.
+    env:
+      DEMO_DOMAIN: '{{.DEMO_DOMAIN}}'
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh dns-docs '{{.ACTION}}'
 
   demo:validate:
     desc: Build the demo's GitOps manifests (deploy/demo) offline and check that every image is pinned by digest

@@ -363,3 +363,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9ba87cf8610
+  - type: implements
+    from: SYM-demo-demo-dns-apply-changes
+    to: REQ-tooling-demo-dns
+    created_at: 2026-10-28T14:36:42.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e88ebc5f339e
+  - type: implements
+    from: SYM-demo-demo-dns-apply-changes
+    to: REQ-tooling-demo-dns-docs
+    created_at: 2026-10-28T14:36:42.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbe61662a59a
+  - type: covered_by
+    from: SYM-demo-demo-dns-apply-changes
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T14:36:42.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d5fb4430012

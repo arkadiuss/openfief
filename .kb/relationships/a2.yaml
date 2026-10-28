@@ -160,3 +160,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5a4c63d2890
+  - type: constrains
+    from: REQ-tooling-demo-dns
+    to: FACT-SUBJECT-31DBB7F6DD738808
+    created_at: 2026-10-28T14:35:46.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67a03e20f1cc
+  - type: requires_property
+    from: REQ-tooling-demo-dns
+    to: FACT-PROP-B6F663658FA4B986
+    created_at: 2026-10-28T14:35:46.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-982e62fc26cf
+  - type: specified_by
+    from: REQ-tooling-demo-dns
+    to: SCEN-tooling-demo-dns-lifecycle
+    created_at: 2026-10-28T14:35:46.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-311d954a5a31
+  - type: specified_by
+    from: REQ-tooling-demo-dns
+    to: SCEN-tooling-demo-dns-only-ours
+    created_at: 2026-10-28T14:35:46.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd000d34a4c7

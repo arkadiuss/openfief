@@ -216,3 +216,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5a8c4726869
+  - type: implements
+    from: SYM-demo-demo-cf
+    to: REQ-tooling-demo-dns
+    created_at: 2026-10-28T14:37:04.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93f798f1ec84
+  - type: implements
+    from: SYM-demo-demo-cf
+    to: REQ-tooling-demo-token
+    created_at: 2026-10-28T14:37:04.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b53adde0529c
+  - type: covered_by
+    from: SYM-demo-demo-cf
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T14:37:04.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afe303c5e6b2

@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94e792ea000e
+  - type: constrains
+    from: REQ-tooling-demo-ssh-throwaway
+    to: FACT-SUBJECT-4D3D2171065D9025
+    created_at: 2026-10-28T14:35:59.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69bbda7a6f0d
+  - type: requires_property
+    from: REQ-tooling-demo-ssh-throwaway
+    to: FACT-PROP-D889C7703206F628
+    created_at: 2026-10-28T14:35:59.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82208202205f
+  - type: specified_by
+    from: REQ-tooling-demo-ssh-throwaway
+    to: SCEN-tooling-demo-ssh-throwaway
+    created_at: 2026-10-28T14:35:59.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9c4c16637b8

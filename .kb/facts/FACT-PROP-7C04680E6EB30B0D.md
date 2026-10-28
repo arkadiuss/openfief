@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:demo.automation:keeps_api_token_secret
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-B3566993445FEEBC
-claim_text: The demo automation must read the Hetzner API token only from HCLOUD_TOKEN, must fail with an explanation when it is unset, and must never print the token or write it to disk.
+claim_key: CLAIM-F8C8F64BA3669646
+claim_text: The demo automation must read the Hetzner API token from HCLOUD_TOKEN, or from HETZNER_API_TOKEN when HCLOUD_TOKEN is unset, and the Cloudflare token only from CLOUDFLARE_API_TOKEN; it must fail with an explanation when no Hetzner token is set, and must never print either token, pass it as a command argument or write it to disk.
 origin:
   kind: agent
   recorded_at: '2026-10-28T09:00:49.127Z'
