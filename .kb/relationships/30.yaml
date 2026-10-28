@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc384396e861
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-bond-terms
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:37:53.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb9ba77787e5
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-bond-terms
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:37:53.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20cb8ef22b33

@@ -104,3 +104,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-233860691c27
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-instrument
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:36:51.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7071fa08be3
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-instrument
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:36:51.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb2b030ae9aa

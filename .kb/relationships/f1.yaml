@@ -97,3 +97,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8c5ab884d5b
+  - type: verified_by
+    from: SCEN-valuation-basis-change
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:29:03.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cec6da22d68
+  - type: executable_for
+    from: SYM-valuation-test-value-market-holding-conflicting-rates
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:10.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bfe77857cfd

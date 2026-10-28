@@ -125,3 +125,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2591724ea97
+  - type: executable_for
+    from: SYM-valuation-test-helper-lot-sum
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:22.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cf9e069f582
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:44.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-492dfb28f504
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:44.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd2acdda628c

@@ -97,3 +97,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccb0b8fe7b27
+  - type: implements
+    from: SYM-valuation-missing
+    to: REQ-valuation-missing-input
+    created_at: 2026-10-28T07:32:32.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e62bba2195b
+  - type: covered_by
+    from: SYM-valuation-missing
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:32.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-051b261fe847

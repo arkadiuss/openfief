@@ -69,3 +69,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2af544e53572
+  - type: implements
+    from: SYM-valuation-app-new-revaluer
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:33:56.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07927e8cd9cd
+  - type: implements
+    from: SYM-valuation-app-new-revaluer
+    to: REQ-AUTO-0C90AD924924F4F6
+    created_at: 2026-10-28T07:33:56.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47f118ff795d
+  - type: covered_by
+    from: SYM-valuation-app-new-revaluer
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:33:56.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10b217724f66
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-usd-price
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:40:02.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad5380b99605
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-usd-price
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:40:02.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4137305d8ac

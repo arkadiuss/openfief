@@ -90,3 +90,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e9c6f423ec2
+  - type: implements
+    from: SYM-valuation-app-input-recorder
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:43.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3162053aa9b
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:43.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46035e615e45
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-revals
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:39:18.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67f6fbaa34ce
+  - type: executable_for
+    from: SYM-valuation-app-test-planner
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:39:23.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bde0f8ef08f

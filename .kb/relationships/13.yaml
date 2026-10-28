@@ -69,3 +69,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bc4b59a05e2
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-bond-terms
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:39.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32521ee2b962
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-bond-terms
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:39.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3550f4f26a3d

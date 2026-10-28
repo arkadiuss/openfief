@@ -118,3 +118,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b62497fbbef2
+  - type: implements
+    from: SYM-valuation-app-revaluer-rows
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:34:12.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b978a10e25b
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-rows
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:34:12.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4002f982ff81

@@ -174,3 +174,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1452e0c8b8d1
+  - type: implements
+    from: SYM-valuation-app-planner-for-isin
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:08.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3162875de312
+  - type: covered_by
+    from: SYM-valuation-app-planner-for-isin
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:08.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e61d3311e1f

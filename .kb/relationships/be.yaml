@@ -62,3 +62,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5f164850e8e
+  - type: executable_for
+    from: SYM-valuation-test-value-market-holding
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:33:07.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-222281d8ff50

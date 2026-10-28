@@ -13686,3 +13686,1489 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-proto-breaking
+  - id: SYM-valuation-index-kind
+    title: IndexKind
+    sourceFile: internal/valuation/index.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:16.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index
+      - type: implements
+        target: REQ-valuation-lot-indices
+  - id: SYM-valuation-index-kind-string
+    title: IndexKind.String
+    sourceFile: internal/valuation/index.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:22.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index
+      - type: implements
+        target: REQ-valuation-lot-indices
+  - id: SYM-valuation-parse-index-kind
+    title: ParseIndexKind
+    sourceFile: internal/valuation/index.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:27.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index
+      - type: implements
+        target: REQ-valuation-lot-indices
+  - id: SYM-valuation-index-reading
+    title: IndexReading
+    sourceFile: internal/valuation/index.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:32.755Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index
+      - type: implements
+        target: REQ-valuation-lot-indices
+  - id: SYM-valuation-lot-indices
+    title: LotIndices
+    sourceFile: internal/valuation/index.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:38.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index
+      - type: implements
+        target: REQ-valuation-lot-indices
+  - id: SYM-valuation-find-reading
+    title: findReading
+    sourceFile: internal/valuation/index.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:43.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index
+      - type: implements
+        target: REQ-valuation-lot-indices
+  - id: SYM-valuation-missing-reason
+    title: MissingReason
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:47.083Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-missing-input
+  - id: SYM-valuation-missing-reason-string
+    title: MissingReason.String
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:52.639Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-missing-input
+  - id: SYM-valuation-parse-missing-reason
+    title: ParseMissingReason
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:31:57.405Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-missing-input
+  - id: SYM-valuation-holding-valuation
+    title: HoldingValuation
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:00.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-decision-d36-1-stored-valuations
+      - type: implements
+        target: REQ-valuation-missing-input
+  - id: SYM-valuation-holding-valuation-valued
+    title: HoldingValuation.Valued
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:05.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-missing-input
+  - id: SYM-valuation-price-on-or-before
+    title: PriceOnOrBefore
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:09.189Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-AUTO-A129ED289B2239A8
+      - type: implements
+        target: REQ-valuation-market-holding
+  - id: SYM-valuation-value-market-holding
+    title: ValueMarketHolding
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:14.176Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-market-holding
+  - id: SYM-valuation-bond-holding
+    title: BondHolding
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:18.949Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-bond-holding
+  - id: SYM-valuation-value-bond-holding
+    title: ValueBondHolding
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:23.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-AUTO-E10BE8CE13E67657
+      - type: implements
+        target: REQ-valuation-bond-holding
+  - id: SYM-valuation-value-bond-lot
+    title: valueBondLot
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:27.872Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-bond-holding
+  - id: SYM-valuation-missing
+    title: missing
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:32.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-missing-input
+  - id: SYM-valuation-valued-through
+    title: ValuedThrough
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:35.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-missing-input
+  - id: SYM-valuation-revaluation
+    title: Revaluation
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:39.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-coalesce
+  - id: SYM-valuation-coalesce
+    title: Coalesce
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:43.662Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-decision-d36-5-revaluation-coalescing
+      - type: implements
+        target: REQ-valuation-coalesce
+  - id: SYM-valuation-test-index-kind-names
+    title: TestIndexKindNames
+    sourceFile: internal/valuation/index_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:46.903Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-index
+  - id: SYM-valuation-test-lot-indices
+    title: TestLotIndices
+    sourceFile: internal/valuation/index_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:50.148Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-index
+  - id: SYM-valuation-test-helper-instrument
+    title: instrument
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:53.382Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-helper-holding
+    title: holding
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:56.751Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-missing-reason-names
+    title: TestMissingReasonNames
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:32:59.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-price-on-or-before
+    title: TestPriceOnOrBefore
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:03.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-value-market-holding
+    title: TestValueMarketHolding
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:06.712Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-value-market-holding-conflicting-rates
+    title: TestValueMarketHoldingConflictingRates
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:10.176Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-helper-edo-terms
+    title: edoTerms
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:13.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-helper-bond-lot
+    title: bondLot
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:16.348Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-value-bond-holding
+    title: TestValueBondHolding
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:19.281Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-helper-lot-sum
+    title: lotSum
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:22.270Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-value-bond-holding-rejects
+    title: TestValueBondHoldingRejects
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:25.142Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-valued-through
+    title: TestValuedThrough
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:28.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-coalesce
+    title: TestCoalesce
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:31.158Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-app-transaction-log
+    title: TransactionLog
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:33.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-account-lister
+    title: AccountLister
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:37.106Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-inputs
+    title: Inputs
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:40.194Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-valuation-store
+    title: ValuationStore
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:43.971Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-store
+    title: Store
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:47.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-recorder
+    title: Recorder
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:50.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-revaluer
+    title: Revaluer
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:52.622Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-new-revaluer
+    title: NewRevaluer
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:55.935Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-AUTO-0C90AD924924F4F6
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-revalue-result
+    title: RevalueResult
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:33:59.342Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-revaluer-revalue
+    title: Revaluer.Revalue
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:05.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-decision-d36-2-valuations-rebuildable
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-revaluer-rows
+    title: Revaluer.rows
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:11.419Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-revaluer-value
+    title: Revaluer.value
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:18.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-bond-holding
+      - type: implements
+        target: REQ-valuation-market-holding
+  - id: SYM-valuation-app-first-date
+    title: firstDate
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:26.025Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-input-cache
+    title: inputCache
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:29.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-new-input-cache
+    title: newInputCache
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:35.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-valuation-app-input-cache-bond-terms
+    title: inputCache.bondTerms
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:39.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-bond-holding
+  - id: SYM-valuation-app-input-cache-market
+    title: inputCache.market
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:44.444Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-market-holding
+  - id: SYM-valuation-app-input-cache-bond-inputs
+    title: inputCache.bondInputs
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:49.677Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-bond-holding
+  - id: SYM-valuation-app-planner
+    title: Planner
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:52.705Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-decision-d36-10-fixed-revaluation-triggers
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-new-planner
+    title: NewPlanner
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:34:57.116Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-account-log
+    title: accountLog
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:00.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-planner-for-instrument
+    title: Planner.ForInstrument
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:03.912Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-planner-for-isin
+    title: Planner.ForISIN
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:07.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-planner-for-all
+    title: Planner.ForAll
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:13.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-planner-from-start
+    title: Planner.FromStart
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:18.384Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-planner-end-of-day
+    title: Planner.EndOfDay
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:23.405Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-planner-logs
+    title: Planner.logs
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:28.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-for-import
+    title: ForImport
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:33.366Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-coalesce
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-held
+    title: held
+    sourceFile: internal/valuation/app/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:38.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-input-recorder
+    title: InputRecorder
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:42.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-new-input-recorder
+    title: NewInputRecorder
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:48.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-input-recorder-record-prices
+    title: InputRecorder.RecordPrices
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:53.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-input-validation
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-input-recorder-record-fxrates
+    title: InputRecorder.RecordFXRates
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:35:57.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-input-validation
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-input-recorder-record-index-readings
+    title: InputRecorder.RecordIndexReadings
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:02.874Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-input-validation
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-input-recorder-record-bond-terms
+    title: InputRecorder.RecordBondTerms
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:07.463Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-input-validation
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-input-recorder-record-tax-wrapper
+    title: InputRecorder.RecordTaxWrapper
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:12.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-input-validation
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-input-recorder-apply-bond-basis
+    title: InputRecorder.ApplyBondBasis
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:16.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-decision-d36-9-basis-change-revalues-all
+      - type: implements
+        target: REQ-valuation-basis-change
+  - id: SYM-valuation-app-input-recorder-end-of-day
+    title: InputRecorder.EndOfDay
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:22.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-input-recorder-for-all-from
+    title: InputRecorder.forAllFrom
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:27.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-revaluation-triggers
+  - id: SYM-valuation-app-test-helper-dec
+    title: dec
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:35.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-money
+    title: money
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:42.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-instrument
+    title: instrument
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:50.673Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-buy
+    title: buy
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:36:58.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-ledger
+    title: fakeLedger
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:06.733Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-ledger-log
+    title: fakeLedger.Log
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:17.470Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-ledger-accounts
+    title: fakeLedger.Accounts
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:24.278Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-store
+    title: fakeStore
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:30.619Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-new-fake-store
+    title: newFakeStore
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:35.275Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-store-prices
+    title: fakeStore.Prices
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:39.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-store-fxrates
+    title: fakeStore.FXRates
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:44.284Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-store-index-readings
+    title: fakeStore.IndexReadings
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:48.328Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-store-bond-terms
+    title: fakeStore.BondTerms
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:52.600Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-store-tax-wrapper
+    title: fakeStore.TaxWrapper
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:57.069Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-store-valued-through
+    title: fakeStore.ValuedThrough
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:00.324Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-store-replace-valuations
+    title: fakeStore.ReplaceValuations
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:04.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-recorded
+    title: recorded
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:10.070Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder
+    title: fakeRecorder
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:16.625Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-prices
+    title: fakeRecorder.SavePrices
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:22.232Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-fxrates
+    title: fakeRecorder.SaveFXRates
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:28.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-index-readings
+    title: fakeRecorder.SaveIndexReadings
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:33.494Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-bond-terms
+    title: fakeRecorder.SaveBondTerms
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:38.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
+    title: fakeRecorder.SaveTaxWrapper
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:43.369Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-bond-basis
+    title: fakeRecorder.SaveBondBasis
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:50.278Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-enqueue
+    title: fakeRecorder.Enqueue
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:38:58.906Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-record
+    title: fakeRecorder.record
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:06.214Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-two-accounts
+    title: twoAccounts
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:13.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-helper-revals
+    title: revals
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:17.746Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-planner
+    title: TestPlanner
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:22.854Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-planner-errors
+    title: TestPlannerErrors
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:28.288Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-record-inputs
+    title: TestRecordInputs
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:33.150Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-record-rejects-invalid-inputs
+    title: TestRecordRejectsInvalidInputs
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:38.696Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-apply-bond-basis
+    title: TestApplyBondBasis
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:42.752Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-record-passes-store-failures-on
+    title: TestRecordPassesStoreFailuresOn
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:46.963Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-helper-etf-ledger
+    title: etfLedger
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:51.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-today-func
+    title: todayFunc
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:55.779Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-revaluer
+    title: revaluer
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:39:58.556Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-usd-price
+    title: usdPrice
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:01.725Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-market-store
+    title: marketStore
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:05.117Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-bond-lot-value
+    title: bondLotValue
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:08.584Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-revalue-missing-inputs
+    title: TestRevalueMissingInputs
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:12.323Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-revalue-stores-market-values
+    title: TestRevalueStoresMarketValues
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:15.708Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-revalue-is-idempotent
+    title: TestRevalueIsIdempotent
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:19.076Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-revalue-starts-at-the-first-transaction
+    title: TestRevalueStartsAtTheFirstTransaction
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:22.602Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-revalue-keeps-an-earlier-gap
+    title: TestRevalueKeepsAnEarlierGap
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:26.185Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-revalue-bonds
+    title: TestRevalueBonds
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:29.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-revalue-errors
+    title: TestRevalueErrors
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:40:32.821Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue

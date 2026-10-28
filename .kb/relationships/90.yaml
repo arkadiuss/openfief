@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84ce2e21dbc2
+  - type: implements
+    from: SYM-valuation-app-store
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:33:47.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63fd6a5116f8
+  - type: covered_by
+    from: SYM-valuation-app-store
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:33:47.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b9f6c003ccc

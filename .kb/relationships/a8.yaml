@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7948ed957e7d
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-fxrates
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:37:45.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e7c38deb4c2
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-fxrates
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:37:45.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2b298b0c8fb

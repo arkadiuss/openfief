@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1070cd673bf8
+  - type: constrains
+    from: REQ-valuation-revaluation-triggers
+    to: FACT-SUBJECT-8E4176040D621F68
+    created_at: 2026-10-28T07:30:32.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebfa8a85a7aa
+  - type: requires_property
+    from: REQ-valuation-revaluation-triggers
+    to: FACT-PROP-0BA60A48F3567113
+    created_at: 2026-10-28T07:30:32.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20dab0d5f827
+  - type: specified_by
+    from: REQ-valuation-revaluation-triggers
+    to: SCEN-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:30:32.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ccda686c6eb

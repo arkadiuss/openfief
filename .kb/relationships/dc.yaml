@@ -55,3 +55,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc3acd13f722
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-recorded
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:38:10.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47dc57ec007a
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-recorded
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:38:10.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66d8b9ab88a1

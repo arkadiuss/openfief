@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ef326cd3a04
+  - type: executable_for
+    from: SYM-valuation-test-helper-holding
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:57.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3af568f70ec6
+  - type: implements
+    from: SYM-valuation-app-new-input-recorder
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:49.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001754dddf42
+  - type: covered_by
+    from: SYM-valuation-app-new-input-recorder
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:49.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf17f992eac9

@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4d9cacdaae2
+  - type: implements
+    from: SYM-valuation-app-for-import
+    to: REQ-valuation-revaluation-triggers
+    created_at: 2026-10-28T07:35:34.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-887b4ef52034
+  - type: implements
+    from: SYM-valuation-app-for-import
+    to: REQ-valuation-coalesce
+    created_at: 2026-10-28T07:35:34.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63269ee56d3c
+  - type: covered_by
+    from: SYM-valuation-app-for-import
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:35:34.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db3e55e653e6

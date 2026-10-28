@@ -104,3 +104,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c8c5c2bbe74
+  - type: executable_for
+    from: SYM-valuation-test-lot-indices
+    to: TEST-valuation-index
+    created_at: 2026-10-28T07:32:50.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2049edf3cf2

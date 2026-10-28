@@ -97,3 +97,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56db52ca756b
+  - type: implements
+    from: SYM-valuation-value-bond-lot
+    to: REQ-valuation-bond-holding
+    created_at: 2026-10-28T07:32:28.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e67f63c7fc3a
+  - type: covered_by
+    from: SYM-valuation-value-bond-lot
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:28.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9c3cfe355d7

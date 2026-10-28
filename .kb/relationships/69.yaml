@@ -76,3 +76,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a256f3d09d75
+  - type: implements
+    from: SYM-valuation-holding-valuation
+    to: REQ-decision-d36-1-stored-valuations
+    created_at: 2026-10-28T07:32:01.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9568def06b6
+  - type: implements
+    from: SYM-valuation-holding-valuation
+    to: REQ-valuation-missing-input
+    created_at: 2026-10-28T07:32:01.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3305288557d2
+  - type: covered_by
+    from: SYM-valuation-holding-valuation
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-28T07:32:01.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a68903377d0c

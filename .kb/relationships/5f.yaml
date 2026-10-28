@@ -132,3 +132,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7b0e22e9e31
+  - type: implements
+    from: SYM-valuation-app-new-input-cache
+    to: REQ-valuation-revaluation-rows
+    created_at: 2026-10-28T07:34:36.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-486e98eb5daa
+  - type: covered_by
+    from: SYM-valuation-app-new-input-cache
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-28T07:34:36.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b39fb2ffe46
+  - type: executable_for
+    from: SYM-valuation-app-test-planner-errors
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T07:39:29.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4ea0f91cfd6
