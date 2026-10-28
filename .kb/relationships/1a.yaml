@@ -132,3 +132,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d275f0590d35
+  - type: implements
+    from: SYM-demo-image-names
+    to: REQ-tooling-demo-signed-deploy
+    created_at: 2026-10-28T09:12:42.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6bd7ab2734a
+  - type: covered_by
+    from: SYM-demo-image-names
+    to: TEST-tooling-demo-pin-images
+    created_at: 2026-10-28T09:12:42.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1b2092c03c6

@@ -104,3 +104,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-133695bdb145
+  - type: executable_for
+    from: SYM-demo-pin-test-helper-pin
+    to: TEST-tooling-demo-pin-images
+    created_at: 2026-10-28T09:14:11.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5afcb7f78b5c

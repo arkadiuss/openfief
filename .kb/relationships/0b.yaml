@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1480adc1f55a
+  - type: implements
+    from: SYM-demo-demo-firewall-rules
+    to: REQ-tooling-demo-access
+    created_at: 2026-10-28T09:08:53.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ab7732f3c5b
+  - type: covered_by
+    from: SYM-demo-demo-firewall-rules
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T09:08:53.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1160dcfa5f24

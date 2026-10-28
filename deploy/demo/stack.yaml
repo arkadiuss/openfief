@@ -1,0 +1,86 @@
+# The demo's layers, applied by Flux in dependency order (dependsOn):
+#   demo-crds      ./deploy/crds           the openfief namespace and the CRDs (the cluster-admin part, D-15)
+#   demo-cnpg      ./deploy/demo/cnpg      the CloudNativePG operator (D-14) from a pinned Helm chart
+#   demo-database  ./deploy/demo/database  a one-instance CloudNativePG cluster, synthetic data only (GR-12)
+#   demo-openfief  the signed artifact     the operator and the egress proxy, images pinned by digest (D-17)
+# The first three follow main in git. demo-openfief follows the OCI artifact that CI publishes after every push to
+# main (and every beta): deploy/demo/openfief rendered with the digests whose signatures verified, then signed.
+# Until CI has published one, demo-openfief waits for its source and the other layers run on their own.
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: demo-crds
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./deploy/crds
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: openfief
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: demo-cnpg
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./deploy/demo/cnpg
+  prune: true
+  wait: true
+  timeout: 10m
+  sourceRef:
+    kind: GitRepository
+    name: openfief
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: demo-database
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: demo-crds
+    - name: demo-cnpg
+  interval: 10m
+  path: ./deploy/demo/database
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: openfief
+---
+# Published by `task deploy:demo` (.github/workflows/deploy-demo.yml). Flux applies a new artifact only if its
+# keyless cosign signature comes from that workflow on main of this repository.
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: openfief-demo-app
+  namespace: flux-system
+spec:
+  interval: 2m
+  url: oci://ghcr.io/arkadiuss/openfief/demo-manifests
+  ref:
+    tag: demo
+  verify:
+    provider: cosign
+    matchOIDCIdentity:
+      - issuer: ^https://token\.actions\.githubusercontent\.com$
+        subject: ^https://github\.com/arkadiuss/openfief/\.github/workflows/deploy-demo\.yml@refs/heads/main$
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: demo-openfief
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: demo-crds
+    - name: demo-database
+  interval: 10m
+  path: ./
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: openfief-demo-app

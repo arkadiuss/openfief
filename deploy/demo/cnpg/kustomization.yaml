@@ -1,0 +1,7 @@
+# The CloudNativePG operator (D-14) for the demo, from its Helm chart at an exact version.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - helmrepository.yaml
+  - helmrelease.yaml

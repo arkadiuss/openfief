@@ -107,12 +107,15 @@ jobs:
           GH_REPO: ${{ github.repository }}
 
   deploy-demo:
-    # Betas deploy to demo. Skipped until the demo machine exists: see the deploy-demo job in ci.yml.
+    # Betas deploy to demo: the beta's signed digests are published as the demo's signed manifests artifact, and
+    # Flux applies it. Skipped until the demo machine exists: see the deploy-demo job in ci.yml.
     name: deploy demo
     needs: [plan, publish]
     if: needs.plan.outputs.publish == 'true' && inputs.channel == 'beta' && vars.DEMO_ENABLED == 'true'
     permissions:
       contents: read
+      packages: write
+      id-token: write
     uses: ./.github/workflows/deploy-demo.yml
     with:
       version: ${{ inputs.version }}

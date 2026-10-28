@@ -1,0 +1,105 @@
+#cloud-config
+# Bootstrap of a demo machine (docs/dev/demo.md). This is a TEMPLATE: scripts/demo/demo.sh renders it with the
+# versions and checksums pinned in Taskfile.yml (task demo:up) and refuses to send it while a placeholder is left unfilled.
+# It holds no secrets: Flux pulls the public repository, and the database credentials are generated in the cluster.
+# Synthetic data only (GR-12).
+#
+# What it does:
+#   - SSH: keys only (Hetzner injects the keys labelled openfief-ssh=true), no root password, no password logins.
+#   - unattended-upgrades for security updates, with an automatic reboot at 04:00 UTC when one needs it.
+#   - k3s @@K3S_VERSION@@: the release binary and install script, each checked against a pinned sha256.
+#     Flannel with k3s's NetworkPolicy controller (D-12) and local-path storage stay on; Traefik and
+#     servicelb are off (D-28: no ingress); Secrets are encrypted at rest in the datastore (D-29).
+#   - Flux @@FLUX_VERSION@@ (install.yaml checked against a pinned sha256) and a GitRepository plus Kustomization on
+#     @@GIT_URL@@ (@@GIT_BRANCH@@, ./deploy/demo), dropped into k3s's auto-deploy manifests directory, so the
+#     cluster is declared, not applied by hand. Everything else comes from deploy/demo through Flux.
+ssh_pwauth: false
+disable_root: false
+package_update: true
+package_upgrade: true
+packages:
+  - ca-certificates
+  - curl
+  - unattended-upgrades
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/10-openfief.conf
+    permissions: '0644'
+    content: |
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PermitRootLogin prohibit-password
+      PermitEmptyPasswords no
+      X11Forwarding no
+      AllowAgentForwarding no
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    permissions: '0644'
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+  - path: /etc/apt/apt.conf.d/52openfief-unattended-upgrades
+    permissions: '0644'
+    content: |
+      Unattended-Upgrade::Automatic-Reboot "true";
+      Unattended-Upgrade::Automatic-Reboot-Time "04:00";
+  - path: /etc/rancher/k3s/config.yaml
+    permissions: '0600'
+    content: |
+      write-kubeconfig-mode: "0600"
+      secrets-encryption: true
+      disable:
+        - traefik
+        - servicelb
+  - path: /var/lib/rancher/k3s/server/manifests/openfief-demo-sync.yaml
+    permissions: '0600'
+    content: |
+      # The demo's only imperative-free entry point: Flux pulls deploy/demo from the public repository.
+      apiVersion: source.toolkit.fluxcd.io/v1
+      kind: GitRepository
+      metadata:
+        name: openfief
+        namespace: flux-system
+      spec:
+        interval: 5m
+        url: @@GIT_URL@@
+        ref:
+          branch: @@GIT_BRANCH@@
+      ---
+      apiVersion: kustomize.toolkit.fluxcd.io/v1
+      kind: Kustomization
+      metadata:
+        name: openfief-demo
+        namespace: flux-system
+      spec:
+        interval: 10m
+        path: ./deploy/demo
+        prune: true
+        sourceRef:
+          kind: GitRepository
+          name: openfief
+  - path: /usr/local/sbin/openfief-bootstrap
+    permissions: '0700'
+    content: |
+      #!/bin/sh
+      # Installs the pinned k3s and Flux; stops at the first checksum mismatch.
+      set -eu
+      k3s_version='@@K3S_VERSION@@'
+      k3s_asset='@@K3S_ASSET@@'
+      k3s_url_version="$(printf '%s' "$k3s_version" | sed 's/+/%2B/g')"
+      work="$(mktemp -d)"
+      trap 'rm -rf "$work"' EXIT
+      fetch() { curl -fsSL --retry 5 --retry-connrefused -o "$1" "$2"; }
+      fetch "$work/k3s" "https://github.com/k3s-io/k3s/releases/download/$k3s_url_version/$k3s_asset"
+      echo "@@K3S_SHA256@@  $work/k3s" | sha256sum -c -
+      fetch "$work/install.sh" "https://raw.githubusercontent.com/k3s-io/k3s/$k3s_url_version/install.sh"
+      echo "@@K3S_INSTALL_SHA256@@  $work/install.sh" | sha256sum -c -
+      fetch "$work/flux.yaml" "https://github.com/fluxcd/flux2/releases/download/@@FLUX_VERSION@@/install.yaml"
+      echo "@@FLUX_INSTALL_SHA256@@  $work/flux.yaml" | sha256sum -c -
+      install -m 0755 "$work/k3s" /usr/local/bin/k3s
+      install -D -m 0600 "$work/flux.yaml" /var/lib/rancher/k3s/server/manifests/flux-system.yaml
+      INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_VERSION="$k3s_version" sh "$work/install.sh"
+
+runcmd:
+  - [passwd, --lock, root]
+  - [systemctl, restart, ssh]
+  - [/usr/local/sbin/openfief-bootstrap]

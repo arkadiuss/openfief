@@ -1,0 +1,25 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: openfief-db
+  namespace: openfief
+spec:
+  # The PostgreSQL image is the default of the operator pinned in ../cnpg.
+  instances: 1
+  storage:
+    storageClass: local-path
+    size: 2Gi
+  bootstrap:
+    initdb:
+      database: openfief
+      owner: openfief
+  postgresql:
+    parameters:
+      shared_buffers: 64MB
+      max_connections: '50'
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
