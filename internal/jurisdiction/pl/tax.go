@@ -52,8 +52,8 @@ func BelkaRate() kernel.Decimal {
 // rounded "do pełnych groszy w górę", up. The examples at
 // https://www.obligacjeskarbowe.pl/oferta-obligacji/ round half up: EDO0524
 // withholds 0.41 PLN on 2.16 PLN (19% is 0.4104), ROR0623 0.08 PLN on a
-// 0.44 PLN coupon (0.0836) and COI0423 1.85 PLN on 9.75 PLN (1.8525). Which
-// one PKO BP applies is an open question for the author.
+// 0.44 PLN coupon (0.0836) and COI0423 1.85 PLN on 9.75 PLN (1.8525).
+// OpenFief follows the examples (D-37).
 func BelkaTax(interest kernel.Money, wrapper TaxWrapper) (kernel.Money, error) {
 	tax, err := belkaTax(interest.Amount(), wrapper)
 	if err != nil {
