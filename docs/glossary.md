@@ -17,9 +17,14 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Holding | ledger | `ledger.Holding` | The quantity of one instrument in one account on a date, derived from postings. | position (allowed only inside connector adapters, as the broker's word) |
 | Lot | ledger | `ledger.Lot` | A quantity acquired on a date at a cost; consumed FIFO. An opening lot is seeded from a broker's current positions instead of full history. | |
 | Balance assertion | ledger | `ledger.BalanceAssertion` | A broker-reported balance on a date that the derived balance must match; a mismatch is an error. | snapshot |
+| Model portfolio | portfolio | `portfolio.Model` | An optional weighted basket of targets for the whole portfolio, which the real portfolio is compared with. Entered by the owner in M0; GR-4's maintainer agent adjusts it from M2. | strategy, benchmark |
+| Target | portfolio | `portfolio.Target` | One instrument or index in the model portfolio, with its weight. The weights sum to 100%. | allocation |
+| Backtest | portfolio | `portfolio.Backtest` | The model portfolio's value series computed from end-of-day history, rebalanced to the target weights once a year. | simulation |
+| Max drawdown | portfolio | `portfolio.MaxDrawdown` | The worst fall from a peak to a later trough in a value series, with both dates. | max loss |
 | Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one role. Defensive: not available to agents. Offensive: the part fiefs are leased from. | bucket |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
 | Price | valuation | `valuation.Price` | An end-of-day price of an instrument from a market-data source. | quote |
+| Index | valuation | `valuation.Index` | A market index, such as WIG20 or MSCI World, with an end-of-day level series from the market-data connector. It can be a target, but it can't be held. | benchmark |
 | FX rate | valuation | `valuation.FXRate` | A rate to PLN; NBP table A in M0. | |
 | Valuation | valuation | `valuation.Valuation` | The value of a holding on a date, with its basis and source. | |
 | Valuation basis | valuation | `valuation.Basis` | `market`, `gross_accrued` or `net_if_redeemed`. | |
@@ -27,7 +32,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
 | Read API | views | `views` + `connectapi` | The public, read-only `/v1` API. | |
-| Plugin | plugins | `plugins.Plugin` | The custom resource for one installed, named instance of a plugin image: what it requests (image, manifest, config). | extension, addon |
+| Plugin | plugins | `plugins.Plugin` | The custom resource for one installed, named instance of a plugin image: the image and its manifest (the vendor's) and the instance's name and config (the owner's). Its status says whether the image is verified. | extension, addon |
 | Grant | plugins | `plugins.Grant` | The custom resource holding what the owner approved for a plugin. | permission set |
 | Catalog | plugins | `plugins.Catalog` | The file in the OpenFief repository that lists first-party and verified plugins, with pinned image digests and signer identities. | marketplace, registry |
 | Verified plugin | plugins | `plugins.Verified` | A plugin whose catalog entry pins a version the author reviewed. Anything installed by image reference alone is unverified. | official, trusted |
@@ -51,8 +56,6 @@ Don't create code for these before their milestone.
 | Fill | One execution against an order. |
 | Policy decision | The result of evaluating an intent: allow, deny or needs approval, with the rules matched. |
 | Audit event | One append-only record of a state change. |
-| Model portfolio | A target allocation the real portfolio follows and adjusts towards. |
-| Target | One weight in the model portfolio. |
 | Invalidation condition | A condition stated up front that would prove a thesis wrong, such as a price level or a fundamental change. |
 
 ### Rules
@@ -89,11 +92,13 @@ Don't create code for these before their milestone.
 | Double-entry bookkeeping | Every transaction is recorded as postings that sum to zero across accounts, so money never appears or vanishes; documented by Luca Pacioli in 1494. |
 | Egress proxy | A proxy that all outbound traffic from a set of pods must pass through, so destinations can be allowed by hostname rather than IP. |
 | End of day (EOD) | Prices or rates as of each trading day's close. |
+| EODHD | EOD Historical Data, a market-data vendor; the first market-data connector uses it. |
 | ESMA | European Securities and Markets Authority, the EU securities regulator. |
 | etcd | The key-value store that holds a Kubernetes cluster's state, including Secrets. |
 | FIFO | First in, first out: the oldest lots are treated as sold first when computing gains. |
 | Flex Query | IBKR's configurable reporting export (trades, positions, cash), retrievable through a web service with a token. |
 | Frontier model | The most capable models from the large labs, typically cloud-hosted. |
+| GPW | Giełda Papierów Wartościowych w Warszawie, the Warsaw Stock Exchange. |
 | GUS | Główny Urząd Statystyczny, Statistics Poland. |
 | HITL | Human in the loop: a person must approve before the system acts. |
 | htmx | A small JavaScript library that lets server-rendered HTML pages update parts of themselves without a front-end framework. |
@@ -132,6 +137,10 @@ Don't create code for these before their milestone.
 | RP ID | Relying-party ID: the domain a WebAuthn passkey is bound to. |
 | Smokescreen | Stripe's open-source egress proxy, written in Go, which checks each client's HTTP CONNECT destinations against a per-client allow-list. |
 | TIF | Time in force: how long an order stays working (for example day, or good-till-cancelled). |
+| TokenRequest / TokenReview | Kubernetes APIs: TokenRequest issues a short-lived ServiceAccount token for a chosen audience; TokenReview checks whether a token is valid. |
+| TWR / MWR | Time-weighted return chains the returns between cash flows, so deposits and withdrawals don't count as performance; it is the standard for comparing with a benchmark. Money-weighted return (an IRR, such as XIRR) weights by the money invested, so it reflects the investor's timing. |
+| Vanguard | A Go library by Buf that serves one Connect service as REST, gRPC and Connect, translating between them (transcoding). |
+| VWAP | Volume-weighted average price. |
 | WebAuthn / passkey | The web standard for public-key authentication; a passkey is a WebAuthn credential stored on a device. |
 | xAPI | XTB's former public trading API, shut down in 2025. |
 | XTB | X-Trade Brokers, a Polish broker. |

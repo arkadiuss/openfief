@@ -111,3 +111,4 @@ Interface outlines, not code. Every plugin also follows the decided plugin rules
 - **[OQ-12]** What authority does the GR-4 maintainer have? Does "maintains" include placing trades (for example rebalancing the defensive part), or only maintaining the model portfolio? Who sets the size of the offensive part: the owner, the model portfolio, or the maintainer? (P-32)
 - **[OQ-14]** May a cloud-hosted thesis agent see its own fief's amounts and positions? Are tier rules hard limits or defaults the owner can override under GR-11? (T-6, P-33)
 - **[OQ-18]** What hardware is available for local models?
+- **[OQ-29]** May raw market-data prices reach a cloud-hosted model (GR-8)? EODHD's terms forbid redistributing its data to others (R-16, D-51). Derived figures such as portfolio values are probably fine; raw price series sent to a model provider may not be.

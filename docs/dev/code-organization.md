@@ -7,16 +7,16 @@ Organized by domain, following DDD (domain-driven design). Names come from [the 
 | Context | Owns | Milestone |
 |---|---|---|
 | `ledger` | Accounts, ledger accounts, transactions, postings, instruments, holdings, lots, balance assertions | M0 |
-| `valuation` | Prices, FX rates, bond series and statutory valuation, valuations | M0 |
+| `valuation` | Prices, index levels, FX rates, bond series and statutory valuation, valuations | M0 |
 | `ingest` | Institutions, connectors' ingest paths, import batches, mapping broker data to the ledger | M0 |
 | `views` | The read API and view plugins (built-in UI, Ghostfolio) | M0 |
 | `plugins` | The operator: Plugin, Grant, manifests, egress allow-lists, image verification | M0 |
 | `identity` | Owner, passkeys, script tokens, plugin identity | M0 |
-| `portfolio` | Sleeves; later the model portfolio and targets | M0 (sleeves only) |
+| `portfolio` | Sleeves, the model portfolio and its targets, backtest and max drawdown | M0 (model portfolio optional) |
 | `jurisdiction/pl` | Polish rules: bond terms, tax wrappers; later PIT-38 | M0 (bonds) |
 | `fiefs`, `execution`, `orchestration`, `models`, `audit` | Leases, intents/orders/policy, agents and wakes, model routing, audit log | M1+ |
 
-**Context map (P).** `ingest` writes to `ledger` and `valuation` through their app APIs. `valuation` reads `ledger`. `views` reads `ledger`, `valuation` and `portfolio`. `jurisdiction/pl` is pure rules used by `valuation`. `plugins` and `identity` are independent. Dependencies never point the other way. A tiny shared kernel `internal/kernel` holds money, currency, quantity and date types.
+**Context map (P).** `ingest` writes to `ledger` and `valuation` through their app APIs. `valuation` reads `ledger`. `portfolio` reads `valuation` for prices and FX rates. `views` reads `ledger`, `valuation` and `portfolio`. `jurisdiction/pl` is pure rules used by `valuation`. `plugins` and `identity` are independent. Dependencies never point the other way. A tiny shared kernel `internal/kernel` holds money, currency, quantity and date types.
 
 ## Layout (P)
 
