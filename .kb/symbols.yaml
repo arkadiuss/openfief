@@ -4168,42 +4168,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-egress-address
-  - id: SYM-kernel-decimal-div
-    title: Decimal.Div
-    sourceFile: internal/kernel/decimal.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:13:32.918Z
-    relationships:
-      - type: covered_by
-        target: TEST-kernel-decimal
-      - type: implements
-        target: REQ-kernel-decimal-exact
-  - id: SYM-kernel-rounds-away
-    title: roundsAway
-    sourceFile: internal/kernel/decimal.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:13:35.132Z
-    relationships:
-      - type: covered_by
-        target: TEST-kernel-decimal
-      - type: implements
-        target: REQ-kernel-decimal-exact
-  - id: SYM-kernel-test-decimal-div
-    title: TestDecimalDiv
-    sourceFile: internal/kernel/decimal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:13:37.041Z
-    relationships:
-      - type: executable_for
-        target: TEST-kernel-decimal
   - id: SYM-portfolio-role
     title: Role
     sourceFile: internal/portfolio/sleeve.go

@@ -6,13 +6,6 @@ relationships:
     created_at: "2026-10-28T04:51:26.076Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-  - type: executable_for
-    from: SYM-kernel-test-decimal-div
-    to: TEST-kernel-decimal
-    created_at: 2026-10-28T05:13:37.138Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5b3128fcd211
   - type: implements
     from: SYM-ledger-book
     to: REQ-ledger-posting-ledger-account

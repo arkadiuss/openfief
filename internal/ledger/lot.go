@@ -106,7 +106,7 @@ func ConsumeFIFO(lots []Lot, qty kernel.Quantity) (LotConsumption, error) {
 // than units, rounded as LotCostPlaces describes. The caller leaves the exact
 // rest in the lot.
 func consumedCost(lot *Lot, units kernel.Quantity) (kernel.Money, error) {
-	share, err := lot.Cost.Amount().Mul(units.Decimal()).Div(lot.Quantity.Decimal(), LotCostPlaces, kernel.RoundHalfEven)
+	share, err := lot.Cost.Amount().Mul(units.Decimal()).Quo(lot.Quantity.Decimal(), LotCostPlaces, kernel.RoundHalfEven)
 	if err != nil {
 		return kernel.Money{}, fmt.Errorf("splitting lot %s: %w", lot.Origin, err)
 	}
