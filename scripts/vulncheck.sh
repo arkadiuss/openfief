@@ -15,12 +15,15 @@ unreachable() {
 }
 
 network_error='dial|lookup|no such host|connection refused|i/o timeout|ENOTFOUND|ECONNREFUSED|ETIMEDOUT|EAI_AGAIN'
+# govulncheck prefixes every failure to download its database with this; findings exit 3 instead.
+# It covers an egress proxy that refuses vuln.go.dev (403 Forbidden), which no dial error shows.
+govulndb_error='fetching vulnerabilities'
 
 if [ -f go.mod ]; then
   out="$(govulncheck ./... 2>&1)"
   rc=$?
   if [ "$rc" -ne 0 ]; then
-    if [ "$rc" -ne 3 ] && grep -qiE "$network_error" <<<"$out"; then
+    if [ "$rc" -ne 3 ] && grep -qiE "$network_error|$govulndb_error" <<<"$out"; then
       unreachable "vuln.go.dev"
     else
       echo "$out" >&2
