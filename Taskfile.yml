@@ -35,11 +35,12 @@ tasks:
       - '{{.TASK_EXE}} --list'
 
   setup:
-    desc: One-time setup per clone (pinned tools, kibi, git hooks)
+    desc: One-time setup per clone (pinned tools, kibi, git hooks, kibi merge driver)
     cmds:
       - task: tools
       - task: kibi:install
       - task: hooks
+      - task: merge-driver
 
   setup:ci:
     desc: CI setup (pinned tools, kibi, this branch's knowledge base); no git hooks
@@ -112,6 +113,12 @@ tasks:
     desc: Install git hooks (lefthook); hooks only call task targets
     cmds:
       - '{{.BIN}}/lefthook install'
+
+  merge-driver:
+    desc: Register kibi's merge driver for the .kb files named in .gitattributes
+    cmds:
+      - git config merge.kibi.name "kibi record merge"
+      - git config merge.kibi.driver "{{.KIBI}} merge-driver %O %A %B"
 
   check:
     desc: Full local pipeline, identical to CI
