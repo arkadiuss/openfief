@@ -41,7 +41,7 @@ jobs:
 
   docs:
     # Publishes the docs site to GitHub Pages from the same run that deploys the demo.
-    # The owner sets Settings > Pages > Source to "GitHub Actions" and the custom domain docs.openfief.dev once.
+    # The owner sets Settings > Pages > Source to "GitHub Actions" and the custom domain openfief.dev once.
     name: publish docs
     if: github.event_name == 'push'
     needs: check

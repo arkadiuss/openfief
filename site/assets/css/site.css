@@ -52,7 +52,8 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .brand { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; letter-spacing: 0.01em; }
 .tagline { color: var(--muted); font-size: 0.9rem; }
-.toplinks { margin-left: auto; }
+.toplinks { margin-left: auto; display: flex; gap: 1.1rem; }
+.mark { vertical-align: -4px; margin-right: 0.45rem; color: var(--accent); }
 .toplinks a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
 .toplinks a:hover { color: var(--accent); }
 .nav-toggle, .nav-button { display: none; }
@@ -163,6 +164,44 @@ th { background: var(--bg-sunken); font-weight: 600; }
 .footer { border-top: 1px solid var(--border); padding: 1rem 1.25rem 2rem; color: var(--muted); font-size: 0.85rem; text-align: center; }
 .footer a { color: var(--muted); }
 
+/* Landing page (site/layouts/home.html): one centered column, wider than a docs page. */
+.landing main { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem 3rem; }
+.hero { padding: 4.5rem 0 3rem; }
+.eyebrow { margin: 0 0 1rem; color: var(--muted); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.hero h1 { font-size: clamp(2.3rem, 5.6vw, 3.8rem); line-height: 1.08; letter-spacing: -0.025em; max-width: 18ch; margin: 0 0 1.2rem; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-lede { font-size: 1.2rem; color: var(--muted); max-width: 40rem; margin: 0 0 1.8rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0 0 1.6rem; }
+.button {
+  display: inline-block; padding: 0.6rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg-raised); color: var(--text); font-weight: 600; text-decoration: none;
+}
+.button:hover { border-color: var(--accent); color: var(--accent); }
+.button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.button.primary:hover { color: var(--bg); filter: brightness(1.1); }
+.stage {
+  display: inline-block; margin: 0; padding: 0.5rem 0.8rem; max-width: 40rem;
+  background: var(--notice-bg); border-left: 3px solid var(--notice-border); border-radius: 4px; font-size: 0.92rem;
+}
+.features { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
+.features li { padding: 1.1rem 1.2rem 1.2rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); }
+.features h2 { font-size: 1.08rem; margin: 0.6rem 0 0.4rem; padding: 0; border: 0; }
+.features p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.state { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.state-built { background: #e3f1e4; color: #2f6b33; }
+.state-partly-built { background: #fff1c7; color: #7a5a00; }
+.state-planned { background: var(--bg-sunken); color: var(--muted); }
+@media (prefers-color-scheme: dark) {
+  .state-built { background: #1f3323; color: #8fd694; }
+  .state-partly-built { background: #3a3016; color: #e8c76a; }
+}
+.verified { margin: 3.5rem 0; padding: 1.6rem 1.8rem; background: var(--accent-soft); border-radius: var(--radius); }
+.verified h2 { margin: 0 0 0.6rem; padding: 0; border: 0; }
+.verified p { max-width: 46rem; }
+.counts { list-style: none; margin: 1.4rem 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.2rem 2.6rem; color: var(--muted); }
+.count { display: block; font-size: 2.4rem; font-weight: 700; line-height: 1.1; color: var(--accent); }
+.story { max-width: 46rem; }
+
 /* Narrower screens: drop the on-this-page column, then fold the navigation behind the menu button. */
 @media (max-width: 1180px) {
   .layout { grid-template-columns: 15rem minmax(0, 46rem); }
@@ -175,4 +214,8 @@ th { background: var(--bg-sunken); font-weight: 600; }
   .sidebar { display: none; position: static; max-height: none; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
   .nav-toggle:checked ~ .layout .sidebar { display: block; }
   h1 { font-size: 1.7rem; }
+  .landing main { padding: 0 1rem 2rem; }
+  .hero { padding: 2.5rem 0 2rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .verified { padding: 1.2rem 1.1rem; }
 }

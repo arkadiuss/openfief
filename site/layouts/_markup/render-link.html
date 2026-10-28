@@ -1,9 +1,10 @@
 {{- /*
 Every relative link is checked at build time, so a broken one fails the build:
-- a Markdown file or folder under docs/ becomes the site page it renders to;
+- a Markdown file or folder under docs/ or site/ becomes the site page it renders to;
 - any other repository path must exist and becomes a GitHub link pinned to the built commit;
 - a same-page #fragment must name a heading on the page;
-- a site path (/requirements/) is made relative to the site's base URL.
+- a site path is made relative to the site's base URL; on a docs page it names a docs path, so /status/ is
+  /docs/status/, the same in hand-written and generated pages.
 */ -}}
 {{- $dest := .Destination -}}
 {{- $href := $dest -}}
@@ -15,7 +16,9 @@ Every relative link is checked at build time, so a broken one fails the build:
   {{- /* External link: kept as written. */ -}}
 {{- else if hasPrefix $dest "/" -}}
   {{- /* Site path such as the generated requirements report: made relative to the site's base URL. */ -}}
-  {{- $href = relURL (strings.TrimPrefix "/" $dest) -}}
+  {{- $path := strings.TrimPrefix "/" $dest -}}
+  {{- if hasPrefix $p.RelPermalink "/docs/" -}}{{- $path = printf "docs/%s" $path -}}{{- end -}}
+  {{- $href = relURL $path -}}
 {{- else if hasPrefix $dest "#" -}}
   {{- if not ($p.Fragments.Identifiers.Contains $u.Fragment) -}}
     {{- errorf "%s: link %q names no heading on this page" $from $dest -}}
@@ -24,9 +27,11 @@ Every relative link is checked at build time, so a broken one fails the build:
   {{- $target := path.Clean (path.Join (path.Dir $from) $u.Path) -}}
   {{- $frag := cond (ne $u.Fragment "") (printf "#%s" $u.Fragment) "" -}}
   {{- $page := false -}}
-  {{- range slice "docs/" "site/content/" "site/.gen/content/" -}}
-    {{- if and (not $page) (or (hasPrefix $target .) (eq (printf "%s/" $target) .)) -}}
-      {{- $page = site.GetPage (printf "/%s" (strings.TrimPrefix . (printf "%s/" $target) | strings.TrimSuffix "/")) -}}
+  {{- /* Each mounted folder and the content path it is mounted at (site/hugo.toml). */ -}}
+  {{- range slice (slice "docs/" "docs/") (slice "site/content/" "") (slice "site/.gen/content/" "docs/") -}}
+    {{- $dir := index . 0 -}}
+    {{- if and (not $page) (or (hasPrefix $target $dir) (eq (printf "%s/" $target) $dir)) -}}
+      {{- $page = site.GetPage (printf "/%s%s" (index . 1) (strings.TrimPrefix $dir (printf "%s/" $target) | strings.TrimSuffix "/")) -}}
     {{- end -}}
   {{- end -}}
   {{- if $page -}}

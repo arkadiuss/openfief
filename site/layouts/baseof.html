@@ -7,9 +7,11 @@
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
   <header class="topbar">
     <label for="nav-toggle" class="nav-button" aria-label="Menu">&#9776;</label>
-    <a class="brand" href="{{ site.Home.RelPermalink }}">OpenFief</a>
+    <a class="brand" href="{{ site.Home.RelPermalink }}">{{ partial "mark.html" }}OpenFief</a>
     <span class="tagline">Give your AI agents a fief, not the kingdom.</span>
     <nav class="toplinks">
+      <a href="{{ (site.GetPage "/docs").RelPermalink }}">Docs</a>
+      <a href="{{ (site.GetPage "/docs/status.md").RelPermalink }}">Status</a>
       <a href="{{ site.Params.repoURL }}">GitHub</a>
     </nav>
   </header>

@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'none'; base-uri 'none'; form-action 'none'">
-<title>{{ if .IsHome }}{{ site.Title }} documentation{{ else }}{{ $title }} · {{ site.Title }}{{ end }}</title>
+<title>{{ if .IsHome }}{{ site.Title }}: give your AI agents a fief, not the kingdom{{ else }}{{ $title }} · {{ site.Title }}{{ end }}</title>
 {{- with .Description }}
 <meta name="description" content="{{ . }}">
 {{- end }}

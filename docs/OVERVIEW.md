@@ -54,7 +54,7 @@ flowchart LR
 
 ## Status and how to help
 
-Design phase, no code yet. Useful now:
+Milestone M0, the tracker, is in progress: the ledger, valuation and import libraries, the read API, the plugin operator and the egress proxy are built; the core service, UI and connectors are not yet. The [status page](https://openfief.dev/docs/status/) tracks every decision. Useful now:
 
 - Critique of the security model, especially the lease guarantees.
 - Experience with the Interactive Brokers API or its linked accounts as a Polish resident.

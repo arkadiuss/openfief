@@ -1,9 +1,71 @@
-{{ define "main" }}
-<article class="home">
-  <h1>{{ partial "title.html" . }}</h1>
-  {{- with .Description }}
-  <p class="lede">{{ . }}</p>
-  {{- end }}
-  {{ .Content }}
-</article>
-{{ end }}
+{{- /*
+The landing page at the site root. Its copy is in site/content/_index.md; the docs live under /docs/.
+The decision counts come from the generated status page, so they are as current as the build.
+*/ -}}
+{{- $docs := site.GetPage "/docs" -}}
+{{- $status := site.GetPage "/docs/status.md" -}}
+{{- $counts := slice -}}
+{{- range slice (slice "Built and tested" "built and tested") (slice "Partly built" "partly built") (slice "Not built" "not built yet") -}}
+  {{- $m := findRESubmatch (printf `"%s" : (\d+)` (index . 0)) $status.RawContent 1 -}}
+  {{- if not $m -}}
+    {{- errorf "home.html: the status page has no %q count; did tools/docgen change its pie chart?" (index . 0) -}}
+  {{- end -}}
+  {{- $counts = $counts | append (dict "n" (index (index $m 0) 1) "label" (index . 1)) -}}
+{{- end -}}
+<!doctype html>
+<html lang="en">
+<head>
+  {{- partial "head.html" . }}
+</head>
+<body class="landing">
+  <header class="topbar">
+    <a class="brand" href="{{ .RelPermalink }}">{{ partial "mark.html" }}OpenFief</a>
+    <nav class="toplinks">
+      <a href="{{ $docs.RelPermalink }}">Docs</a>
+      <a href="{{ $status.RelPermalink }}">Status</a>
+      <a href="{{ site.Params.repoURL }}">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">{{ .Params.eyebrow }}</p>
+      <h1>Give your AI agents a <em>fief</em>, not the kingdom.</h1>
+      <p class="hero-lede">{{ .Params.lede }}</p>
+      <p class="actions">
+        <a class="button primary" href="{{ $docs.RelPermalink }}">Read the docs</a>
+        <a class="button" href="{{ (site.GetPage "/docs/architecture.md").RelPermalink }}">See the architecture</a>
+        <a class="button" href="{{ site.Params.repoURL }}">GitHub</a>
+      </p>
+      <p class="stage">{{ .Params.stage }}</p>
+    </section>
+
+    <section class="band">
+      <ul class="features">
+        {{- range .Params.features }}
+        <li>
+          <span class="state state-{{ .state | urlize }}">{{ .state }}</span>
+          <h2>{{ .title }}</h2>
+          <p>{{ .text | markdownify }}</p>
+        </li>
+        {{- end }}
+      </ul>
+    </section>
+
+    <section class="verified">
+      <h2>Verified as it's built</h2>
+      <p>Every design decision has an ID, every requirement is traced to the code and the tests behind it, and a docs page that falls behind its code fails the build. This build counts the decisions:</p>
+      <ul class="counts">
+        {{- range $counts }}
+        <li><span class="count">{{ .n }}</span> {{ .label }}</li>
+        {{- end }}
+      </ul>
+      <p><a href="{{ $status.RelPermalink }}">See every decision and its evidence</a></p>
+    </section>
+
+    <article class="story">
+      {{ .Content }}
+    </article>
+  </main>
+  {{- partial "footer.html" . }}
+</body>
+</html>

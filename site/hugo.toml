@@ -1,7 +1,8 @@
 # OpenFief docs site (docs/dev/docs.md). Built from the repository root by `task docs:build`:
 #   hugo --source . --config site/hugo.toml
-# so links to source files resolve against the real tree. docs/ is mounted as content unchanged.
-baseURL = 'https://docs.openfief.dev/'
+# so links to source files resolve against the real tree. docs/ is mounted unchanged under /docs/; the landing page
+# (site/content/_index.md) is the site's home.
+baseURL = 'https://openfief.dev/'
 # Every link and asset is written relative to its page, so the same build works at the custom domain, at the
 # GitHub Pages fallback URL, and opened from disk out of a release's docs tarball.
 relativeURLs = true
@@ -24,37 +25,37 @@ timeout = '120s'
 # Any top-level page or section left out appears under "More", so a new page is never hidden.
 [[params.nav]]
   title = 'Start here'
-  pages = ['/OVERVIEW.md', '/architecture.md', '/status.md']
+  pages = ['/docs/OVERVIEW.md', '/docs/architecture.md', '/docs/status.md']
 [[params.nav]]
   title = 'Concepts'
-  section = '/concepts'
+  section = '/docs/concepts'
 [[params.nav]]
   title = 'Design'
-  pages = ['/DESIGN.md', '/glossary.md', '/proposals', '/research.md']
+  pages = ['/docs/DESIGN.md', '/docs/glossary.md', '/docs/proposals', '/docs/research.md']
 [[params.nav]]
   title = 'Reference'
-  section = '/reference'
+  section = '/docs/reference'
 [[params.nav]]
   title = 'Development'
-  section = '/dev'
+  section = '/docs/dev'
 
 # Short sidebar labels for pages whose title (their first heading) is long.
 [params.navLabels]
-  '/overview.md' = 'Overview'
-  '/design.md' = 'Design'
-  '/research.md' = 'Research'
-  '/proposals' = 'Proposals'
+  '/docs/overview.md' = 'Overview'
+  '/docs/design.md' = 'Design'
+  '/docs/research.md' = 'Research'
+  '/docs/proposals' = 'Proposals'
 
 [module]
   [[module.mounts]]
     source = 'docs'
-    target = 'content'
+    target = 'content/docs'
   [[module.mounts]]
     source = 'site/content'
     target = 'content'
   [[module.mounts]]
     source = 'site/.gen/content'
-    target = 'content'
+    target = 'content/docs'
   [[module.mounts]]
     source = 'site/layouts'
     target = 'layouts'
@@ -66,7 +67,7 @@ timeout = '120s'
     target = 'assets/diagrams'
   [[module.mounts]]
     source = 'site/.gen/static'
-    target = 'static'
+    target = 'static/docs'
 
 [markup.goldmark.renderer]
   unsafe = false

@@ -4,8 +4,8 @@
   {{- with .Description }}
   <p class="lede">{{ . }}</p>
   {{- end }}
-  {{- if eq .Section "proposals" }}
-  <p class="notice">Proposals are not decided. Decisions live in <a href="{{ (site.GetPage "/DESIGN.md").RelPermalink }}">the design</a>.</p>
+  {{- if eq .CurrentSection.Path "/docs/proposals" }}
+  <p class="notice">Proposals are not decided. Decisions live in <a href="{{ (site.GetPage "/docs/DESIGN.md").RelPermalink }}">the design</a>.</p>
   {{- end }}
   {{- partial "covers.html" . }}
   {{ .Content }}
