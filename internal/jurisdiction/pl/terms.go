@@ -36,15 +36,29 @@ type Terms struct {
 	// Margin is added to the period index from the second period on; it is
 	// unused for fixed-rate types.
 	Margin kernel.Decimal
-	// EarlyRedemptionFee is charged per bond redeemed before maturity, in PLN.
+	// EarlyRedemptionFee is the amount (b in the issue letters) deducted per
+	// bond redeemed before maturity, in PLN. ValueLot applies its cap and its
+	// waiver; OTS has none, since an early-redeemed OTS earns no interest.
 	EarlyRedemptionFee kernel.Money
 }
 
 // Indices are the published readings that set the rates of interest periods
-// after the first, keyed by period number (2, 3, ...): CPI year on year from
-// GUS for inflation-indexed types (see CPIMonth), or the NBP reference rate
-// for ROR and DOR. A reading is a yearly fraction: CPI of 104.9 (previous
-// year = 100) is 0.049.
+// after the first, keyed by period number (2, 3, ...). A reading is a yearly
+// fraction: CPI of 104.9 (previous year = 100) is 0.049.
+//
+//   - Inflation-indexed types take CPI year on year "ogłaszanej przez Prezesa
+//     Głównego Urzędu Statystycznego w miesiącu poprzedzającym pierwszy
+//     miesiąc danego okresu odsetkowego" (issue letters of EDO, COI, ROS and
+//     ROD, ust. 16 or 10, and Załącznik nr 1); CPIMonth names that reading.
+//   - ROR and DOR take the NBP reference rate "obowiązującej w dziesiątym dniu
+//     roboczym przed pierwszym dniem miesiąca kalendarzowego, w którym
+//     rozpoczyna się okres odsetkowy" (ROR and DOR issue letters, ust. 16 and
+//     Załącznik nr 1); the caller picks that reading, since business days
+//     need the statutory holiday calendar.
+//
+// Sources: the issue letters linked from each series' offer page under
+// https://www.obligacjeskarbowe.pl/oferta-obligacji/ (for example list
+// emisyjny nr 99/2026 for EDO1036 and nr 95/2026 for ROR1027).
 type Indices map[int]kernel.Decimal
 
 // MissingIndexError reports an interest period whose index reading the
@@ -61,9 +75,10 @@ func (e *MissingIndexError) Error() string {
 
 // PeriodRate returns the yearly rate of interest period n starting on start.
 // Period 1 and every period of a fixed-rate type use FirstPeriodRate. Later
-// periods of an inflation-indexed type use the CPI reading plus Margin, where
-// a negative CPI (deflation) counts as zero, so the rate never falls below the
-// margin. Later periods of ROR and DOR use the NBP reference rate plus Margin.
+// periods use r = i + m (Załącznik nr 1 of the issue letters): the index
+// reading i plus Margin m, where "w przypadku gdy i < 0 przyjmuje się że
+// i = 0". The floor applies to CPI (EDO, COI, ROS, ROD) and to the NBP
+// reference rate (ROR, DOR) alike, so the rate never falls below the margin.
 func (t *Terms) PeriodRate(idx Indices, n int, start kernel.Date) (kernel.Decimal, error) {
 	st, err := t.Series.Type.Structure()
 	if err != nil {
@@ -76,7 +91,7 @@ func (t *Terms) PeriodRate(idx Indices, n int, start kernel.Date) (kernel.Decima
 	if !ok {
 		return kernel.Decimal{}, &MissingIndexError{Series: t.Series, Period: n, Start: start}
 	}
-	if st.Indexation == Inflation && reading.Sign() < 0 {
+	if reading.Sign() < 0 {
 		reading = kernel.Decimal{}
 	}
 	return reading.Add(t.Margin), nil

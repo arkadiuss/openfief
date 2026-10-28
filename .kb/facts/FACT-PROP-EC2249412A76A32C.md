@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:pl.early_redemption_fee:capped_at_accr
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-F99E6EEB53A988A7
-claim_text: The net-if-redeemed value must deduct the series' early-redemption fee per bond, capped at the bond's accrued interest except for coupon types after their first interest period, and no fee at or after maturity.
+claim_key: CLAIM-4B0EDD6B0BB6A79B
+claim_text: The net-if-redeemed value must deduct the series' early-redemption fee per bond, capped at the bond's accrued interest except for coupon types after their first interest period, with no fee at or after maturity, none inside IKE or IKZE, and none for OTS, which instead earns no interest when redeemed early.
 origin:
   kind: agent
   recorded_at: '2026-10-28T05:21:59.195Z'

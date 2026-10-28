@@ -39,7 +39,7 @@ const (
 type BondType int
 
 const (
-	// OTS is a 3-month fixed-rate bond; interest is paid at maturity.
+	// OTS is a 3-month fixed-rate bond; interest is paid only at maturity.
 	OTS BondType = iota + 1
 	// ROR is a 1-year bond with monthly coupons at the NBP reference rate plus a margin.
 	ROR
@@ -74,10 +74,18 @@ type Payout int
 
 const (
 	// Capitalized adds each period's interest to the base of the next; all of
-	// it is paid at redemption (OTS, TOS, EDO, ROS, ROD).
+	// it is paid at redemption, early or at maturity (TOS, EDO, ROS, ROD).
 	Capitalized Payout = iota + 1
 	// Coupon pays each period's interest out at the period's end (ROR, DOR, COI).
 	Coupon
+	// AtMaturity pays a fixed amount of interest at maturity and none on early
+	// redemption, which returns the nominal. OTS issue letter (list emisyjny
+	// nr 94/2026, OTS0127, linked from
+	// https://www.obligacjeskarbowe.pl/oferta-obligacji/obligacje-3-miesieczne-ots/ots0127/),
+	// ust. 12-14 (2.00% a year, 0.50 PLN of interest per bond at maturity)
+	// and ust. 23 pkt 3-4 ("odsetki od obligacji nie przysługują", "wykup
+	// obligacji następuje wg ich wartości nominalnej").
+	AtMaturity
 )
 
 // Structure is the shape every series of one bond type shares.
@@ -94,7 +102,7 @@ func (b BondType) Structure() (Structure, error) {
 	const year = monthsPerYear
 	switch b {
 	case OTS:
-		return Structure{TenorMonths: otsTenor, PeriodMonths: otsTenor, Indexation: Fixed, Payout: Capitalized}, nil
+		return Structure{TenorMonths: otsTenor, PeriodMonths: otsTenor, Indexation: Fixed, Payout: AtMaturity}, nil
 	case ROR:
 		return Structure{TenorMonths: rorTenor, PeriodMonths: 1, Indexation: ReferenceRate, Payout: Coupon}, nil
 	case DOR:
@@ -143,7 +151,11 @@ func bondTypes() []bondTypeCode {
 
 // Series is a retail treasury bond series, such as EDO0536: the bond type
 // and the month the series matures. Every bond of a series is sold in the
-// same month, and each bond's term runs from its own purchase date.
+// same calendar month, by cash or by exchange (zamiana), and each bond's term
+// runs from its own purchase date: issue letter ust. 4 ("oferowane do
+// sprzedaży w dniach od 1 do 31 października 2026 r.") and the offer pages
+// ("data wykupu obligacji stanowi datę zakupu nowych obligacji"), see
+// https://www.obligacjeskarbowe.pl/listy-emisyjne/.
 type Series struct {
 	Type          BondType
 	MaturityYear  int

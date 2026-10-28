@@ -8,15 +8,21 @@
 // reference rate) are inputs, never hard-coded.
 //
 // Sources:
-//   - Offer and issue letters (listy emisyjne) of each series:
-//     https://www.obligacjeskarbowe.pl/oferta-obligacji/ and
-//     https://www.obligacjeskarbowe.pl/listy-emisyjne/
+//   - Issue letters (listy emisyjne) of each series, linked as "Zobacz list
+//     emisyjny" from its offer page under
+//     https://www.obligacjeskarbowe.pl/oferta-obligacji/ and listed at
+//     https://www.obligacjeskarbowe.pl/listy-emisyjne/. Doc comments cite the
+//     October 2026 letters: OTS0127 (nr 94/2026), ROR1027 (nr 95/2026),
+//     DOR1028 (nr 96/2026), TOS1029 (nr 97/2026), COI1030 (nr 98/2026),
+//     EDO1036 (nr 99/2026), ROS1032 (nr 100/2026) and ROD1038 (nr 101/2026).
+//   - Interest tables (tabele odsetkowe) with each series' daily accrued
+//     interest per bond: https://www.obligacjeskarbowe.pl/tabela-odsetkowa/.
 //   - Personal income tax act (ustawa o podatku dochodowym od osób
 //     fizycznych): art. 11a ust. 1 (NBP average rate of the last business day
-//     before the day of income), art. 30a ust. 1 pkt 2 (19% on interest),
-//     art. 21 ust. 1 pkt 58 (IKE exemption):
+//     before the day of income), art. 30a ust. 1 pkt 2 (19% on interest and
+//     discount of securities), art. 21 ust. 1 pkt 58 (IKE exemption):
 //     https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19910800350
-//   - Tax ordinance (Ordynacja podatkowa) art. 63 § 1a (withheld tax on
-//     interest rounded to whole grosze):
+//   - Tax ordinance (Ordynacja podatkowa) art. 63 § 1a (rounding of the tax
+//     on interest; see BelkaTax for how it differs from the issuer's examples):
 //     https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19971370926
 package pl

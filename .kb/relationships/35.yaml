@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-08a9d47ab44b
+    type: validates
+    from: TEST-pl-official
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: "2026-10-28T06:03:59.191Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: validates
+    from: TEST-pl-official
+    to: REQ-AUTO-E10BE8CE13E67657
+    created_at: 2026-10-28T06:03:59.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-820cbb098d0f

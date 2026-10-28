@@ -34,12 +34,14 @@ A bond series code must parse into its bond type and maturity month, and a bond 
 
 ## Context
 
-Bond lots are entered by hand with series, quantity and purchase date (D-9), so a typo in the series code would silently value the wrong product. The code's three letters give the bond type; its MMYY gives the maturity month, and each bond's term runs from its own purchase date. Refines REQ-AUTO-FD50BCD71546E83F. Modeled by Claude Code for the M0 valuation task; the author has not reviewed it yet. obligacjeskarbowe.pl and gov.pl were not reachable from the agent's sandbox, so the rule was checked only against search-result excerpts of issue letters and secondary calculators.
+Bond lots are entered by hand with series, quantity and purchase date (D-9), so a typo in the series code would silently value the wrong product. The code's three letters give the bond type; its MMYY gives the maturity month, and each bond's term runs from its own purchase date. Every series is sold only from the 1st to the last day of its own month (issue letters ust. 4); a purchase by exchange is dated on the old bond's maturity day, which falls in the month the new series is sold, so the rule holds for exchanges too. Refines REQ-AUTO-FD50BCD71546E83F. Modeled by Claude Code; the author has not reviewed it yet. Checked on 2026-10-28 against the October 2026 issue letters (listy emisyjne nr 94/2026 to 101/2026: OTS0127, ROR1027, DOR1028, TOS1029, COI1030, EDO1036, ROS1032, ROD1038), older letters (TOS0128, TOS0227, COI0128, EDO1133, ROD0236, ROS0228), the interest tables and the worked examples on obligacjeskarbowe.pl.
 
 ## Source
+
+> Obligacje są oferowane do sprzedaży w dniach od 1 do 31 października 2026 r.
+
+EDO1036 issue letter, ust. 4; https://www.obligacjeskarbowe.pl/oferta-obligacji/ (each offer page links its issue letter) and https://www.obligacjeskarbowe.pl/listy-emisyjne/
 
 > treasury bonds through manual lot entry (series, quantity, purchase date) with valuation computed
 
 docs/DESIGN.md D-9
-
-Product pages: https://www.obligacjeskarbowe.pl/oferta-obligacji/ and https://www.obligacjeskarbowe.pl/listy-emisyjne/

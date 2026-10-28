@@ -7,4 +7,4 @@ origin:
 id: SCEN-pl-tax-wrapper-exempt
 type: scenario
 ---
-Given the same lot of 10 EDO bonds held in an IKE account, when it is valued as if redeemed today, then no tax is withheld and the net value is 1030.20 - 20.00 = 1010.20 PLN; given a TOS lot in IKZE, then no tax is withheld either. Assumes the IKE withdrawal conditions are met and leaves the IKZE withdrawal tax to the account.
+Given the same lot of 10 EDO bonds held in an IKE account, when it is valued as if redeemed today, then neither the early-redemption fee nor tax is deducted and the net value equals the gross 1030.20 PLN; given a TOS lot in IKZE, then no fee or tax is deducted either. Assumes the IKE withdrawal conditions are met and leaves the IKZE withdrawal tax to the account.

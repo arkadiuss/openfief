@@ -55,6 +55,11 @@ func TestPeriodStart(t *testing.T) {
 		{name: "yearly period 2", typ: pl.EDO, purchased: "2024-03-15", n: 2, want: "2025-03-15"},
 		{name: "monthly period from Jan 31 ends Feb 28", typ: pl.ROR, purchased: "2025-01-31", n: 2, want: "2025-02-28"},
 		{name: "monthly period 3 goes back to the 31st", typ: pl.ROR, purchased: "2025-01-31", n: 3, want: "2025-03-31"},
+		// ROR1027 issue letter, Załącznik nr 3, row "31.10.2026".
+		{name: "ROR1027 letter: bought 31.10.2026, period 2 starts 30.11.2026", typ: pl.ROR, purchased: "2026-10-31", n: 2, want: "2026-11-30"},
+		{name: "ROR1027 letter: bought 31.10.2026, period 5 starts 28.02.2027", typ: pl.ROR, purchased: "2026-10-31", n: 5, want: "2027-02-28"},
+		{name: "ROR1027 letter: bought 31.10.2026, period 6 starts 31.03.2027", typ: pl.ROR, purchased: "2026-10-31", n: 6, want: "2027-03-31"},
+		{name: "ROR1027 letter: bought 30.10.2026, period 6 starts 30.03.2027", typ: pl.ROR, purchased: "2026-10-30", n: 6, want: "2027-03-30"},
 		{name: "leap-day purchase, next year Feb 28", typ: pl.TOS, purchased: "2024-02-29", n: 2, want: "2025-02-28"},
 		{name: "leap-day purchase, 4 years later Feb 29", typ: pl.EDO, purchased: "2024-02-29", n: 5, want: "2028-02-29"},
 	}
