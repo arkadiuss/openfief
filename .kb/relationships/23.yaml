@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a49416b9b7a
+  - type: implements
+    from: SYM-demo-demo-ssh-mode
+    to: REQ-tooling-demo-access
+    created_at: 2026-10-28T14:36:22.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f46439bf71a5
+  - type: implements
+    from: SYM-demo-demo-ssh-mode
+    to: REQ-tooling-demo-ssh-throwaway
+    created_at: 2026-10-28T14:36:22.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccd9403cd05b
+  - type: covered_by
+    from: SYM-demo-demo-ssh-mode
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T14:36:22.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93fd58d9af52

@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1539e77db6a1
+  - type: verified_by
+    from: SCEN-tooling-demo-dns-fallback
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T14:35:28.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32b0b3613071
+  - type: verified_by
+    from: SCEN-tooling-demo-ssh-throwaway
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T14:35:33.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce2ef5c21981

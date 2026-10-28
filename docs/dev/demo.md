@@ -11,34 +11,39 @@ covers:
 
 **(P)** This page is a Claude Code proposal, written for the author's request for committed automation that makes it easy to create and recreate demo machines within about €10 a month. The rules it serves are in [sdlc.md](sdlc.md#ci-and-environments): a Hetzner machine running k3s, deployed from `main` and from beta releases, holding synthetic data only (GR-12). Commands live in `Taskfile.yml`.
 
-A demo is one Hetzner Cloud server running k3s. cloud-init installs pinned k3s and Flux, and Flux pulls everything else from `deploy/demo` in this repository. Nothing holds state outside Hetzner and git: every resource carries the labels `app=openfief` and `env=<name>`, and the scripts find resources by those labels. So any session with the token can create, inspect or destroy a demo, and `up` never creates something twice. The data in a demo is a generated, synthetic dataset ([Demo data](#demo-data)).
+A demo is one Hetzner Cloud server running k3s. cloud-init installs pinned k3s and Flux, and Flux pulls everything else from `deploy/demo` in this repository. Nothing holds state outside Hetzner, Cloudflare and git: every Hetzner resource carries the labels `app=openfief` and `env=<name>`, every DNS record the comment `managed-by=openfief-demo env=<name>`, and the scripts find resources by those labels and comments. So any session with the token can create, inspect or destroy a demo, and `up` never creates something twice. The data in a demo is a generated, synthetic dataset ([Demo data](#demo-data)).
 
 ## Before the first demo
 
-1. **API token.** In the Hetzner Cloud console, open the project, then Security > API tokens, and create a Read & Write token. Export it only in the shell that runs the commands: `read -rs HCLOUD_TOKEN && export HCLOUD_TOKEN`. The scripts never print it or write it to disk, and they ignore any `hcloud` CLI context you have stored.
-2. **SSH key.** Upload your public key with the label the scripts look for: `hcloud ssh-key create --name <you> --public-key-from-file ~/.ssh/id_ed25519.pub --label openfief-ssh=true`, or label an existing key with `hcloud ssh-key add-label <key> openfief-ssh=true`. Every key with that label is installed on new demos; without one, `up` refuses.
-3. **Where you connect from.** Set `DEMO_SSH_CIDRS` to your address, such as `203.0.113.7/32`; several CIDRs are separated by commas. With no value, the firewall allows no SSH. HTTP and HTTPS are open to everyone by default (`DEMO_HTTP_CIDRS`), since a demo holds synthetic data only.
-4. **Hard spending cap (optional).** Hetzner Cloud has no spending-limit API, so the budget check below lives in the scripts. For a hard cap, ask Hetzner support to lower the project's server limit to 1: no script or token can then create a second server.
+1. **API token.** In the Hetzner Cloud console, open the project, then Security > API tokens, and create a Read & Write token. Export it only in the shell that runs the commands: `read -rs HCLOUD_TOKEN && export HCLOUD_TOKEN`. If a session has it as `HETZNER_API_TOKEN`, the scripts read that name when `HCLOUD_TOKEN` is unset (or run `HCLOUD_TOKEN="$HETZNER_API_TOKEN" task demo:up ENV=demo`). The scripts never print it or write it to disk, and they ignore any `hcloud` CLI context you have stored.
+2. **Cloudflare token (for DNS).** Create a custom API token in the Cloudflare dashboard with Zone > Zone > Read and Zone > DNS > Edit, limited to the zone `DEMO_DOMAIN` (`openfief.dev`), and export it the same way as `CLOUDFLARE_API_TOKEN`. Without it, `up` only prints the record to create ([DNS](#dns)).
+3. **SSH key, or none.** Upload your public key with the label the scripts look for: `hcloud ssh-key create --name <you> --public-key-from-file ~/.ssh/id_ed25519.pub --label openfief-ssh=true`, or label an existing key with `hcloud ssh-key add-label <key> openfief-ssh=true`. Every key with that label is installed on new demos. Without one, the demo gets a throwaway key nobody holds and has no SSH at all ([SSH](#ssh)).
+4. **Where you connect from.** Set `DEMO_SSH_CIDRS` to your address, such as `203.0.113.7/32`; several CIDRs are separated by commas. With no value, the firewall allows no SSH. HTTP and HTTPS are open to everyone by default (`DEMO_HTTP_CIDRS`), since a demo holds synthetic data only.
+5. **Hard spending cap (optional).** Hetzner Cloud has no spending-limit API, so the budget check below lives in the scripts. For a hard cap, ask Hetzner support to lower the project's server limit to 1: no script or token can then create a second server.
 
 ## Commands
 
 | Command | What it does |
 |---|---|
-| `task demo:plan ENV=demo` | Lists what `up` would create and the monthly cost against the budget. Changes nothing. |
-| `task demo:up ENV=demo` | Creates the firewall and the server if they're missing, and updates the firewall rules from `DEMO_SSH_CIDRS` and `DEMO_HTTP_CIDRS`. Refuses to go over the budget, and prints the demo's URL. |
-| `task demo:status ENV=demo` | Shows the server, its IPv4, the firewall and the project's monthly cost. |
-| `task demo:down ENV=demo CONFIRM=demo` | Deletes every resource labelled `app=openfief,env=demo`, server first. |
-| `task demo:recreate ENV=demo CONFIRM=demo` | `down`, then `up`: a fresh machine from the current cloud-init and pins. |
+| `task demo:plan ENV=demo` | Lists what `up` would create, how SSH would be set up, what it would change in DNS, and the monthly cost against the budget. Changes nothing. |
+| `task demo:up ENV=demo` | Creates the firewall and the server if they're missing, updates the firewall rules from `DEMO_SSH_CIDRS` and `DEMO_HTTP_CIDRS`, and creates or updates the demo's DNS records. Refuses to go over the budget, and prints the demo's URL. |
+| `task demo:status ENV=demo` | Shows the server, its IPv4, the firewall, the DNS records and the project's monthly cost. |
+| `task demo:down ENV=demo CONFIRM=demo` | Deletes every resource labelled `app=openfief,env=demo`, server first, then the demo's throwaway SSH key and its DNS records. |
+| `task demo:recreate ENV=demo CONFIRM=demo` | `down`, then `up`: a fresh machine from the current cloud-init and pins. The DNS records stay and follow the new machine. |
+| `task dns:docs:plan`, `task dns:docs` | Shows, then makes, the docs site's record ([DNS](#dns)). |
 
 `ENV` names the demo: `task demo:up ENV=try-beta` makes a second, separate one (`openfief-try-beta`), if the budget allows it. Settings come from the shell or the command line:
 
 | Setting | Default | Meaning |
 |---|---|---|
-| `HCLOUD_TOKEN` | none (required) | The project's API token. |
+| `HCLOUD_TOKEN` | none (required) | The project's API token; `HETZNER_API_TOKEN` is read when it's unset. |
+| `CLOUDFLARE_API_TOKEN` | none | The Cloudflare token for the DNS records; without it, `up` prints the record to create ([DNS](#dns)). |
+| `DEMO_SSH` | `auto` | `keys`, `off`, or `auto` to pick between them ([SSH](#ssh)). |
 | `DEMO_SSH_CIDRS` | empty: no SSH | Sources allowed to reach SSH (22/tcp). |
 | `DEMO_HTTP_CIDRS` | `0.0.0.0/0,::/0` | Sources allowed to reach HTTP and HTTPS (80 and 443/tcp); `none` closes them. |
 | `DEMO_ACME` | `prod` | Let's Encrypt `prod` or `staging` ([URL and TLS](#url-and-tls)). |
 | `DEMO_DOMAIN` | `openfief.dev` | The demo `ENV` is served at `<ENV>.<DEMO_DOMAIN>`, such as `demo.openfief.dev`; `none` uses the machine's sslip.io name instead ([URL and TLS](#url-and-tls)). |
+| `DEMO_DNS_AAAA` | `off` | `on` also publishes an AAAA record for the server's IPv6 ([DNS](#dns)). |
 | `DEMO_BUDGET_EUR` | `10` | Maximum monthly gross cost of everything labelled `app=openfief` in the project. |
 | `DEMO_SERVER_TYPE` | `cax11` | Hetzner server type; `cax*` types are Arm64. |
 | `DEMO_LOCATION` | `nbg1` | Hetzner location. |
@@ -66,7 +71,7 @@ Why 4 GB is enough: Ubuntu plus k3s (API server, SQLite datastore, kubelet, flan
 
 `deploy/demo/cloud-init.yaml` is a template. `up` fills in the versions and sha256 checksums pinned in `Taskfile.yml`, and refuses to send it while any value is missing or malformed. It contains no secrets. On first boot it:
 
-- allows SSH with keys only: no passwords, a locked root password, and root login by key only;
+- allows SSH with keys only: no passwords, a locked root password, and root login by key only (with `DEMO_SSH=off`, the only key is one nobody holds);
 - turns on unattended security upgrades, rebooting at 04:00 UTC when an upgrade needs it;
 - installs the pinned k3s release binary and install script, each checked against its pinned sha256, keeping k3s's bundled Traefik and servicelb (the demo's HTTP entry, on the machine's own IPv4 with no paid load balancer), flannel and k3s's NetworkPolicy controller (D-12), local-path storage, and Secrets encrypted at rest in the datastore (D-29);
 - reads its public IPv4 from Hetzner's metadata service and writes the ConfigMap `flux-system/demo-settings` with `DEMO_HOST` (`<ENV>.<DEMO_DOMAIN>`, or `<ipv4-with-dashes>.sslip.io` with `DEMO_DOMAIN=none`) and `DEMO_ACME_SERVER`, which Flux substitutes into the demo's TLS and route layers;
@@ -80,10 +85,32 @@ The Hetzner disk isn't encrypted by us, so a demo must only ever hold synthetic 
 
 OpenFief itself ships Services only (D-28): `deploy/crds`, `deploy/operator`, `deploy/egress-proxy` and the future `deploy/core` hold no Ingress, and a test in `internal/plugins/operator` keeps it that way. The demo installation adds its own routes on k3s's bundled Traefik, in `deploy/demo/routes`:
 
-- **URL.** `https://<ENV>.<DEMO_DOMAIN>`: `https://demo.openfief.dev` for the demo named `demo`. `task demo:up` prints it, with the DNS record it needs: an `A` record from that name to the machine's IPv4, not proxied, so Let's Encrypt's HTTP-01 check reaches the machine. A recreated machine usually gets a new IPv4, so the record must follow it. With `DEMO_DOMAIN=none`, the URL is `https://<ipv4-with-dashes>.sslip.io` instead, such as `https://192-0-2-10.sslip.io` for 192.0.2.10: sslip.io answers that name with the IP inside it, so no DNS record is needed, and the URL changes with the IPv4.
+- **URL.** `https://<ENV>.<DEMO_DOMAIN>`: `https://demo.openfief.dev` for the demo named `demo`. `task demo:up` prints it, and with `CLOUDFLARE_API_TOKEN` points the name at the machine's IPv4 ([DNS](#dns)); without the token, it prints the `A` record to create by hand, not proxied, so Let's Encrypt's HTTP-01 check reaches the machine. A recreated machine usually gets a new IPv4, and `up` moves the record to it. With `DEMO_DOMAIN=none`, the URL is `https://<ipv4-with-dashes>.sslip.io` instead, such as `https://192-0-2-10.sslip.io` for 192.0.2.10: sslip.io answers that name with the IP inside it, so no DNS record is needed, and the URL changes with the IPv4.
 - **Routes.** Everything under the host goes to Service `openfief-core`, port `http`: the read API, REST under `/v1` and Connect under `/openfief.*` (D-50). The UI gets its own rule when it exists. The `demo-routes` layer stays suspended until `deploy/core` lands; unsuspend it in `deploy/demo/stack.yaml` then, and correct the Service name or port there if the core's differ.
 - **TLS.** cert-manager, from a pinned Helm chart, requests the certificate from Let's Encrypt with an HTTP-01 challenge on port 80 through Traefik. `DEMO_ACME=prod` (the default) gives a browser-trusted certificate; `DEMO_ACME=staging` gives an untrusted one under much higher rate limits. Use staging while you recreate demos repeatedly: production allows only 5 certificates a week for the same set of names, and a demo on `DEMO_DOMAIN` keeps its name across recreations. The ACME account has no email address, so no personal data goes to Let's Encrypt and no expiry mail comes back; cert-manager renews on its own.
 - **Firewall.** 80 and 443/tcp are open to `DEMO_HTTP_CIDRS` (everyone by default); SSH stays limited to `DEMO_SSH_CIDRS`. There's no paid load balancer: servicelb binds Traefik to the machine's own IPv4.
+
+## DNS
+
+With a `DEMO_DOMAIN` (not `none`) and `CLOUDFLARE_API_TOKEN`, the scripts manage the demo's records in that Cloudflare zone, at `<ENV>.<DEMO_DOMAIN>`:
+
+| Record | Value | Why |
+|---|---|---|
+| A | the server's IPv4 | DNS-only, not proxied, with a 60-second TTL: Let's Encrypt's HTTP-01 check and TLS end on the machine. |
+| CAA | `0 issue "letsencrypt.org"` | Only Let's Encrypt may issue certificates for the name. |
+| AAAA | the server's IPv6 (`<network>::1`) | Only with `DEMO_DNS_AAAA=on`. k3s on the demo is IPv4-only, so by default there's no AAAA record to send IPv6 clients, Let's Encrypt among them, to a port nothing listens on. |
+
+Each record carries the comment `managed-by=openfief-demo env=<ENV>`, the DNS counterpart of the labels. `plan` lists what would change; `up` creates or updates records until they match the server, so a second `up` changes nothing; `status` lists them; `down` deletes only records with that comment; `recreate` keeps them and points them at the new machine. No record without the comment is ever changed or deleted: if one occupies the demo's name, `plan` and `up` refuse before creating anything. The token reaches curl on its standard input, never as an argument. Without the token, `up` prints the record to create; with `DEMO_DOMAIN=none`, the scripts skip DNS entirely.
+
+The docs site shares the zone. `task dns:docs` makes `docs.<DEMO_DOMAIN>` a DNS-only CNAME to `arkadiuss.github.io` (`DOCS_PAGES_HOST`), with the comment `managed-by=openfief-docs`; `task dns:docs:plan` shows what it would change. It updates only its own record and refuses any other record at that name. The demo's records and the docs record have different comments, so neither ever touches the other's.
+
+## SSH
+
+`DEMO_SSH` decides how a new server gets its SSH key. Hetzner needs one: without a key, it sets a root password and emails it.
+
+- `keys` installs every project key labelled `openfief-ssh=true`, and refuses when there's none.
+- `off` installs a throwaway Ed25519 key. openssl generates it in a pipe, and only the public half leaves the pipe; the private half is never written anywhere. The public half is uploaded as `openfief-<ENV>-throwaway`, labelled `app=openfief`, `env=<ENV>` and `openfief-ssh=throwaway`. So there's no root password, nobody can log in, and the demo changes only through git and Flux. A later `up` reuses the key; `down` deletes it, and never a key labelled `openfief-ssh=true`. `off` refuses a non-empty `DEMO_SSH_CIDRS`.
+- `auto`, the default, is `keys` when a labelled key exists and `off` when none does and `DEMO_SSH_CIDRS` is empty; it refuses SSH sources without a key.
 
 ## Reach the demo
 
@@ -118,7 +145,7 @@ To enable the job, the owner:
 
 1. creates the GitHub Environment `demo` (Settings > Environments) with deployment branches limited to `main` and a required reviewer (see [From the pipeline](#from-the-pipeline));
 2. creates the machine, with `task demo:up ENV=demo` or the Demo infrastructure workflow;
-3. after the first push to `main`, makes the GHCR packages `operator`, `egress-proxy` and `demo-manifests` public (the package's settings > Change visibility), so the cluster pulls them without credentials;
+3. after the first push to `main`, makes the GHCR packages `operator`, `egress-proxy`, `demo-seed` and `demo-manifests` public (the package's settings > Change visibility), so the cluster pulls them without credentials. A public repository doesn't make its packages public: on 2026-10-28 GHCR refused anonymous pulls of `operator`, `egress-proxy` and `demo-seed`, and `demo-manifests` didn't exist yet. `curl -s "https://ghcr.io/token?scope=repository:arkadiuss/openfief/operator:pull"` returns a token only for a public package;
 4. sets the repository variable `DEMO_ENABLED=true`.
 
 Every push to `main` and every beta then deploys on its own. A required reviewer on `demo` also gates these deploy jobs; leave it off if deploys should never wait for approval, since the deploy job can't touch the machine itself.
@@ -174,9 +201,9 @@ The Job isn't wired into the demo yet. The base's comment says `deploy/demo` inc
 
 `.github/workflows/demo-infra.yml` (Actions > Demo infrastructure > Run workflow) runs the same targets as a terminal: `task demo:<action> ENV=<env>`, with the same budget check. It's started by hand only, one run per demo name at a time, and it runs in the GitHub Environment `demo`:
 
-- add the environment secret `HCLOUD_TOKEN` (the project's API token);
+- add the environment secret `HCLOUD_TOKEN` (the project's API token), and `CLOUDFLARE_API_TOKEN` for the DNS records;
 - add a required reviewer, so every run that can spend money or delete a demo waits for approval;
-- optionally set the environment variables `DEMO_SSH_CIDRS`, `DEMO_HTTP_CIDRS`, `DEMO_ACME`, `DEMO_DOMAIN`, `DEMO_BUDGET_EUR`, `DEMO_SERVER_TYPE` and `DEMO_LOCATION`.
+- optionally set the environment variables `DEMO_SSH`, `DEMO_SSH_CIDRS`, `DEMO_HTTP_CIDRS`, `DEMO_ACME`, `DEMO_DOMAIN`, `DEMO_DNS_AAAA`, `DEMO_BUDGET_EUR`, `DEMO_SERVER_TYPE` and `DEMO_LOCATION`.
 
 For `down` and `recreate`, type the demo's name again in the `confirm` input; it's passed on as `CONFIRM`.
 

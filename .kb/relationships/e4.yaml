@@ -181,3 +181,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99c23759756f
+  - type: implements
+    from: SYM-demo-demo-dns-plan-for
+    to: REQ-tooling-demo-dns
+    created_at: 2026-10-28T14:37:15.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba5f82a6d0e3
+  - type: covered_by
+    from: SYM-demo-demo-dns-plan-for
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T14:37:15.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfedb2a11311

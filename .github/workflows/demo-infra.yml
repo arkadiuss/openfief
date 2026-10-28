@@ -1,6 +1,7 @@
 # Manages a Hetzner demo machine from the pipeline (docs/dev/demo.md#from-the-pipeline): the same task targets as
 # a terminal, `task demo:<action> ENV=<env>`, with the same budget guard (DEMO_BUDGET_EUR, default 10 EUR).
-# Started by hand only. It runs in the GitHub Environment `demo`, which holds the HCLOUD_TOKEN secret; give that
+# Started by hand only. It runs in the GitHub Environment `demo`, which holds the secrets HCLOUD_TOKEN and
+# CLOUDFLARE_API_TOKEN (the DNS records of <env>.<DEMO_DOMAIN>; without it, up prints the record to create); give that
 # environment a required reviewer so every run that can spend money or delete a demo is approved first.
 # down and recreate delete the demo, so they need `confirm` set to the demo's name.
 name: Demo infrastructure
@@ -54,11 +55,14 @@ jobs:
           DEMO_ENV: ${{ inputs.env }}
           CONFIRM: ${{ inputs.confirm }}
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           # Optional environment variables of `demo`; empty means the defaults in scripts/demo/demo.sh.
           DEMO_SSH_CIDRS: ${{ vars.DEMO_SSH_CIDRS }}
           DEMO_HTTP_CIDRS: ${{ vars.DEMO_HTTP_CIDRS }}
           DEMO_ACME: ${{ vars.DEMO_ACME }}
+          DEMO_SSH: ${{ vars.DEMO_SSH }}
           DEMO_DOMAIN: ${{ vars.DEMO_DOMAIN }}
+          DEMO_DNS_AAAA: ${{ vars.DEMO_DNS_AAAA }}
           DEMO_BUDGET_EUR: ${{ vars.DEMO_BUDGET_EUR }}
           DEMO_SERVER_TYPE: ${{ vars.DEMO_SERVER_TYPE }}
           DEMO_LOCATION: ${{ vars.DEMO_LOCATION }}

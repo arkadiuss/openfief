@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84a36506eb2d
+  - type: implements
+    from: SYM-demo-demo-host
+    to: REQ-tooling-demo-dns
+    created_at: 2026-10-28T14:36:38.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6f17b08e17
