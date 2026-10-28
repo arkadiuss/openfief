@@ -98,6 +98,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-4ca05273f3c5
   - type: implements
+    from: SYM-docgen-report-fresh
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:35:04.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba79b407a5c2
+  - type: covered_by
+    from: SYM-docgen-report-fresh
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:35:04.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e1a9480d3a
+  - type: implements
+    from: SYM-docgen-parse-log
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:35:33.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ecbb28a175a
+  - type: covered_by
+    from: SYM-docgen-parse-log
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:35:34.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a30e3af4036
+  - type: implements
     from: SYM-valuation-postgres-migrate-tx
     to: REQ-valuation-schema
     created_at: 2026-10-28T08:00:27.009Z

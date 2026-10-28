@@ -34,6 +34,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cffcaaa11d67
+  - type: verified_by
+    from: SCEN-docs-stale-gate
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:32:41.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-505d71416223
   - type: implements
     from: SYM-valuation-app-valuation-status
     to: REQ-valuation-status

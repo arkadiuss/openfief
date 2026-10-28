@@ -41,6 +41,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0fab804611f2
+  - type: implements
+    from: SYM-docgen-read-tasks
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:37:09.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff0740464847
+  - type: covered_by
+    from: SYM-docgen-read-tasks
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:37:09.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c1a2d454b6
+  - type: implements
+    from: SYM-docgen-decision-statuses
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:38:37.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeed262292df
+  - type: covered_by
+    from: SYM-docgen-decision-statuses
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:38:37.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f4656c53346
+  - type: covered_by
+    from: SYM-docgen-decision-statuses
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:38:37.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfad63a2fbb7
   - type: executable_for
     from: SYM-valuation-app-test-helper-two-accounts
     to: TEST-valuation-app-plan

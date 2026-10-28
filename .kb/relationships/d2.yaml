@@ -97,6 +97,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbf61117315f
+  - type: constrains
+    from: REQ-docs-stale-gate
+    to: FACT-SUBJECT-CD41B071B22638A7
+    created_at: 2026-10-28T09:32:50.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b529c087e6
+  - type: requires_property
+    from: REQ-docs-stale-gate
+    to: FACT-PROP-3CDD13D16A2E3D9D
+    created_at: 2026-10-28T09:32:50.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6df3febd4b33
+  - type: specified_by
+    from: REQ-docs-stale-gate
+    to: SCEN-docs-stale-gate
+    created_at: 2026-10-28T09:32:50.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50752d3479b7
   - type: implements
     from: SYM-valuation-postgres-new-store
     to: REQ-valuation-schema

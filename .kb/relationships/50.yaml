@@ -112,6 +112,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2f1684daf363
   - type: implements
+    from: SYM-docgen-covering-pages
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:34:56.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c25162ccde7b
+  - type: covered_by
+    from: SYM-docgen-covering-pages
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:34:56.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba736b43f60e
+  - type: implements
     from: SYM-valuation-postgres-scan-valuation
     to: REQ-valuation-schema
     created_at: 2026-10-28T08:04:12.291Z

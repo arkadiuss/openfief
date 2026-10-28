@@ -168,6 +168,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-f52fba34a915
   - type: implements
+    from: SYM-docgen-write-all
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:36:53.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b626870819de
+  - type: covered_by
+    from: SYM-docgen-write-all
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:36:53.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-559437a9d1cb
+  - type: implements
     from: SYM-plugins-app-new-caching-token-reviewer
     to: REQ-plugins-egress-token-review-cache
     created_at: 2026-10-28T08:48:00.296Z

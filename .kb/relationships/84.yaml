@@ -111,6 +111,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a31e8af8b365
+  - type: implements
+    from: SYM-docgen-module-name
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:37:06.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cf30f02f74e
+  - type: covered_by
+    from: SYM-docgen-module-name
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:37:06.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f90f38fff423
   - type: executable_for
     from: SYM-plugins-smokescreen-test-fn-sample-list
     to: TEST-plugins-smokescreen-proxy

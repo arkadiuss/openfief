@@ -265,6 +265,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51e9b9431dba
+  - type: constrains
+    from: REQ-docs-packages-covered
+    to: FACT-SUBJECT-1566B558E945296D
+    created_at: 2026-10-28T09:32:55.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7840019a7e63
+  - type: requires_property
+    from: REQ-docs-packages-covered
+    to: FACT-PROP-FC0C10BF24BE4F95
+    created_at: 2026-10-28T09:32:55.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cd127d38d00
+  - type: specified_by
+    from: REQ-docs-packages-covered
+    to: SCEN-docs-packages-covered
+    created_at: 2026-10-28T09:32:55.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bce16097d1f
+  - type: implements
+    from: SYM-docgen-run-fresh
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:35:26.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17e62bd151d0
+  - type: covered_by
+    from: SYM-docgen-run-fresh
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:35:26.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bf007c7a900
   - type: verified_by
     from: SCEN-valuation-lot-indices
     to: TEST-valuation-index

@@ -1,0 +1,11 @@
+{{- with .File }}
+  {{- $src := strings.TrimPrefix (printf "%s/" hugo.WorkingDir) .Filename }}
+  {{- if not (hasPrefix $src "site/.gen/") }}
+<p class="pagemeta">
+  Source: <a href="{{ site.Params.repoURL }}/blob/{{ site.Params.commit }}/{{ $src }}"><code>{{ $src }}</code></a>
+  {{- with $.GitInfo }} · last changed {{ .AuthorDate.Format "2006-01-02" }} in <a href="{{ site.Params.repoURL }}/commit/{{ .Hash }}"><code>{{ .AbbreviatedHash }}</code></a>{{ end }}
+</p>
+  {{- else }}
+<p class="pagemeta">Generated from the repository at build time; it cannot go stale.</p>
+  {{- end }}
+{{- end }}

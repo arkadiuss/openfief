@@ -18,6 +18,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - Tool versions are pinned in the Taskfile **(P)**; lefthook manages the git hooks **(P)**. Only one tool owns `.git/hooks`.
 - `task vuln` fails on any finding, and also when a vulnerability database can't be reached.
 - kibi's relationship shards and `symbols.yaml` merge record by record through kibi's merge driver (`.gitattributes`); `task setup` registers it in each clone.
+- The docs site is built in every `task check`, and each push to `main` publishes it ([docs.md](docs.md)).
 
 ## Commits and PRs
 
@@ -50,4 +51,5 @@ Pin exact versions and commit lockfiles. Every new dependency needs a reason in 
 - `task check` is green.
 - New behavior has a kibi requirement with its scenario and test linked.
 - New domain terms are in [the glossary](../glossary.md).
+- The pages covering the changed code are updated, or the commit says why not in a `Docs-Unchanged:` trailer ([docs.md](docs.md)).
 - New decisions are in DESIGN.md.

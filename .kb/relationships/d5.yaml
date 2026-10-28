@@ -69,6 +69,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41ef77e8d9c9
+  - type: constrains
+    from: REQ-docs-published
+    to: FACT-SUBJECT-C18CCCB9808C203F
+    created_at: 2026-10-28T09:33:15.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abfa5b3b8e15
+  - type: requires_property
+    from: REQ-docs-published
+    to: FACT-PROP-C649D77283FD356E
+    created_at: 2026-10-28T09:33:15.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4033eb41441a
+  - type: implements
+    from: SYM-docgen-type-name
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:34:33.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-657da86e6599
+  - type: covered_by
+    from: SYM-docgen-type-name
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:34:33.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d344f297fa5b
   - type: validates
     from: TEST-valuation-revaluation
     to: REQ-decision-d36-1-stored-valuations

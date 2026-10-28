@@ -35,6 +35,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-02eb732067ec
   - type: implements
+    from: SYM-docgen-skipped-dir
+    to: REQ-docs-packages-covered
+    created_at: 2026-10-28T09:36:32.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d47aa6f32774
+  - type: implements
+    from: SYM-docgen-skipped-dir
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:36:32.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8eb8862d920
+  - type: covered_by
+    from: SYM-docgen-skipped-dir
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:36:32.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea49b0b4cb8e
+  - type: implements
     from: SYM-valuation-app-input-cache-bond-terms
     to: REQ-valuation-bond-holding
     created_at: 2026-10-28T07:34:40.544Z

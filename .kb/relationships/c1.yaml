@@ -48,6 +48,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-752df1434a24
+  - type: implements
+    from: SYM-docgen-reference-pages
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:37:02.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-627c0e408f73
+  - type: covered_by
+    from: SYM-docgen-reference-pages
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:37:02.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-973e158452c3
   - type: validates
     from: TEST-valuation-app-plan
     to: REQ-decision-d36-5-revaluation-coalescing

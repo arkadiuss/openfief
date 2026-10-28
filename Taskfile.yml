@@ -19,6 +19,8 @@ vars:
   CONTROLLER_GEN_VERSION: v0.23.0
   # The API server and etcd of the operator's envtest suite; scripts/envtest-assets.sh pins their checksums.
   ENVTEST_K8S_VERSION: 1.36.2
+  # renovate: datasource=go depName=github.com/gohugoio/hugo
+  HUGO_VERSION: v0.168.0
   # renovate: datasource=go depName=github.com/bufbuild/buf
   BUF_VERSION: v1.75.0
   # The code generators must match the runtime versions in sdk/go/go.mod (google.golang.org/protobuf, connectrpc.com/connect).
@@ -83,11 +85,11 @@ tasks:
 
   tools:
     desc: Install the pinned Go tools into .bin/
-    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:hcloud, tool:kustomize, tool:gojq]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:hcloud, tool:kustomize, tool:gojq, tool:hugo]
 
   tools:ci:
     internal: true
-    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:kustomize, tool:gojq]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:kustomize, tool:gojq, tool:hugo]
 
   tool:hcloud:
     internal: true
@@ -161,6 +163,13 @@ tasks:
     status:
       - '{{.BIN}}/actionlint -version 2>&1 | head -n1 | grep -qx "{{.ACTIONLINT_VERSION}}"'
 
+  tool:hugo:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' CGO_ENABLED=0 go install github.com/gohugoio/hugo@{{.HUGO_VERSION}}
+    status:
+      - '{{.BIN}}/hugo version 2>&1 | grep -q "hugo {{.HUGO_VERSION}} "'
+
   tool:proto:
     internal: true
     deps: [tool:buf, tool:protoc-gen-go, tool:protoc-gen-connect-go]
@@ -230,6 +239,8 @@ tasks:
       - task: vuln
       - task: test
       - task: docs:check
+      - task: docs:build
+      - task: docs:fresh
       - task: demo:validate
       - task: kibi:check
 
@@ -244,6 +255,7 @@ tasks:
       - task: vuln
       - task: test
       - task: docs:check
+      - task: docs:build
       - task: demo:validate
       - task: kibi:staged
 
@@ -491,12 +503,14 @@ tasks:
       - bash scripts/release-notes.sh '{{.VERSION}}'
 
   release:assets:
-    desc: Package the CRDs and bootstrap install from deploy/ into dist/ (skipped until deploy/ exists)
+    desc: Package the CRDs and bootstrap install from deploy/, and the docs site as of this version, into dist/
     requires:
       vars: [VERSION]
     cmds:
       - mkdir -p dist
       - 'if [ ! -d deploy ]; then echo "no deploy/ yet, no install assets"; exit 0; fi; tar -czf "dist/openfief-deploy-{{.VERSION}}.tar.gz" deploy'
+      - task: docs:build
+      - tar -czf "dist/openfief-docs-{{.VERSION}}.tar.gz" -C site/public .
 
   release:publish:
     desc: Tag the release and, for stable, publish the GitHub release (CI only, after the dry run)
@@ -515,6 +529,68 @@ tasks:
     desc: ID checks for the design documents
     cmds:
       - bash scripts/check-docs.sh
+
+  docs:gen:
+    desc: Generate the docs site's reference and status pages into site/.gen (docs/dev/docs.md)
+    cmds:
+      - mkdir -p site/.gen/content site/.gen/diagrams site/.gen/static
+      - go list -json ./... >site/.gen/packages.json
+      - '{{.TASK_EXE}} --list-all --json >site/.gen/tasks.json'
+      - '{{.KIBI}} coverage --by req --include-passing --limit 100000 --format json >site/.gen/coverage.json'
+      - go run ./tools/docgen reference -packages site/.gen/packages.json -tasks site/.gen/tasks.json -coverage site/.gen/coverage.json -out site/.gen/content
+      - '{{.KIBI}} report --output site/.gen/static/requirements >/dev/null'
+
+  docs:refs:
+    desc: Fail if a docs page names a kibi entity or a task that doesn't exist
+    cmds:
+      - mkdir -p site/.gen
+      - '{{.TASK_EXE}} --list-all --json >site/.gen/tasks.json'
+      - go run ./tools/docgen refs -tasks site/.gen/tasks.json
+
+  docs:build:
+    desc: Build the docs site into site/public; fails on a broken link, a diagram that doesn't render or a stale reference
+    deps: [tool:hugo]
+    cmds:
+      - task: docs:gen
+      - task: docs:refs
+      - rm -rf site/public
+      - HUGO_PARAMS_DIAGRAMSCOLLECT=true {{.BIN}}/hugo --source . --config site/hugo.toml --quiet --panicOnWarning
+      - node scripts/docs-diagrams.mjs site/public/diagrams.json site/.gen/diagrams
+      - rm -rf site/public
+      - HUGO_PARAMS_COMMIT="$(git rev-parse HEAD)" {{.BIN}}/hugo --source . --config site/hugo.toml --quiet --panicOnWarning --minify
+      - rm -f site/public/diagrams.json
+
+  docs:serve:
+    desc: Preview the docs site at http://localhost:1313/openfief/ (run task docs:build first for diagrams and generated pages)
+    deps: [tool:hugo]
+    cmds:
+      - '{{.BIN}}/hugo server --source . --config site/hugo.toml'
+
+  docs:fresh:
+    desc: 'Staleness gate over a pushed range: covered code changed only with its docs pages or a Docs-Unchanged trailer, e.g. task docs:fresh BASE=origin/main'
+    vars:
+      BASE: '{{.BASE | default .DOCS_BASE | default ""}}'
+    cmds:
+      - |
+        base='{{.BASE}}'
+        if [ -z "$base" ] || ! git rev-parse -q --verify "$base^{commit}" >/dev/null || [ -z "${base//0/}" ]; then
+          base="$(git merge-base HEAD origin/main 2>/dev/null || git rev-parse HEAD)"
+        fi
+        git log --no-merges --format='%x1e%H%x1f%B%x1f' --name-only "$base..HEAD" | go run ./tools/docgen fresh
+
+  docs:fresh:commit:
+    desc: Staleness gate for the commit being written (commit-msg hook), e.g. task docs:fresh:commit MSG=.git/COMMIT_EDITMSG
+    requires:
+      vars: [MSG]
+    cmds:
+      - |
+        if git rev-parse -q --verify MERGE_HEAD >/dev/null; then
+          echo "docs: merge commit; the gate checks the merged commits one by one in CI"
+          exit 0
+        fi
+        mkdir -p site/.gen
+        cp '{{.MSG}}' site/.gen/commit-msg
+        git diff --cached --name-only | go run ./tools/docgen fresh -message site/.gen/commit-msg
 
   kibi:install:
     desc: Install the pinned kibi packages (npm ci)
@@ -555,6 +631,6 @@ tasks:
       - '{{.KIBI}} search {{.CLI_ARGS}}'
 
   kibi:report:
-    desc: Requirement health report in kibi-report/
+    desc: Requirement health report in kibi-report/ (the docs site publishes it at /requirements/)
     cmds:
       - '{{.KIBI}} report'

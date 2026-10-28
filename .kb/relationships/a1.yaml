@@ -21,6 +21,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-07074ebfbaf5
   - type: implements
+    from: SYM-docgen-layering-violation
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:33:18.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccea4c20cb71
+  - type: covered_by
+    from: SYM-docgen-layering-violation
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:33:18.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fdbbc3040e7
+  - type: covered_by
+    from: SYM-docgen-layering-violation
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:33:18.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95e491b4af76
+  - type: implements
     from: SYM-connector-gen-pb-transaction-kind-descriptor
     to: REQ-connector-contract-messages
     created_at: 2026-10-28T08:11:13.382Z

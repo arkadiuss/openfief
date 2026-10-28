@@ -1,0 +1,8 @@
+{{- /* A section's regular pages in reading order: front-matter weight first (unset sorts last), then title. */ -}}
+{{- $items := slice -}}
+{{- range .RegularPages -}}
+  {{- $title := partial "title.html" . -}}
+  {{- $weight := cond (eq .Weight 0) 1000 .Weight -}}
+  {{- $items = $items | append (dict "key" (printf "%05d %s" $weight (lower $title)) "title" $title "page" .) -}}
+{{- end -}}
+{{- return sort $items "key" -}}

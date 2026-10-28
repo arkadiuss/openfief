@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{- partial "head.html" . }}
+</head>
+<body>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
+  <header class="topbar">
+    <label for="nav-toggle" class="nav-button" aria-label="Menu">&#9776;</label>
+    <a class="brand" href="{{ site.Home.RelPermalink }}">OpenFief</a>
+    <span class="tagline">Give your AI agents a fief, not the kingdom.</span>
+    <nav class="toplinks">
+      <a href="{{ site.Params.repoURL }}">GitHub</a>
+    </nav>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">{{ partial "nav.html" . }}</aside>
+    <main class="content">{{ block "main" . }}{{ end }}</main>
+    <aside class="toc">{{ block "toc" . }}{{ end }}</aside>
+  </div>
+  {{- partial "footer.html" . }}
+</body>
+</html>

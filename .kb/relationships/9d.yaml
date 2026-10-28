@@ -27,6 +27,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-708539f2139c
+  - type: executable_for
+    from: SYM-docgen-test-crdpage
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:36:13.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61697c5d0ae6
   - type: validates
     from: TEST-valuation-postgres-worker
     to: REQ-decision-d36-1-stored-valuations

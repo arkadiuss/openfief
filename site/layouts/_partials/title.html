@@ -1,0 +1,11 @@
+{{- /* A page's title: front matter, else the Markdown file's first H1 (docs/ keeps GitHub-friendly files without front matter), else its file name. */ -}}
+{{- $t := .Title -}}
+{{- if and (not $t) .File -}}
+  {{- with findRESubmatch `(?m)^#[ \t]+(.+?)[ \t]*$` .RawContent 1 -}}
+    {{- $t = index (index . 0) 1 | markdownify | plainify | htmlUnescape -}}
+  {{- end -}}
+  {{- if not $t -}}
+    {{- $t = .File.ContentBaseName | humanize -}}
+  {{- end -}}
+{{- end -}}
+{{- return $t -}}

@@ -21,6 +21,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-149f342bb04a
   - type: implements
+    from: SYM-docgen-load-pages
+    to: REQ-docs-packages-covered
+    created_at: 2026-10-28T09:36:35.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88988ae3e249
+  - type: implements
+    from: SYM-docgen-load-pages
+    to: REQ-docs-stale-gate
+    created_at: 2026-10-28T09:36:35.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f0d5340b58d
+  - type: covered_by
+    from: SYM-docgen-load-pages
+    to: TEST-docs-fresh
+    created_at: 2026-10-28T09:36:35.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14386bc6b106
+  - type: implements
     from: SYM-valuation-value-market-holding
     to: REQ-valuation-market-holding
     created_at: 2026-10-28T07:32:14.871Z

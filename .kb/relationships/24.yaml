@@ -146,6 +146,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79a98552c5f9
+  - type: implements
+    from: SYM-docgen-code-map-page
+    to: REQ-docs-generated-reference
+    created_at: 2026-10-28T09:33:37.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3d5cd7d48b
+  - type: covered_by
+    from: SYM-docgen-code-map-page
+    to: TEST-docs-reference
+    created_at: 2026-10-28T09:33:37.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f003fcd031c8
+  - type: covered_by
+    from: SYM-docgen-code-map-page
+    to: TEST-docs-generate
+    created_at: 2026-10-28T09:33:37.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ab808f6320f
   - type: constrains
     from: REQ-valuation-bond-holding
     to: FACT-SUBJECT-FDA8A1C642277888

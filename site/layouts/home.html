@@ -1,0 +1,9 @@
+{{ define "main" }}
+<article class="home">
+  <h1>{{ partial "title.html" . }}</h1>
+  {{- with .Description }}
+  <p class="lede">{{ . }}</p>
+  {{- end }}
+  {{ .Content }}
+</article>
+{{ end }}
