@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8b3b8d3bc62
+  - type: executable_for
+    from: SYM-ledger-test-helper-seed-fixture
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:40:40.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e2531d8d38

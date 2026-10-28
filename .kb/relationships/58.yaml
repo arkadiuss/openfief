@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1819c4d585e6
+  - type: constrains
+    from: REQ-ingest-app-seed-opening-only
+    to: FACT-SUBJECT-EF78119FF140D389
+    created_at: 2026-10-28T08:39:38.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d76f85b81cbf
+  - type: requires_property
+    from: REQ-ingest-app-seed-opening-only
+    to: FACT-PROP-07F196F017D74FAE
+    created_at: 2026-10-28T08:39:38.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb35addb5dc8
+  - type: specified_by
+    from: REQ-ingest-app-seed-opening-only
+    to: SCEN-ingest-app-seed-opening-only
+    created_at: 2026-10-28T08:39:38.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bfb78851207

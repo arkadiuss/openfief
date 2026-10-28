@@ -76,3 +76,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24be400a8498
+  - type: executable_for
+    from: SYM-ledger-test-helper-check-already-seeded
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:40:56.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47cb9e8aeb80
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-seeding
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-28T08:43:39.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6467cb7f0851

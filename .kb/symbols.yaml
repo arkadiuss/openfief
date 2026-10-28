@@ -16527,3 +16527,463 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-postgres-worker
+  - id: SYM-ledger-opening-cash-id
+    title: OpeningCashID
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:39:42.034Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-seed-opening-cash
+  - id: SYM-ledger-new-opening-cash
+    title: NewOpeningCash
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:39:46.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-ledger-seed-opening-cash
+  - id: SYM-ledger-is-seeding
+    title: IsSeeding
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:39:52.250Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-is-seeded
+    title: IsSeeded
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:39:57.177Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-seed-decision
+    title: SeedDecision
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:02.869Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-already-seeded-error
+    title: AlreadySeededError
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:07.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-already-seeded-error-error
+    title: AlreadySeededError.Error
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:13.763Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-already-seeded-error-unwrap
+    title: AlreadySeededError.Unwrap
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:24.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-decide-seed
+    title: DecideSeed
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:33.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-test-helper-seed-fixture
+    title: seedFixture
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:39.724Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-test-helper-new-seed-fixture
+    title: newSeedFixture
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:45.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-test-helper-v1
+    title: v1
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:51.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-test-helper-check-already-seeded
+    title: checkAlreadySeeded
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:40:55.932Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-test-opening-cash-id
+    title: TestOpeningCashID
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:41:00.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-test-new-opening-cash
+    title: TestNewOpeningCash
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:41:06.129Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-test-is-seeding
+    title: TestIsSeeding
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:41:14.510Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-test-is-seeded
+    title: TestIsSeeded
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:41:22.603Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-test-decide-seed
+    title: TestDecideSeed
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:41:32.251Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ledger-app-ledger-seed
+    title: Ledger.Seed
+    sourceFile: internal/ledger/app/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:41:40.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-AUTO-3C2A493C661181C7
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-app-guard-seed
+    title: guardSeed
+    sourceFile: internal/ledger/app/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:41:49.885Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-seed-atomic
+      - type: implements
+        target: REQ-ledger-seed-refuse-reseed
+  - id: SYM-ledger-app-ledger-import-all
+    title: Ledger.importAll
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:41:59.994Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-seed-atomic
+  - id: SYM-ledger-app-test-helper-seeding
+    title: seeding
+    sourceFile: internal/ledger/app/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:42:05.523Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-helper-check-seed-refused
+    title: checkSeedRefused
+    sourceFile: internal/ledger/app/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:42:10.652Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-seed
+    title: TestSeed
+    sourceFile: internal/ledger/app/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:42:15.989Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-seed-of-an-unknown-account
+    title: TestSeedOfAnUnknownAccount
+    sourceFile: internal/ledger/app/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:42:21.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-concurrent-seeds-seed-once
+    title: TestConcurrentSeedsSeedOnce
+    sourceFile: internal/ledger/app/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:42:29.036Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-helper-mem-tx
+    title: memTx
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:42:40.623Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-helper-mem-store-lock-account
+    title: memStore.LockAccount
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:42:50.396Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-helper-mem-tx-in-tx
+    title: memTx.InTx
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:42:58.944Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-helper-mem-tx-lock-account
+    title: memTx.LockAccount
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:43:07.358Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-helper-mem-tx-snapshot
+    title: memTx.snapshot
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:43:15.066Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-helper-mem-tx-unlock
+    title: memTx.unlock
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:43:23.225Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-pg-store-lock-account
+    title: Store.LockAccount
+    sourceFile: internal/ledger/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:43:31.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-seed
+      - type: implements
+        target: REQ-ledger-seed-atomic
+  - id: SYM-ledger-pg-test-helper-seeding
+    title: seeding
+    sourceFile: internal/ledger/postgres/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:43:38.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-seed
+  - id: SYM-ledger-pg-test-concurrent-seeds-over-postgres
+    title: TestConcurrentSeedsOverPostgres
+    sourceFile: internal/ledger/postgres/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:43:46.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-seed
+  - id: SYM-ledger-pg-test-lock-account
+    title: TestLockAccount
+    sourceFile: internal/ledger/postgres/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:43:52.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-seed
+  - id: SYM-ingest-app-service-import-mapping
+    title: Service.importMapping
+    sourceFile: internal/ingest/app/ingest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:44:00.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app
+      - type: implements
+        target: REQ-ingest-app-seed-opening-only
+  - id: SYM-ingest-app-test-helper-fake-ledger-seed
+    title: fakeLedger.Seed
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:44:09.617Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-helper-opening-mapping
+    title: openingMapping
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:44:17.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app
+  - id: SYM-ingest-app-test-ingest-seeds-only-in-opening-mode
+    title: TestIngestSeedsOnlyInOpeningMode
+    sourceFile: internal/ingest/app/ingest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:44:28.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app

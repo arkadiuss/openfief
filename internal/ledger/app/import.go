@@ -30,6 +30,9 @@ type ImportSummary struct {
 	// version and of every version it superseded, in that version's account.
 	// Holdings, lots and valuations from that date on may differ (D-36).
 	EarliestAffected map[ledger.AccountID]kernel.Date
+	// AlreadySeeded are the accounts a Seed found already seeded with the
+	// same content, in ID order: for them it changed nothing.
+	AlreadySeeded []ledger.AccountID
 	// Checks are the balance assertions of every account the import touched,
 	// stored and incoming, as checked after it, in account, date and ledger
 	// account order.
@@ -106,12 +109,17 @@ func (e *VersionConflictError) Unwrap() error { return ErrVersionConflict }
 // not fail the import. Last, the Ledger's import hooks run in the same
 // transaction.
 func (l *Ledger) Import(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ImportSummary, error) {
+	return l.importAll(ctx, txs, assertions, false)
+}
+
+// importAll is Import, and with seed set, Seed.
+func (l *Ledger) importAll(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion, seed bool) (ImportSummary, error) {
 	ordered := slices.Clone(txs)
 	slices.SortStableFunc(ordered, func(a, b ledger.Transaction) int { return compareKeys(a.Key, b.Key) })
 	var sum ImportSummary
 	err := l.store.InTx(ctx, func(tx Store) error {
 		var err error
-		sum, err = importTx(ctx, tx, ordered, assertions)
+		sum, err = importTx(ctx, tx, ordered, assertions, seed)
 		if err != nil {
 			return err
 		}
@@ -123,6 +131,9 @@ func (l *Ledger) Import(ctx context.Context, txs []ledger.Transaction, assertion
 		return nil
 	})
 	if err != nil {
+		if seed {
+			return ImportSummary{}, fmt.Errorf("seeding: %w", err)
+		}
 		return ImportSummary{}, fmt.Errorf("importing: %w", err)
 	}
 	return sum, nil
@@ -138,13 +149,20 @@ func compareKeys(a, b ledger.TransactionKey) int {
 	return cmp.Compare(a.ExternalID, b.ExternalID)
 }
 
-// importTx is Import's work inside its database transaction tx.
-func importTx(ctx context.Context, tx Store, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ImportSummary, error) {
+// importTx is Import's work inside its database transaction tx, and with
+// seed set, Seed's: it first refuses to seed an account that is already
+// seeded.
+func importTx(ctx context.Context, tx Store, txs []ledger.Transaction, assertions []ledger.BalanceAssertion, seed bool) (ImportSummary, error) {
 	accounts, err := validateImport(ctx, tx, txs, assertions)
 	if err != nil {
 		return ImportSummary{}, err
 	}
 	var sum ImportSummary
+	if seed {
+		if sum.AlreadySeeded, err = guardSeed(ctx, tx, txs); err != nil {
+			return ImportSummary{}, err
+		}
+	}
 	for i := range txs {
 		t := &txs[i]
 		d, superseded, err := importOne(ctx, tx, t)

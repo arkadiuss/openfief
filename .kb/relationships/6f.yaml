@@ -83,3 +83,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e54e7639224e
+  - type: implements
+    from: SYM-ledger-already-seeded-error-unwrap
+    to: REQ-ledger-seed-refuse-reseed
+    created_at: 2026-10-28T08:40:26.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63022141e9e9
+  - type: covered_by
+    from: SYM-ledger-already-seeded-error-unwrap
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:40:26.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8be55ed525e8

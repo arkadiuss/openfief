@@ -125,3 +125,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf1123d64d56
+  - type: implements
+    from: SYM-ledger-is-seeding
+    to: REQ-ledger-seed-refuse-reseed
+    created_at: 2026-10-28T08:39:53.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8bcbe50821b
+  - type: covered_by
+    from: SYM-ledger-is-seeding
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:39:53.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68c120e0f720

@@ -167,3 +167,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fadbc0eb122f
+  - type: implements
+    from: SYM-ledger-app-guard-seed
+    to: REQ-ledger-seed-atomic
+    created_at: 2026-10-28T08:41:51.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b5d68b2fde1
+  - type: implements
+    from: SYM-ledger-app-guard-seed
+    to: REQ-ledger-seed-refuse-reseed
+    created_at: 2026-10-28T08:41:51.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5db298bf857
+  - type: covered_by
+    from: SYM-ledger-app-guard-seed
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-28T08:41:51.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0b3c6919431

@@ -80,6 +80,9 @@ type ImportSummary struct {
 	// FailedAssertions counts balance assertions the derived balance did not
 	// match: each is a flagged error.
 	FailedAssertions int
+	// AlreadySeeded are the accounts an opening batch found already seeded
+	// with the same content: for them the batch changed nothing (D-23).
+	AlreadySeeded []ledger.AccountID
 }
 
 // Batch is one run of a connector's ingest path: what was read from where,

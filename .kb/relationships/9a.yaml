@@ -90,3 +90,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a9f6c75cf4a
+  - type: implements
+    from: SYM-ledger-pg-store-lock-account
+    to: REQ-ledger-seed-atomic
+    created_at: 2026-10-28T08:43:33.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70628f763a8d
+  - type: covered_by
+    from: SYM-ledger-pg-store-lock-account
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-28T08:43:33.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd78d91d93b1

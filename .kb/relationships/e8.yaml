@@ -104,3 +104,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19ad03195574
+  - type: constrains
+    from: REQ-ledger-seed-atomic
+    to: FACT-SUBJECT-E66CF2A720821755
+    created_at: 2026-10-28T08:39:26.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ba8a4dccbdb
+  - type: requires_property
+    from: REQ-ledger-seed-atomic
+    to: FACT-PROP-E6C58A08AC6A8B16
+    created_at: 2026-10-28T08:39:26.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3867cdf335f1
+  - type: specified_by
+    from: REQ-ledger-seed-atomic
+    to: SCEN-ledger-seed-concurrent
+    created_at: 2026-10-28T08:39:26.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f44b8ed04349

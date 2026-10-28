@@ -76,3 +76,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a4f68d23c43
+  - type: validates
+    from: TEST-ledger-app-seed
+    to: REQ-AUTO-3C2A493C661181C7
+    created_at: 2026-10-28T08:38:15.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5918a5008493

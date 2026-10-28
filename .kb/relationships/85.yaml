@@ -83,3 +83,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4e782d556d8
+  - type: constrains
+    from: REQ-ledger-seed-opening-cash
+    to: FACT-SUBJECT-E66CF2A720821755
+    created_at: 2026-10-28T08:39:08.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd5fa37950ec
+  - type: requires_property
+    from: REQ-ledger-seed-opening-cash
+    to: FACT-PROP-3090C50350AD88BB
+    created_at: 2026-10-28T08:39:08.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3f4a23eab60
+  - type: specified_by
+    from: REQ-ledger-seed-opening-cash
+    to: SCEN-ledger-seed-opening-cash
+    created_at: 2026-10-28T08:39:08.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9621681c275
+  - type: executable_for
+    from: SYM-ledger-test-helper-v1
+    to: TEST-ledger-seed
+    created_at: 2026-10-28T08:40:52.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44f729a8f16b
