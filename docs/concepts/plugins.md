@@ -275,7 +275,7 @@ Implemented, fully or in the part named:
 - **D-49** (part) Connector contract: the core calls `Sync` and `ImportFile`.
 - **D-56** (part) Operator verifies offline; status tells verified from only signed.
 - **D-57** No setting deploys an image the policy refuses.
-- **D-59** (part) Only the core reaches a plugin; the SDK verifies its token with the keys the operator publishes.
+- **D-59** Only the core reaches a plugin; the SDK verifies its TokenRequest token with the keys the operator publishes.
 - **D-63** (part) Separate egress token, rebuilt into the proxy URL per request.
 - **D-5** Contracts and Go SDK licensed Apache-2.0.
 
@@ -331,7 +331,6 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 - **More contracts and SDKs (D-11).** Only the connector contract exists: no view contract (P-9 outlines one, but it is a proposal) and no TypeScript SDK.
 - **First-party plugins in the catalog (D-43).** `nbp-fx` and `ibkr-flex` are built and signed by CI but not in the catalog, so they run as signed by a trusted signer, not verified.
 - **One Secret per IBKR instance (D-48).** `ibkr-flex`'s manifest names one Secret, `ibkr-flex-credentials`, so two instances of it, one per IBKR account, read the same credentials (see [Decisions](#decisions)).
-- **Core-to-plugin auth (D-59).** The SDK verifies the core's token and the operator publishes the keys it needs, but the core's token issuer, the `CoreTokens` port in [ingest/app/connectors.go](../../internal/ingest/app/connectors.go), has no TokenRequest implementation yet.
 - **Core side of plugin identity (D-27).** Plugins get `openfief-core` tokens and the SDK sends them, but nothing in the core verifies them yet.
 - **Uninstall (D-58).** Deleting a `Plugin` removes its objects by garbage collection and drops its allow-list entry. Deleting its grant and Secrets, and marking its data as coming from a removed instance, are not built.
 - **Data tiers.** Carried from manifest to workload but enforced nowhere (P-33 is undecided).

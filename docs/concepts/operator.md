@@ -266,7 +266,7 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 - **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. No UI shows the status yet.
 - **D-57**: nothing deploys without a `True` verification; no flag or setting overrides it.
 - **D-58**: **partly.** Deleting a `Plugin` removes its workload (by garbage collection) and its allow-list key. Its `PluginGrant` and Secrets stay.
-- **D-59**: **partly.** The NetworkPolicy admits ingress only from the core, and the operator publishes the cluster's token-signing public keys in `openfief-sa-jwks` for the SDK. The core's per-instance tokens exist only as a port, `CoreTokens` in [connectors.go](../../internal/ingest/app/connectors.go), with no implementation.
+- **D-59**: the NetworkPolicy admits ingress only from the core, and the operator publishes the cluster's token-signing public keys in `openfief-sa-jwks`, with which the SDK verifies the core's per-instance TokenRequest tokens.
 - **D-63**: separate `openfief-egress` token, checked by TokenReview and cached. The operator projects it only for plugins with granted egress; `kube.AllowLists` swaps allow-lists atomically and fails closed.
 
 ## Verification
@@ -313,6 +313,5 @@ What the tests don't show:
 - **D-56**: the UI that shows the verification status.
 - Private registries: the operator reads registries anonymously.
 - **D-58**: deleting the grant and Secrets on uninstall, and marking the ledger data of a removed instance.
-- **D-59**: an implementation of the core's per-instance tokens.
 - **D-12**: end-to-end tests on kind or k3d.
 - The core's Deployment and Service, which the operator expects as `openfief-core`.
