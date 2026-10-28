@@ -231,27 +231,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-68903f8d1be7
   - type: implements
-    from: SYM-demo-docs-dns-main
-    to: REQ-tooling-demo-dns-docs
-    created_at: 2026-10-28T14:40:59.189Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e3514705a38a
-  - type: implements
-    from: SYM-demo-docs-dns-main
-    to: REQ-tooling-demo-token
-    created_at: 2026-10-28T14:40:59.209Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ec560fcbbb7d
-  - type: covered_by
-    from: SYM-demo-docs-dns-main
-    to: TEST-tooling-demo
-    created_at: 2026-10-28T14:40:59.224Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-388fcb643c98
-  - type: implements
     from: SYM-core-deps
     to: REQ-core-serves-read-api
     created_at: 2026-10-28T14:34:23.709Z

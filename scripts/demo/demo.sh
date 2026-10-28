@@ -5,7 +5,7 @@
 #   task demo:status ENV=demo      the environment's resources and cost
 #   task demo:down ENV=demo CONFIRM=demo      delete every resource labelled app=openfief,env=demo
 #   task demo:recreate ENV=demo CONFIRM=demo  down, then up
-#   task dns:docs:plan / task dns:docs        the docs site's CNAME docs.<DEMO_DOMAIN>
+#   task dns:site:plan / task dns:site        the website's records at <DEMO_DOMAIN> and www.<DEMO_DOMAIN>
 # Stateless: every resource carries the labels app=openfief and env=<ENV> and is found by them, and every DNS
 # record the comment "managed-by=openfief-demo env=<ENV>".
 # The Hetzner token comes from HCLOUD_TOKEN (or HETZNER_API_TOKEN), the Cloudflare token from CLOUDFLARE_API_TOKEN;
@@ -538,10 +538,11 @@ demo_dns_apply() {
   demo_dns_apply_changes
 }
 
-# demo_dns_apply_changes applies the actions in $work/dns-changes.jsonl (from demo_dns_changes) in the zone, and
-# refuses to update or delete any record whose comment isn't the one in the global comment.
+# demo_dns_apply_changes applies the actions in $work/dns-changes.jsonl (from demo_dns_changes or site_dns_changes)
+# in the zone, and refuses to update or delete any record whose comment isn't the one in the global comment, except
+# that a record with the retired comment given as the optional argument may be deleted.
 demo_dns_apply_changes() {
-  local action op id
+  local retired="${1:-}" action op id was
   while IFS= read -r action; do
     op="$(gojq -r .op <<<"$action")"
     id="$(gojq -r '.id // ""' <<<"$action")"
@@ -551,7 +552,11 @@ demo_dns_apply_changes() {
       return 1
     fi
     # A second guard: nothing without our comment is ever changed or deleted.
-    if [ "$op" != create ] && [ "$(gojq -r '(.from // .record).comment // ""' <<<"$action")" != "$comment" ]; then
+    was="$(gojq -r '(.from // .record).comment // ""' <<<"$action")"
+    if [ "$op" = delete ] && [ -n "$retired" ] && [ "$was" = "$retired" ]; then
+      was="$comment"
+    fi
+    if [ "$op" != create ] && [ "$was" != "$comment" ]; then
       demo_fail "refusing to $op a DNS record without the comment \"$comment\""
       return 1
     fi
@@ -782,29 +787,105 @@ demo_main() {
   esac
 }
 
-# The docs site's DNS record (task dns:docs, docs/dev/demo.md#dns): docs.<DEMO_DOMAIN> as a DNS-only CNAME to
-# GitHub Pages with the comment "managed-by=openfief-docs". It reuses the Cloudflare helpers above and, like them,
-# updates or deletes only a record with its own comment; the demo's records carry another, so neither touches the
-# other's.
-# The GitHub Pages host the docs site is published on.
-: "${DOCS_PAGES_HOST:=arkadiuss.github.io}"
+# The website's DNS records (task dns:site, docs/dev/demo.md#dns): the landing page and the docs, served by GitHub
+# Pages at the apex <DEMO_DOMAIN> and at www.<DEMO_DOMAIN>, each record with the comment "managed-by=openfief-site".
+# It reuses the Cloudflare helpers above and, like them, changes or deletes only records with its own comment; the
+# demo's records carry another, so neither touches the other's. The only other records it deletes are the retired
+# docs.<DEMO_DOMAIN> CNAME's, commented "managed-by=openfief-docs": a CNAME to github.io that no Pages site claims
+# could be taken over by whoever claims it.
 
-# docs_dns_desired prints the docs site's records as a JSON array: one DNS-only CNAME from the host in the first
-# argument to the Pages host in the second, with the comment in the third. GitHub Pages issues its own certificate,
-# which needs the name to resolve to GitHub directly, so the record is not proxied.
-docs_dns_desired() {
-  gojq -n -c --arg host "$1" --arg target "$2" --arg comment "$3" '
-    [{type: "CNAME", name: $host, content: $target, ttl: 60, proxied: false, comment: $comment}]'
+# site_pages_addresses lists GitHub Pages' published addresses for an apex domain, as "<type> <address>", from
+# https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain
+site_pages_addresses=(
+  "A 185.199.108.153" "A 185.199.109.153" "A 185.199.110.153" "A 185.199.111.153"
+  "AAAA 2606:50c0:8000::153" "AAAA 2606:50c0:8001::153" "AAAA 2606:50c0:8002::153" "AAAA 2606:50c0:8003::153"
+)
+# The GitHub account that publishes the site: www points at <owner>.github.io, and GitHub verifies the domain with
+# the TXT record _github-pages-challenge-<owner>.<DEMO_DOMAIN>.
+: "${SITE_PAGES_OWNER:=arkadiuss}"
+site_comment=managed-by=openfief-site
+site_retired_comment=managed-by=openfief-docs
+
+# site_dns_desired prints the website's records as a JSON array, for the domain, Pages owner, verification value
+# (empty for none) and comment given: the apex's A and AAAA records to every address in site_pages_addresses, a
+# CNAME from www to <owner>.github.io and, with a value, the TXT record GitHub reads to verify the domain. None is
+# proxied: GitHub Pages issues its own certificate, which needs the names to resolve to GitHub directly.
+site_dns_desired() {
+  printf '%s\n' "${site_pages_addresses[@]}" | gojq -R -s -c --arg d "$1" --arg o "$2" --arg ch "$3" --arg c "$4" '
+    def rec($t; $n; $v): {type: $t, name: $n, content: $v, ttl: 300, proxied: false, comment: $c};
+    [(split("\n")[] | select(. != "") | split(" ") | rec(.[0]; $d; .[1])),
+     rec("CNAME"; "www.\($d)"; "\($o).github.io"),
+     (if $ch != "" then rec("TXT"; "_github-pages-challenge-\($o).\($d)"; $ch) | del(.proxied) else empty end)]'
 }
 
+# site_dns_changes compares the desired records (a file from site_dns_desired) with the zone's existing ones (a file
+# holding a JSON array of Cloudflare records) and prints one JSON action per line: create, update or delete. Each
+# name and type it manages is reconciled as a set, so the apex ends up with exactly the listed addresses: missing
+# ones are created first, then ours with an address no longer listed are deleted. Only records whose comment is the
+# third argument are updated or deleted, plus every record with the retired comment in the fourth; a record of ours
+# at a name and type it no longer manages (the TXT record without a value) is left as it is. It fails, printing
+# nothing, when a record with neither comment has a desired name and type, is a CNAME at a desired name, or sits at
+# a name where a CNAME is wanted.
+site_dns_changes() {
+  local actions clash
+  actions="$(gojq -c -n --slurpfile desired "$1" --slurpfile existing "$2" --arg comment "$3" --arg retired "$4" '
+    def key: "\(.type) \(.name)";
+    def value: (.content // "") | ltrimstr("\"") | rtrimstr("\"");
+    $desired[0] as $want
+    | [$want[] | key] as $keys
+    | [$existing[0][] | select(.comment == $comment)] as $ours
+    | ([$existing[0][] | select(.comment != $comment and .comment != $retired) | . as $e
+          | select($want | any(.name == $e.name and (.type == $e.type or .type == "CNAME" or $e.type == "CNAME")))
+          | {op: "clash", record: .}]
+       + [$want[] as $d
+          | if ($ours | any(key == ($d | key) and value == ($d | value))) then empty
+            else {op: "create", record: $d} end]
+       + [$ours | map(select(key as $k | $keys | index($k))) | group_by("\(key) \(value)")[] as $g
+          | ([$want[] | select(key == ($g[0] | key) and value == ($g[0] | value))] | .[0]) as $d
+          | if $d == null then ($g[] | {op: "delete", id: .id, record: .})
+            else (($g[0] | select((.proxied // false) != ($d.proxied // false))
+                    | {op: "update", id: .id, from: ., record: $d}),
+                  ($g[1:][] | {op: "delete", id: .id, record: .})) end]
+       + [$existing[0][] | select(.comment == $retired) | {op: "delete", id: .id, record: .}])
+    | (map(select(.op == "clash")) + map(select(.op == "create")) + map(select(.op == "update"))
+       + map(select(.op == "delete")))[]')" || return 1
+  clash="$(gojq -r 'select(.op == "clash") | .record | "\(.type) \(.name)"' <<<"$actions")"
+  if [ -n "$clash" ]; then
+    demo_fail "refusing: the zone has $(echo "$clash" | paste -sd, -) without the comment \"$3\"; remove it, or give it that comment so these scripts manage it"
+    return 1
+  fi
+  [ -z "$actions" ] || printf '%s\n' "$actions"
+}
 
-# docs_dns_main runs plan or apply for the docs site's record.
-docs_dns_main() {
-  local command="${1:-}" tool
+# site_dns_records saves into $work/dns.json, as one JSON array, the zone's records that carry the website's comment
+# or the retired docs comment, or sit at one of the names given as arguments. As for the demo, the filters are
+# applied again here, so a filter the API ignores can't widen them.
+site_dns_records() {
+  local query files=() i=0
+  demo_dns_zone
+  for query in "comment.exact=$(gojq -rn --arg c "$site_comment" '$c | @uri')" \
+    "comment.exact=$(gojq -rn --arg c "$site_retired_comment" '$c | @uri')" "${@/#/name.exact=}"; do
+    i=$((i + 1))
+    demo_cf GET "/zones/$zone/dns_records?per_page=100&$query" >"$work/site-$i.json"
+    files+=("$work/site-$i.json")
+  done
+  if ! gojq -e -s 'all(.[]; (.result_info.total_count // 0) <= (.result | length))' "${files[@]}" >/dev/null; then
+    demo_fail "more than 100 DNS records match the website's names or comments; clean up the zone first"
+    return 1
+  fi
+  printf '%s\n' "$@" | gojq -R -s -c 'split("\n") | map(select(. != ""))' >"$work/site-names.json"
+  gojq -s -c --arg c "$site_comment" --arg r "$site_retired_comment" --slurpfile names "$work/site-names.json" '
+    [.[].result[] | select(.comment == $c or .comment == $r or (.name as $n | $names[0] | index($n)))]
+    | unique_by(.id)' "${files[@]}" >"$work/dns.json"
+}
+
+# site_dns_main runs plan or apply for the website's records.
+site_dns_main() {
+  local command="${1:-}" tool challenge="${GITHUB_PAGES_CHALLENGE:-}" www txt names
   case "$command" in
     plan | apply) ;;
     *)
-      demo_fail "usage: demo.sh dns-docs plan|apply"
+      demo_fail "usage: demo.sh dns-site plan|apply"
       return 1
       ;;
   esac
@@ -813,38 +894,49 @@ docs_dns_main() {
     return 1
   fi
   if [ "$DEMO_DOMAIN" = none ]; then
-    demo_fail "DEMO_DOMAIN=none: there is no zone for the docs site's record"
+    demo_fail "DEMO_DOMAIN=none: there is no zone for the website's records"
     return 1
   fi
   for tool in curl gojq; do
     command -v "$tool" >/dev/null 2>&1 || demo_fail "$tool not found; run task setup" || return 1
   done
-  host="docs.$DEMO_DOMAIN"
-  comment="managed-by=openfief-docs"
-  if [[ ! "$host" =~ $demo_host_form ]] || [[ ! "$DOCS_PAGES_HOST" =~ $demo_host_form ]]; then
-    demo_fail "'$host' or DOCS_PAGES_HOST '$DOCS_PAGES_HOST' is not a lowercase DNS name"
+  www="www.$DEMO_DOMAIN"
+  txt="_github-pages-challenge-$SITE_PAGES_OWNER.$DEMO_DOMAIN"
+  if [[ ! "$www" =~ $demo_host_form ]] || [[ ! "$SITE_PAGES_OWNER" =~ ^[a-z0-9]([a-z0-9-]{0,37}[a-z0-9])?$ ]]; then
+    demo_fail "DEMO_DOMAIN '$DEMO_DOMAIN' or SITE_PAGES_OWNER '$SITE_PAGES_OWNER' is not a lowercase DNS name"
     return 1
   fi
-  demo_dns_records
-  docs_dns_desired "$host" "$DOCS_PAGES_HOST" "$comment" >"$work/dns-desired.json"
-  demo_dns_changes "$work/dns-desired.json" "$work/dns.json" "$comment" "$host" >"$work/dns-changes.jsonl"
+  if [ -n "$challenge" ] && [[ ! "$challenge" =~ ^[A-Za-z0-9_-]{1,255}$ ]]; then
+    demo_fail "GITHUB_PAGES_CHALLENGE must be the TXT value GitHub shows: letters, digits, dashes and underscores"
+    return 1
+  fi
+  comment="$site_comment"
+  names=("$DEMO_DOMAIN" "$www")
+  if [ -n "$challenge" ]; then
+    names+=("$txt")
+  else
+    echo "note: GITHUB_PAGES_CHALLENGE is not set, so the TXT record $txt is skipped; an existing one is left as it is"
+  fi
+  site_dns_records "${names[@]}"
+  site_dns_desired "$DEMO_DOMAIN" "$SITE_PAGES_OWNER" "$challenge" "$comment" >"$work/dns-desired.json"
+  site_dns_changes "$work/dns-desired.json" "$work/dns.json" "$comment" "$site_retired_comment" >"$work/dns-changes.jsonl"
   if [ ! -s "$work/dns-changes.jsonl" ]; then
-    echo "DNS record of $host is up to date (CNAME to $DOCS_PAGES_HOST)"
+    echo "DNS records of the website at $DEMO_DOMAIN and $www are up to date (GitHub Pages, $SITE_PAGES_OWNER.github.io)"
   elif [ "$command" = plan ]; then
     demo_dns_show <"$work/dns-changes.jsonl" | sed 's/^/would DNS: /'
   else
-    demo_dns_apply_changes
+    demo_dns_apply_changes "$site_retired_comment"
   fi
 }
 
 
-# Run as a script, "demo.sh <command>" or "demo.sh dns-docs plan|apply"; tests source this file for the pure
+# Run as a script, "demo.sh <command>" or "demo.sh dns-site plan|apply"; tests source this file for the pure
 # helpers (demo_to_micro, demo_render_cloud_init, ...).
 if [ "${BASH_SOURCE[0]}" = "$0" ]; then
   work="$(mktemp -d)"
   trap 'rm -rf "$work"' EXIT
-  if [ "${1:-}" = dns-docs ]; then
-    docs_dns_main "${2:-}"
+  if [ "${1:-}" = dns-site ]; then
+    site_dns_main "${2:-}"
   else
     demo_main "$@"
   fi

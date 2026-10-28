@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4883646cdc73
+  - type: verified_by
+    from: SCEN-tooling-site-dns-challenge
+    to: TEST-tooling-demo
+    created_at: 2026-10-28T15:29:26.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c695014a99bb

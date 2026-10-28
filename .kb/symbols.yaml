@@ -37088,7 +37088,7 @@ symbols:
       - type: implements
         target: REQ-tooling-demo-dns
       - type: implements
-        target: REQ-tooling-demo-dns-docs
+        target: REQ-tooling-site-dns
   - id: SYM-demo-demo-dns-comment
     title: demo_dns_comment
     sourceFile: scripts/demo/demo.sh
@@ -37275,34 +37275,6 @@ symbols:
         target: REQ-tooling-demo-dns
       - type: implements
         target: REQ-tooling-demo-dns-fallback
-  - id: SYM-demo-docs-dns-desired
-    title: docs_dns_desired
-    sourceFile: scripts/demo/demo.sh
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T14:40:54.380Z
-    relationships:
-      - type: covered_by
-        target: TEST-tooling-demo
-      - type: implements
-        target: REQ-tooling-demo-dns-docs
-  - id: SYM-demo-docs-dns-main
-    title: docs_dns_main
-    sourceFile: scripts/demo/demo.sh
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T14:40:58.263Z
-    relationships:
-      - type: covered_by
-        target: TEST-tooling-demo
-      - type: implements
-        target: REQ-tooling-demo-dns-docs
-      - type: implements
-        target: REQ-tooling-demo-token
   - id: SYM-demo-test-helper-record
     title: record
     sourceFile: scripts/tests/demo.test.sh
@@ -38890,3 +38862,77 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-read-api
+  - id: SYM-demo-site-dns-desired
+    title: site_dns_desired
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T15:29:47.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-site-dns
+  - id: SYM-demo-site-dns-changes
+    title: site_dns_changes
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T15:29:50.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-site-dns
+  - id: SYM-demo-site-dns-records
+    title: site_dns_records
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T15:29:53.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-site-dns
+  - id: SYM-demo-site-dns-main
+    title: site_dns_main
+    sourceFile: scripts/demo/demo.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T15:29:57.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-token
+      - type: implements
+        target: REQ-tooling-site-dns
+  - id: SYM-demo-test-helper-site-store
+    title: site_store
+    sourceFile: scripts/tests/demo.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T15:30:02.030Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo
+  - id: SYM-demo-test-helper-demo-records
+    title: demo_records
+    sourceFile: scripts/tests/demo.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T15:30:06.354Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo

@@ -1,6 +1,6 @@
 ---
 title: task dns:docs keeps the docs site's CNAME and nothing else
-status: active
+status: closed
 origin:
   kind: agent
   recorded_at: '2026-10-28T14:35:30.833Z'
