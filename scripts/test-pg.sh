@@ -11,8 +11,8 @@ set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
-# cmd/demo-seed loads the demo dataset end to end into a fresh database.
-mapfile -t pkgs < <(go list ./internal/... | grep '/postgres$'; go list ./cmd/demo-seed)
+# cmd/demo-seed loads the demo dataset end to end into a fresh database; cmd/core serves it over the read API.
+mapfile -t pkgs < <(go list ./internal/... | grep '/postgres$'; go list ./cmd/demo-seed ./cmd/core)
 if [ "${#pkgs[@]}" -eq 0 ]; then
   echo "test:pg: no postgres packages"
   exit 0

@@ -195,3 +195,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b02b3845ebd
+  - type: validates
+    from: TEST-identity-postgres
+    to: REQ-AUTO-2D0C3CC0151C3C5C
+    created_at: 2026-10-28T14:11:05.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35d38d743a6c
+  - type: implements
+    from: SYM-identity-pg-store-script-tokens
+    to: REQ-identity-script-token-revoke
+    created_at: 2026-10-28T14:13:43.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b2b1508e777
+  - type: covered_by
+    from: SYM-identity-pg-store-script-tokens
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:13:43.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42bb50e93444
+  - type: implements
+    from: SYM-core-with-pool
+    to: REQ-core-serves-read-api
+    created_at: 2026-10-28T14:34:27.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c5ed3077c69
+  - type: covered_by
+    from: SYM-core-with-pool
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:34:27.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02541cf8fc93

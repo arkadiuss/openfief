@@ -1,0 +1,46 @@
+# The core's own NetworkPolicy. Ingress: plugin pods on the core's port (they dial the Service's connect port).
+# Probes come from the node, and kubectl port-forward enters through the kubelet, so neither needs a rule here.
+# An installation that routes traffic in through an Ingress controller adds a policy that admits it (the demo
+# does, in deploy/demo/openfief). Egress: DNS and the CloudNativePG cluster openfief-db only; the core calls
+# nothing else today.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-core
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-core
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: openfief-plugin
+      ports:
+        - protocol: TCP
+          port: 8080
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              cnpg.io/cluster: openfief-db
+      ports:
+        - protocol: TCP
+          port: 5432
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

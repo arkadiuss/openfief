@@ -188,3 +188,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b09cc34f76bd
+  - type: constrains
+    from: REQ-identity-script-token-revoke
+    to: FACT-SUBJECT-1FFB20E6DF879F3F
+    created_at: 2026-10-28T14:11:31.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71a364d33530
+  - type: requires_property
+    from: REQ-identity-script-token-revoke
+    to: FACT-PROP-DCE31536D0AD3CB2
+    created_at: 2026-10-28T14:11:31.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9e49ba7402c
+  - type: specified_by
+    from: REQ-identity-script-token-revoke
+    to: SCEN-identity-revoke
+    created_at: 2026-10-28T14:11:31.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52320857122a

@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc84e2d65e1b
+  - type: executable_for
+    from: SYM-identity-test-helper-check-parsed
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:14:20.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-420acb136dac

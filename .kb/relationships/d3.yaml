@@ -230,3 +230,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-685d03948029
+  - type: executable_for
+    from: SYM-core-test-helper-core-now
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:36:47.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e23e495d41e
+  - type: executable_for
+    from: SYM-core-test-helper-get
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:37:19.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0b27096a524

@@ -202,3 +202,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ade4b75a9a65
+  - type: executable_for
+    from: SYM-identity-app-test-revoke
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:14:37.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fadf7292422
+  - type: implements
+    from: SYM-core-parse-args
+    to: REQ-core-config
+    created_at: 2026-10-28T14:33:41.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2213cb88d6
+  - type: covered_by
+    from: SYM-core-parse-args
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:33:41.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ecd4134d7de

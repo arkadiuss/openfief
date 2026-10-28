@@ -160,3 +160,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a85f9b607f2f
+  - type: implements
+    from: SYM-identity-pg-scan-token
+    to: REQ-identity-script-token-store
+    created_at: 2026-10-28T14:13:47.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81be0aabc0ee
+  - type: covered_by
+    from: SYM-identity-pg-scan-token
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:13:47.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27e3e5c0aa74

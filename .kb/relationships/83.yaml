@@ -244,3 +244,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-917438a050f6
+  - type: executable_for
+    from: SYM-identity-test-key-matches
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:14:12.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34cf95977a57
+  - type: executable_for
+    from: SYM-identity-app-test-helper-clock
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:15:14.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1bed105ee40

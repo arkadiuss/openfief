@@ -202,3 +202,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f748f1a8f6e4
+  - type: verified_by
+    from: SCEN-core-config
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:32:54.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee160cdf0bf
+  - type: implements
+    from: SYM-core-server-handler
+    to: REQ-core-health-endpoints
+    created_at: 2026-10-28T14:35:04.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5862b0a3b04
+  - type: covered_by
+    from: SYM-core-server-handler
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:35:04.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbca3f656ea8
+  - type: executable_for
+    from: SYM-core-test-helper-same-location
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:36:19.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6468328f488

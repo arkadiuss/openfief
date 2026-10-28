@@ -160,3 +160,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff410809f2aa
+  - type: constrains
+    from: REQ-core-serves-read-api
+    to: FACT-SUBJECT-D6A091F8C6B86AD8
+    created_at: 2026-10-28T14:33:03.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61dba45a64a2
+  - type: requires_property
+    from: REQ-core-serves-read-api
+    to: FACT-PROP-4DA4036310F79412
+    created_at: 2026-10-28T14:33:03.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3848750f7980
+  - type: specified_by
+    from: REQ-core-serves-read-api
+    to: SCEN-core-serves-read-api
+    created_at: 2026-10-28T14:33:03.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2ce84b84dc

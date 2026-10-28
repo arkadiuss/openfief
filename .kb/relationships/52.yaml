@@ -76,3 +76,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdfe0ba869b1
+  - type: executable_for
+    from: SYM-core-test-core-serves-the-read-api
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:36:24.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a07af3de0f12

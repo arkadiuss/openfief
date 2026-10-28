@@ -188,3 +188,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-811518f43845
+  - type: verified_by
+    from: SCEN-identity-verify-refused
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:11:11.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35d46cb6d713
+  - type: verified_by
+    from: SCEN-identity-verify-refused
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:11:11.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c694a391c28d
+  - type: verified_by
+    from: SCEN-identity-verify-refused
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:11:11.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbacf7232c89

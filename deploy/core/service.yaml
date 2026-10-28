@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openfief-core
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: openfief-core
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+    - name: connect
+      port: 8081
+      # A number, not the port's name: the operator copies it into every plugin's NetworkPolicy,
+      # which matches pod ports.
+      targetPort: 8080

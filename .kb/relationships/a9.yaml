@@ -146,3 +146,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa424a153af8
+  - type: executable_for
+    from: SYM-identity-app-test-helper-clock-now
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:15:19.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40bf313d125c
+  - type: executable_for
+    from: SYM-identity-pg-test-store-unknown-token
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:16:32.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e3a25702420

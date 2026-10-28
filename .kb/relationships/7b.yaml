@@ -167,3 +167,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea49b0b4cb8e
+  - type: constrains
+    from: REQ-identity-script-token-verify
+    to: FACT-SUBJECT-1FFB20E6DF879F3F
+    created_at: 2026-10-28T14:11:26.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09c50cc050e4
+  - type: requires_property
+    from: REQ-identity-script-token-verify
+    to: FACT-PROP-005756C6ED48CFBC
+    created_at: 2026-10-28T14:11:26.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e450daea4e9a
+  - type: specified_by
+    from: REQ-identity-script-token-verify
+    to: SCEN-identity-verify-valid
+    created_at: 2026-10-28T14:11:26.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f4272a2a727
+  - type: specified_by
+    from: REQ-identity-script-token-verify
+    to: SCEN-identity-verify-refused
+    created_at: 2026-10-28T14:11:26.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f5037794e08

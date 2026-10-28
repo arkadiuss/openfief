@@ -167,3 +167,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24051719939f
+  - type: constrains
+    from: REQ-core-graceful-shutdown
+    to: FACT-SUBJECT-D6A091F8C6B86AD8
+    created_at: 2026-10-28T14:33:13.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-140a6a1875a7
+  - type: requires_property
+    from: REQ-core-graceful-shutdown
+    to: FACT-PROP-CCC33C100516DBA7
+    created_at: 2026-10-28T14:33:13.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-922eb3c2b0d5
+  - type: specified_by
+    from: REQ-core-graceful-shutdown
+    to: SCEN-core-graceful-shutdown
+    created_at: 2026-10-28T14:33:13.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e71a158f9b89

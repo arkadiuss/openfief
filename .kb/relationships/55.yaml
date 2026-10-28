@@ -237,3 +237,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f637f01359d
+  - type: implements
+    from: SYM-core-parse-issue
+    to: REQ-core-config
+    created_at: 2026-10-28T14:34:10.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe34698882f7
+  - type: implements
+    from: SYM-core-parse-issue
+    to: REQ-core-token-commands
+    created_at: 2026-10-28T14:34:11.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00f34443aac6
+  - type: covered_by
+    from: SYM-core-parse-issue
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:34:11.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0f4680e9420

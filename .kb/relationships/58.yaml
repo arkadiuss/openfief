@@ -286,3 +286,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88b41b7321c2
+  - type: verified_by
+    from: SCEN-core-token-commands
+    to: TEST-core-unit
+    created_at: 2026-10-28T14:32:56.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3759efd9e618
+  - type: verified_by
+    from: SCEN-core-token-commands
+    to: TEST-core-read-api
+    created_at: 2026-10-28T14:32:56.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be42e15f087d

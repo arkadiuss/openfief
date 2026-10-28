@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb65bfdc46ec
+  - type: executable_for
+    from: SYM-identity-test-parse-script-token-id
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:14:03.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3720a309c863

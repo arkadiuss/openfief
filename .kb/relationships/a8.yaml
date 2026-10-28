@@ -216,3 +216,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f793ed729e9d
+  - type: executable_for
+    from: SYM-identity-app-test-helper-mem-store-revoke-script-token
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:15:05.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0350cc19e374

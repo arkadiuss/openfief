@@ -146,3 +146,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40bcb2f459cd
+  - type: verified_by
+    from: SCEN-identity-revoke
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:11:13.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92905fee90d2
+  - type: verified_by
+    from: SCEN-identity-revoke
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:11:13.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1f406c25e02
+  - type: implements
+    from: SYM-identity-script-token
+    to: REQ-AUTO-2D0C3CC0151C3C5C
+    created_at: 2026-10-28T14:12:02.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab920d90be8b
+  - type: covered_by
+    from: SYM-identity-script-token
+    to: TEST-identity-domain
+    created_at: 2026-10-28T14:12:02.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d1f31299745

@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aead21153e7d
+  - type: executable_for
+    from: SYM-identity-pg-test-helper-check-no-secret-stored
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:17:02.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87087576e7c1

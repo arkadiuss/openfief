@@ -111,3 +111,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0fa8d9537b9
+  - type: implements
+    from: SYM-identity-app-tokens-revoke
+    to: REQ-identity-script-token-revoke
+    created_at: 2026-10-28T14:12:57.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbc98901acbd
+  - type: covered_by
+    from: SYM-identity-app-tokens-revoke
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:12:57.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81a3dfa26440
+  - type: implements
+    from: SYM-identity-pg-store-save-script-token
+    to: REQ-identity-script-token-store
+    created_at: 2026-10-28T14:13:31.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95f417a95e13
+  - type: implements
+    from: SYM-identity-pg-store-save-script-token
+    to: REQ-identity-script-token-issue
+    created_at: 2026-10-28T14:13:31.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c681bb87333
+  - type: covered_by
+    from: SYM-identity-pg-store-save-script-token
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:13:31.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e50deed1f38a
+  - type: executable_for
+    from: SYM-identity-app-test-helper-mem-store-save-script-token
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:14:55.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1aeb9cae6bb

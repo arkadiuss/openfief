@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6eb339e8a1b6
+  - type: executable_for
+    from: SYM-identity-app-test-helper-mem-store
+    to: TEST-identity-app
+    created_at: 2026-10-28T14:14:46.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225d9b5170b2
+  - type: executable_for
+    from: SYM-identity-pg-test-helper-check-revoked
+    to: TEST-identity-postgres
+    created_at: 2026-10-28T14:16:57.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daea06f8c05a
