@@ -1,6 +1,6 @@
 # Code organization
 
-Organized by domain, following DDD (domain-driven design). Names come from [ubiquitous-language.md](ubiquitous-language.md). Rules without a marker are the author's; **(P)** marks a Claude Code proposal pending approval.
+Organized by domain, following DDD (domain-driven design). Names come from [the glossary](../glossary.md). Rules without a marker are the author's; **(P)** marks a Claude Code proposal awaiting the author's approval.
 
 ## Bounded contexts
 
@@ -47,7 +47,7 @@ test/e2e/                end-to-end suites (local k3s)
 - Adapters import `app` and domain packages.
 - Only `cmd` imports adapters.
 - A context never imports another context's adapters or reads its tables: each context owns its schema **(P)**.
-- Enforced by lint ([lint.md](lint.md)).
+- Enforced by lint (`.golangci.yml`).
 
 **Interfaces.** Declare an interface where it's consumed (in `app`), keep it small, and return concrete types.
 
@@ -61,6 +61,6 @@ test/e2e/                end-to-end suites (local k3s)
 - Never log amounts, holdings, account numbers or tokens. Log internal IDs only (GR-12, UC-0).
 - Fixtures use synthetic data only.
 
-**Requirements.** Every behavioral function is owned by a requirement through a kibi `symbol` entity with an `implements` link, not a code comment ([kibi.md](kibi.md)). The pre-commit gate blocks unowned behavioral symbols.
+**Requirements.** Every behavioral function is owned by a kibi requirement ([kibi.md](kibi.md)).
 
-**New context.** Add it to the table above and to the ubiquitous language, and get the author's OK. Contexts are design decisions, not refactors.
+**New context.** Add it to the table above and its terms to the glossary, and get the author's OK. Contexts are design decisions, not refactors.

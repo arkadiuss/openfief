@@ -7,7 +7,7 @@ work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 
 mkdir -p "$work/docs" "$work/scripts"
-cp "$root/docs/DESIGN.md" "$root/docs/SPEC.md" "$work/docs/"
+cp -R "$root/docs/DESIGN.md" "$root/docs/glossary.md" "$root/docs/research.md" "$root/docs/proposals" "$work/docs/"
 cp "$root/scripts/check-docs.sh" "$work/scripts/"
 git -C "$work" init -q
 git -C "$work" -c user.name=test -c user.email=test@example.invalid add -A
@@ -16,33 +16,33 @@ git -C "$work" -c user.name=test -c user.email=test@example.invalid commit -q -m
 cd "$work"
 failures=0
 
+expect_fail() {
+  local name="$1" pattern="$2" out
+  if out="$(bash scripts/check-docs.sh 2>&1)"; then
+    echo "FAIL: $name should fail the check" >&2
+    failures=$((failures + 1))
+  elif ! grep -q "$pattern" <<<"$out"; then
+    echo "FAIL: $name should report '$pattern', got: $out" >&2
+    failures=$((failures + 1))
+  fi
+  git checkout -q -- docs
+}
+
 if ! bash scripts/check-docs.sh >/dev/null 2>&1; then
   echo "FAIL: unchanged docs should pass" >&2
   failures=$((failures + 1))
 fi
 
-cp docs/DESIGN.md design.bak
 printf '\nSee OQ-999.\n' >>docs/DESIGN.md
-if out="$(bash scripts/check-docs.sh 2>&1)"; then
-  echo "FAIL: an undefined OQ tag should fail the check" >&2
-  failures=$((failures + 1))
-elif ! grep -q 'undefined OQ tags: OQ-999' <<<"$out"; then
-  echo "FAIL: the undefined tag should be named, got: $out" >&2
-  failures=$((failures + 1))
-fi
-cp design.bak docs/DESIGN.md
+expect_fail "an undefined OQ tag" 'undefined OQ tags: OQ-999'
 
 sed -i 's/^- \*\*\[GR-14\]\*\* \(.*\)$/- **[GR-14]** \1 (edited)/' docs/DESIGN.md
-if out="$(bash scripts/check-docs.sh 2>&1)"; then
-  echo "FAIL: an edited ground rule should fail the check" >&2
-  failures=$((failures + 1))
-elif ! grep -q 'ground-rule lines' <<<"$out"; then
-  echo "FAIL: the ground-rule change should be named, got: $out" >&2
-  failures=$((failures + 1))
-fi
-cp design.bak docs/DESIGN.md
+expect_fail "an edited ground rule" 'ground-rule lines'
+
+printf '\n- **[OQ-21]** A second definition.\n' >>docs/proposals/hosting.md
+expect_fail "an ID defined twice" 'OQ IDs defined more than once: OQ-21'
 
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "check-docs: 3 cases passed"
+echo "check-docs: 4 cases passed"

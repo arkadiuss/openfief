@@ -34,10 +34,10 @@ When a vulnerability database is unreachable, the vulnerability check must warn 
 
 ## Context
 
-Keeps offline commits possible while CI stays strict. A Claude Code proposal (marked P in docs/dev/sdlc.md), implemented under D-41 and pending the author's review.
+Keeps offline commits possible while CI stays strict. A Claude Code proposal, marked P in docs/dev/sdlc.md and awaiting the author's review.
 
 ## Source
 
 > If a vulnerability database is unreachable, `task vuln` warns locally and fails in CI (`CI=true`). Findings always fail.
 
-docs/dev/sdlc.md#commands
+docs/dev/sdlc.md#tooling

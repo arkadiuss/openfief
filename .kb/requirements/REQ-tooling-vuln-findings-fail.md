@@ -34,10 +34,10 @@ The vulnerability check must fail when govulncheck or npm audit reports a vulner
 
 ## Context
 
-Part of the local pipeline the author asked for: tests, lint and vulnerability check run on the pre-commit hook and in CI (D-36). Recorded by Claude Code while wiring the tooling under D-41.
+Part of the local pipeline the author asked for: tests, lint and vulnerability checks run on the pre-commit hook and in CI (docs/dev/sdlc.md).
 
 ## Source
 
 > If a vulnerability database is unreachable, `task vuln` warns locally and fails in CI (`CI=true`). Findings always fail.
 
-docs/dev/sdlc.md#commands
+docs/dev/sdlc.md#tooling

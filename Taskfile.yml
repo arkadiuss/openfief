@@ -94,7 +94,7 @@ tasks:
       - '{{.GO_GUARD}} {{.BIN}}/golangci-lint fmt --diff'
 
   lint:
-    desc: Strict lint (docs/dev/lint.md)
+    desc: Strict lint (.golangci.yml)
     cmds:
       - '{{.BIN}}/golangci-lint config verify'
       - '{{.GO_GUARD}} {{.BIN}}/golangci-lint run'
@@ -118,7 +118,7 @@ tasks:
       - 'if [ ! -d test/e2e ]; then echo "no e2e suite yet, skipping"; exit 0; fi; go test -tags e2e -count=1 ./test/e2e/...'
 
   docs:check:
-    desc: Provenance checks for docs/DESIGN.md and docs/SPEC.md
+    desc: ID checks for the design documents
     cmds:
       - bash scripts/check-docs.sh
 

@@ -34,7 +34,7 @@ The end-to-end test task must refuse to run when the current Kubernetes context 
 
 ## Context
 
-End-to-end tests run on a local k3s (D-35); refusing other contexts keeps tests from touching a shared or production cluster. The refusal is a Claude Code proposal (marked P in docs/dev/testing.md), implemented under D-41.
+End-to-end tests run on a local k3s (the author's testing rule, docs/dev/testing.md); refusing other contexts keeps tests from touching a shared or production cluster. The refusal itself is a Claude Code proposal, marked P in docs/dev/testing.md.
 
 ## Source
 

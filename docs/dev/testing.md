@@ -1,50 +1,47 @@
 # Testing
 
-Rules without a marker are the author's; **(P)** marks a Claude Code proposal pending approval. Every test must be stable and runnable locally.
+Rules without a marker are the author's; **(P)** marks a Claude Code proposal awaiting the author's approval. Every test must be stable and runnable locally.
 
 ## Levels
 
-| Level | What | How | Runs in |
-|---|---|---|---|
-| Unit | Domain logic | Pure functions, table-driven, small cases | `task test` (pre-commit, CI) |
-| Integration | Adapters against real protocols | HTTP: [hypert](https://github.com/areknoster/hypert) record/replay. Postgres: a disposable instance via testcontainers-go **(P)** | `task test` (replay only) |
-| End-to-end | The full flow on Kubernetes | Local k3s (native, or k3d) | `task e2e` (locally; CI on k3s) |
+| Level | What | How |
+|---|---|---|
+| Unit | Domain logic | Pure functions, small table-driven tests |
+| Integration | Adapters against real protocols | HTTP with [hypert](https://github.com/areknoster/hypert) record and replay; Postgres in a disposable container **(P)** |
+| End-to-end | The full flow on Kubernetes | A local k3s (native or k3d) |
 
 ## Unit tests
 
 - Domain code is pure functions ([code-organization.md](code-organization.md)), so unit tests need no mocks.
-- Table-driven: a `[]struct{ name string; ... }` table plus `t.Run(tc.name, ...)` and `t.Parallel()`.
-- One behavior per table. Keep cases small and named after the rule they check, in the ubiquitous language.
-- Compare with `go-cmp` (`cmp.Diff`) and print `got`/`want`. Stdlib `testing` only, no assertion framework **(P)**.
+- One behavior per table, with small named cases in the [glossary's](../glossary.md) terms, run in parallel.
+- Compare with go-cmp; no assertion framework **(P)**.
 - Ledger invariants (postings sum to zero per currency; FIFO consumes the oldest lot first) also get property-based tests **(P)**.
-- Parsers (e.g. the XTB export) use golden files built from synthetic exports.
+- Parsers, such as the XTB export, use golden files built from synthetic exports.
 
-## Integration tests: hypert
+## Integration tests
 
-- Build HTTP clients with `hypert.TestClient(t, record, opts...)`. Committed tests always run with `record = false` (replay), so they're offline and deterministic.
-- Recordings live in `testdata/<TestName>/` as `*.req.http` and `*.resp.http` and are committed.
-- Replay validates each request against the recording; keep `DefaultRequestValidator()`.
-- Re-recording is a deliberate, manual act: follow the `hypert-recording` skill (`.claude/skills/hypert-recording/SKILL.md`).
-- hypert's sanitizers clean **requests only**. Responses must be scrubbed with `WithResponseTransform` in record mode, or recorded only against paper, demo or public endpoints.
-- No real account data, ever: a recording must not contain an account number, holding, amount or token from a real account (GR-12).
-- Postgres adapter tests run against a fresh database with all migrations applied **(P)**. Never share state between tests.
+- Committed HTTP tests always replay; recording is never left on in committed code.
+- Recordings are committed with their test, and replay checks each request against its recording.
+- Recording is a deliberate, manual act: follow the `hypert-recording` skill.
+- hypert sanitizes requests only, so responses must be scrubbed too, or recorded only against paper, demo or public endpoints.
+- A recording never contains an account number, holding, amount or token from a real account (GR-12).
+- Each Postgres test gets a fresh database with all migrations applied **(P)**.
 
 ## End-to-end tests
 
-- These run the real system on a **local** k3s: the bootstrap install, the operator, plugins, and a real Ghostfolio in the cluster.
-- External institutions are fixture servers in the cluster; e2e never calls a real broker.
+- They run the real system on a local k3s: the bootstrap install, the operator, the plugins and a real Ghostfolio.
+- External institutions are fixture servers in the cluster; end-to-end tests never call a real broker.
 - `task e2e` refuses any kubeconfig context that isn't local **(P)**.
-- Each e2e test maps to an M0 acceptance criterion (SPEC.md §7) or a kibi scenario.
+- Each end-to-end test verifies a kibi scenario.
 
 ## Stability
 
-- No sleeps: wait on conditions with a deadline.
-- No wall-clock: inject the date.
-- No unseeded randomness.
-- No network in unit or replay tests. No test-order dependence.
-- A flaky test is a bug. Fix the cause. Never skip, disable, retry-loop or quarantine a test to get green.
-- Tests verify behavior through public APIs. Don't test private helpers or mock what you own.
+- No sleeps: wait on conditions, with a deadline.
+- No wall clock: inject the date.
+- No unseeded randomness, no network in unit or replay tests, no dependence on test order.
+- A flaky test is a bug: fix the cause. Never skip, disable, retry-loop or quarantine a test to get green.
+- Test behavior through public APIs; don't test private helpers or mock what you own.
 
 ## Traceability
 
-Tests that verify a kibi scenario link to it ([kibi.md](kibi.md)). Coverage percentage is not a target; requirement coverage in `kibi report` is.
+Tests that verify a kibi scenario are linked to it ([kibi.md](kibi.md)). Coverage percentage is not a target; requirement coverage is.

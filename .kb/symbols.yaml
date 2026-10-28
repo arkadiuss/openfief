@@ -26,6 +26,8 @@ symbols:
         target: TEST-tooling-docs-check
       - type: implements
         target: REQ-tooling-docs-undefined-tag
+      - type: implements
+        target: REQ-tooling-docs-unique-ids
   - id: SYM-check-docs-referenced
     title: referenced
     sourceFile: scripts/check-docs.sh
@@ -52,3 +54,13 @@ symbols:
         target: TEST-tooling-vuln-offline
       - type: implements
         target: REQ-tooling-vuln-offline
+  - id: SYM-check-docs-test-expect-fail
+    title: expect_fail
+    sourceFile: scripts/tests/check-docs.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T03:55:01.128Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-docs-check

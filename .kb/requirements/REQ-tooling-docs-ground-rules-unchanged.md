@@ -34,10 +34,10 @@ The docs check must fail when a ground-rule line in docs/DESIGN.md changes.
 
 ## Context
 
-Ground rules are written by the author and never edited (DESIGN.md section 1: only the author edits these; conflicts go to section 7). Recorded by Claude Code while wiring the tooling under D-41.
+Ground rules are written by the author and never edited (docs/DESIGN.md, Ground rules). Recorded by Claude Code while wiring the tooling; the author made the Taskfile the single entry point for all tooling, and this check runs as task docs:check and in the pre-commit hook.
 
 ## Source
 
-> It fails on any referenced tag that isn't defined, and on any changed ground-rule line
+> It fails on any referenced tag that isn't defined, and on any changed ground-rule line.
 
 .claude/skills/design-docs/SKILL.md#checks-after-editing

@@ -9,8 +9,11 @@ Self-hosted portfolio tracker and orchestrator for AI investment agents. Each ag
 ## Documents
 
 - [docs/OVERVIEW.md](docs/OVERVIEW.md): one-page introduction. Start here.
-- [docs/DESIGN.md](docs/DESIGN.md): ground rules, research findings, proposals, tensions and open questions, each tagged by source.
-- [docs/SPEC.md](docs/SPEC.md): requirements, domain model, lifecycles, plugin contracts, events and milestones derived from the design.
+- [docs/DESIGN.md](docs/DESIGN.md): the current, decided design.
+- [docs/proposals/](docs/proposals/): what is proposed but not decided, one file per area.
+- [docs/research.md](docs/research.md): external research the design draws on.
+- [docs/glossary.md](docs/glossary.md): domain terms and abbreviations.
+- Requirements live in kibi (`.kb/`); `task kibi:report` renders them as a page.
 
 ## Development
 

@@ -64,4 +64,4 @@ Design phase, no code yet. Useful now:
 
 Open an issue at github.com/arkadiuss/openfief.
 
-What is decided versus only proposed: see [DESIGN.md](DESIGN.md).
+What is decided: [DESIGN.md](DESIGN.md). What is only proposed: [proposals/](proposals/).

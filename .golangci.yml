@@ -1,4 +1,5 @@
-# Strict by design (docs/dev/lint.md). Never weaken without the author's OK.
+# Strict by design: lint is how agents get fast, unambiguous feedback.
+# Never weaken it (disable a linter, raise a threshold, add a //nolint or an exclusion) without the author's OK.
 version: "2"
 
 linters:
@@ -20,7 +21,8 @@ linters:
     depguard:
       rules:
         domain:
-          # Domain packages are pure: no I/O, no clock, no concurrency (code-organization.md).
+          # Domain packages are pure: no I/O, no clock, no concurrency (docs/dev/code-organization.md).
+          # depguard matches import prefixes only; cross-context adapter imports need go-arch-lint once code exists.
           list-mode: lax
           files:
             - "**/internal/*/*.go"
