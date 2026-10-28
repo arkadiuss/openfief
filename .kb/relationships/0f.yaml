@@ -20,3 +20,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce622ee5db26
+  - type: implements
+    from: SYM-dco-check-unsigned
+    to: REQ-tooling-dco-signoff
+    created_at: 2026-10-28T04:51:23.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55c1bbcae671
+  - type: covered_by
+    from: SYM-dco-check-unsigned
+    to: TEST-tooling-dco
+    created_at: 2026-10-28T04:51:23.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-370a26558388

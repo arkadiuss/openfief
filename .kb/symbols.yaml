@@ -1187,3 +1187,128 @@ symbols:
         target: TEST-kernel-quantity
       - type: implements
         target: REQ-kernel-decimal-exact
+  - id: SYM-dco-check-unsigned
+    title: unsigned
+    status: active
+    sourceFile: scripts/dco-check.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:23.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-dco
+      - type: implements
+        target: REQ-tooling-dco-signoff
+  - id: SYM-dco-check-test-check
+    title: check
+    status: active
+    sourceFile: scripts/tests/dco-check.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:26.041Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-dco
+  - id: SYM-ci-images-images
+    title: images
+    status: active
+    sourceFile: scripts/ci-images.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:35.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-ci-images
+      - type: implements
+        target: REQ-tooling-ci-images
+  - id: SYM-ci-images-test-expect-output
+    title: expect_output
+    status: active
+    sourceFile: scripts/tests/ci-images.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:38.426Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images
+  - id: SYM-ci-images-test-expect-fail
+    title: expect_fail
+    status: active
+    sourceFile: scripts/tests/ci-images.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:40.693Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images
+  - id: SYM-release-version-valid-version
+    title: valid_version
+    status: active
+    sourceFile: scripts/release-version.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:50.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-version
+      - type: implements
+        target: REQ-tooling-release-version
+  - id: SYM-release-version-test-expect
+    title: expect
+    status: active
+    sourceFile: scripts/tests/release-version.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:53.053Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-version
+  - id: SYM-release-notes-previous-release
+    title: previous_release
+    status: active
+    sourceFile: scripts/release-notes.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:02.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-notes
+      - type: implements
+        target: REQ-tooling-release-notes
+  - id: SYM-release-notes-section
+    title: section
+    status: active
+    sourceFile: scripts/release-notes.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:04.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-notes
+      - type: implements
+        target: REQ-tooling-release-notes
+  - id: SYM-release-notes-test-commit
+    title: commit
+    status: active
+    sourceFile: scripts/tests/release-notes.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:07.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-notes
+  - id: SYM-release-notes-test-expect-notes
+    title: expect_notes
+    status: active
+    sourceFile: scripts/tests/release-notes.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:09.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-notes

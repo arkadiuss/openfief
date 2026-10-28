@@ -1,12 +1,20 @@
 # OpenFief task runner: the single entry point for every local, hook and CI step (docs/dev/sdlc.md).
-# First time: install Task (go install github.com/go-task/task/v3/cmd/task@v3.54.0), then run `task setup`.
+# First time: install Task at TASK_VERSION below (go install github.com/go-task/task/v3/cmd/task@<TASK_VERSION>),
+# then run `task setup`. CI installs Task the same way and runs `task setup:ci` (.github/actions/setup).
 version: '3'
 
 vars:
+  # Tool versions are pinned here; the `# renovate:` comments let Renovate update them (renovate.json).
+  # renovate: datasource=go depName=github.com/golangci/golangci-lint/v2
   GOLANGCI_LINT_VERSION: v2.15.0
+  # renovate: datasource=go depName=golang.org/x/vuln
   GOVULNCHECK_VERSION: v1.9.0
+  # renovate: datasource=go depName=github.com/evilmartians/lefthook/v2
   LEFTHOOK_VERSION: v2.2.2
+  # renovate: datasource=go depName=github.com/go-task/task/v3
   TASK_VERSION: v3.54.0
+  # renovate: datasource=go depName=github.com/rhysd/actionlint
+  ACTIONLINT_VERSION: v1.7.12
   GO_GUARD: 'if [ ! -f go.mod ]; then echo "no Go module yet, skipping"; exit 0; fi;'
   # Tools are called by explicit path: Task lets the OS environment override a Taskfile PATH.
   BIN: '{{.ROOT_DIR}}/.bin'
@@ -26,9 +34,20 @@ tasks:
       - task: kibi:install
       - task: hooks
 
+  setup:ci:
+    desc: CI setup (pinned tools, kibi, this branch's knowledge base); no git hooks
+    cmds:
+      - task: tools:ci
+      - task: kibi:install
+      - task: kibi:sync
+
   tools:
     desc: Install the pinned Go tools into .bin/
-    deps: [tool:golangci-lint, tool:govulncheck, tool:lefthook, tool:task]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task]
+
+  tools:ci:
+    internal: true
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task]
 
   tool:golangci-lint:
     internal: true
@@ -51,6 +70,13 @@ tasks:
     status:
       - '{{.BIN}}/lefthook version 2>&1 | grep -qx "{{trimPrefix "v" .LEFTHOOK_VERSION}}"'
 
+  tool:actionlint:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' go install github.com/rhysd/actionlint/cmd/actionlint@{{.ACTIONLINT_VERSION}}
+    status:
+      - '{{.BIN}}/actionlint -version 2>&1 | head -n1 | grep -qx "{{.ACTIONLINT_VERSION}}"'
+
   tool:task:
     internal: true
     cmds:
@@ -68,6 +94,7 @@ tasks:
     cmds:
       - task: fmt:check
       - task: lint
+      - task: lint:ci
       - task: vuln
       - task: test
       - task: docs:check
@@ -78,6 +105,7 @@ tasks:
     cmds:
       - task: fmt:check
       - task: lint
+      - task: lint:ci
       - task: vuln
       - task: test
       - task: docs:check
@@ -99,6 +127,13 @@ tasks:
       - '{{.BIN}}/golangci-lint config verify'
       - '{{.GO_GUARD}} {{.BIN}}/golangci-lint run'
 
+  lint:ci:
+    desc: Lint the GitHub Actions workflows (actionlint, offline)
+    deps: [tool:actionlint]
+    cmds:
+      # The shellcheck and pyflakes integrations are off so the result never depends on what the machine has installed.
+      - '{{.BIN}}/actionlint -shellcheck= -pyflakes='
+
   vuln:
     desc: Vulnerability checks (govulncheck, npm audit)
     cmds:
@@ -110,12 +145,84 @@ tasks:
       - '{{.GO_GUARD}} go test ./...'
       - bash scripts/tests/check-docs.test.sh
       - bash scripts/tests/vulncheck.test.sh
+      - bash scripts/tests/ci-images.test.sh
+      - bash scripts/tests/dco-check.test.sh
+      - bash scripts/tests/release-version.test.sh
+      - bash scripts/tests/release-notes.test.sh
 
   e2e:
     desc: End-to-end tests on a local k3s; refuses non-local clusters
     cmds:
       - bash scripts/assert-local-cluster.sh
       - 'if [ ! -d test/e2e ]; then echo "no e2e suite yet, skipping"; exit 0; fi; go test -tags e2e -count=1 ./test/e2e/...'
+
+  dco:
+    desc: 'DCO sign-off check (D-5) on the commits in BASE..HEAD, e.g. task dco BASE=origin/main HEAD=HEAD'
+    requires:
+      vars: [BASE, HEAD]
+    cmds:
+      - bash scripts/dco-check.sh '{{.BASE}}' '{{.HEAD}}'
+
+  ci:images:
+    desc: 'JSON list of the images CI builds (cmd/*/Dockerfile, plugins/*/Dockerfile), e.g. task ci:images PREFIX=ghcr.io/owner/openfief'
+    silent: true
+    cmds:
+      - bash scripts/ci-images.sh '{{.PREFIX}}'
+
+  image:sign:
+    desc: 'Keyless cosign signature of a pushed image (CI only, D-17), e.g. task image:sign IMAGE=ghcr.io/owner/openfief/x@sha256:...'
+    requires:
+      vars: [IMAGE]
+    cmds:
+      - cosign sign --yes '{{.IMAGE}}'
+
+  deploy:demo:
+    desc: Deploy to the demo k3s (CI only; DEMO_KUBECONFIG comes from the protected `demo` environment, VERSION is empty for main)
+    cmds:
+      - |
+        if [ ! -d deploy/demo ]; then echo "no deploy/demo manifests yet, skipping"; exit 0; fi
+        echo "deploy: ${VERSION:-main} to demo"
+        if [ -z "${DEMO_KUBECONFIG:-}" ]; then echo "deploy: DEMO_KUBECONFIG is not set" >&2; exit 1; fi
+        kubeconfig="$(mktemp)"
+        trap 'rm -f "$kubeconfig"' EXIT
+        printf '%s\n' "$DEMO_KUBECONFIG" >"$kubeconfig"
+        KUBECONFIG="$kubeconfig" kubectl apply -k deploy/demo
+
+  release:check:
+    desc: 'Validate a release version for its channel, e.g. task release:check CHANNEL=beta VERSION=2026.11.0-beta.1'
+    requires:
+      vars: [CHANNEL, VERSION]
+    cmds:
+      - bash scripts/release-version.sh '{{.CHANNEL}}' '{{.VERSION}}'
+
+  release:notes:
+    desc: 'Release notes from Conventional Commits since the previous release, e.g. task release:notes VERSION=2026.11.0'
+    silent: true
+    requires:
+      vars: [VERSION]
+    cmds:
+      - bash scripts/release-notes.sh '{{.VERSION}}'
+
+  release:assets:
+    desc: Package the CRDs and bootstrap install from deploy/ into dist/ (skipped until deploy/ exists)
+    requires:
+      vars: [VERSION]
+    cmds:
+      - mkdir -p dist
+      - 'if [ ! -d deploy ]; then echo "no deploy/ yet, no install assets"; exit 0; fi; tar -czf "dist/openfief-deploy-{{.VERSION}}.tar.gz" deploy'
+
+  release:publish:
+    desc: Tag the release and, for stable, publish the GitHub release (CI only, after the dry run)
+    requires:
+      vars: [CHANNEL, VERSION]
+    cmds:
+      - task: release:check
+      - task: release:assets
+      - bash scripts/release-notes.sh '{{.VERSION}}' >dist/release-notes.md
+      - gh api 'repos/{owner}/{repo}/git/refs' -f ref='refs/tags/{{.VERSION}}' -f sha="$(git rev-parse HEAD)" >/dev/null
+      - |
+        if [ '{{.CHANNEL}}' != stable ]; then echo "beta {{.VERSION}}: tagged, no GitHub release"; exit 0; fi
+        gh release create '{{.VERSION}}' --verify-tag --title '{{.VERSION}}' --notes-file dist/release-notes.md $(find dist -name '*.tar.gz')
 
   docs:check:
     desc: ID checks for the design documents
@@ -151,7 +258,7 @@ tasks:
       - '{{.KIBI}} check --staged'
 
   kibi:sync:
-    desc: Compile this branch's knowledge base (hooks run it after checkout, merge and rebase)
+    desc: Compile this branch's knowledge base (hooks run it after checkout, merge and rebase; CI sets KIBI_BRANCH)
     cmds:
       - '{{.KIBI}} sync'
 
