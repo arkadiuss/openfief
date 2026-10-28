@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T04:51:53.106Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-ledger-app-registry
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T06:05:32.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c42974d98d1
+  - type: verified_by
+    from: SCEN-ledger-app-registry
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:05:32.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-875f17aae632

@@ -48,3 +48,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc6c4049bd58
+  - type: verified_by
+    from: SCEN-ledger-app-version-race
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:05:24.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac5d557fd79c
+  - type: implements
+    from: SYM-ledger-app-cash-currencies
+    to: REQ-ledger-app-queries
+    created_at: 2026-10-28T06:11:42.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bd587ccb7f8
+  - type: implements
+    from: SYM-ledger-app-cash-currencies
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T06:11:42.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eaf981a8cd4
+  - type: covered_by
+    from: SYM-ledger-app-cash-currencies
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:11:42.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cea5dc47a205

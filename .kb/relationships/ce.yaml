@@ -41,3 +41,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3783210c4524
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-money
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:07:17.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f958f36f4e7
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-money
+    to: TEST-ledger-app-check
+    created_at: 2026-10-28T06:07:17.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-850ca8cf911a
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-money
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:07:17.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2df05feccf3
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-money
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T06:07:17.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-383cafd3c8a4

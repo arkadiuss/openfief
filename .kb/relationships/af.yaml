@@ -48,3 +48,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcc1bdc233b8
+  - type: implements
+    from: SYM-ledger-app-assertion-status-string
+    to: REQ-ledger-app-assertion-flag
+    created_at: 2026-10-28T06:06:45.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cea074847a59
+  - type: implements
+    from: SYM-ledger-app-assertion-status-string
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T06:06:45.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3872c800c742
+  - type: covered_by
+    from: SYM-ledger-app-assertion-status-string
+    to: TEST-ledger-app-check
+    created_at: 2026-10-28T06:06:45.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a07baf2c3c3

@@ -41,3 +41,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-517d257de785
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-seeded
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:07:43.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36531b60d5ad
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-seeded
+    to: TEST-ledger-app-check
+    created_at: 2026-10-28T06:07:43.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a33b8695b98b
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-seeded
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:07:43.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1eee2ac1b03
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-seeded
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T06:07:43.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2bea76a1477
+  - type: implements
+    from: SYM-ledger-app-ledger
+    to: REQ-ledger-app-registry
+    created_at: 2026-10-28T06:09:15.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba66a8e98247
+  - type: covered_by
+    from: SYM-ledger-app-ledger
+    to: TEST-ledger-app-registry
+    created_at: 2026-10-28T06:09:15.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-928d015c0d55
+  - type: implements
+    from: SYM-ledger-app-ledger-lots-on
+    to: REQ-ledger-app-queries
+    created_at: 2026-10-28T06:11:26.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5774eb6335a7
+  - type: implements
+    from: SYM-ledger-app-ledger-lots-on
+    to: REQ-AUTO-BE6EA3B9F864EA40
+    created_at: 2026-10-28T06:11:26.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94ab9bde71d8
+  - type: covered_by
+    from: SYM-ledger-app-ledger-lots-on
+    to: TEST-ledger-app-query
+    created_at: 2026-10-28T06:11:26.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0262afdf59d7

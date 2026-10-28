@@ -20,3 +20,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad82edaf2882
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-check-conflict
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:09:06.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6517e13b454a

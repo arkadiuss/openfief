@@ -69,3 +69,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-046126d8185c
+  - type: executable_for
+    from: SYM-ledger-app-test-import-flags-assertion-mismatches
+    to: TEST-ledger-app-check
+    created_at: 2026-10-28T06:06:57.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac93768dabb7

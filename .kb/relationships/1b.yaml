@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b7606703e26
+  - type: implements
+    from: SYM-ledger-app-import-summary
+    to: REQ-ledger-app-import-append
+    created_at: 2026-10-28T06:07:50.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98ff5bce8539
+  - type: covered_by
+    from: SYM-ledger-app-import-summary
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:07:50.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51664caf8edd

@@ -62,3 +62,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c4564d3a443
+  - type: implements
+    from: SYM-ledger-app-version-conflict-error-unwrap
+    to: REQ-ledger-app-version-conflict
+    created_at: 2026-10-28T06:08:08.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb6847b2bcf4
+  - type: covered_by
+    from: SYM-ledger-app-version-conflict-error-unwrap
+    to: TEST-ledger-app-import
+    created_at: 2026-10-28T06:08:08.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-604bccdc6180
