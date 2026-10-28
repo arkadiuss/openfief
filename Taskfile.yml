@@ -19,7 +19,17 @@ vars:
   CONTROLLER_GEN_VERSION: v0.23.0
   # The API server and etcd of the operator's envtest suite; scripts/envtest-assets.sh pins their checksums.
   ENVTEST_K8S_VERSION: 1.36.2
+  # renovate: datasource=go depName=github.com/bufbuild/buf
+  BUF_VERSION: v1.75.0
+  # The code generators must match the runtime versions in sdk/go/go.mod (google.golang.org/protobuf, connectrpc.com/connect).
+  # renovate: datasource=go depName=google.golang.org/protobuf
+  PROTOC_GEN_GO_VERSION: v1.36.12
+  # renovate: datasource=go depName=connectrpc.com/connect
+  PROTOC_GEN_CONNECT_GO_VERSION: v1.21.1
+  # Every Go module in the repository (go.work lists the same): the core, then the Apache-2.0 Go SDK (D-5).
+  GO_MODULES: . sdk/go
   GO_GUARD: 'if [ ! -f go.mod ]; then echo "no Go module yet, skipping"; exit 0; fi;'
+  PROTO_GUARD: 'if [ -z "$(find proto -name "*.proto" 2>/dev/null)" ]; then echo "no contracts yet, skipping"; exit 0; fi;'
   # Tools are called by explicit path: Task lets the OS environment override a Taskfile PATH.
   BIN: '{{.ROOT_DIR}}/.bin'
   # Go tools are built with go.mod's toolchain: golangci-lint refuses code that targets a newer Go than it was built with.
@@ -51,11 +61,11 @@ tasks:
 
   tools:
     desc: Install the pinned Go tools into .bin/
-    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task, tool:controller-gen, tool:envtest]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task, tool:controller-gen, tool:envtest, tool:proto]
 
   tools:ci:
     internal: true
-    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task, tool:controller-gen, tool:envtest]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task, tool:controller-gen, tool:envtest, tool:proto]
 
   tool:golangci-lint:
     internal: true
@@ -86,6 +96,31 @@ tasks:
       - GOBIN='{{.BIN}}' go install github.com/rhysd/actionlint/cmd/actionlint@{{.ACTIONLINT_VERSION}}
     status:
       - '{{.BIN}}/actionlint -version 2>&1 | head -n1 | grep -qx "{{.ACTIONLINT_VERSION}}"'
+
+  tool:proto:
+    internal: true
+    deps: [tool:buf, tool:protoc-gen-go, tool:protoc-gen-connect-go]
+
+  tool:buf:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/bufbuild/buf/cmd/buf@{{.BUF_VERSION}}
+    status:
+      - '{{.BIN}}/buf --version 2>&1 | grep -qx "{{trimPrefix "v" .BUF_VERSION}}"'
+
+  tool:protoc-gen-go:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install google.golang.org/protobuf/cmd/protoc-gen-go@{{.PROTOC_GEN_GO_VERSION}}
+    status:
+      - '{{.BIN}}/protoc-gen-go --version 2>&1 | grep -qx "protoc-gen-go {{.PROTOC_GEN_GO_VERSION}}"'
+
+  tool:protoc-gen-connect-go:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install connectrpc.com/connect/cmd/protoc-gen-connect-go@{{.PROTOC_GEN_CONNECT_GO_VERSION}}
+    status:
+      - '{{.BIN}}/protoc-gen-connect-go --version 2>&1 | grep -qx "{{trimPrefix "v" .PROTOC_GEN_CONNECT_GO_VERSION}}"'
 
   tool:task:
     internal: true
@@ -127,6 +162,7 @@ tasks:
       - task: fmt:check
       - task: lint
       - task: lint:ci
+      - task: proto
       - task: vuln
       - task: test
       - task: docs:check
@@ -139,6 +175,7 @@ tasks:
       - task: fmt:check
       - task: lint
       - task: lint:ci
+      - task: proto
       - task: vuln
       - task: test
       - task: docs:check
@@ -159,20 +196,55 @@ tasks:
       - bash scripts/gen-check.sh deploy/crds deploy/operator/role.yaml internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
 
   fmt:
-    desc: Format Go code (gofumpt, goimports)
+    desc: Format Go code (gofumpt, goimports) in every Go module
     cmds:
-      - '{{.GO_GUARD}} {{.BIN}}/golangci-lint fmt'
+      - for: {var: GO_MODULES}
+        cmd: '{{.GO_GUARD}} cd {{.ITEM}} && {{.BIN}}/golangci-lint fmt'
 
   fmt:check:
     desc: Fail if Go code is not formatted
     cmds:
-      - '{{.GO_GUARD}} {{.BIN}}/golangci-lint fmt --diff'
+      - for: {var: GO_MODULES}
+        cmd: '{{.GO_GUARD}} cd {{.ITEM}} && {{.BIN}}/golangci-lint fmt --diff'
 
   lint:
-    desc: Strict lint (.golangci.yml)
+    desc: Strict lint (.golangci.yml) of every Go module
     cmds:
       - '{{.BIN}}/golangci-lint config verify'
-      - '{{.GO_GUARD}} {{.BIN}}/golangci-lint run'
+      - for: {var: GO_MODULES}
+        cmd: '{{.GO_GUARD}} cd {{.ITEM}} && {{.BIN}}/golangci-lint run'
+
+  proto:
+    desc: Contract checks (buf lint and format, breaking changes, generated code up to date)
+    cmds:
+      - task: proto:lint
+      - task: proto:breaking
+      - task: proto:check
+
+  proto:lint:
+    desc: Lint and format-check the protobuf contracts (buf, STANDARD rules)
+    deps: [tool:buf]
+    cmds:
+      - '{{.PROTO_GUARD}} {{.BIN}}/buf lint'
+      - '{{.PROTO_GUARD}} {{.BIN}}/buf format --diff --exit-code'
+
+  proto:breaking:
+    desc: 'Fail on breaking contract changes against a base revision (PROTO_BASE or DOCS_BASE, default HEAD), e.g. PROTO_BASE=origin/main task proto:breaking'
+    deps: [tool:buf]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/proto-breaking.sh
+
+  proto:gen:
+    desc: Generate the Go code for the contracts into sdk/go/gen (pinned local plugins, no remote BSR)
+    deps: [tool:proto]
+    cmds:
+      - '{{.PROTO_GUARD}} PATH="{{.BIN}}:$PATH" "{{.BIN}}/buf" generate'
+
+  proto:check:
+    desc: Fail if sdk/go/gen is not what proto:gen generates
+    deps: [tool:proto]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/proto-check.sh
 
   lint:ci:
     desc: Lint the GitHub Actions workflows (actionlint, offline)
@@ -184,19 +256,21 @@ tasks:
   vuln:
     desc: Vulnerability checks (govulncheck, npm audit)
     cmds:
-      - PATH='{{.BIN}}':"$PATH" bash scripts/vulncheck.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/vulncheck.sh {{.GO_MODULES}}
 
   test:
     desc: Unit, replay-integration, envtest and tooling tests (offline once `task tools` has run)
     deps: [tool:envtest]
     cmds:
-      - '{{.GO_GUARD}} KUBEBUILDER_ASSETS="{{.BIN}}/envtest/{{.ENVTEST_K8S_VERSION}}" go test ./...'
+      - for: {var: GO_MODULES}
+        cmd: '{{.GO_GUARD}} cd {{.ITEM}} && KUBEBUILDER_ASSETS="{{.BIN}}/envtest/{{.ENVTEST_K8S_VERSION}}" go test ./...'
       - bash scripts/tests/check-docs.test.sh
       - bash scripts/tests/vulncheck.test.sh
       - bash scripts/tests/ci-images.test.sh
       - bash scripts/tests/dco-check.test.sh
       - bash scripts/tests/release-version.test.sh
       - bash scripts/tests/release-notes.test.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/proto-breaking.test.sh
 
   test:pg:
     desc: 'PostgreSQL integration tests on a disposable server (OPENFIEF_PG_DSN, or local PostgreSQL binaries), e.g. task test:pg -- -run TestAppend'

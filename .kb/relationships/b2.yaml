@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a97f46278f2
+  - type: constrains
+    from: REQ-tooling-proto-contracts
+    to: FACT-SUBJECT-EBA808FE7BF21337
+    created_at: 2026-10-28T07:37:32.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-187c9b121fa2
+  - type: requires_property
+    from: REQ-tooling-proto-contracts
+    to: FACT-PROP-0280E88A61B5AC54
+    created_at: 2026-10-28T07:37:32.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465a1a6abb88
+  - type: specified_by
+    from: REQ-tooling-proto-contracts
+    to: SCEN-tooling-proto-contracts
+    created_at: 2026-10-28T07:37:32.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d293846ea96f

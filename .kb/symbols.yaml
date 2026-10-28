@@ -13676,3 +13676,13 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-cmd
+  - id: SYM-tooling-test-helper-proto-breaking-check
+    title: check
+    sourceFile: scripts/tests/proto-breaking.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T07:37:34.518Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-proto-breaking
