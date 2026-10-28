@@ -1,0 +1,5 @@
+# A Plugin's spec.image is an image reference: with this, the `images:` list in kustomization.yaml pins it by digest
+# like a container's image (D-17).
+images:
+  - path: spec/image
+    kind: Plugin

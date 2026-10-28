@@ -48,6 +48,7 @@ if ! grep -q 'extra.example.com' "$work/repo/plugins/nbp-fx/Dockerfile"; then
   echo "FAIL: write did not put the new host in the label" >&2
   failures=$((failures + 1))
 fi
+expect "a demo Plugin declaring the old manifest" check fail "a Plugin of nbp-fx under deploy/demo/plugins declares another manifest"
 
 fresh
 gojq '.configSchema.description = "it'"'"'s"' "$root/plugins/nbp-fx/manifest.json" >"$work/repo/plugins/nbp-fx/manifest.json"

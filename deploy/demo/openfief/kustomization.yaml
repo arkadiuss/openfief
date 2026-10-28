@@ -1,5 +1,6 @@
-# OpenFief on the demo machine: the plugin operator, the egress proxy, the core and the demo dataset loader,
-# images pinned by digest (D-17).
+# OpenFief on the demo machine: the plugin operator, the egress proxy, the core, the demo dataset loader and the demo's
+# plugin instances (../plugins), images pinned by digest (D-17). image-fields.yaml makes a Plugin's spec.image an image
+# field, so `images:` pins plugin images too.
 # This is the template CI deploys from: after every push to main (and every beta), `task deploy:demo` sets each
 # digest to the one whose keyless signature from this repository's images workflow verifies, renders this
 # directory, and publishes it as the signed OCI artifact that Flux on the demo machine follows (../stack.yaml).
@@ -21,7 +22,10 @@ resources:
   - ../../egress-proxy
   - ../../core
   - ../../demo-data
+  - ../plugins
   - core-from-traefik.yaml
+configurations:
+  - image-fields.yaml
 patches:
   - target:
       kind: Deployment
@@ -49,4 +53,6 @@ images:
   - name: ghcr.io/arkadiuss/openfief/core
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
   - name: ghcr.io/arkadiuss/openfief/demo-seed
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+  - name: ghcr.io/arkadiuss/openfief/nbp-fx
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000

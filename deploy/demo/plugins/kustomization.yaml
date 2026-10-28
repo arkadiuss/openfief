@@ -1,0 +1,8 @@
+# The demo's plugin instances (D-48), included by ../openfief, which pins their images by digest like the others.
+# Only plugins that work on public or synthetic data belong here (GR-12): nbp, the first-party NBP FX connector, reads
+# the public NBP table A. No ibkr-flex: it needs a real IBKR account's credentials.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: openfief
+resources:
+  - nbp.yaml

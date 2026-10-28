@@ -44,7 +44,7 @@ demo_manifests() {
 }
 
 plugin_labels() {
-  local mode="$1" root="${2:-.}" manifest dir name want got failures=0 image declared
+  local mode="$1" root="${2:-.}" manifest dir name want got failures=0 image declared demo
   case "$mode" in
     check | write) ;;
     *)
@@ -52,6 +52,7 @@ plugin_labels() {
       return 1
       ;;
   esac
+  demo="$(demo_manifests "$root")"
   for manifest in "$root"/plugins/*/manifest.json; do
     [ -f "$manifest" ] || continue
     dir="$(dirname "$manifest")"
@@ -73,11 +74,13 @@ plugin_labels() {
     fi
     while read -r image declared; do
       [ "$image" = "$name" ] || continue
-      if [ "$(gojq -c -S . <<<"$declared")" != "$(gojq -c -S . "$manifest")" ]; then
+      # gojq prints object keys sorted, so equal manifests print the same.
+      declared="$(gojq -c . <<<"$declared")"
+      if [ -z "$declared" ] || [ "$declared" != "$want" ]; then
         echo "plugin-labels: a Plugin of $name under deploy/demo/plugins declares another manifest than $manifest" >&2
         failures=$((failures + 1))
       fi
-    done < <(demo_manifests "$root")
+    done <<<"$demo"
   done
   if [ "$failures" -ne 0 ]; then
     return 1
