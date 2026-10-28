@@ -27860,19 +27860,6 @@ symbols:
         target: TEST-views-valuation
       - type: implements
         target: REQ-views-valuation-totals
-  - id: SYM-views-add-pln
-    title: addPLN
-    sourceFile: internal/views/valuation.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:21:57.937Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-valuation
-      - type: implements
-        target: REQ-views-valuation-totals
   - id: SYM-views-sum-per-currency
     title: sumPerCurrency
     sourceFile: internal/views/valuation.go
@@ -27913,16 +27900,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T07:22:18.709Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-valuation
-  - id: SYM-views-test-totals-by-date-not-pln
-    title: TestTotalsByDateNotPLN
-    sourceFile: internal/views/valuation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:22:24.702Z
     relationships:
       - type: executable_for
         target: TEST-views-valuation
@@ -28600,3 +28577,100 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-app
+  - id: SYM-views-test-allocate-in-any-reporting-currency
+    title: TestAllocateInAnyReportingCurrency
+    sourceFile: internal/views/allocation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:03.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+  - id: SYM-views-app-unsupported-reporting-currency-error
+    title: UnsupportedReportingCurrencyError
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:07.859Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-reporting-currency
+  - id: SYM-views-app-unsupported-reporting-currency-error-error
+    title: UnsupportedReportingCurrencyError.Error
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:14.559Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-reporting-currency
+  - id: SYM-views-app-views-reporting-currency
+    title: Views.ReportingCurrency
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:21.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-reporting-currency
+  - id: SYM-views-app-test-reporting-currency
+    title: TestReportingCurrency
+    sourceFile: internal/views/app/views_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:26.311Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-test-helper-pln
+    title: pln
+    sourceFile: internal/views/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:32.047Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-allocation
+      - type: executable_for
+        target: TEST-views-page
+      - type: executable_for
+        target: TEST-views-valuation
+  - id: SYM-views-add-in
+    title: addIn
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:37.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-valuation
+      - type: implements
+        target: REQ-views-valuation-totals
+  - id: SYM-views-test-totals-by-date-other-currency
+    title: TestTotalsByDateOtherCurrency
+    sourceFile: internal/views/valuation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T08:09:42.907Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-valuation

@@ -69,3 +69,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82f99b5e46a3
+  - type: implements
+    from: SYM-views-app-unsupported-reporting-currency-error-error
+    to: REQ-views-reporting-currency
+    created_at: 2026-10-28T08:09:15.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e358f34db21
+  - type: covered_by
+    from: SYM-views-app-unsupported-reporting-currency-error-error
+    to: TEST-views-app
+    created_at: 2026-10-28T08:09:15.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b92a89cb1055

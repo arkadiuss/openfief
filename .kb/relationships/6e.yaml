@@ -174,3 +174,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac32715d74ae
+  - type: constrains
+    from: REQ-views-reporting-currency
+    to: FACT-SUBJECT-6A61D8332D2C5521
+    created_at: 2026-10-28T08:06:29.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2817b8fc339
+  - type: requires_property
+    from: REQ-views-reporting-currency
+    to: FACT-PROP-1A9EFD7C336E98BB
+    created_at: 2026-10-28T08:06:29.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7519f65596fc
+  - type: specified_by
+    from: REQ-views-reporting-currency
+    to: SCEN-views-reporting-currency
+    created_at: 2026-10-28T08:06:29.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b10bfc49384

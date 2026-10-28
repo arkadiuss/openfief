@@ -167,3 +167,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66b9dcb3022c
+  - type: verified_by
+    from: SCEN-views-reporting-currency
+    to: TEST-views-app
+    created_at: 2026-10-28T08:06:05.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-123781c2e157
+  - type: verified_by
+    from: SCEN-views-reporting-currency
+    to: TEST-views-allocation
+    created_at: 2026-10-28T08:06:05.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fc4cafa62a4
+  - type: verified_by
+    from: SCEN-views-reporting-currency
+    to: TEST-views-valuation
+    created_at: 2026-10-28T08:06:06.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a08ba9ee71d3

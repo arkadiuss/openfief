@@ -1,5 +1,5 @@
 ---
-title: The read API must give the portfolio's value in PLN on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
+title: The read API must give the portfolio's value in the reporting currency on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
 status: open
 text_ref: docs/DESIGN.md#D-30
 tags:
@@ -8,29 +8,29 @@ tags:
   - confidence-band:high
   - provenance:docs-design-md-d-30
   - lane:strict
-semantic_text: The read API must give the portfolio's value in PLN on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
+semantic_text: The read API must give the portfolio's value in the reporting currency on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
 logic_claims:
-  - CLAIM-FDB7CF01DA11E298
+  - CLAIM-7A58097330700147
 semantic_clauses:
-  - The read API must give the portfolio's value in PLN on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
+  - The read API must give the portfolio's value in the reporting currency on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 15c38bce27fdb08df178d4eaffef3b95d366acd0fcefdf14ff21c7d4ce4d3a66
+semantic_source_hash: c55aa51d588cc2275c8b478199f17d3ca0515f7d26120cac42afc21054517bf7
 semantic_inventory:
-  - claim_key: CLAIM-FDB7CF01DA11E298
-    claim_text: The read API must give the portfolio's value in PLN on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them
+  - claim_key: CLAIM-7A58097330700147
+    claim_text: The read API must give the portfolio's value in the reporting currency on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them
     role: normative
     status: modeled
     span:
       start: 0
-      end: 232
+      end: 251
 origin:
   kind: agent
   recorded_at: '2026-10-28T07:18:18.885Z'
 id: REQ-views-allocation
 type: req
 ---
-The read API must give the portfolio's value in PLN on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
+The read API must give the portfolio's value in the reporting currency on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
 
 ## Context
 

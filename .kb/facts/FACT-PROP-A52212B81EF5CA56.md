@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:views.allocation:groups_pln_value_by_d
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-FDB7CF01DA11E298
-claim_text: The read API must give the portfolio's value in PLN on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
+claim_key: CLAIM-7A58097330700147
+claim_text: The read API must give the portfolio's value in the reporting currency on a date grouped by asset class, currency, institution or sleeve, with each group's exact sum and the total, and must list the holdings it could not value instead of counting them.
 origin:
   kind: agent
   recorded_at: '2026-10-28T07:18:16.396Z'

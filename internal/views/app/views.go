@@ -16,9 +16,22 @@ import (
 // ErrUnknownAccount reports a query for an account that is not stored.
 var ErrUnknownAccount = errors.New("unknown account")
 
-// cashRounding is how cash converted to PLN for the allocation is rounded to
-// grosze.
+// cashRounding is how cash converted to the reporting currency for the
+// allocation is rounded to its minor unit.
 const cashRounding = kernel.RoundHalfEven
+
+// UnsupportedReportingCurrencyError reports a reporting currency (D-62) the
+// views cannot convert to. FX rates are quoted against PLN only (D-20), and
+// cross rates for any other reporting currency are undecided (T-12), so PLN is
+// the only one supported.
+type UnsupportedReportingCurrencyError struct {
+	Currency kernel.Currency
+}
+
+// Error names the currency.
+func (e *UnsupportedReportingCurrencyError) Error() string {
+	return fmt.Sprintf("reporting currency %s is not supported: only %s", e.Currency, valuation.PLN())
+}
 
 // Views runs the read API's queries.
 type Views struct {
@@ -26,12 +39,22 @@ type Views struct {
 	valuations Valuations
 	statuses   ValuationStatuses
 	rates      FXRates
+	reporting  kernel.Currency
 }
 
-// New returns the queries over the given ports.
-func New(l Ledger, v Valuations, s ValuationStatuses, r FXRates) *Views {
-	return &Views{ledger: l, valuations: v, statuses: s, rates: r}
+// New returns the queries over the given ports, with totals, valuations and
+// the allocation in the reporting currency reporting (D-62). A reporting
+// currency other than PLN is an *UnsupportedReportingCurrencyError.
+func New(l Ledger, v Valuations, s ValuationStatuses, r FXRates, reporting kernel.Currency) (*Views, error) {
+	if !reporting.Equal(valuation.PLN()) {
+		return nil, &UnsupportedReportingCurrencyError{Currency: reporting}
+	}
+	return &Views{ledger: l, valuations: v, statuses: s, rates: r, reporting: reporting}, nil
 }
+
+// ReportingCurrency returns the currency totals, valuations and the
+// allocation are reported in.
+func (v *Views) ReportingCurrency() kernel.Currency { return v.reporting }
 
 // Sleeves returns every sleeve, in ID order.
 func (v *Views) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
@@ -151,7 +174,7 @@ func (v *Views) AccountValuations(ctx context.Context, account ledger.AccountID,
 	if err != nil {
 		return AccountValuations{}, fmt.Errorf("loading valuations: %w", err)
 	}
-	totals, err := views.TotalsByDate(vals)
+	totals, err := views.TotalsByDate(vals, v.reporting)
 	if err != nil {
 		return AccountValuations{}, fmt.Errorf("totalling valuations: %w", err)
 	}
@@ -176,7 +199,7 @@ func (v *Views) ValuationTotals(ctx context.Context, from, to kernel.Date) ([]vi
 		}
 		all = append(all, vals...)
 	}
-	totals, err := views.TotalsByDate(all)
+	totals, err := views.TotalsByDate(all, v.reporting)
 	if err != nil {
 		return nil, fmt.Errorf("totalling valuations: %w", err)
 	}
@@ -224,7 +247,8 @@ type AllocationOn struct {
 	Unvalued   []ledger.Holding
 }
 
-// Allocation returns the portfolio's value at the end of on in PLN, grouped by d (D-30):
+// Allocation returns the portfolio's value at the end of on in the reporting
+// currency, grouped by d (D-30):
 // every account's holdings at their stored valuation on that date, and its
 // cash converted at the FX rate for that date.
 func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimension) (AllocationOn, error) {
@@ -246,7 +270,7 @@ func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimensio
 		items = append(items, got...)
 		out.Unvalued = append(out.Unvalued, unvalued...)
 	}
-	if out.Allocation, err = views.Allocate(items, d); err != nil {
+	if out.Allocation, err = views.Allocate(items, d, v.reporting); err != nil {
 		return AllocationOn{}, fmt.Errorf("allocating: %w", err)
 	}
 	return out, nil
@@ -269,11 +293,12 @@ func (v *Views) allocationItems(ctx context.Context, a *ledger.Account, on kerne
 		return nil, nil, fmt.Errorf("loading cash: %w", err)
 	}
 	for _, c := range cash {
-		pln, err := valuation.ConvertToPLN(c, rates, on, cashRounding)
+		// New admits only PLN as the reporting currency, so the PLN rates convert.
+		converted, err := valuation.ConvertToPLN(c, rates, on, cashRounding)
 		if err != nil {
-			return nil, nil, fmt.Errorf("converting cash to PLN: %w", err)
+			return nil, nil, fmt.Errorf("converting cash to %s: %w", v.reporting, err)
 		}
-		items = append(items, views.AllocationItem{Account: *a, AssetClass: views.AssetCash, Value: c, PLN: pln})
+		items = append(items, views.AllocationItem{Account: *a, AssetClass: views.AssetCash, Value: c, Reporting: converted})
 	}
 	return items, unvalued, nil
 }

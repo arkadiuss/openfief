@@ -167,7 +167,7 @@ func newFixture(t *testing.T) *fixture {
 	bond, etf1, etf2 := instrument(t, isinPL, "EDO0334"), instrument(t, isinIE, "ETF1"), instrument(t, isinIE, "ETF2")
 	units := func(n int64) kernel.Quantity { return kernel.NewQuantity(kernel.NewDecimal(n, 0)) }
 	value := func(in ledger.Instrument, day, v, c, pln string) views.HoldingValuation {
-		return views.HoldingValuation{Account: "acc-1", Instrument: in, Date: date(t, day), Basis: valuation.Market, Source: "test", Value: money(t, v, c), PLN: money(t, pln, "PLN")}
+		return views.HoldingValuation{Account: "acc-1", Instrument: in, Date: date(t, day), Basis: valuation.Market, Source: "test", Value: money(t, v, c), Reporting: money(t, pln, "PLN")}
 	}
 	return &fixture{
 		on: on,
@@ -201,6 +201,11 @@ func newFixture(t *testing.T) *fixture {
 	}
 }
 
-func (f *fixture) views() *app.Views {
-	return app.New(f.ledger, f.valuations, f.statuses, f.rates)
+func (f *fixture) views(t *testing.T) *app.Views {
+	t.Helper()
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"))
+	if err != nil {
+		t.Fatalf("app.New(PLN): %v", err)
+	}
+	return v
 }

@@ -1,5 +1,5 @@
 ---
-title: Valuation totals must be one per date, summing the stored valuations dated on it exactly in PLN and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
+title: Valuation totals must be one per date, summing the stored valuations dated on it exactly in the reporting currency and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
 status: open
 text_ref: docs/DESIGN.md#D-30
 tags:
@@ -8,29 +8,29 @@ tags:
   - confidence-band:high
   - provenance:docs-design-md-d-30
   - lane:strict
-semantic_text: Valuation totals must be one per date, summing the stored valuations dated on it exactly in PLN and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
+semantic_text: Valuation totals must be one per date, summing the stored valuations dated on it exactly in the reporting currency and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
 logic_claims:
-  - CLAIM-1BE71A61676C6B85
+  - CLAIM-E38586693C1E5BC8
 semantic_clauses:
-  - Valuation totals must be one per date, summing the stored valuations dated on it exactly in PLN and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
+  - Valuation totals must be one per date, summing the stored valuations dated on it exactly in the reporting currency and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 26a8e9a36620e4d2eb6790be68ad0cddbc70647dc07bde3730dcf4c4f26c4c18
+semantic_source_hash: a8981d623b66f431e82e71171622c52b76911810161d2fd29b62cb248544c279
 semantic_inventory:
-  - claim_key: CLAIM-1BE71A61676C6B85
-    claim_text: Valuation totals must be one per date, summing the stored valuations dated on it exactly in PLN and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days
+  - claim_key: CLAIM-E38586693C1E5BC8
+    claim_text: Valuation totals must be one per date, summing the stored valuations dated on it exactly in the reporting currency and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days
     role: normative
     status: modeled
     span:
       start: 0
-      end: 204
+      end: 223
 origin:
   kind: agent
   recorded_at: '2026-10-28T07:18:28.813Z'
 id: REQ-views-valuation-totals
 type: req
 ---
-Valuation totals must be one per date, summing the stored valuations dated on it exactly in PLN and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
+Valuation totals must be one per date, summing the stored valuations dated on it exactly in the reporting currency and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
 
 ## Context
 

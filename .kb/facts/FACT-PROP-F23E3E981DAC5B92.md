@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:views.valuation_totals:sums_per_date_i
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-1BE71A61676C6B85
-claim_text: Valuation totals must be one per date, summing the stored valuations dated on it exactly in PLN and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
+claim_key: CLAIM-E38586693C1E5BC8
+claim_text: Valuation totals must be one per date, summing the stored valuations dated on it exactly in the reporting currency and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
 origin:
   kind: agent
   recorded_at: '2026-10-28T07:18:25.393Z'

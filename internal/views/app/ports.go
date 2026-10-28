@@ -41,7 +41,8 @@ type Ledger interface {
 type Valuations interface {
 	// HoldingValuations returns account's stored valuations dated from to to,
 	// both inclusive, in date then instrument order, with each value in its
-	// original currency and in PLN. An account with none returns none.
+	// original currency and in the reporting currency (D-62). An account with
+	// none returns none.
 	HoldingValuations(ctx context.Context, account ledger.AccountID, from, to kernel.Date) ([]views.HoldingValuation, error)
 }
 

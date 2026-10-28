@@ -10,7 +10,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
-	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
 // ErrUnknownDimension reports a Dimension outside the declared constants, or
@@ -106,48 +105,50 @@ type AllocationItem struct {
 	AssetClass AssetClass
 	// Value is in its original currency.
 	Value kernel.Money
-	// PLN is Value converted to PLN.
-	PLN kernel.Money
+	// Reporting is Value converted to the reporting currency.
+	Reporting kernel.Money
 }
 
-// AllocationGroup is the PLN value of the items that share one key: an asset
+// AllocationGroup is the reporting-currency value of the items that share one key: an asset
 // class, a currency code, an institution or a sleeve ID.
 type AllocationGroup struct {
-	Key string
-	PLN kernel.Money
+	Key       string
+	Reporting kernel.Money
 }
 
-// Allocation is the portfolio's value in PLN split by one dimension.
+// Allocation is the portfolio's value in the reporting currency (D-62) split
+// by one dimension.
 type Allocation struct {
 	By     Dimension
 	Total  kernel.Money
 	Groups []AllocationGroup
 }
 
-// Allocate groups items by d and sums each group's PLN value: largest group
-// first, then by key. Total is the sum of all groups, zero PLN when there are
-// no items. A PLN value in another currency is an error.
-func Allocate(items []AllocationItem, d Dimension) (Allocation, error) {
+// Allocate groups items by d and sums each group's value in the reporting
+// currency: largest group first, then by key. Total is the sum of all groups,
+// zero when there are no items. A reporting value in another currency is an
+// error.
+func Allocate(items []AllocationItem, d Dimension, reporting kernel.Currency) (Allocation, error) {
 	sums := map[string]kernel.Money{}
-	total := kernel.NewMoney(kernel.Decimal{}, valuation.PLN())
+	total := kernel.NewMoney(kernel.Decimal{}, reporting)
 	for i := range items {
 		key, err := groupKey(&items[i], d)
 		if err != nil {
 			return Allocation{}, err
 		}
-		if sums[key], err = addPLN(sums[key], items[i].PLN); err != nil {
+		if sums[key], err = addIn(reporting, sums[key], items[i].Reporting); err != nil {
 			return Allocation{}, fmt.Errorf("allocation by %s, %s: %w", d, key, err)
 		}
-		if total, err = addPLN(total, items[i].PLN); err != nil {
+		if total, err = addIn(reporting, total, items[i].Reporting); err != nil {
 			return Allocation{}, fmt.Errorf("allocation by %s: %w", d, err)
 		}
 	}
 	groups := make([]AllocationGroup, 0, len(sums))
 	for k, v := range sums {
-		groups = append(groups, AllocationGroup{Key: k, PLN: v})
+		groups = append(groups, AllocationGroup{Key: k, Reporting: v})
 	}
 	slices.SortFunc(groups, func(a, b AllocationGroup) int {
-		if c := b.PLN.Amount().Cmp(a.PLN.Amount()); c != 0 {
+		if c := b.Reporting.Amount().Cmp(a.Reporting.Amount()); c != 0 {
 			return c
 		}
 		return cmp.Compare(a.Key, b.Key)
@@ -183,7 +184,7 @@ func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []Hol
 			unvalued = append(unvalued, *h)
 			continue
 		}
-		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, PLN: v.PLN})
+		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, Reporting: v.Reporting})
 	}
 	return items, unvalued
 }

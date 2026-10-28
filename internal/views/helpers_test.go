@@ -15,6 +15,16 @@ const (
 	isinIE = "IETEST000026"
 )
 
+// pln is the reporting currency of the tests.
+func pln(t *testing.T) kernel.Currency {
+	t.Helper()
+	c, err := kernel.ParseCurrency("PLN")
+	if err != nil {
+		t.Fatalf("ParseCurrency(PLN): %v", err)
+	}
+	return c
+}
+
 func money(t *testing.T, amount, code string) kernel.Money {
 	t.Helper()
 	c, err := kernel.ParseCurrency(code)
@@ -47,7 +57,7 @@ func instrument(t *testing.T, isin, symbol string) ledger.Instrument {
 }
 
 // val is a stored valuation in account acc-1 of the instrument isin/symbol:
-// value in its currency, pln its PLN value.
+// value in its currency, pln its value in the reporting currency, PLN.
 type val struct {
 	isin, symbol, day, value, currency, pln string
 }
@@ -56,7 +66,7 @@ func (v *val) build(t *testing.T) views.HoldingValuation {
 	t.Helper()
 	return views.HoldingValuation{
 		Account: "acc-1", Instrument: instrument(t, v.isin, v.symbol), Date: date(t, v.day),
-		Basis: valuation.Market, Source: "test", Value: money(t, v.value, v.currency), PLN: money(t, v.pln, "PLN"),
+		Basis: valuation.Market, Source: "test", Value: money(t, v.value, v.currency), Reporting: money(t, v.pln, "PLN"),
 	}
 }
 

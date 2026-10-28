@@ -15,8 +15,9 @@ import (
 // more than MaxRangeDays.
 var ErrInvalidRange = errors.New("invalid date range")
 
-// ErrNotPLN reports a value said to be in PLN that is in another currency.
-var ErrNotPLN = errors.New("value is not in PLN")
+// ErrNotReportingCurrency reports a value said to be in the reporting
+// currency (D-62) that is in another currency.
+var ErrNotReportingCurrency = errors.New("value is not in the reporting currency")
 
 // MaxRangeDays is the longest date range, in days after its first date, that
 // one valuation query may span: about ten years of daily values.
@@ -24,7 +25,8 @@ const MaxRangeDays = 3700
 
 // HoldingValuation is a stored valuation of one holding in one account
 // (D-36): its value on a date with the basis and source it was computed on,
-// in the instrument's own currency and converted to PLN.
+// in the instrument's own currency and converted to the reporting currency
+// (D-62).
 type HoldingValuation struct {
 	Account    ledger.AccountID
 	Instrument ledger.Instrument
@@ -34,15 +36,15 @@ type HoldingValuation struct {
 	// Value is in the currency the holding is valued in, such as a price's
 	// currency; it is never converted.
 	Value kernel.Money
-	// PLN is Value converted to PLN.
-	PLN kernel.Money
+	// Reporting is Value converted to the reporting currency.
+	Reporting kernel.Money
 }
 
-// DateTotal is the sum of the valuations dated on one date: in PLN, and per
-// original currency, in currency code order.
+// DateTotal is the sum of the valuations dated on one date: in the reporting
+// currency, and per original currency, in currency code order.
 type DateTotal struct {
 	Date       kernel.Date
-	PLN        kernel.Money
+	Reporting  kernel.Money
 	ByCurrency []kernel.Money
 }
 
@@ -59,38 +61,40 @@ func ValidateRange(from, to kernel.Date) error {
 }
 
 // TotalsByDate sums vals per date, in date order: one total per date that has
-// a valuation. A PLN value in another currency is an error.
-func TotalsByDate(vals []HoldingValuation) ([]DateTotal, error) {
+// a valuation. A reporting value in a currency other than reporting is an
+// error.
+func TotalsByDate(vals []HoldingValuation, reporting kernel.Currency) ([]DateTotal, error) {
 	byDate := map[kernel.Date][]kernel.Money{}
-	pln := map[kernel.Date]kernel.Money{}
+	sums := map[kernel.Date]kernel.Money{}
 	for i := range vals {
 		v := &vals[i]
-		sum, err := addPLN(pln[v.Date], v.PLN)
+		sum, err := addIn(reporting, sums[v.Date], v.Reporting)
 		if err != nil {
 			return nil, fmt.Errorf("total on %s: %w", v.Date, err)
 		}
-		pln[v.Date] = sum
+		sums[v.Date] = sum
 		byDate[v.Date] = append(byDate[v.Date], v.Value)
 	}
-	out := make([]DateTotal, 0, len(pln))
-	for d, sum := range pln {
-		out = append(out, DateTotal{Date: d, PLN: sum, ByCurrency: sumPerCurrency(byDate[d])})
+	out := make([]DateTotal, 0, len(sums))
+	for d, sum := range sums {
+		out = append(out, DateTotal{Date: d, Reporting: sum, ByCurrency: sumPerCurrency(byDate[d])})
 	}
 	slices.SortFunc(out, func(a, b DateTotal) int { return a.Date.Compare(b.Date) })
 	return out, nil
 }
 
-// addPLN adds m to sum, both in PLN; a zero sum is no PLN amount yet.
-func addPLN(sum, m kernel.Money) (kernel.Money, error) {
-	if !m.Currency().Equal(valuation.PLN()) {
-		return kernel.Money{}, fmt.Errorf("%w: %s", ErrNotPLN, m.Currency())
+// addIn adds m to sum, both in currency c; a sum with no currency is
+// nothing yet.
+func addIn(c kernel.Currency, sum, m kernel.Money) (kernel.Money, error) {
+	if !m.Currency().Equal(c) {
+		return kernel.Money{}, fmt.Errorf("%w %s: %s", ErrNotReportingCurrency, c, m.Currency())
 	}
 	if sum.Currency().IsZero() {
 		return m, nil
 	}
 	out, err := sum.Add(m)
 	if err != nil {
-		return kernel.Money{}, fmt.Errorf("adding PLN: %w", err)
+		return kernel.Money{}, fmt.Errorf("adding %s: %w", c, err)
 	}
 	return out, nil
 }

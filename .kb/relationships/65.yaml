@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-897cf76fbf24
+  - type: executable_for
+    from: SYM-views-app-test-reporting-currency
+    to: TEST-views-app
+    created_at: 2026-10-28T08:09:27.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a481b928f9c0

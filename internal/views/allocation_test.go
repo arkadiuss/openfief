@@ -25,7 +25,7 @@ func (i *item) build(t *testing.T) views.AllocationItem {
 	t.Helper()
 	return views.AllocationItem{
 		Account:    ledger.Account{ID: "acc", Institution: i.institution, Name: "Synthetic", Sleeve: portfolio.SleeveID(i.sleeve)},
-		AssetClass: i.class, Value: money(t, i.value, i.currency), PLN: money(t, i.pln, "PLN"),
+		AssetClass: i.class, Value: money(t, i.value, i.currency), Reporting: money(t, i.pln, "PLN"),
 	}
 }
 
@@ -55,13 +55,13 @@ func TestAllocate(t *testing.T) {
 			for i := range items {
 				in = append(in, items[i].build(t))
 			}
-			got, err := views.Allocate(in, tt.by)
+			got, err := views.Allocate(in, tt.by, pln(t))
 			if err != nil {
 				t.Fatalf("Allocate() error = %v", err)
 			}
 			want := views.Allocation{By: tt.by, Total: money(t, tt.total, "PLN")}
 			for _, g := range tt.want {
-				want.Groups = append(want.Groups, views.AllocationGroup{Key: g[0], PLN: money(t, g[1], "PLN")})
+				want.Groups = append(want.Groups, views.AllocationGroup{Key: g[0], Reporting: money(t, g[1], "PLN")})
 			}
 			if diff := cmp.Diff(want, got); diff != "" {
 				t.Errorf("Allocate() mismatch (-want +got):\n%s", diff)
@@ -74,7 +74,7 @@ func TestAllocateEdges(t *testing.T) {
 	t.Parallel()
 	t.Run("no items is zero PLN and no groups", func(t *testing.T) {
 		t.Parallel()
-		got, err := views.Allocate(nil, views.BySleeve)
+		got, err := views.Allocate(nil, views.BySleeve, pln(t))
 		if err != nil {
 			t.Fatalf("Allocate() error = %v", err)
 		}
@@ -86,7 +86,7 @@ func TestAllocateEdges(t *testing.T) {
 	t.Run("equal groups are in key order", func(t *testing.T) {
 		t.Parallel()
 		in := []views.AllocationItem{(&item{"b", "s", views.AssetCash, "1", "PLN", "1"}).build(t), (&item{"a", "s", views.AssetCash, "1", "PLN", "1"}).build(t)}
-		got, err := views.Allocate(in, views.ByInstitution)
+		got, err := views.Allocate(in, views.ByInstitution, pln(t))
 		if err != nil {
 			t.Fatalf("Allocate() error = %v", err)
 		}
@@ -94,21 +94,32 @@ func TestAllocateEdges(t *testing.T) {
 			t.Errorf("Allocate() groups = %v, want a then b", got.Groups)
 		}
 	})
-	t.Run("a PLN value in another currency is an error", func(t *testing.T) {
+	t.Run("a reporting value in another currency is an error", func(t *testing.T) {
 		t.Parallel()
 		bad := (&item{"a", "s", views.AssetCash, "1", "USD", "1"}).build(t)
-		bad.PLN = money(t, "1", "USD")
-		if _, err := views.Allocate([]views.AllocationItem{bad}, views.ByCurrency); !errors.Is(err, views.ErrNotPLN) {
-			t.Errorf("Allocate() error = %v, want %v", err, views.ErrNotPLN)
+		bad.Reporting = money(t, "1", "USD")
+		if _, err := views.Allocate([]views.AllocationItem{bad}, views.ByCurrency, pln(t)); !errors.Is(err, views.ErrNotReportingCurrency) {
+			t.Errorf("Allocate() error = %v, want %v", err, views.ErrNotReportingCurrency)
 		}
 	})
 	t.Run("an unknown dimension is an error", func(t *testing.T) {
 		t.Parallel()
 		in := []views.AllocationItem{(&item{"a", "s", views.AssetCash, "1", "PLN", "1"}).build(t)}
-		if _, err := views.Allocate(in, views.Dimension(9)); !errors.Is(err, views.ErrUnknownDimension) {
+		if _, err := views.Allocate(in, views.Dimension(9), pln(t)); !errors.Is(err, views.ErrUnknownDimension) {
 			t.Errorf("Allocate() error = %v, want %v", err, views.ErrUnknownDimension)
 		}
 	})
+}
+
+func TestAllocateInAnyReportingCurrency(t *testing.T) {
+	t.Parallel()
+	eur := money(t, "0", "EUR").Currency()
+	in := (&item{"a", "s", views.AssetCash, "1", "USD", "0"}).build(t)
+	in.Reporting = money(t, "0.90", "EUR")
+	got, err := views.Allocate([]views.AllocationItem{in}, views.ByCurrency, eur)
+	if err != nil || !got.Total.Equal(money(t, "0.90", "EUR")) {
+		t.Errorf("Allocate(EUR) = %v, %v, want a total of 0.90 EUR", got, err)
+	}
 }
 
 func TestParseDimension(t *testing.T) {
@@ -176,8 +187,8 @@ func TestValueHoldings(t *testing.T) {
 
 	items, unvalued := views.ValueHoldings(acc, holdings, stored, on)
 	wantItems := []views.AllocationItem{
-		{Account: acc, AssetClass: views.AssetTreasuryBond, Value: money(t, "1050.00", "PLN"), PLN: money(t, "1050.00", "PLN")},
-		{Account: acc, AssetClass: views.AssetListed, Value: money(t, "30", "USD"), PLN: money(t, "120.00", "PLN")},
+		{Account: acc, AssetClass: views.AssetTreasuryBond, Value: money(t, "1050.00", "PLN"), Reporting: money(t, "1050.00", "PLN")},
+		{Account: acc, AssetClass: views.AssetListed, Value: money(t, "30", "USD"), Reporting: money(t, "120.00", "PLN")},
 	}
 	if diff := cmp.Diff(wantItems, items); diff != "" {
 		t.Errorf("ValueHoldings() items mismatch (-want +got):\n%s", diff)
