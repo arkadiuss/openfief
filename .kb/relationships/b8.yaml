@@ -223,3 +223,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-008275da6211
+  - type: executable_for
+    from: SYM-e2e-parse-reply
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:02:42.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f75a65bde9d6

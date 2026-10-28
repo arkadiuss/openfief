@@ -104,3 +104,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-388aed6c155b
+  - type: executable_for
+    from: SYM-e2e-kube-apply
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:03:48.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bc57fd6308b

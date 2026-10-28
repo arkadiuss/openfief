@@ -16,6 +16,9 @@ RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags=
 
 FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
 COPY --from=build /out/operator /operator
-USER nonroot:nonroot
+# Numeric, not nonroot:nonroot: the pods run with runAsNonRoot, and the kubelet refuses to start a container
+# whose image names its user, since it can't tell that a name isn't root (CreateContainerConfigError).
+# 65532 is distroless's nonroot user and group.
+USER 65532:65532
 EXPOSE 8081
 ENTRYPOINT ["/operator"]

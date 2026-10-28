@@ -42570,3 +42570,565 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-plugin-labels
+  - id: SYM-e2e-test-core-ready-through-service
+    title: TestCoreReadyThroughService
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:01:29.786Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-traefik-routes-to-core
+    title: TestTraefikRoutesToCore
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:01:35.854Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-core-policy-refuses-other-pods
+    title: TestCorePolicyRefusesOtherPods
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:01:41.510Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-demo-seed-completes
+    title: TestDemoSeedCompletes
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:01:46.806Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-read-apiwith-script-token
+    title: TestReadAPIWithScriptToken
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:01:51.999Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-read-apirefuses-without-token
+    title: TestReadAPIRefusesWithoutToken
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:01:56.713Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-wait-core-available
+    title: waitCoreAvailable
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:01.490Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-wait-seed-complete
+    title: waitSeedComplete
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:06.380Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-job-finished
+    title: jobFinished
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:11.752Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-reply
+    title: reply
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:17.335Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-call
+    title: call
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:22.195Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-get
+    title: get
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:28.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-must-call
+    title: mustCall
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:34.468Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-parse-reply
+    title: parseReply
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:40.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-issue-token
+    title: issueToken
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:46.908Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-demo-account-ids
+    title: demoAccountIDs
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:52.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-warsaw-today
+    title: warsawToday
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:02:58.213Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-all-valued
+    title: allValued
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:03.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-valuation-state
+    title: valuationState
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:10.218Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube
+    title: kube
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:16.096Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-connect
+    title: connect
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:21.553Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-must-connect
+    title: mustConnect
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:27.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-build
+    title: build
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:33.727Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-apply-build
+    title: kube.applyBuild
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:40.889Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-apply
+    title: kube.apply
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:46.792Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-apply-one
+    title: kube.applyOne
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:51.923Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-exec
+    title: kube.exec
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:03:57.425Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-running-pod
+    title: kube.runningPod
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:03.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-condition-true
+    title: kube.conditionTrue
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:08.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-retry
+    title: retry
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:14.022Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-check
+    title: check
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:18.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-wait-for
+    title: waitFor
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:24.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-stuck-reasons
+    title: stuckReasons
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:29.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-pods-state
+    title: kube.podsState
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:35.080Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-pod-state
+    title: podState
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:40.376Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-pod-ready
+    title: podReady
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:46.324Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-diagnose-on-failure
+    title: diagnoseOnFailure
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:51.828Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-diagnosed-namespaces
+    title: diagnosedNamespaces
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:04:57.625Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-dump-diagnostics
+    title: kube.dumpDiagnostics
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:03.157Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-pod-summary
+    title: podSummary
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:09.010Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-dump-pod
+    title: kube.dumpPod
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:14.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-dump-network
+    title: kube.dumpNetwork
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:20.361Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-dump-yaml
+    title: dumpYAML
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:25.821Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-dump-events
+    title: kube.dumpEvents
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:31.423Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-dump-logs
+    title: kube.dumpLogs
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:36.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-cnpg-cluster
+    title: cnpgCluster
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:42.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-main
+    title: TestMain
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:48.689Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-log-stderrf
+    title: logStderrf
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:54.233Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-install
+    title: install
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:05:59.790Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-install-cnpg
+    title: installCNPG
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:06:05.243Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-install-database
+    title: installDatabase
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:06:10.671Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-install-app
+    title: installApp
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:06:15.173Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-install-clients
+    title: installClients
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:06:19.866Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-is-k3s
+    title: kube.isK3s
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:06:24.489Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-deployment-available
+    title: kube.deploymentAvailable
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:06:29.257Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-kube-ensure-local-path
+    title: kube.ensureLocalPath
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T18:06:33.888Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack

@@ -195,3 +195,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1510840db61
+  - type: executable_for
+    from: SYM-e2e-kube-dump-network
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:05:21.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a11fd6fd41c2

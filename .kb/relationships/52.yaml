@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ab9356c4d68
+  - type: executable_for
+    from: SYM-e2e-all-valued
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:03:05.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b2a7737c27b

@@ -272,3 +272,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7a1746690db
+  - type: executable_for
+    from: SYM-e2e-pod-ready
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:04:47.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ef9b2716962

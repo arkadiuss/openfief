@@ -18,6 +18,9 @@ FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c
 # The plugin's manifest (D-42), signed with the image: written from manifest.json by `task plugins:labels`.
 LABEL io.openfief.plugin.manifest='{"capabilities":["connector"],"configSchema":{"additionalProperties":false,"properties":{"accounts":{"additionalProperties":{"minLength":1,"type":"string"},"minProperties":1,"type":"object"}},"required":["accounts"],"type":"object"},"egress":["ndcdyn.interactivebrokers.com"],"secrets":[{"mountPath":"/etc/openfief/ibkr-flex","name":"ibkr-flex-credentials"}]}'
 COPY --from=build /out/plugin /plugin
-USER nonroot:nonroot
+# Numeric, not nonroot:nonroot: the pods run with runAsNonRoot, and the kubelet refuses to start a container
+# whose image names its user, since it can't tell that a name isn't root (CreateContainerConfigError).
+# 65532 is distroless's nonroot user and group.
+USER 65532:65532
 EXPOSE 8080
 ENTRYPOINT ["/plugin"]
