@@ -69,3 +69,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb0a1092351c
+  - type: implements
+    from: SYM-plugins-signer-doc-signer
+    to: REQ-plugins-catalog-format
+    created_at: 2026-10-28T08:54:55.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-267685fc0c38
+  - type: implements
+    from: SYM-plugins-signer-doc-signer
+    to: REQ-plugins-verified-entry-pins
+    created_at: 2026-10-28T08:54:56.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac4f1c602d16
+  - type: covered_by
+    from: SYM-plugins-signer-doc-signer
+    to: TEST-plugins-catalog
+    created_at: 2026-10-28T08:54:56.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d016a5038f9

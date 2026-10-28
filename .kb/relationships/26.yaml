@@ -97,3 +97,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0c9808abb48
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-dsse-proto
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:20:26.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80a5ca952060

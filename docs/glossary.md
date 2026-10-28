@@ -66,6 +66,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Catalog | plugins | `plugins.Catalog` | The file in the OpenFief repository that lists first-party and verified plugins, with pinned image digests and signer identities. | marketplace, registry |
 | Verified plugin | plugins | `plugins.Verified` | A plugin whose catalog entry pins a version the author reviewed. Anything installed by image reference alone is unverified. | official, trusted |
 | Trusted signer | plugins | `plugins.Signer` | An identity whose image signatures the operator accepts: OpenFief's CI, a catalog publisher, or one the owner added. | |
+| Signer identity | plugins | `plugins.SignerIdentity` | Who made a signature: for a keyless signature, the OIDC issuer and subject in its Fulcio certificate (such as a GitHub Actions workflow at a ref); otherwise a public key. | key ID |
+| Trust policy | plugins | `plugins.TrustPolicy` | Every trusted signer plus the catalog. It decides whether a signed image is a verified plugin, unverified but signed by a trusted signer, or refused. Nothing overrides a refusal. | allow-list (that is egress) |
 | Manifest | plugins | `plugins.Manifest` | A plugin's declared capabilities, egress hosts, secrets, data tiers and config schema. | |
 | Egress allow-list | plugins | `plugins.EgressAllowList` | The hostnames a plugin may reach through the egress proxy. | whitelist |
 | Capability | plugins | `plugins.Capability` | What a plugin may act as: `connector` or `view` in M0. Declared in its manifest and approved in its grant. | kind, role |

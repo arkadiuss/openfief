@@ -132,3 +132,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b1ab320ad4a
+  - type: implements
+    from: SYM-plugins-manifest-equal
+    to: REQ-plugins-manifest-label-match
+    created_at: 2026-10-28T08:56:13.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1329fb033388
+  - type: implements
+    from: SYM-plugins-manifest-equal
+    to: REQ-plugins-manifest-in-image
+    created_at: 2026-10-28T08:56:13.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f4a91799d50
+  - type: covered_by
+    from: SYM-plugins-manifest-equal
+    to: TEST-plugins-manifest-label
+    created_at: 2026-10-28T08:56:13.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45f4b4684d89

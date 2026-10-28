@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13e93281c7d0
+  - type: executable_for
+    from: SYM-operator-test-verify-stranger-signature
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-28T09:32:36.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a62670598045

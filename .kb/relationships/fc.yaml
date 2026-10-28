@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3cdecb9d83a
+  - type: executable_for
+    from: SYM-plugins-test-signer-identity-string
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T09:00:19.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdea0a679efd

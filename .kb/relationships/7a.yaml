@@ -118,3 +118,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62acc3e0e44b
+  - type: executable_for
+    from: SYM-cosign-test-verifier-inspect-case
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:23:48.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e604bf07f87

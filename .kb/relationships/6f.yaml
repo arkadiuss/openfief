@@ -90,3 +90,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8be55ed525e8
+  - type: implements
+    from: SYM-plugins-trust
+    to: REQ-plugins-trust-decision
+    created_at: 2026-10-28T08:58:35.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc0bbd5dd065
+  - type: implements
+    from: SYM-plugins-trust
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:58:35.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89cf221d8c68
+  - type: covered_by
+    from: SYM-plugins-trust
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:58:35.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-118f8cba2d2e
+  - type: implements
+    from: SYM-cosign-new
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:22:00.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9ffad584ba
+  - type: implements
+    from: SYM-cosign-new
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T09:22:00.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e71a208dc55e
+  - type: covered_by
+    from: SYM-cosign-new
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:22:00.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6d16b92ea56

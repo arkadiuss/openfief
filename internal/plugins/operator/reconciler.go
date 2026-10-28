@@ -3,6 +3,7 @@ package operator
 import (
 	"context"
 	"fmt"
+	"time"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -88,7 +89,21 @@ func (r *PluginReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 	if err := r.publishAllowList(ctx, p.Name, lists); err != nil {
 		return ctrl.Result{}, err
 	}
-	return ctrl.Result{}, r.writeStatus(ctx, &p, o)
+	return o.result(), r.writeStatus(ctx, &p, o)
+}
+
+// verifyRetry is how soon an image whose signature could not be checked,
+// such as while its registry is unreachable, is checked again.
+const verifyRetry = time.Minute
+
+// result asks for another reconcile when a signature could not be checked.
+func (o *observation) result() ctrl.Result {
+	unknown := o.signature.Status == metav1.ConditionUnknown ||
+		(o.previousSignature != nil && o.previousSignature.Status == metav1.ConditionUnknown)
+	if unknown {
+		return ctrl.Result{RequeueAfter: verifyRetry}
+	}
+	return ctrl.Result{}
 }
 
 // observe reads the Plugin's grant, checks its current version and decides
@@ -101,7 +116,7 @@ func (r *PluginReconciler) observe(ctx context.Context, p *v1alpha1.Plugin) (*ob
 	if current != nil {
 		o.configErr = ValidateConfig(current.Manifest.ConfigSchema, current.Config)
 	}
-	o.signature = r.verify(ctx, p.Spec.Image)
+	o.signature = r.verify(ctx, p.Spec.Image, declaredManifest(current))
 	grant, err := r.grant(ctx, p.Name)
 	if err != nil {
 		return nil, err
@@ -116,16 +131,17 @@ func (r *PluginReconciler) observe(ctx context.Context, p *v1alpha1.Plugin) (*ob
 // plan decides the rollout and which version's spec runs. The previous
 // version runs only if its image is still verified.
 func (r *PluginReconciler) plan(ctx context.Context, p *v1alpha1.Plugin, o *observation, current *plugins.Plugin, grant *plugins.Grant) {
+	previous := previousVersion(p)
 	o.rollout, o.planErr = plugins.PlanRollout(plugins.RolloutInput{
 		Current:           current,
 		CurrentDeployable: o.specErr == nil && o.configErr == nil && o.signature.Verified(),
-		Previous:          previousVersion(p),
+		Previous:          previous,
 		Grant:             grant,
 	})
 	switch {
 	case o.planErr != nil || o.rollout.Run == nil:
 	case o.rollout.Outcome == plugins.RolloutPrevious:
-		if v := r.verify(ctx, p.Status.Deployed.Image); !v.Verified() {
+		if v := r.verify(ctx, p.Status.Deployed.Image, declaredManifest(previous)); !v.Verified() {
 			o.previousSignature = &v
 			return
 		}
@@ -148,14 +164,24 @@ func previousVersion(p *v1alpha1.Plugin) *plugins.Plugin {
 	return previous
 }
 
-// verify checks an image reference's signature; an unparsable reference is
-// never verified.
-func (r *PluginReconciler) verify(ctx context.Context, image string) Verification {
+// verify checks an image reference's signature and, when declared is not
+// nil, that its signed manifest label is declared (D-42); an unparsable
+// reference is never verified.
+func (r *PluginReconciler) verify(ctx context.Context, image string, declared *plugins.Manifest) Verification {
 	ref, err := plugins.ParseImageRef(image)
 	if err != nil {
 		return Verification{Status: metav1.ConditionFalse, Reason: ReasonInvalidImage, Message: err.Error()}
 	}
-	return r.Verifier.VerifyImage(ctx, ref)
+	return r.Verifier.VerifyImage(ctx, ref, declared)
+}
+
+// declaredManifest is a valid plugin version's manifest; nil when the
+// version is invalid, which never runs.
+func declaredManifest(p *plugins.Plugin) *plugins.Manifest {
+	if p == nil {
+		return nil
+	}
+	return &p.Manifest
 }
 
 type grantResult struct {

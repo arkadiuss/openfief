@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b54db34bc9f6
+  - type: implements
+    from: SYM-cosign-fn-is-signature
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:22:55.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abbd406d882d
+  - type: implements
+    from: SYM-cosign-fn-is-signature
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T09:22:55.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1bfda59ac20
+  - type: covered_by
+    from: SYM-cosign-fn-is-signature
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:22:55.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-640ba5b8e643

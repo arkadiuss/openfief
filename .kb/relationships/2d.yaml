@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5dfbe6e1b16
+  - type: executable_for
+    from: SYM-plugins-test-manifest-equal
+    to: TEST-plugins-manifest-label
+    created_at: 2026-10-28T08:56:55.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c08fb4e4ceda

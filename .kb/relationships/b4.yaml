@@ -104,3 +104,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d12f1e5d8d6
+  - type: implements
+    from: SYM-plugins-signer-identity-string
+    to: REQ-plugins-signer-identity-match
+    created_at: 2026-10-28T08:57:38.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c34c08f0373
+  - type: implements
+    from: SYM-plugins-signer-identity-string
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-10-28T08:57:38.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-604730167dc9
+  - type: covered_by
+    from: SYM-plugins-signer-identity-string
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:57:38.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95333f5a43cf

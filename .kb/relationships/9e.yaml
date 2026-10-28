@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02902ffcb5be
+  - type: verified_by
+    from: SCEN-plugins-manifest-label-match
+    to: TEST-plugins-manifest-label
+    created_at: 2026-10-28T08:50:54.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9faaf089d5a
+  - type: verified_by
+    from: SCEN-plugins-manifest-label-match
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:50:54.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-575630fe8e4f
+  - type: executable_for
+    from: SYM-catalog-test-load
+    to: TEST-plugins-catalog-embedded
+    created_at: 2026-10-28T09:31:33.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89b34045b86b

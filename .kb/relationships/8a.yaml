@@ -111,3 +111,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5afcb7f78b5c
+  - type: executable_for
+    from: SYM-plugins-test-parse-manifest-label
+    to: TEST-plugins-manifest-label
+    created_at: 2026-10-28T08:56:45.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d92f06633e5b
+  - type: executable_for
+    from: SYM-cosign-test-production-verifier-requires-sct
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:24:12.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-350d05f0ba13

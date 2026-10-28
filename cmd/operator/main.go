@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"path/filepath"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
@@ -19,22 +20,30 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/plugins/catalog"
+	"github.com/arkadiuss/openfief/internal/plugins/cosign"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
 	"github.com/arkadiuss/openfief/internal/plugins/operator/v1alpha1"
 )
 
-const defaultPluginPort = 8080
+const (
+	defaultPluginPort = 8080
+	// defaultTrustedSigners is where deploy/operator mounts the optional
+	// openfief-trusted-signers ConfigMap.
+	defaultTrustedSigners = "/etc/openfief/trust/signers.json"
+)
 
 // errPluginPort reports a plugin port outside 1 to 65535.
 var errPluginPort = errors.New("plugin port must be 1 to 65535")
 
 type options struct {
-	settings    operator.Settings
-	pluginPort  uint
-	leaderElect bool
-	probeAddr   string
-	metricsAddr string
-	zap         zap.Options
+	settings       operator.Settings
+	pluginPort     uint
+	trustedSigners string
+	leaderElect    bool
+	probeAddr      string
+	metricsAddr    string
+	zap            zap.Options
 }
 
 func main() {
@@ -52,6 +61,8 @@ func parseFlags(args []string) (*options, error) {
 	fs.StringVar(&o.settings.EgressProxyService, "egress-proxy-service", "egress-proxy", "the egress proxy's Service in the openfief namespace")
 	fs.StringVar(&o.settings.EgressProxyPort, "egress-proxy-port", "proxy", "the name of the egress proxy Service's port")
 	fs.UintVar(&o.pluginPort, "plugin-port", defaultPluginPort, "the port every plugin serves Connect RPC on")
+	fs.StringVar(&o.trustedSigners, "trusted-signers", defaultTrustedSigners,
+		"JSON file of the signers the owner trusts besides OpenFief's CI and the catalog (D-45); a missing file adds none")
 	fs.BoolVar(&o.leaderElect, "leader-elect", true, "elect one active operator with a Lease in the openfief namespace")
 	fs.StringVar(&o.probeAddr, "health-probe-bind-address", ":8081", "address of the liveness and readiness probes")
 	fs.StringVar(&o.metricsAddr, "metrics-bind-address", "0", `address of the metrics endpoint; "0" disables it`)
@@ -89,10 +100,12 @@ func run(args []string) error {
 	if err != nil {
 		return fmt.Errorf("manager: %w", err)
 	}
+	verifier, err := imageVerifier(o.trustedSigners)
+	if err != nil {
+		return err
+	}
 	pr := &operator.PluginReconciler{
-		Client: mgr.GetClient(), Scheme: scheme, Settings: o.settings,
-		// D-17: no plugin is deployed until cosign verification replaces this seam.
-		Verifier: operator.UnimplementedVerifier{},
+		Client: mgr.GetClient(), Scheme: scheme, Settings: o.settings, Verifier: verifier,
 	}
 	if setupErr := errors.Join(
 		pr.SetupWithManager(mgr),
@@ -110,4 +123,49 @@ func run(args []string) error {
 		return fmt.Errorf("run: %w", err)
 	}
 	return nil
+}
+
+// imageVerifier builds the operator's signature check (D-45, D-56, D-57):
+// OpenFief's CI, the embedded catalog and the owner's signers, verified
+// against the bundled Sigstore trust root. There is no flag that skips it.
+func imageVerifier(trustedSignersPath string) (*operator.PolicyVerifier, error) {
+	policy, err := trustPolicy(trustedSignersPath)
+	if err != nil {
+		return nil, err
+	}
+	tr, err := cosign.TrustedRoot()
+	if err != nil {
+		return nil, fmt.Errorf("trust root: %w", err)
+	}
+	source, err := cosign.New(&policy, tr)
+	if err != nil {
+		return nil, fmt.Errorf("signature verifier: %w", err)
+	}
+	return operator.NewPolicyVerifier(source, &policy), nil
+}
+
+// trustPolicy reads the embedded catalog and the owner's signers. A missing
+// signers file means the owner added none; an unreadable or invalid one stops
+// the operator, so a typo never silently drops or widens trust.
+func trustPolicy(trustedSignersPath string) (plugins.TrustPolicy, error) {
+	c, err := catalog.Load()
+	if err != nil {
+		return plugins.TrustPolicy{}, fmt.Errorf("catalog: %w", err)
+	}
+	var owner []plugins.Signer
+	data, err := os.ReadFile(filepath.Clean(trustedSignersPath))
+	switch {
+	case errors.Is(err, os.ErrNotExist):
+	case err != nil:
+		return plugins.TrustPolicy{}, fmt.Errorf("trusted signers: %w", err)
+	default:
+		if owner, err = plugins.ParseOwnerSigners(data); err != nil {
+			return plugins.TrustPolicy{}, fmt.Errorf("trusted signers %s: %w", trustedSignersPath, err)
+		}
+	}
+	policy, err := plugins.NewTrustPolicy(c, owner)
+	if err != nil {
+		return plugins.TrustPolicy{}, fmt.Errorf("trust policy: %w", err)
+	}
+	return policy, nil
 }

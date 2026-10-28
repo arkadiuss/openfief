@@ -328,3 +328,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-534d17605076
+  - type: constrains
+    from: REQ-plugins-manifest-label-match
+    to: FACT-SUBJECT-827D9137D4EF64B3
+    created_at: 2026-10-28T08:52:04.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a44d79e53b0
+  - type: requires_property
+    from: REQ-plugins-manifest-label-match
+    to: FACT-PROP-5902F0187C183243
+    created_at: 2026-10-28T08:52:04.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-669a64d74c0e
+  - type: specified_by
+    from: REQ-plugins-manifest-label-match
+    to: SCEN-plugins-manifest-label-match
+    created_at: 2026-10-28T08:52:04.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d1772611a39

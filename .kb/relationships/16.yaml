@@ -97,3 +97,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f364dc8a9cb
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-labelled-image
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:19:08.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff702a3fa5e4
+  - type: implements
+    from: SYM-cosign-fn-read-bundles
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-10-28T09:21:00.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-647d183fb05e
+  - type: implements
+    from: SYM-cosign-fn-read-bundles
+    to: REQ-plugins-manifest-in-image
+    created_at: 2026-10-28T09:21:00.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68b202072a41
+  - type: covered_by
+    from: SYM-cosign-fn-read-bundles
+    to: TEST-plugins-cosign
+    created_at: 2026-10-28T09:21:00.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b399ba404c4

@@ -167,3 +167,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ceaa5c39b84a
+  - type: executable_for
+    from: SYM-plugins-test-trust-new-policy-fixture
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T09:00:38.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dd46dd94c0c

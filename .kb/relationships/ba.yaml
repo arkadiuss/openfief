@@ -153,3 +153,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76cdc3401d79
+  - type: implements
+    from: SYM-plugins-fn-decode-numbers
+    to: REQ-plugins-manifest-label-match
+    created_at: 2026-10-28T08:56:37.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f8dfb80ac02
+  - type: implements
+    from: SYM-plugins-fn-decode-numbers
+    to: REQ-plugins-manifest-in-image
+    created_at: 2026-10-28T08:56:37.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f20e01a23312
+  - type: covered_by
+    from: SYM-plugins-fn-decode-numbers
+    to: TEST-plugins-manifest-label
+    created_at: 2026-10-28T08:56:37.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a57557f7c3f9
+  - type: implements
+    from: SYM-plugins-trust-policy-decide
+    to: REQ-plugins-trust-decision
+    created_at: 2026-10-28T08:59:18.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e643b3d40b44
+  - type: implements
+    from: SYM-plugins-trust-policy-decide
+    to: REQ-plugins-manifest-label-match
+    created_at: 2026-10-28T08:59:18.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-415f3c34cec7
+  - type: covered_by
+    from: SYM-plugins-trust-policy-decide
+    to: TEST-plugins-trust
+    created_at: 2026-10-28T08:59:18.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1807a95d7ea1
