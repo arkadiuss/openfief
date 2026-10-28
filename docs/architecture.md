@@ -80,7 +80,8 @@ flowchart TB
 | Shared kernel | (code organization) | Money, currency, quantity and dates in `internal/kernel` | [Kernel](concepts/kernel.md) |
 | Portfolio | D-52 to D-54, D-61 | Sleeves and sleeve kinds with their default roles and install defaults in `internal/portfolio`; the model portfolio is not built | [Portfolio](concepts/portfolio.md) |
 | Demo dataset | GR-12 | A synthetic dataset in `internal/demo`, loaded by `cmd/demo-seed` through the same ingest, ledger and valuation paths real data takes. It refuses any database without its own demo marker | [Demo](dev/demo.md) |
-| Core service, read API, UI, Ghostfolio view, CLI, XTB parser, market data | D-2 to D-6, D-30, D-46, D-50, D-51 | Not built | [Status](https://arkadiuss.github.io/openfief/status/) |
+| Read API | D-6, D-7, D-30, D-36, D-50, D-62 | The `openfief.views.v1.ReadService` protobuf service and its generated OpenAPI document; the queries, totals and allocation in `internal/views`; the Connect and REST `/v1` handler, through Vanguard, in `internal/views/connectapi`. No binary serves it, and the token verifier it needs is only a port | [Read API](concepts/read-api.md) |
+| Core service, UI, Ghostfolio view, CLI, XTB parser, market data | D-2 to D-5, D-30, D-46, D-51 | Not built | [Status](https://arkadiuss.github.io/openfief/status/) |
 
 The [status page](https://arkadiuss.github.io/openfief/status/) gives the same picture decision by decision, from the requirements in kibi.
 
@@ -102,7 +103,7 @@ flowchart LR
   kernel["kernel (shared)"]
 ```
 
-The [code map](https://arkadiuss.github.io/openfief/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has an arrow the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves. And the three arrows from `views` don't exist yet, because `views` isn't built.
+The [code map](https://arkadiuss.github.io/openfief/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has two arrows the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves, and `views` imports `jurisdiction/pl` to tell a treasury bond series from a listed instrument in the allocation.
 
 ## In the cluster
 
