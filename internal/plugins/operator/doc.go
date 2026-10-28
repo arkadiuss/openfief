@@ -3,7 +3,9 @@
 // (D-15) into each plugin's ServiceAccount, config ConfigMap, Service,
 // NetworkPolicy and Deployment, and publishes every running plugin's egress
 // allow-list in the plugins.EgressAllowListConfigMap ConfigMap for the egress
-// proxy (D-32).
+// proxy (D-32). SigningKeysPublisher publishes the cluster's ServiceAccount
+// token-signing public keys in the plugins.SigningKeysConfigMap ConfigMap,
+// which every plugin mounts to verify the core's token (D-59).
 //
 // Every decision is the domain's: the resources are translated into
 // plugins.Plugin and plugins.Grant, plugins.PlanRollout picks the version that

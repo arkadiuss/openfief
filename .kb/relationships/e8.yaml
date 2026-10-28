@@ -244,3 +244,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01464a42a933
+  - type: validates
+    from: TEST-plugins-nbp-fx
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T17:06:43.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5251d9c74d5b
+  - type: validates
+    from: TEST-plugins-nbp-fx
+    to: REQ-AUTO-D1568676DF81CAF7
+    created_at: 2026-10-28T17:06:43.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84f3078628b8

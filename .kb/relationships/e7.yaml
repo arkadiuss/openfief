@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b262eb40d4e
+  - type: implements
+    from: SYM-operator-issuer-discovery-signing-keys
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:48:28.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89715388b522
+  - type: covered_by
+    from: SYM-operator-issuer-discovery-signing-keys
+    to: TEST-operator-signing-keys
+    created_at: 2026-10-28T16:48:28.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd723834a073

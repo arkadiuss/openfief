@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ab859b671ea
+  - type: executable_for
+    from: SYM-plugins-test-core-auth-env
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T16:48:17.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6bd53ca95ea

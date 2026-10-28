@@ -230,3 +230,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70b6ceb68f69
+  - type: constrains
+    from: REQ-plugins-workload-core-auth
+    to: FACT-SUBJECT-580F1F6B1556993B
+    created_at: 2026-10-28T16:47:47.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27c10777662d
+  - type: requires_property
+    from: REQ-plugins-workload-core-auth
+    to: FACT-PROP-7C4296CA84DEDEF9
+    created_at: 2026-10-28T16:47:47.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca120d85d864
+  - type: specified_by
+    from: REQ-plugins-workload-core-auth
+    to: SCEN-plugins-workload-core-auth
+    created_at: 2026-10-28T16:47:47.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac3c04f47605

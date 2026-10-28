@@ -202,3 +202,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac95691835e9
+  - type: verified_by
+    from: SCEN-plugins-first-party-manifest-label
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:07:00.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c81b74db76a3
+  - type: verified_by
+    from: SCEN-plugins-first-party-manifest-label
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:07:00.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-614b7fd824bf
+  - type: verified_by
+    from: SCEN-plugins-first-party-manifest-label
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:07:00.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-078c171ec2f8

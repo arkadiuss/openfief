@@ -146,3 +146,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df364af39654
+  - type: implements
+    from: SYM-plugins-config-map-volume
+    to: REQ-plugins-workload-core-auth
+    created_at: 2026-10-28T16:48:14.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4637b5be92d
+  - type: covered_by
+    from: SYM-plugins-config-map-volume
+    to: TEST-plugins-compile
+    created_at: 2026-10-28T16:48:14.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29048544349f
+  - type: executable_for
+    from: SYM-delivery-test-test-from-mapping
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:21:20.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2508285227f
+  - type: implements
+    from: SYM-plugin-labels-plugin-labels
+    to: REQ-plugins-first-party-manifest-label
+    created_at: 2026-10-28T17:29:11.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-209d108a1c8f
+  - type: covered_by
+    from: SYM-plugin-labels-plugin-labels
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:29:11.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-990cf04eb65e

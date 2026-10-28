@@ -242,6 +242,7 @@ tasks:
     desc: Full local pipeline, identical to CI
     cmds:
       - task: gen:check
+      - task: plugins:labels:check
       - task: fmt:check
       - task: lint
       - task: lint:ci
@@ -258,6 +259,7 @@ tasks:
     desc: Pre-commit pipeline (like check, with kibi on staged changes)
     cmds:
       - task: gen:check
+      - task: plugins:labels:check
       - task: fmt:check
       - task: lint
       - task: lint:ci
@@ -282,6 +284,18 @@ tasks:
     cmds:
       - task: gen
       - bash scripts/gen-check.sh deploy/crds deploy/operator/role.yaml internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+
+  plugins:labels:
+    desc: Write each first-party plugin's manifest label (D-42) into plugins/<name>/Dockerfile from its manifest.json
+    deps: [tool:gojq]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/plugin-labels.sh write
+
+  plugins:labels:check:
+    desc: Fail if a plugin's Dockerfile label, or a demo Plugin's spec.manifest, differs from plugins/<name>/manifest.json
+    deps: [tool:gojq]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/plugin-labels.sh check
 
   fmt:
     desc: Format Go code (gofumpt, goimports) in every Go module
@@ -355,6 +369,7 @@ tasks:
       - bash scripts/tests/check-docs.test.sh
       - bash scripts/tests/vulncheck.test.sh
       - bash scripts/tests/ci-images.test.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/plugin-labels.test.sh
       - bash scripts/tests/dco-check.test.sh
       - bash scripts/tests/release-version.test.sh
       - bash scripts/tests/release-notes.test.sh

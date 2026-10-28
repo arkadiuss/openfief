@@ -195,3 +195,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f5037794e08
+  - type: implements
+    from: SYM-delivery-money
+    to: REQ-ingest-delivery-contract-messages
+    created_at: 2026-10-28T17:20:47.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94391f631c1e
+  - type: covered_by
+    from: SYM-delivery-money
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:20:47.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89390e0452dd

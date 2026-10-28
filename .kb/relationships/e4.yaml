@@ -223,3 +223,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af9b53b0a82e
+  - type: executable_for
+    from: SYM-ibkr-flex-test-fake-verifier
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:22:58.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbcf86e961d0

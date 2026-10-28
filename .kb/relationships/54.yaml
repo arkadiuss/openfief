@@ -167,3 +167,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-000487d831da
+  - type: implements
+    from: SYM-plugin-labels-dockerfile-label
+    to: REQ-plugins-first-party-manifest-label
+    created_at: 2026-10-28T17:29:01.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-125699c10f7d
+  - type: covered_by
+    from: SYM-plugin-labels-dockerfile-label
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:29:01.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52fe41bdee57

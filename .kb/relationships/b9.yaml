@@ -419,3 +419,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36693b707560
+  - type: implements
+    from: SYM-sdk-go-jwks-verifier
+    to: REQ-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:49:55.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e31502a3789
+  - type: implements
+    from: SYM-sdk-go-jwks-verifier
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:49:55.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aad6b72bf9fe
+  - type: covered_by
+    from: SYM-sdk-go-jwks-verifier
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:49:55.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbba155f8c01
+  - type: implements
+    from: SYM-sdk-go-jwks-verifier-verify
+    to: REQ-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:11.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16496aa3e406
+  - type: implements
+    from: SYM-sdk-go-jwks-verifier-verify
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:50:11.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ce3c3a25125
+  - type: covered_by
+    from: SYM-sdk-go-jwks-verifier-verify
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:11.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e2fd1b9b7a8
+  - type: implements
+    from: SYM-plugin-labels-demo-manifests
+    to: REQ-plugins-first-party-manifest-label
+    created_at: 2026-10-28T17:29:08.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4be4a1b89da3
+  - type: covered_by
+    from: SYM-plugin-labels-demo-manifests
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:29:08.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0283adf267fc

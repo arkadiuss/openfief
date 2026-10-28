@@ -167,3 +167,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84ebdcd1b616
+  - type: constrains
+    from: REQ-plugins-signing-keys-published
+    to: FACT-SUBJECT-CB6D5D25A98C76A8
+    created_at: 2026-10-28T16:47:42.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbdd8df457c2
+  - type: requires_property
+    from: REQ-plugins-signing-keys-published
+    to: FACT-PROP-22A0B2B7EE62CC89
+    created_at: 2026-10-28T16:47:42.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45d96fabac64
+  - type: specified_by
+    from: REQ-plugins-signing-keys-published
+    to: SCEN-plugins-signing-keys-published
+    created_at: 2026-10-28T16:47:42.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2117af358801

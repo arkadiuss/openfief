@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbdb1a250b19
+  - type: implements
+    from: SYM-plugin-labels-manifest-label
+    to: REQ-plugins-first-party-manifest-label
+    created_at: 2026-10-28T17:28:58.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-916d50d3459b
+  - type: covered_by
+    from: SYM-plugin-labels-manifest-label
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:28:58.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6ddf0432e25

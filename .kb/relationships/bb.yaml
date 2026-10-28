@@ -153,3 +153,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7d84b4dffb4
+  - type: implements
+    from: SYM-plugins-check-public-key
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:49:38.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8c006c72172
+  - type: covered_by
+    from: SYM-plugins-check-public-key
+    to: TEST-plugins-signing-keys
+    created_at: 2026-10-28T16:49:38.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59c13a48b87d
+  - type: executable_for
+    from: SYM-delivery-test-cur
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:21:11.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d21585e1e20

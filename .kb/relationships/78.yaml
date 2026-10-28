@@ -244,3 +244,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5203d36334e
+  - type: implements
+    from: SYM-delivery-book-kind
+    to: REQ-ingest-delivery-contract-messages
+    created_at: 2026-10-28T17:20:55.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79fd881fcc44
+  - type: covered_by
+    from: SYM-delivery-book-kind
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:20:55.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf0854920eb2

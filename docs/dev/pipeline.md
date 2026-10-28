@@ -68,12 +68,13 @@ Every step is a task target, and `task --list` shows them with descriptions. Thr
 | Step | What it runs | Fails when |
 |---|---|---|
 | `gen:check` | `task gen` (controller-gen writes deepcopy code, [CRDs](../glossary.md#other-terms-and-abbreviations) and the operator's Role), then [gen-check.sh](../../scripts/gen-check.sh) | a regenerated file differs from the git index or is untracked |
+| `plugins:labels:check` | [plugin-labels.sh](../../scripts/plugin-labels.sh) `check`; `task plugins:labels` writes the labels | a first-party plugin's `io.openfief.plugin.manifest` Dockerfile label, or a demo `Plugin`'s `spec.manifest`, differs from its `plugins/<name>/manifest.json` (D-42) |
 | `fmt:check` | `golangci-lint fmt --diff` in each module (gofumpt with extra rules, goimports) | a file would be reformatted |
 | `lint` | `golangci-lint config verify`, then `golangci-lint run` in each module | any finding; [.golangci.yml](../../.golangci.yml) enables every linter except a commented list |
 | `lint:ci` | actionlint on the workflows, with its shellcheck and pyflakes integrations off | a workflow error |
 | `proto` | `buf lint`, `buf format --diff`, [proto-breaking.sh](../../scripts/proto-breaking.sh) (with the base's own `buf.lock`), [proto-check.sh](../../scripts/proto-check.sh) | a lint or format issue, a breaking change against the base, or a stale `sdk/go/gen` or `gen/openapi` (the read API's OpenAPI document, generated from its protobuf and `read_service.openapi-base.yaml`) |
 | `vuln` | [vulncheck.sh](../../scripts/vulncheck.sh): govulncheck in each module, then `npm audit --audit-level=high` | a finding, or an unreachable vulnerability database |
-| `test` | `go test ./...` in each module with the envtest binaries, then the ten `scripts/tests/*.test.sh` | any failure |
+| `test` | `go test ./...` in each module with the envtest binaries, then the eleven `scripts/tests/*.test.sh` | any failure |
 | `docs:check` | [check-docs.sh](../../scripts/check-docs.sh) | an undefined or duplicate GR, D, P, T, OQ or R ID, or a changed ground-rule line |
 | `docs:build` | [docgen](../../tools/docgen/main.go) writes the reference pages, then Hugo and [docs-diagrams.mjs](../../scripts/docs-diagrams.mjs) build the site ([docs.md](docs.md)) | a broken link, a diagram that doesn't render, or a docs page naming a kibi ID or task that doesn't exist |
 | `docs:fresh` (CI only) | `git log` over the range from `DOCS_BASE`, piped into `docgen fresh` | covered code changed without a page covering it and without a `Docs-Unchanged:` trailer, or a Go package no page covers |
@@ -104,7 +105,7 @@ flowchart TD
   hook --> cc
   subgraph cc["task check:commit (in order, stops at the first failure)"]
     direction TB
-    gen["gen:check"] --> fmt["fmt:check"] --> lint["lint"] --> lintci["lint:ci"] --> proto["proto"]
+    gen["gen:check"] --> labels["plugins:labels:check"] --> fmt["fmt:check"] --> lint["lint"] --> lintci["lint:ci"] --> proto["proto"]
     proto --> vuln["vuln"] --> test["test"] --> docs["docs:check"] --> site["docs:build"] --> dv["demo:validate"] --> kibi["kibi:staged (check-generated, check on staged)"]
   end
   cc -->|"all green"| msg["lefthook commit-msg: task docs:fresh:commit"]
@@ -255,25 +256,26 @@ sequenceDiagram
 
 ## Verification
 
-The pipeline's decisions live in shell scripts, and each script that decides something non-trivial has a test in [scripts/tests](../../scripts/tests). Each test works in a throwaway directory or git repository from `mktemp`. The git tests also clear `GIT_DIR` and its siblings, which a hook exports, so they can't touch the real repository. Each test is a kibi test record that covers a tooling requirement. `task test` runs all ten, so they run in the hook and in CI.
+The pipeline's decisions live in shell scripts, and each script that decides something non-trivial has a test in [scripts/tests](../../scripts/tests). Each test works in a throwaway directory or git repository from `mktemp`. The git tests also clear `GIT_DIR` and its siblings, which a hook exports, so they can't touch the real repository. Each test is a kibi test record that covers a tooling requirement. `task test` runs all eleven, so they run in the hook and in CI.
 
 | Test | Proves |
 |---|---|
 | `check-docs.test.sh` (TEST-tooling-docs-check) | Unchanged docs pass; a reference to an undefined ID, an edited ground-rule line, an ID defined twice and a base revision that isn't a commit each fail with the right message. |
 | `vulncheck.test.sh` (TEST-tooling-vuln-offline) | A high npm finding fails, an unreachable npm registry fails, and a govulncheck that can't reach `vuln.go.dev` fails. Stubs keep it offline. |
 | `ci-images.test.sh` (TEST-tooling-ci-images) | No Dockerfile gives `[]`; two Dockerfiles give the expected matrix with a lowercased prefix; a duplicate or invalid image name fails. |
+| `plugin-labels.test.sh` (TEST-tooling-plugin-labels) | The committed labels pass; a manifest changed without its label fails and names the Dockerfile; a demo `Plugin` declaring another manifest fails; `write` brings the label in step, keeps backslashes as they are, and refuses a single quote or a Dockerfile without the label line. |
 | `dco-check.test.sh` (TEST-tooling-dco) | A commit signed off by its author passes; a sign-off by someone else and a missing sign-off both fail and name the commit. |
 | `release-version.test.sh` (TEST-tooling-release-version) | 14 table cases: valid stable and beta versions pass; a `v` prefix, leading zeros, month 13, `beta.0`, the wrong or an unknown channel, and an existing tag fail. |
 | `release-notes.test.sh` (TEST-tooling-release-notes) | Stable notes start after the previous stable, beta notes after the previous release of either channel, a first release covers all history, and both `!` and `BREAKING CHANGE:` count as breaking. |
 | `proto-breaking.test.sh` (TEST-tooling-proto-breaking) | A base without contracts passes; adding a field passes; changing a field's type fails and names it; `PROTO_BASE` and `DOCS_BASE` both select the base. Needs `buf` on `PATH`. |
 | `demo.test.sh` (TEST-tooling-demo) | 199 checks against a fake hcloud with synthetic prices, and a fake curl that plays the Cloudflare DNS API on a record file. DNS records are created, updated in place on a new IPv4, left alone on a second run, and deleted only when they carry the demo's comment; a record set by hand at the demo's name is refused; without a Cloudflare token the demo falls back to sslip.io. Without a labelled SSH key, only a throwaway Ed25519 public key is uploaded, and `down` deletes it. `demo.sh dns-site` creates the apex's Pages A and AAAA records and the `www` CNAME, changes nothing on a second run or over matching records made by hand with its comment, reconciles a changed address list exactly, adds the verification TXT only with `GITHUB_PAGES_CHALLENGE`, deletes the retired `managed-by=openfief-docs` record, refuses a foreign record at the apex or `www`, and never touches the demo's records, nor the demo its records. A missing token is refused before any API call. `plan` prices the server and IPv4 and creates nothing. `up` over budget is refused, counting existing resources; otherwise it creates the firewall before the server, with labels, keys and rules, and a second `up` creates nothing. `down` needs the matching `CONFIRM`. The rendered cloud-init pins k3s for the CPU, leaves no placeholder and holds no token. |
-| `demo-pin-images.test.sh` (TEST-tooling-demo-pin-images) | With a fake cosign: signed images get their digests and comments survive; only `images.yml` on `main` is trusted; an unsigned image fails and keeps its placeholder; a malformed tag or digest is refused. |
+| `demo-pin-images.test.sh` (TEST-tooling-demo-pin-images) | With a fake cosign: signed images get their digests, the demo `Plugin` renders with its pinned plugin image, and comments survive; only `images.yml` on `main` is trusted; an unsigned image fails and keeps its placeholder; a malformed tag or digest is refused. |
 | `demo-validate.test.sh` (TEST-tooling-demo-validate) | The committed manifests pass; an OCI source without cosign verification, an image pinned by tag only, a Flux path that doesn't build and an undefined substitution variable each fail. |
 
 To run them and the other self-checks:
 
 ```sh
-task test                      # Go tests plus the ten script tests
+task test                      # Go tests plus the eleven script tests
 bash scripts/tests/dco-check.test.sh
 PATH="$PWD/.bin:$PATH" bash scripts/tests/demo.test.sh
 task lint:ci                   # actionlint over the workflows

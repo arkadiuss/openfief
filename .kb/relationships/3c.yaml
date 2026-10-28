@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5aacf3c2c2a
+  - type: executable_for
+    from: SYM-delivery-test-test-mode
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:21:37.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0163855bd2b

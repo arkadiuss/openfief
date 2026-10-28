@@ -160,3 +160,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d487f7ab6d1
+  - type: constrains
+    from: REQ-sdk-go-jwks-verifier
+    to: FACT-SUBJECT-401FDD0C631ABE9D
+    created_at: 2026-10-28T16:47:35.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1228bd1b8b9
+  - type: requires_property
+    from: REQ-sdk-go-jwks-verifier
+    to: FACT-PROP-947CEFBB39392258
+    created_at: 2026-10-28T16:47:35.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-603cdf9efc30
+  - type: specified_by
+    from: REQ-sdk-go-jwks-verifier
+    to: SCEN-sdk-go-jwks-verifier-core-only
+    created_at: 2026-10-28T16:47:35.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74899a2c3fdc

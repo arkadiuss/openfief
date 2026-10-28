@@ -160,3 +160,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69453b7953ca
+  - type: executable_for
+    from: SYM-operator-test-failing-source-signing-keys
+    to: TEST-operator-signing-keys
+    created_at: 2026-10-28T16:48:57.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82f0658660b2

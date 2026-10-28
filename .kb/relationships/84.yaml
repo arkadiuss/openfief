@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-367f2000e3d5
+  - type: implements
+    from: SYM-plugins-signing-keys-data
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:49:41.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a530bd22372
+  - type: covered_by
+    from: SYM-plugins-signing-keys-data
+    to: TEST-plugins-signing-keys
+    created_at: 2026-10-28T16:49:41.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-056b10116f61

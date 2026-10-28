@@ -265,3 +265,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed0dfdd724a7
+  - type: implements
+    from: SYM-delivery-mode
+    to: REQ-ingest-delivery-contract-messages
+    created_at: 2026-10-28T17:20:16.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1215483f0e76
+  - type: covered_by
+    from: SYM-delivery-mode
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:20:16.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94cca8c7073c

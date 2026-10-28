@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-530d27a46731
+  - type: constrains
+    from: REQ-plugins-nbp-fx-sync
+    to: FACT-SUBJECT-C25D641A654E2CC6
+    created_at: 2026-10-28T17:07:23.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-847e810d8d5f
+  - type: requires_property
+    from: REQ-plugins-nbp-fx-sync
+    to: FACT-PROP-081C8E0447DA5411
+    created_at: 2026-10-28T17:07:23.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80985412b9bc
+  - type: specified_by
+    from: REQ-plugins-nbp-fx-sync
+    to: SCEN-plugins-nbp-fx-watermark
+    created_at: 2026-10-28T17:07:23.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54cd843d1566

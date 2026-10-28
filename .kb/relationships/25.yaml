@@ -181,3 +181,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93d358ba66cf
+  - type: implements
+    from: SYM-delivery-fx-rates
+    to: REQ-ingest-delivery-contract-messages
+    created_at: 2026-10-28T17:20:25.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d8fe4a87dab
+  - type: covered_by
+    from: SYM-delivery-fx-rates
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:20:25.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a50a5788618e
+  - type: implements
+    from: SYM-nbp-fx-run
+    to: REQ-plugins-nbp-fx-sync
+    created_at: 2026-10-28T17:24:57.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b794d7111f2
+  - type: covered_by
+    from: SYM-nbp-fx-run
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:24:57.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f979907d377

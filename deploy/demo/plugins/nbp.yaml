@@ -1,0 +1,28 @@
+# The instance nbp of the first-party NBP FX connector (plugins/nbp-fx), with the owner's approval of exactly what
+# it requests: the connector capability and api.nbp.pl through the egress proxy. spec.manifest must equal the image's
+# signed label, plugins/nbp-fx/manifest.json (`task plugins:labels:check` compares them). The digest is a placeholder
+# that ../openfief's `images:` sets (scripts/demo/pin-images.sh).
+apiVersion: openfief.io/v1alpha1
+kind: Plugin
+metadata:
+  name: nbp
+  namespace: openfief
+spec:
+  image: ghcr.io/arkadiuss/openfief/nbp-fx@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  manifest:
+    capabilities: [connector]
+    egress: [api.nbp.pl]
+    configSchema:
+      type: object
+      properties:
+        start: {type: string, minLength: 10, maxLength: 10, pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'}
+      additionalProperties: false
+---
+apiVersion: openfief.io/v1alpha1
+kind: PluginGrant
+metadata:
+  name: nbp
+  namespace: openfief
+spec:
+  capabilities: [connector]
+  egress: [api.nbp.pl]

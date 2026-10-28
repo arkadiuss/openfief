@@ -111,3 +111,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55a02196a256
+  - type: implements
+    from: SYM-operator-signing-keys-publisher
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:48:35.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07bda29a2242
+  - type: covered_by
+    from: SYM-operator-signing-keys-publisher
+    to: TEST-operator-signing-keys
+    created_at: 2026-10-28T16:48:35.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d2813d87c2d
+  - type: verified_by
+    from: SCEN-ingest-delivery-exact
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:06:52.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e1a8a0e424

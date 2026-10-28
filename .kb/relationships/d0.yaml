@@ -258,3 +258,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2495ecbf22b
+  - type: implements
+    from: SYM-sdk-go-parse-key-set
+    to: REQ-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:24.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-193de71248ae
+  - type: implements
+    from: SYM-sdk-go-parse-key-set
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:50:24.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-593124c88fea
+  - type: covered_by
+    from: SYM-sdk-go-parse-key-set
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:24.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ae0d13377e0
