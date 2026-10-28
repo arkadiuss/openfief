@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-078aaae531fe
+    type: implements
+    from: SYM-plugins-field-err
+    to: REQ-plugins-manifest-validation
+    created_at: "2026-10-28T05:23:31.652Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-plugins-field-err
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:23:31.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d399c37735a8

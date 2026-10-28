@@ -6,3 +6,45 @@ relationships:
     created_at: "2026-10-28T04:50:58.653Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-validate-secret-mounts
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:25:16.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10940f26efa4
+  - type: implements
+    from: SYM-plugins-validate-secret-mounts
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:25:16.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0ae388c64e6
+  - type: covered_by
+    from: SYM-plugins-validate-secret-mounts
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:25:16.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d25b30b01305
+  - type: implements
+    from: SYM-plugins-duplicates
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:25:32.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8244607d867
+  - type: implements
+    from: SYM-plugins-duplicates
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:25:32.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd1f3db87607
+  - type: covered_by
+    from: SYM-plugins-duplicates
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:25:32.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6609d09d3bd4

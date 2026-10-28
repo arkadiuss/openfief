@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-ed429be23f0e
+    type: implements
+    from: SYM-plugins-validate-data-tiers
+    to: REQ-plugins-manifest-validation
+    created_at: "2026-10-28T05:25:09.969Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-validate-data-tiers
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:25:09.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d042314d6f4e
+  - type: covered_by
+    from: SYM-plugins-validate-data-tiers
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:25:09.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53991d826566

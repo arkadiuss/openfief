@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-5c5b1541a661
+    type: implements
+    from: SYM-plugins-validate-egress
+    to: REQ-plugins-manifest-validation
+    created_at: "2026-10-28T05:25:06.296Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-validate-egress
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:25:06.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c742604c441d
+  - type: covered_by
+    from: SYM-plugins-validate-egress
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:25:06.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aaf4a58314f

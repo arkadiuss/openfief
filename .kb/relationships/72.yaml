@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-744d5fc36b91
+    type: implements
+    from: SYM-plugins-capability-known
+    to: REQ-plugins-manifest-validation
+    created_at: "2026-10-28T05:24:43.589Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-capability-known
+    to: REQ-AUTO-761F6500ECFC0316
+    created_at: 2026-10-28T05:24:43.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4e4de9126e
+  - type: covered_by
+    from: SYM-plugins-capability-known
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:24:43.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10dd0b97ee3c

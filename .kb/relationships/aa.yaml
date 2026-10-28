@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bef02a2e57cc
+  - type: implements
+    from: SYM-plugins-validate-registry-host
+    to: REQ-plugins-image-digest-only
+    created_at: 2026-10-28T05:24:24.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7413d0b15b30
+  - type: implements
+    from: SYM-plugins-validate-registry-host
+    to: REQ-AUTO-AC7E986366466A6A
+    created_at: 2026-10-28T05:24:24.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e8c59abc4bb
+  - type: covered_by
+    from: SYM-plugins-validate-registry-host
+    to: TEST-plugins-image
+    created_at: 2026-10-28T05:24:24.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28646ec04cab

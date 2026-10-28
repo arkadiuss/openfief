@@ -13,3 +13,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e79868a2d877
+  - type: verified_by
+    from: SCEN-plugins-egress-host-canonical
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:21:09.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fffe8d6029f4
+  - type: constrains
+    from: REQ-plugins-manifest-validation
+    to: FACT-SUBJECT-777F1580F1EE5686
+    created_at: 2026-10-28T05:21:39.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31cc59db27b0
+  - type: requires_property
+    from: REQ-plugins-manifest-validation
+    to: FACT-PROP-03CC0ADB176473D0
+    created_at: 2026-10-28T05:21:39.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-312c4c102b6b
+  - type: specified_by
+    from: REQ-plugins-manifest-validation
+    to: SCEN-plugins-manifest-invalid-fields
+    created_at: 2026-10-28T05:21:39.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cb22302d434

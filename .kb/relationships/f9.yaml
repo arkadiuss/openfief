@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-522744c091f5
+    type: constrains
+    from: REQ-plugins-egress-host-canonical
+    to: FACT-SUBJECT-08D3C0BC70977580
+    created_at: "2026-10-28T05:21:23.175Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-plugins-egress-host-canonical
+    to: FACT-PROP-452EDB5B88A96DBC
+    created_at: 2026-10-28T05:21:23.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e13b0f67fa6
+  - type: specified_by
+    from: REQ-plugins-egress-host-canonical
+    to: SCEN-plugins-egress-host-canonical
+    created_at: 2026-10-28T05:21:23.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f014cf8cd9f4

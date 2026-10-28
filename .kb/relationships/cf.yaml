@@ -13,3 +13,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03b42eeaf82f
+  - type: implements
+    from: SYM-plugins-check-pair
+    to: REQ-plugins-upgrade-approval-diff
+    created_at: 2026-10-28T05:26:07.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e8d4764b30
+  - type: implements
+    from: SYM-plugins-check-pair
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T05:26:07.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f907956a31a
+  - type: covered_by
+    from: SYM-plugins-check-pair
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:26:07.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-989aa2de7cf0
+  - type: implements
+    from: SYM-plugins-needs-approval
+    to: REQ-plugins-upgrade-approval-diff
+    created_at: 2026-10-28T05:26:09.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38d533614ee6
+  - type: implements
+    from: SYM-plugins-needs-approval
+    to: REQ-AUTO-8EA5542EFA92FFCD
+    created_at: 2026-10-28T05:26:09.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae51b009cb1a
+  - type: covered_by
+    from: SYM-plugins-needs-approval
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:26:09.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc6ec95a8eba

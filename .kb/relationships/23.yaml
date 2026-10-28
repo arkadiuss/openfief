@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T04:51:59.883Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: verified_by
+    from: SCEN-plugins-manifest-invalid-fields
+    to: TEST-plugins-manifest
+    created_at: 2026-10-28T05:21:13.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-183ce6227699
+  - type: verified_by
+    from: SCEN-plugins-manifest-invalid-fields
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:21:13.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55c6a14a8702

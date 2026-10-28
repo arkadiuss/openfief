@@ -6,3 +6,17 @@ relationships:
     created_at: "2026-10-28T04:50:09.521Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-permissions-sorted
+    to: REQ-plugins-manifest-validation
+    created_at: 2026-10-28T05:25:50.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18764abec615
+  - type: covered_by
+    from: SYM-plugins-permissions-sorted
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-10-28T05:25:50.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dafe3ae38532

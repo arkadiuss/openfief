@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-b9e657608b62
+    type: validates
+    from: TEST-plugins-egress-host
+    to: REQ-AUTO-48C62B395F846700
+    created_at: "2026-10-28T05:21:01.375Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

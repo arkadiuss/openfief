@@ -6,3 +6,24 @@ relationships:
     created_at: "2026-10-27T20:35:57.738Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-plugins-egress-host-string
+    to: REQ-plugins-egress-host-canonical
+    created_at: 2026-10-28T05:22:57.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15da755a54e6
+  - type: implements
+    from: SYM-plugins-egress-host-string
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:22:57.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ccbf565bb98
+  - type: covered_by
+    from: SYM-plugins-egress-host-string
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:22:57.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15320086eb63

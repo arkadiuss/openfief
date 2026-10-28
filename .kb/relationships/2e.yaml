@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-dd5b92e07b00
+    type: executable_for
+    from: SYM-plugins-test-grant-validate
+    to: TEST-plugins-plugin-grant
+    created_at: "2026-10-28T05:26:16.869Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

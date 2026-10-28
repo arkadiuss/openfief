@@ -1,0 +1,43 @@
+relationships:
+  - id: rel-abe90542bef7
+    type: constrains
+    from: REQ-plugins-upgrade-approval-diff
+    to: FACT-SUBJECT-CAC9841F468582C6
+    created_at: "2026-10-28T05:21:47.606Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: requires_property
+    from: REQ-plugins-upgrade-approval-diff
+    to: FACT-PROP-D57A63D14D8114F2
+    created_at: 2026-10-28T05:21:47.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04394fef9910
+  - type: specified_by
+    from: REQ-plugins-upgrade-approval-diff
+    to: SCEN-plugins-upgrade-new-egress-host
+    created_at: 2026-10-28T05:21:47.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1f57201c79c
+  - type: implements
+    from: SYM-plugins-egress-host-validate
+    to: REQ-plugins-egress-host-canonical
+    created_at: 2026-10-28T05:23:03.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f41264c7d1c2
+  - type: implements
+    from: SYM-plugins-egress-host-validate
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-10-28T05:23:03.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36c5b3a905b5
+  - type: covered_by
+    from: SYM-plugins-egress-host-validate
+    to: TEST-plugins-egress-host
+    created_at: 2026-10-28T05:23:03.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56e1b1bd08bd
