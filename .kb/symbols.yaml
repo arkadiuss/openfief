@@ -3091,3 +3091,170 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-properties
+  - id: SYM-ledger-balance-assertion
+    title: BalanceAssertion
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:04.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-cash-assertion
+    title: CashAssertion
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:08.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-holding-assertion
+    title: HoldingAssertion
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:12.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-balance-assertion-validate
+    title: BalanceAssertion.Validate
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:15.717Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-assertion-mismatch-error
+    title: AssertionMismatchError
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:17.943Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-assertion-mismatch-error-error
+    title: AssertionMismatchError.Error
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:22.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-check-balance-assertion
+    title: CheckBalanceAssertion
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:25.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-D9FBE33256704D04
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-cash-on
+    title: CashOn
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:28.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-balance-on
+    title: balanceOn
+    sourceFile: internal/ledger/assertion.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:31.005Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-assertion
+      - type: implements
+        target: REQ-AUTO-BE6EA3B9F864EA40
+      - type: implements
+        target: REQ-ledger-assertion-mismatch
+  - id: SYM-ledger-test-check-balance-assertion
+    title: TestCheckBalanceAssertion
+    sourceFile: internal/ledger/assertion_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:33.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-assertion
+  - id: SYM-ledger-test-helper-check-mismatch
+    title: checkMismatch
+    sourceFile: internal/ledger/assertion_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:36.891Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-assertion
+  - id: SYM-ledger-test-cash-on
+    title: TestCashOn
+    sourceFile: internal/ledger/assertion_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T05:44:39.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-assertion

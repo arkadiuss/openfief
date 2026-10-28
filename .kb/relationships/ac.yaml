@@ -20,3 +20,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d82bbc00fd25
+  - type: implements
+    from: SYM-ledger-holding-assertion
+    to: REQ-ledger-assertion-mismatch
+    created_at: 2026-10-28T05:44:12.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cab33abea8d
+  - type: implements
+    from: SYM-ledger-holding-assertion
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T05:44:12.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5f56165d30c
+  - type: covered_by
+    from: SYM-ledger-holding-assertion
+    to: TEST-ledger-assertion
+    created_at: 2026-10-28T05:44:12.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-617b44a697c6

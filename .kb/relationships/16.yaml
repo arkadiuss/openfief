@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d9ac92ccf18
+  - type: implements
+    from: SYM-ledger-assertion-mismatch-error
+    to: REQ-ledger-assertion-mismatch
+    created_at: 2026-10-28T05:44:18.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-504d335bc930
+  - type: implements
+    from: SYM-ledger-assertion-mismatch-error
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T05:44:18.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7574110d2a19
+  - type: covered_by
+    from: SYM-ledger-assertion-mismatch-error
+    to: TEST-ledger-assertion
+    created_at: 2026-10-28T05:44:18.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1782f763819

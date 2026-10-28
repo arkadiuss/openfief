@@ -10,7 +10,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
-// holdingLog is a synthetic log: an opening lot of A, a buy of A corrected
+// holdingLog is a synthetic log: a deposit, an opening lot of A, a buy of A corrected
 // from 10 to 12 units, a sale of A, a dividend on A, a buy and full sale of
 // B, and a buy of A in another account.
 func holdingLog(t *testing.T) []ledger.VersionedTransaction {
@@ -23,6 +23,7 @@ func holdingLog(t *testing.T) []ledger.VersionedTransaction {
 		return ledger.VersionedTransaction{Transaction: tx, Version: n}
 	}
 	return []ledger.VersionedTransaction{
+		v(must(t)(ledger.NewDeposit(header(t, "c-1", "2026-03-01"), money(t, "2000", "USD"))), 1),
 		v(must(t)(ledger.NewOpeningLot(header(t, "o-1", "2026-03-01"), a, qty(t, "3"), money(t, "100", "USD"), date(t, "2019-05-17"))), 1),
 		v(must(t)(ledger.NewBuy(header(t, "b-1", "2026-03-02"), a, qty(t, "10"), money(t, "1000", "USD"), none)), 1),
 		v(must(t)(ledger.NewBuy(header(t, "b-1", "2026-03-02"), a, qty(t, "12"), money(t, "1200", "USD"), none)), 2),

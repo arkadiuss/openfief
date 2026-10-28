@@ -27,3 +27,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a946a87c038
+  - type: implements
+    from: SYM-ledger-balance-assertion-validate
+    to: REQ-ledger-assertion-mismatch
+    created_at: 2026-10-28T05:44:16.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f284048fcbf
+  - type: implements
+    from: SYM-ledger-balance-assertion-validate
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T05:44:16.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91517ca45743
+  - type: covered_by
+    from: SYM-ledger-balance-assertion-validate
+    to: TEST-ledger-assertion
+    created_at: 2026-10-28T05:44:16.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fe362724c19

@@ -34,3 +34,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-370a26558388
+  - type: implements
+    from: SYM-ledger-cash-assertion
+    to: REQ-ledger-assertion-mismatch
+    created_at: 2026-10-28T05:44:09.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81a64484ef44
+  - type: implements
+    from: SYM-ledger-cash-assertion
+    to: REQ-AUTO-D9FBE33256704D04
+    created_at: 2026-10-28T05:44:09.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02ba2e8ee20c
+  - type: covered_by
+    from: SYM-ledger-cash-assertion
+    to: TEST-ledger-assertion
+    created_at: 2026-10-28T05:44:09.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b574f2fb544b

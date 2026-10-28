@@ -19,19 +19,11 @@ type Holding struct {
 // on: the sum of the holding postings of the current versions of account's
 // transactions dated on or before on.
 func HoldingOn(log []VersionedTransaction, account AccountID, in Instrument, on kernel.Date) (Holding, error) {
-	txs, err := currentInAccount(log, account, on)
+	units, err := balanceOn(log, account, HoldingBook(in), on)
 	if err != nil {
 		return Holding{}, err
 	}
-	h := Holding{Account: account, Instrument: in, Date: on}
-	for i := range txs {
-		for j := range txs[i].Postings {
-			if p := &txs[i].Postings[j]; p.Book == HoldingBook(in) {
-				h.Quantity = h.Quantity.Add(p.Quantity)
-			}
-		}
-	}
-	return h, nil
+	return Holding{Account: account, Instrument: in, Date: on, Quantity: kernel.NewQuantity(units)}, nil
 }
 
 // HoldingsOn returns every non-zero holding in account at the end of on,
