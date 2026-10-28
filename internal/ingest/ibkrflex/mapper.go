@@ -63,11 +63,10 @@ func booked(t *ledger.Transaction, err error, desc string) (ledger.Transaction, 
 // problemOf turns a row's mapping error into an ingest problem. Ledger
 // errors are reduced to their kind, since they can carry amounts.
 func problemOf(ref string, err error) ingest.Problem {
-	var pe *problemError
-	switch {
-	case errors.As(err, &pe):
+	if pe, ok := errors.AsType[*problemError](err); ok {
 		return ingest.Problem{Kind: pe.kind, Ref: ref, Reason: pe.reason}
-	case errors.Is(err, errField):
+	}
+	if errors.Is(err, errField) {
 		return ingest.Unsupported(ref, err.Error())
 	}
 	return ingest.Unsupported(ref, errLedger.Error())

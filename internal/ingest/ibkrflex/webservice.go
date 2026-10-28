@@ -163,8 +163,7 @@ func (c *Client) get(ctx context.Context, endpoint, q string, limit int64) ([]by
 	req.Header.Set("User-Agent", userAgent)
 	resp, err := c.HTTP.Do(req)
 	if err != nil {
-		var ue *url.Error
-		if errors.As(err, &ue) {
+		if ue, ok := errors.AsType[*url.Error](err); ok {
 			err = ue.Err
 		}
 		return nil, fmt.Errorf("%w: %s %s: %w", ErrFlexService, http.MethodGet, u.Path, err)
