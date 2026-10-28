@@ -2,6 +2,7 @@
   "name": "openfief-devtools",
   "private": true,
   "description": "Developer tooling only (kibi requirements layer). Not part of the OpenFief product.",
+  "license": "AGPL-3.0-or-later",
   "engines": {
     "node": ">=22"
   },

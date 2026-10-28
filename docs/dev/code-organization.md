@@ -26,8 +26,8 @@ internal/<context>/      domain: types and pure functions (package <context>)
 internal/<context>/app/  use cases; ports (interfaces) declared here, by the consumer
 internal/<context>/<adapter>/   postgres, connectapi, nbp, ibkrflex, ...
 internal/kernel/         shared kernel: money, currency, quantity, date. Pure.
-proto/openfief/<context>/v1/    contracts (Apache-2.0, D-5)
-sdk/go/, sdk/ts/         plugin SDKs (Apache-2.0, separate modules)
+proto/openfief/<context>/v1/    contracts (Apache-2.0, own LICENSE file, D-5)
+sdk/go/, sdk/ts/         plugin SDKs (Apache-2.0, own LICENSE file, separate modules)
 plugins/<name>/          first-party plugins, built on the SDK
 deploy/                  CRDs, bootstrap chart
 test/e2e/                end-to-end suites (local k3s)

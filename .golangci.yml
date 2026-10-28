@@ -15,7 +15,7 @@ linters:
     - lll             # line length is left to the formatter and review
     - noinlineerr     # `if err := f(); err != nil` is idiomatic Go
     - testpackage     # table tests of pure functions may live in the same package
-    - goheader        # no header policy yet: the SPDX identifier waits for the license swap (D-5)
+    - goheader        # no per-file license headers: LICENSE and each Apache-2.0 directory's own license file define the terms
 
   settings:
     depguard:

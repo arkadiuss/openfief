@@ -19,4 +19,8 @@ Self-hosted portfolio tracker and orchestrator for AI investment agents. Each ag
 
 Install [Task](https://taskfile.dev), run `task setup`, then `task check`. Coding agents start at [AGENTS.md](AGENTS.md); the rules live in [docs/dev/](docs/dev/).
 
+## License
+
+The core is licensed under the [GNU AGPL v3 or later](LICENSE). Plugin contracts and SDKs are Apache-2.0, with their own license file in their directories. Contributions need a [DCO](https://developercertificate.org/) sign-off (`git commit -s`).
+
 > Not investment advice. You run OpenFief on your own accounts, at your own risk.
