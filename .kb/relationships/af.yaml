@@ -27,3 +27,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-154aad90160c
+  - type: implements
+    from: SYM-kernel-parse-money
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:14.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a398663f82ff
+  - type: covered_by
+    from: SYM-kernel-parse-money
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:14.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3cb1ed733f2

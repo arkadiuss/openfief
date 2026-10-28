@@ -1,0 +1,22 @@
+relationships:
+  - type: implements
+    from: SYM-kernel-money-round
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:30.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a30e109b1bde
+  - type: implements
+    from: SYM-kernel-money-round
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:51:30.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91d4a6c1f66c
+  - type: covered_by
+    from: SYM-kernel-money-round
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:30.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6efb881524f8

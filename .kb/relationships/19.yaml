@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-26db568bf15d
+    type: implements
+    from: SYM-kernel-currency
+    to: REQ-kernel-currency-code
+    created_at: "2026-10-28T04:49:23.831Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-currency
+    to: TEST-kernel-currency
+    created_at: 2026-10-28T04:49:23.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-063a2ccc361d

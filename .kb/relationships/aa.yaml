@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-27ff80134a61
+    type: executable_for
+    from: SYM-kernel-test-decimal-compare
+    to: TEST-kernel-decimal
+    created_at: "2026-10-28T04:50:55.077Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: executable_for
+    from: SYM-kernel-test-money-rejects-bad-input
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:59.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22a175a5b578
+  - type: implements
+    from: SYM-kernel-parse-quantity
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:52:06.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ac55e8285db
+  - type: covered_by
+    from: SYM-kernel-parse-quantity
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:06.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bef02a2e57cc

@@ -13,3 +13,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ea8f666543a
+  - type: implements
+    from: SYM-kernel-currency-is-zero
+    to: REQ-kernel-currency-code
+    created_at: 2026-10-28T04:49:29.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0c17ee41c6b
+  - type: covered_by
+    from: SYM-kernel-currency-is-zero
+    to: TEST-kernel-currency
+    created_at: 2026-10-28T04:49:29.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-789bfd28ccf4
+  - type: implements
+    from: SYM-kernel-decimal-neg
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:50:32.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e010b81a8bb
+  - type: covered_by
+    from: SYM-kernel-decimal-neg
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T04:50:32.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb5147c50308

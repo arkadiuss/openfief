@@ -1,0 +1,21 @@
+relationships:
+  [
+    {
+        type: implements,
+        from: SYM-kernel-quantity,
+        to: REQ-kernel-decimal-exact,
+        created_at: 2026-10-28T04:59:56.565Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-dad26d32f166
+      },
+    {
+        type: covered_by,
+        from: SYM-kernel-quantity,
+        to: TEST-kernel-quantity,
+        created_at: 2026-10-28T04:59:56.573Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-7552a1844999
+      }
+  ]

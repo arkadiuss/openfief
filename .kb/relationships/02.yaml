@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f3e60af7ed6
+  - type: implements
+    from: SYM-kernel-parse-decimal
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:50:22.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc5a2ca67c92
+  - type: covered_by
+    from: SYM-kernel-parse-decimal
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T04:50:22.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90813a6e6ca8

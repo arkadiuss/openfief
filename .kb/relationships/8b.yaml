@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-efe36403e1b4
+    type: validates
+    from: TEST-kernel-money
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: "2026-10-28T04:48:15.495Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

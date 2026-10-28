@@ -1,0 +1,22 @@
+relationships:
+  - id: rel-931aa510bc8c
+    type: implements
+    from: SYM-kernel-currency-mismatch-error
+    to: REQ-kernel-money-currency-mismatch
+    created_at: "2026-10-28T04:51:06.027Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: implements
+    from: SYM-kernel-currency-mismatch-error
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:06.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-131b9633010c
+  - type: covered_by
+    from: SYM-kernel-currency-mismatch-error
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:06.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0bbae866c2c

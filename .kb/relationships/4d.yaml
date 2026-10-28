@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-3e4f2a92b802
+    type: executable_for
+    from: SYM-kernel-test-helper-cur
+    to: TEST-kernel-money
+    created_at: "2026-10-28T04:50:58.653Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert

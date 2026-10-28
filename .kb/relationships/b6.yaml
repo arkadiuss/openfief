@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-8682b23fc5cc
+    type: implements
+    from: SYM-kernel-decimal-mul
+    to: REQ-kernel-decimal-exact
+    created_at: "2026-10-28T04:50:34.369Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-decimal-mul
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T04:50:34.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c7fb7a36a0d

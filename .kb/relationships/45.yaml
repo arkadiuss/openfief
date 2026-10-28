@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bef836ad255
+  - type: verified_by
+    from: SCEN-kernel-decimal-exact
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T04:48:27.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-898fccb56be7
+  - type: verified_by
+    from: SCEN-kernel-decimal-exact
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:48:27.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1abef1ea1ee9
+  - type: verified_by
+    from: SCEN-kernel-decimal-exact
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:48:27.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8b8565aa3ea

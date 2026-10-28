@@ -1,0 +1,15 @@
+relationships:
+  - id: rel-20e04037c6c4
+    type: implements
+    from: SYM-kernel-date-is-zero
+    to: REQ-kernel-calendar-date
+    created_at: "2026-10-28T04:50:01.566Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-date-is-zero
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:50:01.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e59ba445fbd

@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-fda227a9cbfe
+    type: implements
+    from: SYM-kernel-decimal-equal
+    to: REQ-kernel-decimal-exact
+    created_at: "2026-10-28T04:50:40.935Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-decimal-equal
+    to: TEST-kernel-decimal
+    created_at: 2026-10-28T04:50:40.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-163d12674130
+  - type: implements
+    from: SYM-kernel-quantity-add
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:52:10.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbe46af39324
+  - type: covered_by
+    from: SYM-kernel-quantity-add
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:10.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-893d0fe95aab

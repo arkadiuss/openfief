@@ -13,3 +13,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2d1055cab92
+  - type: constrains
+    from: REQ-kernel-money-currency-mismatch
+    to: FACT-SUBJECT-3372881DDFB29A8D
+    created_at: 2026-10-28T04:48:38.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c34ffce6390
+  - type: requires_property
+    from: REQ-kernel-money-currency-mismatch
+    to: FACT-PROP-EF1AD7F1969362F3
+    created_at: 2026-10-28T04:48:38.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7ea4fffd82f
+  - type: specified_by
+    from: REQ-kernel-money-currency-mismatch
+    to: SCEN-kernel-money-mixed-currencies
+    created_at: 2026-10-28T04:48:38.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-091761c8fc69

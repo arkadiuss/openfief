@@ -1,0 +1,15 @@
+relationships:
+  - type: implements
+    from: SYM-kernel-money-neg
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:25.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21b6a7831d25
+  - type: covered_by
+    from: SYM-kernel-money-neg
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:25.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d9ac92ccf18

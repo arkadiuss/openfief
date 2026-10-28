@@ -1,0 +1,43 @@
+relationships:
+  - id: rel-a6b547878bc6
+    type: implements
+    from: SYM-kernel-date-days-until
+    to: REQ-kernel-calendar-date
+    created_at: "2026-10-28T04:49:50.784Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-date-days-until
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:49:50.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fbd363d72ac
+  - type: implements
+    from: SYM-kernel-money-same-currency
+    to: REQ-kernel-money-currency-mismatch
+    created_at: 2026-10-28T04:51:45.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e99207d7424
+  - type: implements
+    from: SYM-kernel-money-same-currency
+    to: REQ-AUTO-5CB834BAA25E2C4C
+    created_at: 2026-10-28T04:51:45.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f545c16ab9e3
+  - type: covered_by
+    from: SYM-kernel-money-same-currency
+    to: TEST-kernel-money
+    created_at: 2026-10-28T04:51:45.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec5887b4863a
+  - type: executable_for
+    from: SYM-kernel-test-quantity-compare
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:28.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aad56077221

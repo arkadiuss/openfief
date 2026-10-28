@@ -64,3 +64,1126 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-docs-check
+  - id: SYM-kernel-currency
+    title: Currency
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:23.792Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-parse-currency
+    title: ParseCurrency
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:25.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-currency-equal
+    title: Currency.Equal
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:27.943Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-currency-is-zero
+    title: Currency.IsZero
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:29.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-currency-string
+    title: Currency.String
+    sourceFile: internal/kernel/currency.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:31.980Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-currency
+      - type: implements
+        target: REQ-kernel-currency-code
+  - id: SYM-kernel-test-parse-currency
+    title: TestParseCurrency
+    sourceFile: internal/kernel/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:33.607Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-currency
+  - id: SYM-kernel-date
+    title: Date
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:35.614Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-new-date
+    title: NewDate
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:37.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-parse-date
+    title: ParseDate
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:39.810Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-year
+    title: Date.Year
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:41.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-month
+    title: Date.Month
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:44.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-day
+    title: Date.Day
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:46.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-add-days
+    title: Date.AddDays
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:48.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-days-until
+    title: Date.DaysUntil
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:50.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-compare
+    title: Date.Compare
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:52.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-before
+    title: Date.Before
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:55.065Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-after
+    title: Date.After
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:57.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-equal
+    title: Date.Equal
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:49:59.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-is-zero
+    title: Date.IsZero
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:01.487Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-string
+    title: Date.String
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:03.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-midnight
+    title: Date.midnight
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:05.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-date-of
+    title: dateOf
+    sourceFile: internal/kernel/date.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:07.807Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-date
+      - type: implements
+        target: REQ-kernel-calendar-date
+  - id: SYM-kernel-test-parse-date
+    title: TestParseDate
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:09.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-test-new-date
+    title: TestNewDate
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:11.059Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-test-date-arithmetic
+    title: TestDateArithmetic
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:12.724Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-test-date-compare
+    title: TestDateCompare
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:14.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-test-date-zero-value
+    title: TestDateZeroValue
+    sourceFile: internal/kernel/date_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:16.043Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-rounding-mode
+    title: RoundingMode
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:18.223Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal
+    title: Decimal
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:20.296Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-parse-decimal
+    title: ParseDecimal
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:22.665Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-new-decimal
+    title: NewDecimal
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:24.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-add
+    title: Decimal.Add
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:27.389Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-sub
+    title: Decimal.Sub
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:29.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-neg
+    title: Decimal.Neg
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:32.153Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-mul
+    title: Decimal.Mul
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:34.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-round
+    title: Decimal.Round
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:36.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-cmp
+    title: Decimal.Cmp
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:38.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-equal
+    title: Decimal.Equal
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:40.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-sign
+    title: Decimal.Sign
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:42.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-is-zero
+    title: Decimal.IsZero
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:44.984Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-decimal-string
+    title: Decimal.String
+    sourceFile: internal/kernel/decimal.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:47.376Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-decimal
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-test-parse-decimal
+    title: TestParseDecimal
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:49.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-kernel-test-decimal-arithmetic-is-exact
+    title: TestDecimalArithmeticIsExact
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:51.365Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-kernel-test-decimal-round
+    title: TestDecimalRound
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:53.179Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-kernel-test-decimal-compare
+    title: TestDecimalCompare
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:54.994Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-kernel-test-helper-dec
+    title: dec
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:56.951Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+      - type: executable_for
+        target: TEST-kernel-money
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-test-helper-cur
+    title: cur
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:50:58.593Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-helper-money
+    title: money
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:00.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-helper-qty
+    title: qty
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:01.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-test-helper-date
+    title: date
+    sourceFile: internal/kernel/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:03.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-date
+  - id: SYM-kernel-currency-mismatch-error
+    title: CurrencyMismatchError
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:05.948Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-currency-mismatch-error-error
+    title: CurrencyMismatchError.Error
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:08.046Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-money
+    title: Money
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:10.062Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-new-money
+    title: NewMoney
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:12.108Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-parse-money
+    title: ParseMoney
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:14.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-amount
+    title: Money.Amount
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:16.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-currency
+    title: Money.Currency
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:18.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-add
+    title: Money.Add
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:21.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-money-sub
+    title: Money.Sub
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:23.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-money-neg
+    title: Money.Neg
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:25.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-mul
+    title: Money.Mul
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:28.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-money-round
+    title: Money.Round
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:30.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-money-cmp
+    title: Money.Cmp
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:32.991Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-money-equal
+    title: Money.Equal
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:35.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-sign
+    title: Money.Sign
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:37.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-is-zero
+    title: Money.IsZero
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:40.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-string
+    title: Money.String
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:42.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+  - id: SYM-kernel-money-same-currency
+    title: Money.sameCurrency
+    sourceFile: internal/kernel/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:45.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-money
+      - type: implements
+        target: REQ-AUTO-5CB834BAA25E2C4C
+      - type: implements
+        target: REQ-kernel-money-currency-mismatch
+  - id: SYM-kernel-test-money-arithmetic-in-one-currency
+    title: TestMoneyArithmeticInOneCurrency
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:47.371Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-mul-and-round
+    title: TestMoneyMulAndRound
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:49.311Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-never-mixes-currencies
+    title: TestMoneyNeverMixesCurrencies
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:51.394Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-keeps-original-currency
+    title: TestMoneyKeepsOriginalCurrency
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:53.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-compare
+    title: TestMoneyCompare
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:55.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-equal-needs-same-currency
+    title: TestMoneyEqualNeedsSameCurrency
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:57.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-test-money-rejects-bad-input
+    title: TestMoneyRejectsBadInput
+    sourceFile: internal/kernel/money_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:51:59.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-money
+  - id: SYM-kernel-new-quantity
+    title: NewQuantity
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:03.975Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-parse-quantity
+    title: ParseQuantity
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:06.373Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-decimal
+    title: Quantity.Decimal
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:08.680Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-add
+    title: Quantity.Add
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:10.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-sub
+    title: Quantity.Sub
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:12.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-neg
+    title: Quantity.Neg
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:14.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-cmp
+    title: Quantity.Cmp
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:16.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-equal
+    title: Quantity.Equal
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:19.115Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-sign
+    title: Quantity.Sign
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:21.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-is-zero
+    title: Quantity.IsZero
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:23.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-quantity-string
+    title: Quantity.String
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:25.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact
+  - id: SYM-kernel-test-quantity-arithmetic
+    title: TestQuantityArithmetic
+    sourceFile: internal/kernel/quantity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:26.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-test-quantity-compare
+    title: TestQuantityCompare
+    sourceFile: internal/kernel/quantity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:28.303Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-test-parse-quantity
+    title: TestParseQuantity
+    sourceFile: internal/kernel/quantity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:52:29.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-quantity
+  - id: SYM-kernel-quantity
+    title: Quantity
+    sourceFile: internal/kernel/quantity.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T04:59:56.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-quantity
+      - type: implements
+        target: REQ-kernel-decimal-exact

@@ -1,0 +1,29 @@
+relationships:
+  - id: rel-cedb5d800340
+    type: implements
+    from: SYM-kernel-date-day
+    to: REQ-kernel-calendar-date
+    created_at: "2026-10-28T04:49:46.331Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+  - type: covered_by
+    from: SYM-kernel-date-day
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:49:46.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e5838f93111
+  - type: implements
+    from: SYM-kernel-new-quantity
+    to: REQ-kernel-decimal-exact
+    created_at: 2026-10-28T04:52:04.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f85eafc76e3
+  - type: covered_by
+    from: SYM-kernel-new-quantity
+    to: TEST-kernel-quantity
+    created_at: 2026-10-28T04:52:04.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfa3c924effa

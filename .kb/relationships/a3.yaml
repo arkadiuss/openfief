@@ -13,3 +13,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe3d9b817ede
+  - type: implements
+    from: SYM-kernel-parse-date
+    to: REQ-kernel-calendar-date
+    created_at: 2026-10-28T04:49:39.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54a146d7a461
+  - type: covered_by
+    from: SYM-kernel-parse-date
+    to: TEST-kernel-date
+    created_at: 2026-10-28T04:49:39.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0029ad2b9e83

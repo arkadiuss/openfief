@@ -1,0 +1,8 @@
+relationships:
+  - id: rel-c0dee9c14cf6
+    type: executable_for
+    from: SYM-kernel-test-parse-currency
+    to: TEST-kernel-currency
+    created_at: "2026-10-28T04:49:33.640Z"
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
