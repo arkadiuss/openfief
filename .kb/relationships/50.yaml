@@ -62,3 +62,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-657cae1edc6f
+  - type: constrains
+    from: REQ-plugins-egress-proxy-connect-only-allow-list
+    to: FACT-SUBJECT-A197B520E58C9AE3
+    created_at: 2026-10-28T06:10:24.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96f81a3411fc
+  - type: requires_property
+    from: REQ-plugins-egress-proxy-connect-only-allow-list
+    to: FACT-PROP-1B15FB9C56FD3469
+    created_at: 2026-10-28T06:10:24.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca35e520dc26
+  - type: specified_by
+    from: REQ-plugins-egress-proxy-connect-only-allow-list
+    to: SCEN-plugins-egress-proxy-connect-only
+    created_at: 2026-10-28T06:10:24.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2c8cf9bd4d0

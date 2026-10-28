@@ -83,3 +83,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a797da1905bd
+  - type: executable_for
+    from: SYM-plugins-kube-test-watch-allow-lists-without-config-map
+    to: TEST-plugins-kube
+    created_at: 2026-10-28T06:12:51.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e517230ed245

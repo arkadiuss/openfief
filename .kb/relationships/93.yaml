@@ -27,3 +27,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b04f241a5af4
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-fn-dial-log
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T06:14:48.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-138982f8bebc

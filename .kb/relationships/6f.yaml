@@ -27,3 +27,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5e785a744b3
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-fn-fake-lists-allow-list
+    to: TEST-plugins-smokescreen-proxy
+    created_at: 2026-10-28T06:14:38.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ebfe8830c4

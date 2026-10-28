@@ -185,8 +185,7 @@ func applyDisposals(lots []Lot, txs []Transaction, in Instrument) ([]Lot, error)
 				continue
 			}
 			taken, err := ConsumeFIFO(lots, p.Quantity.Neg())
-			var oversell *OversellError
-			if errors.As(err, &oversell) {
+			if oversell, ok := errors.AsType[*OversellError](err); ok {
 				oversell.Account, oversell.Instrument, oversell.Date, oversell.Disposal = t.Account, in, t.Date, t.Key
 				return nil, oversell
 			}

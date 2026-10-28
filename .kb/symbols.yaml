@@ -5291,16 +5291,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ledger-transaction
-  - id: SYM-ledger-test-helper-ptr
-    title: ptr
-    sourceFile: internal/ledger/transaction_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:28:10.897Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-transaction
   - id: SYM-ledger-test-helper-must
     title: must
     sourceFile: internal/ledger/helpers_test.go
@@ -6558,3 +6548,1004 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-pl-official
+  - id: SYM-plugins-encode-allow-lists
+    title: EncodeAllowLists
+    sourceFile: internal/plugins/allowlist_codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:00.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list-codec
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-configmap-format
+  - id: SYM-plugins-decode-allow-lists
+    title: DecodeAllowLists
+    sourceFile: internal/plugins/allowlist_codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:04.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list-codec
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-configmap-format
+  - id: SYM-plugins-fn-decode-hosts
+    title: decodeHosts
+    sourceFile: internal/plugins/allowlist_codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:08.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-allow-list-codec
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-allow-list-configmap-format
+  - id: SYM-plugins-test-encode-allow-lists
+    title: TestEncodeAllowLists
+    sourceFile: internal/plugins/allowlist_codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:11.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list-codec
+  - id: SYM-plugins-test-decode-allow-lists
+    title: TestDecodeAllowLists
+    sourceFile: internal/plugins/allowlist_codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:15.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list-codec
+  - id: SYM-plugins-test-allow-lists-round-trip
+    title: TestAllowListsRoundTrip
+    sourceFile: internal/plugins/allowlist_codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:18.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list-codec
+  - id: SYM-plugins-fn-codec-error
+    title: codecError
+    sourceFile: internal/plugins/allowlist_codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:07:21.708Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-allow-list-codec
+  - id: SYM-egress-proxy-cmd-fn-main
+    title: main
+    sourceFile: cmd/egress-proxy/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:19.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-egress-proxy-cmd-fn-run
+    title: run
+    sourceFile: cmd/egress-proxy/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:22.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-allow-lists-fail-closed
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-plugins-app-token-reviewer
+    title: TokenReviewer
+    sourceFile: internal/plugins/app/egress.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:25.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-egress
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-app-allow-list-source
+    title: AllowListSource
+    sourceFile: internal/plugins/app/egress.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:30.213Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-egress
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-plugins-app-egress-decision
+    title: EgressDecision
+    sourceFile: internal/plugins/app/egress.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:34.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-egress
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-plugins-app-egress
+    title: Egress
+    sourceFile: internal/plugins/app/egress.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:36.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-egress
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-app-new-egress
+    title: NewEgress
+    sourceFile: internal/plugins/app/egress.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:40.136Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-egress
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-app-egress-identify
+    title: Egress.Identify
+    sourceFile: internal/plugins/app/egress.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:44.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-egress
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-app-egress-decide
+    title: Egress.Decide
+    sourceFile: internal/plugins/app/egress.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:48.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-egress
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-plugins-app-test-fn-fake-reviewer
+    title: fakeReviewer
+    sourceFile: internal/plugins/app/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:52.970Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-egress
+  - id: SYM-plugins-app-test-fn-fake-reviewer-review-token
+    title: fakeReviewer.ReviewToken
+    sourceFile: internal/plugins/app/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:56.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-egress
+  - id: SYM-plugins-app-test-fn-fake-lists
+    title: fakeLists
+    sourceFile: internal/plugins/app/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:11:59.927Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-egress
+  - id: SYM-plugins-app-test-fn-fake-lists-allow-list
+    title: fakeLists.AllowList
+    sourceFile: internal/plugins/app/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:03.442Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-egress
+  - id: SYM-plugins-app-test-fn-new-egress
+    title: newEgress
+    sourceFile: internal/plugins/app/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:06.279Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-egress
+  - id: SYM-plugins-app-test-egress-identify
+    title: TestEgressIdentify
+    sourceFile: internal/plugins/app/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:09.194Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-egress
+  - id: SYM-plugins-app-test-egress-decide
+    title: TestEgressDecide
+    sourceFile: internal/plugins/app/egress_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:11.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-egress
+  - id: SYM-plugins-kube-allow-lists
+    title: AllowLists
+    sourceFile: internal/plugins/kube/allowlists.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:13.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-allow-lists-fail-closed
+  - id: SYM-plugins-kube-watch-allow-lists
+    title: WatchAllowLists
+    sourceFile: internal/plugins/kube/allowlists.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:16.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-allow-lists-fail-closed
+  - id: SYM-plugins-kube-allow-lists-allow-list
+    title: AllowLists.AllowList
+    sourceFile: internal/plugins/kube/allowlists.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:18.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-allow-lists-fail-closed
+  - id: SYM-plugins-kube-allow-lists-update
+    title: AllowLists.update
+    sourceFile: internal/plugins/kube/allowlists.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:21.261Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-allow-lists-fail-closed
+  - id: SYM-plugins-kube-allow-lists-remove
+    title: AllowLists.remove
+    sourceFile: internal/plugins/kube/allowlists.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:23.666Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube
+      - type: implements
+        target: REQ-AUTO-48C62B395F846700
+      - type: implements
+        target: REQ-plugins-egress-allow-lists-fail-closed
+  - id: SYM-plugins-kube-test-fn-review-client
+    title: reviewClient
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:26.391Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-token-reviewer-review-token
+    title: TestTokenReviewerReviewToken
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:29.473Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-fn-allow-list-map
+    title: allowListMap
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:32.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-fn-error-log
+    title: errorLog
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:35.582Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-fn-error-log-report
+    title: errorLog.report
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:37.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-fn-error-log-count
+    title: errorLog.count
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:40.594Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-fn-wait-for
+    title: waitFor
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:43.185Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-fn-allows
+    title: allows
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:46.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-watch-allow-lists-follows-config-map
+    title: TestWatchAllowListsFollowsConfigMap
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:48.581Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-watch-allow-lists-without-config-map
+    title: TestWatchAllowListsWithoutConfigMap
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:50.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-test-watch-allow-lists-not-synced
+    title: TestWatchAllowListsNotSynced
+    sourceFile: internal/plugins/kube/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:54.179Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube
+  - id: SYM-plugins-kube-token-reviewer
+    title: TokenReviewer
+    sourceFile: internal/plugins/kube/tokenreview.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:12:57.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-kube-new-token-reviewer
+    title: NewTokenReviewer
+    sourceFile: internal/plugins/kube/tokenreview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:03.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-kube-token-reviewer-review-token
+    title: TokenReviewer.ReviewToken
+    sourceFile: internal/plugins/kube/tokenreview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:09.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube
+      - type: implements
+        target: REQ-AUTO-C6544ADAF8F5AE65
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-smokescreen-options
+    title: Options
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:14.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-plugins-smokescreen-new-config
+    title: NewConfig
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:21.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-smokescreen-fn-identify
+    title: identify
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:28.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-smokescreen-fn-bearer-token
+    title: bearerToken
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:35.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-15828B9727AFA488
+      - type: implements
+        target: REQ-plugins-egress-proxy-identifies-plugin
+  - id: SYM-plugins-smokescreen-fn-decider
+    title: decider
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:39.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-plugins-smokescreen-fn-decider-decide
+    title: decider.Decide
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:45.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-plugins-smokescreen-fn-connect-port
+    title: connectPort
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:50.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-8CBFBD6A12E0865B
+      - type: implements
+        target: REQ-plugins-egress-proxy-connect-only-allow-list
+  - id: SYM-plugins-smokescreen-fn-forbidden-ranges
+    title: forbiddenRanges
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:13:56.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-fn-checking-resolver
+    title: checkingResolver
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:00.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-fn-checking-resolver-lookup-port
+    title: checkingResolver.LookupPort
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:05.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-fn-checking-resolver-lookup-ip
+    title: checkingResolver.LookupIP
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:09.317Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-fn-forbidden-error
+    title: forbiddenError
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:12.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-fn-forbidden-error-error
+    title: forbiddenError.Error
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:16.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-fn-forbidden-error-unwrap
+    title: forbiddenError.Unwrap
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:19.066Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-fn-forbidden-error-timeout
+    title: forbiddenError.Timeout
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:22.100Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-fn-forbidden-error-temporary
+    title: forbiddenError.Temporary
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:25.629Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-proxy
+      - type: implements
+        target: REQ-plugins-egress-proxy-checks-every-address
+  - id: SYM-plugins-smokescreen-test-fn-fake-reviewer
+    title: fakeReviewer
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:28.962Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-fake-reviewer-review-token
+    title: fakeReviewer.ReviewToken
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:32.439Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-fake-lists
+    title: fakeLists
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:35.937Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-fake-lists-allow-list
+    title: fakeLists.AllowList
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:38.375Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-fake-resolver
+    title: fakeResolver
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:40.769Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-fake-resolver-lookup-port
+    title: fakeResolver.LookupPort
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:43.235Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-fake-resolver-lookup-ip
+    title: fakeResolver.LookupIP
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:45.558Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-dial-log
+    title: dialLog
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:48.109Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-dial-log-add
+    title: dialLog.add
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:50.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-dial-log-all
+    title: dialLog.all
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:53.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-proxy-fixture
+    title: proxyFixture
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:14:58.309Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-start-proxy
+    title: startProxy
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:03.430Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-listen
+    title: listen
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:07.485Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-close-or-fail
+    title: closeOrFail
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:10.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-outcome
+    title: outcome
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:14.794Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-proxy-fixture-connect
+    title: proxyFixture.connect
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:19.335Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-proxy-fixture-proxy-request
+    title: proxyFixture.proxyRequest
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:24.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-proxy-fixture-get-through-tunnel
+    title: proxyFixture.getThroughTunnel
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:28.915Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-connect
+    title: TestProxyConnect
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:31.874Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-dials-only-checked-addresses
+    title: TestProxyDialsOnlyCheckedAddresses
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:34.277Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-main
+    title: TestMain
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:38.066Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-new-config-refuses-proxy-environment
+    title: TestNewConfigRefusesProxyEnvironment
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:42.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-new-config-needs-listener
+    title: TestNewConfigNeedsListener
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T06:15:45.522Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy

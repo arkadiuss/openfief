@@ -48,3 +48,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6609d09d3bd4
+  - type: executable_for
+    from: SYM-plugins-app-test-egress-identify
+    to: TEST-plugins-app-egress
+    created_at: 2026-10-28T06:12:09.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96bbc12f9b9a

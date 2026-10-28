@@ -111,3 +111,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f2c92f5c54d
+  - type: executable_for
+    from: SYM-plugins-test-allow-lists-round-trip
+    to: TEST-plugins-allow-list-codec
+    created_at: 2026-10-28T06:07:19.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c583bbc2361
