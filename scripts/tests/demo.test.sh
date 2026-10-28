@@ -137,14 +137,16 @@ check "SSH from the given CIDRs, HTTP(S) from anywhere by default" "$(yes_if goj
   {"direction":"in","protocol":"tcp","port":"22","source_ips":["203.0.113.7/32","2001:db8::/64"],"description":"ssh (DEMO_SSH_CIDRS)"},
   {"direction":"in","protocol":"tcp","port":"80","source_ips":["0.0.0.0/0","::/0"],"description":"http (DEMO_HTTP_CIDRS)"},
   {"direction":"in","protocol":"tcp","port":"443","source_ips":["0.0.0.0/0","::/0"],"description":"https (DEMO_HTTP_CIDRS)"}]' "$work/state/rules.json")"
-check "up prints the sslip.io URL" "$(yes_if grep -q 'demo URL: https://192-0-2-10.sslip.io (TLS from Let.s Encrypt prod' "$work/out")"
+check "up prints the demo.openfief.dev URL by default" "$(yes_if grep -q 'demo URL: https://demo.openfief.dev (TLS from Let.s Encrypt prod' "$work/out")"
+check "up names the A record the domain needs" "$(yes_if grep -q 'DNS: demo.openfief.dev needs an A record to 192.0.2.10, not proxied' "$work/out")"
 check "cloud-init asks Let's Encrypt production by default" "$(yes_if grep -q 'DEMO_ACME_SERVER: https://acme-v02.api.letsencrypt.org/directory' "$work/state/user-data.yaml")"
 check "cloud-init pins k3s for arm64" "$(yes_if grep -q "k3s_asset='k3s-arm64'" "$work/state/user-data.yaml")"
 check "cloud-init carries the arm64 checksum" "$(yes_if grep -q "$(printf 'a%.0s' {1..64})" "$work/state/user-data.yaml")"
 check "cloud-init has no placeholder left" "$(yes_if bash -c "! grep -q '@@' '$work/state/user-data.yaml'")"
 check "cloud-init is valid YAML" "$(yes_if gojq --yaml-input -e '.write_files | length > 0' "$work/state/user-data.yaml")"
 check "k3s keeps its bundled Traefik and servicelb" "$(yes_if gojq --yaml-input -e '.write_files[] | select(.path == "/etc/rancher/k3s/config.yaml") | .content | contains("disable") | not' "$work/state/user-data.yaml")"
-check "the machine writes the sslip.io host into the demo settings" "$(yes_if grep -q 'DEMO_HOST: $(printf .%s. "$ipv4" | tr . -).sslip.io' "$work/state/user-data.yaml")"
+check "cloud-init carries the demo's host" "$(yes_if grep -qx "      host='demo.openfief.dev'" "$work/state/user-data.yaml")"
+check "the machine writes the host into the demo settings" "$(yes_if grep -q '"  DEMO_HOST: $host"' "$work/state/user-data.yaml")"
 check "SSH takes keys only" "$(yes_if gojq --yaml-input -e '.ssh_pwauth == false and ([.write_files[] | .content | contains("PasswordAuthentication no")] | any)' "$work/state/user-data.yaml")"
 check "cloud-init holds no token" "$(yes_if bash -c "! grep -qi 'token' '$work/state/user-data.yaml'")"
 
@@ -164,6 +166,14 @@ check "staging asks the Let's Encrypt staging server" "$(yes_if grep -q 'DEMO_AC
 if ACTION=up run_demo ENV=demo DEMO_ACME=production; then r=no; else r=yes; fi
 check "an unknown DEMO_ACME is refused" "$r"
 check "an unknown DEMO_ACME creates nothing" "$(yes_if bash -c "! grep -q create '$work/log'")"
+if ACTION=up run_demo ENV=demo DEMO_DOMAIN=none; then r=yes; else r=no; fi
+check "up with DEMO_DOMAIN=none succeeds" "$r"
+check "DEMO_DOMAIN=none prints the sslip.io URL" "$(yes_if grep -q 'demo URL: https://192-0-2-10.sslip.io (TLS from Let.s Encrypt prod' "$work/out")"
+check "DEMO_DOMAIN=none needs no DNS record" "$(yes_if bash -c "! grep -q '^DNS:' '$work/out'")"
+check "DEMO_DOMAIN=none makes the machine name itself on sslip.io" "$(yes_if bash -c "grep -qx \"      host='none'\" '$work/state/user-data.yaml' && grep -q 'host=\"\$(printf .%s. \"\$ipv4\" | tr . -).sslip.io\"' '$work/state/user-data.yaml'")"
+if ACTION=up run_demo ENV=demo DEMO_DOMAIN=Not_A_Domain; then r=no; else r=yes; fi
+check "a malformed DEMO_DOMAIN is refused" "$r"
+check "a malformed DEMO_DOMAIN creates nothing" "$(yes_if bash -c "! grep -q create '$work/log'")"
 check "the existing server is not priced twice" "$(yes_if bash -c "! grep -q 'primary IPv4 auto-ip' '$work/out'")"
 
 # Without a labelled SSH key, up refuses and explains the label.
@@ -211,7 +221,7 @@ a64="$(printf 'a%.0s' {1..64})"
 b64="$(printf 'b%.0s' {1..64})"
 pins=(K3S_VERSION=v1.36.5+k3s1 K3S_SHA256_ARM64="$a64" K3S_SHA256_AMD64="$b64"
   K3S_INSTALL_SHA256="$(printf 'c%.0s' {1..64})" FLUX_VERSION=v2.9.6 FLUX_INSTALL_SHA256="$(printf 'd%.0s' {1..64})"
-  DEMO_GIT_URL=https://github.com/example/openfief DEMO_GIT_BRANCH=main)
+  DEMO_GIT_URL=https://github.com/example/openfief DEMO_GIT_BRANCH=main ENV=demo)
 
 # render renders a template for a server type with the pins above, overridden by NAME=value arguments.
 render() {
@@ -238,6 +248,9 @@ check "render refuses a git URL with YAML in it" "$r"
 printf '#cloud-config\nx: @@UNKNOWN@@\n' >"$work/bad-template.yaml"
 if render "$work/bad-template.yaml" cax11 >/dev/null; then r=no; else r=yes; fi
 check "render refuses an unknown placeholder" "$r"
+custom="$(render "$template" cax11 ENV=try-beta DEMO_DOMAIN=example.org || true)"
+if grep -qx "      host='try-beta.example.org'" <<<"$custom"; then r=yes; else r=no; fi
+check "render names the host <ENV>.<DEMO_DOMAIN>" "$r"
 
 if [ "$failures" -ne 0 ]; then
   echo "demo: $failures of $cases checks failed" >&2

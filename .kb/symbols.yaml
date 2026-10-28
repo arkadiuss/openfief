@@ -37001,3 +37001,16 @@ symbols:
         target: TEST-docs-reference
       - type: implements
         target: REQ-docs-generated-reference
+  - id: SYM-demo-demo-host
+    title: demo_host
+    status: active
+    sourceFile: scripts/demo/demo.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T14:18:03.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo
+      - type: implements
+        target: REQ-tooling-demo-bootstrap

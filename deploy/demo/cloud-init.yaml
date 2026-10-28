@@ -11,8 +11,9 @@
 #     Flannel with k3s's NetworkPolicy controller (D-12), local-path storage, and the bundled Traefik and
 #     servicelb stay on: the demo takes HTTP(S) on the machine's own IPv4, with no paid load balancer. The product
 #     bases still ship Services only (D-28); deploy/demo adds the demo's routes. Secrets are encrypted at rest (D-29).
-#   - The ConfigMap flux-system/demo-settings, which Flux substitutes into deploy/demo: DEMO_HOST, the machine's
-#     <ipv4-with-dashes>.sslip.io name read from Hetzner's metadata service, and DEMO_ACME_SERVER (@@ACME_SERVER@@).
+#   - The ConfigMap flux-system/demo-settings, which Flux substitutes into deploy/demo: DEMO_HOST (@@DEMO_HOST@@, or
+#     with "none" the machine's <ipv4-with-dashes>.sslip.io name read from Hetzner's metadata service), and
+#     DEMO_ACME_SERVER (@@ACME_SERVER@@).
 #   - Flux @@FLUX_VERSION@@ (install.yaml checked against a pinned sha256) and a GitRepository plus Kustomization on
 #     @@GIT_URL@@ (@@GIT_BRANCH@@, ./deploy/demo), dropped into k3s's auto-deploy manifests directory, so the
 #     cluster is declared, not applied by hand. Everything else comes from deploy/demo through Flux.
@@ -88,11 +89,13 @@ write_files:
         echo "openfief-bootstrap: no public IPv4 from the metadata service" >&2
         exit 1
       fi
+      host='@@DEMO_HOST@@'
+      if [ "$host" = none ]; then host="$(printf '%s' "$ipv4" | tr . -).sslip.io"; fi
       settings=/var/lib/rancher/k3s/server/manifests/openfief-demo-settings.yaml
       mkdir -p "$(dirname "$settings")"
       printf '%s\n' \
         'apiVersion: v1' 'kind: ConfigMap' 'metadata:' '  name: demo-settings' '  namespace: flux-system' 'data:' \
-        "  DEMO_HOST: $(printf '%s' "$ipv4" | tr . -).sslip.io" \
+        "  DEMO_HOST: $host" \
         '  DEMO_ACME_SERVER: @@ACME_SERVER@@' >"$settings"
       chmod 0600 "$settings"
       k3s_version='@@K3S_VERSION@@'

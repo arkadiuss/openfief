@@ -190,6 +190,12 @@ or label an existing key: hcloud ssh-key add-label <key> openfief-ssh=true"
   echo "$names"
 }
 
+# demo_host is the demo's host name, <ENV>.<DEMO_DOMAIN>, or "none" when DEMO_DOMAIN=none: the machine then names
+# itself <ipv4-with-dashes>.sslip.io at boot. demo_render_cloud_init checks its form.
+demo_host() {
+  if [ "${DEMO_DOMAIN:-}" = none ]; then echo none; else echo "${ENV:-}.${DEMO_DOMAIN:-}"; fi
+}
+
 # demo_render_cloud_init fills the @@NAME@@ placeholders of a cloud-init template from the pinned versions in the
 # environment, after checking each value's form, and fails if a placeholder is left.
 demo_render_cloud_init() {
@@ -204,7 +210,7 @@ demo_render_cloud_init() {
     *) acme="unknown DEMO_ACME '${DEMO_ACME:-}', want prod or staging" ;;
   esac
   local -A values=(
-    [ACME_SERVER]="$acme"
+    [ACME_SERVER]="$acme" [DEMO_HOST]="$(demo_host)"
     [K3S_VERSION]="${K3S_VERSION:-}" [K3S_ASSET]="$asset" [K3S_SHA256]="$k3s_sha"
     [K3S_INSTALL_SHA256]="${K3S_INSTALL_SHA256:-}" [FLUX_VERSION]="${FLUX_VERSION:-}"
     [FLUX_INSTALL_SHA256]="${FLUX_INSTALL_SHA256:-}"
@@ -212,6 +218,7 @@ demo_render_cloud_init() {
   )
   local -A forms=(
     [ACME_SERVER]='^https://acme(-staging)?-v02\.api\.letsencrypt\.org/directory$'
+    [DEMO_HOST]='^(none|([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63})$'
     [K3S_VERSION]='^v[0-9]+\.[0-9]+\.[0-9]+\+k3s[0-9]+$' [K3S_ASSET]='^k3s(-arm64)?$'
     [K3S_SHA256]='^[0-9a-f]{64}$' [K3S_INSTALL_SHA256]='^[0-9a-f]{64}$'
     [FLUX_VERSION]='^v[0-9]+\.[0-9]+\.[0-9]+$' [FLUX_INSTALL_SHA256]='^[0-9a-f]{64}$'
@@ -237,7 +244,9 @@ demo_render_cloud_init() {
 : "${DEMO_SSH_CIDRS:=}" "${DEMO_GIT_URL:=https://github.com/arkadiuss/openfief}" "${DEMO_GIT_BRANCH:=main}"
 # HTTP(S) is open to everyone by default: a demo holds synthetic data only (GR-12). DEMO_HTTP_CIDRS=none closes it.
 : "${DEMO_HTTP_CIDRS:=0.0.0.0/0,::/0}" "${DEMO_ACME:=prod}"
-export DEMO_GIT_URL DEMO_GIT_BRANCH DEMO_ACME
+# The demo ENV is served at <ENV>.<DEMO_DOMAIN>, such as demo.openfief.dev; DEMO_DOMAIN=none uses sslip.io instead.
+: "${DEMO_DOMAIN:=openfief.dev}"
+export DEMO_GIT_URL DEMO_GIT_BRANCH DEMO_ACME DEMO_DOMAIN
 
 # demo_prepare checks the token and tools and isolates hcloud from any local CLI context.
 demo_prepare() {
@@ -322,7 +331,12 @@ demo_up() {
     echo "server $name already exists; cloud-init changes need: task demo:recreate ENV=$ENV CONFIRM=$ENV"
   fi
   ip="$(hcloud server ip "$name")"
-  echo "demo URL: https://${ip//./-}.sslip.io (TLS from Let's Encrypt $DEMO_ACME, once Flux and cert-manager are up)"
+  if [ "$(demo_host)" = none ]; then
+    echo "demo URL: https://${ip//./-}.sslip.io (TLS from Let's Encrypt $DEMO_ACME, once Flux and cert-manager are up)"
+  else
+    echo "demo URL: https://$(demo_host) (TLS from Let's Encrypt $DEMO_ACME, once Flux and cert-manager are up)"
+    echo "DNS: $(demo_host) needs an A record to $ip, not proxied, so Let's Encrypt's HTTP-01 check reaches the machine"
+  fi
   echo "next: docs/dev/demo.md#reach-the-demo (ssh root@$ip)"
 }
 

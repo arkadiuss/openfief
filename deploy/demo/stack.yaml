@@ -4,7 +4,8 @@
 #   demo-database  ./deploy/demo/database  a one-instance CloudNativePG cluster, synthetic data only (GR-12)
 #   demo-cert-manager ./deploy/demo/cert-manager  cert-manager from a pinned Helm chart
 #   demo-ingress   ./deploy/demo/ingress   the Let's Encrypt ClusterIssuer (HTTP-01 through k3s's Traefik)
-#   demo-routes    ./deploy/demo/routes    https://<ipv4-with-dashes>.sslip.io to the core (suspended until it exists)
+#   demo-routes    ./deploy/demo/routes    https://<ENV>.<DEMO_DOMAIN> (or <ipv4-with-dashes>.sslip.io) to the core
+#                                          (suspended until it exists)
 #   demo-openfief  the signed artifact     the operator and the egress proxy, images pinned by digest (D-17)
 # The product bases ship Services only (D-28); the routes are this demo's own, on k3s's bundled Traefik.
 # The first three follow main in git. demo-openfief follows the OCI artifact that CI publishes after every push to
@@ -85,7 +86,8 @@ spec:
     kind: GitRepository
     name: openfief
   postBuild:
-    # Written by the machine's cloud-init: DEMO_HOST (<ipv4-with-dashes>.sslip.io) and DEMO_ACME_SERVER.
+    # Written by the machine's cloud-init: DEMO_HOST (<ENV>.<DEMO_DOMAIN>, or <ipv4-with-dashes>.sslip.io) and
+    # DEMO_ACME_SERVER.
     substituteFrom:
       - kind: ConfigMap
         name: demo-settings

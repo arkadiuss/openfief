@@ -58,6 +58,7 @@ jobs:
           DEMO_SSH_CIDRS: ${{ vars.DEMO_SSH_CIDRS }}
           DEMO_HTTP_CIDRS: ${{ vars.DEMO_HTTP_CIDRS }}
           DEMO_ACME: ${{ vars.DEMO_ACME }}
+          DEMO_DOMAIN: ${{ vars.DEMO_DOMAIN }}
           DEMO_BUDGET_EUR: ${{ vars.DEMO_BUDGET_EUR }}
           DEMO_SERVER_TYPE: ${{ vars.DEMO_SERVER_TYPE }}
           DEMO_LOCATION: ${{ vars.DEMO_LOCATION }}

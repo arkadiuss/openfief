@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:demo.cloud_init:pins_verified_versions
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-1DA7C9E52103C1FE
-claim_text: A demo server's cloud-init must install k3s and Flux at the versions pinned in the Taskfile, each download checked against a pinned sha256, write the demo settings (the machine's sslip.io host and the Let's Encrypt production or staging server) and no secrets, and rendering must fail when a pinned value or setting is missing or malformed or a placeholder is left.
+claim_key: CLAIM-0DD96500B0521177
+claim_text: A demo server's cloud-init must install k3s and Flux at the versions pinned in the Taskfile, each download checked against a pinned sha256, write the demo settings (the demo's host, <ENV>.<DEMO_DOMAIN> or with DEMO_DOMAIN=none the machine's sslip.io name, and the Let's Encrypt production or staging server) and no secrets, and rendering must fail when a pinned value or setting is missing or malformed or a placeholder is left
 origin:
   kind: agent
   recorded_at: '2026-10-28T09:01:06.037Z'

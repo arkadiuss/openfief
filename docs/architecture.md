@@ -133,7 +133,7 @@ The install manifests are in `deploy/`: `crds/` for the definitions and the name
 
 ## The demo environment
 
-`deploy/demo` runs the same install on one Hetzner machine with k3s, holding synthetic data only (GR-12). Nothing pushes to it: cloud-init installs Flux, and Flux pulls each layer below, in dependency order. Five layers follow `main` in git. The `openfief` layer instead follows a signed OCI artifact that CI publishes after each push to `main`, with the images pinned to the digests whose signatures verified (D-17). The HTTPS route is the demo's own, on k3s's bundled Traefik with a Let's Encrypt certificate. It stays suspended until a core service exists. Creating and destroying demos is in [demo.md](dev/demo.md).
+`deploy/demo` runs the same install on one Hetzner machine with k3s, holding synthetic data only (GR-12). Nothing pushes to it: cloud-init installs Flux, and Flux pulls each layer below, in dependency order. Five layers follow `main` in git. The `openfief` layer instead follows a signed OCI artifact that CI publishes after each push to `main`, with the images pinned to the digests whose signatures verified (D-17). The HTTPS route is the demo's own, at demo.openfief.dev on k3s's bundled Traefik with a Let's Encrypt certificate. It stays suspended until a core service exists. Creating and destroying demos is in [demo.md](dev/demo.md).
 
 ```mermaid
 flowchart LR

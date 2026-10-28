@@ -480,6 +480,7 @@ tasks:
       DEMO_SSH_CIDRS: '{{.DEMO_SSH_CIDRS}}'
       DEMO_HTTP_CIDRS: '{{.DEMO_HTTP_CIDRS}}'
       DEMO_ACME: '{{.DEMO_ACME}}'
+      DEMO_DOMAIN: '{{.DEMO_DOMAIN}}'
       DEMO_GIT_URL: '{{.DEMO_GIT_URL}}'
       DEMO_GIT_BRANCH: '{{.DEMO_GIT_BRANCH}}'
       K3S_VERSION: '{{.K3S_VERSION}}'
