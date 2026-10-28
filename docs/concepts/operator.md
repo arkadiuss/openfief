@@ -36,7 +36,7 @@ The operator runs OpenFief's plugins on Kubernetes (D-13). It watches two custom
 | `internal/plugins/operator/v1alpha1` | The API: `Plugin`, `PluginGrant`, `Manifest`, `Permissions`, `PluginStatus` and the condition names ([types.go](../../internal/plugins/operator/v1alpha1/types.go), [groupversion.go](../../internal/plugins/operator/v1alpha1/groupversion.go)); generated deepcopy code |
 | `internal/plugins/operator` | The adapter: `PluginReconciler` ([reconciler.go](../../internal/plugins/operator/reconciler.go)), watches and `GrantReconciler` ([setup.go](../../internal/plugins/operator/setup.go)), status ([status.go](../../internal/plugins/operator/status.go)), resource-to-domain conversion ([convert.go](../../internal/plugins/operator/convert.go)), `BuildObjects` ([objects.go](../../internal/plugins/operator/objects.go)), `ClusterFromServices` ([cluster.go](../../internal/plugins/operator/cluster.go)), `ValidateConfig` ([config.go](../../internal/plugins/operator/config.go)), the `ImageVerifier` seam ([verify.go](../../internal/plugins/operator/verify.go)) |
 | `internal/plugins` | The pure domain it calls: `PlanRollout`, `Effective`, `NeedsApproval`, `Compile`, `ParseImageRef`, `EncodeAllowLists` |
-| `internal/plugins/kube` | The egress proxy's Kubernetes adapter: `AllowLists` follows the ConfigMap the operator writes ([allowlists.go](../../internal/plugins/kube/allowlists.go)); `TokenReviewer` checks plugin tokens ([tokenreview.go](../../internal/plugins/kube/tokenreview.go)) |
+| `internal/plugins/kube` | The egress proxy's Kubernetes adapter: `AllowLists` follows the ConfigMap the operator writes ([allowlists.go](../../internal/plugins/kube/allowlists.go)); `TokenReviewer` checks plugin tokens for one audience, `openfief-egress` in the proxy ([tokenreview.go](../../internal/plugins/kube/tokenreview.go)) |
 | `cmd/operator` | Wiring: flags, a controller-runtime manager whose cache sees only `openfief`, leader election through a Lease ([main.go](../../cmd/operator/main.go)); a distroless, non-root image ([Dockerfile](../../cmd/operator/Dockerfile)) |
 | `deploy/crds`, `deploy/operator` | Install manifests: the namespace and CRDs; the operator's ServiceAccount, Role, RoleBinding and Deployment |
 
@@ -81,6 +81,8 @@ classDiagram
   class Deployment {
     name : plugin-NAME
     replicas 1, strategy Recreate
+    token openfief-core : always
+    token openfief-egress : only with granted egress
   }
   class AllowListConfigMap {
     name : openfief-egress-allowlist
@@ -107,7 +109,7 @@ The operator never creates a Secret (D-29) and its Role can't even read one: it 
 
 What `BuildObjects` puts in the pod ([objects.go](../../internal/plugins/operator/objects.go)):
 
-- **Identity.** The ServiceAccount mounts no API token. The only token is a projected one with audience `openfief-core`, valid for 3600 seconds, at `/var/run/secrets/openfief/token` (D-27), named by `OPENFIEF_TOKEN_FILE`. That ServiceAccount is the [plugin identity](../glossary.md).
+- **Identity.** The ServiceAccount mounts no API token. Every pod gets a projected token with audience `openfief-core` at `/var/run/secrets/openfief/token` (D-27), named by `OPENFIEF_TOKEN_FILE`. Only when an egress host is granted, it gets a second one with audience `openfief-egress` at `/var/run/secrets/openfief-egress/token` (D-63), named by `OPENFIEF_EGRESS_TOKEN_FILE`. Both last 3600 seconds and the kubelet renews them. With separate audiences, the proxy never sees a token the core would accept. That ServiceAccount is the [plugin identity](../glossary.md).
 - **Addresses.** `OPENFIEF_CORE_ADDRESS` is the core Service's ClusterIP and port, because plugins have no DNS (D-32). `OPENFIEF_LISTEN_PORT` is the plugin port (8080 by default). Only when an egress host is granted, `HTTPS_PROXY` points at the egress proxy's ClusterIP and `NO_PROXY` at the core.
 - **Hardening.** Non-root, read-only root filesystem, every Linux capability dropped, no privilege escalation, seccomp `RuntimeDefault`, no service links. These settings meet the `restricted` Pod Security Standard the namespace enforces.
 - **Rollouts.** One replica with the `Recreate` strategy, so an old pod never runs beside a new one with other permissions. A SHA-256 of the config in a pod annotation makes a config change replace the pod.
@@ -179,7 +181,7 @@ sequenceDiagram
 
 ### The egress allow-list hand-off
 
-The operator compiles each running plugin's effective egress hosts into the [egress allow-list](../glossary.md) and writes them to the `openfief-egress-allowlist` ConfigMap (D-32). A running plugin with no egress gets an empty value, meaning "none"; a plugin that doesn't run has no key. On the proxy's side, `kube.WatchAllowLists` follows that one ConfigMap with an informer and swaps the decoded lists in atomically. It fails closed: while the ConfigMap is missing or doesn't decode, no plugin has a list. `kube.TokenReviewer` asks the TokenReview API whether a plugin's token is valid for audience `openfief-core` and returns its username. The proxy's own behavior is documented with the egress proxy.
+The operator compiles each running plugin's effective egress hosts into the [egress allow-list](../glossary.md) and writes them to the `openfief-egress-allowlist` ConfigMap (D-32). A running plugin with no egress gets an empty value, meaning "none"; a plugin that doesn't run has no key. On the proxy's side, `kube.WatchAllowLists` follows that one ConfigMap with an informer and swaps the decoded lists in atomically. It fails closed: while the ConfigMap is missing or doesn't decode, no plugin has a list. `kube.TokenReviewer` asks the TokenReview API whether a token is valid for the audience it was built with and returns its username. `cmd/egress-proxy` builds it for `openfief-egress`, so a plugin's core token is refused there, and wraps it in `app.NewCachingTokenReviewer`, which caches accepted reviews for at most five minutes and never past the token's expiry. The proxy's own behavior is documented with the egress proxy.
 
 ### What runs in the openfief namespace
 
@@ -203,7 +205,7 @@ flowchart LR
   proxy -- "TokenReview, ClusterRole create only" --> api
   core -- "Connect RPC on the plugin port" --> pod
   pod -- "Connect RPC to the core" --> core
-  pod -- "HTTP CONNECT, only with granted egress" --> proxy
+  pod -- "HTTP CONNECT with the openfief-egress token,<br/>only with granted egress" --> proxy
   proxy -- "allow-listed hostnames only" --> ext
   np -. "selects" .-> pod
   pod -- "DNS, API server, other pods, direct internet" --x denied["denied"]
@@ -230,8 +232,8 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 - **D-56**: **not built.** The verification call exists for the current and the previous image, but there is no cosign check, no bundled trust root, and no status that tells a verified plugin from one only signed by a trusted signer.
 - **D-57**: nothing deploys without a `True` verification, and there is no override.
 - **D-58**: **partly.** Deleting a `Plugin` removes its workload (by garbage collection) and its allow-list key. Its `PluginGrant` and Secrets stay.
-- **D-59**: **partly.** Ingress is admitted only from the core. The ConfigMap of token-signing public keys is not built.
-- **D-63**: allow-lists swapped atomically and fail closed in `kube.AllowLists`. **Difference:** D-63 says the proxy checks tokens for audience `openfief-egress`; `kube.TokenReviewer` checks `openfief-core`, and plugins have only that one token, so the token sent to the proxy is also valid for the core.
+- **D-59**: **partly.** The NetworkPolicy admits ingress only from the core. The core's per-instance tokens exist only as a port, `CoreTokens` in [connectors.go](../../internal/ingest/app/connectors.go), with no implementation, and the ConfigMap of token-signing public keys is not built.
+- **D-63**: separate `openfief-egress` token, checked by TokenReview and cached. The operator projects it only for plugins with granted egress; `kube.AllowLists` swaps allow-lists atomically and fails closed.
 - **D-42**: **not followed yet.** The operator takes the manifest from `spec.manifest`, not from the image's label, so nothing ties the requested permissions to the signed image.
 
 ## Verification
@@ -248,8 +250,10 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 | Exact objects for a workload | `TestBuildObjects`, `TestDenyAllNetworkPolicy` in [objects_test.go](../../internal/plugins/operator/objects_test.go) | REQ-operator-workload-objects |
 | Peers only from usable Services | `TestClusterFromServices` in [cluster_test.go](../../internal/plugins/operator/cluster_test.go), `TestBuildObjectsRefuses` | REQ-operator-cluster-peers |
 | Image references by digest only | `TestParseImageRef` in [image_test.go](../../internal/plugins/image_test.go) | REQ-plugins-image-digest-only |
-| No ClusterRole for the operator, no Ingress anywhere | `TestManifests` in [manifests_test.go](../../internal/plugins/operator/manifests_test.go) | TEST-operator-manifests (D-15, D-28) |
-| Proxy side: token audience, ConfigMap followed fail-closed | `TestTokenReviewerReviewToken`, `TestWatchAllowLists*` in [kube_test.go](../../internal/plugins/kube/kube_test.go) | REQ-plugins-egress-proxy-identifies-plugin, REQ-plugins-egress-allow-lists-fail-closed |
+| No ClusterRole for the operator; no Ingress in the install bases `crds`, `operator`, `egress-proxy`, `core` (`deploy/demo` is excluded) | `TestManifests` in [manifests_test.go](../../internal/plugins/operator/manifests_test.go) | TEST-operator-manifests (D-15, D-28) |
+| Egress token only with granted egress; core token always | `TestBuildObjects`; `TestReconcile/granted_plugin_without_egress_gets_only_the_core_token` and the upgrade subtest, which read both tokens from the Deployment | REQ-plugins-egress-token-projected |
+| Proxy side: `openfief-egress` only (a core-only token is refused), ConfigMap followed fail-closed | `TestTokenReviewerReviewToken`, `TestWatchAllowLists*` in [kube_test.go](../../internal/plugins/kube/kube_test.go) | REQ-plugins-egress-proxy-identifies-plugin, REQ-plugins-egress-allow-lists-fail-closed |
+| Accepted reviews cached, bounded, refused ones never | `TestCachingTokenReviewer*` in [tokencache_test.go](../../internal/plugins/app/tokencache_test.go) | REQ-plugins-egress-token-review-cache |
 | Flags, API types, controller setup | `TestParseFlags` in [main_test.go](../../cmd/operator/main_test.go); `TestAddToScheme`, `TestDeepCopyIsIndependent`; `TestSetupWithManager` | TEST-operator-cmd, TEST-operator-api |
 
 The reconciler tests use envtest: a real `kube-apiserver` and `etcd` with the CRDs from `deploy/crds`, and no other controllers. Run everything with `task test`, which installs envtest 1.36.2 into `.bin/envtest` and sets `KUBEBUILDER_ASSETS`. A plain `go test ./internal/plugins/operator/...` fails those tests fast without it. `task gen:check` fails if the CRDs, `role.yaml` or the deepcopy code differ from what `task gen` generates from the Go markers.
@@ -268,7 +272,6 @@ What the tests don't show:
 - **D-42**: reading the manifest from the image label and checking it against `spec.manifest`.
 - **D-43, D-44, D-46**: the catalog and the `openfief` CLI. Today `Plugin` and `PluginGrant` are applied by hand.
 - **D-58**: deleting the grant and Secrets on uninstall, and marking the ledger data of a removed instance.
-- **D-59**: the ConfigMap of the cluster's token-signing public keys, and the core's per-instance tokens.
-- **D-63**: a separate projected token with audience `openfief-egress`.
+- **D-59**: the ConfigMap of the cluster's token-signing public keys, and an implementation of the core's per-instance tokens.
 - **D-12**: end-to-end tests on kind or k3d.
 - The core's Deployment and Service, which the operator expects as `openfief-core`.

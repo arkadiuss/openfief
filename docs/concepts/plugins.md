@@ -8,7 +8,7 @@ covers:
   - sdk/**
 ---
 
-A plugin is how OpenFief reaches the outside world: a connector brings data in, a view shows the record somewhere else. Each plugin runs in its own container, out of the core's process, and gets only what its vendor asked for and its owner approved. This page explains that model and shows what the pure `plugins` package builds from it. The [Operator](operator.md) page covers how the operator applies it to a cluster, and [Egress](egress.md) covers the proxy that enforces plugins' outbound hosts.
+A plugin is how OpenFief reaches the outside world: a connector brings data in, a view shows the record somewhere else. Each plugin runs in its own container, out of the core's process, and gets only what its vendor asked for and its owner approved. This page explains that model, what the pure `plugins` package builds from it, and the connector contract and Go SDK a plugin is written with. The [Operator](operator.md) page covers how the operator applies it to a cluster, and [Egress](egress.md) covers the proxy that enforces plugins' outbound hosts.
 
 ## Concepts
 
@@ -22,7 +22,7 @@ A plugin is how OpenFief reaches the outside world: a connector brings data in, 
 
 **Pending approval and rollout.** When a new version of a plugin requests something its grant lacks, that difference is [pending approval](../glossary.md). The owner approves it by adding it to the grant. Until then the version that already ran keeps running, limited to the current grant. Which version runs, if any, is the plugin's [rollout](../glossary.md). Upgrades are always manual, even when the permissions don't change (D-47): the owner changes the image, nothing else does.
 
-**Plugin identity.** Each instance runs as the ServiceAccount `plugin-<name>` in the `openfief` namespace and proves it with a projected ServiceAccount token, audience `openfief-core` (D-27). That is its [plugin identity](../glossary.md). The [Egress](egress.md#concepts) page explains projected tokens.
+**Plugin identity.** Each instance runs as the ServiceAccount `plugin-<name>` in the `openfief` namespace and proves it with projected ServiceAccount tokens. That is its [plugin identity](../glossary.md). It presents a token with audience `openfief-core` to the core (D-27). A plugin with egress also gets a second token, audience `openfief-egress`, for the egress proxy, so the proxy never sees a token the core would accept (D-63). The [Egress](egress.md#concepts) page explains projected tokens.
 
 **Image references and digest pinning.** A tag such as `:1.4` is a pointer that anyone who can push to the repository can move. A digest (`sha256:...`) is the hash of the image's OCI manifest, which in turn hashes every layer, so it names exactly one image. Pulling by digest has been possible since the Docker Registry v2 API (2015). Pinning by digest means the image the owner approved is the image that runs, and it is what a signature covers. An [image reference](../glossary.md) in OpenFief is always `repository@sha256:<hex>`, never a tag (D-17).
 
@@ -32,7 +32,7 @@ A plugin is how OpenFief reaches the outside world: a connector brings data in, 
 
 **Workload.** The [workload](../glossary.md) is everything the operator creates for one plugin, compiled from its effective permissions: identity, token, Secret mounts, environment, NetworkPolicy and egress allow-list (D-11). The Kubernetes Deployment is only one part of it.
 
-**Contracts.** Plugins speak protobuf contracts over [Connect RPC](../glossary.md), which serves one service as gRPC or as plain HTTP with JSON (D-11). The core calls connectors, not the other way round (D-49), and only the core may call a plugin (D-59).
+**Contracts.** Plugins speak protobuf contracts over [Connect RPC](../glossary.md), which serves one service as gRPC or as plain HTTP with JSON (D-11). A [connector](../glossary.md) serves the connector contract and the core calls it, to sync and to import files; the core owns the schedules, retries and [import batches](../glossary.md) (D-49). Only the core may call a plugin, and it proves that with a short-lived token whose audience is that plugin instance (D-59). The SDK hides both the serving side and the token handling from a plugin's author.
 
 ## How it works
 
@@ -48,9 +48,9 @@ Everything in [`internal/plugins`](../../internal/plugins/) is pure: no I/O, no 
 | [image.go](../../internal/plugins/image.go) | `ImageRef`, `ParseImageRef` |
 | [egress_host.go](../../internal/plugins/egress_host.go) | `EgressHost`, `ParseEgressHost` |
 | [allowlist.go](../../internal/plugins/allowlist.go), [allowlist_codec.go](../../internal/plugins/allowlist_codec.go) | `EgressAllowList.Allows`, `EncodeAllowLists`, `DecodeAllowLists` |
-| [identity.go](../../internal/plugins/identity.go) | `Namespace`, `CoreAudience`, `ServiceAccountName`, `PluginForServiceAccount` |
+| [identity.go](../../internal/plugins/identity.go) | `Namespace`, `CoreAudience`, `EgressAudience`, `ServiceAccountName`, `PluginForServiceAccount` |
 | [errors.go](../../internal/plugins/errors.go) | Sentinel errors and `FieldError` |
-| [app/egress.go](../../internal/plugins/app/egress.go) | The egress proxy's use case, `app.Egress`; see [Egress](egress.md) |
+| [app/egress.go](../../internal/plugins/app/egress.go), [app/tokencache.go](../../internal/plugins/app/tokencache.go) | The egress proxy's use case, `app.Egress`, and its token cache, `app.CachingTokenReviewer`; see [Egress](egress.md) |
 
 ### From a plugin and its grant to a workload
 
@@ -76,6 +76,7 @@ flowchart TB
   comp --> wl["Workload"]
   wl --> sa["ServiceAccount plugin-name<br/>no API token, no Role"]
   wl --> tok["projected token<br/>audience openfief-core, 3600 s"]
+  wl --> etok["EgressToken: audience openfief-egress<br/>(only with egress hosts)"]
   wl --> sec["granted Secrets, read-only"]
   wl --> env["HTTPS_PROXY and NO_PROXY<br/>(only with egress hosts)"]
   wl --> np["NetworkPolicy rules<br/>in: core; out: core, plus proxy"]
@@ -101,6 +102,7 @@ flowchart TB
 
 - a ServiceAccount `plugin-<name>` in `openfief` with `AutomountAPIToken` false and no Role: plugins never talk to the Kubernetes API;
 - a projected token at `/var/run/secrets/openfief/token`, audience `openfief-core`, valid for an hour and refreshed by the kubelet;
+- only when some egress host is granted, `EgressToken`: a second projected token at `/var/run/secrets/openfief-egress/token`, audience `openfief-egress` (D-63). The operator names its path in `OPENFIEF_EGRESS_TOKEN_FILE`;
 - the granted Secrets, read-only;
 - NetworkPolicy rules: ingress from the core on the plugin port; egress to the core's pod port, plus the egress proxy's pod port only when some egress host is granted. No rule ever allows DNS (D-32);
 - `HTTPS_PROXY=http://<proxy ClusterIP>:<port>` and `NO_PROXY=<core ClusterIP>`, again only with egress hosts. `Topology` takes addresses, not names, because plugins have no DNS;
@@ -159,28 +161,67 @@ The operator publishes every running plugin's egress allow-list in the ConfigMap
 
 `ServiceAccountName` and `PluginForServiceAccount` map between a plugin name and its Kubernetes username. The reverse map accepts only `system:serviceaccount:openfief:plugin-<valid name>`, so another namespace, a prefix trick such as `openfief-x`, or the core's own ServiceAccount is never taken for a plugin.
 
-### Contracts and the Go SDK
+### The connector contract
 
-The contract tooling is set up, but no contract exists yet: [proto/](../../proto/) holds only its Apache-2.0 license (D-5).
+[connector.proto](../../proto/openfief/connector/v1/connector.proto) defines `openfief.connector.v1.ConnectorService`, which a connector serves and the core calls (D-49):
 
-- [buf.yaml](../../buf.yaml) declares one Buf v2 module at `proto/`, linted with the `STANDARD` rules and checked for breaking changes at `FILE` level.
-- [buf.gen.yaml](../../buf.gen.yaml) generates Go with `protoc-gen-go` and `protoc-gen-connect-go` into `sdk/go/gen`, in managed mode with the Go package prefix `github.com/arkadiuss/openfief/sdk/go/gen`. Both generators are pinned local binaries in `.bin/`, never remote Buf plugins, and their versions match the runtime libraries in `sdk/go/go.mod`.
-- `task proto` runs `proto:lint` (lint and format), `proto:breaking` (against `PROTO_BASE` or `DOCS_BASE`, default `HEAD`; [scripts/proto-breaking.sh](../../scripts/proto-breaking.sh)) and `proto:check` (generated code up to date; [scripts/proto-check.sh](../../scripts/proto-check.sh)). `task proto:gen` regenerates. Each skips cleanly while there are no `.proto` files.
-- [sdk/go](../../sdk/go/) is its own Apache-2.0 Go module, `github.com/arkadiuss/openfief/sdk/go`, listed in `go.work` beside the AGPL core. It requires `connectrpc.com/connect` and `google.golang.org/protobuf`, and so far holds only [package `openfief`'s doc comment](../../sdk/go/openfief/doc.go).
+- `Sync(SyncRequest)` pulls what the institution reported since the previous sync's `watermark`, an opaque string the connector returns and the core stores once the delivery is imported.
+- `ImportFile(stream ImportFileRequest)` maps one statement file. The first message is a `FileHeader` (batch ID, [ingest mode](../glossary.md), file name as a hint, media type); every later one carries the next bytes.
+
+Both answer with a `Delivery`: the batch ID echoed back, the institution, and the connector's [mapping](../glossary.md) (transactions with their postings, balance assertions and [ingest problems](../glossary.md)), plus any prices, FX rates and index readings. The file's conventions keep money exact and the record clean: amounts, prices, rates and quantities are decimal strings, never floating point; dates are `YYYY-MM-DD`; currencies are ISO 4217 codes; `account_id` is OpenFief's own ID, never the institution's account number. Every call carries a batch ID the core generates and reuses on a retry, and the core prefixes each transaction's source with the instance's name, so one instance can never write over another's transactions.
+
+`task proto:gen` generates the Go code into [sdk/go/gen](../../sdk/go/gen/), with `protoc-gen-go` and `protoc-gen-connect-go` pinned as local binaries ([buf.gen.yaml](../../buf.gen.yaml)). [buf.yaml](../../buf.yaml) lints the contract with Buf's `STANDARD` rules and checks breaking changes at `FILE` level; `task proto` runs lint, the breaking check against `PROTO_BASE` or `DOCS_BASE` (default `HEAD`), and a check that the generated code is up to date. The core's side of the contract, which translates deliveries into domain values, is on the [Ingest](ingest.md) page.
+
+### The Go SDK
+
+[sdk/go](../../sdk/go/) is its own Apache-2.0 module, `github.com/arkadiuss/openfief/sdk/go`, beside the AGPL core in `go.work` (D-5). Package [`openfief`](../../sdk/go/openfief/) gives a plugin what the operator set up for it:
+
+- **Environment** ([env.go](../../sdk/go/openfief/env.go)): `CoreURL` from `OPENFIEF_CORE_ADDRESS` (a ClusterIP and port; plugins have no DNS), `ListenAddress` from `OPENFIEF_LISTEN_PORT`, `LoadConfig` from `OPENFIEF_CONFIG`.
+- **Tokens** ([token.go](../../sdk/go/openfief/token.go)): `TokenFile` reads a token file on *every* call, through an `os.Root` of its directory, because the kubelet rotates projected tokens. Its default is `OPENFIEF_TOKEN_FILE`, then `/var/run/secrets/openfief/token`.
+- **Serving the core** ([serve.go](../../sdk/go/openfief/serve.go)): `NewConnectorServer(addr, handler, verifier)` mounts the generated `ConnectorService` handler behind `RequireCore` and speaks HTTP/1.1 and HTTP/2 without TLS (h2c), since `ImportFile` streams. `RequireCore` answers `401` to any request whose `Authorization: Bearer` token the `CoreVerifier` refuses, before the handler sees it. The token's audience is `InstanceAudience(name)`, `openfief-plugin:<instance>`. `ReceiveFile` reads an `ImportFile` stream: exactly one header first, then chunks, up to a size limit the connector sets.
+- **Calling the core** ([core.go](../../sdk/go/openfief/core.go)): `CoreHTTPClient` adds the current `openfief-core` token as a bearer token on every request and never uses a proxy.
+- **Reaching an institution** ([egress.go](../../sdk/go/openfief/egress.go)): `NewEgressClient` reads `HTTPS_PROXY` and `OPENFIEF_EGRESS_TOKEN_FILE`. Its `EgressTransport` rebuilds the proxy URL for every request with user `plugin` and the current egress token as the password; Go's HTTP client sends that as a Basic `Proxy-Authorization` header on the CONNECT (D-63). It refuses plain `http` and refuses to send anything without a proxy.
+
+A connector built on the SDK, answering one `Sync`:
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant C as Core (ingest connectrpc client)
+  participant S as NewConnectorServer
+  participant H as Connector handler
+  participant T as EgressTransport
+  participant X as Egress proxy
+  participant I as Institution API
+  C->>S: Sync(batch ID, mode, watermark), Bearer token with audience openfief-plugin:instance
+  S->>S: RequireCore asks the CoreVerifier, 401 if refused
+  S->>H: Sync
+  H->>T: GET an https URL on a granted host
+  T->>T: read the egress token file, proxy URL with user plugin and the token
+  T->>X: CONNECT host:443, Proxy-Authorization Basic
+  X->>I: tunnel, TLS end to end
+  I-->>H: statement data
+  H-->>S: SyncResponse with Delivery and next watermark
+  S-->>C: SyncResponse
+```
+
+The comment on `EnvEgressIdentityFile` in [env.go](../../sdk/go/openfief/env.go) (lines 25 to 28) still says the operator doesn't mount the egress token yet; it does, under the same name.
 
 ## Decisions
 
 Implemented, fully or in the part named:
 
-- **D-11** Manifests compile into NetworkPolicy, Secret mounts, allow-list. (RBAC compiles to none: a ServiceAccount without a Role.)
+- **D-11** (part) Compiled manifests, a protobuf contract, the Go SDK. (RBAC compiles to none: a ServiceAccount without a Role.)
 - **D-13, D-15** `Plugin` resource; operator confined to `openfief`.
 - **D-16** Enforce only what request and grant share.
 - **D-17** (part) Images pinned by digest; tags refused.
-- **D-27** (part) Every plugin gets an `openfief-core` token.
+- **D-27** (part) Plugins get, and the SDK sends, `openfief-core` tokens.
 - **D-32** (part) Plugins reach only core and proxy, no DNS.
 - **D-47** Upgrades happen only when the owner edits.
 - **D-48** Every instance keyed by its own name.
-- **D-59** (part) Plugin ingress admitted from the core only.
+- **D-49** (part) Connector contract: the core calls `Sync` and `ImportFile`.
+- **D-59** (part) Only the core reaches a plugin; SDK refuses other callers.
+- **D-63** (part) Separate egress token, rebuilt into the proxy URL per request.
 - **D-5** Contracts and Go SDK licensed Apache-2.0.
 
 Implemented differently:
@@ -189,7 +230,7 @@ Implemented differently:
 
 ## Verification
 
-Run `task test` from the repository root; it also installs the API server and etcd for the operator's envtest suite. The pure tests alone run with `go test ./internal/plugins/...`, though the operator package then fails for lack of `KUBEBUILDER_ASSETS`. Requirement IDs come from kibi (`node_modules/.bin/kibi search "<question>"`); each test file is also a kibi test entity, such as `TEST-plugins-rollout`.
+Run `task test` from the repository root; it tests both Go modules, the core and `sdk/go`, and installs the API server and etcd for the operator's envtest suite. The pure tests alone run with `go test ./internal/plugins/...`, though the operator package then fails for lack of `KUBEBUILDER_ASSETS`; the SDK's run with `go test ./...` inside `sdk/go`. Requirement IDs come from kibi (`node_modules/.bin/kibi search "<question>"`); each test file is also a kibi test entity, such as `TEST-plugins-rollout`.
 
 | Behavior | Tests | Requirement |
 |---|---|---|
@@ -199,13 +240,18 @@ Run `task test` from the repository root; it also installs the API server and et
 | Ingress only from the core, egress only to the core and, with egress hosts, the proxy; never DNS | [compile_test.go](../../internal/plugins/compile_test.go): `TestCompile`, `TestCompileNeverAllowsDNS` | REQ-plugins-network-policy-core-and-proxy |
 | Proxy settings and allow-list only with egress hosts; same input, same workload | `TestCompile` ("no egress granted: ..."), `TestCompileDeterministic` | REQ-plugins-proxy-env-and-allow-list |
 | Own ServiceAccount, no API token, `openfief-core` token, read-only Secrets | `TestCompile` | REQ-plugins-workload-identity-secrets |
+| A second, `openfief-egress` token only with granted egress hosts | `TestCompile` | REQ-plugins-egress-token-projected |
 | Images by digest only, tags refused | [image_test.go](../../internal/plugins/image_test.go): `TestParseImageRef` | REQ-plugins-image-digest-only |
 | Every invalid manifest, plugin or grant field reported by name | [manifest_test.go](../../internal/plugins/manifest_test.go): `TestManifestValidate`; [permissions_test.go](../../internal/plugins/permissions_test.go): `TestPluginValidate`, `TestGrantValidate` | REQ-plugins-manifest-validation |
 | Egress hosts canonical; IP literals, wildcards, single labels refused | [egress_host_test.go](../../internal/plugins/egress_host_test.go): `TestParseEgressHost` | REQ-plugins-egress-host-canonical |
 | Only `plugin-<name>` in `openfief` maps to a plugin | [identity_test.go](../../internal/plugins/identity_test.go): `TestPluginForServiceAccount` | REQ-plugins-identity-service-account |
 | Allow-list ConfigMap format, strict decoding | [allowlist_codec_test.go](../../internal/plugins/allowlist_codec_test.go): `TestEncodeAllowLists`, `TestDecodeAllowLists`, `TestAllowListsRoundTrip` | REQ-plugins-allow-list-configmap-format |
+| The connector server serves only callers the verifier accepts; files arrive as one header, then chunks, within a limit | [serve_test.go](../../sdk/go/openfief/serve_test.go): `TestConnectorServerRequiresCore`, `TestConnectorServerSync`, `TestReceiveFile`, `TestInstanceAudience` | REQ-sdk-go-core-only, REQ-sdk-go-receive-file |
+| Every egress request carries the current token as the proxy URL's password; plain http and a missing proxy or token are refused | [egress_test.go](../../sdk/go/openfief/egress_test.go): `TestEgressSendsCurrentTokenOnEveryConnect`, `TestEgressRefusals`, `TestNewEgressClient` | REQ-sdk-go-egress-proxy-url, REQ-plugins-sdk-token-per-request |
+| Tokens are read from their file on every call, never cached | [token_test.go](../../sdk/go/openfief/token_test.go): `TestTokenFileRereadsRotatedToken`, `TestTokenFile`; [core_test.go](../../sdk/go/openfief/core_test.go): `TestCoreHTTPClientSendsCurrentToken` | REQ-sdk-go-token-rotation |
+| Environment names match what the operator sets | [env_test.go](../../sdk/go/openfief/env_test.go): `TestCoreURL`, `TestListenAddress`, `TestLoadConfig`, `TestTokenFileFromEnv` | REQ-sdk-go-plugin-environment |
 
-To check by hand that an upgrade waits, read the "upgrade requesting a new host keeps the previous version" case in `TestPlanRollout`: the expected `Run` is the previous image with the old hosts, and `Pending` holds only the new host.
+The contract's message rules (REQ-connector-contract-messages) are verified by `TestConnectorServerSync` here and by the core's Connect adapter tests (`TEST-ingest-connectrpc-client`, `TEST-ingest-connectrpc-mapping`). To check by hand that an upgrade waits, read the "upgrade requesting a new host keeps the previous version" case in `TestPlanRollout`: the expected `Run` is the previous image with the old hosts, and `Pending` holds only the new host.
 
 ## Not built yet
 
@@ -213,8 +259,8 @@ To check by hand that an upgrade waits, read the "upgrade requesting a new host 
 - **Trusted signers, catalog and verified plugins (D-43, D-44, D-45).** No catalog file and no `plugins.Catalog`, `plugins.Verified` or `plugins.Signer` types; the glossary's Go names for them are proposals.
 - **Manifest from the image label (D-42).** Nothing reads image labels or the registry; the manifest is typed into the `Plugin` spec.
 - **The `openfief` CLI (D-46).** There is no `cmd/openfief`; `Plugin` and `PluginGrant` are applied by hand.
-- **Contracts and SDKs (D-11, D-49).** No `.proto` files, no connector or view service, no TypeScript SDK, and the Go SDK is an empty module. P-8 and P-9 outline the connector and view contracts, but they are proposals, not decisions.
-- **Core-to-plugin auth (D-59).** The NetworkPolicy already admits ingress from the core alone. Missing: the core requesting per-instance tokens through TokenRequest, the SDK verifying them, and the operator publishing the cluster's token-signing keys in a ConfigMap.
-- **Core side of plugin identity (D-27).** Plugins get `openfief-core` tokens, but no core exists yet to verify them.
+- **More contracts and SDKs (D-11).** Only the connector contract exists: no view contract (P-9 outlines one, but it is a proposal), no TypeScript SDK, and no first-party plugin built on the SDK yet.
+- **Core-to-plugin auth (D-59).** The NetworkPolicy admits ingress from the core alone, and the SDK refuses callers its `CoreVerifier` rejects. But the SDK ships no `CoreVerifier`, so each plugin must supply one; the operator doesn't publish the cluster's token-signing keys in a ConfigMap for it to use; and the core's token issuer, the `CoreTokens` port in [ingest/app/connectors.go](../../internal/ingest/app/connectors.go), has no TokenRequest implementation.
+- **Core side of plugin identity (D-27).** Plugins get `openfief-core` tokens and the SDK sends them, but nothing in the core verifies them yet.
 - **Uninstall (D-58).** Deleting a `Plugin` removes its objects by garbage collection and drops its allow-list entry. Deleting its grant and Secrets, and marking its data as coming from a removed instance, are not built.
 - **Data tiers.** Carried from manifest to workload but enforced nowhere (P-33 is undecided).

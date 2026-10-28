@@ -45,7 +45,7 @@ flowchart TB
   cli(["openfief CLI"]):::missing
   subgraph ns["namespace openfief"]
     op["Operator<br/>Plugin + PluginGrant"]:::partial
-    proxy["Egress proxy<br/>Smokescreen"]:::partial
+    proxy["Egress proxy<br/>Smokescreen"]:::built
     core["Core service<br/>ledger, valuation, ingest, read API"]:::partial
     pg[("PostgreSQL")]:::partial
     subgraph plugins["Plugins, one pod each"]
@@ -58,6 +58,8 @@ flowchart TB
       nbpc["NBP FX"]:::partial
     end
   end
+  sdk["Go SDK<br/>connector contract"]:::built
+  sdk -. "plugins build on" .-> plugins
   cli -- "applies resources" --> op
   op -- "creates and constrains" --> plugins
   op -- "allow-lists" --> proxy
@@ -69,12 +71,12 @@ flowchart TB
 | Part | Decided in | Built today | Explained in |
 |---|---|---|---|
 | Operator | D-13, D-15, D-16, D-17, D-56 | `cmd/operator` and the reconciler in `internal/plugins/operator`, plus install manifests in `deploy/`. It deploys no plugin yet: image signature verification (D-56) isn't built, and the placeholder verifier refuses every image | [Operator](concepts/operator.md) |
-| Egress proxy | D-32, D-63 | `cmd/egress-proxy`, embedding Smokescreen. It differs from D-63: a Bearer token instead of the proxy-URL password, the `openfief-core` audience, and `StartWithConfig` instead of `BuildProxy` | [Egress](concepts/egress.md) |
-| Plugin model | D-11, D-16, D-42 to D-49, D-59 | Manifests, grants, effective permissions and workload compilation in `internal/plugins` | [Plugins](concepts/plugins.md) |
-| Ledger | D-18, D-19, D-23, D-33 to D-35 | Domain, use cases and the PostgreSQL store in `internal/ledger`; no service runs it yet | [Ledger](concepts/ledger.md) |
-| Valuation and FX | D-20, D-21, D-25, D-36 | Prices, FX lookups, valuation bases and the NBP client in `internal/valuation`; stored valuations (D-36) are not built | [Valuation](concepts/valuation.md) |
+| Egress proxy | D-32, D-63 | `cmd/egress-proxy`, embedding Smokescreen through `BuildProxy`. It checks each plugin's `openfief-egress` token with a TokenReview, caches accepted reviews, and allows only the hosts the grant names | [Egress](concepts/egress.md) |
+| Plugin model | D-11, D-16, D-42 to D-49, D-59 | Manifests, grants, effective permissions and workload compilation in `internal/plugins`. The connector contract (`openfief.connector.v1`) and the Go SDK for plugin authors in `sdk/go` | [Plugins](concepts/plugins.md) |
+| Ledger | D-18, D-19, D-23, D-33 to D-35 | Domain, use cases and the PostgreSQL store in `internal/ledger`, including the guard against seeding an account twice; no service runs it yet | [Ledger](concepts/ledger.md) |
+| Valuation and FX | D-20, D-21, D-25, D-36 | Prices, FX lookups, valuation bases and the NBP client in `internal/valuation`; stored valuations and the River revaluation queue (D-36) in `internal/valuation/postgres` | [Valuation](concepts/valuation.md) |
 | Treasury bonds | D-9, D-25, D-37 | Polish bond rules in `internal/jurisdiction/pl` | [Treasury bonds](concepts/treasury-bonds.md) |
-| Ingest | D-7, D-8, D-23, D-49 | Import batches and the IBKR Flex mapping and pull in `internal/ingest`; as a package of the core, not yet a plugin | [Ingest](concepts/ingest.md) |
+| Ingest | D-7, D-8, D-23, D-49, D-59 | Import batches and the IBKR Flex mapping and pull in `internal/ingest`, still a package of the core rather than a plugin. The core's client for connector plugins is in `internal/ingest/connectrpc`, but the per-instance tokens it needs (D-59) aren't built | [Ingest](concepts/ingest.md) |
 | Shared kernel | (code organization) | Money, currency, quantity and dates in `internal/kernel` | [Kernel](concepts/kernel.md) |
 | Portfolio | D-52 to D-54, D-61 | Sleeves in `internal/portfolio`; the model portfolio is not built | [Portfolio](concepts/portfolio.md) |
 | Core service, read API, UI, Ghostfolio view, CLI, XTB parser, market data | D-2 to D-6, D-30, D-46, D-50, D-51 | Not built | [Status](https://arkadiuss.github.io/openfief/status/) |
@@ -99,11 +101,11 @@ flowchart LR
   kernel["kernel (shared)"]
 ```
 
-The [code map](https://arkadiuss.github.io/openfief/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has an arrow the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves. And two designed arrows don't exist yet: `views` isn't built, and `valuation` doesn't read the ledger.
+The [code map](https://arkadiuss.github.io/openfief/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has an arrow the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves. And the three arrows from `views` don't exist yet, because `views` isn't built.
 
 ## In the cluster
 
-Everything lives in the `openfief` namespace. A cluster admin installs the custom resource definitions once. The operator's permissions are a Role in that namespace only (D-15). There is no Ingress, LoadBalancer or tunnel (D-28).
+Everything lives in the `openfief` namespace. A cluster admin installs the custom resource definitions once. The operator's permissions are a Role in that namespace only (D-15). The install ships no Ingress, LoadBalancer or tunnel (D-28); only the demo environment adds its own HTTPS route, below.
 
 ```mermaid
 flowchart LR
@@ -121,17 +123,49 @@ flowchart LR
   op -- "creates" --> p1
   op -- "writes" --> cm
   px -- "reads" --> cm
-  p1 -- "HTTPS_PROXY,<br/>Bearer token" --> px
+  p1 -- "HTTPS_PROXY, egress token<br/>as the proxy password" --> px
   px -- "granted hosts only" --> internet
 ```
 
 The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/` and `egress-proxy/` for the two workloads. The [operator](concepts/operator.md) and [egress](concepts/egress.md) pages walk through them.
 
+## The demo environment
+
+`deploy/demo` runs the same install on one Hetzner machine with k3s, holding synthetic data only (GR-12). Nothing pushes to it: cloud-init installs Flux, and Flux pulls each layer below, in dependency order. Five layers follow `main` in git. The `openfief` layer instead follows a signed OCI artifact that CI publishes after each push to `main`, with the images pinned to the digests whose signatures verified (D-17). The HTTPS route is the demo's own, on k3s's bundled Traefik with a Let's Encrypt certificate. It stays suspended until a core service exists. Creating and destroying demos is in [demo.md](dev/demo.md).
+
+```mermaid
+flowchart LR
+  git[("git: main")]
+  oci[("signed OCI artifact<br/>digest-pinned images")]
+  subgraph machine["Hetzner machine, k3s"]
+    flux["Flux<br/>installed by cloud-init"]
+    crds["demo-crds<br/>deploy/crds"]
+    cnpg["demo-cnpg<br/>CloudNativePG operator"]
+    db["demo-database<br/>one-instance cluster"]
+    cm["demo-cert-manager"]
+    ing["demo-ingress<br/>Let's Encrypt issuer"]
+    routes["demo-routes<br/>Traefik, suspended"]
+    of["demo-openfief<br/>operator, egress proxy"]
+  end
+  git --> flux
+  oci --> flux
+  flux --> crds & cnpg & cm
+  crds --> db
+  cnpg --> db
+  cm --> ing --> routes
+  crds --> of
+  db --> of
+  of --> routes
+```
+
+Arrows between layers are Flux `dependsOn` edges. The CI side, from signed images to the published artifact, is on the [delivery pipeline](dev/pipeline.md) page.
+
 ## Main flows
 
 Each flow is drawn on the page that explains it:
 
-- **Importing a broker statement:** the IBKR Flex pull, mapping, and one ledger transaction per import. See [Ingest](concepts/ingest.md).
+- **Importing a broker statement:** the IBKR Flex pull or a connector plugin's delivery, mapping, and one ledger transaction per import. See [Ingest](concepts/ingest.md).
+- **Revaluing after an import:** the import queues revaluation jobs in the same transaction, and a River worker stores the new valuations. See [Valuation](concepts/valuation.md).
 - **Recording and deriving holdings:** versioned transactions, FIFO lots and balance assertions. See [Ledger](concepts/ledger.md).
 - **Valuing a bond lot:** interest periods, indexation, early-redemption fee and Belka tax. See [Treasury bonds](concepts/treasury-bonds.md).
 - **Running a plugin:** from a `Plugin` and its `PluginGrant` to an isolated pod. See [Operator](concepts/operator.md).

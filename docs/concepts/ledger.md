@@ -21,6 +21,8 @@ The ledger is OpenFief's record of what happened in each account: the core's sys
 
 **[Lots](../glossary.md) and FIFO.** A lot is a quantity acquired on a date at a cost. A sale consumes lots first in, first out: the oldest first. That is the order Polish capital-gains tax uses (R-9). An *opening lot* is one the broker reported as held at go-live, with its original open date and cost (D-23). Selling part of a lot splits its cost: the sold part's cost is rounded half-even to two decimal places, and the lot keeps the exact rest, so the two always add up to the original (D-34). Three single-unit sales from a lot of 3 units costing 100.00 take 33.33, 33.34 and 33.33. Fees are not lot cost; they go to the fee ledger account. Broker rows carry no reliable time of day, so within one date acquisitions apply before disposals (D-35).
 
+**Seeding at go-live.** OpenFief doesn't replay an account's full history. It seeds the account once, at go-live, with its opening lots and its opening cash, both against equity (D-23, D-33), and imports transactions from then on. Opening cash is an ordinary deposit, or a withdrawal for a negative balance, whose ID marks it as opening cash. Seeding an account that is already seeded is refused, unless it is exactly the same seeding again, which changes nothing.
+
 **[Balance assertions](../glossary.md).** A broker-reported balance of cash in one currency, or units of one instrument, at the end of a date. Plain-text accounting tools such as Ledger and Beancount use the same device to catch import mistakes. The ledger checks each one against the balance it derives. A mismatch is a flagged [assertion check](../glossary.md) for the owner to resolve; the import that found it is kept (D-18).
 
 ## How it works
@@ -122,10 +124,15 @@ sequenceDiagram
   participant L as app.Ledger
   participant S as postgres.Store
   participant D as ledger domain
-  C->>L: Import(txs, assertions)
+  C->>L: Import or Seed(txs, assertions)
   L->>S: InTx: BEGIN
   L->>D: Validate every transaction and assertion
   L->>S: Account(id) for each account they name
+  opt Seed only, each account of txs in ID order
+    L->>S: LockAccount(id), then Log(id)
+    L->>D: DecideSeed(log, id, txs)
+    Note over L,D: seeded and changed: AlreadySeededError, roll back
+  end
   loop each transaction, sorted by key
     L->>S: Versions(key)
     L->>D: DecideImport(versions, tx)
@@ -141,12 +148,14 @@ sequenceDiagram
     L->>D: CheckBalanceAssertion for stored and incoming assertions
     L->>S: SaveAssertionCheck(matched or flagged)
   end
-  L->>L: run import hooks with the transaction's Store
+  L->>L: run import hooks, such as valuation's ImportHook
   L->>S: COMMIT, or ROLLBACK on any error
   L-->>C: ImportSummary
 ```
 
-Transactions are appended in key order so two concurrent imports never wait on each other's keys in a cycle. If another import appended the same version first, the store returns `ErrVersionConflict` and `Import` reloads; after `MaxAppendAttempts` (3) it fails with a `*VersionConflictError`, and nothing is kept. Incoming assertions replace stored ones with the same date and ledger account. Each result is stored as an `AssertionCheck` with status `AssertionMatched` or `AssertionFlagged` and the derived balance ([check.go](../../internal/ledger/app/check.go)). The `ImportSummary` counts `Unchanged`, `New` and `NewVersions`, lists the `Checks` (`Flagged()` filters them), and gives `EarliestAffected`: per account, the earliest date whose current transactions changed, including the date and account of a superseded version. That is what a revaluation would start from (D-36). An `ImportHook` runs last, inside the transaction; its error rolls the import back.
+Transactions are appended in key order so two concurrent imports never wait on each other's keys in a cycle. If another import appended the same version first, the store returns `ErrVersionConflict` and `Import` reloads; after `MaxAppendAttempts` (3) it fails with a `*VersionConflictError`, and nothing is kept. Incoming assertions replace stored ones with the same date and ledger account. Each result is stored as an `AssertionCheck` with status `AssertionMatched` or `AssertionFlagged` and the derived balance ([check.go](../../internal/ledger/app/check.go)). The `ImportSummary` counts `Unchanged`, `New` and `NewVersions`, lists the `Checks` (`Flagged()` filters them), and gives `EarliestAffected`: per account, the earliest date whose current transactions changed, including the date and account of a superseded version. An `ImportHook` runs last, inside the transaction; its error rolls the import back. The valuation context's hook, `Store.ImportHook` in [queue.go](../../internal/valuation/postgres/queue.go), turns `EarliestAffected` into River revaluation jobs on the import's own transaction, which it reaches through the ledger store's `WithTx` (D-36; see [Valuation](valuation.md)).
+
+**Seeding.** `Ledger.Seed` ([seed.go](../../internal/ledger/app/seed.go)) is `Import` with a guard in front, for an ingest opening batch. Inside the transaction it takes each account of the incoming transactions in ID order, locks it with `Store.LockAccount`, loads its log, and asks `ledger.DecideSeed` ([seed.go](../../internal/ledger/seed.go)). An account is seeded when its current transactions include a seeding one (`IsSeeded`): an opening lot, or opening cash, meaning a deposit or withdrawal whose external ID starts with `OpeningCashPrefix` (`opening-cash:`). Connectors build opening cash with `NewOpeningCash` and key it with `OpeningCashID`, `opening-cash:<currency>:<date>`. An account not yet seeded is `SeedFirst`, even if it already has ordinary transactions. For a seeded account, any incoming transaction of it that isn't unchanged, seeding or not, refuses the whole call with an `*AlreadySeededError` (wrapping `ErrAlreadySeeded`), and nothing is written for any account. If all of them are unchanged, the decision is `SeedUnchanged` and `ImportSummary.AlreadySeeded` lists the account. In PostgreSQL the lock is `SELECT ... FOR NO KEY UPDATE` on the account's row, so two seedings of one account wait for each other while imports that only reference it don't; outside `InTx` it fails with `ErrNoTx`.
 
 **Deriving holdings, lots and cash.** Every derivation in [holding.go](../../internal/ledger/holding.go), [assertion.go](../../internal/ledger/assertion.go) and [lot.go](../../internal/ledger/lot.go) starts from the current versions in one account, dated on or before the day asked about. `HoldingOn`, `HoldingsOn` (non-zero only) and `CashOn` sum units or amounts. `CheckBalanceAssertion` compares that sum with the reported balance and returns an `*AssertionMismatchError` carrying both. `LotsOn` builds lots:
 
@@ -205,7 +214,7 @@ erDiagram
   }
 ```
 
-The database enforces the log's rules for every role, with triggers rather than `REVOKE`, because in M0 the core connects as the schema's owner ([0001_ledger.sql](../../internal/ledger/postgres/migrations/0001_ledger.sql)). An `UPDATE`, `DELETE` or `TRUNCATE` of versions or postings fails with SQLSTATE `OFA01`. A version whose predecessor is missing fails with `OFA02`. Postings can be added only to the version the same transaction just inserted. If a trigger is switched off and a row changed anyway, the stored fingerprint no longer matches and loading fails with `ErrCorruptLog`. `Store.Append` ([log.go](../../internal/ledger/postgres/log.go)) writes a version and its postings in a savepoint, so a refused append leaves the import's transaction usable, and maps the unique `(source, external_id, version)` violation to `app.ErrVersionConflict`. Amounts and quantities are `numeric`, read back as text into `kernel.Decimal`. `Store.WithTx` hands the open `pgx.Tx` to work that must commit with the import, such as inserting a River job (D-36). Sleeves are stored in this schema too, because the portfolio context has no store in M0.
+The database enforces the log's rules for every role, with triggers rather than `REVOKE`, because in M0 the core connects as the schema's owner ([0001_ledger.sql](../../internal/ledger/postgres/migrations/0001_ledger.sql)). An `UPDATE`, `DELETE` or `TRUNCATE` of versions or postings fails with SQLSTATE `OFA01`. A version whose predecessor is missing fails with `OFA02`. Postings can be added only to the version the same transaction just inserted. If a trigger is switched off and a row changed anyway, the stored fingerprint no longer matches and loading fails with `ErrCorruptLog`. `Store.Append` ([log.go](../../internal/ledger/postgres/log.go)) writes a version and its postings in a savepoint, so a refused append leaves the import's transaction usable, and maps the unique `(source, external_id, version)` violation to `app.ErrVersionConflict`. Amounts and quantities are `numeric`, read back as text into `kernel.Decimal`. `Store.WithTx` hands the open `pgx.Tx` to work that must commit with the import; valuation's hook inserts its River jobs through it (D-36). Sleeves are stored in this schema too, because the portfolio context has no store in M0.
 
 ## Decisions
 
@@ -214,11 +223,11 @@ The database enforces the log's rules for every role, with triggers rather than 
 - **D-18**: append-only versioned log, idempotent re-imports, flagged balance assertions.
 - **D-19**: double-entry postings across cash, holding, fee, withholding-tax and FX.
 - **D-20**: amounts keep their original currency; conversion is in [valuation](valuation.md).
-- **D-23**: opening lots at go-live with the broker's open date.
-- **D-33**: an equity ledger account per currency as counterpart.
+- **D-23**: opening lots and cash at go-live; an account is seeded once.
+- **D-33**: an equity ledger account per currency as counterpart, opening cash included.
 - **D-34**: half-even two-place cost split, exact remainder, fees outside cost.
 - **D-35**: ISIN with check digit plus venue symbol; acquisitions first.
-- **D-36**: only the seam: `EarliestAffected`, import hooks and `Store.WithTx`.
+- **D-36**: `EarliestAffected`, import hooks and `WithTx` feed valuation's River queue.
 
 Where the code differs from DESIGN.md's wording: D-19 calls the holding ledger account "position"; the code uses `BookHolding`, the glossary's term. The ER diagram in DESIGN.md §3.3 shows holdings and lots as entities; the code stores neither and computes both from the log on every query. One more, against a proposal rather than a decision: [code-organization.md](../dev/code-organization.md) proposes that each context owns its schema, but the ledger imports `portfolio` and stores its sleeves.
 
@@ -232,23 +241,28 @@ Where the code differs from DESIGN.md's wording: D-19 calls the holding ledger a
 | Re-imports are idempotent; changed content supersedes; every field counts | `TestDecideImport`, `TestFingerprintCoversEveryField`, `TestCurrentTransactions` ([version_test.go](../../internal/ledger/version_test.go)), `TestImportAppendsVersions` ([import_test.go](../../internal/ledger/app/import_test.go)) | REQ-ledger-import-idempotent, REQ-ledger-import-supersede, REQ-ledger-current-versions, REQ-ledger-app-import-append |
 | Holdings and cash come from current versions only | `TestHoldingOn`, `TestHoldingsOn`, `TestHoldingsOnInvalidLog` ([holding_test.go](../../internal/ledger/holding_test.go)), `TestCashOn` ([assertion_test.go](../../internal/ledger/assertion_test.go)) | REQ-ledger-holding-derivation |
 | FIFO order, same-day acquisitions first, cost split, oversell | `TestConsumeFIFO`, `TestConsumeFIFOCostSplitAddsUp`, `TestLotsOn`, `TestLotsOnOversell` ([lot_test.go](../../internal/ledger/lot_test.go)), `TestPropertyFIFOConsumesOldestFirstAndConservesCost`, `TestPropertyOversellConsumesNothing`, `TestPropertyLotsMatchHolding` ([property_test.go](../../internal/ledger/property_test.go)) | REQ-ledger-fifo, REQ-ledger-lot-cost-split, REQ-ledger-oversell, REQ-decision-d35-2-acquisitions-before-disposals |
+| Opening cash is keyed and booked against equity; seeding is decided per account | `TestOpeningCashID`, `TestNewOpeningCash`, `TestIsSeeding`, `TestIsSeeded`, `TestDecideSeed` ([seed_test.go](../../internal/ledger/seed_test.go)) | REQ-ledger-seed-opening-cash, REQ-ledger-seed-refuse-reseed |
+| Re-seeding is refused and writes nothing; concurrent seedings seed once | `TestSeed`, `TestSeedOfAnUnknownAccount`, `TestConcurrentSeedsSeedOnce` ([seed_test.go](../../internal/ledger/app/seed_test.go)), `TestConcurrentSeedsOverPostgres`, `TestLockAccount` ([seed_test.go](../../internal/ledger/postgres/seed_test.go)) | REQ-ledger-seed-refuse-reseed, REQ-ledger-seed-atomic |
 | Assertions are checked, flagged and re-checked after a correction | `TestCheckBalanceAssertion` ([assertion_test.go](../../internal/ledger/assertion_test.go)), `TestImportFlagsAssertionMismatches` ([check_test.go](../../internal/ledger/app/check_test.go)) | REQ-ledger-assertion-mismatch, REQ-ledger-app-assertion-flag |
 | An import is atomic, hooks included; racing imports append one version | `TestImportHooksRunInTheImportTransaction` ([hook_test.go](../../internal/ledger/app/hook_test.go)), `TestImportRetriesVersionConflicts`, `TestConcurrentImportsAppendOneVersion` ([import_test.go](../../internal/ledger/app/import_test.go)) | REQ-ledger-app-import-atomic, REQ-ledger-app-version-conflict |
 | Registry and queries; unknown accounts are refused | `TestSaveSleeve`, `TestSaveAccount` ([ledger_test.go](../../internal/ledger/app/ledger_test.go)), `TestPositionsOnADate`, `TestQueriesOfAnUnknownAccount` ([query_test.go](../../internal/ledger/app/query_test.go)) | REQ-ledger-app-registry, REQ-ledger-app-queries |
 | The database refuses changes; fingerprints catch tampering | `TestAppendRefusesAStoredVersion`, `TestLogIsAppendOnlyInTheDatabase`, `TestLoadDetectsAChangedVersion`, `TestImportOverPostgres` ([appendonly_test.go](../../internal/ledger/postgres/appendonly_test.go)) | REQ-ledger-pg-append-only |
 | Migrations, round trips, hooks on a real transaction | `TestMigrateIsIdempotentAndOwnsTheLedgerSchema`, `TestLogRoundTrip`, `TestAssertionChecksRoundTrip` ([store_test.go](../../internal/ledger/postgres/store_test.go)), `TestImportHookEnqueuesInTheSameTransaction` ([hook_test.go](../../internal/ledger/postgres/hook_test.go)) | REQ-ledger-pg-store, REQ-ledger-app-import-atomic |
+| Valuation's hook enqueues revaluations on the import's transaction | `TestImportHookEnqueuesInTheImportsTransaction`, `TestImportHookNeedsTheLedgersTransaction` ([queue_test.go](../../internal/valuation/postgres/queue_test.go)) | REQ-valuation-enqueue-same-transaction |
 
 `task test` runs the domain and `app` tests; the `app` tests use an in-memory store with the same rules ([memstore_test.go](../../internal/ledger/app/memstore_test.go)). The PostgreSQL tests skip unless `OPENFIEF_PG_DSN` is set, so run `task test:pg`: it starts a throwaway PostgreSQL from local binaries (or uses that DSN) and gives each test a fresh, migrated database. One test: `task test:pg -- -run TestLogIsAppendOnlyInTheDatabase -v`. kibi registers each test file as a TEST entry named after it (TEST-ledger-lot, TEST-ledger-app-import and so on), except that [appendonly_test.go](../../internal/ledger/postgres/appendonly_test.go) is TEST-ledger-pg-log and [property_test.go](../../internal/ledger/property_test.go) is TEST-ledger-properties. To find what governs a behavior, run `node_modules/.bin/kibi search "<question>"` from the repository root.
+
+The two halves of D-36 are tested apart: the ledger's hook tests use a stand-in jobs table, and valuation's hook tests use a stand-in ledger transaction (`ledgerTx`). No test runs `app.Ledger.Import` with valuation's hook against PostgreSQL.
 
 Behaviors the tests don't pin down, worth knowing when reviewing:
 
 - `Import` doesn't derive lots, so a sale of more units than held is stored. The `*OversellError` appears when lots are derived (`LotsOn`), while `HoldingsOn` reports a negative holding.
 - Assertion checks rerun only for accounts that the incoming transactions and assertions name. When a correction moves a transaction out of an account, that account is in `EarliestAffected`, but its stored checks aren't rerun.
+- `Import` has no seed guard: an opening lot or opening cash given to it is appended even into a seeded account. Ingest refuses seeding transactions outside an opening batch (`ErrSeedingOutsideOpening`), so the guard holds on that path only.
 - A buy, sell or opening lot with zero cost or proceeds passes the constructors' sign checks, but its cash or equity posting is then empty, so `Validate` rejects the transaction with `ErrInvalidTransaction`.
 
 ## Not built yet
 
-- **D-36**: no hook enqueues a revaluation, and River isn't a dependency yet. The seam is in place and tested with a stand-in jobs table.
 - **D-6, D-50**: the read API that would serve these queries.
 - **D-58**: marking data that came from a removed plugin instance.
-- **D-49**: nothing wires `app.Ledger` to `postgres.Store` in a binary (`cmd/` holds only the operator and the egress proxy). The ingest side's `LedgerImporter` returns `ingest.ImportSummary`, not `app.ImportSummary`, so an adapter between them is still missing.
+- **D-49, D-36**: nothing wires `app.Ledger` to `postgres.Store` in a binary (`cmd/` holds only the operator and the egress proxy), so valuation's `ImportHook` isn't registered on real imports yet. The ingest side's `LedgerImporter` (`Import` and `Seed`) returns `ingest.ImportSummary`, not `app.ImportSummary`, so an adapter between them is still missing.
