@@ -363,3 +363,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e3608e3448a
+  - type: validates
+    from: TEST-portfolio-app-models
+    to: REQ-portfolio-model-optional
+    created_at: 2026-10-28T23:10:13.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f8dfa824f8d
+  - type: implements
+    from: SYM-portfolio-pbconnect-new-model-portfolio-service-client
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:27:19.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9ddf6b1721c
+  - type: covered_by
+    from: SYM-portfolio-pbconnect-new-model-portfolio-service-client
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:27:19.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c578d9ecf07

@@ -181,3 +181,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6f6fcc15bcc
+  - type: executable_for
+    from: SYM-core-test-helper-model-client
+    to: TEST-core-model-service
+    created_at: 2026-10-28T23:15:45.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e5ba6aa204a
+  - type: implements
+    from: SYM-views-pb-model-target-get-currency
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:42:28.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2246b102bb7e
+  - type: covered_by
+    from: SYM-views-pb-model-target-get-currency
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:42:28.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ae44fa355c0

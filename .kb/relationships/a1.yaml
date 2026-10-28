@@ -265,3 +265,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e2b1bb5c196
+  - type: executable_for
+    from: SYM-core-test-helper-check-model-refusals
+    to: TEST-core-model-service
+    created_at: 2026-10-28T23:37:39.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c78bcbcb2f3c
+  - type: implements
+    from: SYM-views-pb-model-history-gap-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:41:14.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79a71f6ff8ed
+  - type: covered_by
+    from: SYM-views-pb-model-history-gap-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:41:14.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dcebb2c13f0
+  - type: implements
+    from: SYM-views-pb-model-target-history-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:43:55.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc0fd095ffe9
+  - type: covered_by
+    from: SYM-views-pb-model-target-history-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:43:55.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76793659f1a3

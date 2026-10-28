@@ -384,3 +384,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b043d3b5775d
+  - type: implements
+    from: SYM-portfolio-connectapi-new
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:19:31.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a89c6c70abe1
+  - type: covered_by
+    from: SYM-portfolio-connectapi-new
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:19:31.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e74e51860622
+  - type: implements
+    from: SYM-views-pb-model-target-history-get-first-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:44:14.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-606c13ed7bd8
+  - type: covered_by
+    from: SYM-views-pb-model-target-history-get-first-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:44:14.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-164eed28a3c8
+  - type: implements
+    from: SYM-views-pb-backtest-day-get-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:45:16.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abccf709220e
+  - type: covered_by
+    from: SYM-views-pb-backtest-day-get-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:45:17.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96a0d75ff546

@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83ebf9b8996a
+  - type: implements
+    from: SYM-views-connectapi-read-service-get-model-portfolio
+    to: REQ-views-model-portfolio
+    created_at: 2026-10-28T23:40:15.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e81070a4ab5
+  - type: implements
+    from: SYM-views-connectapi-read-service-get-model-portfolio
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:40:15.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-799a7ff2757f
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-get-model-portfolio
+    to: TEST-views-connectapi-model
+    created_at: 2026-10-28T23:40:15.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e13ef95ba745

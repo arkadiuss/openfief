@@ -265,3 +265,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-137c407bffc0
+  - type: implements
+    from: SYM-portfolio-pb-save-model-portfolio-response
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:26:16.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33042fe91dbd
+  - type: covered_by
+    from: SYM-portfolio-pb-save-model-portfolio-response
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:26:16.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14aaa4732878
+  - type: implements
+    from: SYM-views-pb-backtest-day-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:45:10.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84a7accd670e
+  - type: covered_by
+    from: SYM-views-pb-backtest-day-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:45:10.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-846cce9ca398

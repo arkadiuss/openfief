@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3e95058281d
+  - type: implements
+    from: SYM-portfolio-app-parse-instrument
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:17:52.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-838cc7006d0f
+  - type: covered_by
+    from: SYM-portfolio-app-parse-instrument
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:17:52.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150ee2c857ff

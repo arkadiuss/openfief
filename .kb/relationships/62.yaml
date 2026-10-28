@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9352eb06b629
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-mem-store-save-model
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:20:17.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d615d2377685

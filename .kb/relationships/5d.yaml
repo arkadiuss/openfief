@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ed958bdadfe
+  - type: executable_for
+    from: SYM-portfolio-app-test-report-missing-and-failures
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:18:48.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22602d0a6a28

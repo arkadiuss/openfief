@@ -286,3 +286,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed8fdae00d4b
+  - type: implements
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:27:14.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c049a228a999
+  - type: covered_by
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:27:14.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc24034b59ab

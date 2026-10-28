@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a88790bc602
+  - type: implements
+    from: SYM-views-pb-get-model-portfolio-response-get-targets
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:47:02.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b4697cf2ea7
+  - type: covered_by
+    from: SYM-views-pb-get-model-portfolio-response-get-targets
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:47:02.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb51761cd1bd

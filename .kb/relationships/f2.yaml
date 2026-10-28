@@ -230,3 +230,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-280b65489b0c
+  - type: implements
+    from: SYM-views-pb-model-target-kind-enum
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:40:25.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83d77b7fa005
+  - type: covered_by
+    from: SYM-views-pb-model-target-kind-enum
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:40:25.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c289e952c93

@@ -146,3 +146,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdccafca060b
+  - type: implements
+    from: SYM-portfolio-pb-target-get-currency
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:23:45.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a82064123dda
+  - type: covered_by
+    from: SYM-portfolio-pb-target-get-currency
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:23:45.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0b5894fac67
+  - type: implements
+    from: SYM-portfolio-pb-file_openfief_portfolio_v1_model_proto_init
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:27:02.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-199b407e0261
+  - type: covered_by
+    from: SYM-portfolio-pb-file_openfief_portfolio_v1_model_proto_init
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:27:02.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e46bea28f73

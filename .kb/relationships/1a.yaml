@@ -293,3 +293,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-239078c4e902
+  - type: executable_for
+    from: SYM-portfolio-pg-test-helper-target
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:14.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5efffffad4fe

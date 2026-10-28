@@ -370,3 +370,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb48de41f4cc
+  - type: implements
+    from: SYM-views-pb-model-target-get-kind
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:42:12.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac636948057
+  - type: covered_by
+    from: SYM-views-pb-model-target-get-kind
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:42:12.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dc3cc467e20
+  - type: implements
+    from: SYM-views-pb-model-target-history-get-gap
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:44:27.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69038be9f5e7
+  - type: covered_by
+    from: SYM-views-pb-model-target-history-get-gap
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:44:27.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1815abdad0a4

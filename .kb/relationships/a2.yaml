@@ -265,3 +265,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f4c9553e09d
+  - type: implements
+    from: SYM-core-owner-sessions
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:15:21.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56234593166d
+  - type: covered_by
+    from: SYM-core-owner-sessions
+    to: TEST-core-model-service
+    created_at: 2026-10-28T23:15:21.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44153af56d5a

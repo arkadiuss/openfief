@@ -251,3 +251,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b87379ba1b9
+  - type: implements
+    from: SYM-portfolio-app-market-data
+    to: REQ-portfolio-model-report
+    created_at: 2026-10-28T23:18:58.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15b9ad30f205
+  - type: covered_by
+    from: SYM-portfolio-app-market-data
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:18:58.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc2cbeac8a09
+  - type: implements
+    from: SYM-portfolio-app-models-backtest-input
+    to: REQ-portfolio-model-report
+    created_at: 2026-10-28T23:19:22.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45038c95b4ad
+  - type: implements
+    from: SYM-portfolio-app-models-backtest-input
+    to: REQ-portfolio-model-optional
+    created_at: 2026-10-28T23:19:22.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e99c0bf29491
+  - type: covered_by
+    from: SYM-portfolio-app-models-backtest-input
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:19:22.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20119e869f63
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-errors
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:21:15.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c21fd76399
+  - type: implements
+    from: SYM-views-pb-drawdown
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:42:37.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d43d8c513864
+  - type: covered_by
+    from: SYM-views-pb-drawdown
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:42:37.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0591e404534

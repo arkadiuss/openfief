@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53b69b3e7068
+  - type: implements
+    from: SYM-portfolio-pb-save-model-portfolio-response-string
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:26:26.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5f94e0f3250
+  - type: covered_by
+    from: SYM-portfolio-pb-save-model-portfolio-response-string
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:26:26.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35084f007123

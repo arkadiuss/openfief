@@ -251,3 +251,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4026184536a3
+  - type: implements
+    from: SYM-portfolio-pb-get-model-portfolio-request-get-origin
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:24:55.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3f52b9497ec
+  - type: covered_by
+    from: SYM-portfolio-pb-get-model-portfolio-request-get-origin
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:24:55.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6867e079c77a
+  - type: implements
+    from: SYM-portfolio-pb-save-model-portfolio-request-get-origin
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:26:03.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2afcbd48a87c
+  - type: covered_by
+    from: SYM-portfolio-pb-save-model-portfolio-request-get-origin
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:26:03.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b57be1116a51

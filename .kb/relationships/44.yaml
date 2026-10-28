@@ -422,5 +422,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-c5be058fdb3d
+      },
+    {
+        type: implements,
+        from: SYM-portfolio-app-models-check-owner,
+        to: REQ-portfolio-model-entry,
+        created_at: 2026-10-28T23:17:57.371Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-b121909447e2
+      },
+    {
+        type: covered_by,
+        from: SYM-portfolio-app-models-check-owner,
+        to: TEST-portfolio-app-models,
+        created_at: 2026-10-28T23:17:57.408Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-14b5da1cf1c8
       }
   ]

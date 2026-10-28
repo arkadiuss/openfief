@@ -3,6 +3,8 @@ title: Portfolio
 description: Sleeves and sleeve kinds, the defensive and offensive parts of the portfolio that every account belongs to, and the model portfolio, its backtest and max drawdowns.
 covers:
   - internal/portfolio/**
+  - proto/openfief/portfolio/**
+  - sdk/go/gen/openfief/portfolio/**
 ---
 
 The portfolio context describes the portfolio as a whole: the parts it is divided into, and later the model it is compared with. It holds [sleeves](../glossary.md) and [sleeve kinds](../glossary.md): every account belongs to exactly one sleeve, every sleeve has one kind, and each sleeve is either defensive or offensive. It also holds the optional [model portfolio](../glossary.md) (D-52 to D-54): its [targets](../glossary.md), its [backtest](../glossary.md) and the [max drawdown](../glossary.md) of the model and of each target.
@@ -103,16 +105,48 @@ flowchart LR
 
 **Max drawdown.** `MaxDrawdown` walks the series once, keeping the highest value so far; each later value's fall from it is compared exactly, by cross-multiplying, and only the worst one's depth is divided, rounded half-even to 12 places. Of equal falls it keeps the earliest. A series that never falls has depth 0 with its first day as both peak and trough.
 
-### Not built: storing, serving and showing the model
+### Built: storing and entering the model
+
+```mermaid
+sequenceDiagram
+  participant B as Owner's browser
+  participant U as Built-in UI
+  participant C as Core: ModelPortfolioService
+  participant A as app.Models
+  participant S as portfolio schema
+  B->>U: settings form
+  U->>C: SaveModelPortfolio(origin, session token, model)<br/>Bearer: the UI's plugin token
+  C->>C: CallerInterceptor: a view plugin?
+  C->>A: Save
+  A->>A: Owners.CheckOwner: owner scope on origin?
+  A->>A: CheckModel: Model.Validate, ISIN check digits
+  A->>S: SaveModel, one transaction
+  C-->>U: the model as stored
+```
+
+**Entry.** D-52 has the owner enter the model in the built-in UI, which hands it to the core like manual bond lots (D-49). The read API stays read-only (D-6), so the core serves a separate contract to view plugins only, `openfief.portfolio.v1.ModelPortfolioService` in [model.proto](../../proto/openfief/portfolio/v1/model.proto), with the `AuthService`'s conventions: the caller presents its plugin token, admitted by the identity context's `CallerInterceptor`, and the request carries the browser's origin and the owner's session token. `GetModelPortfolio` returns the stored model, on or off; `SaveModelPortfolio` replaces it whole. Only an owner-scoped session may call either: an invalid session is `UNAUTHENTICATED`, a read-scoped one or an origin off the allow-list `PERMISSION_DENIED`, a model breaking a rule `INVALID_ARGUMENT` with the rule it broke. No decision names this write path; it is the narrowest one that lets the UI hand the model over (see [Decisions](#decisions)).
+
+| Package | What it holds |
+|---|---|
+| [`portfolio/app`](../../internal/portfolio/app/models.go) | `Models`: `Settings` and `Save` for the owner, `CheckModel` and `ParseInstrument`; `Report`, the backtest and drawdowns for the read API, only while the model is on. The ports `ModelStore`, `MarketData` (prices, index levels and FX rates, which `*valuation/postgres.Store` serves) and `Owners`, with `ErrNoSession` and `ErrNotOwner`. PLN is the only reporting currency, as in the read API. |
+| [`portfolio/postgres`](../../internal/portfolio/postgres/store.go) | The `portfolio` schema ([0001_model.sql](../../internal/portfolio/postgres/migrations/0001_model.sql)): `model`, at most one row with `enabled`, and `model_targets` in the owner's order. No row is the zero `Model`, off (D-52). Saving replaces both in one transaction. Table checks repeat the per-target rules; the 100% sum is checked before saving. |
+| [`portfolio/connectapi`](../../internal/portfolio/connectapi/service.go) | The generated handler, the conversion between messages and the domain, and the error mapping. |
+
+`cmd/core` migrates the schema, implements `Owners` over the identity context (`ownerSessions`: the origin on `--auth-origin` and `Auth.Session` with owner scope) and mounts the service next to the `AuthService` ([model.go](../../cmd/core/model.go)).
+
+**The report.** `Models.Report(through)` loads the model; while it is off it reads nothing else and says so. Otherwise it loads each instrument target's prices, keyed `ISIN/symbol` like the ledger's instruments, each index target's [index levels](../glossary.md), keyed by the name the market-data connector gives the index (stored since the EODHD connector, [Valuation](valuation.md)), and the FX rates of every currency they are in, all through `through`. It runs `Backtest`, then `MaxDrawdown` over the whole backtest and over each target's own history.
+
+The read API serves the report as `GetModelPortfolio`, rebased to 100 on go-live, and answers 404 while the model is off ([Read API](read-api.md#the-model-portfolio)).
+
+### Not built: showing the model
 
 ```mermaid
 flowchart LR
-  owner(["Owner, built-in UI"]) -- "targets and weights, D-52" --> store["Stored model<br/>off by default"]
-  store --> bt["portfolio.Backtest"]
-  bt --> api["Read API, D-6"]
+  store["Stored model<br/>off by default"] --> rep["app.Models.Report"]
+  rep --> api["Read API: GetModelPortfolio"]
   api --> chart["Value-over-time chart<br/>two lines from go-live, both at 100"]
   classDef notbuilt stroke-dasharray: 5 5
-  class store,api,chart notbuilt
+  class chart notbuilt
 ```
 
 ## Decisions
@@ -121,6 +155,8 @@ flowchart LR
 - **D-30**: `KindBySleeve` lets the allocation group by kind; the chart isn't built.
 - **D-52, D-53, D-54**: the model's targets and weights, its backtest and max drawdowns are built as pure rules. When it rebalances (each December 31), the 0.01% weight step, the 50-target limit and the precision are this context's reading, not the author's.
 - **D-61, D-62**: the backtest is in the reporting currency and a foreign target starts with its first FX rate.
+- **D-52, D-49: how the UI hands the model to the core is not decided in detail.** The core serves `ModelPortfolioService` to view plugins only, with the `AuthService`'s caller check and owner-scoped sessions, as the narrowest write path that keeps the read API read-only. Whether this is the shape the author wants for owner entries (manual bond lots will need one too) is for the author.
+- **A target's own drawdown (D-54) is in the reporting currency** over the target's history where it has both closes and FX rates. P-48, not decided, would compute it in the target's own currency over its whole history.
 - **No decision ID for sleeve kinds.** The commit and the migration call them an "author decision", and the glossary defines the term, but DESIGN.md records no D-ID for the built-in kinds, the default sleeves or the override.
 - **Which offensive sleeves agents may lease from.** The glossary makes every offensive sleeve "the part fiefs are leased from". [kind.go](../../internal/portfolio/kind.go) says only `agent-pool` is what fiefs are leased from and `satellite` holds the owner's own higher-risk positions, yet both are offensive and the default Satellite sleeve is offensive. Nothing in the code tells them apart; OQ-20 is still open.
 
@@ -136,6 +172,9 @@ flowchart LR
 | Targets, weights and the 100% sum | `TestModelValidate`, `TestTargetKind`, `TestTargetKey` in [model_test.go](../../internal/portfolio/model_test.go) | REQ-portfolio-model-targets, REQ-portfolio-model-weights |
 | Histories in PLN, the start, the end, the year-end rebalance, gaps and bad history | `TestBacktest`, `TestBacktestTargetHistories`, `TestMissingDataString` in [backtest_test.go](../../internal/portfolio/backtest_test.go) | REQ-portfolio-backtest-history, REQ-portfolio-backtest-index, REQ-portfolio-backtest-yearly-rebalance |
 | Max drawdown and rebasing | `TestMaxDrawdown`, `TestSince` in [drawdown_test.go](../../internal/portfolio/drawdown_test.go) | REQ-portfolio-drawdown-depth, REQ-portfolio-rebase, REQ-portfolio-max-drawdown |
+| The owner reads and saves the model; other sessions are refused; invalid models and bad ISINs are refused; the report while on, nothing read while off | `TestSettingsAndSave`, `TestOwnerOnly`, `TestSaveRejects`, `TestReport`, `TestReportOff`, `TestReportMissingAndFailures` in [app/models_test.go](../../internal/portfolio/app/models_test.go) | REQ-portfolio-model-entry, REQ-portfolio-model-report, REQ-portfolio-model-optional |
+| The service over Connect: callers, sessions, error codes, round trip | `TestSaveAndGet`, `TestErrors` in [connectapi/service_test.go](../../internal/portfolio/connectapi/service_test.go); `TestModelPortfolioService` in [cmd/core/model_test.go](../../cmd/core/model_test.go) under `task test:pg` | REQ-portfolio-model-entry |
+| PostgreSQL: off by default, round trip, table checks | `TestModelRoundTrip`, `TestModelConstraints` in [postgres/store_test.go](../../internal/portfolio/postgres/store_test.go) under `task test:pg` | REQ-portfolio-model-store |
 | Properties: one target is its price, price scale doesn't matter, the drawdown is the worst pair | `TestBacktestOfOneTargetIsItsPrice`, `TestBacktestIgnoresPriceScale`, `TestMaxDrawdownIsTheWorstPair` in [backtest_property_test.go](../../internal/portfolio/backtest_property_test.go) | REQ-portfolio-backtest-index, REQ-portfolio-drawdown-depth |
 
 Run `go test ./internal/portfolio/... ./internal/ledger/app/...` or `task test`; the PostgreSQL tests run with `task test:pg`.
@@ -144,7 +183,7 @@ From reading the code: the override guards only one path to offensive. Saving a 
 
 ## Not built yet
 
-- **D-52**: storing the model portfolio (off by default), entry in the built-in UI, and its place in the read API.
+- **D-52**: the model portfolio's entry form in the built-in UI.
 - **D-53, D-54**: the model's line in the value-over-time chart (D-30) and its drawdowns in the UI.
 - **D-62**: the reporting currency setting and its default from the jurisdiction pack. The backtest also needs FX history into it, which starts no earlier than NBP's first rate on 2002-01-02.
 - **D-30, D-6**: sleeves and kinds in the read API, and the allocation chart.

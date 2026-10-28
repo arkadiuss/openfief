@@ -42,16 +42,22 @@ type Views struct {
 	statuses   ValuationStatuses
 	rates      FXRates
 	reporting  kernel.Currency
+	models     ModelReports
 }
 
 // New returns the queries over the given ports, with totals, valuations and
-// the allocation in the reporting currency reporting (D-62). A reporting
-// currency other than PLN is an *UnsupportedReportingCurrencyError.
-func New(l Ledger, v Valuations, s ValuationStatuses, r FXRates, reporting kernel.Currency) (*Views, error) {
+// the allocation in the reporting currency reporting (D-62), configured by
+// opts. A reporting currency other than PLN is an
+// *UnsupportedReportingCurrencyError.
+func New(l Ledger, v Valuations, s ValuationStatuses, r FXRates, reporting kernel.Currency, opts ...Option) (*Views, error) {
 	if !reporting.Equal(valuation.PLN()) {
 		return nil, &UnsupportedReportingCurrencyError{Currency: reporting}
 	}
-	return &Views{ledger: l, valuations: v, statuses: s, rates: r, reporting: reporting}, nil
+	out := &Views{ledger: l, valuations: v, statuses: s, rates: r, reporting: reporting}
+	for _, o := range opts {
+		o(out)
+	}
+	return out, nil
 }
 
 // ReportingCurrency returns the currency totals, valuations and the

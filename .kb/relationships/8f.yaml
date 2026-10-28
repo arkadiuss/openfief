@@ -300,3 +300,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7de1be3f661
+  - type: implements
+    from: SYM-views-pb-model-target-history-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:44:01.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a12382957c1
+  - type: covered_by
+    from: SYM-views-pb-model-target-history-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:44:01.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77dd6c8f69bf

@@ -20,6 +20,7 @@ var errBadParameter = errors.New("invalid parameter")
 // quote account IDs, amounts or what was asked for.
 var (
 	errNoSuchAccount = errors.New("no such account")
+	errModelOff      = errors.New("no model portfolio")
 	errBadRange      = errors.New("the date range ends before it starts or is too long")
 	errBadPageToken  = errors.New("the page token is not one this API returned")
 	errBadPageSize   = errors.New("the page size is out of range")
@@ -55,6 +56,9 @@ func invalidMessage(err error) error {
 func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.Error {
 	if errors.Is(err, app.ErrUnknownAccount) {
 		return connect.NewError(connect.CodeNotFound, errNoSuchAccount)
+	}
+	if errors.Is(err, app.ErrModelOff) {
+		return connect.NewError(connect.CodeNotFound, errModelOff)
 	}
 	if msg := invalidMessage(err); msg != nil {
 		return connect.NewError(connect.CodeInvalidArgument, msg)

@@ -244,3 +244,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55879e64ee78
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-fake-market-fx-rates
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:16:35.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c9f5934411d
+  - type: implements
+    from: SYM-portfolio-pb-model-portfolio-proto-reflect
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:24:11.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f96e217a551
+  - type: covered_by
+    from: SYM-portfolio-pb-model-portfolio-proto-reflect
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:24:11.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59e887a45db9
+  - type: implements
+    from: SYM-portfolio-pb-get-model-portfolio-request-descriptor
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:24:50.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f87e76700e68
+  - type: covered_by
+    from: SYM-portfolio-pb-get-model-portfolio-request-descriptor
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:24:50.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f600fd4000a6

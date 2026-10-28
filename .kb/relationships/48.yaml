@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f01cac2e101
+  - type: implements
+    from: SYM-views-pb-model-target-history-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:43:39.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a5312340160
+  - type: covered_by
+    from: SYM-views-pb-model-target-history-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:43:39.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f60954e38f00

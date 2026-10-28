@@ -146,3 +146,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3718c270584
+  - type: implements
+    from: SYM-portfolio-pb-get-model-portfolio-request
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:24:28.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69e721b9d66a
+  - type: covered_by
+    from: SYM-portfolio-pb-get-model-portfolio-request
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:24:28.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e4084755a1f

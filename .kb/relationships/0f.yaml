@@ -391,3 +391,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5dd143bfdacc
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-model-portfolio
+    to: TEST-views-connectapi-model
+    created_at: 2026-10-28T23:39:58.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07446d319cf5

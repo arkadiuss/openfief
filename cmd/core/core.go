@@ -18,6 +18,7 @@ import (
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
+	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
 	viewsapp "github.com/arkadiuss/openfief/internal/views/app"
@@ -40,7 +41,7 @@ func withPool(ctx context.Context, dsn string, fn func(d *deps) error) error {
 }
 
 // migrate applies every context's migrations: the ledger's, valuation's with
-// River's, identity's and ingest's. Each takes its own advisory lock, so replicas
+// River's, identity's, ingest's and portfolio's. Each takes its own advisory lock, so replicas
 // starting at once apply each migration once.
 func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	if err := ledgerpg.Migrate(ctx, pool); err != nil {
@@ -53,6 +54,9 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	if err := ingestpg.Migrate(ctx, pool); err != nil {
+		return fmt.Errorf("migrating: %w", err)
+	}
+	if err := portfoliopg.Migrate(ctx, pool); err != nil {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	return nil
@@ -88,8 +92,8 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 // and the read API with script tokens as its verifier (D-27). It stores
 // the built-in sleeve kinds and sleeves when cfg asks, and records the bond
 // basis, which revalues everything when it changed. Next to the read API it
-// serves the AuthService to the view plugins callers accepts (author
-// decision, auth split). Start the River client to run the workers.
+// serves the AuthService and the ModelPortfolioService (D-52) to the view
+// plugins callers accepts (author decision, auth split). Start the River client to run the workers.
 func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger, callers identityconnect.Callers) (*core, error) {
 	vstore, err := valuationpg.NewStore(pool)
 	if err != nil {
@@ -114,13 +118,17 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, fmt.Errorf("revaluation workers: %w", err)
 	}
-	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting)
-	if err != nil {
-		return nil, fmt.Errorf("views: %w", err)
-	}
 	auth, err := newAuth(pool, &cfg.Auth, now)
 	if err != nil {
 		return nil, err
+	}
+	models, err := newModels(pool, vstore, auth, cfg.Auth.Origins, cfg.Reporting)
+	if err != nil {
+		return nil, err
+	}
+	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewsapp.WithModel(models))
+	if err != nil {
+		return nil, fmt.Errorf("views: %w", err)
 	}
 	api, err := connectapi.New(views, readTokens{auth: auth}, connectapi.WithLogger(log))
 	if err != nil {
@@ -130,7 +138,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		pool: pool, ledger: l, recorder: recorder, now: now, log: log,
 		today: valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 	}
-	return &core{api: withAuthService(api, auth, callers, log), river: client, deps: deps}, nil
+	served := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
+	return &core{api: served, river: client, deps: deps}, nil
 }
 
 // readTokens is the read API's token verifier: the owner's session, of any

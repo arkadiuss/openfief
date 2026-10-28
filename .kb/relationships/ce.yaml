@@ -377,3 +377,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5837803e3ae5
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-fake-market-prices
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:16:25.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-813289449d7d
+  - type: executable_for
+    from: SYM-portfolio-app-test-save-rejects
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:18:17.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-967c608f983a
+  - type: implements
+    from: SYM-portfolio-pb-get-model-portfolio-response-proto-message
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:25:17.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-333070661f62
+  - type: covered_by
+    from: SYM-portfolio-pb-get-model-portfolio-response-proto-message
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:25:17.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f1725c75067

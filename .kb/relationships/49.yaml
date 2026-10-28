@@ -202,3 +202,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c3fe875b650
+  - type: implements
+    from: SYM-portfolio-pb-save-model-portfolio-request-string
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:25:44.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11ab5d7af94f
+  - type: covered_by
+    from: SYM-portfolio-pb-save-model-portfolio-request-string
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:25:44.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fde61156de89

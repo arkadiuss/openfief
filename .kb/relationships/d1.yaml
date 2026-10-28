@@ -272,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b98711cc3416
+  - type: implements
+    from: SYM-views-app-model-portfolio-type
+    to: REQ-views-model-portfolio
+    created_at: 2026-10-28T23:38:07.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aadd406c39a0
+  - type: implements
+    from: SYM-views-app-model-portfolio-type
+    to: REQ-views-model-line-from-go-live
+    created_at: 2026-10-28T23:38:07.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbfc91a7f333
+  - type: covered_by
+    from: SYM-views-app-model-portfolio-type
+    to: TEST-views-app-model
+    created_at: 2026-10-28T23:38:07.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7da1d1b949f1

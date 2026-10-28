@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1c2454c9d8a
+  - type: executable_for
+    from: SYM-portfolio-pg-test-helper-new-pool
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:04.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03e782279f48
+  - type: implements
+    from: SYM-portfolio-pb-get-model-portfolio-request-string
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:24:36.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19184e774954
+  - type: covered_by
+    from: SYM-portfolio-pb-get-model-portfolio-request-string
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:24:37.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be5e013f33f9

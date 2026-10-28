@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e06390262e3a
+  - type: implements
+    from: SYM-portfolio-pb-file_openfief_portfolio_v1_model_proto_raw-desc-gzip
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:26:51.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e2c017b91f
+  - type: covered_by
+    from: SYM-portfolio-pb-file_openfief_portfolio_v1_model_proto_raw-desc-gzip
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:26:51.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7c28884b500
