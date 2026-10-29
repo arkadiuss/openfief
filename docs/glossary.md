@@ -24,7 +24,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Target | portfolio | `portfolio.Target` | One instrument or index in the model portfolio, with its weight. The weights sum to 100%. | allocation |
 | Backtest | portfolio | `portfolio.Backtest` | The model portfolio's value series computed from end-of-day history, rebalanced to the target weights once a year. | simulation |
 | Max drawdown | portfolio | `portfolio.MaxDrawdown` | The worst fall from a peak to a later trough in a value series, with both dates. | max loss |
-| Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one sleeve kind and one role, which defaults to the kind's. Defensive: not available to agents. Offensive: the part fiefs are leased from. A sleeve is offensive in a defensive kind only when the owner explicitly overrides it. | bucket |
+| Sleeve | portfolio | `portfolio.Sleeve` | A part of the portfolio with one sleeve kind and one role, which defaults to the kind's. Defensive: not available to agents. Offensive: the part fiefs are leased from. A role other than the kind's, either way, needs the owner's explicit choice, the role override (D-71). | bucket |
 | Sleeve kind | portfolio | `portfolio.Kind` | A named category of sleeve with a default role, such as core, bonds, retirement or agent-pool. Built-in kinds come with OpenFief; the owner can add and rename kinds, but a kind's default role never changes. | sleeve type |
 | Jurisdiction pack | jurisdiction | `jurisdiction.Pack` | The pluggable rules for one country (GR-13): bond terms, tax rules, and the default reporting currency. Poland first. | locale, country plugin |
 | Import batch | ingest | `ingest.Batch` | One run of a connector's ingest path. | sync |
@@ -36,7 +36,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Connector contract | ingest | `openfief.connector.v1.ConnectorService` | The protobuf service over Connect RPC that a connector plugin serves and the core calls (D-11, D-49): Sync pulls what the institution reported since a watermark, ImportFile maps a statement file, ImportBondLots maps bond lots the owner entered. Each call is one import batch, with a batch ID the core generates and reuses on a retry. Not the public read API. | ingest API |
 | Delivery | ingest | `app.Delivery` | What a connector returns for one import batch: its mapping, plus any prices, FX rates, index readings, index levels, bond series terms and cross-check prices, and for a sync the next watermark. The core scopes its transaction keys to the connector instance. | push, upload (for plugins) |
 | Watermark | ingest | `app.Delivery.Watermark` | Where a connector's next sync continues from. The connector returns it, the core stores it after importing the delivery and hands it back on the next sync; only the connector understands it. | cursor, checkpoint |
-| Connector binding | ingest | `app.ConnectorBindings` | Permission for one connector instance to write to one account. The owner adds it with `core connector bind`; the core refuses, whole, a delivery that names an account its instance is not bound to. | account mapping |
+| Connector binding | ingest | `app.ConnectorBindings` | Permission for one connector instance to write to one account. The owner adds it in the built-in UI with the account, or with `core connector bind`; the core refuses, whole, a delivery that names an account its instance is not bound to. | account mapping |
+| Broker account | ingest | `ingest.BrokerAccount` | One of the owner's accounts as the institution names it, such as an IBKR Flex account ID, reported by a broker connector (D-72). The owner maps it to an OpenFief account in the built-in UI instead of typing it; nothing of an unmapped one is booked. | external account, account number |
 | Bond lot | ingest | `ingest.BondLot` | A lot of treasury bonds the owner enters by hand (D-9): its series code, quantity and purchase date, plus the series terms valuing it needs. The core hands it to the connector bound to its account (D-49), which books it as a deposit and a buy on the purchase date. | bond entry, manual lot |
 | Sync policy | ingest | `ingest.SyncPolicy` | When the core syncs each connector instance (D-49): every interval after a success, with jitter, and after a failure again with a doubling backoff. | cron, schedule (alone) |
 | Index reading | ingest | `ingest.IndexReading` | One published value of an index that sets treasury bond interest, as a yearly fraction: CPI year on year for a month (GUS), or the NBP reference rate for the month whose interest periods it sets, dated on that month's first day. Period indices are picked from them. | rate (alone) |
@@ -173,6 +174,7 @@ Don't create code for these before their milestone.
 | FIFO | First in, first out: the oldest lots are treated as sold first when computing gains. |
 | Flex Query | IBKR's configurable reporting export (trades, positions, cash), retrievable through a web service with a token. |
 | Frontier model | The most capable models from the large labs, typically cloud-hosted. |
+| Gateway API / HTTPRoute | The Kubernetes networking API that succeeds Ingress. A cluster's operator runs a Gateway, which listens for traffic and terminates TLS; an application attaches an HTTPRoute to it for its hostname and paths. |
 | GPW | Giełda Papierów Wartościowych w Warszawie, the Warsaw Stock Exchange. |
 | GUS | Główny Urząd Statystyczny, Statistics Poland. |
 | HITL | Human in the loop: a person must approve before the system acts. |
@@ -185,6 +187,7 @@ Don't create code for these before their milestone.
 | Ingress | The Kubernetes resource that exposes an HTTP service outside the cluster. |
 | JWT / JWKS | A JSON Web Token (RFC 7519) is a signed set of claims, such as issuer, subject, audience and expiry; Kubernetes ServiceAccount tokens are JWTs. A JSON Web Key Set (RFC 7517) is a JSON list of the public keys that verify them. |
 | kind / k3d / k3s | kind and k3d run Kubernetes clusters in containers for testing; k3s is a lightweight Kubernetes distribution. |
+| Kustomize component | Kustomize builds Kubernetes manifests from a base plus overlays, with no templating; a component is an optional piece an installation opts into by listing it. |
 | KNF | Komisja Nadzoru Finansowego, the Polish Financial Supervision Authority. |
 | KV | Key-value store. |
 | Limit order | An order that executes only at a stated price or better. |

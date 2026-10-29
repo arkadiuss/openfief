@@ -440,3 +440,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2c6f8fc1bb7
+  - type: executable_for
+    from: SYM-ibkrflex-test-helper-check-same-entries
+    to: TEST-ingest-ibkrflex-brokers
+    created_at: 2026-10-29T11:51:52.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c956c02f6352
+  - type: implements
+    from: SYM-ingest-postgres-store-bindings
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:04:02.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f35c9ee17dfe
+  - type: covered_by
+    from: SYM-ingest-postgres-store-bindings
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T13:04:02.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df5f6862e4a5
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-response-get-kind
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:35:27.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b2575ece83
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-response-get-kind
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:35:27.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-588a89ad77ce
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-request
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:48:25.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-197c1a331a2b
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-request
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:48:25.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e2c60687177

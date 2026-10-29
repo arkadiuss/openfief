@@ -447,3 +447,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-551e17c967d9
+  - type: implements
+    from: SYM-ui-account-entry
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:21.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-635f0734a7bb
+  - type: covered_by
+    from: SYM-ui-account-entry
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:21.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c31f0bc58ba1
+  - type: implements
+    from: SYM-ingestv1-x-accounts-pb
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:27.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d63f6bea727
+  - type: covered_by
+    from: SYM-ingestv1-x-accounts-pb
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:27.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-794d4914e121

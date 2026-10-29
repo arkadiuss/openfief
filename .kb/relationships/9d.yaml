@@ -286,6 +286,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed912342d49a
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-sleeves-locked
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:13:43.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d13dc2763a0
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-get-kind
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:13.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfc40a39ae8a
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-get-kind
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:13.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36c849b0ac6b
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind-get-key
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:43:41.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39f9e01fedbf
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind-get-key
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:43:41.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-130c365d23b2
+  - type: implements
+    from: SYM-viewsv1-connector-binding-proto-reflect
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:44:44.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8cc93fc4bd6
+  - type: covered_by
+    from: SYM-viewsv1-connector-binding-proto-reflect
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:44:44.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99db48b05551
   - type: constrains
     from: REQ-ui-charts-number-format
     to: FACT-SUBJECT-9A296B3D7B3E9839

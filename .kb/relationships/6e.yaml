@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa93a03214af
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-sleeve-service-round-trip
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:08:17.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9090edf956c

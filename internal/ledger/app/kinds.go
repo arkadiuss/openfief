@@ -33,10 +33,13 @@ func (l *Ledger) Kinds(ctx context.Context) ([]portfolio.Kind, error) {
 	return kinds, nil
 }
 
-// EnsureDefaults stores every built-in sleeve kind and default sleeve that
-// is not stored yet, in one database transaction. Run it at install or on
-// every start: it never changes a stored kind or sleeve, so the owner's
-// renames and moves are kept, and running it again stores nothing.
+// EnsureDefaults stores every built-in sleeve kind that is not stored yet
+// and, while no sleeve is stored at all, the default sleeves (D-71: an
+// install starts with bonds, core and satellite), in one database
+// transaction (portfolio.MissingDefaults). Run it at install or on every
+// start: it never changes a stored kind or sleeve, so the owner's renames
+// and moves are kept, and once any sleeve is stored, the owner's or the
+// demo dataset's, it adds no sleeve.
 func (l *Ledger) EnsureDefaults(ctx context.Context) error {
 	err := l.store.InTx(ctx, func(tx Store) error {
 		kinds, err := tx.Kinds(ctx)

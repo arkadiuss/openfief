@@ -146,13 +146,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af7cadcb8211
-  - type: specified_by
-    from: REQ-portfolio-default-kinds
-    to: SCEN-portfolio-default-kinds
-    created_at: 2026-10-28T09:35:32.976Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-64ae89c2fcc8
   - type: executable_for
     from: SYM-cosign-test-verifier-new-world
     to: TEST-plugins-cosign
@@ -496,3 +489,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f142ed95ec7
+  - type: implements
+    from: SYM-ui-config-missing-client
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:15:45.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-024340f2bf6b
+  - type: covered_by
+    from: SYM-ui-config-missing-client
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:15:45.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edd12080c0f1
+  - type: implements
+    from: SYM-portfoliov1-sleeve-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:32:52.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d07a7d7fa47
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:32:52.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-631f85827815

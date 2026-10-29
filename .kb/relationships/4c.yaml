@@ -426,3 +426,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ef3110419f
+  - type: implements
+    from: SYM-ui-accounts-data-unmapped
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:27.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-349e556c4666
+  - type: implements
+    from: SYM-ui-accounts-data-unmapped
+    to: REQ-ingest-unmapped-broker-account
+    created_at: 2026-10-29T13:11:27.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-464e8c5408c2
+  - type: covered_by
+    from: SYM-ui-accounts-data-unmapped
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:27.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db6f0827f22e
+  - type: implements
+    from: SYM-ingestv1-create-account-response-get-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:22:26.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffe0579a3219
+  - type: covered_by
+    from: SYM-ingestv1-create-account-response-get-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:22:26.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f65ee591dab6
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:40:38.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5a82893eca1
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:40:38.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f2d527c600b

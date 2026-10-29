@@ -111,13 +111,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64c7bc867f2e
-  - type: implements
-    from: SYM-portfolio-default-sleeves
-    to: REQ-portfolio-default-kinds
-    created_at: 2026-10-28T09:38:43.759Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6c7181e65750
   - type: covered_by
     from: SYM-portfolio-default-sleeves
     to: TEST-portfolio-sleeve-kind
@@ -419,3 +412,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df3baa5cb4ac
+  - type: implements
+    from: SYM-portfolio-default-sleeves
+    to: REQ-portfolio-install-sleeves
+    created_at: 2026-10-29T11:38:49.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bb06d6be1a1
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-connections
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:09:05.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a23e77749ce
+  - type: implements
+    from: SYM-views-connectapi-pb-broker-account
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:10:10.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f660f7cef71
+  - type: covered_by
+    from: SYM-views-connectapi-pb-broker-account
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:10:11.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e96de22f5e3b
+  - type: implements
+    from: SYM-ui-form-role
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:17:37.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d62fd773dc4
+  - type: covered_by
+    from: SYM-ui-form-role
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:17:37.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51088f39dc1f
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-response-string
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:35:00.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fcfcf023440
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-response-string
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:35:00.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4236d678ebf7
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind-get-default-role
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:43:59.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-801dae952464
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind-get-default-role
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:43:59.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c7a638013df
+  - type: implements
+    from: SYM-viewsv1-connector-binding-reset
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:44:13.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aca722cd0db
+  - type: covered_by
+    from: SYM-viewsv1-connector-binding-reset
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:44:13.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f310a61d193

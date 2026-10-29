@@ -349,6 +349,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef7a183d8e8d
+  - type: verified_by
+    from: SCEN-portfolio-sleeve-service
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T12:45:34.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e36850818c2
+  - type: verified_by
+    from: SCEN-portfolio-sleeve-service
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T12:45:34.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ffc4c5c28ca
+  - type: verified_by
+    from: SCEN-portfolio-sleeve-service
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T12:45:34.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68c0c41880c3
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-response-reset
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:36:47.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5d007a9c4a0
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-response-reset
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:36:47.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2df8691ab603
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-response
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:32.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5661d5569f63
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-response
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:32.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4cbb416db6d
   - type: executable_for
     from: SYM-core-test-callers-outside-acluster
     to: TEST-core-auth

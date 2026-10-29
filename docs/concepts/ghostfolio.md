@@ -75,12 +75,16 @@ Ghostfolio stores numbers as IEEE 754 doubles, which print back any decimal of u
 ```mermaid
 flowchart LR
   subgraph pod["pod plugin-ghostfolio"]
-    loop["loop: Syncer.Sync<br/>every interval"]
+    loop@{ icon: "fief:view", form: "square", label: "loop: Syncer.Sync<br/>every interval", pos: "b", h: 40 }
   end
-  loop -- "read API, Bearer:<br/>projected token (openfief-core)" --> core["Core<br/>readTokens"]
-  loop -- "CONNECT, projected token<br/>(openfief-egress)" --> proxy["Egress proxy"]
-  proxy -- "granted host only" --> gf["Owner's Ghostfolio"]
-  secret[/"Secret &lt;instance&gt;-security-token<br/>file security-token"/] -.-> loop
+  core@{ icon: "fief:gate", form: "square", label: "Core<br/>readTokens", pos: "b", h: 40 }
+  proxy@{ icon: "fief:egress", form: "square", label: "Egress proxy", pos: "b", h: 40 }
+  gf@{ icon: "fief:globe", form: "square", label: "Owner's Ghostfolio", pos: "b", h: 40 }
+  secret@{ icon: "fief:secret", form: "square", label: "Secret &lt;instance&gt;-security-token<br/>file security-token", pos: "b", h: 40 }
+  loop -- "read API, Bearer:<br/>projected token (openfief-core)" --> core
+  loop -- "CONNECT, projected token<br/>(openfief-egress)" --> proxy
+  proxy -- "granted host only" --> gf
+  secret -.-> loop
 ```
 
 | Manifest | Value |

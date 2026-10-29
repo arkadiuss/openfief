@@ -286,3 +286,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bffd9cde8a13
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-sleeves
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:14:30.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bee92bb9ad2
+  - type: implements
+    from: SYM-ui-server-render-sleeves
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:17:24.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44e54b871a77
+  - type: covered_by
+    from: SYM-ui-server-render-sleeves
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:17:24.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4d810e4ef7d

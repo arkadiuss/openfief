@@ -342,3 +342,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-244df5f7be88
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:43:09.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f227fafaf85
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:43:09.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49f321fd674e
+  - type: constrains
+    from: REQ-identity-enroll-origin
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: 2026-10-29T15:07:51.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bbc92f6a202
+  - type: requires_property
+    from: REQ-identity-enroll-origin
+    to: FACT-PROP-956AEEF6C7EEEAF8
+    created_at: 2026-10-29T15:07:51.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64a185186473
+  - type: supersedes
+    from: REQ-identity-enroll-origin
+    to: REQ-identity-first-passkey-link
+    created_at: 2026-10-29T15:07:51.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-553a52806ae4

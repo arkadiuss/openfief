@@ -294,6 +294,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-75c5c0ba4d9a
   - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-brokers-mark-seeded
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:47:41.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-561597d1e8c1
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:13:49.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-234e7aca96d8
+  - type: executable_for
     from: SYM-fd-e2e-test-first-passkey
     to: TEST-e2e-first-passkey
     created_at: 2026-10-29T12:12:28.469Z

@@ -342,6 +342,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67cda6b27087
+  - type: executable_for
+    from: SYM-core-test-helper-view-bearer
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T12:57:11.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4eb03ed5c4dc
   - type: implements
     from: SYM-fd-identity-cli-until-stopped
     to: REQ-identity-first-passkey-link

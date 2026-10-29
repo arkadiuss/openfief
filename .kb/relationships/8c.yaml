@@ -405,3 +405,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-508149d83299
+  - type: implements
+    from: SYM-ingestv1-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:18:24.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f82a3c95a838
+  - type: covered_by
+    from: SYM-ingestv1-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:18:24.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da9ccdea1c56
+  - type: implements
+    from: SYM-ingestv1-update-account-request-proto-message
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:22:57.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17698a77c806
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-proto-message
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:22:57.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd54250798da
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-get-session-token
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:40:52.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a76c02406d22
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-get-session-token
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:40:52.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-616ec8d16a07

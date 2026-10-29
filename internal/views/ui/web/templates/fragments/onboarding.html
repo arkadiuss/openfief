@@ -1,0 +1,242 @@
+{{/* The sleeve and account forms (D-71, D-72), on their own pages and in the first-run wizard (D-73). Every form posts the page it returns to in "next". */}}
+
+{{/* A sleeve's role as a pill with its word, and the owner's explicit override when it differs from the kind's. */}}
+{{define "sleeve-role"}}<span class="pills"><span class="pill pill-neutral">{{enum .GetRole.String "SLEEVE_ROLE_"}}</span>{{if .GetRoleOverride}}<span class="pill pill-warn">differs from its kind</span>{{end}}</span>{{end}}
+
+{{/* The role choice of a sleeve form: the kind's default, or an explicit role with the override box. */}}
+{{define "sleeve-role-fields"}}
+<div class="field">
+  <label for="{{.ID}}-role">Role</label>
+  <select id="{{.ID}}-role" name="role" aria-describedby="{{.ID}}-role-help">
+    <option value=""{{if not .Role}} selected{{end}}>The kind's default</option>
+    <option value="defensive"{{if eq .Role "defensive"}} selected{{end}}>Defensive</option>
+    <option value="offensive"{{if eq .Role "offensive"}} selected{{end}}>Offensive</option>
+  </select>
+  <p class="help" id="{{.ID}}-role-help">Defensive: never available to agents. Offensive: agents' budgets are leased from it.</p>
+</div>
+<label class="check"><input type="checkbox" name="role_override"{{if .Override}} checked{{end}}> I choose a role other than the kind's default</label>
+{{end}}
+
+{{define "sleeve-forms"}}
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+{{$d := .}}
+<section class="card" aria-labelledby="sleeves-title">
+  <h2 id="sleeves-title">Sleeves</h2>
+  <p class="muted">Every account belongs to one sleeve, and every sleeve has a kind that gives it its role. A role other than the kind's default is your explicit choice.</p>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Sleeve</th><th scope="col">Kind</th><th scope="col">Role</th>{{if $d.Owner}}<th scope="col"><span class="sr-only">Change</span></th>{{end}}</tr></thead>
+    <tbody>
+    {{range $d.Sleeves}}
+    <tr>
+      <td>{{.GetName}} <span class="muted mono">{{.GetId}}</span></td>
+      <td>{{$d.KindName .GetKind}}</td>
+      <td>{{template "sleeve-role" .}}</td>
+      {{if $d.Owner}}<td>
+        <details class="change"><summary>Change</summary>
+        <form method="post" action="/sleeves/{{.GetId}}">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <div class="fields">
+            <div class="field"><label for="sleeve-{{.GetId}}-name">Name</label><input id="sleeve-{{.GetId}}-name" name="name" value="{{.GetName}}" required maxlength="100" autocomplete="off"></div>
+            <div class="field"><label for="sleeve-{{.GetId}}-kind">Kind</label>
+              <select id="sleeve-{{.GetId}}-kind" name="kind">{{$k := .GetKind}}{{range $d.Kinds}}<option value="{{.GetKey}}"{{if eq .GetKey $k}} selected{{end}}>{{.GetName}} ({{enum .GetDefaultRole.String "SLEEVE_ROLE_"}})</option>{{end}}</select></div>
+            {{template "sleeve-role-fields" (roleFields (print "sleeve-" .GetId) .)}}
+          </div>
+          <div class="actions"><button type="submit">Save sleeve</button></div>
+        </form>
+        </details>
+      </td>{{end}}
+    </tr>
+    {{else}}
+    <tr><td colspan="4" class="empty">No sleeves.</td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
+</section>
+
+{{if $d.Owner}}
+<section class="card" aria-labelledby="add-sleeve-title">
+  <h2 id="add-sleeve-title">Add a sleeve</h2>
+  <form method="post" action="/sleeves">
+    <input type="hidden" name="next" value="{{$d.Next}}">
+    <div class="fields">
+      <div class="field"><label for="new-sleeve-name">Name</label><input id="new-sleeve-name" name="name" required maxlength="100" autocomplete="off" aria-describedby="new-sleeve-name-help"><p class="help" id="new-sleeve-name-help">Its ID is made from the name and never changes.</p></div>
+      <div class="field"><label for="new-sleeve-kind">Kind</label>
+        <select id="new-sleeve-kind" name="kind" required>{{range $d.Kinds}}<option value="{{.GetKey}}">{{.GetName}} ({{enum .GetDefaultRole.String "SLEEVE_ROLE_"}})</option>{{end}}</select></div>
+      {{template "sleeve-role-fields" (roleFields "new-sleeve" nil)}}
+    </div>
+    <div class="actions"><button type="submit">Add sleeve</button></div>
+  </form>
+</section>
+{{end}}
+
+<section class="card" aria-labelledby="kinds-title">
+  <h2 id="kinds-title">Sleeve kinds</h2>
+  <p class="muted">A kind gives its sleeves their default role. You can rename any kind, but its default role never changes.</p>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Kind</th><th scope="col">Key</th><th scope="col">Default role</th>{{if $d.Owner}}<th scope="col"><span class="sr-only">Rename</span></th>{{end}}</tr></thead>
+    <tbody>
+    {{range $d.Kinds}}
+    <tr>
+      <td>{{.GetName}}</td><td class="mono">{{.GetKey}}</td>
+      <td><span class="pill pill-neutral">{{enum .GetDefaultRole.String "SLEEVE_ROLE_"}}</span></td>
+      {{if $d.Owner}}<td>
+        <details class="change"><summary>Rename</summary>
+        <form method="post" action="/sleeve-kinds/{{.GetKey}}">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <div class="field"><label for="kind-{{.GetKey}}-name">Name</label><input id="kind-{{.GetKey}}-name" name="name" value="{{.GetName}}" required maxlength="100" autocomplete="off"></div>
+          <div class="actions"><button type="submit">Rename kind</button></div>
+        </form>
+        </details>
+      </td>{{end}}
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{if $d.Owner}}
+  <form method="post" action="/sleeve-kinds">
+    <input type="hidden" name="next" value="{{$d.Next}}">
+    <div class="fields">
+      <div class="field"><label for="new-kind-name">New kind</label><input id="new-kind-name" name="name" required maxlength="100" autocomplete="off"></div>
+      <div class="field"><label for="new-kind-role">Default role</label>
+        <select id="new-kind-role" name="default_role" required aria-describedby="new-kind-role-help"><option value="" selected disabled>Choose a role</option><option value="defensive">Defensive</option><option value="offensive">Offensive</option></select>
+        <p class="help" id="new-kind-role-help">Fixed for good once the kind is added.</p></div>
+    </div>
+    <div class="actions"><button type="submit">Add kind</button></div>
+  </form>
+  {{end}}
+</section>
+{{end}}
+
+{{/* The choice of a sleeve in an account form. */}}
+{{define "sleeve-select"}}<select id="{{.ID}}" name="sleeve" required>{{$cur := .Current}}{{range .Sleeves}}<option value="{{.GetId}}"{{if eq .GetId $cur}} selected{{end}}>{{.GetName}} ({{enum .GetRole.String "SLEEVE_ROLE_"}})</option>{{end}}</select>{{end}}
+
+{{define "account-forms"}}
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+{{$d := .}}
+{{with $d.Unmapped}}
+<section class="card" aria-labelledby="unmapped-title">
+  <h2 id="unmapped-title">Unmapped broker accounts</h2>
+  <p class="alert alert-warn">A connector reported these accounts at your institution. Their transactions are not booked until you pick an OpenFief account for each.</p>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Connector</th><th scope="col">Broker account</th><th scope="col">Institution</th><th scope="col">Last seen</th>{{if $d.Owner}}<th scope="col"><span class="sr-only">Account</span></th>{{end}}</tr></thead>
+    <tbody>
+    {{range .}}
+    <tr>
+      <td class="mono">{{.GetConnectorInstance}}</td><td class="mono">{{.GetId}}</td><td>{{.GetInstitution}}</td><td class="mono">{{.GetLastSeen}}</td>
+      {{if $d.Owner}}<td>
+        <details class="change"><summary>Create its account</summary>
+        <form method="post" action="/accounts">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <input type="hidden" name="broker" value="{{.GetConnectorInstance}}/{{.GetId}}">
+          <div class="fields">
+            <div class="field"><label for="for-{{.GetConnectorInstance}}-{{.GetId}}-name">Name</label><input id="for-{{.GetConnectorInstance}}-{{.GetId}}-name" name="name" required maxlength="100" autocomplete="off"></div>
+            <div class="field"><label for="for-{{.GetConnectorInstance}}-{{.GetId}}-sleeve">Sleeve</label>{{template "sleeve-select" (sleeveSelect (print "for-" .GetConnectorInstance "-" .GetId "-sleeve") $d.Sleeves "")}}</div>
+          </div>
+          <div class="actions"><button type="submit">Create account</button></div>
+        </form>
+        </details>
+        {{if $d.Accounts}}
+        <details class="change"><summary>Map to an account</summary>
+        <form method="post" action="/accounts/bind">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <input type="hidden" name="broker" value="{{.GetConnectorInstance}}/{{.GetId}}">
+          <div class="field"><label for="map-{{.GetConnectorInstance}}-{{.GetId}}">Account</label>
+            <select id="map-{{.GetConnectorInstance}}-{{.GetId}}" name="account" required>{{range $d.Accounts}}<option value="{{.Account.GetId}}">{{.Account.GetName}}</option>{{end}}</select></div>
+          <div class="actions"><button type="submit">Map broker account</button></div>
+        </form>
+        </details>
+        {{end}}
+      </td>{{end}}
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+</section>
+{{end}}
+
+<section class="card" aria-labelledby="account-list-title">
+  <h2 id="account-list-title">Accounts</h2>
+  {{if $d.Accounts}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Account</th><th scope="col">Institution</th><th scope="col">Sleeve</th><th scope="col">Fed by</th>{{if $d.Owner}}<th scope="col"><span class="sr-only">Change</span></th>{{end}}</tr></thead>
+    <tbody>
+    {{range $d.Accounts}}
+    <tr>
+      <td><a href="/accounts/{{.Account.GetId}}">{{.Account.GetName}}</a> <span class="muted mono">{{.Account.GetId}}</span></td>
+      <td>{{.Account.GetInstitution}}</td><td>{{.Account.GetSleeve}}</td>
+      <td>{{range .Instances}}<span class="pill pill-neutral mono">{{.}}</span> {{else}}<span class="muted">no connector</span>{{end}}</td>
+      {{if $d.Owner}}<td>
+        <details class="change"><summary>Change</summary>
+        <form method="post" action="/accounts/{{.Account.GetId}}/edit">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <div class="fields">
+            <div class="field"><label for="acc-{{.Account.GetId}}-name">Name</label><input id="acc-{{.Account.GetId}}-name" name="name" value="{{.Account.GetName}}" required maxlength="100" autocomplete="off"></div>
+            <div class="field"><label for="acc-{{.Account.GetId}}-sleeve">Sleeve</label>{{template "sleeve-select" (sleeveSelect (print "acc-" .Account.GetId "-sleeve") $d.Sleeves .Account.GetSleeve)}}</div>
+          </div>
+          <div class="actions"><button type="submit">Save account</button></div>
+        </form>
+        </details>
+        {{if $d.Instances}}
+        <details class="change"><summary>Connect</summary>
+        <form method="post" action="/accounts/bind">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <input type="hidden" name="account" value="{{.Account.GetId}}">
+          <div class="field"><label for="bind-{{.Account.GetId}}">Connector instance</label>
+            <select id="bind-{{.Account.GetId}}" name="instance" required>{{range $d.Instances}}<option value="{{.}}">{{.}}</option>{{end}}</select></div>
+          <div class="actions"><button type="submit">Bind connector</button></div>
+        </form>
+        </details>
+        {{end}}
+      </td>{{end}}
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{else}}
+  <div class="state">{{template "kasztan" "asleep"}}<div>
+    <p class="state-title">No accounts yet.</p>
+    <p class="muted">{{if $d.Owner}}Create one below for each account you hold at an institution.{{else}}The owner creates them.{{end}}</p>
+  </div></div>
+  {{end}}
+</section>
+
+{{if $d.Owner}}
+<section class="card" aria-labelledby="add-account-title">
+  <h2 id="add-account-title">Add an account</h2>
+  <form method="post" action="/accounts">
+    <input type="hidden" name="next" value="{{$d.Next}}">
+    <div class="fields">
+      <div class="field"><label for="new-account-name">Name</label><input id="new-account-name" name="name" required maxlength="100" autocomplete="off" aria-describedby="new-account-name-help"><p class="help" id="new-account-name-help">Its ID is made from the name and never changes.</p></div>
+      <div class="field"><label for="new-account-sleeve">Sleeve</label>{{template "sleeve-select" (sleeveSelect "new-account-sleeve" $d.Sleeves "")}}</div>
+      <div class="field"><label for="new-account-instance">Connector instance</label>
+        <select id="new-account-instance" name="instance" aria-describedby="new-account-instance-help"><option value="">None yet</option>{{range $d.Instances}}<option value="{{.}}">{{.}}</option>{{end}}</select>
+        <p class="help" id="new-account-instance-help">The installed plugin that brings this account's data in.{{if $d.InstancesUnknown}} The core can't read its cluster now, so only connectors it has seen are listed.{{end}}</p></div>
+      {{with $d.Unmapped}}<div class="field"><label for="new-account-broker">Broker account</label>
+        <select id="new-account-broker" name="broker" aria-describedby="new-account-broker-help"><option value="">None</option>{{range .}}<option value="{{.GetConnectorInstance}}/{{.GetId}}">{{.GetId}} ({{.GetConnectorInstance}})</option>{{end}}</select>
+        <p class="help" id="new-account-broker-help">An account your connector reported; picking one also picks its connector.</p></div>{{end}}
+      <div class="field"><label for="new-account-institution">Institution</label><input id="new-account-institution" name="institution" maxlength="64" autocomplete="off" aria-describedby="new-account-institution-help"><p class="help" id="new-account-institution-help">Its ID, such as <code>ibkr</code>, <code>xtb</code> or <code>treasury-bonds</code>. Leave it empty to take the broker account's.</p></div>
+    </div>
+    <div class="actions"><button type="submit">Create account</button></div>
+  </form>
+</section>
+{{end}}
+
+{{with $d.Brokers}}
+<section class="card" aria-labelledby="brokers-title">
+  <h2 id="brokers-title">Broker accounts</h2>
+  <p class="muted">The accounts at your institutions that connectors reported, and the account each one is booked in.</p>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Connector</th><th scope="col">Broker account</th><th scope="col">Institution</th><th scope="col">Booked in</th><th scope="col">Last seen</th></tr></thead>
+    <tbody>
+    {{range .}}
+    <tr>
+      <td class="mono">{{.GetConnectorInstance}}</td><td class="mono">{{.GetId}}</td><td>{{.GetInstitution}}</td>
+      <td>{{with .GetAccountId}}<a href="/accounts/{{.}}">{{.}}</a>{{else}}<span class="pill pill-warn">Unmapped</span>{{end}}</td>
+      <td><span class="mono">{{.GetLastSeen}}</span>{{if not .GetInLastDelivery}} <span class="pill pill-neutral">not in the last sync</span>{{end}}</td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+</section>
+{{end}}
+{{end}}

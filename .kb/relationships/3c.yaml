@@ -139,20 +139,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50834fb69232
-  - type: implements
-    from: SYM-portfolio-has-sleeve
-    to: REQ-portfolio-default-kinds
-    created_at: 2026-10-28T09:39:01.311Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8cf90588cb57
-  - type: covered_by
-    from: SYM-portfolio-has-sleeve
-    to: TEST-portfolio-sleeve-kind
-    created_at: 2026-10-28T09:39:01.355Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-da33e2401568
   - type: executable_for
     from: SYM-views-connectapi-test-connect-pages
     to: TEST-views-connectapi-connect
@@ -405,3 +391,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea10d0318dbc
+  - type: implements
+    from: SYM-ingestv1connect-account-service-client-interface
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T15:08:57.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81a98c246831
+  - type: covered_by
+    from: SYM-ingestv1connect-account-service-client-interface
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T15:08:57.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1849814d5b3
+  - type: constrains
+    from: REQ-identity-enroll-localhost-forward
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: 2026-10-29T15:08:14.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99202188042f
+  - type: requires_property
+    from: REQ-identity-enroll-localhost-forward
+    to: FACT-PROP-DCD0599C26B0FB08
+    created_at: 2026-10-29T15:08:14.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6968e25342e3
+  - type: supersedes
+    from: REQ-identity-enroll-localhost-forward
+    to: REQ-identity-first-passkey-link
+    created_at: 2026-10-29T15:08:14.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98c0cc88d46b

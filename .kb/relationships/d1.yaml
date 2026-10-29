@@ -370,3 +370,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-272c31627427
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-response-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:49:20.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27e4120febfc
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-response-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:49:20.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aef7106bfa94
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-response-proto-reflect
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:49:34.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b213a85cf042
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-response-proto-reflect
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:49:34.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30f5ac615da9

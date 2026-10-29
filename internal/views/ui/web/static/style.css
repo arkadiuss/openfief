@@ -161,6 +161,21 @@ label.check { display: flex; align-items: center; gap: var(--space-2); min-heigh
 .targets td { vertical-align: middle; }
 .targets input, .targets select { min-width: 6rem; }
 
+/* The first-run wizard's steps (D-73) and the change forms folded into tables */
+.steps { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin: 0 0 var(--space-5); counter-reset: step; }
+.steps li { counter-increment: step; }
+.steps a {
+  display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: 0 var(--space-4);
+  border: 1.5px solid var(--border-strong); border-radius: var(--radius-pill);
+  color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.92rem;
+}
+.steps a::before { content: counter(step); font-family: var(--font-mono); color: var(--muted); }
+.steps a:hover { background: var(--sunken); }
+.steps a[aria-current="step"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.steps a[aria-current="step"]::before { color: var(--on-accent); }
+details.change > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--link); font-weight: 500; }
+details.change[open] { padding: var(--space-3); background: var(--sunken); border-radius: var(--radius); margin-bottom: var(--space-2); }
+
 /* Charts (D-30) */
 .chart { position: relative; height: 18rem; margin-bottom: var(--space-4); }
 .switch { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-4); }

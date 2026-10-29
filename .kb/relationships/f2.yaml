@@ -286,3 +286,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93db063e9262
+  - type: implements
+    from: SYM-ingest-app-account-ledger
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:58:40.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f204172d534
+  - type: covered_by
+    from: SYM-ingest-app-account-ledger
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:58:40.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9c47a3a1b7c
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-get-role
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:20.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f49ceb430e78
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-get-role
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:20.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ded3ba82cbcf
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:42:54.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-977250aa6a17
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:42:54.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66f66709f932
+  - type: implements
+    from: SYM-viewsv1-broker-account-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:45:30.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db8cee620280
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:45:30.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2fc1da52aea
+  - type: implements
+    from: SYM-viewsv1-list-broker-accounts-response-descriptor
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:51:22.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92a967c4f301
+  - type: covered_by
+    from: SYM-viewsv1-list-broker-accounts-response-descriptor
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:51:22.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78f502794301

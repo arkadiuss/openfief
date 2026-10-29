@@ -287,6 +287,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0acd3892cb99
   - type: implements
+    from: SYM-ingest-connectapi-account-service
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:01:17.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e5492d3c794
+  - type: covered_by
+    from: SYM-ingest-connectapi-account-service
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:01:17.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eaba7f1e3abe
+  - type: implements
     from: SYM-fd-plugins-core-serves-path
     to: REQ-plugins-view-browser-path-grant
     created_at: 2026-10-29T12:04:46.789Z
@@ -307,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8aa9f3acff02
+  - type: constrains
+    from: REQ-identity-first-passkey-own-host-or-localhost
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: 2026-10-29T15:07:15.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e24f93319c8
+  - type: requires_property
+    from: REQ-identity-first-passkey-own-host-or-localhost
+    to: FACT-PROP-7FF8E2EF0D7BCE72
+    created_at: 2026-10-29T15:07:15.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-308fa6559a8c
+  - type: supersedes
+    from: REQ-identity-first-passkey-own-host-or-localhost
+    to: REQ-identity-install-without-hostname
+    created_at: 2026-10-29T15:07:15.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78b3af5fadfa

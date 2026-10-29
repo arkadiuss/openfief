@@ -322,6 +322,8 @@ type fakeRead struct {
 	// pluginsUnavailable makes ListPlugins answer UNAVAILABLE, as a core
 	// that can't read its cluster does.
 	pluginsUnavailable bool
+	// noAccounts makes ListAccounts list none, as on a fresh install.
+	noAccounts bool
 }
 
 func pln(amount string) *viewsv1.Money { return &viewsv1.Money{Amount: amount, Currency: "PLN"} }
@@ -333,6 +335,12 @@ func syntheticInstrument() *viewsv1.Instrument {
 func (f *fakeRead) ListAccounts(_ context.Context, r *connect.Request[viewsv1.ListAccountsRequest]) (*connect.Response[viewsv1.ListAccountsResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
+	}
+	f.mu.Lock()
+	none := f.noAccounts
+	f.mu.Unlock()
+	if none {
+		return connect.NewResponse(&viewsv1.ListAccountsResponse{}), nil
 	}
 	return connect.NewResponse(&viewsv1.ListAccountsResponse{Accounts: []*viewsv1.Account{
 		{Id: accountID, Institution: "synthetic-broker", Name: "Synthetic brokerage", Sleeve: "core"},
@@ -539,6 +547,8 @@ type harness struct {
 	model      *fakeModel
 	bondLots   *fakeBondLots
 	statements *fakeStatements
+	sleeves    *fakeSleeves
+	accounts   *fakeAccounts
 	read       *fakeRead
 	handler    http.Handler
 	tokenFile  string
@@ -548,12 +558,17 @@ type harness struct {
 // the SDK's CoreHTTPClient over a token file, as the plugin wires it.
 func newHarness(t *testing.T) *harness {
 	t.Helper()
-	h := &harness{auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{}}
+	h := &harness{
+		auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{},
+		sleeves: &fakeSleeves{}, accounts: &fakeAccounts{},
+	}
 	mux := http.NewServeMux()
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
 	mux.Handle(portfoliov1connect.NewModelPortfolioServiceHandler(h.model))
 	mux.Handle(ingestv1connect.NewBondLotServiceHandler(h.bondLots))
 	mux.Handle(ingestv1connect.NewStatementServiceHandler(h.statements))
+	mux.Handle(portfoliov1connect.NewSleeveServiceHandler(h.sleeves))
+	mux.Handle(ingestv1connect.NewAccountServiceHandler(h.accounts))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
 	core := httptest.NewServer(mux)
 	t.Cleanup(core.Close)
@@ -564,6 +579,8 @@ func newHarness(t *testing.T) *harness {
 		Model:      portfoliov1connect.NewModelPortfolioServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		BondLots:   ingestv1connect.NewBondLotServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Statements: ingestv1connect.NewStatementServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Sleeves:    portfoliov1connect.NewSleeveServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Accounts:   ingestv1connect.NewAccountServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Read:       viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:      func() kernel.Date { return mustDate(t, "2026-04-01") },
 	})

@@ -71,13 +71,6 @@ relationships:
     id: rel-6902f27ccbff
   - type: implements
     from: SYM-portfolio-check-sleeve
-    to: REQ-portfolio-sleeve-role-override
-    created_at: 2026-10-28T09:38:35.951Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ba92f020859c
-  - type: implements
-    from: SYM-portfolio-check-sleeve
     to: REQ-portfolio-sleeve-kind
     created_at: 2026-10-28T09:38:35.973Z
     created_by: kibi/upsert
@@ -454,3 +447,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-467856c386de
+  - type: implements
+    from: SYM-portfolio-check-sleeve
+    to: REQ-portfolio-role-override-explicit
+    created_at: 2026-10-29T11:38:36.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12c9b6fe777e
+  - type: implements
+    from: SYM-portfolio-check-sleeve
+    to: REQ-portfolio-role-differs-explicit
+    created_at: 2026-10-29T11:38:36.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4dbb45aa9f9
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry-save-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:02:21.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48c33a1f15e2

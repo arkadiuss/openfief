@@ -4,12 +4,14 @@
 #   demo-database  ./deploy/demo/database  a one-instance CloudNativePG cluster, synthetic data only (GR-12)
 #   demo-cert-manager ./deploy/demo/cert-manager  cert-manager from a pinned Helm chart
 #   demo-ingress   ./deploy/demo/ingress   the Let's Encrypt ClusterIssuer (HTTP-01 through k3s's Traefik)
-#   demo-routes    ./deploy/demo/routes    https://<ENV>.<DEMO_DOMAIN> (or <ipv4-with-dashes>.sslip.io) to the core
-#   demo-openfief  the signed artifact     operator, egress proxy, core, demo data; images pinned by digest (D-17)
+#   demo-routes    the signed artifact     ./routes: https://<ENV>.<DEMO_DOMAIN> (or <ipv4-with-dashes>.sslip.io) to the core
+#   demo-openfief  the signed artifact     ./app: operator, egress proxy, core, demo data; images pinned by digest (D-17)
 # The product bases ship Services only (D-28); the routes are this demo's own, on k3s's bundled Traefik.
-# The first three follow main in git. demo-openfief follows the OCI artifact that CI publishes after every push to
-# main (and every beta): deploy/demo/openfief rendered with the digests whose signatures verified, then signed.
-# Until CI has published one, demo-openfief waits for its source and the other layers run on their own.
+# The platform layers follow main in git. demo-openfief and demo-routes follow the OCI artifact that CI publishes
+# after every push to main (and every beta): deploy/demo/openfief rendered with the digests whose signatures verified
+# into ./app, and deploy/demo/routes into ./routes, then signed. The routes ship with the core they point at, so a
+# route change never reaches the demo before the core that serves it. Until CI has published an artifact with both
+# paths, those two layers wait for it, keeping what they applied last, and the other layers run on their own.
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -101,11 +103,11 @@ spec:
     - name: demo-ingress
     - name: demo-openfief
   interval: 10m
-  path: ./deploy/demo/routes
+  path: ./routes
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: openfief
+    kind: OCIRepository
+    name: openfief-demo-app
   postBuild:
     substituteFrom:
       - kind: ConfigMap
@@ -139,7 +141,7 @@ spec:
     - name: demo-crds
     - name: demo-database
   interval: 10m
-  path: ./
+  path: ./app
   prune: true
   sourceRef:
     kind: OCIRepository

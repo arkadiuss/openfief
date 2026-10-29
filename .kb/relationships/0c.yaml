@@ -300,3 +300,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a1509eea622
+  - type: implements
+    from: SYM-ingest-postgres-store-mark-seeded
+    to: REQ-ingest-broker-account-record
+    created_at: 2026-10-29T11:53:00.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e78e208be8c
+  - type: implements
+    from: SYM-ingest-postgres-store-mark-seeded
+    to: REQ-ingest-broker-account-seeding
+    created_at: 2026-10-29T11:53:00.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-652a8b039dd7
+  - type: covered_by
+    from: SYM-ingest-postgres-store-mark-seeded
+    to: TEST-ingest-postgres-brokers
+    created_at: 2026-10-29T11:53:00.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc9d9b41318f
+  - type: implements
+    from: SYM-ingestv1-bind-account-request-get-account-id
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:26:08.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da8452e4b75f
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request-get-account-id
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:26:08.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c09319eb2c6f
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-response-get-sleeve
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:42:13.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2488ac505613
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-response-get-sleeve
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:42:13.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-349d064588cd
+  - type: implements
+    from: SYM-viewsv1-list-broker-accounts-request-proto-reflect
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:50:23.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1a07b93cfe1
+  - type: covered_by
+    from: SYM-viewsv1-list-broker-accounts-request-proto-reflect
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:50:23.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4dcb114f1d1
+  - type: constrains
+    from: REQ-platform-exposes-nothing-by-default
+    to: FACT-SUBJECT-C8D936D003BD7B6C
+    created_at: 2026-10-29T15:05:38.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-563f4490e814
+  - type: requires_property
+    from: REQ-platform-exposes-nothing-by-default
+    to: FACT-PROP-5D0AAD2D7CEF36BE
+    created_at: 2026-10-29T15:05:38.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7800cd94ee0c
+  - type: supersedes
+    from: REQ-platform-exposes-nothing-by-default
+    to: REQ-AUTO-0D5A3B94C46E88DF
+    created_at: 2026-10-29T15:05:38.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bba9bc26b006
+  - type: supersedes
+    from: REQ-platform-exposes-nothing-by-default
+    to: REQ-AUTO-3E7CF23DAD42DA83
+    created_at: 2026-10-29T15:05:38.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dfdfa598bff

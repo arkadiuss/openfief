@@ -14,7 +14,7 @@ import (
 func TestSaveSleeve(t *testing.T) {
 	t.Parallel()
 	play := func(kind portfolio.KindKey, role portfolio.Role, override bool) portfolio.Sleeve {
-		return portfolio.Sleeve{ID: "play", Name: "Play", Kind: kind, Role: role, OffensiveOverride: override}
+		return portfolio.Sleeve{ID: "play", Name: "Play", Kind: kind, Role: role, RoleOverride: override}
 	}
 	tests := []struct {
 		name    string
@@ -34,9 +34,14 @@ func TestSaveSleeve(t *testing.T) {
 			stored: play(portfolio.KindAgentPool, portfolio.RoleOffensive, false),
 		},
 		{
-			name:   "defensive in an offensive kind",
-			sleeve: play(portfolio.KindSatellite, portfolio.RoleDefensive, false),
-			stored: play(portfolio.KindSatellite, portfolio.RoleDefensive, false),
+			name:   "defensive in an offensive kind with the override",
+			sleeve: play(portfolio.KindSatellite, portfolio.RoleDefensive, true),
+			stored: play(portfolio.KindSatellite, portfolio.RoleDefensive, true),
+		},
+		{
+			name:    "defensive in an offensive kind without the override",
+			sleeve:  play(portfolio.KindSatellite, portfolio.RoleDefensive, false),
+			wantErr: portfolio.ErrRoleOverride,
 		},
 		{
 			name:   "offensive in a defensive kind with the override",

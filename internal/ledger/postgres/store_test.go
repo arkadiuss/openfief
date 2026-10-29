@@ -40,7 +40,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -63,7 +63,7 @@ func TestRegistryRoundTrip(t *testing.T) {
 	t.Parallel()
 	store, _ := seededStore(t)
 	ctx := t.Context()
-	play := portfolio.Sleeve{ID: "play", Name: "Play", Kind: portfolio.KindRetirement, Role: portfolio.RoleOffensive, OffensiveOverride: true}
+	play := portfolio.Sleeve{ID: "play", Name: "Play", Kind: portfolio.KindRetirement, Role: portfolio.RoleOffensive, RoleOverride: true}
 	renamed := portfolio.Sleeve{ID: core, Name: "Core renamed", Kind: portfolio.KindBonds, Role: portfolio.RoleDefensive}
 	for _, s := range []portfolio.Sleeve{play, renamed} {
 		if err := store.SaveSleeve(ctx, s); err != nil {

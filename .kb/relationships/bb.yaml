@@ -363,3 +363,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f9219962ec4
+  - type: implements
+    from: SYM-connectorv1-transaction-get-broker-account
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:54:45.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34d49cce36ef
+  - type: covered_by
+    from: SYM-connectorv1-transaction-get-broker-account
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:54:45.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-758c12a04c50
+  - type: implements
+    from: SYM-ui-server-account-entry-done
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:12:01.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5870f4b17c33
+  - type: covered_by
+    from: SYM-ui-server-account-entry-done
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:12:01.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69ab87fe579e

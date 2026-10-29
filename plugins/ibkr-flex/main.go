@@ -7,16 +7,17 @@
 // Flex parser and mapping are internal/ingest/ibkrflex; this binary only
 // wires them to the SDK.
 //
-// The Flex Web Service token and the Flex Query's ID come from the Secret
-// ibkr-flex-credentials (files token and query-id), which the owner
+// The Flex Web Service token and the Flex Query's ID come from the instance's
+// Secret <instance>-flex-token (role flex-token, D-89; files token and query-id), which the owner
 // creates (D-29) and the manifest mounts at /etc/openfief/ibkr-flex. They
 // are read on every sync and never logged.
 //
-// Config (OPENFIEF_CONFIG, checked against the manifest's schema) maps each
-// IBKR account the Flex Query reports to the OpenFief account it feeds; a
-// statement of any other account is skipped:
-//
-//	{"accounts": {"U0000000": "acc-ibkr"}}
+// The plugin takes no config. It names every statement's entries by the
+// IBKR account the statement is of, and reports every IBKR account it saw,
+// so the core maps them to the OpenFief accounts the owner picked in the
+// built-in UI and books nothing for an account the owner hasn't mapped
+// (D-72). The owner never types an IBKR account number, and the plugin
+// never learns an OpenFief account ID.
 package main
 
 import (
@@ -29,17 +30,11 @@ import (
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/ingest/ibkrflex"
-	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
 
 // requestTimeout bounds one request to the Flex Web Service.
 const requestTimeout = time.Minute
-
-// config is the plugin's configuration.
-type config struct {
-	Accounts map[string]string `json:"accounts"`
-}
 
 func main() {
 	os.Exit(serve())
@@ -60,35 +55,22 @@ func serve() int {
 
 // run serves the connector until ctx is done.
 func run(ctx context.Context, log *slog.Logger) error {
-	var cfg config
-	if err := openfief.LoadConfig(&cfg); err != nil {
-		return fmt.Errorf("config: %w", err)
-	}
 	hc, err := openfief.NewEgressClient()
 	if err != nil {
 		return fmt.Errorf("egress: %w", err)
 	}
 	hc.Timeout = requestTimeout
 	c := &connector{
-		mapper:  ibkrflex.Mapper{Accounts: cfg.ledgerAccounts()},
+		mapper:  ibkrflex.Mapper{ByBrokerAccount: true},
 		secrets: flexMount,
 		fetch: func(ctx context.Context, token, queryID string) ([]byte, error) {
 			client := ibkrflex.Client{HTTP: hc, Token: token, QueryID: queryID}
 			return client.FetchStatement(ctx)
 		},
 	}
-	log.Info("ibkr-flex serving", "accounts", len(cfg.Accounts))
+	log.Info("ibkr-flex serving")
 	if err := openfief.ServeConnector(ctx, c); err != nil {
 		return fmt.Errorf("ibkr-flex: %w", err)
 	}
 	return nil
-}
-
-// ledgerAccounts is the account map as the Flex mapper takes it.
-func (c config) ledgerAccounts() map[string]ledger.AccountID {
-	out := make(map[string]ledger.AccountID, len(c.Accounts))
-	for ibkr, account := range c.Accounts {
-		out[ibkr] = ledger.AccountID(account)
-	}
-	return out
 }

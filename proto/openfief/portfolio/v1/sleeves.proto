@@ -1,0 +1,127 @@
+// OpenFief's sleeve entry contract (docs/DESIGN.md D-71, D-73, D-79).
+//
+// The owner adds and renames sleeve kinds and sleeves in the built-in UI, in
+// the first-run wizard (D-73) and later, and the UI hands them to the core
+// through SleeveService: one owner-only service for this kind of entry
+// (D-79). The read API (D-6) stays read-only: it lists sleeves and sleeve
+// kinds for any read caller.
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto), as in model.proto:
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - The owner names kinds and sleeves; the core makes their keys and IDs
+//   from the names, as lowercase hyphenated words. A name the core can make
+//   no key from, an unknown kind, or a role other than the kind's default
+//   without role_override fails with INVALID_ARGUMENT and nothing is
+//   stored; a name whose key or ID is taken fails with ALREADY_EXISTS; an
+//   unknown kind or sleeve to change fails with NOT_FOUND.
+syntax = "proto3";
+
+package openfief.portfolio.v1;
+
+// SleeveService adds and changes sleeve kinds and sleeves.
+service SleeveService {
+  // AddSleeveKind adds a kind with a default role, which never changes.
+  rpc AddSleeveKind(AddSleeveKindRequest) returns (AddSleeveKindResponse);
+
+  // RenameSleeveKind renames a kind, built-in ones too. Its key and default
+  // role stay.
+  rpc RenameSleeveKind(RenameSleeveKindRequest) returns (RenameSleeveKindResponse);
+
+  // AddSleeve adds a sleeve of a stored kind.
+  rpc AddSleeve(AddSleeveRequest) returns (AddSleeveResponse);
+
+  // UpdateSleeve renames a sleeve, or changes its kind or role; its ID
+  // stays.
+  rpc UpdateSleeve(UpdateSleeveRequest) returns (UpdateSleeveResponse);
+}
+
+// SleeveRole is what a sleeve is for.
+enum SleeveRole {
+  SLEEVE_ROLE_UNSPECIFIED = 0;
+  // Never available to agents.
+  SLEEVE_ROLE_DEFENSIVE = 1;
+  // Fiefs are leased from it (GR-6).
+  SLEEVE_ROLE_OFFENSIVE = 2;
+}
+
+// SleeveKind is a named category of sleeve with the role a sleeve of it
+// gets by default.
+message SleeveKind {
+  // Lowercase hyphenated words, such as "emergency-fund".
+  string key = 1;
+  string name = 2;
+  SleeveRole default_role = 3;
+}
+
+// Sleeve is a part of the portfolio with one kind and one role.
+message Sleeve {
+  // Lowercase hyphenated words made from the sleeve's first name.
+  string id = 1;
+  string name = 2;
+  // The key of the sleeve's kind.
+  string kind = 3;
+  SleeveRole role = 4;
+  // The owner's explicit choice of a role other than the kind's default
+  // role (D-71). It must be set exactly when role differs from it.
+  bool role_override = 5;
+}
+
+message AddSleeveKindRequest {
+  string origin = 1;
+  string session_token = 2;
+  string name = 3;
+  SleeveRole default_role = 4;
+}
+
+message AddSleeveKindResponse {
+  SleeveKind kind = 1;
+}
+
+message RenameSleeveKindRequest {
+  string origin = 1;
+  string session_token = 2;
+  string key = 3;
+  string name = 4;
+}
+
+message RenameSleeveKindResponse {
+  SleeveKind kind = 1;
+}
+
+message AddSleeveRequest {
+  string origin = 1;
+  string session_token = 2;
+  string name = 3;
+  // The key of a stored kind.
+  string kind = 4;
+  // Unspecified takes the kind's default role.
+  SleeveRole role = 5;
+  bool role_override = 6;
+}
+
+message AddSleeveResponse {
+  Sleeve sleeve = 1;
+}
+
+message UpdateSleeveRequest {
+  string origin = 1;
+  string session_token = 2;
+  string id = 3;
+  string name = 4;
+  string kind = 5;
+  // Unspecified takes the kind's default role.
+  SleeveRole role = 6;
+  bool role_override = 7;
+}
+
+message UpdateSleeveResponse {
+  Sleeve sleeve = 1;
+}

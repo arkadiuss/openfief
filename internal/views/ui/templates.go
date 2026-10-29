@@ -38,16 +38,18 @@ type page struct {
 // templateFuncs are the helpers templates format values with.
 func templateFuncs() template.FuncMap {
 	return template.FuncMap{
-		"money":      formatMoney,
-		"amount":     formatAmount,
-		"share":      share,
-		"percent":    percent,
-		"book":       bookLabel,
-		"instrument": instrumentLabel,
-		"enum":       enumLabel,
-		"balance":    balanceLabel,
-		"trust":      trustLabel,
-		"badge":      badgeOf,
+		"money":        formatMoney,
+		"amount":       formatAmount,
+		"share":        share,
+		"percent":      percent,
+		"book":         bookLabel,
+		"instrument":   instrumentLabel,
+		"enum":         enumLabel,
+		"balance":      balanceLabel,
+		"trust":        trustLabel,
+		"badge":        badgeOf,
+		"roleFields":   roleFields,
+		"sleeveSelect": sleeveSelect,
 	}
 }
 

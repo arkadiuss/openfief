@@ -328,3 +328,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7fa4ccfbc06
+  - type: validates
+    from: TEST-portfolio-connectapi-sleeves
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-29T12:45:16.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f5316d5f1e2
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-accounts-update-account
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:14:03.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff745d50a9e7
+  - type: implements
+    from: SYM-ingestv1-account-proto-reflect
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:18:56.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebe39830adfa
+  - type: covered_by
+    from: SYM-ingestv1-account-proto-reflect
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:18:56.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21edf8f7833d
+  - type: implements
+    from: SYM-ingestv1-bind-account-response-proto-message
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:26:47.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-022824fc018e
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-response-proto-message
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:26:47.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccb0f394ea9d
+  - type: implements
+    from: SYM-viewsv1-broker-account-proto-message
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:45:38.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47801e0945a3
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-proto-message
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:45:38.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3f7f14768a9

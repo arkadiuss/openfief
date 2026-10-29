@@ -101,7 +101,7 @@ func TestCheckSleeve(t *testing.T) {
 	t.Parallel()
 	kinds := portfolio.DefaultKinds()
 	sleeve := func(kind portfolio.KindKey, role portfolio.Role, override bool) portfolio.Sleeve {
-		return portfolio.Sleeve{ID: "s", Name: "S", Kind: kind, Role: role, OffensiveOverride: override}
+		return portfolio.Sleeve{ID: "s", Name: "S", Kind: kind, Role: role, RoleOverride: override}
 	}
 	tests := []struct {
 		name    string
@@ -125,9 +125,14 @@ func TestCheckSleeve(t *testing.T) {
 			want:   sleeve(portfolio.KindSatellite, portfolio.RoleOffensive, false),
 		},
 		{
-			name:   "defensive in an offensive kind",
-			sleeve: sleeve(portfolio.KindSatellite, portfolio.RoleDefensive, false),
-			want:   sleeve(portfolio.KindSatellite, portfolio.RoleDefensive, false),
+			name:   "defensive in an offensive kind with the override",
+			sleeve: sleeve(portfolio.KindSatellite, portfolio.RoleDefensive, true),
+			want:   sleeve(portfolio.KindSatellite, portfolio.RoleDefensive, true),
+		},
+		{
+			name:    "defensive in an offensive kind without the override",
+			sleeve:  sleeve(portfolio.KindSatellite, portfolio.RoleDefensive, false),
+			wantErr: portfolio.ErrRoleOverride,
 		},
 		{
 			name:   "offensive in a defensive kind with the override",
@@ -140,7 +145,7 @@ func TestCheckSleeve(t *testing.T) {
 			wantErr: portfolio.ErrRoleOverride,
 		},
 		{
-			name:    "override on a defensive sleeve",
+			name:    "override on a defensive sleeve of a defensive kind",
 			sleeve:  sleeve(portfolio.KindCore, portfolio.RoleDefensive, true),
 			wantErr: portfolio.ErrRoleOverride,
 		},
@@ -226,12 +231,17 @@ func TestMissingDefaults(t *testing.T) {
 	}{
 		{name: "fresh install", wantKinds: kinds, wantSleeves: sleeves},
 		{name: "everything stored", kinds: kinds, sleeves: sleeves},
+		{name: "kinds stored by the migration, no sleeve yet", kinds: kinds, wantSleeves: sleeves},
 		{
-			name:        "renamed kind, moved sleeve and custom kind are kept",
-			kinds:       []portfolio.Kind{custom, renamedCore},
-			sleeves:     []portfolio.Sleeve{movedCore},
-			wantKinds:   []portfolio.Kind{kinds[0], kinds[1], kinds[3], kinds[4], kinds[5]},
-			wantSleeves: []portfolio.Sleeve{sleeves[0], sleeves[2]},
+			name:      "renamed kind, moved sleeve and custom kind are kept; no default sleeve is added to a started install",
+			kinds:     []portfolio.Kind{custom, renamedCore},
+			sleeves:   []portfolio.Sleeve{movedCore},
+			wantKinds: []portfolio.Kind{kinds[0], kinds[1], kinds[3], kinds[4], kinds[5]},
+		},
+		{
+			name:    "the demo dataset's own sleeves are not joined by the defaults",
+			kinds:   kinds,
+			sleeves: []portfolio.Sleeve{{ID: "demo-defensive", Name: "Demo defensive", Kind: portfolio.KindBonds, Role: portfolio.RoleDefensive}},
 		},
 	}
 	for _, tt := range tests {

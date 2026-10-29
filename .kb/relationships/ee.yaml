@@ -363,3 +363,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd7cdf2ee624
+  - type: constrains
+    from: REQ-portfolio-role-override-explicit
+    to: FACT-SUBJECT-20F39635C8813292
+    created_at: 2026-10-29T11:36:16.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-513055780be0
+  - type: requires_property
+    from: REQ-portfolio-role-override-explicit
+    to: FACT-PROP-2F3C3544A4DE1C2A
+    created_at: 2026-10-29T11:36:16.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fcf8c3aac51
+  - type: specified_by
+    from: REQ-portfolio-role-override-explicit
+    to: SCEN-portfolio-role-override-explicit
+    created_at: 2026-10-29T11:36:16.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ad052c6e3eb
+  - type: supersedes
+    from: REQ-portfolio-role-override-explicit
+    to: REQ-portfolio-sleeve-role-override
+    created_at: 2026-10-29T11:36:16.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba0cddbe4017
+  - type: implements
+    from: SYM-ingest-connectrpc-broker-account-from
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:50:12.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a65fe983495e
+  - type: covered_by
+    from: SYM-ingest-connectrpc-broker-account-from
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:50:12.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0decd1ec86e8
+  - type: implements
+    from: SYM-portfoliov1-sleeve-kind-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:31:50.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03b88c6184ae
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-kind-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:31:50.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e278c8aca819

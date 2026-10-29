@@ -473,7 +473,7 @@ tasks:
       - '{{.GO_GUARD}} go run ./cmd/sigstore-trusted-root -o internal/plugins/cosign/trusted_root.json'
 
   deploy:demo:
-    desc: 'Publish deploy/demo/openfief, pinned to the signed digests of TAG, as the signed artifact Flux on the demo follows (CI only; needs cosign and a GHCR login), e.g. task deploy:demo TAG=sha-1a2b3c4 REPO=owner/openfief'
+    desc: 'Publish deploy/demo/openfief, pinned to the signed digests of TAG, and deploy/demo/routes as the signed artifact Flux on the demo follows (CI only; needs cosign and a GHCR login), e.g. task deploy:demo TAG=sha-1a2b3c4 REPO=owner/openfief'
     deps: [tool:gojq, tool:kustomize, tool:flux]
     requires:
       vars: [TAG, REPO]
@@ -485,8 +485,11 @@ tasks:
         set -e
         PATH='{{.BIN}}':"$PATH" bash scripts/demo/pin-images.sh "$TAG" "$REPO"
         PATH='{{.BIN}}':"$PATH" bash scripts/demo/validate.sh
-        mkdir -p dist/demo-manifests
-        '{{.BIN}}/kustomize' build deploy/demo/openfief >dist/demo-manifests/openfief.yaml
+        # ./app is OpenFief, ./routes the demo's routes to it (deploy/demo/stack.yaml): one signed artifact, so a route
+        # change ships with the core it points at. The routes keep their ${DEMO_HOST}; Flux substitutes it.
+        rm -rf dist/demo-manifests && mkdir -p dist/demo-manifests/app dist/demo-manifests/routes
+        '{{.BIN}}/kustomize' build deploy/demo/openfief >dist/demo-manifests/app/openfief.yaml
+        '{{.BIN}}/kustomize' build deploy/demo/routes >dist/demo-manifests/routes/routes.yaml
         artifact="oci://ghcr.io/$(printf '%s' "$REPO" | tr '[:upper:]' '[:lower:]')/demo-manifests"
         pushed="$('{{.BIN}}/flux' push artifact "$artifact:$TAG" --path=dist/demo-manifests \
           --source="https://github.com/$REPO" --revision="$TAG@sha1:$(git rev-parse HEAD)" --output json)"

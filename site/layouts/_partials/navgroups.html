@@ -1,0 +1,25 @@
+{{- /*
+The sidebar groups from site/hugo.toml, resolved to pages. Each group has its title, blurb, open flag, the index of its
+section (head, or false) and its parts: lists of items under an optional small heading. The sidebar (nav.html) and the
+docs home (docshome.html) both draw from this, so they always agree.
+*/ -}}
+{{- $groups := slice -}}
+{{- range site.Params.nav -}}
+  {{- $group := . -}}
+  {{- $head := false -}}
+  {{- with $group.section -}}
+    {{- with site.GetPage . }}{{ $head = . }}{{ else }}{{ errorf "site/hugo.toml: the sidebar names section %q, which is not a page" . }}{{ end -}}
+  {{- end -}}
+  {{- $parts := slice -}}
+  {{- if $group.parts -}}
+    {{- range $group.parts -}}
+      {{- $parts = $parts | append (dict "title" .title "items" (partial "navpages.html" .pages)) -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $items := partial "navpages.html" ($group.pages | default slice) -}}
+    {{- with $head }}{{ range partial "pages.html" . }}{{ $items = $items | append (dict "page" .page "label" .title) }}{{ end }}{{ end -}}
+    {{- $parts = $parts | append (dict "title" "" "items" $items) -}}
+  {{- end -}}
+  {{- $groups = $groups | append (dict "title" $group.title "blurb" $group.blurb "open" $group.open "head" $head "parts" $parts) -}}
+{{- end -}}
+{{- return $groups -}}

@@ -426,3 +426,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1af4fe75b51
+  - type: constrains
+    from: REQ-ingest-broker-account-seeding
+    to: FACT-SUBJECT-ADDCB97B909F7AE1
+    created_at: 2026-10-29T11:37:01.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7318da2575fb
+  - type: requires_property
+    from: REQ-ingest-broker-account-seeding
+    to: FACT-PROP-C1DD849DC6CE72C1
+    created_at: 2026-10-29T11:37:01.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5fac72004da
+  - type: specified_by
+    from: REQ-ingest-broker-account-seeding
+    to: SCEN-ingest-broker-account-seeding
+    created_at: 2026-10-29T11:37:01.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2726cb0f2496
+  - type: implements
+    from: SYM-views-app-views-connector-bindings
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:08:52.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b1079f52018
+  - type: covered_by
+    from: SYM-views-app-views-connector-bindings
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:08:52.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a436dbede96
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-request-proto-message
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:33:54.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36a7b6551e2b
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-request-proto-message
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:33:54.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3acde902eed

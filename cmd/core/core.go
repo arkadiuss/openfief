@@ -155,7 +155,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewOptions(models, checks, installed)...)
+	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)))
+	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
 	}
@@ -171,6 +172,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	served := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
 	served = withBondLotService(served, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	served = withStatementService(served, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	served = withOnboardingServices(served, newSleeves(l, auth, cfg.Auth.Origins), newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	return &core{api: served, river: client, deps: deps, plugins: installed}, nil
 }
 

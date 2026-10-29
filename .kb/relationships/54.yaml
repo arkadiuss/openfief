@@ -398,3 +398,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd8d958a7935
+  - type: verified_by
+    from: SCEN-portfolio-role-override-explicit
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-29T11:35:45.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-733bc07c74ab
+  - type: verified_by
+    from: SCEN-portfolio-role-override-explicit
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-29T11:35:45.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd4ddfd6b068
+  - type: implements
+    from: SYM-ui-server-setup-page
+    to: REQ-ui-first-run-wizard-steps
+    created_at: 2026-10-29T13:16:10.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33eb730a4dd3
+  - type: implements
+    from: SYM-ui-server-setup-page
+    to: REQ-ui-first-run-wizard
+    created_at: 2026-10-29T13:16:10.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa815793a13
+  - type: covered_by
+    from: SYM-ui-server-setup-page
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:16:10.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cce7633e854d

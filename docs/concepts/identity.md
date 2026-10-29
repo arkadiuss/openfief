@@ -21,7 +21,7 @@ The identity context decides who may use OpenFief. An installation has exactly o
 
 **Scopes.** A `read` session may use the read API, `WhoAmI` and `Logout`. An `owner` session may also manage passkeys, script tokens and enrollment links. The core enforces this; a view plugin can't widen it.
 
-**Enrollment codes.** OpenFief installs with no hostname (D-60), so the first passkey is created on `localhost` through `kubectl port-forward`: the owner runs `openfief enroll` (D-80, [below](#the-first-passkey)), which has the core's own `core enroll-link` print a one-time link, such as `http://localhost:8080/enroll#code=ofenroll_...`. An [enrollment code](../glossary.md) works once, on the one [origin](../glossary.md) it was issued for, within its lifetime (15 minutes by default, 24 hours at most); only its key's hash is stored. The code sits in the URL fragment, which a browser never sends to a server or in a `Referer`. When the owner adds their own Ingress, a logged-in owner session issues a link for the new host the same way (`CreateEnrollmentLink`). Creating a passkey with a code also logs the owner in.
+**Enrollment codes.** OpenFief installs with no hostname (D-60), so the first passkey is created through a one-time link: the owner runs `openfief enroll` (D-80, [below](#the-first-passkey)), which has the core's own `core enroll-link` print it, such as `http://localhost:8080/enroll#code=ofenroll_...`. An [enrollment code](../glossary.md) works once, on the one [origin](../glossary.md) it was issued for, within its lifetime (15 minutes by default, 24 hours at most); only its key's hash is stored. The code sits in the URL fragment, which a browser never sends to a server or in a `Referer`. When the owner adds a route on their own hostname ([Expose OpenFief](../guides/expose.md)), a logged-in owner session issues a link for that host the same way (`CreateEnrollmentLink`). Creating a passkey with a code also logs the owner in and opens the overview, which sends an owner whose install has no account yet to the built-in UI's first-run wizard (D-73, [UI](ui.md#pages)).
 
 **Allowed origins.** The core serves the owner only on origins on an explicit allow-list (`--auth-origin`, repeated; `http://localhost:8080` by default). An origin is `https://` and a lowercase DNS name with an optional port, or `http://localhost`, the one host browsers treat as secure without TLS. IP addresses are refused, because a WebAuthn relying party ID must be a domain. Every call names its origin, and the browser's signed client data must name the same one.
 
@@ -144,8 +144,8 @@ sequenceDiagram
 - D-27: plugins authenticate with projected ServiceAccount tokens (audience `openfief-core`); scripts get separate, scoped, expiring, read-only tokens.
 - D-29: no home-grown cryptography: go-webauthn, `crypto/rand`, `crypto/sha256`, `crypto/subtle`.
 - D-59: only the core may call a plugin, with a short-lived TokenRequest token whose audience is that instance.
-- D-60: no hostname at install; the one-time link for the first passkey on localhost; a session's link for a new host; passkeys per host.
-- D-80: `openfief enroll` runs `core enroll-link` in the core's pod through exec with the owner's kubeconfig, starts the port-forward and prints the link. D-80 says the forward goes "to the UI"; since D-81 makes the core the only entry point for browsers, it goes to the core, which proxies the UI. The first-run wizard (D-73) is what the output points to; it is not built yet.
+- D-60: no hostname at install; the one-time link for the first passkey, on the owner's hostname or on localhost; a session's link for another host; passkeys per host.
+- D-80: `openfief enroll` runs `core enroll-link` in the core's pod through exec with the owner's kubeconfig and prints the link; with no origin given, it forwards a local port to the core, which proxies the UI (D-81), and the link is for `localhost`. The first-run wizard (D-73) is what the output points to; it is not built yet.
 - D-6: the public API is read-only, so `read` is the only script token scope.
 - D-84: no fixed token and no bypass in any build. The core once accepted a token from `OPENFIEF_AUTH_CALLER_TOKEN` outside a cluster; that path is gone, and so is the UI's matching variable.
 - Author decisions given in chat, not yet in DESIGN.md: the auth split (authenticators, opaque sessions, script tokens from a session, the UI as backend-for-frontend), and demo read-only sessions (scopes, the demo authenticator).
@@ -166,5 +166,6 @@ sequenceDiagram
 
 ## Not built yet
 
+- `openfief enroll --origin`, which prints the first passkey's link for the owner's own hostname with no port-forward (D-80). Until it exists, the first passkey is made on `localhost` and a session issues the link for another host.
 - Listing and revoking other sessions than the current one.
 - Scopes for script tokens other than `read`; they wait for a write API, which M0 doesn't have.

@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90f66d9a3d05
+  - type: implements
+    from: SYM-ingestv1-bind-account-response-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:00.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-405ac0894eba
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-response-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:00.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-030cb63ebcfa

@@ -482,3 +482,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49197a66af88
+  - type: implements
+    from: SYM-ingest-postgres-store-all-broker-accounts
+    to: REQ-ingest-broker-account-record
+    created_at: 2026-10-29T11:52:44.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1ff8bff7088
+  - type: implements
+    from: SYM-ingest-postgres-store-all-broker-accounts
+    to: REQ-ingest-broker-account-seeding
+    created_at: 2026-10-29T11:52:44.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f24fc410bf22
+  - type: covered_by
+    from: SYM-ingest-postgres-store-all-broker-accounts
+    to: TEST-ingest-postgres-brokers
+    created_at: 2026-10-29T11:52:44.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7bc1e26f681
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-new-sleeve-client
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:08:04.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53d76c24714e
+  - type: implements
+    from: SYM-viewsv1-list-sleeve-kinds-response-reset
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:47:45.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057465674abc
+  - type: covered_by
+    from: SYM-viewsv1-list-sleeve-kinds-response-reset
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:47:45.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e41217f2277

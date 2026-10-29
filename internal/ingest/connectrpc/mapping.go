@@ -385,7 +385,7 @@ func bondLotsTo(lots []ingest.BondLot) []*connectorv1.BondLot {
 }
 
 // mappingFrom translates a delivery's transactions, balance assertions and
-// ingest problems.
+// ingest problems, with those named by broker account apart (D-72).
 func mappingFrom(d *connectorv1.Delivery) (ingest.Mapping, error) {
 	txs, err := translate("transactions", d.GetTransactions(), transactionFrom)
 	if err != nil {
@@ -399,7 +399,11 @@ func mappingFrom(d *connectorv1.Delivery) (ingest.Mapping, error) {
 	if err != nil {
 		return ingest.Mapping{}, err
 	}
-	return ingest.Mapping{Transactions: txs, Assertions: assertions, Problems: problems}, nil
+	m := ingest.Mapping{Transactions: txs, Assertions: assertions, Problems: problems}
+	if err := splitByBrokerAccount(d, &m); err != nil {
+		return ingest.Mapping{}, err
+	}
+	return m, nil
 }
 
 // priceFrom translates one end-of-day price; the close must be positive.

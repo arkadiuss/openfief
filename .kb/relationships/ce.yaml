@@ -475,6 +475,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba9435cc76c9
+  - type: implements
+    from: SYM-ingest-app-connectors-mark-seeded
+    to: REQ-ingest-broker-account-seeding
+    created_at: 2026-10-29T11:47:12.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76611a5c70c5
+  - type: covered_by
+    from: SYM-ingest-app-connectors-mark-seeded
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:47:12.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcd5cb3ef57e
+  - type: implements
+    from: SYM-ingest-connectapi-new-accounts
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:01:11.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a968f211de68
+  - type: covered_by
+    from: SYM-ingest-connectapi-new-accounts
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:01:11.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b06519307c6
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-response
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:36:40.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bb47a96cdae
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-response
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:36:40.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c894c5b28be9
+  - type: implements
+    from: SYM-portfoliov1-file_openfief_portfolio_v1_sleeves_proto_init
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:42:33.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c404bf3812f
+  - type: covered_by
+    from: SYM-portfoliov1-file_openfief_portfolio_v1_sleeves_proto_init
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:42:33.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d454d9d7f79
   - type: executable_for
     from: SYM-fd-identity-cli-test-enroll
     to: TEST-identity-cli

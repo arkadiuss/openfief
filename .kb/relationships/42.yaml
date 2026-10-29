@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-facf74de7301
+  - type: implements
+    from: SYM-ingest-reported-broker-accounts
+    to: REQ-ingest-broker-account-record
+    created_at: 2026-10-29T11:49:34.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-018488ae3e9d
+  - type: covered_by
+    from: SYM-ingest-reported-broker-accounts
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:49:34.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f94d221285e

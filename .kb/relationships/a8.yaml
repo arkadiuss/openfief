@@ -538,3 +538,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5aafedd9ed61
+  - type: verified_by
+    from: SCEN-views-onboarding-lists
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T12:45:39.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eafbd66af32
+  - type: verified_by
+    from: SCEN-views-onboarding-lists
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T12:45:39.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6305f15172a8
+  - type: verified_by
+    from: SCEN-views-onboarding-lists
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T12:45:39.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a460c67ef8c8
+  - type: implements
+    from: SYM-portfoliov1connect-unimplemented-sleeve-service-handler-update-sleeve
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:30:24.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27ecb778e169
+  - type: covered_by
+    from: SYM-portfoliov1connect-unimplemented-sleeve-service-handler-update-sleeve
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:30:24.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f85a215bfd0
+  - type: implements
+    from: SYM-viewsv1-broker-account-reset
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:45:22.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0294b66e488d
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-reset
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:45:22.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc60756b9659

@@ -496,3 +496,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8da830afb36
+  - type: constrains
+    from: REQ-portfolio-sleeve-service
+    to: FACT-SUBJECT-7D628E9AE5C6B625
+    created_at: 2026-10-29T12:45:55.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-135520121f3d
+  - type: requires_property
+    from: REQ-portfolio-sleeve-service
+    to: FACT-PROP-84D1D1EBF4EAC7A1
+    created_at: 2026-10-29T12:45:55.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-462bacbcbf46
+  - type: specified_by
+    from: REQ-portfolio-sleeve-service
+    to: SCEN-portfolio-sleeve-service
+    created_at: 2026-10-29T12:45:55.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74d49d016480
+  - type: implements
+    from: SYM-views-app-views-sleeve-kinds
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:08:46.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ef7bd5e63df
+  - type: covered_by
+    from: SYM-views-app-views-sleeve-kinds
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:08:46.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c2169ba48a8

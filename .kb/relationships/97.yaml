@@ -496,3 +496,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c88b42fa4ee
+  - type: implements
+    from: SYM-ui-server-connector-instances
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:40.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b9913ea7f59
+  - type: covered_by
+    from: SYM-ui-server-connector-instances
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:40.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9886da250b1
+  - type: implements
+    from: SYM-ingestv1-update-account-request-string
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:22:49.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f05726eb7c2f
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-string
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:22:49.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2a96e529dea
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind-proto-reflect
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:43:25.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b8385166bc1
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind-proto-reflect
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:43:25.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff419fb788f5

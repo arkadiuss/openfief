@@ -72,10 +72,10 @@ func (s *Store) WithTx(fn func(tx pgx.Tx) error) error {
 // stored.
 func (s *Store) SaveSleeve(ctx context.Context, sl portfolio.Sleeve) error {
 	_, err := s.db.Exec(ctx, `
-		INSERT INTO ledger.sleeves (id, name, kind, role, offensive_override) VALUES ($1, $2, $3, $4, $5)
+		INSERT INTO ledger.sleeves (id, name, kind, role, role_override) VALUES ($1, $2, $3, $4, $5)
 		ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, kind = EXCLUDED.kind, role = EXCLUDED.role,
-			offensive_override = EXCLUDED.offensive_override`,
-		string(sl.ID), sl.Name, string(sl.Kind), sl.Role.String(), sl.OffensiveOverride)
+			role_override = EXCLUDED.role_override`,
+		string(sl.ID), sl.Name, string(sl.Kind), sl.Role.String(), sl.RoleOverride)
 	if err != nil {
 		return fmt.Errorf("saving sleeve %s: %w", sl.ID, err)
 	}
@@ -85,7 +85,7 @@ func (s *Store) SaveSleeve(ctx context.Context, sl portfolio.Sleeve) error {
 // Sleeves returns every sleeve, in ID order.
 func (s *Store) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
 	rows, err := s.db.Query(ctx, `
-		SELECT id, name, kind, role, offensive_override FROM ledger.sleeves ORDER BY id COLLATE "C"`)
+		SELECT id, name, kind, role, role_override FROM ledger.sleeves ORDER BY id COLLATE "C"`)
 	if err != nil {
 		return nil, fmt.Errorf("loading sleeves: %w", err)
 	}
@@ -108,7 +108,7 @@ func scanSleeve(row pgx.CollectableRow) (portfolio.Sleeve, error) {
 		return portfolio.Sleeve{}, fmt.Errorf("%w: sleeve %s: %w", ErrCorruptLog, id, err)
 	}
 	return portfolio.Sleeve{
-		ID: portfolio.SleeveID(id), Name: name, Kind: portfolio.KindKey(kind), Role: r, OffensiveOverride: override,
+		ID: portfolio.SleeveID(id), Name: name, Kind: portfolio.KindKey(kind), Role: r, RoleOverride: override,
 	}, nil
 }
 
