@@ -235,7 +235,7 @@ message BondTerms {
 // Delivery is what a connector returns for one import batch: its mapping of
 // what the institution reported (transactions with their postings, balance
 // assertions and the rows it left out), plus any prices, FX rates, index
-// readings and index levels.
+// readings, index levels, bond series terms and cross-check prices.
 message Delivery {
   // The batch ID of the call, echoed back.
   string batch_id = 1;
@@ -250,6 +250,12 @@ message Delivery {
   repeated IndexLevel index_levels = 9;
   // The terms of the treasury bond series the delivery's transactions hold.
   repeated BondTerms bond_terms = 10;
+  // The institution's own end-of-day prices of instruments, such as the
+  // mark prices of the positions an IBKR Flex statement reports. The core
+  // stores them only to cross-check the market-data connector's prices
+  // (D-22): unlike prices, they never value a holding and never replace a
+  // stored price.
+  repeated Price cross_check_prices = 11;
 }
 
 message SyncRequest {

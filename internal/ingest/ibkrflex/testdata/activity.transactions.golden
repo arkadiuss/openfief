@@ -46,8 +46,10 @@ assert acc-ibkr 2026-03-13 holding:PLTEST000010/TSTA 20
 assert acc-ibkr 2026-03-13 holding:IETEST000026/TSTB 4.5
 assert acc-ibkr 2026-03-13 cash:USD 664.37
 assert acc-ibkr 2026-03-13 cash:EUR 1.2
+cross-check PLTEST000010/TSTA 2026-03-13 102.4 USD
 problem unsupported FlexStatement#1/OpenPositions#4: short or empty positions are not supported
 problem unsupported FlexStatement#1/OpenPositions#5: asset category "FUT" is not supported
+problem skipped FlexStatement#1/OpenPositions[isin=IETEST000026]: the mark prices of the instrument's LOT rows disagree; no cross-check price
 problem unsupported FlexStatement#1/CashReport#4[currency=GBP]: missing or unreadable attribute: endingCash
 problem skipped FlexStatement#1/Trades#1: <Order> is not a <Trade> row
 problem skipped FlexStatement#1/Trades#4[tradeID=9000102]: <Lot> is not a <Trade> row

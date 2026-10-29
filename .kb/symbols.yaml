@@ -8227,11 +8227,14 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T06:26:32.110Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-ibkrflex-golden
       - type: implements
         target: REQ-ibkrflex-assertions
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
   - id: SYM-ibkrflex-positions
     title: positions
     sourceFile: internal/ingest/ibkrflex/positions.go
@@ -72962,3 +72965,240 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-postgres-crosscheck
+  - id: SYM-ingest-cross-check-price
+    title: CrossCheckPrice
+    sourceFile: internal/ingest/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:24:54.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-ibkrflex-held-units-mark-of
+    title: heldUnits.markOf
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:06.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
+  - id: SYM-ibkrflex-held-units-add-mark
+    title: heldUnits.addMark
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:12.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
+  - id: SYM-ibkrflex-stmt-mark
+    title: stmt.mark
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:19.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
+  - id: SYM-ingest-conn-rpc-cross-check-price-from
+    title: crossCheckPriceFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:26.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-ingest-app-cross-check-price-store
+    title: CrossCheckPriceStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:32.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-ingest-app-connectors-store-cross-checks
+    title: Connectors.storeCrossChecks
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:39.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-ingest-app-test-helper-fake-stores-store-cross-check-prices
+    title: fakeStores.StoreCrossCheckPrices
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:45.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-connectors-cross-check-prices
+    title: TestConnectorsCrossCheckPrices
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:52.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-core-conn-cross-check-inputs
+    title: crossCheckInputs
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:57.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cross-check
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-core-conn-cross-check-inputs-store-cross-check-prices
+    title: crossCheckInputs.StoreCrossCheckPrices
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:03.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cross-check
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-core-test-helper-mem-cross-checks
+    title: memCrossChecks
+    sourceFile: cmd/core/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:10.450Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-cross-check
+  - id: SYM-core-test-helper-mem-cross-checks-save-cross-check-prices
+    title: memCrossChecks.SaveCrossCheckPrices
+    sourceFile: cmd/core/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:17.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cross-check
+  - id: SYM-core-test-helper-mem-cross-checks-cross-checked-prices
+    title: memCrossChecks.CrossCheckedPrices
+    sourceFile: cmd/core/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:24.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cross-check
+  - id: SYM-core-test-cross-check-inputs
+    title: TestCrossCheckInputs
+    sourceFile: cmd/core/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:30.784Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cross-check
+  - id: SYM-core-parse-valuation-flags
+    title: parseValuationFlags
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:37.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-parse-threshold
+    title: parseThreshold
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:44.499Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-valuation-settings
+    title: valuationSettings
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:51.296Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-connector-gen-pb-delivery-get-cross-check-prices
+    title: Delivery.GetCrossCheckPrices
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:33:37.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-cross-check-prices

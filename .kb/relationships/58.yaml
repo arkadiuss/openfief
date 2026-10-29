@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39d1d0c1f75d
+  - type: implements
+    from: SYM-ingest-app-connectors-store-cross-checks
+    to: REQ-ingest-cross-check-prices
+    created_at: 2026-10-29T06:25:41.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dc4150a6edd
+  - type: implements
+    from: SYM-ingest-app-connectors-store-cross-checks
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T06:25:41.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b24c791c2cdc
+  - type: covered_by
+    from: SYM-ingest-app-connectors-store-cross-checks
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T06:25:41.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcb0d3037e19

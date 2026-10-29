@@ -342,3 +342,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9706fc364a64
+  - type: implements
+    from: SYM-ingest-cross-check-price
+    to: REQ-ibkrflex-cross-check-prices
+    created_at: 2026-10-29T06:24:56.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c93737d5c5d8
+  - type: implements
+    from: SYM-ingest-cross-check-price
+    to: REQ-ingest-cross-check-prices
+    created_at: 2026-10-29T06:24:56.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86540781483c
+  - type: covered_by
+    from: SYM-ingest-cross-check-price
+    to: TEST-ingest-delivery
+    created_at: 2026-10-29T06:24:56.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7402e3c07ac2
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-cross-check-prices
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T06:25:54.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-106baccfc277

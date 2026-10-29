@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62bbf2de533a
+  - type: verified_by
+    from: SCEN-ingest-cross-check-prices
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T06:24:29.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a66aa27f5d01
+  - type: verified_by
+    from: SCEN-ingest-cross-check-prices
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-29T06:24:29.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d64fbd8bf4df
+  - type: verified_by
+    from: SCEN-ingest-cross-check-prices
+    to: TEST-core-cross-check
+    created_at: 2026-10-29T06:24:29.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbf936d76a49

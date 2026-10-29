@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60beea1cdce5
+  - type: executable_for
+    from: SYM-core-test-cross-check-inputs
+    to: TEST-core-cross-check
+    created_at: 2026-10-29T06:26:32.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe4253a3858f

@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-906c2a80b1dd
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-stores-store-cross-check-prices
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T06:25:47.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ee996f45513

@@ -8,4 +8,6 @@ assert acc-ibkr 2026-03-06 holding:IETEST000026/TSTB 5
 assert acc-ibkr 2026-03-06 cash:USD 1250.75
 assert acc-ibkr 2026-03-06 cash:EUR -40.1
 assert acc-ibkr 2026-03-06 cash:PLN 0
+cross-check PLTEST000010/TSTA 2026-03-06 101.25 USD
+cross-check IETEST000026/TSTB 2026-03-06 106.5 EUR
 problem unsupported FlexStatement#1/OpenPositions#6: asset category "OPT" is not supported

@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b6f238548be
+  - type: executable_for
+    from: SYM-core-test-helper-mem-cross-checks-cross-checked-prices
+    to: TEST-core-cross-check
+    created_at: 2026-10-29T06:26:26.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbf0899147c9

@@ -130,9 +130,12 @@ func (b *Batch) Complete(m *Mapping, imported ImportSummary) {
 }
 
 // Mapping is what a connector makes of one source: ledger transactions,
-// balance assertions, and the rows it left out as ingest problems.
+// balance assertions, the rows it left out as ingest problems, and the
+// institution's own prices as cross-check prices, which the ledger never
+// sees.
 type Mapping struct {
-	Transactions []ledger.Transaction
-	Assertions   []ledger.BalanceAssertion
-	Problems     []Problem
+	Transactions     []ledger.Transaction
+	Assertions       []ledger.BalanceAssertion
+	Problems         []Problem
+	CrossCheckPrices []CrossCheckPrice
 }

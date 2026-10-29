@@ -64,6 +64,13 @@ type fakeStores struct {
 	readings []ingest.IndexReading
 	levels   []valuation.IndexLevel
 	terms    []ingest.BondTerms
+	checks   []valuation.CrossCheckPrice
+}
+
+func (f *fakeStores) StoreCrossCheckPrices(_ context.Context, _ ingest.BatchID, prices []valuation.CrossCheckPrice) error {
+	f.calls++
+	f.checks = prices
+	return f.err
 }
 
 func (f *fakeStores) StoreBondTerms(_ context.Context, _ ingest.BatchID, terms []ingest.BondTerms) error {
@@ -135,8 +142,8 @@ func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, 
 	day := march2(t)
 	return &app.Connectors{
 		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores, Terms: stores,
-		Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
-		Today:    func() kernel.Date { return day },
+		CrossChecks: stores, Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
+		Today: func() kernel.Date { return day },
 	}
 }
 
@@ -169,6 +176,37 @@ func TestConnectorsSync(t *testing.T) {
 	d.Prices[0].Source, d.FXRates[0].Source, d.IndexReadings[0].Source, d.IndexLevels[0].Source = "xtb-main", "xtb-main", "xtb-main", "xtb-main"
 	if diff := cmp.Diff([]any{d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels}, []any{stores.prices, stores.rates, stores.readings, stores.levels}); diff != "" {
 		t.Errorf("stored inputs (-want +got):\n%s", diff)
+	}
+}
+
+// TestConnectorsCrossCheckPrices checks that a delivery's cross-check
+// prices are stored apart from its prices, with the instance as their
+// source, and that a delivery with some fails without a store for them.
+func TestConnectorsCrossCheckPrices(t *testing.T) {
+	t.Parallel()
+	d := delivery(t)
+	d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels = nil, nil, nil, nil
+	mark := valuation.CrossCheckPrice{
+		Instrument: "PLTEST000010/TST", Date: march2(t), Close: kernel.NewMoney(kernel.NewDecimal(1235, -2), mustCurrency(t, "EUR")), Source: "spoofed",
+	}
+	d.CrossCheckPrices = []valuation.CrossCheckPrice{mark}
+	stores := &fakeStores{}
+	if _, err := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, stores).Sync(t.Context(), "ibkr-main", "b-1", ingest.ModeTransactions, ""); err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	mark.Source = "ibkr-main"
+	if diff := cmp.Diff([]valuation.CrossCheckPrice{mark}, stores.checks); diff != "" {
+		t.Errorf("stored cross-check prices (-want +got):\n%s", diff)
+	}
+	if len(stores.prices) != 0 || stores.calls != 1 {
+		t.Errorf("stores got prices %v in %d calls; want only the cross-check prices", stores.prices, stores.calls)
+	}
+
+	c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, &fakeStores{})
+	c.CrossChecks = nil
+	_, err := c.Sync(t.Context(), "ibkr-main", "b-2", ingest.ModeTransactions, "")
+	if diff := cmp.Diff(app.ErrNoCrossCheckStore, err, cmpopts.EquateErrors()); diff != "" {
+		t.Errorf("Sync without a cross-check store error (-want +got):\n%s", diff)
 	}
 }
 

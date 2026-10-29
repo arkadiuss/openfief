@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67dc19ebeeae
+  - type: implements
+    from: SYM-core-conn-cross-check-inputs-store-cross-check-prices
+    to: REQ-ingest-cross-check-prices
+    created_at: 2026-10-29T06:26:05.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87c6eb97a936
+  - type: covered_by
+    from: SYM-core-conn-cross-check-inputs-store-cross-check-prices
+    to: TEST-core-cross-check
+    created_at: 2026-10-29T06:26:05.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35737612a30c

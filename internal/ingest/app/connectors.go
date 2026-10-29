@@ -24,8 +24,9 @@ const (
 
 // Delivery is what a connector plugin returns for one import batch: its
 // mapping of what the institution reported, plus any prices, FX rates,
-// index readings, market index levels and treasury bond series terms, and
-// for a sync the watermark the next one continues from.
+// index readings, market index levels, treasury bond series terms and
+// cross-check prices, and for a sync the watermark the next one continues
+// from.
 type Delivery struct {
 	Institution   ingest.InstitutionID
 	Mapping       ingest.Mapping
@@ -34,7 +35,10 @@ type Delivery struct {
 	IndexReadings []ingest.IndexReading
 	IndexLevels   []valuation.IndexLevel
 	BondTerms     []ingest.BondTerms
-	Watermark     string
+	// CrossCheckPrices are the institution's own prices, which only
+	// cross-check Prices (D-22) and never value a holding.
+	CrossCheckPrices []valuation.CrossCheckPrice
+	Watermark        string
 }
 
 // Errors a ConnectorCaller wraps when the connector answers that it won't
@@ -105,6 +109,13 @@ type IndexLevelStore interface {
 	StoreIndexLevels(ctx context.Context, batch ingest.BatchID, levels []valuation.IndexLevel) error
 }
 
+// CrossCheckPriceStore records cross-check prices (D-22) apart from
+// prices: they value nothing. Recording one again for the same instrument,
+// date and source replaces it, so a retried batch has no further effect.
+type CrossCheckPriceStore interface {
+	StoreCrossCheckPrices(ctx context.Context, batch ingest.BatchID, prices []valuation.CrossCheckPrice) error
+}
+
 // BondTermsStore records treasury bond series terms (D-9), which make the
 // core value holdings of their instruments as bonds. Recording a series'
 // terms again replaces them, so a retried batch has no further effect.
@@ -148,6 +159,9 @@ type Connectors struct {
 	Indices  IndexReadingStore
 	Levels   IndexLevelStore
 	Terms    BondTermsStore
+	// CrossChecks stores cross-check prices; a delivery that carries some
+	// fails without it.
+	CrossChecks CrossCheckPriceStore
 	// Today returns the date a batch starts on.
 	Today func() kernel.Date
 }
@@ -194,8 +208,8 @@ func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ing
 
 // deliver imports a delivery as one import batch: transactions scoped to the
 // instance into the ledger, seeded in an opening batch (D-23), then prices,
-// FX rates, index readings and index levels with the instance as their
-// source, then treasury bond series terms. Every index reading must be
+// FX rates, index readings, index levels and cross-check prices with the
+// instance as their source, then treasury bond series terms. Every index reading must be
 // valid and every transaction and balance assertion must be in an account
 // the instance is bound to, or nothing is imported.
 func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.BatchID, source string, mode ingest.Mode, d *Delivery) (ingest.Batch, error) {
@@ -269,7 +283,34 @@ func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest
 			return fmt.Errorf("store index readings: %w", err)
 		}
 	}
+	if err := c.storeCrossChecks(ctx, instance, id, d.CrossCheckPrices); err != nil {
+		return err
+	}
 	return c.storeLevels(ctx, instance, id, d.IndexLevels)
+}
+
+// ErrNoCrossCheckStore reports a delivery with cross-check prices to a
+// Connectors that has nowhere to store them.
+var ErrNoCrossCheckStore = errors.New("no store for cross-check prices")
+
+// storeCrossChecks stores a delivery's cross-check prices with the
+// instance as their source, apart from its prices (D-22); none is skipped.
+func (c *Connectors) storeCrossChecks(ctx context.Context, instance string, id ingest.BatchID, prices []valuation.CrossCheckPrice) error {
+	if len(prices) == 0 {
+		return nil
+	}
+	if c.CrossChecks == nil {
+		return ErrNoCrossCheckStore
+	}
+	out := make([]valuation.CrossCheckPrice, len(prices))
+	for i, p := range prices {
+		p.Source = instance
+		out[i] = p
+	}
+	if err := c.CrossChecks.StoreCrossCheckPrices(ctx, id, out); err != nil {
+		return fmt.Errorf("store cross-check prices: %w", err)
+	}
+	return nil
 }
 
 // storeTerms stores a delivery's treasury bond series terms; none is
