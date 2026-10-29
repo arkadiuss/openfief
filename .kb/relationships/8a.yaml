@@ -272,3 +272,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a35fb97e9418
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-messages
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:13:58.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d16d26c377c
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-messages
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-29T01:13:58.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb0b01ff38c1
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-messages
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-29T01:13:58.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa5b68b9ee60
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-response-string
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:28:49.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed267e439486
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-response-string
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:28:49.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a317624d1fbf

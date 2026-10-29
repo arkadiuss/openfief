@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3594540c0c6
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-owners-check-owner
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:28.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9ac5111e124

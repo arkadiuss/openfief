@@ -321,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ba2027d4874
+  - type: implements
+    from: SYM-treasurybonds-instrument
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-10-29T01:22:13.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-359873dc3181
+  - type: implements
+    from: SYM-treasurybonds-instrument
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:22:13.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2d4807e972
+  - type: covered_by
+    from: SYM-treasurybonds-instrument
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:22:13.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-615c3bb33c9e

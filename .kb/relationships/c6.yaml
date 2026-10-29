@@ -377,3 +377,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-412cd9f3bb5b
+  - type: implements
+    from: SYM-ingest-delivery-bond-terms
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:21:34.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-084039c06f41
+  - type: covered_by
+    from: SYM-ingest-delivery-bond-terms
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-29T01:21:34.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a52ff4da545

@@ -202,3 +202,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1d905f97700
+  - type: executable_for
+    from: SYM-core-test-bond-lot-service
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:56:26.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2f073292c30

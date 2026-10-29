@@ -1113,6 +1113,84 @@ func (x *IndexLevel) GetLevel() string {
 	return ""
 }
 
+// BondTerms are what the issue letter of one Polish retail treasury bond
+// series fixes (D-9). Once recorded, the core values holdings of the
+// instrument as treasury bonds from these terms rather than at a price.
+type BondTerms struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The series' instrument; its symbol is the series code, such as
+	// "EDO0536".
+	Instrument *Instrument `protobuf:"bytes,1,opt,name=instrument,proto3" json:"instrument,omitempty"`
+	// The yearly rate of the first interest period, as a fraction: 5.35% is
+	// "0.0535".
+	FirstPeriodRate string `protobuf:"bytes,2,opt,name=first_period_rate,json=firstPeriodRate,proto3" json:"first_period_rate,omitempty"`
+	// The yearly margin over the period index, as a fraction; "0" for a
+	// fixed-rate series.
+	Margin string `protobuf:"bytes,3,opt,name=margin,proto3" json:"margin,omitempty"`
+	// The early-redemption fee per bond, in PLN.
+	EarlyRedemptionFee *Money `protobuf:"bytes,4,opt,name=early_redemption_fee,json=earlyRedemptionFee,proto3" json:"early_redemption_fee,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *BondTerms) Reset() {
+	*x = BondTerms{}
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BondTerms) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BondTerms) ProtoMessage() {}
+
+func (x *BondTerms) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BondTerms.ProtoReflect.Descriptor instead.
+func (*BondTerms) Descriptor() ([]byte, []int) {
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *BondTerms) GetInstrument() *Instrument {
+	if x != nil {
+		return x.Instrument
+	}
+	return nil
+}
+
+func (x *BondTerms) GetFirstPeriodRate() string {
+	if x != nil {
+		return x.FirstPeriodRate
+	}
+	return ""
+}
+
+func (x *BondTerms) GetMargin() string {
+	if x != nil {
+		return x.Margin
+	}
+	return ""
+}
+
+func (x *BondTerms) GetEarlyRedemptionFee() *Money {
+	if x != nil {
+		return x.EarlyRedemptionFee
+	}
+	return nil
+}
+
 // Delivery is what a connector returns for one import batch: its mapping of
 // what the institution reported (transactions with their postings, balance
 // assertions and the rows it left out), plus any prices, FX rates, index
@@ -1130,13 +1208,15 @@ type Delivery struct {
 	FxRates           []*FxRate           `protobuf:"bytes,7,rep,name=fx_rates,json=fxRates,proto3" json:"fx_rates,omitempty"`
 	IndexReadings     []*IndexReading     `protobuf:"bytes,8,rep,name=index_readings,json=indexReadings,proto3" json:"index_readings,omitempty"`
 	IndexLevels       []*IndexLevel       `protobuf:"bytes,9,rep,name=index_levels,json=indexLevels,proto3" json:"index_levels,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// The terms of the treasury bond series the delivery's transactions hold.
+	BondTerms     []*BondTerms `protobuf:"bytes,10,rep,name=bond_terms,json=bondTerms,proto3" json:"bond_terms,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Delivery) Reset() {
 	*x = Delivery{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[12]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1148,7 +1228,7 @@ func (x *Delivery) String() string {
 func (*Delivery) ProtoMessage() {}
 
 func (x *Delivery) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[12]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1161,7 +1241,7 @@ func (x *Delivery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Delivery.ProtoReflect.Descriptor instead.
 func (*Delivery) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{12}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Delivery) GetBatchId() string {
@@ -1227,6 +1307,13 @@ func (x *Delivery) GetIndexLevels() []*IndexLevel {
 	return nil
 }
 
+func (x *Delivery) GetBondTerms() []*BondTerms {
+	if x != nil {
+		return x.BondTerms
+	}
+	return nil
+}
+
 type SyncRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The core's ID for this import batch; a retry reuses it.
@@ -1241,7 +1328,7 @@ type SyncRequest struct {
 
 func (x *SyncRequest) Reset() {
 	*x = SyncRequest{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[13]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1253,7 +1340,7 @@ func (x *SyncRequest) String() string {
 func (*SyncRequest) ProtoMessage() {}
 
 func (x *SyncRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[13]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1266,7 +1353,7 @@ func (x *SyncRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncRequest.ProtoReflect.Descriptor instead.
 func (*SyncRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{13}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *SyncRequest) GetBatchId() string {
@@ -1302,7 +1389,7 @@ type SyncResponse struct {
 
 func (x *SyncResponse) Reset() {
 	*x = SyncResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[14]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1314,7 +1401,7 @@ func (x *SyncResponse) String() string {
 func (*SyncResponse) ProtoMessage() {}
 
 func (x *SyncResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[14]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1327,7 +1414,7 @@ func (x *SyncResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncResponse.ProtoReflect.Descriptor instead.
 func (*SyncResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{14}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SyncResponse) GetDelivery() *Delivery {
@@ -1361,7 +1448,7 @@ type FileHeader struct {
 
 func (x *FileHeader) Reset() {
 	*x = FileHeader{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[15]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1373,7 +1460,7 @@ func (x *FileHeader) String() string {
 func (*FileHeader) ProtoMessage() {}
 
 func (x *FileHeader) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[15]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1386,7 +1473,7 @@ func (x *FileHeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileHeader.ProtoReflect.Descriptor instead.
 func (*FileHeader) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{15}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *FileHeader) GetBatchId() string {
@@ -1430,7 +1517,7 @@ type ImportFileRequest struct {
 
 func (x *ImportFileRequest) Reset() {
 	*x = ImportFileRequest{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[16]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1442,7 +1529,7 @@ func (x *ImportFileRequest) String() string {
 func (*ImportFileRequest) ProtoMessage() {}
 
 func (x *ImportFileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[16]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1455,7 +1542,7 @@ func (x *ImportFileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportFileRequest.ProtoReflect.Descriptor instead.
 func (*ImportFileRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{16}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ImportFileRequest) GetPart() isImportFileRequest_Part {
@@ -1510,7 +1597,7 @@ type ImportFileResponse struct {
 
 func (x *ImportFileResponse) Reset() {
 	*x = ImportFileResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[17]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1522,7 +1609,7 @@ func (x *ImportFileResponse) String() string {
 func (*ImportFileResponse) ProtoMessage() {}
 
 func (x *ImportFileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[17]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1535,10 +1622,201 @@ func (x *ImportFileResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportFileResponse.ProtoReflect.Descriptor instead.
 func (*ImportFileResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{17}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ImportFileResponse) GetDelivery() *Delivery {
+	if x != nil {
+		return x.Delivery
+	}
+	return nil
+}
+
+// BondLot is one lot of Polish retail treasury bonds as the owner entered
+// it: what D-9 names (series, quantity, purchase date), plus the series'
+// terms from its issue letter, which valuing the lot needs. The bonds were
+// bought for cash at the nominal, 100 PLN each.
+type BondLot struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The series code, such as "EDO0536".
+	Series string `protobuf:"bytes,1,opt,name=series,proto3" json:"series,omitempty"`
+	// How many bonds: a positive whole number, such as "40".
+	Quantity string `protobuf:"bytes,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	// The day the bonds were bought, "YYYY-MM-DD".
+	PurchaseDate string `protobuf:"bytes,3,opt,name=purchase_date,json=purchaseDate,proto3" json:"purchase_date,omitempty"`
+	// The series' first-period rate, as a fraction: 6.8% is "0.068".
+	FirstPeriodRate string `protobuf:"bytes,4,opt,name=first_period_rate,json=firstPeriodRate,proto3" json:"first_period_rate,omitempty"`
+	// The series' margin, as a fraction; "0" for a fixed-rate series.
+	Margin string `protobuf:"bytes,5,opt,name=margin,proto3" json:"margin,omitempty"`
+	// The series' early-redemption fee per bond, in PLN.
+	EarlyRedemptionFee *Money `protobuf:"bytes,6,opt,name=early_redemption_fee,json=earlyRedemptionFee,proto3" json:"early_redemption_fee,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *BondLot) Reset() {
+	*x = BondLot{}
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BondLot) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BondLot) ProtoMessage() {}
+
+func (x *BondLot) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BondLot.ProtoReflect.Descriptor instead.
+func (*BondLot) Descriptor() ([]byte, []int) {
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *BondLot) GetSeries() string {
+	if x != nil {
+		return x.Series
+	}
+	return ""
+}
+
+func (x *BondLot) GetQuantity() string {
+	if x != nil {
+		return x.Quantity
+	}
+	return ""
+}
+
+func (x *BondLot) GetPurchaseDate() string {
+	if x != nil {
+		return x.PurchaseDate
+	}
+	return ""
+}
+
+func (x *BondLot) GetFirstPeriodRate() string {
+	if x != nil {
+		return x.FirstPeriodRate
+	}
+	return ""
+}
+
+func (x *BondLot) GetMargin() string {
+	if x != nil {
+		return x.Margin
+	}
+	return ""
+}
+
+func (x *BondLot) GetEarlyRedemptionFee() *Money {
+	if x != nil {
+		return x.EarlyRedemptionFee
+	}
+	return nil
+}
+
+type ImportBondLotsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The core's ID for this import batch; a retry reuses it.
+	BatchId       string     `protobuf:"bytes,1,opt,name=batch_id,json=batchId,proto3" json:"batch_id,omitempty"`
+	Lots          []*BondLot `protobuf:"bytes,2,rep,name=lots,proto3" json:"lots,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImportBondLotsRequest) Reset() {
+	*x = ImportBondLotsRequest{}
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImportBondLotsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportBondLotsRequest) ProtoMessage() {}
+
+func (x *ImportBondLotsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportBondLotsRequest.ProtoReflect.Descriptor instead.
+func (*ImportBondLotsRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ImportBondLotsRequest) GetBatchId() string {
+	if x != nil {
+		return x.BatchId
+	}
+	return ""
+}
+
+func (x *ImportBondLotsRequest) GetLots() []*BondLot {
+	if x != nil {
+		return x.Lots
+	}
+	return nil
+}
+
+type ImportBondLotsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Delivery      *Delivery              `protobuf:"bytes,1,opt,name=delivery,proto3" json:"delivery,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImportBondLotsResponse) Reset() {
+	*x = ImportBondLotsResponse{}
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImportBondLotsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportBondLotsResponse) ProtoMessage() {}
+
+func (x *ImportBondLotsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportBondLotsResponse.ProtoReflect.Descriptor instead.
+func (*ImportBondLotsResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ImportBondLotsResponse) GetDelivery() *Delivery {
 	if x != nil {
 		return x.Delivery
 	}
@@ -1609,7 +1887,14 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"IndexLevel\x12\x14\n" +
 	"\x05index\x18\x01 \x01(\tR\x05index\x12\x12\n" +
 	"\x04date\x18\x02 \x01(\tR\x04date\x12\x14\n" +
-	"\x05level\x18\x03 \x01(\tR\x05level\"\xa5\x04\n" +
+	"\x05level\x18\x03 \x01(\tR\x05level\"\xe2\x01\n" +
+	"\tBondTerms\x12A\n" +
+	"\n" +
+	"instrument\x18\x01 \x01(\v2!.openfief.connector.v1.InstrumentR\n" +
+	"instrument\x12*\n" +
+	"\x11first_period_rate\x18\x02 \x01(\tR\x0ffirstPeriodRate\x12\x16\n" +
+	"\x06margin\x18\x03 \x01(\tR\x06margin\x12N\n" +
+	"\x14early_redemption_fee\x18\x04 \x01(\v2\x1c.openfief.connector.v1.MoneyR\x12earlyRedemptionFee\"\xe6\x04\n" +
 	"\bDelivery\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12F\n" +
@@ -1619,7 +1904,10 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x06prices\x18\x06 \x03(\v2\x1c.openfief.connector.v1.PriceR\x06prices\x128\n" +
 	"\bfx_rates\x18\a \x03(\v2\x1d.openfief.connector.v1.FxRateR\afxRates\x12J\n" +
 	"\x0eindex_readings\x18\b \x03(\v2#.openfief.connector.v1.IndexReadingR\rindexReadings\x12D\n" +
-	"\findex_levels\x18\t \x03(\v2!.openfief.connector.v1.IndexLevelR\vindexLevels\"w\n" +
+	"\findex_levels\x18\t \x03(\v2!.openfief.connector.v1.IndexLevelR\vindexLevels\x12?\n" +
+	"\n" +
+	"bond_terms\x18\n" +
+	" \x03(\v2 .openfief.connector.v1.BondTermsR\tbondTerms\"w\n" +
 	"\vSyncRequest\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12/\n" +
 	"\x04mode\x18\x02 \x01(\x0e2\x1b.openfief.connector.v1.ModeR\x04mode\x12\x1c\n" +
@@ -1639,6 +1927,18 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x05chunk\x18\x02 \x01(\fH\x00R\x05chunkB\x06\n" +
 	"\x04part\"Q\n" +
 	"\x12ImportFileResponse\x12;\n" +
+	"\bdelivery\x18\x01 \x01(\v2\x1f.openfief.connector.v1.DeliveryR\bdelivery\"\xf6\x01\n" +
+	"\aBondLot\x12\x16\n" +
+	"\x06series\x18\x01 \x01(\tR\x06series\x12\x1a\n" +
+	"\bquantity\x18\x02 \x01(\tR\bquantity\x12#\n" +
+	"\rpurchase_date\x18\x03 \x01(\tR\fpurchaseDate\x12*\n" +
+	"\x11first_period_rate\x18\x04 \x01(\tR\x0ffirstPeriodRate\x12\x16\n" +
+	"\x06margin\x18\x05 \x01(\tR\x06margin\x12N\n" +
+	"\x14early_redemption_fee\x18\x06 \x01(\v2\x1c.openfief.connector.v1.MoneyR\x12earlyRedemptionFee\"f\n" +
+	"\x15ImportBondLotsRequest\x12\x19\n" +
+	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x122\n" +
+	"\x04lots\x18\x02 \x03(\v2\x1e.openfief.connector.v1.BondLotR\x04lots\"U\n" +
+	"\x16ImportBondLotsResponse\x12;\n" +
 	"\bdelivery\x18\x01 \x01(\v2\x1f.openfief.connector.v1.DeliveryR\bdelivery*\xaa\x01\n" +
 	"\bBookKind\x12\x19\n" +
 	"\x15BOOK_KIND_UNSPECIFIED\x10\x00\x12\x12\n" +
@@ -1669,11 +1969,12 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x05Index\x12\x15\n" +
 	"\x11INDEX_UNSPECIFIED\x10\x00\x12\r\n" +
 	"\tINDEX_CPI\x10\x01\x12\x18\n" +
-	"\x14INDEX_REFERENCE_RATE\x10\x022\xc8\x01\n" +
+	"\x14INDEX_REFERENCE_RATE\x10\x022\xb7\x02\n" +
 	"\x10ConnectorService\x12O\n" +
 	"\x04Sync\x12\".openfief.connector.v1.SyncRequest\x1a#.openfief.connector.v1.SyncResponse\x12c\n" +
 	"\n" +
-	"ImportFile\x12(.openfief.connector.v1.ImportFileRequest\x1a).openfief.connector.v1.ImportFileResponse(\x01B\xed\x01\n" +
+	"ImportFile\x12(.openfief.connector.v1.ImportFileRequest\x1a).openfief.connector.v1.ImportFileResponse(\x01\x12m\n" +
+	"\x0eImportBondLots\x12,.openfief.connector.v1.ImportBondLotsRequest\x1a-.openfief.connector.v1.ImportBondLotsResponseB\xed\x01\n" +
 	"\x19com.openfief.connector.v1B\x0eConnectorProtoP\x01ZJgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1;connectorv1\xa2\x02\x03OCX\xaa\x02\x15Openfief.Connector.V1\xca\x02\x15Openfief\\Connector\\V1\xe2\x02!Openfief\\Connector\\V1\\GPBMetadata\xea\x02\x17Openfief::Connector::V1b\x06proto3"
 
 var (
@@ -1689,31 +1990,35 @@ func file_openfief_connector_v1_connector_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_connector_v1_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_openfief_connector_v1_connector_proto_goTypes = []any{
-	(BookKind)(0),              // 0: openfief.connector.v1.BookKind
-	(TransactionKind)(0),       // 1: openfief.connector.v1.TransactionKind
-	(ProblemKind)(0),           // 2: openfief.connector.v1.ProblemKind
-	(Mode)(0),                  // 3: openfief.connector.v1.Mode
-	(Index)(0),                 // 4: openfief.connector.v1.Index
-	(*Money)(nil),              // 5: openfief.connector.v1.Money
-	(*Instrument)(nil),         // 6: openfief.connector.v1.Instrument
-	(*Book)(nil),               // 7: openfief.connector.v1.Book
-	(*Posting)(nil),            // 8: openfief.connector.v1.Posting
-	(*TransactionKey)(nil),     // 9: openfief.connector.v1.TransactionKey
-	(*Transaction)(nil),        // 10: openfief.connector.v1.Transaction
-	(*BalanceAssertion)(nil),   // 11: openfief.connector.v1.BalanceAssertion
-	(*Problem)(nil),            // 12: openfief.connector.v1.Problem
-	(*Price)(nil),              // 13: openfief.connector.v1.Price
-	(*FxRate)(nil),             // 14: openfief.connector.v1.FxRate
-	(*IndexReading)(nil),       // 15: openfief.connector.v1.IndexReading
-	(*IndexLevel)(nil),         // 16: openfief.connector.v1.IndexLevel
-	(*Delivery)(nil),           // 17: openfief.connector.v1.Delivery
-	(*SyncRequest)(nil),        // 18: openfief.connector.v1.SyncRequest
-	(*SyncResponse)(nil),       // 19: openfief.connector.v1.SyncResponse
-	(*FileHeader)(nil),         // 20: openfief.connector.v1.FileHeader
-	(*ImportFileRequest)(nil),  // 21: openfief.connector.v1.ImportFileRequest
-	(*ImportFileResponse)(nil), // 22: openfief.connector.v1.ImportFileResponse
+	(BookKind)(0),                  // 0: openfief.connector.v1.BookKind
+	(TransactionKind)(0),           // 1: openfief.connector.v1.TransactionKind
+	(ProblemKind)(0),               // 2: openfief.connector.v1.ProblemKind
+	(Mode)(0),                      // 3: openfief.connector.v1.Mode
+	(Index)(0),                     // 4: openfief.connector.v1.Index
+	(*Money)(nil),                  // 5: openfief.connector.v1.Money
+	(*Instrument)(nil),             // 6: openfief.connector.v1.Instrument
+	(*Book)(nil),                   // 7: openfief.connector.v1.Book
+	(*Posting)(nil),                // 8: openfief.connector.v1.Posting
+	(*TransactionKey)(nil),         // 9: openfief.connector.v1.TransactionKey
+	(*Transaction)(nil),            // 10: openfief.connector.v1.Transaction
+	(*BalanceAssertion)(nil),       // 11: openfief.connector.v1.BalanceAssertion
+	(*Problem)(nil),                // 12: openfief.connector.v1.Problem
+	(*Price)(nil),                  // 13: openfief.connector.v1.Price
+	(*FxRate)(nil),                 // 14: openfief.connector.v1.FxRate
+	(*IndexReading)(nil),           // 15: openfief.connector.v1.IndexReading
+	(*IndexLevel)(nil),             // 16: openfief.connector.v1.IndexLevel
+	(*BondTerms)(nil),              // 17: openfief.connector.v1.BondTerms
+	(*Delivery)(nil),               // 18: openfief.connector.v1.Delivery
+	(*SyncRequest)(nil),            // 19: openfief.connector.v1.SyncRequest
+	(*SyncResponse)(nil),           // 20: openfief.connector.v1.SyncResponse
+	(*FileHeader)(nil),             // 21: openfief.connector.v1.FileHeader
+	(*ImportFileRequest)(nil),      // 22: openfief.connector.v1.ImportFileRequest
+	(*ImportFileResponse)(nil),     // 23: openfief.connector.v1.ImportFileResponse
+	(*BondLot)(nil),                // 24: openfief.connector.v1.BondLot
+	(*ImportBondLotsRequest)(nil),  // 25: openfief.connector.v1.ImportBondLotsRequest
+	(*ImportBondLotsResponse)(nil), // 26: openfief.connector.v1.ImportBondLotsResponse
 }
 var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	0,  // 0: openfief.connector.v1.Book.kind:type_name -> openfief.connector.v1.BookKind
@@ -1728,27 +2033,35 @@ var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	6,  // 9: openfief.connector.v1.Price.instrument:type_name -> openfief.connector.v1.Instrument
 	5,  // 10: openfief.connector.v1.Price.close:type_name -> openfief.connector.v1.Money
 	4,  // 11: openfief.connector.v1.IndexReading.index:type_name -> openfief.connector.v1.Index
-	10, // 12: openfief.connector.v1.Delivery.transactions:type_name -> openfief.connector.v1.Transaction
-	11, // 13: openfief.connector.v1.Delivery.balance_assertions:type_name -> openfief.connector.v1.BalanceAssertion
-	12, // 14: openfief.connector.v1.Delivery.problems:type_name -> openfief.connector.v1.Problem
-	13, // 15: openfief.connector.v1.Delivery.prices:type_name -> openfief.connector.v1.Price
-	14, // 16: openfief.connector.v1.Delivery.fx_rates:type_name -> openfief.connector.v1.FxRate
-	15, // 17: openfief.connector.v1.Delivery.index_readings:type_name -> openfief.connector.v1.IndexReading
-	16, // 18: openfief.connector.v1.Delivery.index_levels:type_name -> openfief.connector.v1.IndexLevel
-	3,  // 19: openfief.connector.v1.SyncRequest.mode:type_name -> openfief.connector.v1.Mode
-	17, // 20: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	3,  // 21: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
-	20, // 22: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
-	17, // 23: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	18, // 24: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
-	21, // 25: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
-	19, // 26: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
-	22, // 27: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
-	26, // [26:28] is the sub-list for method output_type
-	24, // [24:26] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	6,  // 12: openfief.connector.v1.BondTerms.instrument:type_name -> openfief.connector.v1.Instrument
+	5,  // 13: openfief.connector.v1.BondTerms.early_redemption_fee:type_name -> openfief.connector.v1.Money
+	10, // 14: openfief.connector.v1.Delivery.transactions:type_name -> openfief.connector.v1.Transaction
+	11, // 15: openfief.connector.v1.Delivery.balance_assertions:type_name -> openfief.connector.v1.BalanceAssertion
+	12, // 16: openfief.connector.v1.Delivery.problems:type_name -> openfief.connector.v1.Problem
+	13, // 17: openfief.connector.v1.Delivery.prices:type_name -> openfief.connector.v1.Price
+	14, // 18: openfief.connector.v1.Delivery.fx_rates:type_name -> openfief.connector.v1.FxRate
+	15, // 19: openfief.connector.v1.Delivery.index_readings:type_name -> openfief.connector.v1.IndexReading
+	16, // 20: openfief.connector.v1.Delivery.index_levels:type_name -> openfief.connector.v1.IndexLevel
+	17, // 21: openfief.connector.v1.Delivery.bond_terms:type_name -> openfief.connector.v1.BondTerms
+	3,  // 22: openfief.connector.v1.SyncRequest.mode:type_name -> openfief.connector.v1.Mode
+	18, // 23: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	3,  // 24: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
+	21, // 25: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
+	18, // 26: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	5,  // 27: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
+	24, // 28: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
+	18, // 29: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	19, // 30: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
+	22, // 31: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
+	25, // 32: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
+	20, // 33: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
+	23, // 34: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
+	26, // 35: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
+	33, // [33:36] is the sub-list for method output_type
+	30, // [30:33] is the sub-list for method input_type
+	30, // [30:30] is the sub-list for extension type_name
+	30, // [30:30] is the sub-list for extension extendee
+	0,  // [0:30] is the sub-list for field type_name
 }
 
 func init() { file_openfief_connector_v1_connector_proto_init() }
@@ -1756,7 +2069,7 @@ func file_openfief_connector_v1_connector_proto_init() {
 	if File_openfief_connector_v1_connector_proto != nil {
 		return
 	}
-	file_openfief_connector_v1_connector_proto_msgTypes[16].OneofWrappers = []any{
+	file_openfief_connector_v1_connector_proto_msgTypes[17].OneofWrappers = []any{
 		(*ImportFileRequest_Header)(nil),
 		(*ImportFileRequest_Chunk)(nil),
 	}
@@ -1766,7 +2079,7 @@ func file_openfief_connector_v1_connector_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_connector_v1_connector_proto_rawDesc), len(file_openfief_connector_v1_connector_proto_rawDesc)),
 			NumEnums:      5,
-			NumMessages:   18,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

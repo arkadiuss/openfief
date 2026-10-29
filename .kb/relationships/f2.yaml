@@ -251,3 +251,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fc9e4df5989
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-owners
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:23.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-087a6948989c
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-served
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:33.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fd418de9380

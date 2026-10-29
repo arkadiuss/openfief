@@ -58,6 +58,9 @@ const (
 	// ConnectorServiceImportFileProcedure is the fully-qualified name of the ConnectorService's
 	// ImportFile RPC.
 	ConnectorServiceImportFileProcedure = "/openfief.connector.v1.ConnectorService/ImportFile"
+	// ConnectorServiceImportBondLotsProcedure is the fully-qualified name of the ConnectorService's
+	// ImportBondLots RPC.
+	ConnectorServiceImportBondLotsProcedure = "/openfief.connector.v1.ConnectorService/ImportBondLots"
 )
 
 // ConnectorServiceClient is a client for the openfief.connector.v1.ConnectorService service.
@@ -69,6 +72,12 @@ type ConnectorServiceClient interface {
 	// ImportFile maps one statement file, such as an uploaded export. The first
 	// message carries the header, the rest carry the file's bytes in order.
 	ImportFile(context.Context) *connect.ClientStreamForClient[v1.ImportFileRequest, v1.ImportFileResponse]
+	// ImportBondLots maps Polish retail treasury bond lots the owner entered
+	// by hand in the built-in UI, which hands them to the core (D-9, D-49).
+	// It is always a transactions batch. A connector that takes no bond lots
+	// answers UNIMPLEMENTED; a lot it refuses, such as one whose purchase date
+	// doesn't match its series, INVALID_ARGUMENT naming the rule it broke.
+	ImportBondLots(context.Context, *connect.Request[v1.ImportBondLotsRequest]) (*connect.Response[v1.ImportBondLotsResponse], error)
 }
 
 // NewConnectorServiceClient constructs a client for the openfief.connector.v1.ConnectorService
@@ -94,13 +103,20 @@ func NewConnectorServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(connectorServiceMethods.ByName("ImportFile")),
 			connect.WithClientOptions(opts...),
 		),
+		importBondLots: connect.NewClient[v1.ImportBondLotsRequest, v1.ImportBondLotsResponse](
+			httpClient,
+			baseURL+ConnectorServiceImportBondLotsProcedure,
+			connect.WithSchema(connectorServiceMethods.ByName("ImportBondLots")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // connectorServiceClient implements ConnectorServiceClient.
 type connectorServiceClient struct {
-	sync       *connect.Client[v1.SyncRequest, v1.SyncResponse]
-	importFile *connect.Client[v1.ImportFileRequest, v1.ImportFileResponse]
+	sync           *connect.Client[v1.SyncRequest, v1.SyncResponse]
+	importFile     *connect.Client[v1.ImportFileRequest, v1.ImportFileResponse]
+	importBondLots *connect.Client[v1.ImportBondLotsRequest, v1.ImportBondLotsResponse]
 }
 
 // Sync calls openfief.connector.v1.ConnectorService.Sync.
@@ -113,6 +129,11 @@ func (c *connectorServiceClient) ImportFile(ctx context.Context) *connect.Client
 	return c.importFile.CallClientStream(ctx)
 }
 
+// ImportBondLots calls openfief.connector.v1.ConnectorService.ImportBondLots.
+func (c *connectorServiceClient) ImportBondLots(ctx context.Context, req *connect.Request[v1.ImportBondLotsRequest]) (*connect.Response[v1.ImportBondLotsResponse], error) {
+	return c.importBondLots.CallUnary(ctx, req)
+}
+
 // ConnectorServiceHandler is an implementation of the openfief.connector.v1.ConnectorService
 // service.
 type ConnectorServiceHandler interface {
@@ -123,6 +144,12 @@ type ConnectorServiceHandler interface {
 	// ImportFile maps one statement file, such as an uploaded export. The first
 	// message carries the header, the rest carry the file's bytes in order.
 	ImportFile(context.Context, *connect.ClientStream[v1.ImportFileRequest]) (*connect.Response[v1.ImportFileResponse], error)
+	// ImportBondLots maps Polish retail treasury bond lots the owner entered
+	// by hand in the built-in UI, which hands them to the core (D-9, D-49).
+	// It is always a transactions batch. A connector that takes no bond lots
+	// answers UNIMPLEMENTED; a lot it refuses, such as one whose purchase date
+	// doesn't match its series, INVALID_ARGUMENT naming the rule it broke.
+	ImportBondLots(context.Context, *connect.Request[v1.ImportBondLotsRequest]) (*connect.Response[v1.ImportBondLotsResponse], error)
 }
 
 // NewConnectorServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -144,12 +171,20 @@ func NewConnectorServiceHandler(svc ConnectorServiceHandler, opts ...connect.Han
 		connect.WithSchema(connectorServiceMethods.ByName("ImportFile")),
 		connect.WithHandlerOptions(opts...),
 	)
+	connectorServiceImportBondLotsHandler := connect.NewUnaryHandler(
+		ConnectorServiceImportBondLotsProcedure,
+		svc.ImportBondLots,
+		connect.WithSchema(connectorServiceMethods.ByName("ImportBondLots")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.connector.v1.ConnectorService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ConnectorServiceSyncProcedure:
 			connectorServiceSyncHandler.ServeHTTP(w, r)
 		case ConnectorServiceImportFileProcedure:
 			connectorServiceImportFileHandler.ServeHTTP(w, r)
+		case ConnectorServiceImportBondLotsProcedure:
+			connectorServiceImportBondLotsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -165,4 +200,8 @@ func (UnimplementedConnectorServiceHandler) Sync(context.Context, *connect.Reque
 
 func (UnimplementedConnectorServiceHandler) ImportFile(context.Context, *connect.ClientStream[v1.ImportFileRequest]) (*connect.Response[v1.ImportFileResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.connector.v1.ConnectorService.ImportFile is not implemented"))
+}
+
+func (UnimplementedConnectorServiceHandler) ImportBondLots(context.Context, *connect.Request[v1.ImportBondLotsRequest]) (*connect.Response[v1.ImportBondLotsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.connector.v1.ConnectorService.ImportBondLots is not implemented"))
 }

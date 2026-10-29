@@ -1,6 +1,7 @@
 {{define "content"}}
 {{with .Data}}
 <p class="muted">{{.Account.Institution}} · sleeve {{.Account.Sleeve}} · {{status .Status}} · showing {{.Date}}</p>
+{{if .Error}}<p class="error" role="alert">{{.Error}}</p>{{end}}
 
 <section class="card" aria-labelledby="holdings-title">
   <h2 id="holdings-title">Holdings</h2>
@@ -43,6 +44,28 @@
     </tbody>
   </table>
 </section>
+
+{{with .BondLot}}
+<section class="card" aria-labelledby="bond-lot-title">
+  <h2 id="bond-lot-title">Add bond lot</h2>
+  <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each (D-9): the series code, such as EDO0536, how many bonds and the day you bought them, with the series' terms from its issue letter. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
+  <form method="post" action="/accounts/{{$.Data.Account.Id}}/bond-lots" class="row">
+    <label for="lot-series">Series</label>
+    <input id="lot-series" name="series" value="{{.Series}}" required maxlength="7" size="8" pattern="[A-Za-z]{3}[0-9]{4}" autocomplete="off">
+    <label for="lot-quantity">Bonds</label>
+    <input id="lot-quantity" name="quantity" value="{{.Quantity}}" required type="number" min="1" step="1" autocomplete="off">
+    <label for="lot-date">Bought on</label>
+    <input id="lot-date" name="purchase_date" value="{{.PurchaseDate}}" required type="date">
+    <label for="lot-first">First-year rate %</label>
+    <input id="lot-first" name="first_rate" value="{{.FirstRate}}" required inputmode="decimal" size="6" autocomplete="off">
+    <label for="lot-margin">Margin %</label>
+    <input id="lot-margin" name="margin" value="{{.Margin}}" required inputmode="decimal" size="6" autocomplete="off">
+    <label for="lot-fee">Early-redemption fee, PLN per bond</label>
+    <input id="lot-fee" name="fee" value="{{.Fee}}" required inputmode="decimal" size="6" autocomplete="off">
+    <button type="submit" class="primary">Add bond lot</button>
+  </form>
+</section>
+{{end}}
 
 <section class="card" aria-labelledby="checks-title">
   <h2 id="checks-title">Balance assertions</h2>

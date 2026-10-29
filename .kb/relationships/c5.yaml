@@ -286,3 +286,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c7d518abd3d
+  - type: implements
+    from: SYM-ingest-delivery-bond-lot
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:21:24.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-331df7991700
+  - type: covered_by
+    from: SYM-ingest-delivery-bond-lot
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-29T01:21:24.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9568f52d7cd0
+  - type: implements
+    from: SYM-ingestv1-bond-lot-get-early-redemption-fee-pln
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:30:26.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e99567af9cb
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-get-early-redemption-fee-pln
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:30:26.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4b240e3d190

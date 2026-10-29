@@ -93,6 +93,9 @@ type connectorDeps struct {
 	today    func() kernel.Date
 	now      func() time.Time
 	log      *slog.Logger
+	// entries is the client the owner's manual entries go through; the
+	// scheduler sets it once it has found the instances.
+	entries *entryCaller
 }
 
 // withConnectorDeps connects to dsn, migrates, and runs fn with what the
@@ -126,7 +129,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 	return &ingestapp.Scheduler{
 		Connectors: &ingestapp.Connectors{
 			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
-			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Today: d.today,
+			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs, Today: d.today,
 		},
 		Instances:  discovery,
 		Store:      store,
@@ -140,13 +143,18 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 }
 
 // runConnectors starts discovery and runs the scheduler until ctx ends.
-// Neither ever fails the core: a cluster that can't be reached is logged
-// and leaves the read API serving.
+// Once discovery runs, the owner's manual entries can reach the instances
+// too (d.entries). Neither ever fails the core: a cluster that can't be
+// reached is logged and leaves the read API serving.
 func runConnectors(ctx context.Context, d *connectorDeps, c *cluster, cfg *syncConfig) {
 	discovery := ingestkube.NewDiscovery(c.dynamic, c.client, c.namespace, discoveryResync)
 	if err := discovery.Start(ctx); err != nil {
 		d.log.Warn("connector discovery did not start; no syncs", "error", err)
 		return
+	}
+	if d.entries != nil {
+		tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
+		d.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), discovery.BaseURL, tokens))
 	}
 	ticker := time.NewTicker(schedulerTick)
 	defer ticker.Stop()
@@ -254,8 +262,8 @@ func importSummary(s *ledgerapp.ImportSummary) ingest.ImportSummary {
 	}
 }
 
-// valuationInputs records a delivery's prices, FX rates, index readings and
-// index levels through valuation's input use cases, each with the revaluations it causes
+// valuationInputs records a delivery's prices, FX rates, index readings,
+// index levels and bond terms through valuation's input use cases, each with the revaluations it causes
 // (D-36). Recording one again replaces it, so a retried batch has no
 // further effect.
 type valuationInputs struct {
@@ -299,6 +307,17 @@ func (v valuationInputs) StoreIndexReadings(ctx context.Context, _ ingest.BatchI
 func (v valuationInputs) StoreIndexLevels(ctx context.Context, _ ingest.BatchID, levels []valuation.IndexLevel) error {
 	if err := v.recorder.RecordIndexLevels(ctx, levels); err != nil {
 		return fmt.Errorf("valuation: %w", err)
+	}
+	return nil
+}
+
+// StoreBondTerms records treasury bond series terms (D-9), each for its
+// instrument's ISIN; holdings of it are then valued as bonds.
+func (v valuationInputs) StoreBondTerms(ctx context.Context, _ ingest.BatchID, terms []ingest.BondTerms) error {
+	for i := range terms {
+		if err := v.recorder.RecordBondTerms(ctx, terms[i].Instrument.ISIN, &terms[i].Terms); err != nil {
+			return fmt.Errorf("valuation: %w", err)
+		}
 	}
 	return nil
 }

@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fb003a98446
+  - type: validates
+    from: TEST-ingest-app-bondlots
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:13:42.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-443ca19ea805
+  - type: executable_for
+    from: SYM-core-test-helper-bond-lot-client
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:56:15.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fec3789ee1ed

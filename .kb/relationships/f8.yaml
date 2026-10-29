@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95edcd2efdca
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-edo-lot
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:47.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1a0f6333add

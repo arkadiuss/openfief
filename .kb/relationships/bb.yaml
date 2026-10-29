@@ -307,3 +307,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c766e4c5affe
+  - type: implements
+    from: SYM-ui-parse-bond-lot-form
+    to: REQ-ui-bond-lot-entry
+    created_at: 2026-10-29T02:14:54.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d442891b9620
+  - type: implements
+    from: SYM-ui-parse-bond-lot-form
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T02:14:54.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed5b2aadc3c8
+  - type: covered_by
+    from: SYM-ui-parse-bond-lot-form
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-29T02:14:54.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-357efc14fa10

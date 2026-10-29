@@ -216,3 +216,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fde61156de89
+  - type: implements
+    from: SYM-ingestv1connect-bond-lot-service-handler
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:32:54.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a577ea2619c
+  - type: covered_by
+    from: SYM-ingestv1connect-bond-lot-service-handler
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:32:54.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6b8beecffd7

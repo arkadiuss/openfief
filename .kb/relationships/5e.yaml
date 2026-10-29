@@ -370,3 +370,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcc2fda79e6f
+  - type: implements
+    from: SYM-ingest-bond-lot-cost
+    to: REQ-ingest-bond-lot-rules
+    created_at: 2026-10-29T01:17:11.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cee8a4cb49a9
+  - type: implements
+    from: SYM-ingest-bond-lot-cost
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:17:11.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bb0b48e3e6c
+  - type: covered_by
+    from: SYM-ingest-bond-lot-cost
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-29T01:17:11.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-204484e242d9
+  - type: implements
+    from: SYM-connectorv1-bond-terms
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:25:51.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cf31e04c0f4
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:25:51.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44984bd61804
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-request-get-batch-id
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:28:28.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-093b19797751
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-request-get-batch-id
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:28:29.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c1676096389
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-request-get-account-id
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:31:12.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71cf9d85e079
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-request-get-account-id
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:31:12.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5284cbb935c

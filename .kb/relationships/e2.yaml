@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3959b57e1e49
+  - type: executable_for
+    from: SYM-core-test-helper-edo-request
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:56:21.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ca033fb5d65

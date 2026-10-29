@@ -251,3 +251,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5592339bdc22
+  - type: implements
+    from: SYM-core-entry-caller
+    to: REQ-core-bond-lot-service
+    created_at: 2026-10-29T01:54:57.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0e3c097b0cb
+  - type: implements
+    from: SYM-core-entry-caller
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:54:57.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-786ea378ad80
+  - type: covered_by
+    from: SYM-core-entry-caller
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:54:57.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c84c64cbde15

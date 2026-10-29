@@ -363,3 +363,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ea9e301bec8
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-client-import-bond-lots-refusals
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:20:36.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-198efc10eb70
+  - type: implements
+    from: SYM-connectorv1-bond-terms-get-margin
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:26:37.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12b99ea142a9
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-get-margin
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:26:37.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e3783e63156

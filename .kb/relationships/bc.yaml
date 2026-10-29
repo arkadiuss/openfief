@@ -356,3 +356,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19f39ef8f459
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-unavailable-connector
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:20:40.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b2586eba57
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-unavailable-connector-import-bond-lots
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:20:46.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-177b3d68f66d
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_bond_lots_proto_init
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:32:24.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-505e94421d21
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_bond_lots_proto_init
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:32:24.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7617107642f2
+  - type: executable_for
+    from: SYM-core-test-helper-check-bond-valued
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:56:44.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-636a7bb3a798

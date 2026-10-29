@@ -265,3 +265,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e84a7b627f2
+  - type: constrains
+    from: REQ-ingest-bond-lot-messages
+    to: FACT-SUBJECT-A6A9A47C2E538068
+    created_at: 2026-10-29T01:14:34.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02a5c999e7cd
+  - type: requires_property
+    from: REQ-ingest-bond-lot-messages
+    to: FACT-PROP-633E18719281370F
+    created_at: 2026-10-29T01:14:34.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a11d758037ae
+  - type: specified_by
+    from: REQ-ingest-bond-lot-messages
+    to: SCEN-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:14:34.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-870210c7e74f
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-refusal
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:16:08.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9e2fcc5470d

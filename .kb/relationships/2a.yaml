@@ -335,3 +335,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c94c5811f119
+  - type: implements
+    from: SYM-ingest-postgres-store-bound-instances
+    to: REQ-ingest-bond-lot-handoff
+    created_at: 2026-10-29T01:22:03.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5803b9706fcb
+  - type: covered_by
+    from: SYM-ingest-postgres-store-bound-instances
+    to: TEST-ingest-postgres
+    created_at: 2026-10-29T01:22:03.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f750d12a262

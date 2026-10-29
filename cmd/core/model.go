@@ -12,6 +12,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
+	ingestapp "github.com/arkadiuss/openfief/internal/ingest/app"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
 	portfolioconnect "github.com/arkadiuss/openfief/internal/portfolio/connectapi"
@@ -20,30 +21,46 @@ import (
 )
 
 // ownerSessions checks that a session is the owner's, owner-scoped, on an
-// allowed origin, for the model portfolio's use cases (D-52, author
-// decision, auth split). It implements portfolioapp.Owners.
+// allowed origin, for the owner's use cases: the model portfolio's (D-52)
+// and the manual bond lots' (D-9, D-49) (author decision, auth split). It
+// implements portfolioapp.Owners and ingestapp.Owners, answering with the
+// errors of the context it was made for.
 type ownerSessions struct {
 	auth    *identityapp.Auth
 	origins identity.Origins
+	// noSession and notOwner are the context's errors for an invalid
+	// session and for a caller who is not the owner.
+	noSession, notOwner error
 }
 
-// CheckOwner maps the identity context's answer onto the portfolio
-// context's errors: an origin off the allow-list or a session without owner
-// scope is portfolioapp.ErrNotOwner, an invalid session
-// portfolioapp.ErrNoSession.
+// portfolioOwners is ownerSessions answering with the portfolio context's
+// errors.
+func portfolioOwners(auth *identityapp.Auth, origins identity.Origins) ownerSessions {
+	return ownerSessions{auth: auth, origins: origins, noSession: portfolioapp.ErrNoSession, notOwner: portfolioapp.ErrNotOwner}
+}
+
+// ingestOwners is ownerSessions answering with the ingest context's
+// errors.
+func ingestOwners(auth *identityapp.Auth, origins identity.Origins) ownerSessions {
+	return ownerSessions{auth: auth, origins: origins, noSession: ingestapp.ErrNoSession, notOwner: ingestapp.ErrNotOwner}
+}
+
+// CheckOwner maps the identity context's answer onto the context's errors:
+// an origin off the allow-list or a session without owner scope is
+// notOwner, an invalid session noSession.
 func (o ownerSessions) CheckOwner(ctx context.Context, origin, sessionToken string) error {
 	allowed, err := o.origins.Allowed(origin)
 	if err != nil {
-		return fmt.Errorf("%w: %w", portfolioapp.ErrNotOwner, err)
+		return fmt.Errorf("%w: %w", o.notOwner, err)
 	}
 	_, err = o.auth.Session(ctx, allowed, sessionToken, identity.SessionScopeOwner)
 	switch {
 	case err == nil:
 		return nil
 	case errors.Is(err, identityapp.ErrInvalidSession):
-		return fmt.Errorf("%w: %w", portfolioapp.ErrNoSession, err)
+		return fmt.Errorf("%w: %w", o.noSession, err)
 	case errors.Is(err, identityapp.ErrForbidden):
-		return fmt.Errorf("%w: %w", portfolioapp.ErrNotOwner, err)
+		return fmt.Errorf("%w: %w", o.notOwner, err)
 	}
 	return fmt.Errorf("checking a session: %w", err)
 }
@@ -52,7 +69,7 @@ func (o ownerSessions) CheckOwner(ctx context.Context, origin, sessionToken stri
 // with the owner's sessions checked by auth on origins, in the reporting
 // currency reporting.
 func newModels(pool *pgxpool.Pool, vstore *valuationpg.Store, auth *identityapp.Auth, origins identity.Origins, reporting kernel.Currency) (*portfolioapp.Models, error) {
-	models, err := portfolioapp.New(portfoliopg.New(pool), vstore, ownerSessions{auth: auth, origins: origins}, reporting)
+	models, err := portfolioapp.New(portfoliopg.New(pool), vstore, portfolioOwners(auth, origins), reporting)
 	if err != nil {
 		return nil, fmt.Errorf("model portfolio: %w", err)
 	}

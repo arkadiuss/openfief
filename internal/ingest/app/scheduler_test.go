@@ -181,6 +181,10 @@ func (*scriptedCaller) ImportFile(context.Context, string, ingest.BatchID, inges
 	return app.Delivery{}, errCaller
 }
 
+func (*scriptedCaller) ImportBondLots(context.Context, string, ingest.BatchID, []ingest.BondLot) (app.Delivery, error) {
+	return app.Delivery{}, errCaller
+}
+
 func (f *scriptedCaller) seen() []syncCall {
 	f.mu.Lock()
 	defer f.mu.Unlock()

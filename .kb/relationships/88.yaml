@@ -419,3 +419,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2334b69c397a
+  - type: executable_for
+    from: SYM-ingest-test-helper-bond-lot-case
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-29T01:17:25.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4dbab575e17
+  - type: executable_for
+    from: SYM-treasury-bonds-test-import-bond-lots-refuses
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:25:02.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed1319d1bbc6
+  - type: implements
+    from: SYM-core-valuation-inputs-store-bond-terms
+    to: REQ-core-bond-lot-service
+    created_at: 2026-10-29T01:56:49.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eec9b1f66f47
+  - type: covered_by
+    from: SYM-core-valuation-inputs-store-bond-terms
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:56:49.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2bba0dcd0b6

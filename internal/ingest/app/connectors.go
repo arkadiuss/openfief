@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 
@@ -11,14 +12,20 @@ import (
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
-// SourceSync is the ingest path of a batch the core pulled from a connector
-// plugin with Sync.
-const SourceSync = "sync"
+const (
+	// SourceSync is the ingest path of a batch the core pulled from a
+	// connector plugin with Sync.
+	SourceSync = "sync"
+	// SourceEntry is the ingest path of a batch the owner entered by hand,
+	// such as a treasury bond lot (D-9), which the core handed to a
+	// connector plugin.
+	SourceEntry = "entry"
+)
 
 // Delivery is what a connector plugin returns for one import batch: its
 // mapping of what the institution reported, plus any prices, FX rates,
-// index readings and market index levels, and for a sync the watermark the
-// next one continues from.
+// index readings, market index levels and treasury bond series terms, and
+// for a sync the watermark the next one continues from.
 type Delivery struct {
 	Institution   ingest.InstitutionID
 	Mapping       ingest.Mapping
@@ -26,8 +33,24 @@ type Delivery struct {
 	FXRates       []valuation.FXRate
 	IndexReadings []ingest.IndexReading
 	IndexLevels   []valuation.IndexLevel
+	BondTerms     []ingest.BondTerms
 	Watermark     string
 }
+
+// Errors a ConnectorCaller wraps when the connector answers that it won't
+// take what the owner entered, so the owner learns why.
+var (
+	// ErrEntryRefused reports entries the connector refused, such as a bond
+	// lot that breaks a rule; the error carries the connector's reason.
+	ErrEntryRefused = errors.New("the connector refused the entry")
+	// ErrNoEntries reports a connector that takes no entries of the kind,
+	// such as one that takes no bond lots.
+	ErrNoEntries = errors.New("the connector takes no such entries")
+	// ErrConnectorUnavailable reports a connector instance that can't be
+	// reached now, such as one that isn't running; the same entry may be
+	// sent again later.
+	ErrConnectorUnavailable = errors.New("the connector can't be reached")
+)
 
 // ConnectorCaller calls connector plugins' connector contract (D-49). The
 // instance names the connector instance (D-48). Implementations
@@ -36,6 +59,10 @@ type Delivery struct {
 type ConnectorCaller interface {
 	Sync(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (Delivery, error)
 	ImportFile(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, file NamedFile) (Delivery, error)
+	// ImportBondLots hands treasury bond lots the owner entered to instance
+	// as a transactions batch. A refusal wraps ErrEntryRefused, a connector
+	// that takes no bond lots ErrNoEntries.
+	ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (Delivery, error)
 }
 
 // NamedFile is a statement file to import: its contents, the name the owner
@@ -78,6 +105,13 @@ type IndexLevelStore interface {
 	StoreIndexLevels(ctx context.Context, batch ingest.BatchID, levels []valuation.IndexLevel) error
 }
 
+// BondTermsStore records treasury bond series terms (D-9), which make the
+// core value holdings of their instruments as bonds. Recording a series'
+// terms again replaces them, so a retried batch has no further effect.
+type BondTermsStore interface {
+	StoreBondTerms(ctx context.Context, batch ingest.BatchID, terms []ingest.BondTerms) error
+}
+
 // ConnectorBindings knows which accounts each connector instance may write
 // to: its connector bindings.
 type ConnectorBindings interface {
@@ -113,6 +147,7 @@ type Connectors struct {
 	FXRates  FXRateStore
 	Indices  IndexReadingStore
 	Levels   IndexLevelStore
+	Terms    BondTermsStore
 	// Today returns the date a batch starts on.
 	Today func() kernel.Date
 }
@@ -141,12 +176,28 @@ func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.
 	return c.deliver(ctx, instance, id, SourceFile, mode, &d)
 }
 
+// ImportBondLots hands treasury bond lots the owner entered for account to
+// instance as transactions batch id, and imports what it maps (D-9, D-49:
+// manual bond-lot entries go through the core to the right connector).
+// Every transaction and balance assertion delivered must be in account, or
+// nothing is imported.
+func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, lots []ingest.BondLot) (ingest.Batch, error) {
+	d, err := c.Caller.ImportBondLots(ctx, instance, id, lots)
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("import bond lots into %s batch %s: %w", instance, id, err)
+	}
+	if err := ingest.CheckBound(instance, []ledger.AccountID{account}, &d.Mapping); err != nil {
+		return ingest.Batch{}, fmt.Errorf("import bond lots into %s batch %s: refused: %w", instance, id, err)
+	}
+	return c.deliver(ctx, instance, id, SourceEntry, ingest.ModeTransactions, &d)
+}
+
 // deliver imports a delivery as one import batch: transactions scoped to the
 // instance into the ledger, seeded in an opening batch (D-23), then prices,
 // FX rates, index readings and index levels with the instance as their
-// source. Every
-// index reading must be valid and every transaction and balance assertion
-// must be in an account the instance is bound to, or nothing is imported.
+// source, then treasury bond series terms. Every index reading must be
+// valid and every transaction and balance assertion must be in an account
+// the instance is bound to, or nothing is imported.
 func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.BatchID, source string, mode ingest.Mode, d *Delivery) (ingest.Batch, error) {
 	batch, err := ingest.NewBatch(id, d.Institution, source, mode, c.Today())
 	if err != nil {
@@ -166,6 +217,9 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	if err := c.storeInputs(ctx, instance, id, d, readings); err != nil {
+		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
+	}
+	if err := c.storeTerms(ctx, id, d.BondTerms); err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	batch.Complete(&m, imported)
@@ -216,6 +270,18 @@ func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest
 		}
 	}
 	return c.storeLevels(ctx, instance, id, d.IndexLevels)
+}
+
+// storeTerms stores a delivery's treasury bond series terms; none is
+// skipped.
+func (c *Connectors) storeTerms(ctx context.Context, id ingest.BatchID, terms []ingest.BondTerms) error {
+	if len(terms) == 0 {
+		return nil
+	}
+	if err := c.Terms.StoreBondTerms(ctx, id, terms); err != nil {
+		return fmt.Errorf("store bond terms: %w", err)
+	}
+	return nil
 }
 
 // storeLevels stores a delivery's market index levels with the instance as

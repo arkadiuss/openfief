@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-779cc37efad3
+  - type: validates
+    from: TEST-ingest-bondlot
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:13:39.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfec8c72bd54

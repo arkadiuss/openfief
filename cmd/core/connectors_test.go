@@ -263,6 +263,9 @@ func TestServeSchedulesConnectors(t *testing.T) {
 	if err != nil {
 		t.Fatalf("waiting for the first sync attempt: %v", err)
 	}
+	if c.deps.entries.client.Load() == nil {
+		t.Error("the scheduler runs, but the owner's manual entries have no connector client")
+	}
 	cancel()
 	if err := shutdown(context.WithoutCancel(ctx), &server{pool: pool}, &http.Server{ReadHeaderTimeout: time.Second}, c, 10*time.Second); err != nil {
 		t.Errorf("shutdown: %v", err)

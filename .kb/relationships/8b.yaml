@@ -363,3 +363,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44457f15684e
+  - type: implements
+    from: SYM-ingest-connectrpc-bond-lots-to
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:21:08.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6785061f3ee7
+  - type: covered_by
+    from: SYM-ingest-connectrpc-bond-lots-to
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-29T01:21:08.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0090f61823a4
+  - type: implements
+    from: SYM-treasurybonds-same-terms
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-10-29T01:22:33.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d558ea78d577
+  - type: implements
+    from: SYM-treasurybonds-same-terms
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:22:33.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38f5b3d45a33
+  - type: covered_by
+    from: SYM-treasurybonds-same-terms
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:22:33.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2b0bc750145

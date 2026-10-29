@@ -342,3 +342,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4695ecef8723
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-bond-connector
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:20:15.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a69f11c54ed4

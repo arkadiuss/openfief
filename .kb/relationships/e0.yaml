@@ -440,3 +440,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15827faed0cb
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:13:41.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6770c594ecf2
+  - type: implements
+    from: SYM-connectorv1-bond-lot-get-quantity
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:27:29.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c54bc960596f
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-get-quantity
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:27:29.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7537c1a3871a

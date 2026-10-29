@@ -384,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3068cb3e0499
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-caller-import-file
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:58.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66127024bcda

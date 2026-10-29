@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f90d3f0363e
+  - type: implements
+    from: SYM-treasury-bonds-date-in
+    to: REQ-plugins-treasury-bonds-connector
+    created_at: 2026-10-29T01:25:37.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f560d584e53
+  - type: covered_by
+    from: SYM-treasury-bonds-date-in
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:25:37.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72d5bff05aa8

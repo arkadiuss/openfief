@@ -205,6 +205,27 @@ func TestBindingStore(t *testing.T) {
 	}
 }
 
+func TestBoundInstances(t *testing.T) {
+	t.Parallel()
+	s := postgres.New(newPool(t))
+	ctx := t.Context()
+	for _, instance := range []string{"xtb-main", "bonds-main"} {
+		if err := s.Bind(ctx, instance, "acc-2", t0()); err != nil {
+			t.Fatalf("Bind %s: %v", instance, err)
+		}
+	}
+	instances, err := s.BoundInstances(ctx, "acc-2")
+	if err != nil {
+		t.Fatalf("BoundInstances: %v", err)
+	}
+	if diff := cmp.Diff([]string{"bonds-main", "xtb-main"}, instances); diff != "" {
+		t.Errorf("instances bound to acc-2 (-want +got):\n%s", diff)
+	}
+	if none, noneErr := s.BoundInstances(ctx, "acc-9"); noneErr != nil || len(none) != 0 {
+		t.Errorf("BoundInstances of an unbound account = %v, %v; want none", none, noneErr)
+	}
+}
+
 // checkCompletion completes xtb-main's open batch b-1 and checks the state
 // and the stored counts, and that a completed batch can't complete or fail.
 func checkCompletion(t *testing.T, pool *pgxpool.Pool, s *postgres.Store) {

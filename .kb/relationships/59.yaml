@@ -307,3 +307,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ef8421ecb20
+  - type: implements
+    from: SYM-core-entry-caller-import-file
+    to: REQ-core-bond-lot-service
+    created_at: 2026-10-29T01:55:09.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49de264c7800
+  - type: implements
+    from: SYM-core-entry-caller-import-file
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:55:09.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c5458ae788
+  - type: covered_by
+    from: SYM-core-entry-caller-import-file
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:55:09.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ecfbc0d9623
