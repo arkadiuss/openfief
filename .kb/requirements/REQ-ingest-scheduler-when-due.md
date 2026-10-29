@@ -34,7 +34,11 @@ The core must sync every running connector instance when its sync policy says it
 
 ## Context
 
-D-49 makes the core own connectors' schedules. This replaces REQ-ingest-scheduler-due without its mode clause (opening until one opening batch completes), which D-95 changed: the mode now follows the bound accounts' seeding in the ledger, as REQ-ingest-sync-mode-from-ledger says. Modeled by Claude Code for the market-data work package (impl/market-data); the author has not reviewed it yet.
+D-49 makes the core own connectors' schedules. Modeled by Claude Code for the market-data work package (impl/market-data); the author has not reviewed it yet.
+
+## Why this changed
+
+It replaces REQ-ingest-scheduler-due without that requirement's mode clause, opening until one opening batch completes and transactions after it, because D-95 makes a seeded account sync in transactions mode on its own: the mode now follows the ledger's seeding of the bound accounts, as REQ-ingest-sync-mode-from-ledger states.
 
 ## Source
 
