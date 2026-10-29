@@ -39,6 +39,7 @@ Modelled on OpenClaw: calendar versions, release channels and a separate release
 
 - Product versions are `YYYY.M.N`, with betas `YYYY.M.N-beta.K`. Tags carry no `v` prefix, because Go would read a root tag `v2026.11.0` as major version 2026 of the module **(P)**.
 - Channels: `beta` deploys to demo; `stable` is a GitHub release with signed images, the CRDs and the bootstrap install.
+- Every release also ships the `openfief` CLI for Linux and macOS on amd64 and arm64, signed with cosign and with an SBOM (software bill of materials), since installing OpenFief starts with it (D-80).
 - The release workflow is started manually, does a dry run before it publishes anything, and only the author releases.
 - Contracts and SDKs use SemVer, independent of the product version. The Go SDK is tagged `sdk/go/vX.Y.Z`, as Go requires for a submodule **(P)**, and `buf breaking` gates every SDK release **(P)**.
 

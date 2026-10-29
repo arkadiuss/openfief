@@ -17,26 +17,9 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Plugins and the CLI
 
-14. **First-party plugins in the catalog (D-43, D-44).**
-    - *Today:* `nbp-fx`, `ibkr-flex`, `eodhd`, `treasury-bonds`, `ghostfolio` and `ui` are built and signed by CI but not listed in the catalog, so they show as "signed by OpenFief CI", not "verified".
-    - *Options:* add each with its signed digest per release; or leave first-party plugins as "signed by OpenFief CI".
-
-15. **Secrets shared between instances of one image.**
-    - *Problem:* Secret names come from the signed manifest, so two instances of one image (one per IBKR account, D-48) read the same Secrets.
-    - *Today:* uninstall keeps a Secret another instance still names, and says so.
-    - *Options:* a per-instance naming convention (for example a prefix the operator adds); or keep one Secret per image.
-
 16. **Data from a removed instance (D-58).**
     - *Today:* a transaction is marked as coming from a removed instance when no `Plugin` of that name exists. The mark is worked out on every read, so the log stays append-only and reinstalling under the same name clears it. Only transactions are marked, not lots or holdings, and nothing is marked outside a cluster.
     - *Question:* mark lots and holdings too?
-
-17. **CLI behaviours.**
-    - *Today:* a catalog name shared by several versions is refused, with the list to choose from, instead of picking the newest. Installing over an existing name is refused; there is no `upgrade` command (D-47 leaves upgrades to the owner's own edit). `--print` without `--trusted-signers` trusts only OpenFief's CI and the catalog.
-    - *Question:* keep these?
-
-18. **Shipping the `openfief` binary.**
-    - *Today:* it builds with `go build ./cmd/openfief`; no release step publishes it.
-    - *Options:* a signed release (goreleaser or similar) per tag; or later.
 
 19. **Core egress to the Kubernetes API.**
     - *Problem:* k3s serves the API on the node's address, so the product's NetworkPolicy lets the core reach port 6443 on any address.
