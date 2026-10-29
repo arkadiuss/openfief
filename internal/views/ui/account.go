@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"cmp"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -46,6 +47,18 @@ type accountData struct {
 	Cash         []*viewsv1.Money
 	Checks       []*viewsv1.AssertionCheck
 	Transactions transactionsView
+	// BondLot is the "Add bond lot" form, shown to the owner on a bond
+	// account's page only (D-9); nil elsewhere.
+	BondLot *bondLotForm
+	// Error is why the core refused what the owner posted.
+	Error string
+}
+
+// accountForm is what the owner posted to an account's page and why it was
+// refused, to show again; the zero value is a fresh page.
+type accountForm struct {
+	Lot   *bondLotForm
+	Error string
 }
 
 // instrumentKey identifies an instrument by ISIN and venue symbol.
@@ -67,8 +80,15 @@ func joinValuations(holdings []*viewsv1.Holding, valuations []*viewsv1.Valuation
 
 // accountPage shows one account on a date: its valuation status, holdings
 // with their values, open lots, cash, balance assertion checks, and a page
-// of its transactions.
+// of its transactions; to the owner, a bond account's page also offers the
+// "Add bond lot" form.
 func (s *server) accountPage(w http.ResponseWriter, r *http.Request, sess session) {
+	s.renderAccount(w, r, sess, http.StatusOK, accountForm{})
+}
+
+// renderAccount shows the account page with status, and with form: the
+// bond lot the owner posted and the core's reason for refusing it.
+func (s *server) renderAccount(w http.ResponseWriter, r *http.Request, sess session, code int, form accountForm) {
 	ctx, id := r.Context(), r.PathValue("id")
 	acc, err := s.read.GetAccount(ctx, bearer(&viewsv1.GetAccountRequest{AccountId: id}, sess))
 	if err != nil {
@@ -85,7 +105,10 @@ func (s *server) accountPage(w http.ResponseWriter, r *http.Request, sess sessio
 		s.errorPage(w, r, http.StatusBadRequest, err.Error())
 		return
 	}
-	data := accountData{Date: date.String(), Account: acc.Msg.GetAccount(), Status: status.Msg.GetStatus()}
+	data := accountData{Date: date.String(), Account: acc.Msg.GetAccount(), Status: status.Msg.GetStatus(), Error: form.Error}
+	if sess.Owner() && data.Account.GetInstitution() == bondInstitution {
+		data.BondLot = cmp.Or(form.Lot, &bondLotForm{})
+	}
 	if method, posErr := s.positions(r, sess, &data); posErr != nil {
 		s.coreFailed(w, r, method, posErr)
 		return
@@ -94,7 +117,7 @@ func (s *server) accountPage(w http.ResponseWriter, r *http.Request, sess sessio
 		s.coreFailed(w, r, "ListTransactions", err)
 		return
 	}
-	s.show(w, r, http.StatusOK, "account", page{Title: data.Account.GetName(), Session: &sess, Data: data})
+	s.show(w, r, code, "account", page{Title: data.Account.GetName(), Session: &sess, Data: data})
 }
 
 // positions reads an account's holdings, valuations, lots, cash and

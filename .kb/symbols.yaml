@@ -67277,3 +67277,171 @@ symbols:
         target: TEST-core-bond-lots
       - type: implements
         target: REQ-core-bond-lot-service
+  - id: SYM-ui-account-form
+    title: accountForm
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:14:38.566Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-server-render-account
+    title: server.renderAccount
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:14:43.641Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-bond-lot-form
+    title: bondLotForm
+    sourceFile: internal/views/ui/bondlots.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:14:47.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-parse-bond-lot-form
+    title: parseBondLotForm
+    sourceFile: internal/views/ui/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:14:52.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-bond-lot-form-message
+    title: bondLotForm.message
+    sourceFile: internal/views/ui/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:14:58.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-server-add-bond-lot
+    title: server.addBondLot
+    sourceFile: internal/views/ui/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:03.266Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-test-helper-fake-bond-lots
+    title: fakeBondLots
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:07.444Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-helper-fake-bond-lots-add-bond-lot
+    title: fakeBondLots.AddBondLot
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:12.316Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-helper-fake-bond-lots-locked
+    title: fakeBondLots.locked
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:17.532Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-helper-bond-harness
+    title: bondHarness
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:22.803Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-helper-lot-form
+    title: lotForm
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:28.094Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-account-bond-lot-form
+    title: TestAccountBondLotForm
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:33.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-add-bond-lot
+    title: TestAddBondLot
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:38.810Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-add-bond-lot-refusals
+    title: TestAddBondLotRefusals
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T02:15:43.930Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots

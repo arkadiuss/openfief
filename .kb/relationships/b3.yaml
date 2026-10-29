@@ -321,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bef86cd95722
+  - type: constrains
+    from: REQ-ui-bond-lot-entry
+    to: FACT-SUBJECT-795C271138597389
+    created_at: 2026-10-29T02:14:36.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-738654ba4194
+  - type: requires_property
+    from: REQ-ui-bond-lot-entry
+    to: FACT-PROP-A6147638E12266EB
+    created_at: 2026-10-29T02:14:36.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-174219754a0c
+  - type: specified_by
+    from: REQ-ui-bond-lot-entry
+    to: SCEN-ui-bond-lot-entry
+    created_at: 2026-10-29T02:14:36.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80ef3338ce33
