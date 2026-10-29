@@ -1,11 +1,11 @@
 {{define "transaction-rows"}}
 {{range .Transactions}}
 <tr>
-  <td>{{.Date}}</td>
-  <td>{{enum .Kind.String "TRANSACTION_KIND_"}}{{if .LotOpened}} (opened {{.LotOpened}}){{end}}</td>
+  <td class="mono">{{.Date}}</td>
+  <td>{{enum .Kind.String "TRANSACTION_KIND_"}}{{if .LotOpened}} (opened <span class="mono">{{.LotOpened}}</span>){{end}}</td>
   <td>{{.Description}}</td>
-  <td><ul class="postings">{{range .Postings}}<li>{{book .Book}}: {{money .Amount}}{{if .Quantity}} ({{amount .Quantity}} units){{end}}</li>{{end}}</ul></td>
-  <td>{{if .ConnectorInstance}}{{.ConnectorInstance}}{{if .ConnectorInstanceRemoved}} <span class="removed" title="This plugin instance is no longer installed; the data it brought in stays.">removed instance</span>{{end}}{{else}}{{.Source}}{{end}}</td>
+  <td><ul class="postings">{{range .Postings}}<li>{{book .Book}}: <span class="mono">{{money .Amount}}</span>{{if .Quantity}} (quantity <span class="mono">{{amount .Quantity}}</span>){{end}}</li>{{end}}</ul></td>
+  <td>{{if .ConnectorInstance}}{{.ConnectorInstance}}{{if .ConnectorInstanceRemoved}} <span class="pill pill-neutral removed" title="This plugin instance is no longer installed; the data it brought in stays.">removed instance</span>{{end}}{{else}}{{.Source}}{{end}}</td>
 </tr>
 {{end}}
 {{if .Next}}

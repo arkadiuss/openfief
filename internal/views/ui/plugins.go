@@ -42,11 +42,42 @@ func (s *server) pluginsPage(w http.ResponseWriter, r *http.Request, sess sessio
 	s.show(w, r, http.StatusOK, "plugins", page{Title: "Plugins", Session: &sess, Data: list})
 }
 
-// trustLabel names how far a plugin's image is trusted (D-45, D-56).
+// trustBadge is one of the four badges the UI groups a plugin's signature
+// trust into (D-87): its word and the tone of its pill.
+type trustBadge struct {
+	Label string
+	// Tone is the status pill's tone: ok, neutral, warn or danger.
+	Tone string
+}
+
+// badgeOf groups a plugin's signature trust into its badge (D-87):
+// Verified when the catalog pins the reviewed version (D-44), Yours when
+// one of the owner's signers signed it (D-45), Unreviewed for any other
+// trusted signer, and Blocked when the operator refused it or hasn't
+// checked it yet. A trust the UI doesn't know is Blocked too.
+func badgeOf(t viewsv1.SignatureTrust) trustBadge {
+	switch t {
+	case viewsv1.SignatureTrust_SIGNATURE_TRUST_VERIFIED:
+		return trustBadge{Label: "Verified", Tone: "ok"}
+	case viewsv1.SignatureTrust_SIGNATURE_TRUST_OWNER:
+		return trustBadge{Label: "Yours", Tone: "neutral"}
+	case viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI,
+		viewsv1.SignatureTrust_SIGNATURE_TRUST_PUBLISHER,
+		viewsv1.SignatureTrust_SIGNATURE_TRUST_TRUSTED_SIGNER:
+		return trustBadge{Label: "Unreviewed", Tone: "warn"}
+	case viewsv1.SignatureTrust_SIGNATURE_TRUST_REFUSED,
+		viewsv1.SignatureTrust_SIGNATURE_TRUST_NOT_CHECKED,
+		viewsv1.SignatureTrust_SIGNATURE_TRUST_UNSPECIFIED:
+	}
+	return trustBadge{Label: "Blocked", Tone: "danger"}
+}
+
+// trustLabel names a plugin's signature trust in full, the detail under
+// its badge (D-87): who signed the image, or why it is blocked.
 func trustLabel(t viewsv1.SignatureTrust) string {
 	switch t {
 	case viewsv1.SignatureTrust_SIGNATURE_TRUST_VERIFIED:
-		return "Verified plugin"
+		return "In the catalog and reviewed"
 	case viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI:
 		return "Signed by OpenFief's CI"
 	case viewsv1.SignatureTrust_SIGNATURE_TRUST_PUBLISHER:
@@ -56,7 +87,7 @@ func trustLabel(t viewsv1.SignatureTrust) string {
 	case viewsv1.SignatureTrust_SIGNATURE_TRUST_TRUSTED_SIGNER:
 		return "Signed by a trusted signer"
 	case viewsv1.SignatureTrust_SIGNATURE_TRUST_REFUSED:
-		return "Refused"
+		return "Refused by the operator"
 	case viewsv1.SignatureTrust_SIGNATURE_TRUST_NOT_CHECKED:
 		return "Not checked yet"
 	case viewsv1.SignatureTrust_SIGNATURE_TRUST_UNSPECIFIED:

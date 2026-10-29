@@ -109,22 +109,6 @@ func parseDimension(key string) dimension {
 	return all[0]
 }
 
-// valuationState describes an account's valuation status (D-36) in words:
-// how far it is valued, and whether a revaluation is running or pending.
-func valuationState(s *viewsv1.ValuationStatus) string {
-	state := "not valued yet"
-	if through := s.GetValuedThrough(); through != "" {
-		state = "valued through " + through
-	}
-	switch {
-	case s.GetRunning():
-		state += "; revaluation running"
-	case s.GetPending():
-		state += "; revaluation pending"
-	}
-	return state
-}
-
 // bookLabel names a ledger account: a holding by its instrument, any other
 // kind by its kind and currency.
 func bookLabel(b *viewsv1.Book) string {
@@ -132,6 +116,17 @@ func bookLabel(b *viewsv1.Book) string {
 		return instrumentLabel(b.GetInstrument())
 	}
 	return enumLabel(b.GetKind().String(), "BOOK_KIND_") + " " + b.GetCurrency()
+}
+
+// balanceLabel formats a balance of a ledger account, such as a balance
+// assertion's reported or derived balance, with its unit: a holding's is a
+// quantity of its instrument, any other's an amount in the ledger
+// account's currency, which is always shown (D-20).
+func balanceLabel(b *viewsv1.Book, balance string) string {
+	if b.GetKind() == viewsv1.BookKind_BOOK_KIND_HOLDING {
+		return formatAmount(balance)
+	}
+	return formatAmount(balance) + " " + b.GetCurrency()
 }
 
 // instrumentLabel names an instrument by its venue symbol and ISIN.

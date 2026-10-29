@@ -3,28 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <meta name="referrer" content="no-referrer">
 <meta name="htmx-config" content='{"includeIndicatorStyles":false,"allowEval":false,"allowScriptTags":false,"selfRequestsOnly":true}'>
 <title>{{.Title}} · OpenFief</title>
+<link rel="icon" href="/static/design/marks/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/design/fonts/fonts.css">
+<link rel="stylesheet" href="/static/design/tokens.css">
 <link rel="stylesheet" href="/static/style.css">
 <script src="/static/vendor/htmx-2.0.11.min.js" defer></script>
 {{block "scripts" .}}{{end}}
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="/">OpenFief</a>
+  <a class="brand" href="/">{{template "mark"}}openfief</a>
   {{with .Session}}
   <nav aria-label="Main">
-    <a href="/">Overview</a>
-    <a href="/assertions">Flagged assertions</a>
-    <a href="/price-checks">Price checks</a>
-    <a href="/plugins">Plugins</a>
-    {{if .Owner}}<a href="/settings">Settings</a>{{end}}
+    <a href="/"{{if eq $.Title "Overview"}} aria-current="page"{{end}}>Overview</a>
+    <a href="/assertions"{{if eq $.Title "Flagged balance assertions"}} aria-current="page"{{end}}>Balance assertions</a>
+    <a href="/price-checks"{{if eq $.Title "Flagged price checks"}} aria-current="page"{{end}}>Price checks</a>
+    <a href="/plugins"{{if eq $.Title "Plugins"}} aria-current="page"{{end}}>Plugins</a>
+    {{if .Owner}}<a href="/settings"{{if eq $.Title "Settings"}} aria-current="page"{{end}}>Settings</a>{{end}}
   </nav>
-  <span class="scope" title="What this session may do">{{.ScopeLabel}} access</span>
-  <form method="post" action="/logout" class="inline">
-    <button type="submit" class="link">Sign out</button>
-  </form>
+  <div class="session">
+    <span class="pill pill-neutral" title="What this session may do">{{.ScopeLabel}} access</span>
+    <form method="post" action="/logout" class="inline">
+      <button type="submit" class="quiet">Sign out</button>
+    </form>
+  </div>
   {{end}}
 </header>
 <main>

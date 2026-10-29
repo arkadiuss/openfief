@@ -1,0 +1,19 @@
+{{/* The design system's small parts (docs/dev/design-system.md), shared by every page. */}}
+
+{{/* The Gate, OpenFief's mark: the tower in currentColor with the fief, the gold square, in its arch. */}}
+{{define "mark"}}<svg class="mark" viewBox="0 0 100 100" width="28" height="28" aria-hidden="true" focusable="false"><path d="M14 14h16v18H14zM42 14h16v18H42zM70 14h16v18H70zM14 30h72v60H62V64a12 12 0 0 0-24 0v26H14z" fill="currentColor"/><rect class="mark-fief" x="43" y="74" width="14" height="14"/></svg>{{end}}
+
+{{/* Kasztan in one of his poses: on-duty, seal, drawbridge or asleep. The words next to him carry the meaning. */}}
+{{define "kasztan"}}<figure class="kasztan"><img src="/static/design/mascot/kasztan-{{.}}.svg" alt="" width="240" height="260"></figure>{{end}}
+
+{{/* An account's valuation status (D-36): how far it is valued, in monospace, and a pending or running revaluation with a gold dot. */}}
+{{define "valuation-status"}}<span class="pills">
+{{- with .GetValuedThrough}}<span class="pill pill-neutral">valued through <span class="mono">{{.}}</span></span>{{else}}<span class="pill pill-neutral">not valued yet</span>{{end -}}
+{{- if .GetRunning}}<span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation running</span>{{else if .GetPending}}<span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span>{{end -}}
+</span>{{end}}
+
+{{/* A plugin's trust badge (D-87, D-56): Verified with a check, Yours, Unreviewed, Blocked with a cross. */}}
+{{define "trust-badge"}}{{$b := badge .}}<span class="pill pill-{{$b.Tone}}">
+{{- if eq $b.Tone "ok"}}<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>{{end -}}
+{{- if eq $b.Tone "danger"}}<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>{{end -}}
+{{$b.Label}}</span>{{end}}

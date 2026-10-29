@@ -10,18 +10,18 @@
   </nav>
   {{if .Groups}}
   <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Allocation by {{.Dimension.Label}}, as in the table below"></canvas></div>
-  <table>
+  <div class="table"><table>
     <thead><tr><th scope="col">{{.Dimension.Label}}</th><th scope="col" class="num">Value</th><th scope="col" class="num">Share</th></tr></thead>
     <tbody>
     {{range .Groups}}<tr><td>{{.Key}}</td><td class="num">{{money .Value}}</td><td class="num">{{.Share}}</td></tr>{{end}}
     </tbody>
     <tfoot><tr><th scope="row">Total</th><td class="num">{{money .Total}}</td><td></td></tr></tfoot>
-  </table>
+  </table></div>
   {{else}}
-  <p>Nothing is valued on this date yet.</p>
+  <p class="muted">Nothing is valued on this date yet.</p>
   {{end}}
   {{if .Unvalued}}
-  <p class="warn">Left out for lack of a valuation on {{.Date}}:
+  <p class="alert alert-warn">Left out for lack of a valuation on {{.Date}}:
     {{range $i, $u := .Unvalued}}{{if $i}}, {{end}}{{instrument $u.Instrument}} in {{$u.AccountId}}{{end}}.</p>
   {{end}}
 </section>
