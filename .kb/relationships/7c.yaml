@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4cb8eef9052
+  - type: executable_for
+    from: SYM-core-test-helper-static-tokens-token-for
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:56:04.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d819037035e

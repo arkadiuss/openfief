@@ -66995,3 +66995,285 @@ symbols:
         target: TEST-ingest-connectapi
       - type: implements
         target: REQ-ingest-bond-lot-service
+  - id: SYM-core-entry-caller
+    title: entryCaller
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:54:56.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-entry-caller-sync
+    title: entryCaller.Sync
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:02.353Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-entry-caller-import-file
+    title: entryCaller.ImportFile
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:08.275Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-entry-caller-import-bond-lots
+    title: entryCaller.ImportBondLots
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:13.708Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-entry-caller-set
+    title: entryCaller.set
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:19.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-entry-caller-get
+    title: entryCaller.get
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:25.349Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-new-bond-lots
+    title: newBondLots
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:31.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-with-bond-lot-service
+    title: withBondLotService
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:36.975Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-test-helper-bonds-connector
+    title: bondsConnector
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:41.384Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-bonds-connector-import-bond-lots
+    title: bondsConnector.ImportBondLots
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:47.041Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-refused
+    title: refused
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:52.484Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-static-tokens
+    title: staticTokens
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:55:57.199Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-static-tokens-token-for
+    title: staticTokens.TokenFor
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:02.796Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-bond-lot-api
+    title: bondLotAPI
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:08.336Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-bond-lot-client
+    title: bondLotClient
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:14.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-edo-request
+    title: edoRequest
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:19.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-bond-lot-service
+    title: TestBondLotService
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:25.214Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-enroll-code
+    title: enrollCode
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:31.447Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-check-bond-lot-refusals
+    title: checkBondLotRefusals
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:37.001Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-check-bond-valued
+    title: checkBondValued
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:42.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-valuation-inputs-store-bond-terms
+    title: valuationInputs.StoreBondTerms
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:48.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+  - id: SYM-core-portfolio-owners
+    title: portfolioOwners
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:53.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service
+  - id: SYM-core-ingest-owners
+    title: ingestOwners
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:56:59.721Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-bond-lots
+      - type: implements
+        target: REQ-core-bond-lot-service

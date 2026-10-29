@@ -92,8 +92,9 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 // and the read API with script tokens as its verifier (D-27). It stores
 // the built-in sleeve kinds and sleeves when cfg asks, and records the bond
 // basis, which revalues everything when it changed. Next to the read API it
-// serves the AuthService and the ModelPortfolioService (D-52) to the view
-// plugins callers accepts (author decision, auth split). Start the River client to run the workers.
+// serves the AuthService, the ModelPortfolioService (D-52) and the
+// BondLotService (D-9, D-49) to the view plugins callers accepts (author
+// decision, auth split). Start the River client to run the workers.
 func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger, callers identityconnect.Callers) (*core, error) {
 	vstore, err := valuationpg.NewStore(pool)
 	if err != nil {
@@ -136,9 +137,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	}
 	deps := &connectorDeps{
 		pool: pool, ledger: l, recorder: recorder, now: now, log: log,
-		today: valuationpg.TodayIn(cfg.EndOfDay.Location, now),
+		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
+		entries: &entryCaller{},
 	}
 	served := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
+	served = withBondLotService(served, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	return &core{api: served, river: client, deps: deps}, nil
 }
 
