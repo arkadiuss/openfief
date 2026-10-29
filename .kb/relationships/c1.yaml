@@ -244,3 +244,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e5eca05acfc
+  - type: implements
+    from: SYM-connectorv1-bond-terms-get-first-period-rate
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:26:31.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf365ef41694
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-get-first-period-rate
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:26:31.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ab9bd98101a
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-request-proto-reflect
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:28:17.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d587b9a30c9e
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-request-proto-reflect
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:28:17.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32661f395b70

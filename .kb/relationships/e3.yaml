@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e1922fb4af5
+  - type: executable_for
+    from: SYM-ingest-delivery-test-bond-terms
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-29T01:21:58.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82ff3e705a8d

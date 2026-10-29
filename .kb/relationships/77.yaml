@@ -293,3 +293,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23d8dfb5727b
+  - type: constrains
+    from: REQ-ingest-bond-lot-service
+    to: FACT-SUBJECT-6E688A1FD178D752
+    created_at: 2026-10-29T01:14:41.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae65b0d37e41
+  - type: requires_property
+    from: REQ-ingest-bond-lot-service
+    to: FACT-PROP-C23104637997C6F4
+    created_at: 2026-10-29T01:14:41.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-450e73b2a71b
+  - type: specified_by
+    from: REQ-ingest-bond-lot-service
+    to: SCEN-ingest-bond-lot-service
+    created_at: 2026-10-29T01:14:41.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-310bdf88f557
+  - type: implements
+    from: SYM-ingest-app-bond-terms-store
+    to: REQ-ingest-bond-lot-handoff
+    created_at: 2026-10-29T01:16:30.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be04418b24a8
+  - type: covered_by
+    from: SYM-ingest-app-bond-terms-store
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:16:30.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d79b80532817

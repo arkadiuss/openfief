@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-267c606beaae
+  - type: implements
+    from: SYM-ingest-connectrpc-client-import-bond-lots
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:20:51.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4098e90d9cfa
+  - type: covered_by
+    from: SYM-ingest-connectrpc-client-import-bond-lots
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:20:51.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae37c4772526

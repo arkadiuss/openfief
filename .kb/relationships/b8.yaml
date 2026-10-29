@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c21a7ce3814
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-fake-verifier-verify-core
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:21.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cd96367a6cd

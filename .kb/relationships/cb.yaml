@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae4acc89c449
+  - type: implements
+    from: SYM-connectorv1-bond-lot-proto-reflect
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:27:14.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0a4a0a0ec90
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-proto-reflect
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:27:14.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52714f826162

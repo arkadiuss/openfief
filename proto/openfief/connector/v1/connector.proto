@@ -31,6 +31,12 @@ service ConnectorService {
   // ImportFile maps one statement file, such as an uploaded export. The first
   // message carries the header, the rest carry the file's bytes in order.
   rpc ImportFile(stream ImportFileRequest) returns (ImportFileResponse);
+  // ImportBondLots maps Polish retail treasury bond lots the owner entered
+  // by hand in the built-in UI, which hands them to the core (D-9, D-49).
+  // It is always a transactions batch. A connector that takes no bond lots
+  // answers UNIMPLEMENTED; a lot it refuses, such as one whose purchase date
+  // doesn't match its series, INVALID_ARGUMENT naming the rule it broke.
+  rpc ImportBondLots(ImportBondLotsRequest) returns (ImportBondLotsResponse);
 }
 
 // Money is an exact amount in one currency.
@@ -207,6 +213,23 @@ message IndexLevel {
   string level = 3;
 }
 
+// BondTerms are what the issue letter of one Polish retail treasury bond
+// series fixes (D-9). Once recorded, the core values holdings of the
+// instrument as treasury bonds from these terms rather than at a price.
+message BondTerms {
+  // The series' instrument; its symbol is the series code, such as
+  // "EDO0536".
+  Instrument instrument = 1;
+  // The yearly rate of the first interest period, as a fraction: 5.35% is
+  // "0.0535".
+  string first_period_rate = 2;
+  // The yearly margin over the period index, as a fraction; "0" for a
+  // fixed-rate series.
+  string margin = 3;
+  // The early-redemption fee per bond, in PLN.
+  Money early_redemption_fee = 4;
+}
+
 // Delivery is what a connector returns for one import batch: its mapping of
 // what the institution reported (transactions with their postings, balance
 // assertions and the rows it left out), plus any prices, FX rates, index
@@ -223,6 +246,8 @@ message Delivery {
   repeated FxRate fx_rates = 7;
   repeated IndexReading index_readings = 8;
   repeated IndexLevel index_levels = 9;
+  // The terms of the treasury bond series the delivery's transactions hold.
+  repeated BondTerms bond_terms = 10;
 }
 
 message SyncRequest {
@@ -263,5 +288,34 @@ message ImportFileRequest {
 }
 
 message ImportFileResponse {
+  Delivery delivery = 1;
+}
+
+// BondLot is one lot of Polish retail treasury bonds as the owner entered
+// it: what D-9 names (series, quantity, purchase date), plus the series'
+// terms from its issue letter, which valuing the lot needs. The bonds were
+// bought for cash at the nominal, 100 PLN each.
+message BondLot {
+  // The series code, such as "EDO0536".
+  string series = 1;
+  // How many bonds: a positive whole number, such as "40".
+  string quantity = 2;
+  // The day the bonds were bought, "YYYY-MM-DD".
+  string purchase_date = 3;
+  // The series' first-period rate, as a fraction: 6.8% is "0.068".
+  string first_period_rate = 4;
+  // The series' margin, as a fraction; "0" for a fixed-rate series.
+  string margin = 5;
+  // The series' early-redemption fee per bond, in PLN.
+  Money early_redemption_fee = 6;
+}
+
+message ImportBondLotsRequest {
+  // The core's ID for this import batch; a retry reuses it.
+  string batch_id = 1;
+  repeated BondLot lots = 2;
+}
+
+message ImportBondLotsResponse {
   Delivery delivery = 1;
 }

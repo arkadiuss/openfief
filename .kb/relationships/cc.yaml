@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f463019adf7b
+  - type: executable_for
+    from: SYM-ingest-test-bond-lot-validate
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-29T01:17:36.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40779b05682c

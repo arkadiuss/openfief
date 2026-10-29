@@ -244,3 +244,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62f13f69a3eb
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-scripted-caller-import-bond-lots
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T01:16:56.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb3def9ef1e7
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-bindings-bound-instances
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:38.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-710f58c2fd3a

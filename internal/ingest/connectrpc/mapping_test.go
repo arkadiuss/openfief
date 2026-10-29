@@ -9,6 +9,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
@@ -17,9 +18,12 @@ import (
 
 const testISIN = "PLTEST000010"
 
+// testBondISIN is the derived ISIN of the bond series EDO0536.
+const testBondISIN = "PLEDO0536000"
+
 // testDelivery is a synthetic delivery for batch b-1: one buy of 2 units for
-// 100.50 USD, a holding assertion, a skipped row, a price, an FX rate and an
-// index reading.
+// 100.50 USD, a holding assertion, a skipped row, a price, an FX rate, an
+// index reading, an index level and the terms of a bond series.
 func testDelivery() *connectorv1.Delivery {
 	instrument := &connectorv1.Instrument{Isin: testISIN, Symbol: "TST"}
 	holding := &connectorv1.Book{Kind: connectorv1.BookKind_BOOK_KIND_HOLDING, Instrument: instrument}
@@ -42,6 +46,30 @@ func testDelivery() *connectorv1.Delivery {
 		FxRates:       []*connectorv1.FxRate{{Currency: "USD", Date: "2026-03-02", Rate: "3.9876"}},
 		IndexReadings: []*connectorv1.IndexReading{{Index: connectorv1.Index_INDEX_CPI, Date: "2026-02-01", Value: "0.049"}},
 		IndexLevels:   []*connectorv1.IndexLevel{{Index: "FAKE20", Date: "2026-03-02", Level: "1522.60"}},
+		BondTerms: []*connectorv1.BondTerms{{
+			Instrument:      &connectorv1.Instrument{Isin: testBondISIN, Symbol: "EDO0536"},
+			FirstPeriodRate: "0.06", Margin: "0.02", EarlyRedemptionFee: &connectorv1.Money{Amount: "2.00", Currency: "PLN"},
+		}},
+	}
+}
+
+// testBondTerms are testDelivery's bond terms in the domain.
+func testBondTerms(t *testing.T) ingest.BondTerms {
+	t.Helper()
+	isin, err := ledger.ParseISIN(testBondISIN)
+	if err != nil {
+		t.Fatalf("ParseISIN: %v", err)
+	}
+	series, err := pl.ParseSeries("EDO0536")
+	if err != nil {
+		t.Fatalf("ParseSeries: %v", err)
+	}
+	return ingest.BondTerms{
+		Instrument: ledger.Instrument{ISIN: isin, Symbol: "EDO0536"},
+		Terms: pl.Terms{
+			Series: series, FirstPeriodRate: mustDecimal(t, "0.06"), Margin: mustDecimal(t, "0.02"),
+			EarlyRedemptionFee: mustMoney(t, "2.00", "PLN"),
+		},
 	}
 }
 
@@ -98,6 +126,7 @@ func TestDeliveryFrom(t *testing.T) {
 			Index: ingest.IndexCPI, Date: mustDate(t, "2026-02-01"), Value: mustDecimal(t, "0.049"),
 		}},
 		IndexLevels: []valuation.IndexLevel{{Index: "FAKE20", Date: day, Level: mustDecimal(t, "1522.60")}},
+		BondTerms:   []ingest.BondTerms{testBondTerms(t)},
 		Mapping: ingest.Mapping{
 			Transactions: []ledger.Transaction{{
 				Key: ledger.TransactionKey{Source: "acc-1", ExternalID: "T1"}, Account: "acc-1",
@@ -156,6 +185,13 @@ func TestDeliveryFromRejects(t *testing.T) {
 		{name: "bad assertion date", edit: func(r *connectorv1.Delivery) { r.BalanceAssertions[0].Date = "" }},
 		{name: "bad assertion book", edit: func(r *connectorv1.Delivery) { r.BalanceAssertions[0].Book = nil }},
 		{name: "no problem kind", edit: func(r *connectorv1.Delivery) { r.Problems[0].Kind = 0 }},
+		{name: "bond terms of no series", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Instrument.Symbol = "TST" }},
+		{name: "bond terms with a bad ISIN", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Instrument.Isin = "PLEDO0536001" }},
+		{name: "bond terms with an exponent rate", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].FirstPeriodRate = "6e-2" }},
+		{name: "bond terms without a margin", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Margin = "" }},
+		{name: "bond terms without a fee", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].EarlyRedemptionFee = nil }},
+		{name: "bond terms with a fee in EUR", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].EarlyRedemptionFee.Currency = "EUR" }},
+		{name: "bond terms with a negative fee", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].EarlyRedemptionFee.Amount = "-2" }},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

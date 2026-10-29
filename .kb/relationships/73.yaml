@@ -342,3 +342,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1374ffef3c8c
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-owners
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:15:16.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd1815d2459

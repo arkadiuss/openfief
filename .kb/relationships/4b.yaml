@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bee43ca0b9e
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-fake-verifier
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:14.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02e43b425346
+  - type: implements
+    from: SYM-ingestv1connect-bond-lot-service-client-impl
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:32:43.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bb710bbc255
+  - type: covered_by
+    from: SYM-ingestv1connect-bond-lot-service-client-impl
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:32:43.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e72d9c55ddc1

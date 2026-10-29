@@ -293,3 +293,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de180d9df253
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-bond-connector-import-bond-lots
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:20:20.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c0ddf185e53
+  - type: implements
+    from: SYM-treasury-bonds-connector
+    to: REQ-plugins-treasury-bonds-connector
+    created_at: 2026-10-29T01:23:51.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f834b96d984
+  - type: implements
+    from: SYM-treasury-bonds-connector
+    to: REQ-AUTO-FD618A602F7F9106
+    created_at: 2026-10-29T01:23:51.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9fd37efee4d
+  - type: covered_by
+    from: SYM-treasury-bonds-connector
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:23:51.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bef86cd95722

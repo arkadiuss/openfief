@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7c28884b500
+  - type: implements
+    from: SYM-ingestv1-bond-lot-get-first-period-rate-percent
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:30:15.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92780aa18acb
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-get-first-period-rate-percent
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:30:15.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-677ecd179c51

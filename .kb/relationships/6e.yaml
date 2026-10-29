@@ -286,3 +286,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45b5156b9314
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-handoff
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:13:56.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c17cd72f431a
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-handoff
+    to: TEST-ingest-postgres
+    created_at: 2026-10-29T01:13:56.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce23be5f8fbd
+  - type: implements
+    from: SYM-connectorv1-bond-lot-get-purchase-date
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:27:34.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b80a05d8103
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-get-purchase-date
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:27:34.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1768a0e0bd8
+  - type: implements
+    from: SYM-ingestv1-bond-lot-proto-reflect
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:29:49.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e7cf8c0e232
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-proto-reflect
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:29:49.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e32c5c3d8381
+  - type: implements
+    from: SYM-ingestv1-bond-lot-get-purchase-date
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:30:09.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e74ef98d524e
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-get-purchase-date
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:30:10.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c33ddb89b9a8
+  - type: implements
+    from: SYM-ingestv1connect-bond-lot-service-client-add-bond-lot
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:32:49.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-821efd9ba6f6
+  - type: covered_by
+    from: SYM-ingestv1connect-bond-lot-service-client-add-bond-lot
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:32:49.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3f3da1496b6

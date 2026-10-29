@@ -433,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96a0d75ff546
+  - type: implements
+    from: SYM-ingest-connectapi-lot-from
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:18:19.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3d1327d8885
+  - type: implements
+    from: SYM-ingest-connectapi-lot-from
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:18:19.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74f6692f39c6
+  - type: covered_by
+    from: SYM-ingest-connectapi-lot-from
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:19.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95777f147b21

@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38695f827973
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-importer-seed
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:19:17.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e693d225ee1
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-client-import-bond-lots
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:20:31.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39c85ad84a6e
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-response-get-batch-id
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:31:53.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b5a4ae32ba0
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-response-get-batch-id
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:31:53.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e120f8fb9c7

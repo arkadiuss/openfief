@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c707e8bd7b49
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-check-handed-over
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:15:57.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d522fef9455d

@@ -64488,3 +64488,2510 @@ symbols:
         target: REQ-ui-model-portfolio
       - type: implements
         target: REQ-ui-overview
+  - id: SYM-ingest-app-owners
+    title: Owners
+    sourceFile: internal/ingest/app/bondlots.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:14:55.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-app-account-bindings
+    title: AccountBindings
+    sourceFile: internal/ingest/app/bondlots.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:00.746Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-app-bond-lots
+    title: BondLots
+    sourceFile: internal/ingest/app/bondlots.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:04.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-app-bond-lots-add
+    title: BondLots.Add
+    sourceFile: internal/ingest/app/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:10.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-app-test-helper-fake-owners
+    title: fakeOwners
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:14.925Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-fake-owners-check-owner
+    title: fakeOwners.CheckOwner
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:20.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-fake-account-bindings
+    title: fakeAccountBindings
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:24.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-fake-account-bindings-bound-instances
+    title: fakeAccountBindings.BoundInstances
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:29.414Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-edo-lot
+    title: edoLot
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:34.499Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-bond-delivery
+    title: bondDelivery
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:39.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-bond-lots
+    title: bondLots
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:45.308Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-bond-lots-add
+    title: TestBondLotsAdd
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:50.296Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-check-handed-over
+    title: checkHandedOver
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:15:56.263Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-check-imported
+    title: checkImported
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:01.691Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-refusal
+    title: refusal
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:06.782Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-ok
+    title: ok
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:12.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-bond-lots-add-refuses
+    title: TestBondLotsAddRefuses
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:17.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-with
+    title: with
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:23.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-bond-terms-store
+    title: BondTermsStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:29.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+  - id: SYM-ingest-app-connectors-import-bond-lots
+    title: Connectors.ImportBondLots
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:34.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+  - id: SYM-ingest-app-connectors-store-terms
+    title: Connectors.storeTerms
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:39.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+  - id: SYM-ingest-app-test-helper-fake-caller-import-bond-lots
+    title: fakeCaller.ImportBondLots
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:44.671Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-helper-fake-stores-store-bond-terms
+    title: fakeStores.StoreBondTerms
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:49.989Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-helper-scripted-caller-import-bond-lots
+    title: scriptedCaller.ImportBondLots
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:55.097Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-bond-lot
+    title: BondLot
+    sourceFile: internal/ingest/bondlot.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:16:59.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-bondlot
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-ingest-bond-lot-rules
+  - id: SYM-ingest-bond-lot-series
+    title: BondLot.Series
+    sourceFile: internal/ingest/bondlot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:04.648Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-bondlot
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-ingest-bond-lot-rules
+  - id: SYM-ingest-bond-lot-cost
+    title: BondLot.Cost
+    sourceFile: internal/ingest/bondlot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:09.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-bondlot
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-ingest-bond-lot-rules
+  - id: SYM-ingest-bond-lot-validate
+    title: BondLot.Validate
+    sourceFile: internal/ingest/bondlot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:15.056Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-bondlot
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-ingest-bond-lot-rules
+  - id: SYM-ingest-bond-terms
+    title: BondTerms
+    sourceFile: internal/ingest/bondlot.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:20.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-bondlot
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-ingest-bond-lot-rules
+  - id: SYM-ingest-test-helper-bond-lot-case
+    title: bondLotCase
+    sourceFile: internal/ingest/bondlot_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:24.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-bondlot
+  - id: SYM-ingest-test-helper-bond-lot-case-lot
+    title: bondLotCase.lot
+    sourceFile: internal/ingest/bondlot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:29.700Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-bondlot
+  - id: SYM-ingest-test-bond-lot-validate
+    title: TestBondLotValidate
+    sourceFile: internal/ingest/bondlot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:35.454Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-bondlot
+  - id: SYM-ingest-test-bond-lot-cost
+    title: TestBondLotCost
+    sourceFile: internal/ingest/bondlot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:40.985Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-bondlot
+  - id: SYM-ingest-connectapi-percent
+    title: percent
+    sourceFile: internal/ingest/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:46.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-new
+    title: New
+    sourceFile: internal/ingest/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:52.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-service
+    title: service
+    sourceFile: internal/ingest/connectapi/service.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:17:56.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-service-add-bond-lot
+    title: service.AddBondLot
+    sourceFile: internal/ingest/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:02.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-count
+    title: count
+    sourceFile: internal/ingest/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:07.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-service-fail
+    title: service.fail
+    sourceFile: internal/ingest/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:12.445Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-lot-from
+    title: lotFrom
+    sourceFile: internal/ingest/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:17.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-test-helper-owners
+    title: owners
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:21.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-owners-check-owner
+    title: owners.CheckOwner
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:26.966Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-bindings
+    title: bindings
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:31.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-bindings-bound-instances
+    title: bindings.BoundInstances
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:36.628Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-bindings-bound-accounts
+    title: bindings.BoundAccounts
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:42.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-caller
+    title: caller
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:46.789Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-caller-sync
+    title: caller.Sync
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:51.901Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-caller-import-file
+    title: caller.ImportFile
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:18:57.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-caller-import-bond-lots
+    title: caller.ImportBondLots
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:02.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-importer
+    title: importer
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:06.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-importer-import
+    title: importer.Import
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:11.324Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-importer-seed
+    title: importer.Seed
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:16.470Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-view-only
+    title: viewOnly
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:21.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-bearer
+    title: bearer
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:26.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-client
+    title: client
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:31.561Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-new-client
+    title: newClient
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:36.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-lot
+    title: lot
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:41.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-add-bond-lot
+    title: TestAddBondLot
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:47.212Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-add-bond-lot-refusals
+    title: TestAddBondLotRefusals
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:52.796Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-or
+    title: or
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:19:58.105Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-apply
+    title: apply
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:03.689Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectrpc-test-helper-refuse
+    title: refuse
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:09.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-test-helper-bond-connector
+    title: bondConnector
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:13.661Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-test-helper-bond-connector-import-bond-lots
+    title: bondConnector.ImportBondLots
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:19.080Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-test-helper-lot-of
+    title: lotOf
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:24.430Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-test-client-import-bond-lots
+    title: TestClientImportBondLots
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:29.725Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-test-client-import-bond-lots-refusals
+    title: TestClientImportBondLotsRefusals
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:35.066Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-test-helper-unavailable-connector
+    title: unavailableConnector
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:39.194Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-test-helper-unavailable-connector-import-bond-lots
+    title: unavailableConnector.ImportBondLots
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:44.614Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-client-import-bond-lots
+    title: Client.ImportBondLots
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:50.011Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingest-connectrpc-entry-error
+    title: entryError
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:20:55.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingest-connectrpc-bond-terms-from
+    title: bondTermsFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:00.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingest-connectrpc-bond-lots-to
+    title: bondLotsTo
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:06.542Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingest-connectrpc-test-helper-test-bond-terms
+    title: testBondTerms
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:11.839Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-delivery-bond-lots
+    title: BondLots
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:17.073Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingest-delivery-bond-lot
+    title: bondLot
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:22.716Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingest-delivery-fee-from
+    title: feeFrom
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:27.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingest-delivery-bond-terms
+    title: BondTerms
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:33.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingest-delivery-test-helper-lot-message
+    title: lotMessage
+    sourceFile: internal/ingest/delivery/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:38.128Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-bonds
+  - id: SYM-ingest-delivery-test-helper-edo-terms
+    title: edoTerms
+    sourceFile: internal/ingest/delivery/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:42.907Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-bonds
+  - id: SYM-ingest-delivery-test-bond-lots
+    title: TestBondLots
+    sourceFile: internal/ingest/delivery/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:47.414Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-bonds
+  - id: SYM-ingest-delivery-test-bond-lots-refuses
+    title: TestBondLotsRefuses
+    sourceFile: internal/ingest/delivery/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:52.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-bonds
+  - id: SYM-ingest-delivery-test-bond-terms
+    title: TestBondTerms
+    sourceFile: internal/ingest/delivery/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:21:57.057Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-bonds
+  - id: SYM-ingest-postgres-store-bound-instances
+    title: Store.BoundInstances
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:02.074Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+  - id: SYM-ingest-postgres-test-bound-instances
+    title: TestBoundInstances
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:07.019Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-treasurybonds-instrument
+    title: Instrument
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:12.145Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-treasurybonds-lot-mapping
+  - id: SYM-treasurybonds-mapper
+    title: Mapper
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:16.526Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-treasurybonds-lot-mapping
+  - id: SYM-treasurybonds-mapper-map
+    title: Mapper.Map
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:21.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-treasurybonds-lot-mapping
+  - id: SYM-treasurybonds-add-terms
+    title: addTerms
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:27.023Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-treasurybonds-lot-mapping
+  - id: SYM-treasurybonds-same-terms
+    title: sameTerms
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:32.158Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-treasurybonds-lot-mapping
+  - id: SYM-treasurybonds-mapper-lot-transactions
+    title: Mapper.lotTransactions
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:37.994Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-AUTO-FD50BCD71546E83F
+      - type: implements
+        target: REQ-treasurybonds-lot-mapping
+  - id: SYM-treasurybonds-test-helper-must-date
+    title: mustDate
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:43.997Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-helper-pln
+    title: pln
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:50.389Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-helper-lot
+    title: lot
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:22:57.423Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-helper-instrument
+    title: instrument
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:04.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-instrument
+    title: TestInstrument
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:11.346Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-map
+    title: TestMap
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:18.175Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-helper-row
+    title: row
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:24.260Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-helper-qty
+    title: qty
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:31.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-map-keeps-keys-across-re-entry
+    title: TestMapKeepsKeysAcrossReEntry
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:38.303Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-map-refuses
+    title: TestMapRefuses
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:44.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasury-bonds-connector
+    title: connector
+    sourceFile: plugins/treasury-bonds/connector.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:49.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-AUTO-FD618A602F7F9106
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-connector-sync
+    title: connector.Sync
+    sourceFile: plugins/treasury-bonds/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:23:55.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-AUTO-FD618A602F7F9106
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-status
+    title: status
+    sourceFile: plugins/treasury-bonds/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:01.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-AUTO-FD618A602F7F9106
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-connector-import-bond-lots
+    title: connector.ImportBondLots
+    sourceFile: plugins/treasury-bonds/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:07.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-AUTO-FD618A602F7F9106
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-test-helper-fake-verifier
+    title: fakeVerifier
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:12.747Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-fake-verifier-verify-core
+    title: fakeVerifier.VerifyCore
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:19.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-core-client
+    title: coreClient
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:26.136Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-served
+    title: served
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:31.953Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-as-core
+    title: asCore
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:38.550Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-edo-lot
+    title: edoLot
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:45.648Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-import-bond-lots
+    title: TestImportBondLots
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:24:53.264Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-import-bond-lots-refuses
+    title: TestImportBondLotsRefuses
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:00.684Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-sync-delivers-nothing
+    title: TestSyncDeliversNothing
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:06.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-config
+    title: config
+    sourceFile: plugins/treasury-bonds/main.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:12.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-main
+    title: main
+    sourceFile: plugins/treasury-bonds/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:18.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-serve
+    title: serve
+    sourceFile: plugins/treasury-bonds/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:23.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-run
+    title: run
+    sourceFile: plugins/treasury-bonds/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:29.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-date-in
+    title: dateIn
+    sourceFile: plugins/treasury-bonds/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:35.646Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-test-manifest
+    title: TestManifest
+    sourceFile: plugins/treasury-bonds/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:40.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-date-in
+    title: TestDateIn
+    sourceFile: plugins/treasury-bonds/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:45.152Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-connectorv1-bond-terms
+    title: BondTerms
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:49.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-reset
+    title: BondTerms.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:25:55.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-string
+    title: BondTerms.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:01.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-proto-message
+    title: BondTerms.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:07.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-proto-reflect
+    title: BondTerms.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:13.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-descriptor
+    title: BondTerms.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:18.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-get-instrument
+    title: BondTerms.GetInstrument
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:24.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-get-first-period-rate
+    title: BondTerms.GetFirstPeriodRate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:30.272Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-get-margin
+    title: BondTerms.GetMargin
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:36.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-terms-get-early-redemption-fee
+    title: BondTerms.GetEarlyRedemptionFee
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:41.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-delivery-get-bond-terms
+    title: Delivery.GetBondTerms
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:47.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot
+    title: BondLot
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:51.293Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-reset
+    title: BondLot.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:26:56.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-string
+    title: BondLot.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:01.878Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-proto-message
+    title: BondLot.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:07.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-proto-reflect
+    title: BondLot.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:12.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-descriptor
+    title: BondLot.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:17.954Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-get-series
+    title: BondLot.GetSeries
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:23.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-get-quantity
+    title: BondLot.GetQuantity
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:28.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-get-purchase-date
+    title: BondLot.GetPurchaseDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:33.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-get-first-period-rate
+    title: BondLot.GetFirstPeriodRate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:38.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-get-margin
+    title: BondLot.GetMargin
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:43.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-get-early-redemption-fee
+    title: BondLot.GetEarlyRedemptionFee
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:48.839Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request
+    title: ImportBondLotsRequest
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:53.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-reset
+    title: ImportBondLotsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:27:59.800Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-string
+    title: ImportBondLotsRequest.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:05.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-proto-message
+    title: ImportBondLotsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:11.061Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-proto-reflect
+    title: ImportBondLotsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:16.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-descriptor
+    title: ImportBondLotsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:21.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-get-batch-id
+    title: ImportBondLotsRequest.GetBatchId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:27.394Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-get-lots
+    title: ImportBondLotsRequest.GetLots
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:32.959Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-response
+    title: ImportBondLotsResponse
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:37.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-response-reset
+    title: ImportBondLotsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:42.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-response-string
+    title: ImportBondLotsResponse.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:47.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-response-proto-message
+    title: ImportBondLotsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:53.406Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-response-proto-reflect
+    title: ImportBondLotsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:28:58.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-response-descriptor
+    title: ImportBondLotsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:03.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-response-get-delivery
+    title: ImportBondLotsResponse.GetDelivery
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:09.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1connect-connector-service-client-import-bond-lots
+    title: connectorServiceClient.ImportBondLots
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:14.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1connect-unimplemented-connector-service-handler-import-bond-lots
+    title: UnimplementedConnectorServiceHandler.ImportBondLots
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:20.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ingestv1-bond-lot
+    title: BondLot
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:25.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-reset
+    title: BondLot.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:31.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-string
+    title: BondLot.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:36.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-proto-message
+    title: BondLot.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:42.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-proto-reflect
+    title: BondLot.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:47.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-descriptor
+    title: BondLot.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:52.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-get-series
+    title: BondLot.GetSeries
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:29:57.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-get-quantity
+    title: BondLot.GetQuantity
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:03.160Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-get-purchase-date
+    title: BondLot.GetPurchaseDate
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:08.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-get-first-period-rate-percent
+    title: BondLot.GetFirstPeriodRatePercent
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:13.947Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-get-margin-percent
+    title: BondLot.GetMarginPercent
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:19.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-bond-lot-get-early-redemption-fee-pln
+    title: BondLot.GetEarlyRedemptionFeePln
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:24.539Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request
+    title: AddBondLotRequest
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:28.870Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-reset
+    title: AddBondLotRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:34.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-string
+    title: AddBondLotRequest.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:39.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-proto-message
+    title: AddBondLotRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:44.725Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-proto-reflect
+    title: AddBondLotRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:50.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-descriptor
+    title: AddBondLotRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:30:55.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-get-origin
+    title: AddBondLotRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:00.748Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-get-session-token
+    title: AddBondLotRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:05.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-get-account-id
+    title: AddBondLotRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:11.036Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-request-get-lot
+    title: AddBondLotRequest.GetLot
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:16.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response
+    title: AddBondLotResponse
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:20.636Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-reset
+    title: AddBondLotResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:25.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-string
+    title: AddBondLotResponse.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:30.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-proto-message
+    title: AddBondLotResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:36.509Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-proto-reflect
+    title: AddBondLotResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:41.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-descriptor
+    title: AddBondLotResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:46.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-get-batch-id
+    title: AddBondLotResponse.GetBatchId
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:52.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-get-new
+    title: AddBondLotResponse.GetNew
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:31:57.440Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-get-new-versions
+    title: AddBondLotResponse.GetNewVersions
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:02.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-add-bond-lot-response-get-unchanged
+    title: AddBondLotResponse.GetUnchanged
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:07.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-file_openfief_ingest_v1_bond_lots_proto_raw-desc-gzip
+    title: file_openfief_ingest_v1_bond_lots_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:12.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:17.869Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-file_openfief_ingest_v1_bond_lots_proto_init
+    title: file_openfief_ingest_v1_bond_lots_proto_init
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:22.997Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/ingest/v1/bond_lots.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:27.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1connect-bond-lot-service-client
+    title: BondLotServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/bond_lots.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:32.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1connect-new-bond-lot-service-client
+    title: NewBondLotServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/bond_lots.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:37.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1connect-bond-lot-service-client-impl
+    title: bondLotServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/bond_lots.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:42.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1connect-bond-lot-service-client-add-bond-lot
+    title: bondLotServiceClient.AddBondLot
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/bond_lots.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:47.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1connect-bond-lot-service-handler
+    title: BondLotServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/bond_lots.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:53.012Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1connect-new-bond-lot-service-handler
+    title: NewBondLotServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/bond_lots.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:32:58.237Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1connect-unimplemented-bond-lot-service-handler
+    title: UnimplementedBondLotServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/bond_lots.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:33:02.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service
+  - id: SYM-ingestv1connect-unimplemented-bond-lot-service-handler-add-bond-lot
+    title: UnimplementedBondLotServiceHandler.AddBondLot
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/bond_lots.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T01:33:08.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-service

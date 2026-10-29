@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-019809a09fde
+  - type: verified_by
+    from: SCEN-treasurybonds-lot-mapping
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:13:54.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5254354d2d27
+  - type: verified_by
+    from: SCEN-treasurybonds-lot-mapping
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:13:54.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f8972f55eb9

@@ -300,3 +300,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f998976e982
+  - type: executable_for
+    from: SYM-ingest-app-test-bond-lots-add-refuses
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:16:19.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e20cef68031e
+  - type: implements
+    from: SYM-ingestv1-bond-lot-get-margin-percent
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:30:20.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70523c11bb3d
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-get-margin-percent
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:30:20.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bd81950524f
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-response-reset
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:31:27.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c301f42c2491
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-response-reset
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:31:27.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f379d6c8d282

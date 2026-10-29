@@ -258,3 +258,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13aa3b9d00a9
+  - type: constrains
+    from: REQ-ingest-bond-lot-handoff
+    to: FACT-SUBJECT-BDB16DBA9CB82400
+    created_at: 2026-10-29T01:14:27.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54ecf88a894f
+  - type: requires_property
+    from: REQ-ingest-bond-lot-handoff
+    to: FACT-PROP-BE5DA79E1820EFFE
+    created_at: 2026-10-29T01:14:27.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d1a38371ece
+  - type: specified_by
+    from: REQ-ingest-bond-lot-handoff
+    to: SCEN-ingest-bond-lot-handoff
+    created_at: 2026-10-29T01:14:27.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b234cbc8bc08

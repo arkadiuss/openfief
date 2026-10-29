@@ -32,6 +32,7 @@ type fakeCaller struct {
 	mode      ingest.Mode
 	watermark string
 	file      string
+	lots      []ingest.BondLot
 }
 
 func (f *fakeCaller) Sync(_ context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (app.Delivery, error) {
@@ -49,6 +50,11 @@ func (f *fakeCaller) ImportFile(_ context.Context, instance string, id ingest.Ba
 	return f.delivery, f.err
 }
 
+func (f *fakeCaller) ImportBondLots(_ context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (app.Delivery, error) {
+	f.instance, f.id, f.lots = instance, id, lots
+	return f.delivery, f.err
+}
+
 // fakeStores records what each valuation input store was given.
 type fakeStores struct {
 	err      error
@@ -57,6 +63,13 @@ type fakeStores struct {
 	rates    []valuation.FXRate
 	readings []ingest.IndexReading
 	levels   []valuation.IndexLevel
+	terms    []ingest.BondTerms
+}
+
+func (f *fakeStores) StoreBondTerms(_ context.Context, _ ingest.BatchID, terms []ingest.BondTerms) error {
+	f.calls++
+	f.terms = terms
+	return f.err
 }
 
 func (f *fakeStores) StorePrices(_ context.Context, _ ingest.BatchID, prices []valuation.Price) error {
@@ -121,7 +134,7 @@ func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, 
 	t.Helper()
 	day := march2(t)
 	return &app.Connectors{
-		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores,
+		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores, Terms: stores,
 		Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
 		Today:    func() kernel.Date { return day },
 	}

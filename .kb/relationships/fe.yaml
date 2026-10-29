@@ -265,3 +265,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a424b26a3a6b
+  - type: validates
+    from: TEST-ingest-connectapi
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:13:48.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c29a3bd7ad9
+  - type: constrains
+    from: REQ-treasurybonds-lot-mapping
+    to: FACT-SUBJECT-8422AA93FAB9FA88
+    created_at: 2026-10-29T01:14:20.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96e251418932
+  - type: requires_property
+    from: REQ-treasurybonds-lot-mapping
+    to: FACT-PROP-CD54057E5E0E98C5
+    created_at: 2026-10-29T01:14:20.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4713b1d70da1
+  - type: specified_by
+    from: REQ-treasurybonds-lot-mapping
+    to: SCEN-treasurybonds-lot-mapping
+    created_at: 2026-10-29T01:14:20.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9970b2264fbb
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-account-bindings
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:15:25.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-116dacda88aa
+  - type: implements
+    from: SYM-ingestv1-bond-lot-get-series
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:29:59.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d196eeb491a3
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-get-series
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:29:59.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e4c48c14720

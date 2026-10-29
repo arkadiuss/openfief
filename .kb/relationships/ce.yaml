@@ -405,3 +405,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f1725c75067
+  - type: implements
+    from: SYM-ingest-app-account-bindings
+    to: REQ-ingest-bond-lot-handoff
+    created_at: 2026-10-29T01:15:02.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85e2d2ec2d80
+  - type: implements
+    from: SYM-ingest-app-account-bindings
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:15:02.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d99f007bd7f
+  - type: covered_by
+    from: SYM-ingest-app-account-bindings
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:15:02.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a95eb1ed8899
+  - type: executable_for
+    from: SYM-ingest-app-test-bond-lots-add
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:15:51.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cf6aa271c7e
+  - type: implements
+    from: SYM-connectorv1-bond-lot-get-first-period-rate
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:27:39.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c06e6301910
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-get-first-period-rate
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:27:40.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba9435cc76c9

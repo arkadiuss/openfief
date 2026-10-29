@@ -370,3 +370,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-236936f2c8d6
+  - type: implements
+    from: SYM-ingest-bond-lot-series
+    to: REQ-ingest-bond-lot-rules
+    created_at: 2026-10-29T01:17:06.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58750b8e4949
+  - type: implements
+    from: SYM-ingest-bond-lot-series
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:17:06.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c1c53f64562
+  - type: covered_by
+    from: SYM-ingest-bond-lot-series
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-29T01:17:06.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4e59c5d31a1

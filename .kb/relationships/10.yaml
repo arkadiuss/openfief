@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce687936f271
+  - type: implements
+    from: SYM-ingest-app-owners
+    to: REQ-ingest-bond-lot-handoff
+    created_at: 2026-10-29T01:14:57.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dce19f1f4f43
+  - type: implements
+    from: SYM-ingest-app-owners
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:14:57.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54cb11baaaf6
+  - type: covered_by
+    from: SYM-ingest-app-owners
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:14:57.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-684580271f60
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-importer-import
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:19:12.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a558d072182

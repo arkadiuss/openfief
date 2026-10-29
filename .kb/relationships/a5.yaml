@@ -230,3 +230,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ae44fa355c0
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-AUTO-FD618A602F7F9106
+    created_at: 2026-10-29T01:13:50.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fb2bdd3b77c
+  - type: implements
+    from: SYM-treasury-bonds-connector-sync
+    to: REQ-plugins-treasury-bonds-connector
+    created_at: 2026-10-29T01:23:57.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4e1f843729f
+  - type: implements
+    from: SYM-treasury-bonds-connector-sync
+    to: REQ-AUTO-FD618A602F7F9106
+    created_at: 2026-10-29T01:23:57.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f80c249ddaf5
+  - type: covered_by
+    from: SYM-treasury-bonds-connector-sync
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:23:57.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0026a404f0af

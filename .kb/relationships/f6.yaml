@@ -216,3 +216,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87d09c31c9a6
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-caller-sync
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:53.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-488f65fe1442

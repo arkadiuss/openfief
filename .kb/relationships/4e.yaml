@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee2636ba86ec
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-edo-lot
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:15:35.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24f98d164342
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-with
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:16:25.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-581448ba5b3e

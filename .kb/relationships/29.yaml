@@ -377,3 +377,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-474d7ac8bfe1
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-add-bond-lot-refusals
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:19:54.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b02e6ca42e52
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-request-reset
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:28:01.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b149d49fb9f9
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-request-reset
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:28:01.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b1c3c7974dc

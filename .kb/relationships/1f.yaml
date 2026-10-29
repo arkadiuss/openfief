@@ -356,3 +356,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b0925f25768
+  - type: implements
+    from: SYM-ingest-delivery-bond-lots
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:21:18.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0390af40e963
+  - type: covered_by
+    from: SYM-ingest-delivery-bond-lots
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-29T01:21:18.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66c4a257ec02
+  - type: implements
+    from: SYM-connectorv1-delivery-get-bond-terms
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:26:48.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e3ff4e4d9cd
+  - type: covered_by
+    from: SYM-connectorv1-delivery-get-bond-terms
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:26:48.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bf1c4b32dee
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-request-descriptor
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:30:57.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65099b14ff3f
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-request-descriptor
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:30:57.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00787940d91f

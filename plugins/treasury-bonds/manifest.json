@@ -1,0 +1,11 @@
+{
+  "capabilities": ["connector"],
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "account": {"type": "string", "minLength": 1}
+    },
+    "required": ["account"],
+    "additionalProperties": false
+  }
+}

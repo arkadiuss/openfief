@@ -335,3 +335,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-291f273c889c
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-lot
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:22:59.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46d4a80bf903
+  - type: executable_for
+    from: SYM-treasurybonds-test-instrument
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:23:13.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99e3ed235291
+  - type: implements
+    from: SYM-treasury-bonds-status
+    to: REQ-plugins-treasury-bonds-connector
+    created_at: 2026-10-29T01:24:03.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9419a262f908
+  - type: implements
+    from: SYM-treasury-bonds-status
+    to: REQ-AUTO-FD618A602F7F9106
+    created_at: 2026-10-29T01:24:03.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3e7e6e7ed22
+  - type: covered_by
+    from: SYM-treasury-bonds-status
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:03.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab317ca0524e
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-as-core
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:40.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d97f95a8d657
