@@ -29,6 +29,8 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/remotecommand"
 	"sigs.k8s.io/yaml"
+
+	"github.com/arkadiuss/openfief/internal/plugins"
 )
 
 const (
@@ -123,6 +125,12 @@ func (k *kube) applyBuild(ctx context.Context, cmd *exec.Cmd) error {
 // apply applies every object in manifests, YAML or JSON, server-side, as
 // Flux applies the demo's layers.
 func (k *kube) apply(ctx context.Context, manifests []byte) error {
+	return k.applyEdited(ctx, manifests, nil)
+}
+
+// applyEdited is apply with each object changed by edit first, unless edit
+// is nil.
+func (k *kube) applyEdited(ctx context.Context, manifests []byte, edit func(*unstructured.Unstructured) error) error {
 	dec := utilyaml.NewYAMLOrJSONDecoder(bytes.NewReader(manifests), yamlBuffer)
 	for {
 		var obj unstructured.Unstructured
@@ -135,6 +143,11 @@ func (k *kube) apply(ctx context.Context, manifests []byte) error {
 		}
 		if len(obj.Object) == 0 {
 			continue
+		}
+		if edit != nil {
+			if err := edit(&obj); err != nil {
+				return err
+			}
 		}
 		if err := k.applyOne(ctx, &obj); err != nil {
 			return err
@@ -343,10 +356,11 @@ func diagnosedNamespaces() []string {
 }
 
 // dumpDiagnostics logs what explains a failure: every pod and event in the
-// cluster, the spec and status of each pod in OpenFief's, CloudNativePG's
-// and the clients' namespaces that is not ready, and the logs of every pod
-// there: the core, the demo loader, the database and the CloudNativePG
-// operator among them.
+// cluster, the network and plugin objects in OpenFief's namespace, the spec
+// and status of each pod in OpenFief's, CloudNativePG's and the clients'
+// namespaces that is not ready, and the logs of every pod there: the core,
+// the operator, the plugins, the demo loader, the database and the
+// CloudNativePG operator among them.
 func (k *kube) dumpDiagnostics(ctx context.Context, logf func(string, ...any)) {
 	pods, err := k.clients.CoreV1().Pods(metav1.NamespaceAll).List(ctx, metav1.ListOptions{})
 	if err != nil {
@@ -361,6 +375,7 @@ func (k *kube) dumpDiagnostics(ctx context.Context, logf func(string, ...any)) {
 	logf("diagnostics: pods\n%s", b.String())
 	k.dumpEvents(ctx, logf)
 	k.dumpNetwork(ctx, logf)
+	k.dumpPlugins(ctx, logf)
 	for i := range pods.Items {
 		k.dumpPod(ctx, logf, &pods.Items[i])
 	}
@@ -401,6 +416,36 @@ func (k *kube) dumpNetwork(ctx context.Context, logf func(string, ...any)) {
 	dumpYAML(logf, "EndpointSlices of Service openfief-core", endpoints, err)
 	ingresses, err := k.clients.NetworkingV1().Ingresses(metav1.NamespaceAll).List(ctx, metav1.ListOptions{})
 	dumpYAML(logf, "Ingresses", ingresses, err)
+}
+
+// dumpPlugins logs what decides whether a plugin runs: the Plugins and
+// PluginGrants with their status, the operator's Deployments for them, the
+// egress allow-lists and the trusted signers (public keys only).
+func (k *kube) dumpPlugins(ctx context.Context, logf func(string, ...any)) {
+	for _, r := range []schema.GroupVersionResource{pluginResource(), grantResource()} {
+		list, err := k.dynamic.Resource(r).Namespace(namespace).List(ctx, metav1.ListOptions{})
+		if err == nil {
+			for i := range list.Items {
+				list.Items[i].SetManagedFields(nil)
+			}
+		}
+		dumpYAML(logf, r.Resource+" in "+namespace, list, err)
+	}
+	deployments, err := k.clients.AppsV1().Deployments(namespace).List(ctx,
+		metav1.ListOptions{LabelSelector: "app.kubernetes.io/name=openfief-plugin"})
+	if err == nil {
+		for i := range deployments.Items {
+			deployments.Items[i].ManagedFields = nil
+		}
+	}
+	dumpYAML(logf, "plugin Deployments", deployments, err)
+	for _, name := range []string{plugins.EgressAllowListConfigMap, trustedSignersConfigMap} {
+		cm, err := k.clients.CoreV1().ConfigMaps(namespace).Get(ctx, name, metav1.GetOptions{})
+		if err == nil {
+			cm.ManagedFields = nil
+		}
+		dumpYAML(logf, "ConfigMap "+name, cm, err)
+	}
 }
 
 // dumpYAML logs v as YAML under title, or err.

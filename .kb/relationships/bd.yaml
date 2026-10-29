@@ -300,3 +300,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9472298d0d0
+  - type: constrains
+    from: REQ-identity-view-plugin-token-review
+    to: FACT-SUBJECT-D6D9E363C220B0F5
+    created_at: 2026-10-29T08:15:29.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5bf4d6c7346
+  - type: requires_property
+    from: REQ-identity-view-plugin-token-review
+    to: FACT-PROP-375EF3DE03B851B0
+    created_at: 2026-10-29T08:15:29.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53758cd1e269

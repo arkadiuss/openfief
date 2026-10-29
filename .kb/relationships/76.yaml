@@ -433,20 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-873e001987a0
-  - type: constrains
-    from: REQ-identity-no-auth-bypass
-    to: FACT-SUBJECT-B83F8A3C8FAFE02C
-    created_at: 2026-10-29T10:54:23.865Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c9e67337a362
-  - type: requires_property
-    from: REQ-identity-no-auth-bypass
-    to: FACT-PROP-D1CEBAEA762603BB
-    created_at: 2026-10-29T10:54:23.923Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c7f988425cb4
   - type: specified_by
     from: REQ-identity-no-auth-bypass
     to: SCEN-identity-no-auth-bypass
@@ -454,3 +440,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e134632832d
+  - type: constrains
+    from: REQ-identity-no-auth-bypass
+    to: FACT-SUBJECT-5A4E6481189FE5A3
+    created_at: 2026-10-29T08:21:32.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00898de9faa1
+  - type: requires_property
+    from: REQ-identity-no-auth-bypass
+    to: FACT-PROP-99CAA9B7065DB88C
+    created_at: 2026-10-29T08:21:32.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f733c8c0b3ab

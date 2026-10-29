@@ -1,43 +1,46 @@
 ---
-title: 'No build of OpenFief may accept a fixed token or any other way around authentication: outside a cluster the core must refuse every AuthService caller, and the built-in UI must present only its projected ServiceAccount token.'
+title: Every build of OpenFief, development builds included, must have no fixed token and no other way around authentication.
 status: open
-text_ref: docs/DESIGN.md#D-84
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-84
+  - provenance:design-decisions-d-84-1
   - lane:strict
-semantic_text: 'No build of OpenFief may accept a fixed token or any other way around authentication: outside a cluster the core must refuse every AuthService caller, and the built-in UI must present only its projected ServiceAccount token.'
+text_ref: design-decisions:D-84#1
+origin:
+  kind: import
+  ref: design-decisions:D-84#1
+  recorded_at: '2026-10-29T08:21:32.861Z'
+semantic_text: Every build of OpenFief, development builds included, must have no fixed token and no other way around authentication.
 logic_claims:
-  - CLAIM-470CEEBB591CE491
+  - CLAIM-8DDF24D2356BCDDD
 semantic_clauses:
-  - 'No build of OpenFief may accept a fixed token or any other way around authentication: outside a cluster the core must refuse every AuthService caller, and the built-in UI must present only its projected ServiceAccount token.'
+  - Every build of OpenFief, development builds included, must have no fixed token and no other way around authentication.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: a36334f504ad98881abf42257c2cde679a84273a1c6d852537e82a1df120c506
+firmness: firm
+required_evidence: asserted
+semantic_source_hash: e5b5596070217f6779053d7079edbe51b9d991df7937e76fb78ebf959d84acaa
 semantic_inventory:
-  - claim_key: CLAIM-470CEEBB591CE491
-    claim_text: 'No build of OpenFief may accept a fixed token or any other way around authentication: outside a cluster the core must refuse every AuthService caller, and the built-in UI must present only its projected ServiceAccount token'
+  - claim_key: CLAIM-8DDF24D2356BCDDD
+    claim_text: Every build of OpenFief, development builds included, must have no fixed token and no other way around authentication
     role: normative
     status: modeled
     span:
       start: 0
-      end: 223
-origin:
-  kind: agent
-  recorded_at: '2026-10-29T10:54:23.857Z'
+      end: 117
 id: REQ-identity-no-auth-bypass
 type: req
 ---
-No build of OpenFief may accept a fixed token or any other way around authentication: outside a cluster the core must refuse every AuthService caller, and the built-in UI must present only its projected ServiceAccount token.
+Every build of OpenFief, development builds included, must have no fixed token and no other way around authentication.
 
 ## Context
 
-Author decision D-84 (docs/DESIGN.md): no fixed token or other way around authentication, not even for development; local UI development runs against kind or k3d. The core's OPENFIEF_AUTH_CALLER_TOKEN path and the UI's matching variable were removed; tests admit the view plugin through a fake cluster's TokenReview instead.
+D-65 to D-69 make the owner authenticate with a passkey and then use an opaque session, and D-27 has plugins and scripts present their own tokens. D-84 rules out every shortcut around that, in every build and even for development: no fixed token and no other bypass. Local development of the UI runs against a local cluster instead (REQ-ui-local-development-cluster). The author recorded D-83 to D-85 after the design session that answered the implementation's questions.
 
 ## Source
 
-> [D-84] No build of OpenFief has a fixed token or any other way around authentication, not even for development. Local development of the UI runs against a local cluster such as kind or k3d.
+> No build of OpenFief has a fixed token or any other way around authentication, not even for development. Local development of the UI runs against a local cluster such as kind or k3d.
 
-docs/DESIGN.md#D-84
+OpenFief author decisions (docs/DESIGN.md, section 3.7), design-decisions:D-84#1

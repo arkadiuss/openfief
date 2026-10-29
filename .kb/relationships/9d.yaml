@@ -258,3 +258,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3fc8b9c6602
+  - type: constrains
+    from: REQ-valuation-market-data-highest-rank-wins
+    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
+    created_at: 2026-10-29T08:49:29.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-346aa6443fd8
+  - type: requires_property
+    from: REQ-valuation-market-data-highest-rank-wins
+    to: FACT-PROP-668DF0F14C2D9ABF
+    created_at: 2026-10-29T08:49:29.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4318e0f3aa07
+  - type: constrains
+    from: REQ-pl-bond-isin-from-series
+    to: FACT-SUBJECT-D53FC2954C60B518
+    created_at: 2026-10-29T09:49:21.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-321e4a8b42c5
+  - type: requires_property
+    from: REQ-pl-bond-isin-from-series
+    to: FACT-PROP-47B6AD299514C259
+    created_at: 2026-10-29T09:49:21.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed912342d49a

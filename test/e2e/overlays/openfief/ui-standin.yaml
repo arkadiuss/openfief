@@ -1,7 +1,8 @@
 # A stand-in for the workload the operator builds for the demo's Plugin ui (deploy/demo/plugins/ui.yaml). The operator
-# never deploys an image that a trusted signer didn't sign (D-57), and the images this suite builds are unsigned and
-# live in no registry, so kustomization.yaml drops the Plugin and its grant and this runs the same image the way the
-# operator would: Service and Deployment plugin-ui with the plugin labels, the core's address and port, the plugin
+# never deploys an image that a trusted signer didn't sign (D-57). The suite does sign plugin images in its own registry
+# (../../registry_test.go), but checks the operator's deployment with nbp-fx (../../plugins_test.go): how browsers reach
+# a view plugin is being redesigned (the core is to proxy them), so kustomization.yaml drops the Plugin and its grant and this
+# runs the same image, loaded into the nodes, the way the operator would: Service and Deployment plugin-ui with the plugin labels, the core's address and port, the plugin
 # port 8080, a projected token with audience openfief-core, and the same hardened security context. Unlike a real
 # plugin pod it can resolve DNS, so it names the core's Service instead of its ClusterIP.
 apiVersion: v1

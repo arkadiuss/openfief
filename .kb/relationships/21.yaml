@@ -335,6 +335,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-163502565684
+  - type: constrains
+    from: REQ-ingest-seeded-account-transactions-mode
+    to: FACT-SUBJECT-4BFD344454E24D51
+    created_at: 2026-10-29T09:40:18.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ba2ad8dc8bf
+  - type: requires_property
+    from: REQ-ingest-seeded-account-transactions-mode
+    to: FACT-PROP-DE1086057CC83242
+    created_at: 2026-10-29T09:40:18.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7eeae7a8397
   - type: executable_for
     from: SYM-ingest-app-test-helper-bool-int
     to: TEST-ingest-app-uploads

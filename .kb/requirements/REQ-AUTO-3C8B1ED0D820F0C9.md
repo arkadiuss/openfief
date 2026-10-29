@@ -1,6 +1,6 @@
 ---
 title: Plugin network access must be limited to the core and the egress proxy, with no DNS.
-status: open
+status: closed
 text_ref: design-decisions:D-32#4
 tags:
   - strict-modeling

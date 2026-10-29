@@ -364,6 +364,48 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-3d5c7987d2ae
   - type: implements
+    from: SYM-treasurybonds-index-sync
+    to: REQ-treasurybonds-index-sync
+    created_at: 2026-10-29T04:03:46.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24564fa97089
+  - type: implements
+    from: SYM-treasurybonds-index-sync
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:03:46.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-045a23634512
+  - type: covered_by
+    from: SYM-treasurybonds-index-sync
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:03:46.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcaa2e030915
+  - type: executable_for
+    from: SYM-treasury-bonds-test-start-date
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T04:09:36.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-485efeb01935
+  - type: constrains
+    from: REQ-views-ghostfolio-dividend-booking
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-29T10:25:11.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44dda5eb4d5a
+  - type: requires_property
+    from: REQ-views-ghostfolio-dividend-booking
+    to: FACT-PROP-F731E3AC11F3833C
+    created_at: 2026-10-29T10:25:11.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bfb14bced39
+  - type: implements
     from: SYM-ingestv1connect-new-statement-service-client
     to: REQ-ingest-statement-service
     created_at: 2026-10-29T05:16:09.411Z
@@ -398,34 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-920066b2a1c2
-  - type: implements
-    from: SYM-treasurybonds-index-sync
-    to: REQ-treasurybonds-index-sync
-    created_at: 2026-10-29T04:03:46.520Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-24564fa97089
-  - type: implements
-    from: SYM-treasurybonds-index-sync
-    to: REQ-AUTO-30FD669113CEFE3B
-    created_at: 2026-10-29T04:03:46.549Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-045a23634512
-  - type: covered_by
-    from: SYM-treasurybonds-index-sync
-    to: TEST-treasurybonds-indices
-    created_at: 2026-10-29T04:03:46.573Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bcaa2e030915
-  - type: executable_for
-    from: SYM-treasury-bonds-test-start-date
-    to: TEST-plugins-treasury-bonds
-    created_at: 2026-10-29T04:09:36.413Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-485efeb01935
   - type: implements
     from: SYM-views-pb-price-check-status-descriptor
     to: REQ-views-price-checks

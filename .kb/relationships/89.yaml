@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-738ca240c938
+  - type: constrains
+    from: REQ-pl-tax-wrappers
+    to: FACT-SUBJECT-F8EB972928ACF530
+    created_at: 2026-10-29T07:54:40.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c55169c51ad7
+  - type: requires_property
+    from: REQ-pl-tax-wrappers
+    to: FACT-PROP-38B0C80B8B621ECE
+    created_at: 2026-10-29T07:54:40.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-399ad81046fe

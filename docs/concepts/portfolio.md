@@ -138,7 +138,7 @@ sequenceDiagram
 
 The read API serves the report as `GetModelPortfolio`, rebased to 100 on go-live, and answers 404 while the model is off ([Read API](read-api.md#the-model-portfolio)).
 
-The [built-in UI](ui.md) draws it as the second line of the value-over-time chart, from go-live, both lines at 100, with the drawdowns in a table, and offers the form on its settings page.
+The [built-in UI](ui.md) draws it as the second line of the value-over-time chart, from go-live, both lines at 100 (D-106 moves it to a separate performance chart, not built yet), with the drawdowns in a table, and offers the form on its settings page.
 
 ## Decisions
 

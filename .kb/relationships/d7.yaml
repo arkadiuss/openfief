@@ -300,6 +300,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-945343eb8a34
+  - type: constrains
+    from: REQ-ui-money-charts-value-switch
+    to: FACT-SUBJECT-50ABCC5968A1366A
+    created_at: 2026-10-29T10:32:06.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3e436182396
+  - type: supersedes
+    from: REQ-ui-money-charts-value-switch
+    to: REQ-ui-value-switch
+    created_at: 2026-10-29T10:32:06.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d408897f5b0
+  - type: requires_property
+    from: REQ-ui-money-charts-value-switch
+    to: FACT-PROP-MONEY-CHARTS-VALUE-SWITCH
+    created_at: 2026-10-29T10:32:29.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bf5c1e1856b
   - type: implements
     from: SYM-ingestv1connect-unimplemented-statement-service-handler-upload-statement
     to: REQ-ingest-statement-service

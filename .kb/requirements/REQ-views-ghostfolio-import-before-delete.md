@@ -1,6 +1,6 @@
 ---
 title: Each Ghostfolio sync must import missing activities before deleting stale ones.
-status: open
+status: closed
 text_ref: design-decisions:D-64#1
 tags:
   - strict-modeling

@@ -483,27 +483,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ee7170480e67
   - type: implements
-    from: SYM-ingest-connectapi-new-statements
-    to: REQ-ingest-statement-service
-    created_at: 2026-10-29T05:11:55.350Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7b2216da5e2
-  - type: implements
-    from: SYM-ingest-connectapi-new-statements
-    to: REQ-ingest-uploads-through-core
-    created_at: 2026-10-29T05:11:55.386Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ee2f5bdf8781
-  - type: covered_by
-    from: SYM-ingest-connectapi-new-statements
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-29T05:11:55.409Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a9037ef8fd29
-  - type: implements
     from: SYM-valuation-gus-new
     to: REQ-valuation-gus-cpi
     created_at: 2026-10-29T04:05:32.893Z
@@ -524,6 +503,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0af88cd16eb1
+  - type: constrains
+    from: REQ-ingest-market-data-sync-instruments
+    to: FACT-SUBJECT-33539288FED00E7B
+    created_at: 2026-10-29T08:46:54.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f6238d6c428
+  - type: requires_property
+    from: REQ-ingest-market-data-sync-instruments
+    to: FACT-PROP-5C5191E181DBAB9F
+    created_at: 2026-10-29T08:46:54.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-914b8be60a85
+  - type: implements
+    from: SYM-ingest-connectapi-new-statements
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:11:55.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b2216da5e2
+  - type: implements
+    from: SYM-ingest-connectapi-new-statements
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T05:11:55.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee2f5bdf8781
+  - type: covered_by
+    from: SYM-ingest-connectapi-new-statements
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:11:55.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9037ef8fd29
   - type: executable_for
     from: SYM-views-connectapi-test-restprice-checks
     to: TEST-views-connectapi-pricechecks

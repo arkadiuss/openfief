@@ -1,6 +1,6 @@
 ---
 title: Changing the bond valuation basis must revalue everything.
-status: open
+status: closed
 text_ref: design-decisions:D-36#9
 tags:
   - strict-modeling

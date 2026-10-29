@@ -370,6 +370,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e120f8fb9c7
+  - type: constrains
+    from: REQ-portfolio-twr-confirmed-transfers-only
+    to: FACT-SUBJECT-134DCCCDF96783CB
+    created_at: 2026-10-29T10:11:24.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f80f2835108e
+  - type: requires_property
+    from: REQ-portfolio-twr-confirmed-transfers-only
+    to: FACT-PROP-CC6363403AD6890F
+    created_at: 2026-10-29T10:11:24.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-254c72f1ae2c
   - type: verified_by
     from: SCEN-ingest-recorded-batches
     to: TEST-ingest-postgres

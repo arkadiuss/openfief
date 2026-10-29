@@ -321,13 +321,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b04508bdf541
-  - type: executable_for
-    from: SYM-ingest-connectrpc-test-helper-broken-file-read
-    to: TEST-ingest-connectrpc-files
-    created_at: 2026-10-29T05:15:11.239Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-042d9abb5cca
   - type: constrains
     from: REQ-portfolio-role-differs-explicit
     to: FACT-SUBJECT-20F39635C8813292
@@ -342,3 +335,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2732efd962e8
+  - type: constrains
+    from: REQ-ui-local-development-cluster
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-29T08:22:10.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16d7c7574bfe
+  - type: requires_property
+    from: REQ-ui-local-development-cluster
+    to: FACT-PROP-54AE18FCA08765DD
+    created_at: 2026-10-29T08:22:10.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a081ae89d407
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-broken-file-read
+    to: TEST-ingest-connectrpc-files
+    created_at: 2026-10-29T05:15:11.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-042d9abb5cca

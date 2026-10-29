@@ -1,6 +1,6 @@
 ---
 title: When the model portfolio is on, the value-over-time chart must show it as a second line from go-live, with both lines starting at 100.
-status: open
+status: closed
 text_ref: design-decisions:D-53#2
 tags:
   - strict-modeling

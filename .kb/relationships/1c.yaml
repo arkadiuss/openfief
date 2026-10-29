@@ -377,3 +377,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae43f69848e5
+  - type: constrains
+    from: REQ-identity-read-api-view-plugin-tokens
+    to: FACT-SUBJECT-3539E4EDEC067C24
+    created_at: 2026-10-29T08:20:16.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ebc69cfe601
+  - type: requires_property
+    from: REQ-identity-read-api-view-plugin-tokens
+    to: FACT-PROP-5C17C9E6FC05B8EE
+    created_at: 2026-10-29T08:20:16.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52af7a5ef4ee
+  - type: restates
+    from: REQ-identity-read-api-view-plugin-tokens
+    to: REQ-identity-read-api-plugins
+    created_at: 2026-10-29T08:42:23.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89a00cc6a93f
