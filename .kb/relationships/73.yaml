@@ -370,3 +370,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98297a907d9b
+  - type: verified_by
+    from: SCEN-e2e-plugin-signature-verified
+    to: TEST-e2e-plugins
+    created_at: 2026-10-29T10:09:40.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05cd0ee9eb1a
+  - type: executable_for
+    from: SYM-e2e-images-start-registry
+    to: TEST-e2e-plugins
+    created_at: 2026-10-29T10:13:48.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d20c809a5955
+  - type: executable_for
+    from: SYM-e2e-images-start-registry
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-29T10:13:48.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39bbc0d67694

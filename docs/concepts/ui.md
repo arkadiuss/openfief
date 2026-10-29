@@ -159,7 +159,7 @@ sequenceDiagram
 
 The handler tests run the UI against both services as in-memory Connect servers, a fake AuthService and a fake read API over a synthetic record, with the AuthService client the plugin uses: the SDK's `CoreHTTPClient` over a token file the test rotates.
 
-In the end-to-end suite the UI runs from a stand-in Deployment ([ui-standin.yaml](../../test/e2e/overlays/openfief/ui-standin.yaml)), because the operator never deploys the suite's unsigned images (D-57). WebAuthn needs a browser with an authenticator and is not exercised end to end.
+In the end-to-end suite the UI runs from a stand-in Deployment ([ui-standin.yaml](../../test/e2e/overlays/openfief/ui-standin.yaml)). The suite can sign plugin images for the operator (it deploys `nbp-fx` that way, see [Operator](operator.md#verification)), but how browsers reach a view plugin is being redesigned (the core is to proxy view plugins), so the UI keeps its stand-in for now. WebAuthn needs a browser with an authenticator and is not exercised end to end.
 
 ## Not built yet
 

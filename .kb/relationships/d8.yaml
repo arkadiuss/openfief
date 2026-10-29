@@ -293,3 +293,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38386fb880df
+  - type: executable_for
+    from: SYM-e2e-test-helper-check-signature
+    to: TEST-e2e-plugins
+    created_at: 2026-10-29T10:10:52.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7247749e9670

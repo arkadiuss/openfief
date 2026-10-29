@@ -328,3 +328,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4676c8f0b181
+  - type: verified_by
+    from: SCEN-e2e-plugin-uninstalled
+    to: TEST-e2e-plugins
+    created_at: 2026-10-29T10:09:49.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11a17273a0f3

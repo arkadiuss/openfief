@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2bafe2bee21
+  - type: validates
+    from: TEST-e2e-plugins
+    to: REQ-e2e-operator-deploys-signed-plugin
+    created_at: 2026-10-29T10:10:01.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e2e9b02c19
