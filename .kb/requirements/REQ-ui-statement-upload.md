@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must offer the owner, and only the owner, an Upload statement form on every account page, stream the posted file to the core without storing it, and show the import's counts and problems or the core's reason.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-49
 tags:
   - strict-modeling

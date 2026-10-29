@@ -1,6 +1,6 @@
 ---
 title: The price check threshold must be a setting of the core, a fraction greater than 0 and less than 1, and must be 0.01 when it is not set.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-22
 tags:
   - strict-modeling

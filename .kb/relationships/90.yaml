@@ -286,3 +286,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe6f1f1e35ea
+  - type: constrains
+    from: REQ-ingest-statement-upload-bound-instance
+    to: FACT-SUBJECT-6E456E81146115C7
+    created_at: 2026-10-29T10:46:34.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38f7b4c86426
+  - type: requires_property
+    from: REQ-ingest-statement-upload-bound-instance
+    to: FACT-PROP-698CC5BF53C83175
+    created_at: 2026-10-29T10:46:34.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c7a31775bc7

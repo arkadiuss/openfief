@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e04adab9b4e2
+  - type: constrains
+    from: REQ-ingest-opening-upload-seeds-syncs
+    to: FACT-SUBJECT-6E456E81146115C7
+    created_at: 2026-10-29T10:49:06.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62b4c15a4b8f
+  - type: requires_property
+    from: REQ-ingest-opening-upload-seeds-syncs
+    to: FACT-PROP-198C9B5A14CD54FA
+    created_at: 2026-10-29T10:49:06.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64a33b50189b

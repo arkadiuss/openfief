@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must list every flagged price check on its own page, with both prices, their sources, the difference in percent and the threshold, and must count and link them on the overview next to the flagged balance assertions, for any session, without changing any price.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-22
 tags:
   - strict-modeling
