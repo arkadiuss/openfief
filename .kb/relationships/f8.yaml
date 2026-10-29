@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-966c80bcbad3
+  - type: implements
+    from: SYM-ingest-app-source-store
+    to: REQ-ingest-market-data-sources-recorded
+    created_at: 2026-10-29T18:11:57.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bb23a4d4c9d
+  - type: covered_by
+    from: SYM-ingest-app-source-store
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T18:11:57.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ec38fa1709f

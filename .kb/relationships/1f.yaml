@@ -482,3 +482,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a93e8b6cfa85
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-save-sources
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:16:19.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e709a7f1b03d
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-request-proto-message
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:24:24.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec30a13515a7
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-request-proto-message
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:24:24.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee46a2831341

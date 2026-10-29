@@ -426,3 +426,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-459769784bae
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-owners
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:13:20.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8a6ecf00e58
+  - type: executable_for
+    from: SYM-valuation-app-test-record-sources-refuses
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:14:21.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2add2753dd40
+  - type: implements
+    from: SYM-ui-move-source
+    to: REQ-ui-market-data-ranking
+    created_at: 2026-10-29T18:20:23.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b031ce23618c
+  - type: covered_by
+    from: SYM-ui-move-source
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:20:23.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff55823d946e
+  - type: implements
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-set-source-ranking
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:28:48.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d647d090372
+  - type: covered_by
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-set-source-ranking
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:28:48.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-976d7d0ce21c

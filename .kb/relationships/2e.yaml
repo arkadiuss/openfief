@@ -503,3 +503,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0700d2c024bb
+  - type: implements
+    from: SYM-valuation-app-new-rankings
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:12:45.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e12402c408f2
+  - type: implements
+    from: SYM-valuation-app-new-rankings
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:12:45.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e6b146d11da
+  - type: covered_by
+    from: SYM-valuation-app-new-rankings
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:12:45.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fa17fb8bda8
+  - type: implements
+    from: SYM-valuation-gen-pb-source-ranking-reset
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:23:19.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-193449a3e37f
+  - type: covered_by
+    from: SYM-valuation-gen-pb-source-ranking-reset
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:23:19.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed5e68eb7bff
+  - type: implements
+    from: SYM-valuation-gen-pb-init
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:34.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43ab0d20295c
+  - type: covered_by
+    from: SYM-valuation-gen-pb-init
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:34.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-615866233d36

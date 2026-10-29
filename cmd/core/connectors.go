@@ -98,9 +98,11 @@ type connectorDeps struct {
 	// portfolio's targets, for what market-data connectors price (D-93).
 	bonds ingestapp.BondSeries
 	model ingestapp.ModelTargets
-	today func() kernel.Date
-	now   func() time.Time
-	log   *slog.Logger
+	// rankings records the sources of market data (D-94).
+	rankings *valuationapp.Rankings
+	today    func() kernel.Date
+	now      func() time.Time
+	log      *slog.Logger
 	// entries is the client the owner's manual entries go through; the
 	// scheduler sets it once it has found the instances.
 	entries *entryCaller
@@ -130,6 +132,7 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		return fn(&connectorDeps{
 			pool: p.pool, ledger: l, recorder: recorder, crossChecks: checks, now: time.Now, log: log,
 			today: valuationpg.TodayIn(time.UTC, time.Now), bonds: vstore, model: models,
+			rankings: newRankings(p.pool, l, vstore, nil),
 		})
 	})
 }
@@ -150,7 +153,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
 			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
 			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
-			Seeding: d.ledger,
+			Seeding: d.ledger, Sources: sourceInputs{rankings: d.rankings},
 		},
 		Instances:  discovery,
 		Store:      store,

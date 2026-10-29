@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48a9f8bd1435
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-market-data
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:20:29.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a15cccdb9a

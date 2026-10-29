@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b140f049e2a3
+  - type: implements
+    from: SYM-valuation-gen-pb-source-ranking-string
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:23:25.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8183ff898c1e
+  - type: covered_by
+    from: SYM-valuation-gen-pb-source-ranking-string
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:23:25.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05b1d449e85e

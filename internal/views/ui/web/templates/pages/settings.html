@@ -113,5 +113,30 @@
   </form>
 </section>
 {{end}}
+{{with .MarketData}}
+<section class="card" aria-labelledby="market-data-title">
+  <h2 id="market-data-title">Market-data sources</h2>
+  <p class="muted">For each kind of market data, the highest-ranked source with a value for a date wins, and the others are kept to cross-check it (D-94). By default the first-party connector ranks first: EODHD for prices, NBP for exchange rates and the treasury bond connector for CPI and the NBP reference rate. Changing the order revalues every account.</p>
+  {{range .}}
+  <h3>{{.Label}}</h3>
+  {{if .Sources}}
+  <form method="post" action="/settings/market-data">
+    <input type="hidden" name="kind" value="{{.Kind}}">
+    {{range .Sources}}<input type="hidden" name="source" value="{{.Name}}">{{end}}
+    <ol class="ranking">
+    {{range .Sources}}
+      <li><span class="mono">{{.Name}}</span>{{if .Institution}} <span class="muted">{{.Institution}}</span>{{end}}{{if not .Placed}} <span class="pill pill-neutral">default place</span>{{end}}
+        <button type="submit" name="up" value="{{.Name}}" class="quiet" aria-label="Move {{.Name}} up">Up</button>
+        <button type="submit" name="down" value="{{.Name}}" class="quiet" aria-label="Move {{.Name}} down">Down</button></li>
+    {{end}}
+    </ol>
+    <div class="actions"><button type="submit" name="reset" value="1">Back to the default order</button></div>
+  </form>
+  {{else}}
+  <p class="muted">No connector has delivered any yet.</p>
+  {{end}}
+  {{end}}
+</section>
+{{end}}
 {{end}}
 {{end}}

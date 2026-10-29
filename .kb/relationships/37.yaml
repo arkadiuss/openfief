@@ -475,3 +475,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e2c60687177
+  - type: executable_for
+    from: SYM-valuation-test-rank-sources
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:19:02.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-169590457437
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-response-proto-reflect
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:25:21.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47016bfb682a
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-response-proto-reflect
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:25:21.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5be11e4d1a5

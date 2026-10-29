@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2011417a80d7
+  - type: implements
+    from: SYM-valuation-gen-pb-market-data-kind
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:21:20.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e77f4266f9b5
+  - type: covered_by
+    from: SYM-valuation-gen-pb-market-data-kind
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:21:20.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6500a9d22bf8

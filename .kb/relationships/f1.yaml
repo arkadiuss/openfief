@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee7c398f1899
+  - type: implements
+    from: SYM-valuation-lower-ranked-checks
+    to: REQ-valuation-lower-ranked-cross-checks
+    created_at: 2026-10-29T18:18:47.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b938de4b21c1
+  - type: covered_by
+    from: SYM-valuation-lower-ranked-checks
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:18:47.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-019d6ab410cf

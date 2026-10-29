@@ -265,7 +265,7 @@ sequenceDiagram
     U->>U: ScopeToConnector: key source becomes plugin, instance, source
     U->>L: Seed in opening mode, Import in transactions mode (seeding refused)
     L-->>U: ImportSummary
-    U->>V: StorePrices, StoreFXRates, StoreIndexReadings, StoreCrossCheckPrices, source = instance
+    U->>V: StoreSources (instance, institution, kinds), then StorePrices, StoreFXRates, StoreIndexReadings, StoreCrossCheckPrices, source = instance
     Note over U,V: a failed store fails the batch after the ledger import, and the same batch ID makes a retry safe
     U->>U: batch.Complete(mapping, summary)
     U-->>C: SyncResult(batch, next watermark)
@@ -273,6 +273,8 @@ sequenceDiagram
 ```
 
 The translation in [mapping.go](../../internal/ingest/connectrpc/mapping.go) refuses, with `ErrInvalidMessage` naming the field: a decimal with an exponent, grouping or a plus sign; a date that isn't `YYYY-MM-DD`; a malformed currency; an ISIN with a wrong check digit or an instrument without a symbol (D-35); a missing amount or delivery; any unspecified enum; a price or FX rate that isn't positive; and a delivery whose `batch_id` isn't the one asked for. The client never scopes keys; `Connectors` does. Every price, FX rate, index reading and index level gets the instance as its source, overwriting what the plugin sent. A delivery's `index_levels` become `valuation.IndexLevel` values, keyed by the index's name exactly as the connector sends it (`IndexLevel.index`, such as `WIG20`); a level without a name, a date or a positive value is refused like a bad price. `Connectors` hands them to its `IndexLevelStore` port, which `cmd/core` implements with valuation's `InputRecorder.RecordIndexLevels`; storing them enqueues no revaluation, since no holding is valued from an index.
+
+Before the values, `Connectors` records the instance, with the institution its delivery names, as a source of each kind of market data it carries (prices, FX rates, index readings) through its `SourceStore` port, which `cmd/core` implements with valuation's `Rankings.RecordSources`: the owner ranks these sources, and the institution gives a source its default place (D-94, [Valuation](valuation.md#ranking-the-sources)). Without the port no source is recorded.
 
 A delivery's `cross_check_prices` are [cross-check prices](../glossary.md): an institution's own end-of-day prices, translated with the same rules as `prices` (`crossCheckPriceFrom`) but kept in their own field of `app.Delivery`, `CrossCheckPrices`. `Connectors` gives each the instance as its source and hands them to its `CrossCheckPriceStore` port, never to `PriceStore`, so they can't replace a market-data connector's price or value a holding (D-22). `cmd/core` implements the port with valuation's `CrossChecks.RecordCrossCheckPrices` ([Valuation](valuation.md#cross-checking-prices)). A `Connectors` without that store refuses a delivery that carries some (`ErrNoCrossCheckStore`) rather than drop them; the bond-lot path has none, since bond lots carry no prices.
 

@@ -293,3 +293,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e78d9db6ec77
+  - type: implements
+    from: SYM-valuation-connectapi-service-fail
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:14:57.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1b15b847b50
+  - type: covered_by
+    from: SYM-valuation-connectapi-service-fail
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:14:57.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f88423023108
+  - type: implements
+    from: SYM-valuation-split-type
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T20:08:24.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36990131ba2a
+  - type: implements
+    from: SYM-valuation-split-type
+    to: REQ-valuation-lower-ranked-cross-checks
+    created_at: 2026-10-29T20:08:24.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f67bb27339b
+  - type: covered_by
+    from: SYM-valuation-split-type
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T20:08:24.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceb655313b51

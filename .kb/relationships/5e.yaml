@@ -552,3 +552,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06f1114b5bf6
+  - type: implements
+    from: SYM-valuation-postgres-store-save-sources
+    to: REQ-valuation-market-data-all-sources-stored
+    created_at: 2026-10-29T18:15:25.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d6ddec7babf
+  - type: implements
+    from: SYM-valuation-postgres-store-save-sources
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:15:25.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cba3ebb4b65
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-sources
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:15:25.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23a6453320b7

@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-899e0b7599cd
+  - type: implements
+    from: SYM-ui-ranking-kind
+    to: REQ-ui-market-data-ranking
+    created_at: 2026-10-29T18:19:40.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5dd8678dddc
+  - type: covered_by
+    from: SYM-ui-ranking-kind
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:19:40.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b93dec79c35b

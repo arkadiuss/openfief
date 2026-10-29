@@ -67,6 +67,14 @@ type fakeStores struct {
 	levels   []valuation.IndexLevel
 	terms    []ingest.BondTerms
 	checks   []valuation.CrossCheckPrice
+	sources  []valuation.Source
+}
+
+// StoreSources records the sources without counting a call, so the other
+// tests count only the stores of values.
+func (f *fakeStores) StoreSources(_ context.Context, _ ingest.BatchID, sources []valuation.Source) error {
+	f.sources = sources
+	return f.err
 }
 
 func (f *fakeStores) StoreCrossCheckPrices(_ context.Context, _ ingest.BatchID, prices []valuation.CrossCheckPrice) error {
@@ -144,7 +152,7 @@ func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, 
 	day := march2(t)
 	return &app.Connectors{
 		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores, Terms: stores,
-		CrossChecks: stores, Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
+		CrossChecks: stores, Sources: stores, Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
 		Today: func() kernel.Date { return day },
 	}
 }
@@ -178,6 +186,14 @@ func TestConnectorsSync(t *testing.T) {
 	d.Prices[0].Source, d.FXRates[0].Source, d.IndexReadings[0].Source, d.IndexLevels[0].Source = "xtb-main", "xtb-main", "xtb-main", "xtb-main"
 	if diff := cmp.Diff([]any{d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels}, []any{stores.prices, stores.rates, stores.readings, stores.levels}); diff != "" {
 		t.Errorf("stored inputs (-want +got):\n%s", diff)
+	}
+	wantSources := []valuation.Source{
+		{Kind: valuation.KindPrices, Name: "xtb-main", Institution: "xtb"},
+		{Kind: valuation.KindFXRates, Name: "xtb-main", Institution: "xtb"},
+		{Kind: valuation.KindIndexReadings, Name: "xtb-main", Institution: "xtb"},
+	}
+	if diff := cmp.Diff(wantSources, stores.sources); diff != "" {
+		t.Errorf("recorded sources (-want +got):\n%s", diff)
 	}
 }
 

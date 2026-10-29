@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2fe4f3027ae
+  - type: implements
+    from: SYM-core-valuation-owners
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:11:00.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-391da84f2253
+  - type: covered_by
+    from: SYM-core-valuation-owners
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:11:00.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebc240ae4cdb

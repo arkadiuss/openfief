@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"slices"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -128,6 +129,13 @@ type IndexLevelStore interface {
 	StoreIndexLevels(ctx context.Context, batch ingest.BatchID, levels []valuation.IndexLevel) error
 }
 
+// SourceStore records the market-data sources a delivery's values come
+// from: the instance, with the institution it named, for each kind it
+// delivered (D-94). The institution places a source in its default rank.
+type SourceStore interface {
+	StoreSources(ctx context.Context, batch ingest.BatchID, sources []valuation.Source) error
+}
+
 // CrossCheckPriceStore records cross-check prices (D-22) apart from
 // prices: they value nothing. Recording one again for the same instrument,
 // date and source replaces it, so a retried batch has no further effect.
@@ -192,6 +200,9 @@ type Connectors struct {
 	// accounts they are mapped to (D-72); a delivery that names broker
 	// accounts fails without it.
 	Brokers BrokerAccountStore
+	// Sources records which instances delivered prices, FX rates and index
+	// readings, for the owner's ranking of them (D-94); nil records none.
+	Sources SourceStore
 	// Seeding says which accounts are seeded and from when (D-23, D-95).
 	// A sync never books again what an account's seeding holds: its
 	// opening batch leaves out the seeding of accounts already seeded, and
@@ -280,7 +291,8 @@ func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ing
 // what accounts' seeding already holds left out (D-95), the transactions
 // scoped to the instance into the ledger, seeded in an
 // opening batch (D-23), then prices, FX rates, index readings, index
-// levels and cross-check prices with the instance as their source, then
+// levels and cross-check prices with the instance as their source, the
+// instance recorded as a source of each kind of market data, then
 // treasury bond series terms. Every index reading must be valid and every
 // transaction and balance assertion must be in an account the instance is
 // bound to, and with only in one of only, or nothing is imported.
@@ -307,10 +319,7 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
-	if err := c.storeInputs(ctx, instance, id, d, readings); err != nil {
-		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
-	}
-	if err := c.storeTerms(ctx, id, d.BondTerms); err != nil {
+	if err := c.storeMarketData(ctx, instance, id, d, readings); err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	if err := c.markSeeded(ctx, instance, seeding); err != nil {
@@ -369,6 +378,19 @@ func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.
 	return nil
 }
 
+// storeMarketData records the instance as a source of each kind of market
+// data d carries, then stores its valuation inputs and its treasury bond
+// series terms.
+func (c *Connectors) storeMarketData(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) error {
+	if err := c.storeSources(ctx, instance, id, d); err != nil {
+		return err
+	}
+	if err := c.storeInputs(ctx, instance, id, d, readings); err != nil {
+		return err
+	}
+	return c.storeTerms(ctx, id, d.BondTerms)
+}
+
 // storeInputs stores a delivery's prices, FX rates and the validated index
 // readings, each with the instance as its source; an empty kind is skipped.
 func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) error {
@@ -401,6 +423,31 @@ func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest
 		return err
 	}
 	return c.storeLevels(ctx, instance, id, d.IndexLevels)
+}
+
+// storeSources records instance, with the delivery's institution, as a
+// source of each kind of market data d carries (D-94). Cross-check prices
+// are no ranked source: they never win (D-22).
+func (c *Connectors) storeSources(ctx context.Context, instance string, id ingest.BatchID, d *Delivery) error {
+	if c.Sources == nil {
+		return nil
+	}
+	var sources []valuation.Source
+	for kind, n := range map[valuation.MarketDataKind]int{
+		valuation.KindPrices: len(d.Prices), valuation.KindFXRates: len(d.FXRates), valuation.KindIndexReadings: len(d.IndexReadings),
+	} {
+		if n > 0 {
+			sources = append(sources, valuation.Source{Kind: kind, Name: instance, Institution: string(d.Institution)})
+		}
+	}
+	if len(sources) == 0 {
+		return nil
+	}
+	slices.SortFunc(sources, func(a, b valuation.Source) int { return int(a.Kind) - int(b.Kind) })
+	if err := c.Sources.StoreSources(ctx, id, sources); err != nil {
+		return fmt.Errorf("store market-data sources: %w", err)
+	}
+	return nil
 }
 
 // ErrNoCrossCheckStore reports a delivery with cross-check prices to a

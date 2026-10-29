@@ -384,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86b0fd1b0f19
+  - type: executable_for
+    from: SYM-valuation-postgres-test-ranked-prices
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:16:13.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddcfe6c121de

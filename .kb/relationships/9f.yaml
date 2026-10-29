@@ -314,3 +314,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d5d401d4b07
+  - type: implements
+    from: SYM-valuation-app-rankings
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:12:38.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56105857c151
+  - type: implements
+    from: SYM-valuation-app-rankings
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:12:38.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-746260021e87
+  - type: covered_by
+    from: SYM-valuation-app-rankings
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:12:38.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5bb51bb16f5
+  - type: implements
+    from: SYM-valuation-ranked-fx-rates
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:18:31.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a4c39cca6b
+  - type: implements
+    from: SYM-valuation-ranked-fx-rates
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:18:31.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbfc76e50e29
+  - type: covered_by
+    from: SYM-valuation-ranked-fx-rates
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:18:31.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5deb44fde4d

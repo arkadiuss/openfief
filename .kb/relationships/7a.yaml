@@ -384,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e47fff0fe855
+  - type: executable_for
+    from: SYM-ui-test-settings-shows-source-rankings
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:21:07.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e557d2246905

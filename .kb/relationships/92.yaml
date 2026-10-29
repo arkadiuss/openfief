@@ -398,3 +398,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef7c5d872715
+  - type: implements
+    from: SYM-valuation-app-rankings-rank-sources
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:12:59.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad1189fdf5d
+  - type: implements
+    from: SYM-valuation-app-rankings-rank-sources
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:12:59.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f96105cf3d0
+  - type: covered_by
+    from: SYM-valuation-app-rankings-rank-sources
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:12:59.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff4981a68887

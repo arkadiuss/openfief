@@ -19,7 +19,8 @@ import (
 // ModelPortfolioService, BondLotService and StatementService clients are
 // the core's contracts for view plugins: they log the owner in and hand
 // the model portfolio (D-52), manual bond lots (D-9, D-49) and uploaded
-// statements (D-7, D-49) to the core.
+// statements (D-7, D-49) to the core, and the MarketDataService client the
+// owner's ranking of market-data sources (D-94).
 func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 	t.Parallel()
 	files, err := filepath.Glob("*.go")
@@ -33,6 +34,7 @@ func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1",
+		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1",
 		"github.com/arkadiuss/openfief/sdk/go/openfief",
 	}
 	fset := token.NewFileSet()

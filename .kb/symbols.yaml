@@ -85120,3 +85120,2060 @@ symbols:
         target: TEST-ingest-connectrpc-client
       - type: implements
         target: REQ-ingest-market-data-scope
+  - id: SYM-core-valuation-owners
+    title: valuationOwners
+    sourceFile: cmd/core/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:10:58.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-core-new-rankings
+    title: newRankings
+    sourceFile: cmd/core/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:11:05.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-core-with-market-data-service
+    title: withMarketDataService
+    sourceFile: cmd/core/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:11:12.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-core-source-inputs
+    title: sourceInputs
+    sourceFile: cmd/core/marketdata.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:11:17.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-market-data-sources-recorded
+  - id: SYM-core-source-inputs-store-sources
+    title: sourceInputs.StoreSources
+    sourceFile: cmd/core/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:11:24.310Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-market-data-sources-recorded
+  - id: SYM-core-test-helper-market-data-api
+    title: marketDataAPI
+    sourceFile: cmd/core/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:11:32.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-market-data
+  - id: SYM-core-test-helper-market-data-client
+    title: marketDataClient
+    sourceFile: cmd/core/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:11:39.068Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-market-data
+  - id: SYM-core-test-market-data-service
+    title: TestMarketDataService
+    sourceFile: cmd/core/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:11:47.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-market-data
+  - id: SYM-ingest-app-source-store
+    title: SourceStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:11:55.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-market-data-sources-recorded
+  - id: SYM-ingest-app-connectors-store-market-data
+    title: Connectors.storeMarketData
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:02.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-market-data-sources-recorded
+  - id: SYM-ingest-app-connectors-store-sources
+    title: Connectors.storeSources
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:08.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-market-data-sources-recorded
+  - id: SYM-ingest-app-test-helper-fake-stores-store-sources
+    title: fakeStores.StoreSources
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:15.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-valuation-app-owners
+    title: Owners
+    sourceFile: internal/valuation/app/ranking.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:22.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-ranking
+      - type: implements
+        target: REQ-valuation-market-data-source-ranking
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-app-ranking-store
+    title: RankingStore
+    sourceFile: internal/valuation/app/ranking.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:30.445Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-ranking
+      - type: implements
+        target: REQ-valuation-market-data-source-ranking
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-app-rankings
+    title: Rankings
+    sourceFile: internal/valuation/app/ranking.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:36.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-ranking
+      - type: implements
+        target: REQ-valuation-market-data-source-ranking
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-app-new-rankings
+    title: NewRankings
+    sourceFile: internal/valuation/app/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:42.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-ranking
+      - type: implements
+        target: REQ-valuation-market-data-source-ranking
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-app-rankings-source-rankings
+    title: Rankings.SourceRankings
+    sourceFile: internal/valuation/app/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:49.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-ranking
+      - type: implements
+        target: REQ-valuation-market-data-source-ranking
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-app-rankings-rank-sources
+    title: Rankings.RankSources
+    sourceFile: internal/valuation/app/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:12:57.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-ranking
+      - type: implements
+        target: REQ-valuation-market-data-source-ranking
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-app-rankings-record-sources
+    title: Rankings.RecordSources
+    sourceFile: internal/valuation/app/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:05.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-ranking
+      - type: implements
+        target: REQ-valuation-market-data-source-ranking
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-app-rankings-check-owner
+    title: Rankings.checkOwner
+    sourceFile: internal/valuation/app/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:12.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-ranking
+      - type: implements
+        target: REQ-valuation-market-data-source-ranking
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-app-test-helper-fake-owners
+    title: fakeOwners
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:18.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-helper-fake-owners-check-owner
+    title: fakeOwners.CheckOwner
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:25.312Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-helper-fake-rankings
+    title: fakeRankings
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:31.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-helper-fake-rankings-save-sources
+    title: fakeRankings.SaveSources
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:38.420Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-helper-fake-rankings-source-ranking
+    title: fakeRankings.SourceRanking
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:45.409Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-helper-fake-rankings-save-source-ranking
+    title: fakeRankings.SaveSourceRanking
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:52.219Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-helper-new-rankings
+    title: newRankings
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:13:58.978Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-rank-sources
+    title: TestRankSources
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:14:05.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-rank-sources-refuses
+    title: TestRankSourcesRefuses
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:14:13.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-app-test-record-sources-refuses
+    title: TestRecordSourcesRefuses
+    sourceFile: internal/valuation/app/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:14:19.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-ranking
+  - id: SYM-valuation-connectapi-new
+    title: New
+    sourceFile: internal/valuation/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:14:26.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-connectapi-service
+    title: service
+    sourceFile: internal/valuation/connectapi/service.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:14:32.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-connectapi-service-list-source-rankings
+    title: service.ListSourceRankings
+    sourceFile: internal/valuation/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:14:39.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-connectapi-service-set-source-ranking
+    title: service.SetSourceRanking
+    sourceFile: internal/valuation/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:14:47.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-connectapi-service-fail
+    title: service.fail
+    sourceFile: internal/valuation/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:14:55.526Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-connectapi-pb-ranking
+    title: pbRanking
+    sourceFile: internal/valuation/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:02.392Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-connectapi-kind-to
+    title: kindTo
+    sourceFile: internal/valuation/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:09.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-connectapi-kind-from
+    title: kindFrom
+    sourceFile: internal/valuation/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:15.844Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-postgres-store-save-sources
+    title: Store.SaveSources
+    sourceFile: internal/valuation/postgres/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:22.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-ranking
+      - type: implements
+        target: REQ-valuation-market-data-all-sources-stored
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-postgres-store-source-ranking
+    title: Store.SourceRanking
+    sourceFile: internal/valuation/postgres/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:30.303Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-ranking
+      - type: implements
+        target: REQ-valuation-market-data-all-sources-stored
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-postgres-querier
+    title: querier
+    sourceFile: internal/valuation/postgres/ranking.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:37.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-ranking
+      - type: implements
+        target: REQ-valuation-market-data-all-sources-stored
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-postgres-ranking-in
+    title: rankingIn
+    sourceFile: internal/valuation/postgres/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:44.176Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-ranking
+      - type: implements
+        target: REQ-valuation-market-data-all-sources-stored
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-postgres-placed-in
+    title: placedIn
+    sourceFile: internal/valuation/postgres/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:51.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-ranking
+      - type: implements
+        target: REQ-valuation-market-data-all-sources-stored
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-postgres-store-rank-of
+    title: Store.rankOf
+    sourceFile: internal/valuation/postgres/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:15:58.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-ranking
+      - type: implements
+        target: REQ-valuation-market-data-all-sources-stored
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-postgres-store-save-source-ranking
+    title: Store.SaveSourceRanking
+    sourceFile: internal/valuation/postgres/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:05.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-ranking
+      - type: implements
+        target: REQ-valuation-market-data-all-sources-stored
+      - type: implements
+        target: REQ-valuation-ranking-revalues
+  - id: SYM-valuation-postgres-test-ranked-prices
+    title: TestRankedPrices
+    sourceFile: internal/valuation/postgres/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:11.270Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-ranking
+  - id: SYM-valuation-postgres-test-helper-save-sources
+    title: saveSources
+    sourceFile: internal/valuation/postgres/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:17.120Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-ranking
+  - id: SYM-valuation-postgres-test-helper-check-ranking-kept
+    title: checkRankingKept
+    sourceFile: internal/valuation/postgres/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:23.596Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-ranking
+  - id: SYM-valuation-postgres-test-ranked-rates-and-readings
+    title: TestRankedRatesAndReadings
+    sourceFile: internal/valuation/postgres/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:29.798Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-ranking
+  - id: SYM-valuation-market-data-kind
+    title: MarketDataKind
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:35.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-market-data-kinds
+    title: MarketDataKinds
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:41.954Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-market-data-kind-string
+    title: MarketDataKind.String
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:49.099Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-parse-market-data-kind
+    title: ParseMarketDataKind
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:16:55.746Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-default-institution
+    title: DefaultInstitution
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:02.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-default-ranking
+  - id: SYM-valuation-source
+    title: Source
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:09.606Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-ranked-source
+    title: RankedSource
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:16.763Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-ranking
+    title: Ranking
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:22.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-ranking-names
+    title: Ranking.Names
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:30.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-rank-sources
+    title: RankSources
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:38.012Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-default-ranking
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-btoi
+    title: btoi
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:45.360Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-validate-ranking
+    title: ValidateRanking
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:51.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-rank-of
+    title: rankOf
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:17:58.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-split
+    title: split
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:18:05.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-ranked-prices
+    title: RankedPrices
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:18:20.772Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-lower-ranked-cross-checks
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+  - id: SYM-valuation-ranked-fx-rates
+    title: RankedFXRates
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:18:28.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-ranked-index-readings
+    title: RankedIndexReadings
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:18:36.497Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+      - type: implements
+        target: REQ-valuation-ranked-source-order
+  - id: SYM-valuation-lower-ranked-checks
+    title: LowerRankedChecks
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:18:45.151Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-lower-ranked-cross-checks
+  - id: SYM-valuation-test-market-data-kind-names
+    title: TestMarketDataKindNames
+    sourceFile: internal/valuation/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:18:52.642Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-ranking
+  - id: SYM-valuation-test-rank-sources
+    title: TestRankSources
+    sourceFile: internal/valuation/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:18:59.928Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-ranking
+  - id: SYM-valuation-test-validate-ranking
+    title: TestValidateRanking
+    sourceFile: internal/valuation/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:06.232Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-ranking
+  - id: SYM-valuation-test-helper-ranked-price
+    title: rankedPrice
+    sourceFile: internal/valuation/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:13.242Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-ranking
+  - id: SYM-valuation-test-ranked-prices
+    title: TestRankedPrices
+    sourceFile: internal/valuation/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:19.550Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-ranking
+  - id: SYM-valuation-test-ranked-fx-rates-and-readings
+    title: TestRankedFXRatesAndReadings
+    sourceFile: internal/valuation/ranking_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:25.536Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-ranking
+  - id: SYM-ui-kind-name
+    title: kindName
+    sourceFile: internal/views/ui/marketdata.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:32.088Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-market-data
+      - type: implements
+        target: REQ-ui-market-data-ranking
+  - id: SYM-ui-ranking-kind
+    title: rankingKind
+    sourceFile: internal/views/ui/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:38.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-market-data
+      - type: implements
+        target: REQ-ui-market-data-ranking
+  - id: SYM-ui-ranking-view
+    title: rankingView
+    sourceFile: internal/views/ui/marketdata.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:44.356Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-market-data
+      - type: implements
+        target: REQ-ui-market-data-ranking
+  - id: SYM-ui-ranking-view-names
+    title: rankingView.Names
+    sourceFile: internal/views/ui/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:51.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-market-data
+      - type: implements
+        target: REQ-ui-market-data-ranking
+  - id: SYM-ui-server-load-rankings
+    title: server.loadRankings
+    sourceFile: internal/views/ui/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:19:59.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-market-data
+      - type: implements
+        target: REQ-ui-market-data-ranking
+  - id: SYM-ui-server-rank-sources
+    title: server.rankSources
+    sourceFile: internal/views/ui/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:20:06.201Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-market-data
+      - type: implements
+        target: REQ-ui-market-data-ranking
+  - id: SYM-ui-kind-of
+    title: kindOf
+    sourceFile: internal/views/ui/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:20:13.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-market-data
+      - type: implements
+        target: REQ-ui-market-data-ranking
+  - id: SYM-ui-move-source
+    title: moveSource
+    sourceFile: internal/views/ui/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:20:21.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-market-data
+      - type: implements
+        target: REQ-ui-market-data-ranking
+  - id: SYM-ui-test-helper-fake-market-data
+    title: fakeMarketData
+    sourceFile: internal/views/ui/marketdata_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:20:27.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-market-data
+  - id: SYM-ui-test-helper-new-fake-market-data
+    title: newFakeMarketData
+    sourceFile: internal/views/ui/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:20:34.665Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-market-data
+  - id: SYM-ui-test-helper-fake-market-data-list-source-rankings
+    title: fakeMarketData.ListSourceRankings
+    sourceFile: internal/views/ui/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:20:42.646Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-market-data
+  - id: SYM-ui-test-helper-fake-market-data-set-source-ranking
+    title: fakeMarketData.SetSourceRanking
+    sourceFile: internal/views/ui/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:20:49.900Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-market-data
+  - id: SYM-ui-test-helper-fake-market-data-locked
+    title: fakeMarketData.locked
+    sourceFile: internal/views/ui/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:20:57.387Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-market-data
+  - id: SYM-ui-test-settings-shows-source-rankings
+    title: TestSettingsShowsSourceRankings
+    sourceFile: internal/views/ui/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:21:04.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-market-data
+  - id: SYM-ui-test-rank-sources-form
+    title: TestRankSourcesForm
+    sourceFile: internal/views/ui/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:21:12.278Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-market-data
+  - id: SYM-valuation-gen-pb-market-data-kind
+    title: MarketDataKind
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:21:18.121Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-market-data-kind-enum
+    title: MarketDataKind.Enum
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:21:25.997Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-market-data-kind-string
+    title: MarketDataKind.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:21:32.943Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-market-data-kind-descriptor
+    title: MarketDataKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:21:40.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-market-data-kind-type
+    title: MarketDataKind.Type
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:21:47.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-market-data-kind-number
+    title: MarketDataKind.Number
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:21:53.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-market-data-kind-enum-descriptor
+    title: MarketDataKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:01.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source
+    title: RankedSource
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:06.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source-reset
+    title: RankedSource.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:14.417Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source-string
+    title: RankedSource.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:22.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source-proto-message
+    title: RankedSource.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:29.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source-proto-reflect
+    title: RankedSource.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:36.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source-descriptor
+    title: RankedSource.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:43.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source-get-name
+    title: RankedSource.GetName
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:50.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source-get-institution
+    title: RankedSource.GetInstitution
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:22:57.436Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-ranked-source-get-placed
+    title: RankedSource.GetPlaced
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:04.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-source-ranking
+    title: SourceRanking
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:09.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-source-ranking-reset
+    title: SourceRanking.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:16.724Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-source-ranking-string
+    title: SourceRanking.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:23.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-source-ranking-proto-message
+    title: SourceRanking.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:30.926Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-source-ranking-proto-reflect
+    title: SourceRanking.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:37.800Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-source-ranking-descriptor
+    title: SourceRanking.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:44.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-source-ranking-get-kind
+    title: SourceRanking.GetKind
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:51.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-source-ranking-get-sources
+    title: SourceRanking.GetSources
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:23:57.611Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-request
+    title: ListSourceRankingsRequest
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:03.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-request-reset
+    title: ListSourceRankingsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:09.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-request-string
+    title: ListSourceRankingsRequest.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:15.885Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-request-proto-message
+    title: ListSourceRankingsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:22.595Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-request-proto-reflect
+    title: ListSourceRankingsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:28.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-request-descriptor
+    title: ListSourceRankingsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:35.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-request-get-origin
+    title: ListSourceRankingsRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:41.436Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-request-get-session-token
+    title: ListSourceRankingsRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:47.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-response
+    title: ListSourceRankingsResponse
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:53.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-response-reset
+    title: ListSourceRankingsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:24:59.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-response-string
+    title: ListSourceRankingsResponse.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:05.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-response-proto-message
+    title: ListSourceRankingsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:12.726Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-response-proto-reflect
+    title: ListSourceRankingsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:19.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-response-descriptor
+    title: ListSourceRankingsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:25.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-list-source-rankings-response-get-rankings
+    title: ListSourceRankingsResponse.GetRankings
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:32.029Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request
+    title: SetSourceRankingRequest
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:37.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-reset
+    title: SetSourceRankingRequest.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:43.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-string
+    title: SetSourceRankingRequest.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:50.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-proto-message
+    title: SetSourceRankingRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:25:57.119Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-proto-reflect
+    title: SetSourceRankingRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:03.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-descriptor
+    title: SetSourceRankingRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:09.777Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-get-origin
+    title: SetSourceRankingRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:16.228Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-get-session-token
+    title: SetSourceRankingRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:22.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-get-kind
+    title: SetSourceRankingRequest.GetKind
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:28.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-request-get-sources
+    title: SetSourceRankingRequest.GetSources
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:35.664Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-response
+    title: SetSourceRankingResponse
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:41.090Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-response-reset
+    title: SetSourceRankingResponse.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:47.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-response-string
+    title: SetSourceRankingResponse.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:26:54.074Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-response-proto-message
+    title: SetSourceRankingResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:00.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-response-proto-reflect
+    title: SetSourceRankingResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:06.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-response-descriptor
+    title: SetSourceRankingResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:12.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-set-source-ranking-response-get-ranking
+    title: SetSourceRankingResponse.GetRanking
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:19.302Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-file_openfief_valuation_v1_market_data_proto_raw-desc-gzip
+    title: file_openfief_valuation_v1_market_data_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:25.826Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:32.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-file_openfief_valuation_v1_market_data_proto_init
+    title: file_openfief_valuation_v1_market_data_proto_init
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:39.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-pb-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/valuation/v1/market_data.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:45.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-market-data-service-client
+    title: marketDataServiceClient
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:51.866Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-new-market-data-service-client
+    title: NewMarketDataServiceClient
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:27:58.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-market-data-service-client-list-source-rankings
+    title: marketDataServiceClient.ListSourceRankings
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:28:10.228Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-market-data-service-client-set-source-ranking
+    title: marketDataServiceClient.SetSourceRanking
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:28:16.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-market-data-service-handler
+    title: MarketDataServiceHandler
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:28:22.637Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-new-market-data-service-handler
+    title: NewMarketDataServiceHandler
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:28:28.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-unimplemented-market-data-service-handler
+    title: UnimplementedMarketDataServiceHandler
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:28:34.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-list-source-rankings
+    title: UnimplementedMarketDataServiceHandler.ListSourceRankings
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:28:40.447Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-set-source-ranking
+    title: UnimplementedMarketDataServiceHandler.SetSourceRanking
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:28:46.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service
+  - id: SYM-valuation-split-type
+    title: Split
+    sourceFile: internal/valuation/ranking.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:08:22.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-ranking
+      - type: implements
+        target: REQ-valuation-lower-ranked-cross-checks
+      - type: implements
+        target: REQ-valuation-market-data-highest-rank-wins
+  - id: SYM-valuation-gen-connect-market-data-service-client-interface
+    title: MarketDataServiceClient
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/market_data.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:08:29.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-market-data
+      - type: implements
+        target: REQ-valuation-market-data-service

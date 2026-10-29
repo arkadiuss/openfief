@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71d62cb864ec
+  - type: constrains
+    from: REQ-ingest-market-data-sources-recorded
+    to: FACT-SUBJECT-8A31F337F2AAFE7E
+    created_at: 2026-10-29T18:01:36.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75cef3e423e7
+  - type: requires_property
+    from: REQ-ingest-market-data-sources-recorded
+    to: FACT-PROP-5454CD7915862898
+    created_at: 2026-10-29T18:01:36.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9d62a42a03c
+  - type: specified_by
+    from: REQ-ingest-market-data-sources-recorded
+    to: SCEN-ingest-market-data-sources-recorded
+    created_at: 2026-10-29T18:01:36.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb12394b14fb

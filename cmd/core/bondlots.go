@@ -100,6 +100,7 @@ func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connect
 		Caller: d.entries, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
 		Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
 		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
+		Sources: sourceInputs{rankings: d.rankings},
 	}
 }
 

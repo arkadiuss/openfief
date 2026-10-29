@@ -391,3 +391,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-322ff66fbea5
+  - type: verified_by
+    from: SCEN-ingest-market-data-sources-recorded
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T18:00:58.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b604a403cc9d
+  - type: implements
+    from: SYM-core-with-market-data-service
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:11:14.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d846a9712dcf
+  - type: covered_by
+    from: SYM-core-with-market-data-service
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:11:14.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b0eb5ddb663
+  - type: implements
+    from: SYM-valuation-gen-pb-market-data-kind-enum
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:21:28.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4636434eae56
+  - type: covered_by
+    from: SYM-valuation-gen-pb-market-data-kind-enum
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:21:28.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98f3143c78fc

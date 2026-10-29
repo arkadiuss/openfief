@@ -482,3 +482,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d47780853a18
+  - type: validates
+    from: TEST-core-market-data
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:00:45.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90b187bb24f6

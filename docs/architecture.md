@@ -117,6 +117,8 @@ sequenceDiagram
 
 The core picks the batch's mode from the ledger: an account already seeded from its opening lots syncs in transactions mode on its own, and a newly mapped account is seeded first (D-95). A market-data connector, one that feeds no account, is told in each sync what to price: every instrument you hold and the model portfolio's targets, so a new purchase is priced without configuring anything (D-93).
 
+When two connectors deliver the same kind of market data, every value is kept and the one from the source you rank higher wins; the others cross-check it. You rank them on the settings page, and a new order revalues everything (D-94).
+
 The import is idempotent: each transaction is keyed by its source and the institution's own ID, so the same statement twice changes nothing, and a changed row becomes a new version rather than an overwrite (D-18). The broker's own position snapshots are stored as balance assertions and checked against what the ledger derives. Revaluation runs in a queue inside PostgreSQL, so valuations catch up with every import, price and rate (D-36). [Ingest](concepts/ingest.md) and [Valuation](concepts/valuation.md) follow each step in the code.
 
 Not every source is pulled. Treasury bond lots are typed in on an account's page and statements are uploaded there, and the core hands both to the connector bound to that account ([Ingest](concepts/ingest.md#statement-uploads)).

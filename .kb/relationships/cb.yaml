@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06e4d14b9661
+  - type: executable_for
+    from: SYM-core-test-helper-market-data-client
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:11:41.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23f06da1d1b0

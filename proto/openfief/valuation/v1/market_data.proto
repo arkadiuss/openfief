@@ -1,0 +1,97 @@
+// OpenFief's market-data source ranking contract (docs/DESIGN.md D-94,
+// D-79).
+//
+// The owner ranks the sources of each kind of market data (prices, FX
+// rates and index readings) in priority order. For each date the
+// highest-ranked source with a value wins; every source's values are
+// stored, so the lower-ranked ones serve as cross-checks (D-22). A source
+// is a connector instance that delivered values of the kind (D-48). By
+// default the first-party connector of each kind ranks first: EODHD for
+// prices, NBP for FX rates, and the treasury bond connector for CPI and
+// the NBP reference rate; the other sources follow by name.
+//
+// The core serves MarketDataService to VIEW plugins only, next to the
+// AuthService, as the owner's entry service for this kind of entry (D-79).
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - A ranking that names a source twice, or a source with an empty name or
+//   one longer than 64 characters, or a kind that is unspecified, fails
+//   with INVALID_ARGUMENT and nothing changes.
+syntax = "proto3";
+
+package openfief.valuation.v1;
+
+// MarketDataService reads and changes the owner's ranking of market-data
+// sources.
+service MarketDataService {
+  // ListSourceRankings returns the ranking of every kind of market data.
+  rpc ListSourceRankings(ListSourceRankingsRequest) returns (ListSourceRankingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // SetSourceRanking replaces the owner's order of one kind's sources.
+  // Sources it doesn't name rank after them, in their default place. A
+  // change revalues every account (D-36).
+  rpc SetSourceRanking(SetSourceRankingRequest) returns (SetSourceRankingResponse);
+}
+
+// MarketDataKind is a kind of market data whose sources are ranked.
+enum MarketDataKind {
+  MARKET_DATA_KIND_UNSPECIFIED = 0;
+  // End-of-day prices of instruments (D-21).
+  MARKET_DATA_KIND_PRICES = 1;
+  // FX rates to PLN (D-20).
+  MARKET_DATA_KIND_FX_RATES = 2;
+  // Period index readings: CPI and the NBP reference rate.
+  MARKET_DATA_KIND_INDEX_READINGS = 3;
+}
+
+// RankedSource is one source in a ranking.
+message RankedSource {
+  // The connector instance's name.
+  string name = 1;
+  // The institution it named on its deliveries, such as "eodhd"; empty for
+  // a source the owner placed that never delivered.
+  string institution = 2;
+  // Whether the owner placed it; an unplaced source is in its default
+  // place, after every placed one.
+  bool placed = 3;
+}
+
+// SourceRanking is the order of one kind's sources, the highest first.
+message SourceRanking {
+  MarketDataKind kind = 1;
+  repeated RankedSource sources = 2;
+}
+
+message ListSourceRankingsRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message ListSourceRankingsResponse {
+  // One per kind: prices, FX rates, index readings.
+  repeated SourceRanking rankings = 1;
+}
+
+message SetSourceRankingRequest {
+  string origin = 1;
+  string session_token = 2;
+  MarketDataKind kind = 3;
+  // The owner's order, highest first; empty puts every source back in its
+  // default place.
+  repeated string sources = 4;
+}
+
+message SetSourceRankingResponse {
+  // The kind's ranking as it now is.
+  SourceRanking ranking = 1;
+}

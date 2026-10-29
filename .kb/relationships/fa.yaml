@@ -370,3 +370,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2be7f6f4ad55
+  - type: verified_by
+    from: SCEN-valuation-ranking-revalues
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:00:52.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3be887001a12
+  - type: verified_by
+    from: SCEN-valuation-ranking-revalues
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:00:52.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f63b261c4d47
+  - type: implements
+    from: SYM-valuation-connectapi-service-set-source-ranking
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:14:50.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6292e0f1cbe7
+  - type: covered_by
+    from: SYM-valuation-connectapi-service-set-source-ranking
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:14:50.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8adb1efa3d62
+  - type: implements
+    from: SYM-valuation-gen-pb-source-ranking-descriptor
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:23:46.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c05080a75c8
+  - type: covered_by
+    from: SYM-valuation-gen-pb-source-ranking-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:23:46.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39624a5b816a
