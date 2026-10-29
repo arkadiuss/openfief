@@ -15,20 +15,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Needed:* a header row and two or three rows with made-up values, copied from a real export. The parser's fixtures will be synthetic.
    - *Known so far:* the author holds stocks and ETFs only at XTB (so D-24's CFD handling stays as written) and will send the headers from a real export. The export's language is not known yet. Public parsers disagree on the sheet names (R-19).
 
-## Identity and the UI
-
-11. **Passkey login in the end-to-end tests.**
-    - *Problem:* `--auth-origin` accepts plain HTTP only on localhost, so the e2e host `http://openfief.e2e.test` isn't allowed, and the e2e suite checks only that the login page renders.
-    - *Options:* a test-only flag that allows one insecure origin; or keep the e2e check as it is.
-
-12. **Who sees the list of installed plugins.**
-    - *Today:* `/plugins` in the UI, and `GET /v1/plugins`, are open to any session, including the public demo's read-only auto-login. They show image digests and signer names.
-    - *Options:* keep; or owner scope only.
-
-13. **Signature trust shown for each plugin (D-46, D-56).**
-    - *Today:* the operator writes an additive `status.signature` (trust, signer kind, signer) on the v1alpha1 `Plugin`, because the `SignatureVerified` condition alone can't tell OpenFief's CI from the owner's own signers. The UI shows seven levels: verified, signed by OpenFief CI, by a catalog publisher, by the owner, by a trusted signer of unknown kind, refused, not checked.
-    - *Question:* is the status field and that set of levels right?
-
 ## Plugins and the CLI
 
 14. **First-party plugins in the catalog (D-43, D-44).**
