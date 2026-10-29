@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ca033fb5d65
+  - type: implements
+    from: SYM-pl-is-business-day
+    to: REQ-pl-reference-rate-day
+    created_at: 2026-10-29T03:51:20.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f830c3e2301
+  - type: covered_by
+    from: SYM-pl-is-business-day
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:51:20.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c91099d31947

@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66127024bcda
+  - type: implements
+    from: SYM-valuation-nbp-archive-change-reference-rate
+    to: REQ-valuation-nbp-reference-rates
+    created_at: 2026-10-29T04:08:19.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2e3ef4b1e2c
+  - type: implements
+    from: SYM-valuation-nbp-archive-change-reference-rate
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:08:19.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f5c03cc3eac
+  - type: covered_by
+    from: SYM-valuation-nbp-archive-change-reference-rate
+    to: TEST-valuation-nbp-refrate
+    created_at: 2026-10-29T04:08:19.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-165d28044fe2

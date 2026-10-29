@@ -1,0 +1,5 @@
+GET https://static.nbp.pl/dane/stopy/stopy_procentowe_archiwum.xml HTTP/1.1
+Host: static.nbp.pl
+User-Agent: openfief
+Accept: text/xml
+

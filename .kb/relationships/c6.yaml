@@ -391,3 +391,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a52ff4da545
+  - type: executable_for
+    from: SYM-valuation-gus-test-cpi-stops-at-the-first-month-not-final
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:07:10.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf58d7bd5636

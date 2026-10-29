@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d79b80532817
+  - type: verified_by
+    from: SCEN-valuation-nbp-reference-rates
+    to: TEST-valuation-nbp-refrate
+    created_at: 2026-10-29T03:56:25.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1392ca349bad
+  - type: implements
+    from: SYM-valuation-gus-client
+    to: REQ-valuation-gus-cpi
+    created_at: 2026-10-29T04:05:27.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5198864c097e
+  - type: implements
+    from: SYM-valuation-gus-client
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:05:27.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0ece1024c57
+  - type: covered_by
+    from: SYM-valuation-gus-client
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:05:27.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-722ce144ede4

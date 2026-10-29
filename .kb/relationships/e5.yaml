@@ -279,3 +279,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2860df60d7a
+  - type: executable_for
+    from: SYM-valuation-gus-test-helper-stub-transport
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:07:21.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a408721f12b8

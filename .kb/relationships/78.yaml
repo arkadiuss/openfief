@@ -461,3 +461,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2fe69984eba
+  - type: executable_for
+    from: SYM-ingest-delivery-test-index-readings
+    to: TEST-ingest-delivery
+    created_at: 2026-10-29T04:02:45.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aa05bb58a76
+  - type: implements
+    from: SYM-treasurybonds-index-sync-readings
+    to: REQ-treasurybonds-index-sync
+    created_at: 2026-10-29T04:03:52.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08e07ed5f6e9
+  - type: implements
+    from: SYM-treasurybonds-index-sync-readings
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:03:52.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f52d1bfe712
+  - type: covered_by
+    from: SYM-treasurybonds-index-sync-readings
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:03:52.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb1282288096

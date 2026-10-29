@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -232,6 +233,29 @@ func TestPriceAndIndexLevel(t *testing.T) {
 	wantLevel := &connectorv1.IndexLevel{Index: "FAKE20", Date: "2001-01-03", Level: "1522.6"}
 	if diff := cmp.Diff(wantLevel, level, protocmp.Transform()); diff != "" {
 		t.Errorf("IndexLevel (-want +got):\n%s", diff)
+	}
+}
+
+func TestIndexReadings(t *testing.T) {
+	t.Parallel()
+	readings := []valuation.IndexReading{
+		{Kind: valuation.CPI, Year: 2025, Month: time.September, Value: dec(t, "0.029"), Source: "gus-cpi"},
+		{Kind: valuation.ReferenceRate, Year: 2026, Month: time.November, Value: dec(t, "0.0375"), Source: "nbp-ref"},
+	}
+	got, err := delivery.IndexReadings(readings)
+	if err != nil {
+		t.Fatalf("IndexReadings: %v", err)
+	}
+	want := []*connectorv1.IndexReading{
+		{Index: connectorv1.Index_INDEX_CPI, Date: "2025-09-01", Value: "0.029"},
+		{Index: connectorv1.Index_INDEX_REFERENCE_RATE, Date: "2026-11-01", Value: "0.0375"},
+	}
+	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
+		t.Errorf("IndexReadings (-want +got):\n%s", diff)
+	}
+	_, err = delivery.IndexReadings([]valuation.IndexReading{{Year: 2025, Month: time.September, Value: dec(t, "0.029")}})
+	if diff := cmp.Diff(delivery.ErrUnknownValue, err, cmpopts.EquateErrors()); diff != "" {
+		t.Errorf("a reading of no kind (-want +got):\n%s", diff)
 	}
 }
 

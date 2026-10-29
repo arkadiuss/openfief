@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3ca5dfc496d
+  - type: executable_for
+    from: SYM-valuation-gus-test-cpi-nothing-published
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:06:58.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-741a7dd0ee97

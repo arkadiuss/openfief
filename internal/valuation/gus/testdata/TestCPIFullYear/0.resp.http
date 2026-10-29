@@ -1,0 +1,207 @@
+HTTP/1.1 200 OK
+Content-Length: 4467
+Access-Control-Allow-Methods: GET, HEAD
+Access-Control-Allow-Origin: *
+Cache-Control: public,max-age=300
+Content-Type: application/json; charset=utf-8
+Date: Thu, 29 Oct 2026 03:36:08 GMT
+Strict-Transport-Security: max-age=15552000; includeSubDomains
+Vary: Accept
+X-Rate-Limit-Limit: 7d
+X-Rate-Limit-Remaining: 9999
+X-Rate-Limit-Reset: 2026-11-05T03:36:08.1373409Z
+
+[
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 247,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 104.90000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 248,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 104.90000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 249,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 104.90000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 250,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 104.30000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 251,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 104.00000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 252,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 104.10000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 253,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 103.10000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 254,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 102.90000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 255,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 102.90000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 256,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 102.80000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 257,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 102.50000,
+    "precyzja": 1
+  },
+  {
+    "id-wskaznik": 1832,
+    "id-przekroj": 739,
+    "id-wymiar-1": 2,
+    "id-pozycja-1": 33617,
+    "id-wymiar-2": 565,
+    "id-pozycja-2": 6656078,
+    "id-okres": 258,
+    "id-sposob-prezentacji-miara": 5,
+    "id-daty": 2025,
+    "id-brak-wartosci": 253,
+    "id-tajnosci": 43,
+    "id-flaga": 36,
+    "wartosc": 102.40000,
+    "precyzja": 1
+  }
+]

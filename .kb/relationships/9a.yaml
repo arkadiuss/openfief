@@ -454,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4af6d1c22a87
+  - type: verified_by
+    from: SCEN-valuation-gus-cpi
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T03:56:23.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afb848fd5976

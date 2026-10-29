@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0026a404f0af
+  - type: implements
+    from: SYM-treasury-bonds-connector-sync
+    to: REQ-treasurybonds-index-sync
+    created_at: 2026-10-29T04:09:55.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcc40954224b
