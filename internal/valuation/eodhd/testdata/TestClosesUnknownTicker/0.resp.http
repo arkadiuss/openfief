@@ -1,0 +1,6 @@
+HTTP/1.1 404 Not Found
+Content-Length: 17
+Content-Type: text/html; charset=UTF-8
+Date: Tue, 07 Jan 2025 22:00:00 GMT
+
+Ticker Not Found.

@@ -181,3 +181,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-973e158452c3
+  - type: implements
+    from: SYM-core-auth-cmd-core-auth-view-reviewer
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:28:57.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7beaa1819e94
+  - type: covered_by
+    from: SYM-core-auth-cmd-core-auth-view-reviewer
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:28:57.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63f52ab70595
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-session-store-take-ceremony
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:42.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7be5eebbfd9
+  - type: executable_for
+    from: SYM-views-test-helper-row-build
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:05:36.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c686cffe167e
+  - type: implements
+    from: SYM-plugins-app-uninstall-plan
+    to: REQ-plugins-cli-uninstall
+    created_at: 2026-10-28T22:44:18.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88098b2bfc9d
+  - type: covered_by
+    from: SYM-plugins-app-uninstall-plan
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:44:18.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98bb618bfedb
+  - type: implements
+    from: SYM-portfolio-app-models-report
+    to: REQ-portfolio-model-report
+    created_at: 2026-10-28T23:19:17.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae6e0546741b
+  - type: implements
+    from: SYM-portfolio-app-models-report
+    to: REQ-portfolio-model-optional
+    created_at: 2026-10-28T23:19:17.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e4b9d0207ff
+  - type: covered_by
+    from: SYM-portfolio-app-models-report
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:19:17.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e5eca05acfc
+  - type: implements
+    from: SYM-views-ghostfolio-client-delete-activities-in-accounts
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:01:47.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837a5789801f
+  - type: implements
+    from: SYM-views-ghostfolio-client-delete-activities-in-accounts
+    to: REQ-views-ghostfolio-filtered-delete
+    created_at: 2026-10-29T01:01:47.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-452cf89a7809
+  - type: covered_by
+    from: SYM-views-ghostfolio-client-delete-activities-in-accounts
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:01:47.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a31c3e87b463
+  - type: implements
+    from: SYM-connectorv1-bond-terms-get-first-period-rate
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:26:31.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf365ef41694
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-get-first-period-rate
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:26:31.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ab9bd98101a
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-request-proto-reflect
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:28:17.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d587b9a30c9e
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-request-proto-reflect
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:28:17.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32661f395b70

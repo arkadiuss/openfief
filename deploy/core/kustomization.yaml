@@ -1,11 +1,13 @@
-# OpenFief core service (D-2): the read API (D-6, D-50), the River revaluation workers (D-36) and script tokens
-# (D-27). A self-contained kustomize base; an overlay pins the image by digest with `images:`, e.g.:
+# OpenFief core service (D-2): the read API (D-6, D-50), the River revaluation workers (D-36), script tokens
+# (D-27) and the connector scheduler (D-49), which calls each running connector instance with a TokenRequest token
+# of its own ServiceAccount (D-59; rbac.yaml). A self-contained kustomize base; an overlay pins the image by digest with `images:`, e.g.:
 #   kustomize edit set image ghcr.io/arkadiuss/openfief/core=ghcr.io/arkadiuss/openfief/core@sha256:<digest>
 #
 # Services only (D-28): Service openfief-core is a ClusterIP with two ports on the same container port 8080:
 #   http     8080 -> 8080  the read API, REST under /v1 and Connect under /openfief.*, plus /healthz and /readyz.
 #            The default way in is `kubectl -n openfief port-forward svc/openfief-core 8080:http`; anything else
-#            is the installation's own Ingress, which then exposes the read API (every call needs a script token).
+#            is the installation's own Ingress, which then exposes the read API (every call needs a session or a
+#            script token).
 #   connect  8081 -> 8080  what plugins dial (the operator's --core-port=connect, D-49): the same listener today.
 # The operator reads this Service's selector and copies it into every plugin's NetworkPolicy, so the core pods'
 # label app.kubernetes.io/name: openfief-core must stay unique to the core.
@@ -14,15 +16,24 @@
 # is openfief-db; an overlay with another cluster patches the secret name in deployment.yaml and the database
 # selector in networkpolicy.yaml.
 #
-# Script tokens for the read API (the image has no shell, so exec the binary itself):
+# The first passkey (D-60): print a one-time link, port-forward the built-in UI to localhost:8080, open the link:
+#   kubectl -n openfief exec deploy/openfief-core -- /core enroll-link --host localhost:8080
+#
+# Script tokens come from a logged-in session in the UI; as a break-glass, the CLI issues them too (the image has
+# no shell, so exec the binary itself):
 #   kubectl -n openfief exec deploy/openfief-core -- /core token issue --name my-script --ttl 168h
 #   kubectl -n openfief exec deploy/openfief-core -- /core token list
 #   kubectl -n openfief exec deploy/openfief-core -- /core token revoke <id>
+#
+# A connector instance writes only to the accounts it is bound to, and the owner binds them:
+#   kubectl -n openfief exec deploy/openfief-core -- /core connector bind --instance ibkr-main --account <account id>
+#   kubectl -n openfief exec deploy/openfief-core -- /core connector sync --instance ibkr-main
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: openfief
 resources:
   - serviceaccount.yaml
+  - rbac.yaml
   - deployment.yaml
   - service.yaml
   - networkpolicy.yaml

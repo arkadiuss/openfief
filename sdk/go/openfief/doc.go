@@ -5,7 +5,10 @@
 // A connector serves the connector contract, openfief.connector.v1, and the
 // core calls it (D-49): NewConnectorServer serves an implementation to the
 // core only, checking the core's token with a CoreVerifier (D-59), and
-// ReceiveFile reads an ImportFile stream. NewEgressClient reaches granted
+// ReceiveFile reads an ImportFile stream. NewCoreVerifier returns the SDK's
+// CoreVerifier, a JWKSVerifier: it checks the core's token against the
+// cluster's ServiceAccount signing keys, which the operator mounts in every
+// plugin because plugins can't reach the Kubernetes API. NewEgressClient reaches granted
 // external hosts through the egress proxy, with the plugin's egress token as
 // the proxy URL's password on every request (D-63). CoreHTTPClient calls the
 // core, such as its read API, with the plugin's core token (D-27). Projected

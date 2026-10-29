@@ -258,3 +258,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42f9bf0eb983
+  - type: executable_for
+    from: SYM-sdk-go-test-test-jwks-verifier-key-set
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:51:22.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0937b1f6630
+  - type: implements
+    from: SYM-identity-gen-pb-owner-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:37:50.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89ac84e14118
+  - type: implements
+    from: SYM-identity-gen-pb-owner-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:37:50.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543ca5aadd28
+  - type: covered_by
+    from: SYM-identity-gen-pb-owner-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:37:50.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56c91a9790a2
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-take-ceremony
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:23.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-311f9d223cf4
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-check-no-auth-secret-stored
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:49:26.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c677799480a
+  - type: implements
+    from: SYM-views-pb-get-performance-request-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:09:48.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0d0d456ef77
+  - type: covered_by
+    from: SYM-views-pb-get-performance-request-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:09:48.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bee43ca0b9e
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-fake-verifier
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:14.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02e43b425346
+  - type: implements
+    from: SYM-ingestv1connect-bond-lot-service-client-impl
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:32:43.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bb710bbc255
+  - type: covered_by
+    from: SYM-ingestv1connect-bond-lot-service-client-impl
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:32:43.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e72d9c55ddc1

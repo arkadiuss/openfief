@@ -1,0 +1,45 @@
+# What the demo machine runs (deploy/demo/openfief: operator, egress proxy, core with its NetworkPolicy, the
+# demo-seed Job, the core-from-traefik and ui-from-traefik policies and the plugin instances), with three changes only:
+#   - the images are the ones `task e2e:images` built from this checkout and loaded into the cluster, so a pull
+#     request tests its own code; the tag replaces the demo's placeholder digest;
+#   - core-from-e2e-client.yaml admits the suite's client pod the way core-from-traefik admits Traefik;
+#   - the built-in UI runs from ui-standin.yaml instead of its Plugin and PluginGrant, which the operator would never
+#     deploy from an unsigned image (D-57); see that file.
+# Everything else, args and policies included, is the demo's, so a failure here is a failure on the demo.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../../deploy/demo/openfief
+  - core-from-e2e-client.yaml
+  - ui-standin.yaml
+patches:
+  - patch: |-
+      $patch: delete
+      apiVersion: openfief.io/v1alpha1
+      kind: Plugin
+      metadata:
+        name: ui
+        namespace: openfief
+  - patch: |-
+      $patch: delete
+      apiVersion: openfief.io/v1alpha1
+      kind: PluginGrant
+      metadata:
+        name: ui
+        namespace: openfief
+images:
+  - name: ghcr.io/arkadiuss/openfief/core
+    newName: openfief.test/core
+    newTag: e2e
+  - name: ghcr.io/arkadiuss/openfief/operator
+    newName: openfief.test/operator
+    newTag: e2e
+  - name: ghcr.io/arkadiuss/openfief/egress-proxy
+    newName: openfief.test/egress-proxy
+    newTag: e2e
+  - name: ghcr.io/arkadiuss/openfief/demo-seed
+    newName: openfief.test/demo-seed
+    newTag: e2e
+  - name: ghcr.io/arkadiuss/openfief/ui
+    newName: openfief.test/ui
+    newTag: e2e

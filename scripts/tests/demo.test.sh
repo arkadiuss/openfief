@@ -166,7 +166,7 @@ run_demo() {
   cp "${DNS:-$work/dns-empty.json}" "$work/state/dns.json"
   local cf=()
   if [ -n "${CF_TOKEN:-}" ]; then cf=(CLOUDFLARE_API_TOKEN="$CF_TOKEN" DEMO_DOMAIN=example.com); fi
-  env -u CLOUDFLARE_API_TOKEN -u HETZNER_API_TOKEN -u DEMO_SSH -u DEMO_DOMAIN -u DEMO_DNS_AAAA -u DEMO_SSH_CIDRS -u DOCS_PAGES_HOST \
+  env -u CLOUDFLARE_API_TOKEN -u HETZNER_API_TOKEN -u DEMO_SSH -u DEMO_DOMAIN -u DEMO_DNS_AAAA -u DEMO_SSH_CIDRS -u SITE_PAGES_OWNER -u GITHUB_PAGES_CHALLENGE \
     PATH="$work/bin:$PATH" HCLOUD_TOKEN="$token" FAKE_LOG="$work/log" FAKE_STATE="$work/state" \
     FAKE_CF_TOKEN="$cf_token" FAKE_CF_STORE="$work/state/dns.json" FAKE_ZONE_ID="$zone_id" \
     FAKE_SERVER="${SERVER:-$work/server.json}" FAKE_THROWAWAY="${THROWAWAY:-$work/no-keys.json}" \
@@ -413,50 +413,137 @@ if ACTION=down THROWAWAY="$work/throwaway.json" run_demo ENV=demo CONFIRM=demo; 
 check "down deletes the throwaway key after the server" "$(yes_if bash -c "grep delete '$work/log' | tr '\n' ';' | grep -qx 'server delete openfief-demo;firewall delete openfief-demo;primary-ip delete auto-ip;ssh-key delete openfief-demo-throwaway;'")"
 check "down asks only for throwaway keys" "$(yes_if grep -qx 'ssh-key list --selector app=openfief,env=demo,openfief-ssh=throwaway --output json' "$work/log")"
 
-# The docs site's record (demo.sh dns-docs, task dns:docs): docs.<domain> as a DNS-only CNAME to GitHub Pages with its
-# own comment; it never touches the demo's records, and the demo never touches it.
+# The website's records (demo.sh dns-site, task dns:site): the apex's A and AAAA records to GitHub Pages, www as a
+# CNAME and, with GITHUB_PAGES_CHALLENGE, the verification TXT record, all with their own comment. They never touch
+# the demo's records, the demo never touches them, and the retired docs.<domain> CNAME is deleted.
+site_comment='managed-by=openfief-site'
 docs_comment='managed-by=openfief-docs'
+site_a='185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153'
+site_aaaa='2606:50c0:8000::153 2606:50c0:8001::153 2606:50c0:8002::153 2606:50c0:8003::153'
+# site_store prints the website's records after a run, as dns_store does for all of them.
+site_store() {
+  gojq -r --arg c "$site_comment" '[.[] | select(.comment == $c) | "\(.type) \(.name) \(.content)"] | sort | join("; ")' \
+    "$work/state/dns.json"
+}
+site_want="$({
+  for a in $site_a; do echo "A example.com $a"; done
+  for a in $site_aaaa; do echo "AAAA example.com $a"; done
+  echo 'CNAME www.example.com arkadiuss.github.io'
+} | sort | paste -sd';' - | sed 's/;/; /g')"
+# demo_records prints the demo's and other non-site records, to compare before and after a site run.
+demo_records() {
+  gojq -c --arg c "$site_comment" '[.[] | select(.comment != $c)] | sort_by(.id)' "$1"
+}
+
+if ACTION=plan MODE=dns-site CF_TOKEN="$cf_token" run_demo; then r=yes; else r=no; fi
+check "dns:site:plan succeeds" "$r"
+check "dns:site:plan shows the four A and four AAAA records and the www CNAME" "$(yes_if bash -c "test \"\$(grep -c '^would DNS: create A example.com 185\.199\.1[01][0-9]\.153$' '$work/out')\" = 4 && test \"\$(grep -c '^would DNS: create AAAA example.com 2606:50c0:800[0-3]::153$' '$work/out')\" = 4 && grep -qx 'would DNS: create CNAME www.example.com arkadiuss.github.io' '$work/out'")"
+check "dns:site:plan changes nothing" "$(yes_if test -z "$(dns_calls)")"
+check "without GITHUB_PAGES_CHALLENGE the TXT record is skipped, and said so" "$(yes_if bash -c "grep -q 'GITHUB_PAGES_CHALLENGE is not set, so the TXT record _github-pages-challenge-arkadiuss.example.com is skipped' '$work/out' && ! grep -q TXT '$work/log'")"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" run_demo; then r=yes; else r=no; fi
+check "dns:site creates the records" "$r"
+check "dns:site creates exactly the Pages addresses and the www CNAME" "$(yes_if test "$(site_store)" = "$site_want")"
+check "every site record is DNS-only with the site's comment" "$(yes_if gojq -e 'length == 9 and all(.[]; .proxied == false and .comment == "managed-by=openfief-site")' "$work/state/dns.json")"
+check "dns:site creates no docs record" "$(yes_if bash -c "! grep -q 'docs\.' '$work/state/dns.json'")"
+cp "$work/state/dns.json" "$work/dns-site.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site.json" run_demo; then r=yes; else r=no; fi
+check "dns:site again succeeds" "$r"
+check "dns:site again changes nothing" "$(yes_if bash -c "test -z '$(dns_calls)' && grep -q 'website at example.com and www.example.com are up to date' '$work/out'")"
+# Records made by hand with the site's comment, as Cloudflare returns them (its own ids, TTL 300, extra fields, in
+# another order), are adopted as they are.
 {
-  record CNAME docs.example.com arkadiuss.github.io "$docs_comment" 20
-} | gojq -s -c . >"$work/dns-docs.json"
-{
-  record CNAME docs.example.com someone.github.io "$docs_comment" 20
-} | gojq -s -c . >"$work/dns-docs-old.json"
-{
-  record TXT docs.example.com 'verification' '' 21
-} | gojq -s -c . >"$work/dns-docs-foreign.json"
-gojq -c '. + [{id: "00000000000000000000000000000014", type: "CNAME", name: "docs.example.com",
+  i=40
+  for a in $site_aaaa $site_a; do
+    t=A
+    [[ "$a" != *:* ]] || t=AAAA
+    i=$((i + 1))
+    gojq -n -c --arg t "$t" --arg a "$a" --arg id "$(printf '%032x' "$i")" --arg c "$site_comment" \
+      '{id: $id, type: $t, name: "example.com", content: $a, proxiable: true, proxied: false, ttl: 300,
+        comment: $c, tags: [], created_on: "2026-10-28T00:00:00Z"}'
+  done
+  gojq -n -c --arg c "$site_comment" '{id: "00000000000000000000000000000050", type: "CNAME", name: "www.example.com",
+    content: "arkadiuss.github.io", proxiable: true, proxied: false, ttl: 300, comment: $c, tags: []}'
+} | gojq -s -c . >"$work/dns-site-hand.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-hand.json" run_demo; then r=yes; else r=no; fi
+check "dns:site adopts hand-made records with its comment without a change" "$(yes_if bash -c "test $r = yes && test -z '$(dns_calls)' && grep -q 'up to date' '$work/out' && cmp -s '$work/dns-site-hand.json' '$work/state/dns.json'")"
+
+# An address list change: a stale address of ours is replaced, a fifth of ours removed, a proxied one set DNS-only.
+gojq -c '(map(select(.content == "185.199.108.153")) | .[0].id) as $id
+  | map(if .id == $id then .content = "185.199.99.153" else . end)
+  | map(if .content == "2606:50c0:8000::153" then .proxied = true else . end)
+  | . + [{id: "000000000000000000000000000000aa", type: "A", name: "example.com", content: "185.199.98.153",
+          ttl: 300, proxied: false, comment: "managed-by=openfief-site"}]' "$work/dns-site.json" >"$work/dns-site-old.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-old.json" run_demo; then r=yes; else r=no; fi
+check "dns:site after an address change succeeds" "$r"
+check "the address set is reconciled exactly" "$(yes_if test "$(site_store)" = "$site_want")"
+check "the missing address is created before the stale ones are deleted" "$(yes_if test "$(dns_calls | cut -d' ' -f2 | tr '\n' ' ')" = 'POST PATCH DELETE DELETE ')"
+check "the deletes are reported" "$(yes_if bash -c "grep -qx 'DNS: delete A example.com 185.199.99.153' '$work/out' && grep -qx 'DNS: delete A example.com 185.199.98.153' '$work/out'")"
+check "the proxied record is set back to DNS-only" "$(yes_if gojq -e 'all(.[]; .proxied == false)' "$work/state/dns.json")"
+
+# A record without the site's comment at the apex or www makes it refuse before changing anything; the apex's own
+# records of other types, such as MX, are fine.
+gojq -c '. + [{id: "000000000000000000000000000000bb", type: "A", name: "example.com", content: "198.51.100.50",
+  ttl: 300, proxied: false, comment: null}]' "$work/dns-site-old.json" >"$work/dns-site-foreign.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-foreign.json" run_demo; then r=no; else r=yes; fi
+check "dns:site refuses a foreign A record at the apex" "$r"
+check "the apex clash is named" "$(yes_if grep -q 'refusing: the zone has A example.com without the comment "managed-by=openfief-site"' "$work/out")"
+check "a clash changes nothing, ours included" "$(yes_if bash -c "test -z '$(dns_calls)' && cmp -s '$work/dns-site-foreign.json' '$work/state/dns.json'")"
+for foreign in 'CNAME example.com elsewhere.example.net' 'TXT www.example.com hello' 'AAAA example.com 2001:db8::50'; do
+  read -r ftype fname fvalue <<<"$foreign"
+  record "$ftype" "$fname" "$fvalue" '' 30 | gojq -s -c . >"$work/dns-site-foreign1.json"
+  if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-foreign1.json" run_demo; then r=no; else r=yes; fi
+  check "dns:site refuses a foreign $ftype at $fname" "$(yes_if bash -c "test $r = yes && test -z '$(dns_calls)'")"
+done
+record MX example.com mail.example.com '' 31 | gojq -s -c . >"$work/dns-site-mx.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-mx.json" run_demo; then r=yes; else r=no; fi
+check "dns:site keeps the apex's MX record" "$(yes_if bash -c "test $r = yes && grep -q 'mail.example.com' '$work/state/dns.json'")"
+
+# The retired docs record is deleted wherever it is; a docs record without that comment is not the site's.
+gojq -c '. + [{id: "000000000000000000000000000000cc", type: "CNAME", name: "docs.example.com",
   content: "arkadiuss.github.io", ttl: 60, proxied: false, comment: "managed-by=openfief-docs"}]' \
-  "$work/dns-mixed.json" >"$work/dns-mixed-docs.json"
-if ACTION=plan MODE=dns-docs CF_TOKEN="$cf_token" run_demo; then r=yes; else r=no; fi
-check "dns:docs:plan succeeds" "$r"
-check "dns:docs:plan shows the CNAME" "$(yes_if grep -qx 'would DNS: create CNAME docs.example.com arkadiuss.github.io' "$work/out")"
-check "dns:docs:plan changes nothing" "$(yes_if test -z "$(dns_calls)")"
-if ACTION=apply MODE=dns-docs CF_TOKEN="$cf_token" run_demo; then r=yes; else r=no; fi
-check "dns:docs creates the CNAME with its comment, DNS-only" "$(yes_if gojq -e '. == [.[0]] and .[0].type == "CNAME" and .[0].name == "docs.example.com" and .[0].content == "arkadiuss.github.io" and .[0].proxied == false and .[0].comment == "managed-by=openfief-docs"' "$work/state/dns.json")"
-if ACTION=apply MODE=dns-docs CF_TOKEN="$cf_token" DNS="$work/dns-docs.json" run_demo; then r=yes; else r=no; fi
-check "dns:docs again changes nothing" "$(yes_if bash -c "test -z '$(dns_calls)' && grep -q 'docs.example.com is up to date' '$work/out'")"
-if ACTION=apply MODE=dns-docs CF_TOKEN="$cf_token" DNS="$work/dns-docs-old.json" run_demo; then r=yes; else r=no; fi
-check "dns:docs updates its own record in place" "$(yes_if bash -c "test \"\$(grep -cE '^curl (POST|PATCH|DELETE)' '$work/log')\" = 1 && grep -q '^curl PATCH' '$work/log' && grep -q 'arkadiuss.github.io' '$work/state/dns.json'")"
-if ACTION=apply MODE=dns-docs CF_TOKEN="$cf_token" DNS="$work/dns-docs-foreign.json" run_demo; then r=no; else r=yes; fi
-check "dns:docs refuses any record without its comment at the name" "$r"
-check "dns:docs leaves that record alone" "$(yes_if bash -c "test -z '$(dns_calls)' && cmp -s '$work/dns-docs-foreign.json' '$work/state/dns.json'")"
-gojq -c 'map(select(.name != "docs.example.com"))' "$work/dns-mixed.json" >"$work/dns-mixed-nodocs.json"
-if ACTION=apply MODE=dns-docs CF_TOKEN="$cf_token" DNS="$work/dns-mixed-nodocs.json" run_demo; then r=yes; else r=no; fi
-check "dns:docs never touches the demo's records" "$(yes_if bash -c "test \"\$(grep -cE '^curl (POST|PATCH|DELETE)' '$work/log')\" = 1 && grep -q '^curl POST' '$work/log'")"
-if ACTION=down CF_TOKEN="$cf_token" DNS="$work/dns-mixed-docs.json" run_demo ENV=demo CONFIRM=demo; then r=yes; else r=no; fi
-check "the demo's down keeps the docs record" "$(yes_if gojq -e '[.[] | select(.comment == "managed-by=openfief-docs")] | length == 1' "$work/state/dns.json")"
-if ACTION=up CF_TOKEN="$cf_token" DNS="$work/dns-docs.json" run_demo ENV=docs ENV_INVENTORY="$work/empty.json"; then r=no; else r=yes; fi
-check "a demo named docs is refused at the docs record's name" "$r"
-check "the refused demo leaves the docs record alone" "$(yes_if cmp -s "$work/dns-docs.json" "$work/state/dns.json")"
-if ACTION=plan MODE=dns-docs run_demo; then r=no; else r=yes; fi
-check "dns:docs needs CLOUDFLARE_API_TOKEN" "$r"
-check "dns:docs without a token names it and calls nothing" "$(yes_if bash -c "grep -q 'CLOUDFLARE_API_TOKEN is not set' '$work/out' && ! grep -q '^curl' '$work/log'")"
-if ACTION=plan MODE=dns-docs CF_TOKEN="$cf_token" run_demo DEMO_DOMAIN=none; then r=no; else r=yes; fi
-check "dns:docs refuses DEMO_DOMAIN=none" "$r"
+  "$work/dns-site.json" >"$work/dns-site-docs.json"
+if ACTION=plan MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-docs.json" run_demo; then r=yes; else r=no; fi
+check "dns:site:plan shows the retired docs record's delete" "$(yes_if bash -c "grep -qx 'would DNS: delete CNAME docs.example.com arkadiuss.github.io' '$work/out' && test -z '$(dns_calls)'")"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-docs.json" run_demo; then r=yes; else r=no; fi
+check "dns:site deletes the retired docs record and nothing else" "$(yes_if bash -c "test $r = yes && test '$(dns_calls)' = 'curl DELETE /zones/$zone_id/dns_records/000000000000000000000000000000cc' && cmp -s '$work/dns-site.json' '$work/state/dns.json'")"
+gojq -c 'map(select(.name != "www.example.com"))' "$work/dns-mixed.json" >"$work/dns-mixed-nowww.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-mixed-nowww.json" run_demo; then r=yes; else r=no; fi
+check "dns:site in a shared zone succeeds" "$r"
+check "dns:site never touches the demo's or other records" "$(yes_if test "$(demo_records "$work/dns-mixed-nowww.json")" = "$(demo_records "$work/state/dns.json")")"
+check "dns:site leaves a docs record without the retired comment" "$(yes_if grep -q 'example.github.io' "$work/state/dns.json")"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-mixed.json" run_demo; then r=no; else r=yes; fi
+check "dns:site refuses a hand-made record at www" "$(yes_if bash -c "test $r = yes && grep -q 'refusing: the zone has A www.example.com' '$work/out' && test -z '$(dns_calls)'")"
+
+# The verification TXT record: created with GITHUB_PAGES_CHALLENGE, left alone without it.
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site.json" run_demo GITHUB_PAGES_CHALLENGE=0123abcd4567ef; then r=yes; else r=no; fi
+check "dns:site with GITHUB_PAGES_CHALLENGE succeeds" "$r"
+check "the challenge becomes a TXT record with the site's comment" "$(yes_if bash -c "test '$(dns_calls | cut -d" " -f2)' = POST && gojq -e '[.[] | select(.type == \"TXT\")] == [.[] | select(.type == \"TXT\" and .name == \"_github-pages-challenge-arkadiuss.example.com\" and .content == \"0123abcd4567ef\" and .comment == \"managed-by=openfief-site\")] and ([.[] | select(.type == \"TXT\")] | length) == 1' '$work/state/dns.json'")"
+cp "$work/state/dns.json" "$work/dns-site-txt.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-txt.json" run_demo; then r=yes; else r=no; fi
+check "without GITHUB_PAGES_CHALLENGE an existing TXT record of ours stays" "$(yes_if bash -c "test $r = yes && test -z '$(dns_calls)' && grep -q '0123abcd4567ef' '$work/state/dns.json'")"
+gojq -c 'map(if .type == "TXT" then .content = "\"0123abcd4567ef\"" else . end)' "$work/dns-site-txt.json" >"$work/dns-site-txt-quoted.json"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-txt-quoted.json" run_demo GITHUB_PAGES_CHALLENGE=0123abcd4567ef; then r=yes; else r=no; fi
+check "a TXT value Cloudflare returns in quotes counts as the same" "$(yes_if bash -c "test $r = yes && test -z '$(dns_calls)'")"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-txt.json" run_demo GITHUB_PAGES_CHALLENGE=fedcba9876; then r=yes; else r=no; fi
+check "a new GITHUB_PAGES_CHALLENGE replaces our TXT record" "$(yes_if bash -c "test $r = yes && test '$(dns_calls | cut -d" " -f2 | tr "\n" " ")' = 'POST DELETE ' && grep -q fedcba9876 '$work/state/dns.json' && ! grep -q 0123abcd4567ef '$work/state/dns.json'")"
+if ACTION=apply MODE=dns-site CF_TOKEN="$cf_token" run_demo GITHUB_PAGES_CHALLENGE='x" y'; then r=no; else r=yes; fi
+check "a malformed GITHUB_PAGES_CHALLENGE is refused before any call" "$(yes_if bash -c "test $r = yes && ! grep -q '^curl' '$work/log'")"
+
+# The demo leaves the site's records alone: down deletes only its own, and a demo named www is refused.
+gojq -c -s '.[0] + .[1]' "$work/dns-mixed.json" "$work/dns-site.json" >"$work/dns-mixed-site.json"
+if ACTION=down CF_TOKEN="$cf_token" DNS="$work/dns-mixed-site.json" run_demo ENV=demo CONFIRM=demo; then r=yes; else r=no; fi
+check "the demo's down keeps every site record" "$(yes_if bash -c "test $r = yes && test \"\$(gojq '[.[] | select(.comment == \"managed-by=openfief-site\")] | length' '$work/state/dns.json')\" = 9")"
+if ACTION=up CF_TOKEN="$cf_token" DNS="$work/dns-site.json" run_demo ENV=www ENV_INVENTORY="$work/empty.json"; then r=no; else r=yes; fi
+check "a demo named www is refused at the site's www record" "$r"
+check "the refused demo leaves the site's records alone" "$(yes_if cmp -s "$work/dns-site.json" "$work/state/dns.json")"
+if ACTION=plan MODE=dns-site run_demo; then r=no; else r=yes; fi
+check "dns:site needs CLOUDFLARE_API_TOKEN" "$r"
+check "dns:site without a token names it and calls nothing" "$(yes_if bash -c "grep -q 'CLOUDFLARE_API_TOKEN is not set' '$work/out' && ! grep -q '^curl' '$work/log'")"
+if ACTION=plan MODE=dns-site CF_TOKEN="$cf_token" run_demo DEMO_DOMAIN=none; then r=no; else r=yes; fi
+check "dns:site refuses DEMO_DOMAIN=none" "$r"
 for action in plan apply; do
-  ACTION=$action MODE=dns-docs CF_TOKEN="$cf_token" DNS="$work/dns-docs-old.json" run_demo >/dev/null 2>&1 || true
-  check "Cloudflare token stays secret (dns:docs $action)" "$(yes_if bash -c "! grep -q '$cf_token' '$work/log' '$work/out' '$work/state/'* 2>/dev/null")"
+  ACTION=$action MODE=dns-site CF_TOKEN="$cf_token" DNS="$work/dns-site-old.json" run_demo GITHUB_PAGES_CHALLENGE=0123abcd >/dev/null 2>&1 || true
+  check "Cloudflare token stays secret (dns:site $action)" "$(yes_if bash -c "! grep -q '$cf_token' '$work/log' '$work/out' '$work/state/'* 2>/dev/null")"
 done
 
 # Pure helpers: exact micro-euro parsing, rounding up, architecture and rendering checks.

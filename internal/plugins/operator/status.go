@@ -74,6 +74,9 @@ func pluginStatus(o *observation, old []metav1.Condition) v1alpha1.PluginStatus 
 	set(v1alpha1.ConditionReady, ready.status, ready.reason, ready.message)
 	set(v1alpha1.ConditionApprovalRequired, approval.status, approval.reason, approval.message)
 	set(v1alpha1.ConditionSignatureVerified, o.signature.Status, o.signature.Reason, o.signature.Message)
+	if o.signature.Verified() && o.signature.Signature != nil {
+		st.Signature = o.signature.Signature.DeepCopy()
+	}
 	return st
 }
 

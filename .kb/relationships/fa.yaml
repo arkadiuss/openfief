@@ -139,3 +139,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f56af74cd5b5
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-batch-state
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:58:21.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac7ca7b6f069
+  - type: executable_for
+    from: SYM-core-conn-test-connector-bind-and-sync
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:24.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-272528a8d7d3
+  - type: executable_for
+    from: SYM-sdk-go-test-write-file
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:49.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ecd03853a36
+  - type: validates
+    from: TEST-sdk-go-serve-connector
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T17:06:41.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c37f37740df
+  - type: validates
+    from: TEST-sdk-go-serve-connector
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-28T17:06:41.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19b6dc323bcb
+  - type: executable_for
+    from: SYM-nbp-fx-test-test-today
+    to: TEST-plugins-nbp-fx-main
+    created_at: 2026-10-28T17:25:23.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-245737f98b9a
+  - type: implements
+    from: SYM-identity-origin-default-port
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:35.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95f260040799
+  - type: covered_by
+    from: SYM-identity-origin-default-port
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:35.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5177f24fa624
+  - type: implements
+    from: SYM-identity-secret-parse-secret
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:49:36.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48aa41a4f759
+  - type: covered_by
+    from: SYM-identity-secret-parse-secret
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:49:36.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecc18caac9d5
+  - type: implements
+    from: SYM-cmd-openfief-new-scheme
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:39:02.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55e9ab2b0f47
+  - type: covered_by
+    from: SYM-cmd-openfief-new-scheme
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:39:02.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e6a3ffc4025
+  - type: implements
+    from: SYM-valuation-pg-store-index-levels
+    to: REQ-valuation-index-levels
+    created_at: 2026-10-28T22:47:15.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33a3f9596752
+  - type: covered_by
+    from: SYM-valuation-pg-store-index-levels
+    to: TEST-valuation-postgres-index-levels
+    created_at: 2026-10-28T22:47:15.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fa98adf5a45
+  - type: implements
+    from: SYM-views-ghostfolio-httperror-error
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:00:36.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-298574656ec2
+  - type: covered_by
+    from: SYM-views-ghostfolio-httperror-error
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:00:36.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23193c8addbd
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-check-preview
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T01:04:35.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d659bcc48291

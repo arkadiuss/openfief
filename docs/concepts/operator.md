@@ -38,11 +38,11 @@ The operator runs OpenFief's plugins on Kubernetes (D-13). It watches two custom
 | Path | What it holds |
 |---|---|
 | `internal/plugins/operator/v1alpha1` | The API: `Plugin`, `PluginGrant`, `Manifest`, `Permissions`, `PluginStatus` and the condition names ([types.go](../../internal/plugins/operator/v1alpha1/types.go), [groupversion.go](../../internal/plugins/operator/v1alpha1/groupversion.go)); generated deepcopy code |
-| `internal/plugins/operator` | The adapter: `PluginReconciler` ([reconciler.go](../../internal/plugins/operator/reconciler.go)), watches and `GrantReconciler` ([setup.go](../../internal/plugins/operator/setup.go)), status ([status.go](../../internal/plugins/operator/status.go)), resource-to-domain conversion ([convert.go](../../internal/plugins/operator/convert.go)), `BuildObjects` ([objects.go](../../internal/plugins/operator/objects.go)), `ClusterFromServices` ([cluster.go](../../internal/plugins/operator/cluster.go)), `ValidateConfig` ([config.go](../../internal/plugins/operator/config.go)), `ImageVerifier` and `PolicyVerifier` ([verify.go](../../internal/plugins/operator/verify.go)) |
+| `internal/plugins/operator` | The adapter: `PluginReconciler` ([reconciler.go](../../internal/plugins/operator/reconciler.go)), watches and `GrantReconciler` ([setup.go](../../internal/plugins/operator/setup.go)), status ([status.go](../../internal/plugins/operator/status.go)), resource-to-domain conversion ([convert.go](../../internal/plugins/operator/convert.go)), `BuildObjects` ([objects.go](../../internal/plugins/operator/objects.go)), `ClusterFromServices` ([cluster.go](../../internal/plugins/operator/cluster.go)), `ValidateConfig` ([config.go](../../internal/plugins/operator/config.go)), `ImageVerifier` and `PolicyVerifier` ([verify.go](../../internal/plugins/operator/verify.go)), `SigningKeysPublisher` and `IssuerDiscovery` ([signingkeys.go](../../internal/plugins/operator/signingkeys.go)) |
 | `internal/plugins` | The pure domain it calls: `PlanRollout`, `Effective`, `NeedsApproval`, `Compile`, `ParseImageRef`, `EncodeAllowLists`, `TrustPolicy`, `ParseManifestLabel`; the embedded catalog is `internal/plugins/catalog`, empty today |
-| `internal/plugins/cosign` | The signature adapter: `Verifier.Inspect` finds an image's bundles and verifies them with sigstore-go, then reads its manifest label ([verifier.go](../../internal/plugins/cosign/verifier.go), [registry.go](../../internal/plugins/cosign/registry.go)); `TrustedRoot` embeds Sigstore's public-good trust root ([trustroot.go](../../internal/plugins/cosign/trustroot.go)) |
-| `internal/plugins/kube` | The egress proxy's Kubernetes adapter: `AllowLists` follows the ConfigMap the operator writes ([allowlists.go](../../internal/plugins/kube/allowlists.go)); `TokenReviewer` checks plugin tokens for one audience, `openfief-egress` in the proxy ([tokenreview.go](../../internal/plugins/kube/tokenreview.go)) |
-| `cmd/operator` | Wiring: flags, a controller-runtime manager whose cache sees only `openfief`, leader election through a Lease, the trust policy and verifier (`imageVerifier`) ([main.go](../../cmd/operator/main.go)); a distroless, non-root image ([Dockerfile](../../cmd/operator/Dockerfile)) |
+| `internal/plugins/cosign` | The signature adapter: `Verifier.Inspect` finds an image's bundles and verifies them with sigstore-go, then reads its manifest label ([verifier.go](../../internal/plugins/cosign/verifier.go), [registry.go](../../internal/plugins/cosign/registry.go)); `TrustedRoot` embeds Sigstore's public-good trust root ([trustroot.go](../../internal/plugins/cosign/trustroot.go)). The `openfief` CLI uses the same `Verifier`. `cosign/cosigntest` is test support for code outside the package: an in-memory registry and images signed with a fresh key as `cosign sign --key` stores them ([cosigntest.go](../../internal/plugins/cosign/cosigntest/cosigntest.go)) |
+| `internal/plugins/kube` | The plugins context's Kubernetes adapter outside the operator. For the egress proxy: `AllowLists` follows the ConfigMap the operator writes ([allowlists.go](../../internal/plugins/kube/allowlists.go)); `TokenReviewer` checks plugin tokens for one audience, `openfief-egress` in the proxy ([tokenreview.go](../../internal/plugins/kube/tokenreview.go)). For the `openfief` CLI ([instances.go](../../internal/plugins/kube/instances.go)): `Instances` creates, lists and deletes the `Plugin`, `PluginGrant` and Secrets of an instance with the owner's kubeconfig; `OwnerSigners` reads `openfief-trusted-signers` as the operator does; `Resources` and `ResourcesYAML` build the resources an install applies or prints. See [Installing with the CLI](plugins.md#installing-with-the-cli) |
+| `cmd/operator` | Wiring: flags, a controller-runtime manager whose cache sees only `openfief`, leader election through a Lease, the trust policy and verifier (`imageVerifier`), the signing keys publisher ([main.go](../../cmd/operator/main.go)); a distroless, non-root image ([Dockerfile](../../cmd/operator/Dockerfile)) |
 | `cmd/sigstore-trusted-root` | `task trustroot:update`: refreshes `trusted_root.json` through TUF ([main.go](../../cmd/sigstore-trusted-root/main.go)) |
 | `deploy/crds`, `deploy/operator` | Install manifests: the namespace and CRDs; the operator's ServiceAccount, Role, RoleBinding and Deployment |
 
@@ -62,6 +62,7 @@ classDiagram
     status.deployed : the PluginSpec that runs now
     status.effective : Permissions
     status.pendingApproval : Permissions
+    status.signature : trust, signerKind, signer
   }
   class PluginGrant {
     metadata.name : same as its Plugin
@@ -183,7 +184,7 @@ flowchart TD
   decide -- "another trusted signer" --> signed["True: SignedByTrustedSigner"]
 ```
 
-`PolicyVerifier` ([verify.go](../../internal/plugins/operator/verify.go)) turns the outcome into the `SignatureVerified` condition, so the status tells a [verified plugin](../glossary.md) from one only signed by a trusted signer (D-56). It runs for the current spec with its manifest, and again for the previous version with that version's manifest when the previous version would keep running. The manifest label is compared as sets with `spec.manifest` (`Manifest.Equal`), and it is read only from an image a trusted signer signed (D-42). Its signature covers the image config, and so the label.
+`PolicyVerifier` ([verify.go](../../internal/plugins/operator/verify.go)) turns the outcome into the `SignatureVerified` condition, so the status tells a [verified plugin](../glossary.md) from one only signed by a trusted signer (D-56). It runs for the current spec with its manifest, and again for the previous version with that version's manifest when the previous version would keep running. While the current spec's condition is `True`, `status.signature` also names who signed: `trust` (`Verified` or `Unverified`), the signer's kind (`OpenFiefCI`, `Publisher` or `Owner`) and its name, such as `openfief-ci` or a name from `signers.json`. The core reads it, with the condition, to show each instance's trust in the [read API](read-api.md) and the [built-in UI](ui.md) (D-56); the condition's reason alone can't tell OpenFief's CI from an owner's signer. It is absent while the condition isn't `True`. The manifest label is compared as sets with `spec.manifest` (`Manifest.Equal`), and it is read only from an image a trusted signer signed (D-42). Its signature covers the image config, and so the label.
 
 `cmd/operator` builds the trust policy once at start ([main.go](../../cmd/operator/main.go)). It holds OpenFief's CI (keyless, GitHub Actions, the `images.yml` workflow on `main`), each publisher in the embedded catalog, and the owner's signers from `signers.json` in the optional ConfigMap `openfief-trusted-signers`, mounted at `/etc/openfief/trust`. A missing file adds no signer; an invalid one stops the operator; a change needs a restart. No flag skips the check (D-57). The registry is read anonymously, so plugin images must be public, and the operator needs HTTPS egress to every registry plugins come from and the blob storage it redirects to.
 
@@ -197,6 +198,16 @@ A signed image is cached by digest, at most 256 and emptied when full, so a reco
 
 The operator compiles each running plugin's effective egress hosts into the [egress allow-list](../glossary.md) and writes them to the `openfief-egress-allowlist` ConfigMap (D-32). A running plugin with no egress gets an empty value, meaning "none"; a plugin that doesn't run has no key. On the proxy's side, `kube.WatchAllowLists` follows that one ConfigMap with an informer and swaps the decoded lists in atomically. It fails closed: while the ConfigMap is missing or doesn't decode, no plugin has a list. `kube.TokenReviewer` asks the TokenReview API whether a token is valid for the audience it was built with and returns its username. `cmd/egress-proxy` builds it for `openfief-egress`, so a plugin's core token is refused there, and wraps it in `app.NewCachingTokenReviewer`, which caches accepted reviews for at most five minutes and never past the token's expiry. The proxy's own behavior is documented with the egress proxy.
 
+### Publishing the signing keys for plugins
+
+Only the core may call a plugin, and it proves that with a ServiceAccount token whose audience is the plugin instance (D-59). The SDK checks that token's signature itself, because a plugin can't reach the Kubernetes API for a TokenReview. It needs the cluster's public signing keys and its token issuer, and the operator publishes them.
+
+`SigningKeysPublisher` ([signingkeys.go](../../internal/plugins/operator/signingkeys.go)) reads them with `IssuerDiscovery` from the API server's ServiceAccount issuer discovery endpoints: the issuer from `/.well-known/openid-configuration` and the keys from `/openid/v1/jwks`. It reads the keys from the API server itself, never from the `jwks_uri` the configuration names, which may be an address the operator can't reach. `plugins.ParseSigningKeys` accepts only RSA and EC public keys with key IDs, and the publisher server-side applies them as the ConfigMap `openfief-sa-jwks` (keys `jwks.json` and `issuer`), with its own field manager, `openfief-operator/signing-keys`. It runs once at start, every `--signing-keys-refresh` (ten minutes by default) so a rotated key reaches plugins, and on every change to that ConfigMap, so an edited or deleted one is put back. If the keys can't be read, the published ones stay.
+
+Every plugin pod mounts that ConfigMap read-only at `/var/run/secrets/openfief-sa-jwks`, and its environment names the instance (`OPENFIEF_INSTANCE`), the core's username (`OPENFIEF_CORE_SUBJECT`, from `--core-service-account`, `system:serviceaccount:openfief:openfief-core` by default) and the mount (`OPENFIEF_SA_JWKS_DIR`). The mount isn't optional: until the ConfigMap exists, a plugin pod doesn't start.
+
+The discovery endpoints are non-resource URLs, which no namespaced Role can grant. Kubernetes' default RBAC binds the ClusterRole `system:service-account-issuer-discovery`, which allows reading both, to the group `system:serviceaccounts`, so the operator reads them as any ServiceAccount does and keeps its Role-only footprint (D-15). A cluster that removed that binding has to bind the ClusterRole to `openfief/openfief-operator`; until then plugins get no keys.
+
 ### What runs in the openfief namespace
 
 ```mermaid
@@ -208,8 +219,9 @@ flowchart LR
     op["openfief-operator<br/>Role in openfief only"]
     ts[/"ConfigMap openfief-trusted-signers, optional"/]
     al[/"ConfigMap openfief-egress-allowlist"/]
+    jwks[/"ConfigMap openfief-sa-jwks"/]
     proxy["egress-proxy<br/>Service port 4750"]
-    core["core, not built yet<br/>expected Service openfief-core, port connect"]
+    core["openfief-core<br/>Service port connect"]
     subgraph one["per Plugin NAME"]
       np{{"NetworkPolicy plugin-NAME"}}
       pod["plugin pod<br/>ServiceAccount plugin-NAME, no API token"]
@@ -217,6 +229,8 @@ flowchart LR
   end
   op -- "watch Plugin, PluginGrant; apply objects" --> api
   op -- "one key per running plugin" --> al
+  op -- "issuer and public keys from issuer discovery" --> jwks
+  jwks -. "mounted read-only" .-> pod
   ts -. "mounted, read at start" .-> op
   op -- "referrers, bundles, image config; anonymous HTTPS" --> reg
   proxy -- "watch, Role limited to this ConfigMap" --> al
@@ -229,7 +243,7 @@ flowchart LR
   pod -- "DNS, API server, other pods, direct internet" --x denied["denied"]
 ```
 
-Only plugin pods get NetworkPolicies from the operator; the install manifests give none to the operator or the proxy. The core has no binary or manifest yet. The operator's flags name its Service (`--core-service=openfief-core`, `--core-port=connect`), and until that Service exists, any plugin that would run gets `ClusterUnavailable`.
+Only plugin pods get NetworkPolicies from the operator. The core's install manifest, [deploy/core](../../deploy/core/kustomization.yaml), gives the core its own, which admits plugin pods to its port; the install manifests give none to the operator or the proxy. The operator's flags name the core's Service (`--core-service=openfief-core`, `--core-port=connect`, which `deploy/core` serves on 8081), and until that Service exists, any plugin that would run gets `ClusterUnavailable`.
 
 Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.yaml), [deploy/operator/kustomization.yaml](../../deploy/operator/kustomization.yaml)): a cluster admin runs `kubectl apply -k deploy/crds`, which creates the `openfief` namespace with `pod-security.kubernetes.io/enforce: restricted` and both CRDs. Then `kubectl apply -k deploy/operator` installs the operator, after an overlay pins its image by digest. Its [role.yaml](../../deploy/operator/role.yaml) is generated from the `+kubebuilder:rbac` markers in [reconciler.go](../../internal/plugins/operator/reconciler.go): read `plugins` and `plugingrants`; update their status; update `plugins/finalizers`, which owner references with `blockOwnerDeletion` need; full control of ServiceAccounts, ConfigMaps, Services, Deployments and NetworkPolicies; create and patch events; manage Leases for leader election. All of it is limited to `openfief`, but within the namespace it isn't limited to the operator's own objects: Kubernetes RBAC can't restrict `create` by name.
 
@@ -250,10 +264,10 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 - **D-45**: three kinds of trusted signer; the owner's come from a ConfigMap.
 - **D-48**: each `Plugin` name is an instance with its own ServiceAccount, config, grant and allow-list key. **Gap:** Secret names come from the manifest, and D-42 now makes `spec.manifest` equal the image's label. So two instances of one image always request the same Secrets, and can't have their own as D-48 says.
 - **D-55**: `Plugin` and `PluginGrant` are the only custom resources; no money.
-- **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. No UI shows the status yet.
+- **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`, and `status.signature` names the signer and its kind. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. The read API lists it and the built-in UI shows it ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-57**: nothing deploys without a `True` verification; no flag or setting overrides it.
-- **D-58**: **partly.** Deleting a `Plugin` removes its workload (by garbage collection) and its allow-list key. Its `PluginGrant` and Secrets stay.
-- **D-59**: **partly.** The NetworkPolicy admits ingress only from the core. The core's per-instance tokens exist only as a port, `CoreTokens` in [connectors.go](../../internal/ingest/app/connectors.go), with no implementation, and the ConfigMap of token-signing public keys is not built.
+- **D-58**: **partly.** Deleting a `Plugin` removes its workload (by garbage collection) and its allow-list key. The operator never deletes a `PluginGrant` or a Secret; `openfief plugin uninstall` deletes them ([Plugins](plugins.md#installing-with-the-cli)). The core marks the ledger data of a removed instance when it reads it: an instance with no `Plugin` left is removed ([Read API](read-api.md#installed-plugins-and-removed-instances)).
+- **D-59**: the NetworkPolicy admits ingress only from the core, and the operator publishes the cluster's token-signing public keys in `openfief-sa-jwks`, with which the SDK verifies the core's per-instance TokenRequest tokens.
 - **D-63**: separate `openfief-egress` token, checked by TokenReview and cached. The operator projects it only for plugins with granted egress; `kube.AllowLists` swaps allow-lists atomically and fails closed.
 
 ## Verification
@@ -278,6 +292,8 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 | Egress token only with granted egress; core token always | `TestBuildObjects`; `TestReconcile/granted_plugin_without_egress_gets_only_the_core_token` and the upgrade subtest, which read both tokens from the Deployment | REQ-plugins-egress-token-projected |
 | Proxy side: `openfief-egress` only (a core-only token is refused), ConfigMap followed fail-closed | `TestTokenReviewerReviewToken`, `TestWatchAllowLists*` in [kube_test.go](../../internal/plugins/kube/kube_test.go) | REQ-plugins-egress-proxy-identifies-plugin, REQ-plugins-egress-allow-lists-fail-closed |
 | Accepted reviews cached, bounded, refused ones never | `TestCachingTokenReviewer*` in [tokencache_test.go](../../internal/plugins/app/tokencache_test.go) | REQ-plugins-egress-token-review-cache |
+| The operator's ServiceAccount reads issuer discovery with default RBAC; the keys are published, restored after deletion and kept when the source fails; the core's TokenRequest tokens verify with the SDK from the ConfigMap alone | `TestSigningKeys`, `TestSigningKeysPublisherRuns` in [signingkeys_test.go](../../internal/plugins/operator/signingkeys_test.go) | REQ-plugins-signing-keys-published, REQ-sdk-go-jwks-verifier |
+| Every plugin pod mounts the signing keys and gets its instance name and the core's username | `TestBuildObjects` | REQ-plugins-workload-core-auth |
 | Flags, API types, controller setup | `TestParseFlags` in [main_test.go](../../cmd/operator/main_test.go); `TestAddToScheme`, `TestDeepCopyIsIndependent`; `TestSetupWithManager` | TEST-operator-cmd, TEST-operator-api |
 
 The reconciler tests use envtest: a real `kube-apiserver` and `etcd` with the CRDs from `deploy/crds`, and no other controllers. Run everything with `task test`, which installs envtest 1.36.2 into `.bin/envtest` and sets `KUBEBUILDER_ASSETS`. A plain `go test ./internal/plugins/operator/...` fails those tests fast without it. `task gen:check` fails if the CRDs, `role.yaml` or the deepcopy code differ from what `task gen` generates from the Go markers.
@@ -290,14 +306,10 @@ What the tests don't show:
 - From server-side apply's rules, not a test: a re-apply restores the fields the operator owns, but keeps fields another field manager added, such as an extra container, volume or environment variable added with `kubectl edit`. NetworkPolicy rule lists are atomic, so they are restored whole.
 - The cosign tests run against an in-process registry and sigstore-go's virtual Sigstore. No test reads a real registry such as GHCR or a bundle from the public-good instance; `TestTrustedRoot` only checks that the bundled root loads.
 - From reading the code: the signed-image cache lives in memory. If the operator restarts while a plugin's registry is down, the running version's check is `Unknown`, so the plugin is torn down and comes back on a retry after the registry does.
-- There is no end-to-end suite (`test/e2e` doesn't exist), so no test checks that a real CNI enforces the NetworkPolicies.
+- The end-to-end suite ([test/e2e](../../test/e2e/main_test.go), `task e2e` on kind or k3d) installs the operator with the demo's manifests, but deploys no plugin through it: its images are unsigned (D-57), so the UI runs from a stand-in Deployment. `TestCorePolicyRefusesOtherPods` checks that a real CNI enforces the core's NetworkPolicy; no test checks the operator's per-plugin NetworkPolicies on a real cluster.
 
 ## Not built yet
 
-- **D-46**: the `openfief` CLI and its preview of the signature check. Today `Plugin` and `PluginGrant` are applied by hand, and the catalog lists no plugin.
-- **D-56**: the UI that shows the verification status.
-- Private registries: the operator reads registries anonymously.
-- **D-58**: deleting the grant and Secrets on uninstall, and marking the ledger data of a removed instance.
-- **D-59**: the ConfigMap of the cluster's token-signing public keys, and an implementation of the core's per-instance tokens.
-- **D-12**: end-to-end tests on kind or k3d.
-- The core's Deployment and Service, which the operator expects as `openfief-core`.
+- **D-43**: the catalog lists no plugin, so the `openfief` CLI's preview of the signature check (`cosign.Verifier` and the same trust policy) never shows a verified plugin yet.
+- Private registries: the operator and the CLI read registries anonymously.
+- **D-12**, partly: end-to-end tests of the operator's plugin workloads on kind or k3d. The suite covers the core, the demo dataset and the UI's stand-in; a signed test plugin, deployed by the operator, is not in it.

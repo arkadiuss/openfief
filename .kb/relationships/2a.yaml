@@ -216,3 +216,150 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ba4f8f14dc1
+  - type: implements
+    from: SYM-sdk-go-core-token-algorithms
+    to: REQ-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:49:52.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6d86722974c
+  - type: implements
+    from: SYM-sdk-go-core-token-algorithms
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:49:52.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bbd755c2b1e
+  - type: covered_by
+    from: SYM-sdk-go-core-token-algorithms
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:49:52.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3555ba9b5def
+  - type: implements
+    from: SYM-identity-gen-pb-owner-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:37:54.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c3f2412c11e
+  - type: implements
+    from: SYM-identity-gen-pb-owner-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:37:54.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86715574120c
+  - type: covered_by
+    from: SYM-identity-gen-pb-owner-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:37:54.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a292cc95713b
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:39:05.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4447ab658cd
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:39:05.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69b8c865a727
+  - type: covered_by
+    from: SYM-identity-gen-pb-script-token-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:39:05.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37d49471c8b6
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-authenticator-get
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:53:46.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2573b59d2ece
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-authenticator-get
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:46.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49aca010783a
+  - type: implements
+    from: SYM-ui-instrument-key
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:50:51.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e4f0564c819
+  - type: covered_by
+    from: SYM-ui-instrument-key
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:50:51.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3b4f5289b6b
+  - type: implements
+    from: SYM-plugins-cli-yes-no
+    to: REQ-plugins-cli-list
+    created_at: 2026-10-28T23:37:07.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12b7feed6352
+  - type: covered_by
+    from: SYM-plugins-cli-yes-no
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-28T23:37:07.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bb372198bce
+  - type: implements
+    from: SYM-plugins-cli-cluster
+    to: REQ-plugins-cli-owner-signers
+    created_at: 2026-10-28T23:37:12.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c33b831f791
+  - type: covered_by
+    from: SYM-plugins-cli-cluster
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:37:12.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c94c5811f119
+  - type: implements
+    from: SYM-ingest-postgres-store-bound-instances
+    to: REQ-ingest-bond-lot-handoff
+    created_at: 2026-10-29T01:22:03.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5803b9706fcb
+  - type: covered_by
+    from: SYM-ingest-postgres-store-bound-instances
+    to: TEST-ingest-postgres
+    created_at: 2026-10-29T01:22:03.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f750d12a262
+  - type: implements
+    from: SYM-operator-api-signature-status-deep-copy
+    to: REQ-operator-signature-signer-status
+    created_at: 2026-10-29T03:06:28.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca072e54ab03
+  - type: covered_by
+    from: SYM-operator-api-signature-status-deep-copy
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-29T03:06:28.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d5c7987d2ae

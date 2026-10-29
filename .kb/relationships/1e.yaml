@@ -216,3 +216,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a33eb7110482
+  - type: implements
+    from: SYM-core-conn-in-cluster
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:23:32.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcb2937c1daf
+  - type: covered_by
+    from: SYM-core-conn-in-cluster
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:23:32.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25089f99ab3d
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-iresponse-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:49:13.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-300837c5919f
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-iresponse-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:49:13.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62eea28f0bc6
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-iresponse-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:49:13.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5defd574cc7f
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-session-store
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:26.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85def0603523
+  - type: implements
+    from: SYM-ui-local-http
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:07.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d51a38c9656a
+  - type: covered_by
+    from: SYM-ui-local-http
+    to: TEST-ui-format
+    created_at: 2026-10-28T19:56:07.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06d564c52a83
+  - type: executable_for
+    from: SYM-views-app-test-helper-performance-days
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T21:00:50.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ad6ac668c81
+  - type: constrains
+    from: REQ-portfolio-rebase
+    to: FACT-SUBJECT-CC375F51A146E82A
+    created_at: 2026-10-28T22:11:53.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9f37dde03a6
+  - type: requires_property
+    from: REQ-portfolio-rebase
+    to: FACT-PROP-BA2EF6922940B6FB
+    created_at: 2026-10-28T22:11:53.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc0508aae76e
+  - type: specified_by
+    from: REQ-portfolio-rebase
+    to: SCEN-portfolio-rebase
+    created_at: 2026-10-28T22:11:53.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48a77e0ba9da
+  - type: implements
+    from: SYM-views-ghostfolio-syncer-import-batch
+    to: REQ-views-ghostfolio-dry-run
+    created_at: 2026-10-29T01:03:13.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38e0dd434a68
+  - type: covered_by
+    from: SYM-views-ghostfolio-syncer-import-batch
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:03:13.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6bc7163ba9
+  - type: implements
+    from: SYM-ingest-app-connectors-import-bond-lots
+    to: REQ-ingest-bond-lot-handoff
+    created_at: 2026-10-29T01:16:36.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5a9fbfaaf45
+  - type: covered_by
+    from: SYM-ingest-app-connectors-import-bond-lots
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:16:36.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60ef7101746e
+  - type: implements
+    from: SYM-ingestv1connect-unimplemented-bond-lot-service-handler
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:33:04.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee50e906d9d
+  - type: covered_by
+    from: SYM-ingestv1connect-unimplemented-bond-lot-service-handler
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:33:04.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9706fc364a64

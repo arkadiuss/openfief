@@ -1,0 +1,76 @@
+{{define "scripts"}}
+<script src="/static/vendor/chart-4.5.1.umd.min.js" defer></script>
+<script src="/static/app.js" defer></script>
+{{end}}
+{{define "content"}}
+{{with .Data}}
+<section class="card total" aria-labelledby="total-title">
+  <h2 id="total-title">Total on {{.Date}}</h2>
+  <p class="hero">{{money .Allocation.Total}}</p>
+  <p class="muted">Holdings at their stored valuations plus cash, in the reporting currency.
+    {{if .Flagged}}<a href="/assertions" class="warn">{{.Flagged}} flagged balance assertion(s)</a> need attention.{{end}}</p>
+</section>
+
+<section class="card" aria-labelledby="accounts-title">
+  <h2 id="accounts-title">Accounts</h2>
+  <table>
+    <thead><tr>
+      <th scope="col">Account</th><th scope="col">Institution</th><th scope="col">Sleeve</th>
+      <th scope="col" class="num">Holdings value</th><th scope="col">Valuation</th><th scope="col" class="num">Flagged</th>
+    </tr></thead>
+    <tbody>
+    {{range .Accounts}}
+    <tr>
+      <td><a href="/accounts/{{.Account.Id}}">{{.Account.Name}}</a></td>
+      <td>{{.Account.Institution}}</td>
+      <td>{{.Account.Sleeve}}</td>
+      <td class="num">{{with .Holdings}}{{money .}}{{else}}not valued{{end}}</td>
+      <td>{{status .Status}}</td>
+      <td class="num">{{if .Flagged}}<a class="warn" href="/assertions">{{.Flagged}}</a>{{else}}0{{end}}</td>
+    </tr>
+    {{else}}
+    <tr><td colspan="6">No accounts yet.</td></tr>
+    {{end}}
+    </tbody>
+  </table>
+  <p class="muted">Cash is listed per account on its page, in its own currencies.</p>
+</section>
+
+{{template "allocation" .Allocation}}
+
+<section class="card" aria-labelledby="history-title">
+  <h2 id="history-title">Value over time</h2>
+  {{with .History}}
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}"></canvas></div>
+  <p class="muted">From go-live ({{.From}}) to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and transfers between your accounts don't count as performance.{{with .Value}} Its value with cash on {{$.Data.History.To}} is {{money .}}.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}{{if .Pending}} A revaluation is pending, so the line may still change.{{end}}</p>
+  {{else}}
+  <p>No valued days yet.</p>
+  {{end}}
+  {{with .Model}}
+  <h3>Model portfolio</h3>
+  {{if .BacktestStart}}
+  <p class="muted">The second line is the model portfolio's backtest, rebalanced to its target weights at each year end, 100 on the same first day. Its history runs from {{.BacktestStart}} to {{.BacktestEnd}}.</p>
+  {{else}}
+  <p class="warn">The model portfolio has no backtest yet: some target has no history in the reporting currency.</p>
+  {{end}}
+  <table>
+    <thead><tr><th scope="col">Max drawdown</th><th scope="col" class="num">Fall</th><th scope="col">Peak</th><th scope="col">Trough</th><th scope="col">Over</th></tr></thead>
+    <tbody>
+    {{range .Drawdowns}}
+    <tr>
+      <td>{{.Name}}</td>
+      {{if .Missing}}<td colspan="4" class="warn">No history: {{.Missing}}</td>
+      {{else if not .Peak}}<td colspan="4">No history</td>
+      {{else}}<td class="num">{{if .NeverFell}}never fell{{else}}{{.Depth}}{{end}}</td><td>{{.Peak}}</td><td>{{.Trough}}</td><td>{{.First}} to {{.Last}}</td>
+      {{end}}
+    </tr>
+    {{end}}
+    </tbody>
+  </table>
+  <p class="muted">The worst fall from a peak to a later trough over each one's whole history (D-54): the model over its backtest, each target in the reporting currency from its first day with a price and an FX rate.</p>
+  {{end}}
+  {{end}}
+</section>
+{{end}}
+{{end}}

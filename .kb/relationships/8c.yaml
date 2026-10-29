@@ -160,3 +160,178 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-924b789fb74f
+  - type: implements
+    from: SYM-ingest-sched-app-sync-state
+    to: REQ-ingest-scheduler-due
+    created_at: 2026-10-28T16:51:46.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6b019fd4b7
+  - type: covered_by
+    from: SYM-ingest-sched-app-sync-state
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:51:46.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae1f51bc8ae
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-mem-bindings-bind
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:55:01.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32421b3eb449
+  - type: constrains
+    from: REQ-plugins-ibkr-flex-connector
+    to: FACT-SUBJECT-5E0FEE059B9E9693
+    created_at: 2026-10-28T17:07:31.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f506affb001
+  - type: requires_property
+    from: REQ-plugins-ibkr-flex-connector
+    to: FACT-PROP-2DBEEAA051C48C35
+    created_at: 2026-10-28T17:07:31.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54102317a646
+  - type: specified_by
+    from: REQ-plugins-ibkr-flex-connector
+    to: SCEN-plugins-ibkr-flex-modes
+    created_at: 2026-10-28T17:07:31.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-674fb37f7731
+  - type: executable_for
+    from: SYM-e2e-get
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:02:29.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df229933cd58
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-response-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:47:13.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d8b6dfb600b
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-response-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:47:13.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-979abfd93214
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-demo-session-response-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:47:13.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aebcd0d4d7e8
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-response-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:55:27.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-702208952175
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-response-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:55:27.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05e00052cc34
+  - type: covered_by
+    from: SYM-identity-gen-pb-revoke-script-token-response-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:55:27.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d533986f552
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-check-grant
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:38:28.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3834e0266524
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-check-grant
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:28.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97c311524c51
+  - type: implements
+    from: SYM-identity-postgres-auth-scan-passkey
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:47:26.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c193e7677200
+  - type: covered_by
+    from: SYM-identity-postgres-auth-scan-passkey
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:47:26.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33b8124bfa9a
+  - type: implements
+    from: SYM-ui-same-origin
+    to: REQ-ui-browser-security
+    created_at: 2026-10-28T19:55:36.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac9b26ba2c82
+  - type: covered_by
+    from: SYM-ui-same-origin
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:55:36.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2bbe1749f72
+  - type: implements
+    from: SYM-connector-gen-pb-index-level-string
+    to: REQ-ingest-delivery-market-data
+    created_at: 2026-10-28T21:50:53.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f05d8ae442a8
+  - type: covered_by
+    from: SYM-connector-gen-pb-index-level-string
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T21:50:53.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-137106ef6f04
+  - type: validates
+    from: TEST-plugins-app-install
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T22:43:21.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd6fa804711b
+  - type: validates
+    from: TEST-plugins-app-install
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-28T22:43:21.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f75296ca063
+  - type: executable_for
+    from: SYM-portfolio-test-helper-rng-path
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:10.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28756115fe7b
+  - type: executable_for
+    from: SYM-portfolio-test-backtest-target-histories
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:22:24.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b09c0c39e15b

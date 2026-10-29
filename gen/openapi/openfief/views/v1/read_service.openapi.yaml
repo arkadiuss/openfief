@@ -98,6 +98,22 @@ components:
         - ASSERTION_STATUS_MATCHED
         - ASSERTION_STATUS_FLAGGED
       description: AssertionStatus is the result of checking a balance assertion.
+    openfief.views.v1.BacktestDay:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        index:
+          type: string
+          title: index
+          description: |-
+            The backtest as an index, 100 on the response's from, as a decimal
+             string.
+      title: BacktestDay
+      additionalProperties: false
+      description: BacktestDay is the model portfolio's backtest at the end of one day.
     openfief.views.v1.Book:
       type: object
       properties:
@@ -152,6 +168,32 @@ components:
       description: |-
         DateTotal is the sum of the valuations dated on one date, in the
          reporting currency and per original currency, in currency order.
+    openfief.views.v1.Drawdown:
+      type: object
+      properties:
+        peakDate:
+          type: string
+          title: peak_date
+          description: YYYY-MM-DD.
+        troughDate:
+          type: string
+          title: trough_date
+        peakValue:
+          type: string
+          title: peak_value
+          description: The series' values on those days, as decimal strings.
+        troughValue:
+          type: string
+          title: trough_value
+        depth:
+          type: string
+          title: depth
+          description: The fall as a fraction of the peak, such as "0.25" for 25%.
+      title: Drawdown
+      additionalProperties: false
+      description: |-
+        Drawdown is the worst fall of a series from a peak to a later trough. A
+         series that never falls has depth "0" with its first day as both.
     openfief.views.v1.GetAccountRequest:
       type: object
       properties:
@@ -209,6 +251,135 @@ components:
             $ref: '#/components/schemas/openfief.views.v1.UnvaluedHolding'
           title: unvalued
       title: GetAllocationResponse
+      additionalProperties: false
+    openfief.views.v1.GetModelPortfolioRequest:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: |-
+            The first date of days, YYYY-MM-DD; empty, or a date before go-live,
+             means go-live, the first transaction's date. The index is 100 on the
+             first day of days.
+        to:
+          type: string
+          title: to
+          description: |-
+            The last date, inclusive, YYYY-MM-DD; empty means the latest date any
+             account is valued through. Nothing later is used.
+      title: GetModelPortfolioRequest
+      additionalProperties: false
+    openfief.views.v1.GetModelPortfolioResponse:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: The range of days as resolved.
+        to:
+          type: string
+          title: to
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.ModelTarget'
+          title: targets
+          description: The targets in the owner's order.
+        backtestStart:
+          type: string
+          title: backtest_start
+          description: |-
+            The first and last day every target has history, both empty when some
+             target has none or they don't overlap.
+        backtestEnd:
+          type: string
+          title: backtest_end
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.BacktestDay'
+          title: days
+          description: |-
+            One per day from the later of from and backtest_start to the earlier of
+             to and backtest_end, in date order, rebalanced to the weights at the
+             end of each December 31.
+        drawdown:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Drawdown'
+          title: drawdown
+          description: |-
+            The model's max drawdown over its whole backtest, from backtest_start,
+             in index points of a backtest that is 100 on backtest_start.
+        targetHistories:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.ModelTargetHistory'
+          title: target_histories
+          description: Each target's history and max drawdown, in the owner's order.
+        reportingCurrency:
+          type: string
+          title: reporting_currency
+          description: The currency of the backtest and of the targets' values.
+      title: GetModelPortfolioResponse
+      additionalProperties: false
+    openfief.views.v1.GetPerformanceRequest:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: |-
+            The first date, YYYY-MM-DD; empty, or a date before go-live, means
+             go-live. The index is 100 on it.
+        to:
+          type: string
+          title: to
+          description: |-
+            The last date, inclusive, YYYY-MM-DD, at most 3700 days after from;
+             empty means the latest date any account is valued through.
+      title: GetPerformanceRequest
+      additionalProperties: false
+    openfief.views.v1.GetPerformanceResponse:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: |-
+            The range asked for, as resolved; both empty when nothing is recorded
+             yet.
+        to:
+          type: string
+          title: to
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.PerformanceDay'
+          title: days
+          description: One per day from from, in date order, up to to or the gap.
+        gap:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.PerformanceGap'
+          title: gap
+          description: Why days ends before to; unspecified when it doesn't.
+        revaluationPending:
+          type: boolean
+          title: revaluation_pending
+          description: |-
+            A revaluation of some account is pending or running, so the series
+             may change.
+        transfers:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Transfer'
+          title: transfers
+          description: The transfers between the owner's accounts with a leg in the range.
+        reportingCurrency:
+          type: string
+          title: reporting_currency
+          description: The currency of every *_reporting value.
+      title: GetPerformanceResponse
       additionalProperties: false
     openfief.views.v1.GetValuationStatusRequest:
       type: object
@@ -425,6 +596,22 @@ components:
           title: lots
       title: ListLotsResponse
       additionalProperties: false
+    openfief.views.v1.ListPluginsRequest:
+      type: object
+      title: ListPluginsRequest
+      additionalProperties: false
+      description: ListPluginsRequest has no parameters.
+    openfief.views.v1.ListPluginsResponse:
+      type: object
+      properties:
+        plugins:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Plugin'
+          title: plugins
+      title: ListPluginsResponse
+      additionalProperties: false
+      description: ListPluginsResponse lists the installed plugin instances.
     openfief.views.v1.ListSleevesRequest:
       type: object
       title: ListSleevesRequest
@@ -554,6 +741,88 @@ components:
       description: |-
         Lot is an open tax lot. An opening lot was seeded at go-live from what the
          institution reported held.
+    openfief.views.v1.ModelHistoryGap:
+      type: string
+      title: ModelHistoryGap
+      enum:
+        - MODEL_HISTORY_GAP_UNSPECIFIED
+        - MODEL_HISTORY_GAP_NO_CLOSES
+        - MODEL_HISTORY_GAP_NO_FX_RATE
+      description: |-
+        ModelHistoryGap says why a target has no history in the reporting
+         currency.
+    openfief.views.v1.ModelTarget:
+      type: object
+      properties:
+        kind:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ModelTargetKind'
+          title: kind
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+          description: An instrument target's instrument; unset for an index.
+        index:
+          type: string
+          title: index
+          description: |-
+            An index target's name as the market-data connector names it, such as
+             "WIG20"; empty for an instrument.
+        currency:
+          type: string
+          title: currency
+          description: |-
+            An index target's currency, the one its levels are in; empty for an
+             instrument, whose prices carry theirs.
+        weightPercent:
+          type: string
+          title: weight_percent
+          description: |-
+            The weight in percent as a decimal string, such as "60". The weights
+             sum to 100.
+      title: ModelTarget
+      additionalProperties: false
+      description: |-
+        ModelTarget is one instrument or index of the model portfolio, with its
+         weight.
+    openfief.views.v1.ModelTargetHistory:
+      type: object
+      properties:
+        target:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ModelTarget'
+          title: target
+        firstDate:
+          type: string
+          title: first_date
+          description: YYYY-MM-DD; both empty when gap says why there is none.
+        lastDate:
+          type: string
+          title: last_date
+        gap:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ModelHistoryGap'
+          title: gap
+        drawdown:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Drawdown'
+          title: drawdown
+          description: Values in reporting_currency per unit of the target.
+      title: ModelTargetHistory
+      additionalProperties: false
+      description: |-
+        ModelTargetHistory is one target's own history in the reporting currency:
+         its value per unit from its first day with a close (and an FX rate) to its
+         last close, and its max drawdown over it.
+    openfief.views.v1.ModelTargetKind:
+      type: string
+      title: ModelTargetKind
+      enum:
+        - MODEL_TARGET_KIND_UNSPECIFIED
+        - MODEL_TARGET_KIND_INSTRUMENT
+        - MODEL_TARGET_KIND_INDEX
+      description: ModelTargetKind says what a model portfolio target is.
     openfief.views.v1.Money:
       type: object
       properties:
@@ -568,6 +837,116 @@ components:
       title: Money
       additionalProperties: false
       description: Money is an exact decimal amount in one currency.
+    openfief.views.v1.PerformanceDay:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        index:
+          type: string
+          title: index
+          description: |-
+            The time-weighted return since the first day as an index, 100 on the
+             first day, as a decimal string: 105 means 5% up.
+        valueReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: value_reporting
+        holdingsReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: holdings_reporting
+          description: The holdings at their stored valuations.
+        cashReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: cash_reporting
+          description: Every account's cash, converted at the FX rate for the day.
+        inTransitReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: in_transit_reporting
+          description: |-
+            Money withdrawn from one account and not yet deposited into another;
+             negative while the deposit is booked and the withdrawal not yet.
+        flowReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: flow_reporting
+          description: |-
+            The day's net external cash flow: deposits, opening cash and opening
+             lots in, withdrawals out. Taken at the end of the day.
+      title: PerformanceDay
+      additionalProperties: false
+      description: |-
+        PerformanceDay is the portfolio at the end of one day, in the reporting
+         currency. value_reporting is holdings_reporting plus cash_reporting plus
+         in_transit_reporting.
+    openfief.views.v1.PerformanceGap:
+      type: string
+      title: PerformanceGap
+      enum:
+        - PERFORMANCE_GAP_UNSPECIFIED
+        - PERFORMANCE_GAP_UNVALUED
+        - PERFORMANCE_GAP_NO_FX_RATE
+      description: |-
+        PerformanceGap says why a performance series ends before the last date
+         asked for.
+    openfief.views.v1.Plugin:
+      type: object
+      properties:
+        instance:
+          type: string
+          title: instance
+          description: The instance's name, the name of its Plugin resource.
+        image:
+          type: string
+          title: image
+          description: The image reference, pinned by digest.
+        imageDigest:
+          type: string
+          title: image_digest
+          description: The image's digest, such as "sha256:...".
+        capabilities:
+          type: array
+          items:
+            type: string
+          title: capabilities
+          description: 'What the running version may act as: requested and granted (D-16).'
+        requestedCapabilities:
+          type: array
+          items:
+            type: string
+          title: requested_capabilities
+          description: What the image's signed manifest requests.
+        trust:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.SignatureTrust'
+          title: trust
+        signer:
+          type: string
+          title: signer
+          description: The trusted signer's name; empty unless a trusted signer signed it.
+        trustReason:
+          type: string
+          title: trust_reason
+          description: The operator's reason for the trust, such as "Verified" or "Unsigned".
+        phase:
+          type: string
+          title: phase
+          description: |-
+            The operator's Ready reason, such as "Running" or "AwaitingApproval";
+             "Removing" while it is being uninstalled, "Pending" before the operator
+             reconciled it.
+        ready:
+          type: boolean
+          title: ready
+          description: Whether a version of it runs.
+      title: Plugin
+      additionalProperties: false
+      description: Plugin is one installed plugin instance.
     openfief.views.v1.Posting:
       type: object
       properties:
@@ -588,6 +967,21 @@ components:
       title: Posting
       additionalProperties: false
       description: Posting is one leg of a transaction.
+    openfief.views.v1.SignatureTrust:
+      type: string
+      title: SignatureTrust
+      enum:
+        - SIGNATURE_TRUST_UNSPECIFIED
+        - SIGNATURE_TRUST_VERIFIED
+        - SIGNATURE_TRUST_OPENFIEF_CI
+        - SIGNATURE_TRUST_PUBLISHER
+        - SIGNATURE_TRUST_OWNER
+        - SIGNATURE_TRUST_TRUSTED_SIGNER
+        - SIGNATURE_TRUST_REFUSED
+        - SIGNATURE_TRUST_NOT_CHECKED
+      description: |-
+        SignatureTrust is how far an installed plugin's image is trusted (D-45,
+         D-56).
     openfief.views.v1.Sleeve:
       type: object
       properties:
@@ -647,6 +1041,19 @@ components:
           items:
             $ref: '#/components/schemas/openfief.views.v1.Posting'
           title: postings
+        connectorInstance:
+          type: string
+          title: connector_instance
+          description: |-
+            The connector instance whose delivery brought the transaction in, read
+             from its source; empty when no connector instance did.
+        connectorInstanceRemoved:
+          type: boolean
+          title: connector_instance_removed
+          description: |-
+            True when that instance is no longer installed (D-58). The transaction
+             stays; reinstalling the instance under the same name continues from it.
+             False while the core can't tell which instances are installed.
       title: Transaction
       additionalProperties: false
       description: |-
@@ -666,6 +1073,33 @@ components:
         - TRANSACTION_KIND_WITHDRAWAL
         - TRANSACTION_KIND_OPENING_LOT
       description: TransactionKind is what kind of economic event a transaction is.
+    openfief.views.v1.Transfer:
+      type: object
+      properties:
+        withdrawalAccountId:
+          type: string
+          title: withdrawal_account_id
+        withdrawalDate:
+          type: string
+          title: withdrawal_date
+          description: YYYY-MM-DD.
+        depositAccountId:
+          type: string
+          title: deposit_account_id
+        depositDate:
+          type: string
+          title: deposit_date
+          description: YYYY-MM-DD.
+        amount:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: amount
+      title: Transfer
+      additionalProperties: false
+      description: |-
+        Transfer is a withdrawal from one of the owner's accounts matched with a
+         deposit of the same amount and currency into another, at most five days
+         apart: not a cash flow.
     openfief.views.v1.UnvaluedHolding:
       type: object
       properties:
@@ -1039,6 +1473,99 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetAllocationResponse'
+  /v1/model-portfolio:
+    get:
+      tags:
+        - ReadService
+      summary: GetModelPortfolio
+      description: |-
+        GetModelPortfolio returns the model portfolio (D-52) with its backtest
+         (D-53) as an index that starts at 100 on go-live, like the
+         performance series, and the max drawdown of the model and of each
+         target (D-54), in the reporting currency. While the model portfolio is
+         off it fails with NOT_FOUND and says nothing about it.
+      operationId: openfief.views.v1.ReadService.GetModelPortfolio
+      parameters:
+        - name: from
+          in: query
+          description: |-
+            The first date of days, YYYY-MM-DD; empty, or a date before go-live,
+             means go-live, the first transaction's date. The index is 100 on the
+             first day of days.
+          schema:
+            type: string
+            title: from
+        - name: to
+          in: query
+          description: |-
+            The last date, inclusive, YYYY-MM-DD; empty means the latest date any
+             account is valued through. Nothing later is used.
+          schema:
+            type: string
+            title: to
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetModelPortfolioResponse'
+  /v1/performance:
+    get:
+      tags:
+        - ReadService
+      summary: GetPerformance
+      description: |-
+        GetPerformance returns the portfolio's time-weighted return per day
+         (D-61) as an index that starts at 100, with the portfolio's value
+         including cash, in the reporting currency. Deposits and withdrawals are
+         not performance; transfers between the owner's own accounts are not cash
+         flows. The series stops at the last day every account is valued for,
+         and says why.
+      operationId: openfief.views.v1.ReadService.GetPerformance
+      parameters:
+        - name: from
+          in: query
+          description: |-
+            The first date, YYYY-MM-DD; empty, or a date before go-live, means
+             go-live. The index is 100 on it.
+          schema:
+            type: string
+            title: from
+        - name: to
+          in: query
+          description: |-
+            The last date, inclusive, YYYY-MM-DD, at most 3700 days after from;
+             empty means the latest date any account is valued through.
+          schema:
+            type: string
+            title: to
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetPerformanceResponse'
+  /v1/plugins:
+    get:
+      tags:
+        - ReadService
+      summary: ListPlugins
+      description: |-
+        ListPlugins returns the installed plugin instances (D-46, D-48), in
+         name order, each with what it may do and how far its image's signature
+         is trusted (D-56), as the operator recorded them. It only reads: nothing
+         in this API installs, removes or approves a plugin. It fails with
+         UNAVAILABLE when the core can't read the cluster.
+      operationId: openfief.views.v1.ReadService.ListPlugins
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListPluginsResponse'
   /v1/sleeves:
     get:
       tags:
@@ -1104,4 +1631,5 @@ tags:
   - name: ReadService
     description: |-
       ReadService reads the record: sleeves, accounts, transactions, holdings,
-       tax lots, cash, balance assertions, valuations and the allocation.
+       tax lots, cash, balance assertions, valuations, the allocation and the
+       portfolio's performance.

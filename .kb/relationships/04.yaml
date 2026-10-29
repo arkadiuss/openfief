@@ -188,3 +188,269 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5f8e6b0725d
+  - type: executable_for
+    from: SYM-e2e-cnpg-cluster
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:05:44.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f47f05c2afc5
+  - type: implements
+    from: SYM-identity-gen-pb-session-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:36:55.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1009a9ba02e8
+  - type: implements
+    from: SYM-identity-gen-pb-session-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:36:55.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-add34fb32a87
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:36:55.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34673813d980
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-response-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:42:30.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-342900a4dce2
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-response-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:42:30.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a1e855a4b3d
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-response-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:42:30.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225b2f6c6845
+  - type: implements
+    from: SYM-identity-gen-pb-finish-registration-request-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:43:00.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-291eb5352b96
+  - type: implements
+    from: SYM-identity-gen-pb-finish-registration-request-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:43:00.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de9ec88b7ff2
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-registration-request-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:43:00.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8e4821d1ac7
+  - type: implements
+    from: SYM-identity-gen-connect-new-auth-service-handler
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:58:32.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6d087ac5d13
+  - type: implements
+    from: SYM-identity-gen-connect-new-auth-service-handler
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:58:32.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c22e20171089
+  - type: covered_by
+    from: SYM-identity-gen-connect-new-auth-service-handler
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:58:32.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baf1a082f5cb
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-authenticate-refuses-junk
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:35:16.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd7be36c498b
+  - type: implements
+    from: SYM-identity-connectapi-handler-code-of
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:41:08.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9002abde9b1b
+  - type: implements
+    from: SYM-identity-connectapi-handler-code-of
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:41:08.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a278eeac2d02
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-code-of
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:08.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-873392fcef8a
+  - type: implements
+    from: SYM-ui-session-token
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:25.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-558abeeae709
+  - type: covered_by
+    from: SYM-ui-session-token
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:56:25.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d43dc7023306
+  - type: executable_for
+    from: SYM-ui-test-helper-scope-of
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:04:31.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c293e42c0ac3
+  - type: executable_for
+    from: SYM-ui-test-helper-scope-of
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:04:31.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-380351c34450
+  - type: executable_for
+    from: SYM-ui-test-helper-scope-of
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:04:31.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd91719511be
+  - type: implements
+    from: SYM-plugins-eodhd-config
+    to: REQ-plugins-eodhd-config
+    created_at: 2026-10-28T21:42:24.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaebd1243e0e
+  - type: covered_by
+    from: SYM-plugins-eodhd-config
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:42:24.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17c0c4e5f296
+  - type: implements
+    from: SYM-portfolio-pb-model-portfolio
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:23:53.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-918c9767df39
+  - type: covered_by
+    from: SYM-portfolio-pb-model-portfolio
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:23:53.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53ebfdb56ab4
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-rng
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:04:45.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b71a0174046
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-session-swap-round-trip
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:07:26.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-622f2eabb189
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-caller-import-bond-lots
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T01:16:46.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-931b808b3484
+  - type: implements
+    from: SYM-connectorv1-bond-terms-proto-reflect
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:26:14.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c48a325c995d
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-proto-reflect
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:26:14.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a8303b232d
+  - type: implements
+    from: SYM-ingestv1-bond-lot
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:29:27.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96760636669b
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:29:27.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04e42fbced7f
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-response-string
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:31:32.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05580ced44b4
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-response-string
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:31:32.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-178e7a8c3418
+  - type: implements
+    from: SYM-core-with-bond-lot-service
+    to: REQ-core-bond-lot-service
+    created_at: 2026-10-29T01:55:38.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf22248c8932
+  - type: implements
+    from: SYM-core-with-bond-lot-service
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:55:38.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09cecb9c3e77
+  - type: covered_by
+    from: SYM-core-with-bond-lot-service
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:55:38.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09692fc6dccd

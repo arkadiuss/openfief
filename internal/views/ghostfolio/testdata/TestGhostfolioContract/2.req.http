@@ -1,0 +1,9 @@
+POST http://127.0.0.1:3333/api/v1/import?dryRun=false HTTP/1.1
+Host: 127.0.0.1:3333
+User-Agent: Go-http-client/1.1
+Content-Length: 418
+Accept: application/json
+Authorization: SANITIZED
+Content-Type: application/json
+
+{"activities":[{"accountId":"6f2518ca-5394-442f-9e2d-b17303fc27d7","comment":"a fee of my own","currency":"PLN","dataSource":"MANUAL","date":"2025-01-02T00:00:00.000Z","fee":3,"quantity":0,"symbol":"2cfb82e0-7096-5770-a0dc-e2f2d0d6cd2c","type":"FEE","unitPrice":0}],"assetProfiles":[{"currency":"PLN","dataSource":"MANUAL","marketData":[],"name":"OpenFief fees (PLN)","symbol":"2cfb82e0-7096-5770-a0dc-e2f2d0d6cd2c"}]}

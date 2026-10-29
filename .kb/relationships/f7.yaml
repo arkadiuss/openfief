@@ -125,3 +125,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65a838d5988c
+  - type: implements
+    from: SYM-ingest-sched-check-bound
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:55:48.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b28c3af8fb7
+  - type: covered_by
+    from: SYM-ingest-sched-check-bound
+    to: TEST-ingest-binding
+    created_at: 2026-10-28T16:55:48.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-541d0e2c5f3a
+  - type: implements
+    from: SYM-plugins-signing-keys
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:49:30.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-338820ea2eb5
+  - type: covered_by
+    from: SYM-plugins-signing-keys
+    to: TEST-plugins-signing-keys
+    created_at: 2026-10-28T16:49:30.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac49ae0d951c
+  - type: executable_for
+    from: SYM-e2e-test-core-ready-through-service
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:01:31.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7901ba475aa
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-login-methods
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:34:02.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0501d99d449
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-take-ceremony
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:38:50.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2826c5f7d0
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-take-ceremony
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:50.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c93d998a0ee3
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-credentials
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:51:52.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cb70c7901fe
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-credentials
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:51:52.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7821f6ae97dd
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-user-web-authn-credentials
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:51:52.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cca3e1a4e138
+  - type: implements
+    from: SYM-portfolio-backtest-func
+    to: REQ-portfolio-backtest-index
+    created_at: 2026-10-28T22:16:00.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28e02745142b
+  - type: implements
+    from: SYM-portfolio-backtest-func
+    to: REQ-portfolio-backtest-yearly-rebalance
+    created_at: 2026-10-28T22:16:00.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa288c47df6e
+  - type: covered_by
+    from: SYM-portfolio-backtest-func
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:16:00.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2466bc4c51b
+  - type: implements
+    from: SYM-plugins-eodhd-market-data
+    to: REQ-plugins-eodhd-sync
+    created_at: 2026-10-28T21:42:49.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5ab638ab799
+  - type: covered_by
+    from: SYM-plugins-eodhd-market-data
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:42:49.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49c28937bbf8
+  - type: verified_by
+    from: SCEN-views-ghostfolio-read-record
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T00:54:31.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd4e0e49dda6

@@ -94,6 +94,45 @@ func (c *Client) ImportFile(ctx context.Context, instance string, id ingest.Batc
 	return deliveryFrom(resp.Msg.GetDelivery(), id, "")
 }
 
+// ImportBondLots hands lots to instance as batch id. An INVALID_ARGUMENT
+// answer wraps app.ErrEntryRefused with the connector's reason, an
+// UNIMPLEMENTED one app.ErrNoEntries.
+func (c *Client) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (app.Delivery, error) {
+	call, err := c.service(ctx, instance)
+	if err != nil {
+		return app.Delivery{}, fmt.Errorf("%w: %w", app.ErrConnectorUnavailable, err)
+	}
+	req := connect.NewRequest(&connectorv1.ImportBondLotsRequest{BatchId: string(id), Lots: bondLotsTo(lots)})
+	req.Header().Set("Authorization", call.auth)
+	resp, err := call.svc.ImportBondLots(ctx, req)
+	if err != nil {
+		return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, entryError(err))
+	}
+	return deliveryFrom(resp.Msg.GetDelivery(), id, "")
+}
+
+// entryError returns err wrapping app.ErrEntryRefused, with the connector's
+// own message, when the connector answered INVALID_ARGUMENT; wrapping
+// app.ErrNoEntries when it answered UNIMPLEMENTED; and wrapping
+// app.ErrConnectorUnavailable when it could not be reached or answered
+// UNAVAILABLE.
+func entryError(err error) error {
+	code := connect.CodeOf(err)
+	if code == connect.CodeInvalidArgument {
+		if ce, ok := errors.AsType[*connect.Error](err); ok {
+			return fmt.Errorf("%w: %s", app.ErrEntryRefused, ce.Message())
+		}
+		return fmt.Errorf("%w: %w", app.ErrEntryRefused, err)
+	}
+	if code == connect.CodeUnimplemented {
+		return fmt.Errorf("%w: %w", app.ErrNoEntries, err)
+	}
+	if code == connect.CodeUnavailable || code == connect.CodeDeadlineExceeded {
+		return fmt.Errorf("%w: %w", app.ErrConnectorUnavailable, err)
+	}
+	return err
+}
+
 // sendChunks sends src's bytes on stream in chunks of ChunkSize. A send that
 // fails with io.EOF means the connector answered early; CloseAndReceive
 // returns its answer.

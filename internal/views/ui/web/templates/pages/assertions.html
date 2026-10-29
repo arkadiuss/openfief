@@ -1,0 +1,11 @@
+{{define "content"}}
+<p class="muted">A flagged balance assertion is a balance the institution reported that the record does not derive: an error to resolve, usually a missing or wrong import.</p>
+{{range .Data}}
+<section class="card" aria-label="{{.Account.Name}}">
+  <h2><a href="/accounts/{{.Account.Id}}">{{.Account.Name}}</a></h2>
+  {{template "checks" .Checks}}
+</section>
+{{else}}
+<p>No flagged balance assertions.</p>
+{{end}}
+{{end}}

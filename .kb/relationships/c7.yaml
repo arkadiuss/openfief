@@ -188,3 +188,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ae5b500361
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-response-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:44:58.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc6f7eaf16f5
+  - type: implements
+    from: SYM-identity-gen-pb-begin-login-response-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:44:58.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b1490e94642
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-login-response-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:44:58.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fed934ec98ff
+  - type: executable_for
+    from: SYM-identity-app-auth-test-auth-fixture-begun-login
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:43.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8b5b28f8e9b
+  - type: implements
+    from: SYM-identity-session-session-check
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:51:03.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5370a559f253
+  - type: implements
+    from: SYM-identity-session-session-check
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:51:03.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a1a19e6531
+  - type: covered_by
+    from: SYM-identity-session-session-check
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:51:03.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa2dd4d443e3
+  - type: implements
+    from: SYM-ui-refusal-status
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:56:53.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-218ecc39b37f
+  - type: covered_by
+    from: SYM-ui-refusal-status
+    to: TEST-ui-settings
+    created_at: 2026-10-28T19:56:53.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c00f491f37e5
+  - type: implements
+    from: SYM-portfolio-drawdown
+    to: REQ-portfolio-drawdown-depth
+    created_at: 2026-10-28T22:22:33.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c482565859a3
+  - type: implements
+    from: SYM-portfolio-drawdown
+    to: REQ-portfolio-max-drawdown
+    created_at: 2026-10-28T22:22:33.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d758ae7712cf
+  - type: covered_by
+    from: SYM-portfolio-drawdown
+    to: TEST-portfolio-drawdown
+    created_at: 2026-10-28T22:22:33.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b418eed0693c
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-fake-verifier-verify-core
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:45:10.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df1bd6427389
+  - type: implements
+    from: SYM-views-ghostfolio-client-user
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:01:09.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e80be7723511
+  - type: covered_by
+    from: SYM-views-ghostfolio-client-user
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:01:09.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1291e9d0ba2f
+  - type: implements
+    from: SYM-ingest-connectapi-count
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:18:08.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7f97cbb150b
+  - type: implements
+    from: SYM-ingest-connectapi-count
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:18:08.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2005058f02ca
+  - type: covered_by
+    from: SYM-ingest-connectapi-count
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:08.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf75f8ab0315

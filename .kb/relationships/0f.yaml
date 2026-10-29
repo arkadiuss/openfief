@@ -251,3 +251,178 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42c52a4bd1d7
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-check-completion
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:58:43.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49729fba8f04
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-get-session-token
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:41:39.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7c32c62dfe0
+  - type: implements
+    from: SYM-identity-gen-pb-begin-registration-request-get-session-token
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:41:39.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38b381c17a5d
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-registration-request-get-session-token
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:41:39.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60f46a0c2b17
+  - type: implements
+    from: SYM-identity-gen-pb-list-script-tokens-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:53:54.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b00ab35550c5
+  - type: implements
+    from: SYM-identity-gen-pb-list-script-tokens-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:53:54.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caf6284ed91b
+  - type: covered_by
+    from: SYM-identity-gen-pb-list-script-tokens-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:53:54.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f97c86c02e38
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-passkeys
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:06.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa29ead082cb
+  - type: implements
+    from: SYM-identity-app-passkeys-auth-begin-login
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:37:58.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce3f592f7574
+  - type: covered_by
+    from: SYM-identity-app-passkeys-auth-begin-login
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:37:58.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a977acd14b7f
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:40:47.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f53c9f3a758
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:40:47.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e915ac00921
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-caller-interceptor
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:40:47.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7949fd76a862
+  - type: implements
+    from: SYM-identity-postgres-auth-scan-session
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:48:11.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd6782172d53
+  - type: covered_by
+    from: SYM-identity-postgres-auth-scan-session
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:48:11.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69e6c7d20118
+  - type: implements
+    from: SYM-ui-server-remove-passkey
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:57:33.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2c7c4447c8a
+  - type: covered_by
+    from: SYM-ui-server-remove-passkey
+    to: TEST-ui-settings
+    created_at: 2026-10-28T19:57:33.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-633deff00619
+  - type: executable_for
+    from: SYM-ui-test-helper-synthetic-instrument
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:04:49.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c747195de29
+  - type: executable_for
+    from: SYM-ui-test-helper-synthetic-instrument
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:04:49.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21b9915f8be0
+  - type: executable_for
+    from: SYM-ui-test-helper-synthetic-instrument
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:04:49.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd143bfdacc
+  - type: implements
+    from: SYM-cmd-openfief-connect
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:38:56.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-618d71677a1d
+  - type: covered_by
+    from: SYM-cmd-openfief-connect
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:38:56.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b62c0124b4eb
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-model-portfolio
+    to: TEST-views-connectapi-model
+    created_at: 2026-10-28T23:39:58.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07446d319cf5
+  - type: executable_for
+    from: SYM-plugins-ghostfolio-test-new-syncer-with
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:38:45.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7f2aec40036
+  - type: executable_for
+    from: SYM-ingest-delivery-test-helper-lot-message
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-29T01:21:39.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17378d5e27ab

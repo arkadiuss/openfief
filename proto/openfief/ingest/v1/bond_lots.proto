@@ -1,0 +1,83 @@
+// OpenFief's manual treasury bond lot entry contract (docs/DESIGN.md D-9,
+// D-49).
+//
+// The owner enters Polish retail treasury bond lots by hand in the built-in
+// UI, which hands each to the core (D-49). The core hands it to the
+// connector instance bound to the account, through the connector contract's
+// ImportBondLots (proto/openfief/connector/v1/connector.proto), and imports
+// what that connector delivers as one import batch, like any other: data
+// enters the ledger only through a connector's ingest path (D-7). The core
+// serves BondLotService to VIEW plugins only, next to the AuthService. It
+// is not part of the public read API (D-6), which stays read-only.
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto) and the ModelPortfolioService's
+// (proto/openfief/portfolio/v1/model.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - A lot that breaks a rule (an unknown series code, a purchase date that
+//   doesn't match the series or lies in the future, a quantity that is not
+//   a positive whole number, malformed terms) fails with INVALID_ARGUMENT
+//   naming the rule, and nothing is imported.
+// - An account with no connector instance bound to it, or with more than
+//   one, fails with FAILED_PRECONDITION; so does a bound connector that
+//   takes no bond lots. A connector that can't be reached fails with
+//   UNAVAILABLE, and the owner may simply send the lot again.
+syntax = "proto3";
+
+package openfief.ingest.v1;
+
+// BondLotService takes treasury bond lots the owner enters by hand.
+service BondLotService {
+  // AddBondLot hands one lot to the connector bound to its account and
+  // imports what it delivers. Entering a lot of the same series bought on
+  // the same day again replaces it: its quantity and the series' terms are
+  // the ones last entered (D-18).
+  rpc AddBondLot(AddBondLotRequest) returns (AddBondLotResponse);
+}
+
+// BondLot is one lot as the owner enters it: what D-9 names (series,
+// quantity, purchase date), plus the series' terms from its issue letter,
+// which valuing it needs. The bonds were bought for cash at the nominal,
+// 100 PLN each.
+message BondLot {
+  // The series code, such as "EDO0536".
+  string series = 1;
+  // How many bonds: a positive whole number, such as "40".
+  string quantity = 2;
+  // The day the bonds were bought, "YYYY-MM-DD".
+  string purchase_date = 3;
+  // The series' first-period rate in percent, as a decimal string, such as
+  // "6.80".
+  string first_period_rate_percent = 4;
+  // The series' margin in percent, such as "2.00"; "0" for a fixed-rate
+  // series.
+  string margin_percent = 5;
+  // The series' early-redemption fee per bond in PLN, as a decimal string,
+  // such as "2.00".
+  string early_redemption_fee_pln = 6;
+}
+
+message AddBondLotRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The OpenFief account the lot is in.
+  string account_id = 3;
+  BondLot lot = 4;
+}
+
+message AddBondLotResponse {
+  // The import batch the lot came in by.
+  string batch_id = 1;
+  // How many of the batch's transactions were new, new versions of ones
+  // entered before, or unchanged.
+  int32 new = 2;
+  int32 new_versions = 3;
+  int32 unchanged = 4;
+}

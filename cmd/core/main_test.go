@@ -14,6 +14,7 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/arkadiuss/openfief/internal/identity"
+	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
@@ -44,7 +45,33 @@ func defaultServe(t *testing.T) serveConfig {
 		Listen: ":8080", Reporting: pln,
 		EndOfDay: valuationpg.DailyAt{Hour: 23, Minute: 30, Location: warsaw(t)},
 		Workers:  2, BondBasis: valuation.NetIfRedeemed, EnsureDefaults: true, ShutdownTimeout: 25 * time.Second,
+		Sync: syncConfig{
+			Policy:         ingest.SyncPolicy{Interval: 6 * time.Hour, Jitter: 30 * time.Minute, RetryFirst: 5 * time.Minute, RetryMax: time.Hour},
+			Timeout:        5 * time.Minute,
+			ServiceAccount: "openfief-core",
+		},
+		Auth: authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
 	}
+}
+
+// mustOrigins returns the allow-list of texts.
+func mustOrigins(t *testing.T, texts ...string) identity.Origins {
+	t.Helper()
+	o, err := identity.NewOrigins(texts)
+	if err != nil {
+		t.Fatalf("NewOrigins: %v", err)
+	}
+	return o
+}
+
+// mustOrigin parses text.
+func mustOrigin(t *testing.T, text string) identity.Origin {
+	t.Helper()
+	o, err := identity.ParseOrigin(text)
+	if err != nil {
+		t.Fatalf("ParseOrigin: %v", err)
+	}
+	return o
 }
 
 func TestParseArgs(t *testing.T) {
@@ -53,10 +80,25 @@ func TestParseArgs(t *testing.T) {
 	utc := def
 	utc.EndOfDay = valuationpg.DailyAt{Hour: 22, Minute: 5, Location: time.UTC}
 	utc.Listen, utc.Workers, utc.BondBasis, utc.EnsureDefaults, utc.ShutdownTimeout = "127.0.0.1:9090", 4, valuation.GrossAccrued, false, time.Second
+	pod := def
+	pod.Connectors = true
+	tuned := pod
+	tuned.Connectors = false
+	tuned.Sync = syncConfig{
+		Policy:  ingest.SyncPolicy{Interval: time.Hour, Jitter: 0, RetryFirst: time.Minute, RetryMax: 2 * time.Minute},
+		Timeout: time.Minute, ServiceAccount: "core-sa",
+	}
+	authed := def
+	authed.Auth = authConfig{
+		Origins:      mustOrigins(t, "https://dev.example.com", "http://localhost:9000"),
+		Sessions:     identity.SessionPolicy{Idle: time.Hour, Max: 48 * time.Hour},
+		DemoSessions: true,
+	}
 	tests := []struct {
 		name    string
 		args    []string
 		dsn     string
+		pod     bool // KUBERNETES_SERVICE_HOST is set
 		want    command
 		wantErr error // nil with wantFail: any error
 		fail    bool
@@ -71,6 +113,60 @@ func TestParseArgs(t *testing.T) {
 			},
 			dsn: testDSN, want: command{Name: cmdServe, DSN: testDSN, Serve: utc},
 		},
+		{name: "in a pod, connectors are on", dsn: testDSN, pod: true, want: command{Name: cmdServe, DSN: testDSN, Serve: pod}},
+		{
+			name: "connector flags", pod: true, dsn: testDSN,
+			args: []string{
+				"--connectors=false", "--sync-every=1h", "--sync-jitter=0s",
+				"--sync-retry-first=1m", "--sync-retry-max=2m", "--sync-timeout=1m", "--service-account=core-sa",
+			},
+			want: command{Name: cmdServe, DSN: testDSN, Serve: tuned},
+		},
+		{
+			name: "auth flags", dsn: testDSN,
+			args: []string{
+				"--auth-origin=https://dev.example.com", "--auth-origin", "http://localhost:9000",
+				"--session-idle=1h", "--session-max=48h", "--demo-sessions",
+			},
+			want: command{Name: cmdServe, DSN: testDSN, Serve: authed},
+		},
+		{name: "plain http off localhost", args: []string{"--auth-origin=http://dev.example.com"}, dsn: testDSN, wantErr: identity.ErrInvalidOrigin},
+		{name: "idle above max", args: []string{"--session-idle=10h", "--session-max=1h"}, dsn: testDSN, wantErr: identity.ErrInvalidSessionPolicy},
+		{
+			name: "enroll-link", args: []string{"enroll-link"}, dsn: testDSN,
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "http://localhost:8080"), TTL: 15 * time.Minute}},
+		},
+		{
+			name: "enroll-link for a host", args: []string{"enroll-link", "--host=dev.example.com", "--ttl=1h"}, dsn: testDSN,
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "https://dev.example.com"), TTL: time.Hour}},
+		},
+		{
+			name: "enroll-link for an origin", args: []string{"enroll-link", "--host=https://dev.example.com:8443"}, dsn: testDSN,
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "https://dev.example.com:8443"), TTL: 15 * time.Minute}},
+		},
+		{name: "enroll-link for an IP", args: []string{"enroll-link", "--host=192.0.2.1"}, dsn: testDSN, wantErr: identity.ErrInvalidOrigin},
+		{name: "enroll-link with an argument", args: []string{"enroll-link", "now"}, dsn: testDSN, wantErr: errUsage},
+		{name: "retry max below first", args: []string{"--sync-retry-first=1h", "--sync-retry-max=1m"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
+		{name: "zero sync interval", args: []string{"--sync-every=0s"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
+		{
+			name: "connector bind", args: []string{"connector", "bind", "--instance", "xtb-main", "--account", "acc-1"}, dsn: testDSN,
+			want: command{Name: cmdBind, DSN: testDSN, Connector: connectorArgs{Instance: "xtb-main", Account: "acc-1"}},
+		},
+		{
+			name: "connector sync", args: []string{"connector", "sync", "--instance=xtb-main"}, dsn: testDSN,
+			want: command{Name: cmdSync, DSN: testDSN, Connector: connectorArgs{Instance: "xtb-main"}},
+		},
+		{
+			name: "connector sync in a mode", args: []string{"connector", "sync", "--instance=xtb-main", "--mode=transactions"}, dsn: testDSN,
+			want: command{Name: cmdSync, DSN: testDSN, Connector: connectorArgs{Instance: "xtb-main", Mode: ingest.ModeTransactions}},
+		},
+		{name: "connector without subcommand", args: []string{"connector"}, dsn: testDSN, wantErr: errUsage},
+		{name: "connector sync with no instance flag", args: []string{"connector", "sync", "--mode=opening"}, dsn: testDSN, wantErr: errNoInstance},
+		{name: "connector bind without an account", args: []string{"connector", "bind", "--instance=x"}, dsn: testDSN, wantErr: errNoAccount},
+		{name: "connector bind with a mode", args: []string{"connector", "bind", "--instance=x", "--account=a", "--mode=opening"}, dsn: testDSN, wantErr: errUsage},
+		{name: "connector sync with an account", args: []string{"connector", "sync", "--instance=x", "--account=a"}, dsn: testDSN, wantErr: errUsage},
+		{name: "connector sync in an unknown mode", args: []string{"connector", "sync", "--instance=x", "--mode=full"}, dsn: testDSN, wantErr: errBadMode},
+		{name: "connector sync with an argument", args: []string{"connector", "sync", "--instance=x", "now"}, dsn: testDSN, wantErr: errUsage},
 		{name: "migrate", args: []string{"migrate"}, dsn: testDSN, want: command{Name: cmdMigrate, DSN: testDSN}},
 		{name: "token issue", args: []string{"token", "issue", "--name", "demo", "--ttl", "168h"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "demo", TTL: 168 * time.Hour}},
 		{name: "token issue default lifetime", args: []string{"token", "issue", "--name=x"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour}},
@@ -100,8 +196,11 @@ func TestParseArgs(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			got, err := parseArgs(tt.args, func(k string) string {
-				if k == dsnEnv {
+				switch {
+				case k == dsnEnv:
 					return tt.dsn
+				case k == inClusterEnv && tt.pod:
+					return "192.0.2.1"
 				}
 				return ""
 			})

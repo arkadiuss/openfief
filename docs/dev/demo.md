@@ -30,7 +30,7 @@ A demo is one Hetzner Cloud server running k3s. cloud-init installs pinned k3s a
 | `task demo:status ENV=demo` | Shows the server, its IPv4, the firewall, the DNS records and the project's monthly cost. |
 | `task demo:down ENV=demo CONFIRM=demo` | Deletes every resource labelled `app=openfief,env=demo`, server first, then the demo's throwaway SSH key and its DNS records. |
 | `task demo:recreate ENV=demo CONFIRM=demo` | `down`, then `up`: a fresh machine from the current cloud-init and pins. The DNS records stay and follow the new machine. |
-| `task dns:docs:plan`, `task dns:docs` | Shows, then makes, the docs site's record ([DNS](#dns)). |
+| `task dns:site:plan`, `task dns:site` | Shows, then makes, the website's records at the apex and `www` ([DNS](#dns)). |
 
 `ENV` names the demo: `task demo:up ENV=try-beta` makes a second, separate one (`openfief-try-beta`), if the budget allows it. Settings come from the shell or the command line:
 
@@ -77,7 +77,7 @@ Why 4 GB is enough: Ubuntu plus k3s (API server, SQLite datastore, kubelet, flan
 - reads its public IPv4 from Hetzner's metadata service and writes the ConfigMap `flux-system/demo-settings` with `DEMO_HOST` (`<ENV>.<DEMO_DOMAIN>`, or `<ipv4-with-dashes>.sslip.io` with `DEMO_DOMAIN=none`) and `DEMO_ACME_SERVER`, which Flux substitutes into the demo's TLS and route layers;
 - places Flux's pinned `install.yaml` (checked against its sha256), plus a `GitRepository` and `Kustomization` for `./deploy/demo`, in k3s's auto-deploy manifests directory, so even the bootstrap is declared rather than applied by hand.
 
-Flux then applies `deploy/demo/stack.yaml` in dependency order: the namespace and CRDs (`deploy/crds`), the CloudNativePG operator from a pinned Helm chart, a one-instance PostgreSQL cluster whose password CloudNativePG generates in the cluster, cert-manager and its Let's Encrypt issuer, the HTTP routes ([URL and TLS](#url-and-tls)), and finally the OpenFief operator, egress proxy, core and demo-seed Job from the signed artifact CI publishes, with images pinned by digest (D-17; see [Deploys](#deploys)).
+Flux then applies `deploy/demo/stack.yaml` in dependency order: the namespace and CRDs (`deploy/crds`), the CloudNativePG operator from a pinned Helm chart, a one-instance PostgreSQL cluster whose password CloudNativePG generates in the cluster, cert-manager and its Let's Encrypt issuer, the HTTP routes ([URL and TLS](#url-and-tls)), and finally the OpenFief operator, egress proxy, core and demo-seed Job from the signed artifact CI publishes, with images pinned by digest (D-17; see [Deploys](#deploys)). The same artifact holds the demo's plugin instances from `deploy/demo/plugins`: one `nbp` instance of the first-party NBP FX connector, with a `PluginGrant` for the connector capability and `api.nbp.pl`, and one `ui` instance of the [built-in UI](../concepts/ui.md), with a `PluginGrant` for the view capability. Table A is public data, so it fits a synthetic demo; IBKR's plugin needs a real account's credentials and is not deployed. `deploy/demo/openfief/image-fields.yaml` tells kustomize that a `Plugin`'s `spec.image` is an image, so the `images:` list pins it like a container's.
 
 The Hetzner disk isn't encrypted by us, so a demo must only ever hold synthetic data: never real broker credentials, account numbers or portfolio data (GR-12).
 
@@ -86,7 +86,7 @@ The Hetzner disk isn't encrypted by us, so a demo must only ever hold synthetic 
 OpenFief itself ships Services only (D-28): `deploy/crds`, `deploy/operator`, `deploy/egress-proxy` and the future `deploy/core` hold no Ingress, and a test in `internal/plugins/operator` keeps it that way. The demo installation adds its own routes on k3s's bundled Traefik, in `deploy/demo/routes`:
 
 - **URL.** `https://<ENV>.<DEMO_DOMAIN>`: `https://demo.openfief.dev` for the demo named `demo`. `task demo:up` prints it, and with `CLOUDFLARE_API_TOKEN` points the name at the machine's IPv4 ([DNS](#dns)); without the token, it prints the `A` record to create by hand, not proxied, so Let's Encrypt's HTTP-01 check reaches the machine. A recreated machine usually gets a new IPv4, and `up` moves the record to it. With `DEMO_DOMAIN=none`, the URL is `https://<ipv4-with-dashes>.sslip.io` instead, such as `https://192-0-2-10.sslip.io` for 192.0.2.10: sslip.io answers that name with the IP inside it, so no DNS record is needed, and the URL changes with the IPv4.
-- **Routes.** Everything under the host goes to Service `openfief-core`, port `http`: the read API, REST under `/v1` and Connect under `/openfief.*` (D-50). The UI gets its own rule when it exists. A demo-only NetworkPolicy in `deploy/demo/openfief` lets Traefik, in `kube-system`, reach the core's port; the core's own policy admits only plugins. Every read API call needs a script token ([Use the read API](#use-the-read-api)).
+- **Routes.** The read API goes to Service `openfief-core`, port `http`: REST under `/v1` and Connect under `/openfief.views.v1.ReadService/` (D-50). Everything else goes to the [built-in UI](../concepts/ui.md), Service `plugin-ui`, port `connect`, which the operator creates for the `ui` instance. Nothing routes to the core's AuthService or its health endpoints. Demo-only NetworkPolicies in `deploy/demo/openfief` let Traefik, in `kube-system`, reach the core's port and the UI's; the core's own policy admits only plugins, and the operator's policy for a plugin only the core (D-59). Every read API call needs a script token ([Use the read API](#use-the-read-api)).
 - **TLS.** cert-manager, from a pinned Helm chart, requests the certificate from Let's Encrypt with an HTTP-01 challenge on port 80 through Traefik. `DEMO_ACME=prod` (the default) gives a browser-trusted certificate; `DEMO_ACME=staging` gives an untrusted one under much higher rate limits. Use staging while you recreate demos repeatedly: production allows only 5 certificates a week for the same set of names, and a demo on `DEMO_DOMAIN` keeps its name across recreations. The ACME account has no email address, so no personal data goes to Let's Encrypt and no expiry mail comes back; cert-manager renews on its own.
 - **Firewall.** 80 and 443/tcp are open to `DEMO_HTTP_CIDRS` (everyone by default); SSH stays limited to `DEMO_SSH_CIDRS`. There's no paid load balancer: servicelb binds Traefik to the machine's own IPv4.
 
@@ -102,7 +102,15 @@ With a `DEMO_DOMAIN` (not `none`) and `CLOUDFLARE_API_TOKEN`, the scripts manage
 
 Each record carries the comment `managed-by=openfief-demo env=<ENV>`, the DNS counterpart of the labels. `plan` lists what would change; `up` creates or updates records until they match the server, so a second `up` changes nothing; `status` lists them; `down` deletes only records with that comment; `recreate` keeps them and points them at the new machine. No record without the comment is ever changed or deleted: if one occupies the demo's name, `plan` and `up` refuse before creating anything. The token reaches curl on its standard input, never as an argument. Without the token, `up` prints the record to create; with `DEMO_DOMAIN=none`, the scripts skip DNS entirely.
 
-The docs site shares the zone. `task dns:docs` makes `docs.<DEMO_DOMAIN>` a DNS-only CNAME to `arkadiuss.github.io` (`DOCS_PAGES_HOST`), with the comment `managed-by=openfief-docs`; `task dns:docs:plan` shows what it would change. It updates only its own record and refuses any other record at that name. The demo's records and the docs record have different comments, so neither ever touches the other's.
+The website shares the zone: GitHub Pages serves the landing page at `https://<DEMO_DOMAIN>/` and the docs under `/docs/` ([docs.md](docs.md#build-and-publishing)). `task dns:site` keeps its records, each DNS-only (GitHub Pages issues its own certificate, so the names must resolve to GitHub) and with the comment `managed-by=openfief-site`; `task dns:site:plan` shows what it would change and changes nothing.
+
+| Record | Value | Why |
+|---|---|---|
+| A, AAAA at `<DEMO_DOMAIN>` | GitHub Pages' four IPv4 and four IPv6 addresses | The apex can't be a CNAME. The list is `site_pages_addresses` in [demo.sh](../../scripts/demo/demo.sh), copied from GitHub's [custom domain page](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain). |
+| CNAME at `www.<DEMO_DOMAIN>` | `arkadiuss.github.io` (`SITE_PAGES_OWNER`) | Pages redirects `www` to the apex. |
+| TXT at `_github-pages-challenge-arkadiuss.<DEMO_DOMAIN>` | `GITHUB_PAGES_CHALLENGE` | Only when that variable is set: the value GitHub shows under account Settings > Pages > Verified domains. Verifying the domain stops other accounts from claiming it. Without the variable the record is skipped, and one that exists is left as it is. |
+
+The address records are reconciled as a set: a missing address is created, then an address of ours that is no longer listed is deleted. Only records with the site's comment are changed; a record without it at the apex or `www` with the same type, or a CNAME in the way, makes `dns:site` refuse before changing anything, while the apex's other records, such as MX, are left alone. It also deletes any record still commented `managed-by=openfief-docs`: the retired `docs.<DEMO_DOMAIN>` CNAME, because a CNAME to github.io that no Pages site claims can be taken over by whoever claims it. No `docs.` record exists or is created any more. A redirect from `docs.<DEMO_DOMAIN>` to `/docs/` would need a Cloudflare Single Redirect rule (and a proxied record for it to act on); the token has no Rulesets permission, so that isn't automated. The demo's records and the site's have different comments, so `demo:down` never deletes a site record and `dns:site` never touches a demo's.
 
 ## SSH
 
@@ -134,7 +142,7 @@ The tunnelled kubeconfig points at `127.0.0.1`, which `task e2e` takes for a loc
 
 ## Use the read API
 
-The core serves the read API (D-50) at `https://demo.openfief.dev`: REST under `/v1` and Connect under `/openfief.views.v1.ReadService/`. Every call needs a [script token](../glossary.md) (D-27); `/healthz` and `/readyz` need none and return no data. The core's image has no shell, so issue a token by running the binary itself in its pod:
+The core serves the read API (D-50) at `https://demo.openfief.dev`: REST under `/v1` and Connect under `/openfief.views.v1.ReadService/`. Every call needs a [script token](../glossary.md) (D-27). The core's `/healthz` and `/readyz` are not routed: reach them through `kubectl port-forward`. The core's image has no shell, so issue a token by running the binary itself in its pod:
 
 ```bash
 ssh root@"$ip" k3s kubectl -n openfief exec deploy/openfief-core -- /core token issue --name demo --ttl 168h
@@ -163,12 +171,11 @@ Deploys are automatic GitOps pulls: a merge to `main` reaches the demo with no m
 
 The committed digests in `deploy/demo/openfief` stay placeholders (all zeros): CI fills them in on its own checkout every time, so no deploy commit is ever needed. Until the first artifact exists, `demo-openfief` waits for its source while the other layers run. `task demo:validate` (part of `task check`) builds every layer and fails if an image isn't pinned by digest or an OCI source doesn't require a cosign signature.
 
-To enable the job, the owner:
+The job runs on every push to `main` and every real beta, with no on/off setting: publishing the artifact is harmless when no machine exists, because nothing pulls it. To stop deploys, suspend Flux on the machine or remove the demo with `task demo:down`. For the demo to pick the artifact up, the owner:
 
 1. creates the GitHub Environment `demo` (Settings > Environments) with deployment branches limited to `main` and a required reviewer (see [From the pipeline](#from-the-pipeline));
 2. creates the machine, with `task demo:up ENV=demo` or the Demo infrastructure workflow;
-3. after the first push to `main`, makes the GHCR packages `operator`, `egress-proxy`, `core`, `demo-seed` and `demo-manifests` public (the package's settings > Change visibility), so the cluster pulls them without credentials. A public repository doesn't make its packages public: on 2026-10-28 GHCR refused anonymous pulls of `operator`, `egress-proxy` and `demo-seed`, and `demo-manifests` didn't exist yet. `curl -s "https://ghcr.io/token?scope=repository:arkadiuss/openfief/operator:pull"` returns a token only for a public package;
-4. sets the repository variable `DEMO_ENABLED=true`.
+3. after the first push to `main`, makes the GHCR packages `operator`, `egress-proxy`, `core`, `demo-seed`, `nbp-fx` and `demo-manifests` public (the package's settings > Change visibility), so the cluster pulls them without credentials. A public repository doesn't make its packages public: on 2026-10-28 GHCR refused anonymous pulls of `operator`, `egress-proxy` and `demo-seed`, and `demo-manifests` didn't exist yet. `curl -s "https://ghcr.io/token?scope=repository:arkadiuss/openfief/operator:pull"` returns a token only for a public package.
 
 Every push to `main` and every beta then deploys on its own. A required reviewer on `demo` also gates these deploy jobs; leave it off if deploys should never wait for approval, since the deploy job can't touch the machine itself.
 

@@ -3,6 +3,8 @@ title: Ingest
 description: How statements from institutions enter the ledger, through in-core mappers or connector plugins the core calls, and what the IBKR Flex connector does today.
 covers:
   - internal/ingest/**
+  - proto/openfief/ingest/**
+  - sdk/go/gen/openfief/ingest/**
 ---
 
 The ingest context is the only way data gets into OpenFief's ledger (D-7). A connector reads what an institution reports, translates it into ledger transactions and balance assertions, and lists every row it could not book. The core runs that either with a mapper compiled into it, as for IBKR Flex Query statements today, or by calling a connector plugin over its Connect contract (D-49). This page explains the concepts, shows what `internal/ingest` actually does, and points to the tests that prove it.
@@ -21,7 +23,7 @@ A [mapping](../glossary.md) is what a connector makes of one statement: [transac
 
 **Seeding, then transactions.** OpenFief does not replay an account's full history (D-23). At go-live, an `opening` batch [seeds](../glossary.md) the account from the institution's current state: one opening [lot](../glossary.md) per broker lot, with its original open date and cost, plus the [opening cash](../glossary.md), a deposit (or a withdrawal for a negative balance) against equity, keyed `opening-cash:<currency>:<date>` (D-33). An account whose current transactions include either is seeded, and the ledger refuses to seed it again unless nothing would change. After that, `transactions` batches import transactions from go-live on. Both modes import balance assertions.
 
-**The connector contract.** A connector plugin serves the [connector contract](../glossary.md), `openfief.connector.v1.ConnectorService` in [connector.proto](../../proto/openfief/connector/v1/connector.proto). `Sync` pulls what the institution reported since a [watermark](../glossary.md) the connector returned last time. `ImportFile` maps one statement file. Each call is one import batch, with a batch ID the core generates and reuses on a retry. The answer is a [delivery](../glossary.md): the mapping, plus any end-of-day prices, FX rates and [index readings](../glossary.md) (CPI and the NBP reference rate, for treasury bonds). The core authenticates each call with a short-lived token whose audience is that plugin instance (D-59). It prefixes every delivered transaction's key source with `plugin:<instance>:`, so that no instance can write or supersede another's transactions (D-48).
+**The connector contract.** A connector plugin serves the [connector contract](../glossary.md), `openfief.connector.v1.ConnectorService` in [connector.proto](../../proto/openfief/connector/v1/connector.proto). `Sync` pulls what the institution reported since a [watermark](../glossary.md) the connector returned last time. `ImportFile` maps one statement file. Each call is one import batch, with a batch ID the core generates and reuses on a retry. The answer is a [delivery](../glossary.md): the mapping, plus any end-of-day prices, FX rates, [index readings](../glossary.md) (CPI and the NBP reference rate, for treasury bonds) and [index levels](../glossary.md) (market indices such as WIG20). The core authenticates each call with a short-lived token whose audience is that plugin instance (D-59). It prefixes every delivered transaction's key source with `plugin:<instance>:`, so that no instance can write or supersede another's transactions (D-48).
 
 **Anti-corruption layer.** Eric Evans described this pattern in *Domain-Driven Design* (2003): a translation layer at the boundary, so that a foreign model never leaks into your own. Here there are two boundaries. Each in-core adapter, such as `ibkrflex`, parses the institution's format and keeps IBKR words (position, trade, conid, Flex section and attribute names) to itself. The `connectrpc` adapter translates the contract's protobuf messages, so no generated type reaches the domain or the use cases ([code-organization.md](../dev/code-organization.md)).
 
@@ -33,9 +35,14 @@ A [mapping](../glossary.md) is what a connector makes of one statement: [transac
 
 | Package | What it holds |
 |---|---|
-| `internal/ingest` | Domain types: `Institution`, `Batch`, `Mode`, `Mapping`, `Problem`, `ImportSummary`, `IndexReading`, and key scoping (`ConnectorKeySource`, `ScopeToConnector`). Pure functions, no I/O. [batch.go](../../internal/ingest/batch.go), [problem.go](../../internal/ingest/problem.go), [index.go](../../internal/ingest/index.go), [scope.go](../../internal/ingest/scope.go) |
-| `internal/ingest/app` | `Service`, which runs in-core mappers ([ingest.go](../../internal/ingest/app/ingest.go)), and `Connectors`, which calls connector plugins ([connectors.go](../../internal/ingest/app/connectors.go)), with the ports they need |
+| `internal/ingest` | Domain types: `Institution`, `Batch`, `Mode`, `Mapping`, `Problem`, `ImportSummary`, `IndexReading`, key scoping (`ConnectorKeySource`, `ScopeToConnector`), the [sync policy](../glossary.md) and [connector bindings](../glossary.md) (`CheckBound`, `ValidateInstanceName`). Pure functions, no I/O. [batch.go](../../internal/ingest/batch.go), [problem.go](../../internal/ingest/problem.go), [index.go](../../internal/ingest/index.go), [scope.go](../../internal/ingest/scope.go), [schedule.go](../../internal/ingest/schedule.go), [binding.go](../../internal/ingest/binding.go) |
+| `internal/ingest/app` | `Service`, which runs in-core mappers ([ingest.go](../../internal/ingest/app/ingest.go)), `Connectors`, which calls connector plugins ([connectors.go](../../internal/ingest/app/connectors.go)), `Scheduler`, which owns their syncs ([scheduler.go](../../internal/ingest/app/scheduler.go)), and `Bind` ([bindings.go](../../internal/ingest/app/bindings.go)), with the ports they need |
+| `internal/ingest/kube` | `Discovery`: the running connector instances and their Services' addresses, from the operator's `Plugin` resources and Services through informers ([discovery.go](../../internal/ingest/kube/discovery.go)) |
+| `internal/ingest/postgres` | The `ingest` schema: each instance's watermark and sync state, the import batch history and the connector bindings ([store.go](../../internal/ingest/postgres/store.go), [migrations](../../internal/ingest/postgres/migrations/0001_ingest.sql)) |
 | `internal/ingest/connectrpc` | The core's client of the connector contract and the translation of its messages: [client.go](../../internal/ingest/connectrpc/client.go), [mapping.go](../../internal/ingest/connectrpc/mapping.go) |
+| `internal/ingest/delivery` | The connector plugins' side of the contract, the reverse of `connectrpc`'s translation: `FromMapping` writes a mapping as a `Delivery`, `FXRates` writes FX rates, `Price` an end-of-day close of an instrument, `IndexLevel` a market index's closing level, and `Mode` reads a request's ingest mode ([delivery.go](../../internal/ingest/delivery/delivery.go)). The first-party plugins under [plugins/](../../plugins/) use it ([Plugins](plugins.md#first-party-plugins)) |
+| `internal/ingest/treasurybonds` | The treasury bond connector's logic: `Mapper` turns the owner's [bond lots](../glossary.md) into deposits and buys, and `Instrument` derives a series' instrument ([mapper.go](../../internal/ingest/treasurybonds/mapper.go)). The plugin [plugins/treasury-bonds](../../plugins/treasury-bonds/) serves it |
+| `internal/ingest/connectapi` | The core's `openfief.ingest.v1.BondLotService` ([bond_lots.proto](../../proto/openfief/ingest/v1/bond_lots.proto)), which the built-in UI calls with the owner's lots ([service.go](../../internal/ingest/connectapi/service.go)) |
 | `internal/ingest/ibkrflex` | The IBKR adapter: bounded XML decoding ([decode.go](../../internal/ingest/ibkrflex/decode.go)), the `Mapper` ([mapper.go](../../internal/ingest/ibkrflex/mapper.go), [positions.go](../../internal/ingest/ibkrflex/positions.go), [cashreport.go](../../internal/ingest/ibkrflex/cashreport.go), [trades.go](../../internal/ingest/ibkrflex/trades.go), [cashtx.go](../../internal/ingest/ibkrflex/cashtx.go), [fields.go](../../internal/ingest/ibkrflex/fields.go)) and the Flex Web Service `Client` ([webservice.go](../../internal/ingest/ibkrflex/webservice.go)) |
 
 The domain types, as declared in `internal/ingest`:
@@ -111,7 +118,7 @@ classDiagram
 
 `NewBatch` refuses a batch without an ID, an institution, a source, a known mode or a start date (`ErrInvalidBatch`); the zero `Mode` is not a mode. `Batch.Complete` records the mapping's counts, the ledger's summary and a copy of the problems. `IndexReading.Validate` requires a known index, a date and a source, and a CPI reading dated on the first of its month (`ErrInvalidIndexReading`). `ScopeToConnector` returns copies of transactions whose key source is `plugin:<instance>:<source>`; an empty source stays empty, so the ledger still rejects it.
 
-The ports are declared in `app`, by their consumer. Some adapters have the matching methods. The ledger is connected only in `cmd/demo-seed`, whose `importer` turns the ledger's summary into `ingest.ImportSummary`; no product binary connects it, and nothing connects the stores:
+The ports are declared in `app`, by their consumer. `cmd/core` connects them for connector plugins: its `ledgerImporter` turns the ledger's summary into `ingest.ImportSummary` (as `cmd/demo-seed`'s `importer` does for `Service`), and its `valuationInputs` records prices, FX rates and index readings through valuation's `InputRecorder`, each index reading as the reading for the month of its date:
 
 ```mermaid
 flowchart LR
@@ -127,6 +134,13 @@ flowchart LR
   fc["ibkrflex.Client"]
   rc["connectrpc.Client"]
   led["ledger/app.Ledger: Import, Seed<br/>return ledger/app.ImportSummary"]
+  rec["valuation/app.InputRecorder"]
+  sch["app.Scheduler"]
+  ss(["SyncStore, ConnectorBindings"])
+  il(["InstanceLister"])
+  pg["ingest/postgres.Store"]
+  disc["ingest/kube.Discovery"]
+  tok["identity/kube.CoreTokens"]
   svc --> mp
   svc --> sf
   svc --> li
@@ -137,10 +151,18 @@ flowchart LR
   fc -. "matching method" .-> sf
   rc -. "matching methods" .-> cc
   rc --> ct
-  led -. "adapter only in cmd/demo-seed" .-> li
+  led -. "adapters in cmd/demo-seed and cmd/core" .-> li
+  rec -. "adapter in cmd/core" .-> vs
+  sch --> con
+  sch --> ss
+  sch --> il
+  con --> ss
+  pg -. "matching methods" .-> ss
+  disc -. "matching method" .-> il
+  tok -. "matching method" .-> ct
 ```
 
-Nothing implements `CoreTokens` or the three stores yet.
+`identity/kube.CoreTokens` implements `CoreTokens` with the TokenRequest API ([Identity](identity.md)); `connectrpc.Client` gets each instance's address from `Discovery.BaseURL`.
 
 ### Running an in-core mapper
 
@@ -214,7 +236,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
   autonumber
-  participant C as Caller (none yet)
+  participant C as app.Scheduler
   participant U as app.Connectors
   participant R as connectrpc.Client
   participant T as CoreTokens
@@ -237,8 +259,9 @@ sequenceDiagram
     R-->>U: app.Delivery
     U->>U: NewBatch(batch ID, delivery's institution, "sync", mode, Today())
     U->>U: validate every index reading, with the instance as its source
+    U->>U: CheckBound: every account must have a connector binding to the instance, else refused whole
     U->>U: ScopeToConnector: key source becomes plugin, instance, source
-    U->>L: Import(transactions, assertions), in either mode
+    U->>L: Seed in opening mode, Import in transactions mode (seeding refused)
     L-->>U: ImportSummary
     U->>V: StorePrices, StoreFXRates, StoreIndexReadings, source = instance
     Note over U,V: a failed store fails the batch after the ledger import, and the same batch ID makes a retry safe
@@ -247,7 +270,80 @@ sequenceDiagram
   end
 ```
 
-The translation in [mapping.go](../../internal/ingest/connectrpc/mapping.go) refuses, with `ErrInvalidMessage` naming the field: a decimal with an exponent, grouping or a plus sign; a date that isn't `YYYY-MM-DD`; a malformed currency; an ISIN with a wrong check digit or an instrument without a symbol (D-35); a missing amount or delivery; any unspecified enum; a price or FX rate that isn't positive; and a delivery whose `batch_id` isn't the one asked for. The client never scopes keys; `Connectors` does. Every price, FX rate and index reading gets the instance as its source, overwriting what the plugin sent.
+The translation in [mapping.go](../../internal/ingest/connectrpc/mapping.go) refuses, with `ErrInvalidMessage` naming the field: a decimal with an exponent, grouping or a plus sign; a date that isn't `YYYY-MM-DD`; a malformed currency; an ISIN with a wrong check digit or an instrument without a symbol (D-35); a missing amount or delivery; any unspecified enum; a price or FX rate that isn't positive; and a delivery whose `batch_id` isn't the one asked for. The client never scopes keys; `Connectors` does. Every price, FX rate, index reading and index level gets the instance as its source, overwriting what the plugin sent. A delivery's `index_levels` become `valuation.IndexLevel` values, keyed by the index's name exactly as the connector sends it (`IndexLevel.index`, such as `WIG20`); a level without a name, a date or a positive value is refused like a bad price. `Connectors` hands them to its `IndexLevelStore` port, which `cmd/core` implements with valuation's `InputRecorder.RecordIndexLevels`; storing them enqueues no revaluation, since no holding is valued from an index.
+
+### Connector bindings
+
+A connector instance writes only to the accounts the owner bound it to. A [connector binding](../glossary.md) pairs an instance name with a ledger account ID, and `app.Bind` adds one after checking the name (`ValidateInstanceName`: a Plugin's name, a lower-case DNS label of at most 56 characters) and that the account is stored. Before anything is imported, `Connectors.deliver` loads the instance's bindings and `CheckBound` refuses the whole delivery, with an `*UnboundAccountsError` (`ErrAccountNotBound`) naming every other account, if any transaction or balance assertion is in an account the instance isn't bound to. A delivery with only prices, FX rates or index readings, such as a market-data connector's, needs no binding. Key scoping (D-48) keeps instances from overwriting each other's transactions; the binding keeps an instance from writing into an account at all.
+
+### Treasury bond lots
+
+Neither the treasury bond registry nor the bank that sells the bonds offers an API (R-5), so D-9 makes manual entry the bonds' ingest path: the owner types each [bond lot](../glossary.md), its series code, quantity and purchase date, in the built-in UI. D-49 sends it through the core to the right connector, so it enters the ledger like any other delivery, as an import batch of a connector instance with keys scoped to it. Valuing a lot needs its series' [terms](../glossary.md) (first-period rate, margin, early-redemption fee) as well, which D-9 doesn't list; the owner enters them with the lot, from the series' issue letter ([Treasury bonds](treasury-bonds.md#series-terms)).
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant UI as Built-in UI (view plugin)
+  participant S as connectapi BondLotService
+  participant B as app.BondLots
+  participant U as app.Connectors
+  participant P as treasury-bonds plugin
+  participant L as LedgerImporter
+  participant V as BondTermsStore
+  UI->>S: AddBondLot(origin, session, account, lot in percent)
+  Note over S: the view plugin's token, checked by the caller interceptor
+  S->>S: lotFrom: rates from percent to fractions, fee in PLN
+  S->>B: Add(origin, session, account, lot)
+  B->>B: Owners.CheckOwner: an owner-scoped session on an allowed origin
+  B->>B: lot.Validate(Today)
+  B->>B: BoundInstances(account): exactly one, else ErrNoBondConnector
+  B->>U: ImportBondLots(instance, new batch ID, account, lot)
+  U->>P: ConnectorService ImportBondLots, core token for the instance (D-59)
+  P->>P: treasurybonds.Mapper.Map: deposit and buy per lot, terms per series
+  P-->>U: Delivery(transactions, bond_terms)
+  U->>U: CheckBound to the account alone, ScopeToConnector
+  U->>L: Import, a transactions batch with source "entry"
+  U->>V: StoreBondTerms: valuation's RecordBondTerms per series
+  U-->>S: Batch
+  S-->>UI: batch ID, new, new versions, unchanged
+```
+
+- **The rules of a lot** are `ingest.BondLot.Validate` ([bondlot.go](../../internal/ingest/bondlot.go)), pure and shared by the core and the connector: a purchase date no later than today, a margin of zero or more, and a lot that `pl.ValueLot` can value on its purchase date as a cash purchase. That last one refuses an unknown bond type, a purchase date whose maturity misses the series' month, a quantity that isn't a positive whole number, and a negative rate or fee. The core checks it before calling the connector, so the owner gets the reason even when the connector is down, and the connector checks it again before mapping.
+- **The right connector** is the one instance bound to the lot's account ([connector binding](../glossary.md)): `app.BondLots` asks `AccountBindings.BoundInstances` (`postgres.Store.BoundInstances`) and refuses an account with none or several (`ErrNoBondConnector`). The delivery must stay in that one account, or nothing is imported.
+- **The owner only.** `BondLotService` follows the model portfolio's `ModelPortfolioService` ([Portfolio](portfolio.md)): served to view plugins only, with the owner's session and the browser's origin in the request, checked through the `Owners` port, which `cmd/core` implements over the identity context.
+- **The mapping** (`treasurybonds.Mapper.Map`) books each lot as two transactions on its purchase date in the account the instance's config names: a deposit of its cost against equity, quantity times the 100 PLN nominal, and the buy of the bonds for that cost. The account's cash stays at zero, and the money counts as entering the portfolio on the day the bonds were bought, as a deposit does for the time-weighted return (D-61). The keys are `lot:<series>:<purchase date>:deposit` and `:buy` under the source `treasury-bonds:<account>`, so entering a lot of the same series and day again with another quantity is a new version that supersedes it (D-18). One series twice on one day, or with two sets of terms, in one batch is refused.
+- **The instrument.** The owner enters only the series code, and the issuer's offer pages and interest tables name series by code, so `treasurybonds.Instrument` derives the instrument: the series code as its venue symbol, and as its ISIN `PL`, the code, `00` and the check digit that makes it valid, such as `PLEDO0536000`. It is stable, so every lot of a series is one holding, and its `PL` prefix and series symbol make the views count it as a treasury bond. It is not the ISIN the registry may have assigned (see [Decisions](#decisions)).
+- **Valuation.** The delivery's `bond_terms` reach valuation's `InputRecorder.RecordBondTerms` through the `BondTermsStore` port, so holdings of the instrument are valued as bonds by the existing rules (`ValueBondHolding`, [Valuation](valuation.md#valuing-one-holding)), and their accounts revalued from their first transaction. Recording a series' terms again replaces them.
+- **Errors** reach the owner as Connect codes: no valid session `UNAUTHENTICATED`; a read-scoped session or another origin `PERMISSION_DENIED`; a broken rule, or the connector's own refusal (`ErrEntryRefused`, with its reason), `INVALID_ARGUMENT`; an account without its one connector, or a connector that takes no bond lots (`ErrNoEntries`, its `UNIMPLEMENTED`), `FAILED_PRECONDITION`; a connector that can't be reached (`ErrConnectorUnavailable`) `UNAVAILABLE`; anything else `INTERNAL`, logged without amounts and shown without its cause.
+
+### Scheduling syncs
+
+The core owns the schedules, retries and import batches (D-49). `Scheduler` syncs each running connector instance when it is due:
+
+- `InstanceLister` names the instances that run now. An instance that is uninstalled is no longer listed, so it is no longer synced, and its watermark, batches and bindings stay, so reinstalling it under the same name continues from them (D-58).
+- The [sync policy](../glossary.md) (`ingest.SyncPolicy`) sets when: every `Interval` after a success, plus a random jitter of up to `Jitter`, and after a failure again after `RetryFirst`, doubled for each consecutive failure, up to `RetryMax`. An instance that was never synced is due at once.
+- One sync per instance at a time: in the process, `Scheduler` tracks the instances it is syncing; across core replicas, `SyncStore.ClaimSync` claims the instance until the attempt's timeout plus a minute, so a crashed attempt's claim lapses.
+- A failed attempt leaves its import batch open, and the next attempt retries it with the same batch ID and mode, as the connector contract requires. The first batch of an instance is an `opening` batch; once one completes, the instance is seeded and later batches are `transactions` batches (D-23). `SyncNow` runs one attempt at once and can ask for a mode, which abandons an open batch of the other mode.
+- Each attempt has a timeout for the call and the import together. Its outcome is recorded even when the context ended meanwhile.
+
+```mermaid
+stateDiagram-v2
+  direction LR
+  [*] --> open: StartBatch (new batch ID)
+  open --> open: FailSync (attempts + 1, retry after the backoff)
+  open --> completed: CompleteSync (watermark stored, failures reset)
+  open --> abandoned: StartBatch of another mode (SyncNow with a mode)
+  completed --> [*]
+  abandoned --> [*]
+```
+
+**Two transactions, in a safe order.** The ledger import and the valuation inputs are stored in separate database transactions, the ledger first. If storing the inputs fails, the batch fails with the transactions already imported. The retry delivers the same batch again: the ledger finds every transaction unchanged (D-18), and prices, FX rates and index readings replace the rows stored under the same key. The watermark is stored only by `CompleteSync`, after both steps, in the same database transaction that marks the batch completed, so a sync is never skipped.
+
+**Finding the instances.** `kube.Discovery` watches, with client-go informers in the `openfief` namespace, the `Plugin` resources (read as unstructured data, so ingest doesn't depend on the operator's Go types) and the Services labelled `app.kubernetes.io/name: openfief-plugin`. An instance runs when its `Plugin` is not being deleted, its `Ready` condition is `True`, its `status.effective.capabilities` include `connector`, and its Service, found by the label `openfief.io/plugin: <name>`, has a ClusterIP and a port named `connect`. The core calls `http://<ClusterIP>:<port>`, with no DNS lookup. The names are the operator's runtime contract; a test checks them against `internal/plugins/operator`.
+
+**In the core.** `cmd/core serve` runs the scheduler when `--connectors` is on, by default inside a cluster: it starts the informers and the scheduler in the background, ticks every minute, and stops with the process, recording what was in flight. Discovery that can't reach the API server, or a sync that fails, never affects `/readyz`. The flags are `--sync-every` (6h), `--sync-jitter` (30m), `--sync-retry-first` (5m), `--sync-retry-max` (1h), `--sync-timeout` (5m) and `--service-account` (`openfief-core`). `core connector bind --instance NAME --account ID` adds a connector binding; `core connector sync --instance NAME [--mode opening|transactions]` syncs one instance now, as the scheduler would, and prints the batch's counts. Batch IDs are `b-` and 16 random hex digits.
+
+`internal/ingest/postgres` keeps this in the `ingest` schema, migrated by its own runner and advisory lock: `connector_instances` (watermark, seeded, failures, next sync, claim, open batch), `import_batches` (instance, mode, state, attempts, and the completed batch's counts) and `connector_bindings`. It holds IDs, counts and times only, never an amount or an account number.
 
 ### The Flex Web Service client
 
@@ -310,16 +406,25 @@ DESIGN §3.7 lists malicious statement files as a threat. `decode` reads with `e
 - **D-33** Opening cash is booked against the equity ledger account.
 - **D-34** Trade fees go to the fee ledger account.
 - **D-35** Instruments need a valid ISIN and a venue symbol.
-- **D-48** Each instance's transaction keys are scoped to `plugin:<instance>:`.
-- **D-49** Partly: the core calls connectors, one batch per call.
+- **D-48** Each instance's transaction keys are scoped to `plugin:<instance>:`, and each instance writes only to the accounts it is bound to.
+- **D-49** The core calls connectors, one batch per call, and `Scheduler` owns their schedules and retries, with the batches and watermarks in the `ingest` schema. Manual bond lots go through the core to the connector bound to their account (`BondLots`, `ImportBondLots`).
+- **D-9** Treasury bonds through manual lot entry, with valuation computed: the lot's series, quantity and purchase date, plus its series' terms.
+- **D-58** An uninstalled instance is no longer synced; its state and data stay.
 - **D-59** A fresh core token per call, with the instance as audience.
 - **D-32** Partly: the Flex client expects the egress proxy, but doesn't enforce it.
 
 Where the code differs from a decision, a requirement or the glossary:
 
-- **D-23, the plugin path skips the seeding guard.** `Connectors.deliver` ([connectors.go](../../internal/ingest/app/connectors.go)) calls `LedgerImporter.Import` in both modes. An opening delivery for an already seeded account is not refused, and a transactions delivery may carry opening lots or opening cash. Only `Service` seeds through `Seed`. REQ-ingest-app-seed-opening-only says every opening import batch must.
 - **D-23, transactions from go-live.** `transactions` mode books every row in the statement. Nothing compares row dates with go-live, so a statement whose period overlaps the opening statement's would book those rows on top of the opening lots. [problem.go](../../internal/ingest/problem.go) gives "a transaction before go-live" as an example of a skipped row, but no code produces one.
-- **D-49.** The core's side of the contract is built, but nothing calls `Service` or `Connectors`: there is no scheduler, retry loop, or store for batches and watermarks. The IBKR code is still a package inside the core, `internal/ingest/ibkrflex`, not a plugin.
+- **D-49.** File uploads (`Connectors.ImportFile`) have no entry point, and neither uploads nor bond-lot entries are recorded as batches in the store: only syncs are.
+- **D-9, bond lots.** These are this context's narrow readings, not decisions, and the author hasn't reviewed them:
+  - A lot also carries its series' terms, since D-9's three fields can't be valued without them; the owner re-enters them with each lot of a series, and the last entered replace the earlier.
+  - A lot is a deposit and a buy on its purchase date, not an opening lot at go-live (D-23): the ledger refuses to seed an account twice, so lots entered one by one can't each be opening lots. A lot bought before the portfolio's first other transaction therefore moves go-live, and the value-over-time line, back to it.
+  - A lot is bought for cash at the nominal. A purchase by exchange at 99.90 PLN, whose discount is taxed (see the [exchange price](../glossary.md)), can't be entered yet.
+  - The instrument's ISIN is derived from the series code, not the one the registry may assign, so a later import of the bond service's own export (OQ-22) must use the same derivation or hold the same series twice. D-35 asks for "an ISIN with a valid check digit", which the derived one has.
+  - Re-entering a lot of the same series and day replaces it; there is no way to remove a lot.
+- **Index readings.** Valuation keeps one reading per index and month, so a reference rate that takes effect during a month becomes that whole month's reading, and a later change in the same month replaces it.
+- **IBKR.** The IBKR code stays a package, `internal/ingest/ibkrflex`; the plugin [plugins/ibkr-flex](../../plugins/ibkr-flex/) serves it to the core.
 - **Ingest problems.** The glossary and [doc.go](../../internal/ingest/ibkrflex/doc.go) say rows that aren't booked become ingest problems. Rows in sections the mapper doesn't read, and the `BASE_SUMMARY` cash row, are dropped silently.
 - **Glossary names.**
   - There is no `ingest.Connector` type.
@@ -338,14 +443,25 @@ Run every test with `task test`, or only this context with `go test ./internal/i
 | An in-core path maps once and imports once; failures import nothing | [ingest_test.go](../../internal/ingest/app/ingest_test.go): `TestIngestFile`, `TestIngestFileFailures`, `TestPull`, `TestPullFailures` | REQ-ingest-app-ingest-path, TEST-ingest-app |
 | Opening batches seed, transactions batches with seeding transactions are refused | ingest_test.go: `TestIngestSeedsOnlyInOpeningMode` | REQ-ingest-app-seed-opening-only, TEST-ingest-app |
 | Sync and file import through a plugin: scoped keys, sourced inputs, failures | [connectors_test.go](../../internal/ingest/app/connectors_test.go): `TestConnectorsSync`, `TestConnectorsImportFile`, `TestConnectorsFailures` | REQ-ingest-connector-batches, TEST-ingest-app-connectors |
+| A delivery naming an unbound account is refused whole; plugin opening batches seed | [bound_test.go](../../internal/ingest/app/bound_test.go): `TestConnectorsRefuseUnboundAccounts`, `TestConnectorsSeedOnlyInOpeningMode`; [binding_test.go](../../internal/ingest/binding_test.go): `TestCheckBound`, `TestValidateInstanceName` | REQ-ingest-connector-binding, TEST-ingest-app-bound, TEST-ingest-binding |
+| Syncs run when due, retry the same batch with a backoff, one at a time, only for listed instances | [scheduler_test.go](../../internal/ingest/app/scheduler_test.go): `TestSchedulerSyncsWhenDue`, `TestSchedulerRetriesWithTheSameBatch`, `TestSchedulerSyncsOnlyListedInstances`, `TestSchedulerSingleFlight`, `TestSchedulerSyncNow`, `TestSchedulerTimeout`; [schedule_test.go](../../internal/ingest/schedule_test.go): `TestSyncPolicyNextSync` | REQ-ingest-scheduler-due, REQ-ingest-scheduler-retry, REQ-ingest-scheduler-single-flight, TEST-ingest-app-scheduler, TEST-ingest-schedule |
+| Running instances and their addresses come from Plugins and Services, and changes are watched | [discovery_test.go](../../internal/ingest/kube/discovery_test.go): `TestDiscovery`, `TestServiceAddress`, `TestOperatorContract` | REQ-ingest-discovery, TEST-ingest-kube |
+| The core binds, syncs through a real Connect server with its token, refuses an unbound instance, and runs the scheduler on serve (`task test:pg`) | [connectors_test.go](../../cmd/core/connectors_test.go): `TestConnectorBindAndSync`, `TestServeSchedulesConnectors` | REQ-core-connector-commands, TEST-core-connectors |
+| Watermarks, claims, batch history and bindings in PostgreSQL (`task test:pg`) | [store_test.go](../../internal/ingest/postgres/store_test.go): `TestSyncStoreLifecycle`, `TestSyncStoreClaimExpires`, `TestSyncStoreStartBatchAbandonsTheOpenOne`, `TestBindingStore` | REQ-ingest-sync-store, TEST-ingest-postgres |
 | The client calls a real Connect server over h2c with a fresh bearer token; streams files in chunks | [client_test.go](../../internal/ingest/connectrpc/client_test.go): `TestClientSync`, `TestClientImportFile`, `TestClientFailures` | REQ-ingest-core-authenticates-to-connector, TEST-ingest-connectrpc-client |
 | Contract messages translate, malformed ones are refused | [mapping_test.go](../../internal/ingest/connectrpc/mapping_test.go): `TestDeliveryFrom`, `TestDeliveryFromRejects`, `TestValuationInputsFrom`, `TestValuationInputsFromRejects`, `TestPlainDecimal`, `TestModeTo` | REQ-ingest-connector-contract-translation, TEST-ingest-connectrpc-mapping |
+| A plugin's mapping, FX rates, prices, index levels and mode are written as contract messages with exact decimal strings; values without a contract form are refused | [delivery_test.go](../../internal/ingest/delivery/delivery_test.go): `TestFromMapping`, `TestFromMappingRefuses`, `TestFromMappingIBKRStatement`, `TestFXRates`, `TestPriceAndIndexLevel`, `TestMode` | REQ-ingest-delivery-contract-messages, REQ-ingest-delivery-market-data, TEST-ingest-delivery |
+| A bond lot is booked only when it can be valued on its purchase date, no later than today | [bondlot_test.go](../../internal/ingest/bondlot_test.go): `TestBondLotValidate`, `TestBondLotCost` | REQ-ingest-bond-lot-rules, TEST-ingest-bondlot |
+| A bond lot becomes a deposit and a buy of its cost, keyed by series and day; terms once per series; a derived, stable instrument | [mapper_test.go](../../internal/ingest/treasurybonds/mapper_test.go): `TestInstrument`, `TestMap`, `TestMapKeepsKeysAcrossReEntry`, `TestMapRefuses` | REQ-treasurybonds-lot-mapping, TEST-treasurybonds-mapper |
+| The owner's lot goes to the account's one bound connector and is imported as a transactions batch; every refusal imports nothing | [bondlots_test.go](../../internal/ingest/app/bondlots_test.go): `TestBondLotsAdd`, `TestBondLotsAddRefuses`; `TestBoundInstances` in [store_test.go](../../internal/ingest/postgres/store_test.go) (`task test:pg`) | REQ-ingest-bond-lot-handoff, TEST-ingest-app-bondlots, TEST-ingest-postgres |
+| Bond lots and terms cross the contract exactly; a refusal, no support and an unreachable connector stay apart | [bonds_test.go](../../internal/ingest/connectrpc/bonds_test.go): `TestClientImportBondLots`, `TestClientImportBondLotsRefusals`; `TestDeliveryFrom`, `TestDeliveryFromRejects`; [delivery bonds_test.go](../../internal/ingest/delivery/bonds_test.go): `TestBondLots`, `TestBondLotsRefuses`, `TestBondTerms` | REQ-ingest-bond-lot-messages, TEST-ingest-connectrpc-bonds, TEST-ingest-delivery-bonds |
+| `BondLotService` takes the owner's lot from view plugins only, in percent, and answers each failure with its own code | [service_test.go](../../internal/ingest/connectapi/service_test.go): `TestAddBondLot`, `TestAddBondLotRefusals` | REQ-ingest-bond-lot-service, TEST-ingest-connectapi |
 | Flex statements in both modes: lots, cash, transactions, assertions, problems | [golden_test.go](../../internal/ingest/ibkrflex/golden_test.go): `TestMapGolden`, `TestMapValidTransactions` | REQ-ibkrflex-opening, REQ-ibkrflex-transactions, REQ-ibkrflex-assertions, TEST-ibkrflex-golden |
 | Single Flex rows: dates, signs, fees, withholding pairing | [rows_test.go](../../internal/ingest/ibkrflex/rows_test.go): `TestMapTradeRows`, `TestMapCashTransactionRows`, `TestMapOpenPositionRows`, `TestMapCashReportRows` | REQ-ibkrflex-withholding-pairing, TEST-ibkrflex-rows |
 | Hostile Flex input is refused; input at each limit is accepted | [hostile_test.go](../../internal/ingest/ibkrflex/hostile_test.go): `TestMapRefusesHostileInput`, `TestMapAtTheLimits`, `TestMapReadFailure` | REQ-ibkrflex-hostile-input, TEST-ibkrflex-hostile |
 | Flex Web Service: two steps, retry, invalid token, size cap, no token in errors | [webservice_test.go](../../internal/ingest/ibkrflex/webservice_test.go): `TestFetchStatement`, `TestFetchStatementTokenInvalid`, `TestFetchStatementFailures`, `TestFetchStatementStopsWhenCancelled` | REQ-ibkrflex-web-service-pull, TEST-ibkrflex-webservice |
 
-All the ingest requirements above are `default` firmness and say the author hasn't reviewed them yet. The firm D-49 requirements (REQ-ingest-core-calls-connectors, REQ-ingest-core-owns-schedules, REQ-ingest-uploads-through-core) have no test yet. The ledger side is verified there: the one-transaction import by `TestImportHooksRunInTheImportTransaction` in [hook_test.go](../../internal/ledger/app/hook_test.go) (REQ-ledger-app-import-atomic), and the re-seed refusal by TEST-ledger-app-seed (REQ-ledger-seed-refuse-reseed).
+All the ingest requirements above are `default` firmness and say the author hasn't reviewed them yet. Of the firm D-49 requirements, REQ-ingest-core-owns-schedules is verified by the scheduler and store tests; REQ-ingest-uploads-through-core is verified, for bond lots, by TEST-ingest-app-bondlots and TEST-ingest-connectapi; REQ-ingest-core-calls-connectors has no test of its own yet. Of the firm D-9 requirements, TEST-ingest-bondlot and TEST-treasurybonds-mapper validate REQ-AUTO-FD50BCD71546E83F (manual lot entry), and TEST-plugins-treasury-bonds validates REQ-AUTO-FD618A602F7F9106 (a treasury bonds connector). The ledger side is verified there: the one-transaction import by `TestImportHooksRunInTheImportTransaction` in [hook_test.go](../../internal/ledger/app/hook_test.go) (REQ-ledger-app-import-atomic), and the re-seed refusal by TEST-ledger-app-seed (REQ-ledger-seed-refuse-reseed).
 
 The Flex golden files sit next to their fixtures, `opening.xml` and `activity.xml`, in [testdata](../../internal/ingest/ibkrflex/testdata/). To rewrite them after an intended change, run `go test ./internal/ingest/ibkrflex -run TestMapGolden -update` and review the diff line by line.
 
@@ -354,21 +470,15 @@ The Flex golden files sit next to their fixtures, `opening.xml` and `activity.xm
 **Known gaps.** These behaviors have no test, and the first two are bugs:
 
 - In `pairWithholding` ([cashtx.go](../../internal/ingest/ibkrflex/cashtx.go)), a dividend's second withholding row in a different currency resets the dividend's withholding to zero. The first, valid row then vanishes with no problem of its own, and the dividend is booked as if nothing was withheld.
-- An opening delivery from a plugin isn't seeded through `Seed` (see above). `TestConnectorsImportFile` runs an opening batch but doesn't check which ledger call it makes.
 - Rows in sections the Flex mapper doesn't read produce no ingest problem, and `transactions` mode has no go-live cutoff.
 - Nothing checks at compile time that `ibkrflex.Mapper`, `*ibkrflex.Client` and `*connectrpc.Client` satisfy the `app` ports.
 
 ## Not built yet
 
 - **XTB export parser.** Uploaded xStation files (D-9), stocks and ETFs only, with closed CFD results as cash and open CFDs flagged (D-24).
-- **Treasury bonds.** Manual lot entry in the built-in UI, handed to the core (D-9, D-49), and an import of the bond service's own export if one exists (D-9, OQ-22). The connector contract has only `Sync` and `ImportFile`, no call for manual entries.
-- **Connector plugins.** The contract, the core's client and the Go SDK exist, but no connector plugin does. The IBKR code would move into one (D-11, D-49).
-- **Core-owned scheduling.** The daily sync's schedule, retries, and stored import batches and watermarks (D-49).
-- **Entry points.** Upload, CLI and watched folder (D-7). Only `cmd/demo-seed` builds a `Service`, to load the demo dataset; no product binary builds `Service` or `Connectors`.
-- **Adapters for the ports.**
-  - `LedgerImporter`, over `ledger/app.Ledger.Import` and `Seed`, turning flagged checks into `FailedAssertions`.
-  - `CoreTokens`, over Kubernetes' TokenRequest API (D-59).
-  - The price, FX rate and index reading stores.
+- **Treasury bonds.** An import of the bond service's own export, if one exists (D-9, OQ-22), and fetching series terms, CPI and NBP reference rates (DESIGN.md's diagram has the treasury bonds connector fetch them); the owner enters the terms with each lot.
+- **More connector plugins.** `ibkr-flex`, `nbp-fx`, `eodhd` and `treasury-bonds` exist ([Plugins](plugins.md#first-party-plugins)); the XTB parser and the bond service's export has none yet.
+- **Entry points for files.** Upload, CLI and watched folder (D-7). Only `cmd/demo-seed` builds a `Service`, to load the demo dataset; `cmd/core` builds `Connectors` for syncs only, and nothing calls `Connectors.ImportFile` yet.
 - **IBKR prices as a cross-check** for the market-data connector (D-22). A delivery can carry prices, but the Flex mapper doesn't read `tradePrice` or position prices.
 - **Verification against a real account** of the Flex schema, lot-level open dates and cost basis, and how far back one request reaches (OQ-22).
 - **Full history backfill**, which arrives with the tax pack (D-23).

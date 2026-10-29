@@ -1,0 +1,86 @@
+{{define "content"}}
+{{with .Data}}
+<p class="muted">{{.Account.Institution}} · sleeve {{.Account.Sleeve}} · {{status .Status}} · showing {{.Date}}</p>
+{{if .Error}}<p class="error" role="alert">{{.Error}}</p>{{end}}
+
+<section class="card" aria-labelledby="holdings-title">
+  <h2 id="holdings-title">Holdings</h2>
+  <table>
+    <thead><tr><th scope="col">Instrument</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Value</th><th scope="col" class="num">Reporting value</th><th scope="col">Basis</th></tr></thead>
+    <tbody>
+    {{range .Holdings}}
+    <tr>
+      <td>{{instrument .Holding.Instrument}}</td>
+      <td class="num">{{amount .Holding.Quantity}}</td>
+      {{with .Valuation}}
+      <td class="num">{{money .Value}}</td><td class="num">{{money .ValueReporting}}</td><td>{{enum .Basis.String "VALUATION_BASIS_"}}</td>
+      {{else}}
+      <td colspan="3">no valuation on this date</td>
+      {{end}}
+    </tr>
+    {{else}}
+    <tr><td colspan="5">No holdings.</td></tr>
+    {{end}}
+    </tbody>
+  </table>
+</section>
+
+<section class="card" aria-labelledby="cash-title">
+  <h2 id="cash-title">Cash</h2>
+  {{if .Cash}}<ul>{{range .Cash}}<li>{{money .}}</li>{{end}}</ul>{{else}}<p>No cash.</p>{{end}}
+</section>
+
+<section class="card" aria-labelledby="lots-title">
+  <h2 id="lots-title">Open lots</h2>
+  <table>
+    <thead><tr><th scope="col">Instrument</th><th scope="col">Opened</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Cost</th><th scope="col">Origin</th></tr></thead>
+    <tbody>
+    {{range .Lots}}
+    <tr><td>{{instrument .Instrument}}</td><td>{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
+      <td>{{if .Opening}}opening lot{{else}}{{.OriginSource}} {{.OriginExternalId}}{{end}}</td></tr>
+    {{else}}
+    <tr><td colspan="5">No open lots.</td></tr>
+    {{end}}
+    </tbody>
+  </table>
+</section>
+
+{{with .BondLot}}
+<section class="card" aria-labelledby="bond-lot-title">
+  <h2 id="bond-lot-title">Add bond lot</h2>
+  <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each (D-9): the series code, such as EDO0536, how many bonds and the day you bought them, with the series' terms from its issue letter. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
+  <form method="post" action="/accounts/{{$.Data.Account.Id}}/bond-lots" class="row">
+    <label for="lot-series">Series</label>
+    <input id="lot-series" name="series" value="{{.Series}}" required maxlength="7" size="8" pattern="[A-Za-z]{3}[0-9]{4}" autocomplete="off">
+    <label for="lot-quantity">Bonds</label>
+    <input id="lot-quantity" name="quantity" value="{{.Quantity}}" required type="number" min="1" step="1" autocomplete="off">
+    <label for="lot-date">Bought on</label>
+    <input id="lot-date" name="purchase_date" value="{{.PurchaseDate}}" required type="date">
+    <label for="lot-first">First-year rate %</label>
+    <input id="lot-first" name="first_rate" value="{{.FirstRate}}" required inputmode="decimal" size="6" autocomplete="off">
+    <label for="lot-margin">Margin %</label>
+    <input id="lot-margin" name="margin" value="{{.Margin}}" required inputmode="decimal" size="6" autocomplete="off">
+    <label for="lot-fee">Early-redemption fee, PLN per bond</label>
+    <input id="lot-fee" name="fee" value="{{.Fee}}" required inputmode="decimal" size="6" autocomplete="off">
+    <button type="submit" class="primary">Add bond lot</button>
+  </form>
+</section>
+{{end}}
+
+<section class="card" aria-labelledby="checks-title">
+  <h2 id="checks-title">Balance assertions</h2>
+  {{template "checks" .Checks}}
+</section>
+
+<section class="card" aria-labelledby="tx-title">
+  <h2 id="tx-title">Transactions</h2>
+  <table>
+    <thead><tr><th scope="col">Date</th><th scope="col">Kind</th><th scope="col">Description</th><th scope="col">Postings</th><th scope="col">Source</th></tr></thead>
+    <tbody>
+    {{template "transaction-rows" .Transactions}}
+    </tbody>
+  </table>
+  {{if not .Transactions.Transactions}}<p>No transactions.</p>{{end}}
+</section>
+{{end}}
+{{end}}

@@ -1,0 +1,26 @@
+{
+  "capabilities": ["view"],
+  "secrets": [{"name": "ghostfolio-credentials", "mountPath": "/etc/openfief/ghostfolio"}],
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "url": {"type": "string", "pattern": "^https://[^/?#@]+/?$"},
+      "interval": {"type": "string", "pattern": "^([0-9]+([.][0-9]+)?(s|m|h))+$"},
+      "listings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "isin": {"type": "string", "pattern": "^[A-Z]{2}[A-Z0-9]{9}[0-9]$"},
+            "dataSource": {"enum": ["ALPHA_VANTAGE", "COINGECKO", "EOD_HISTORICAL_DATA", "FINANCIAL_MODELING_PREP", "GHOSTFOLIO", "GOOGLE_SHEETS", "RAPID_API", "YAHOO"]},
+            "symbol": {"type": "string", "minLength": 1}
+          },
+          "required": ["isin", "dataSource", "symbol"],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": ["url"],
+    "additionalProperties": false
+  }
+}

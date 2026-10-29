@@ -153,3 +153,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3bb0c91b7bcd
+  - type: executable_for
+    from: SYM-ingest-kube-test-service-address
+    to: TEST-ingest-kube
+    created_at: 2026-10-28T17:27:33.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b7738cd3b2b
+  - type: implements
+    from: SYM-cmd-openfief-cluster-owner-signers
+    to: REQ-plugins-cli-owner-signers
+    created_at: 2026-10-28T23:38:51.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d8b93c134a0
+  - type: covered_by
+    from: SYM-cmd-openfief-cluster-owner-signers
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:38:51.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6c69433ead9
+  - type: implements
+    from: SYM-ingest-connectapi-service
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:17:58.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7ac24c671c9
+  - type: implements
+    from: SYM-ingest-connectapi-service
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:17:58.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5aed2f342ab
+  - type: covered_by
+    from: SYM-ingest-connectapi-service
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:17:58.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db57dddf2aca
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-lot-of
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:20:25.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ace42e8b4197
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-request-proto-message
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:28:12.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b2312fb7378
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-request-proto-message
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:28:12.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13f8b216fff0
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-response-get-unchanged
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:32:09.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce953a551753
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-response-get-unchanged
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:32:09.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77e1ed1a0360
+  - type: executable_for
+    from: SYM-views-app-test-helper-record
+    to: TEST-views-app-plugins
+    created_at: 2026-10-29T03:36:00.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed26618c433b

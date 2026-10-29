@@ -15,6 +15,7 @@ import (
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/getkin/kin-openapi/routers"
 	"github.com/getkin/kin-openapi/routers/legacy"
+	"github.com/google/go-cmp/cmp"
 
 	"github.com/arkadiuss/openfief/internal/views/connectapi"
 )
@@ -122,6 +123,8 @@ func TestREST(t *testing.T) {
 		{"/v1/valuation-status", http.StatusOK},
 		{"/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_ASSET_CLASS", http.StatusOK},
 		{"/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_SLEEVE", http.StatusOK},
+		{"/v1/performance", http.StatusOK},
+		{"/v1/performance?from=2026-03-01&to=2026-03-04", http.StatusOK},
 		{"/v1/accounts/nope", http.StatusNotFound},
 		{"/v1/accounts/nope/holdings?date=2026-03-02", http.StatusNotFound},
 		{"/v1/accounts/nope/valuation-status", http.StatusNotFound},
@@ -134,6 +137,8 @@ func TestREST(t *testing.T) {
 		{"/v1/accounts/acc-1/valuations?from=2026-03-02&to=2026-03-01", http.StatusBadRequest},
 		{"/v1/valuations?from=2000-01-01&to=2026-03-01", http.StatusBadRequest},
 		{"/v1/allocation?date=2026-03-02", http.StatusBadRequest},
+		{"/v1/performance?from=yesterday", http.StatusBadRequest},
+		{"/v1/performance?from=2026-03-02&to=2026-03-01", http.StatusBadRequest},
 	}
 	for _, tt := range tests {
 		t.Run(tt.target, func(t *testing.T) {
@@ -317,5 +322,51 @@ func TestLogNamesNoData(t *testing.T) {
 		if strings.Contains(logged, secret) {
 			t.Errorf("the log contains %q:\n%s", secret, logged)
 		}
+	}
+}
+
+// amount is a Money message's JSON.
+type amount struct {
+	Amount   string `json:"amount"`
+	Currency string `json:"currency"`
+}
+
+// performanceDay is a PerformanceDay message's JSON, without in transit.
+type performanceDay struct {
+	Date     string `json:"date"`
+	Index    string `json:"index"`
+	Value    amount `json:"valueReporting"`
+	Holdings amount `json:"holdingsReporting"`
+	Cash     amount `json:"cashReporting"`
+	Flow     amount `json:"flowReporting"`
+}
+
+// performanceBody is a GetPerformanceResponse message's JSON.
+type performanceBody struct {
+	From               string           `json:"from"`
+	To                 string           `json:"to"`
+	Gap                string           `json:"gap"`
+	RevaluationPending bool             `json:"revaluationPending"`
+	ReportingCurrency  string           `json:"reportingCurrency"`
+	Days               []performanceDay `json:"days"`
+}
+
+func TestRESTPerformance(t *testing.T) {
+	t.Parallel()
+	_, rec := newAPI(t, newLedger(t)).serve(t, http.MethodGet, "/v1/performance?to=2026-03-04", goodToken)
+	var body performanceBody
+	if err := json.Unmarshal(rec.Body.Bytes(), &body); err != nil {
+		t.Fatalf("decoding %s: %v", rec.Body, err)
+	}
+	// Go-live is 2026-03-02, valued through that day: 1043.21 + 126 PLN of
+	// holdings, -90 USD cash at 4.00, and the opening lot flowing in at its
+	// valuation; 03-03 is not valued.
+	pln := func(a string) amount { return amount{Amount: a, Currency: "PLN"} }
+	want := performanceBody{
+		From: "2026-03-02", To: "2026-03-04", Gap: "PERFORMANCE_GAP_UNVALUED", RevaluationPending: true, ReportingCurrency: "PLN",
+		Days: []performanceDay{{"2026-03-02", "100", pln("809.21"), pln("1169.21"), pln("-360"), pln("1043.21")}},
+	}
+	if diff := cmp.Diff(want, body); diff != "" {
+		t.Errorf("GET /v1/performance mismatch (-want +got):\n%s", diff)
 	}
 }

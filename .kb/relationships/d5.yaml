@@ -202,3 +202,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d344f297fa5b
+  - type: implements
+    from: SYM-core-conn-valuation-inputs-store-index-readings
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:24:52.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c67326e153
+  - type: covered_by
+    from: SYM-core-conn-valuation-inputs-store-index-readings
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:24:52.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea29bb30ab74
+  - type: implements
+    from: SYM-ibkr-flex-read-secret-file
+    to: REQ-plugins-ibkr-flex-connector
+    created_at: 2026-10-28T17:22:12.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa0d81b3597a
+  - type: covered_by
+    from: SYM-ibkr-flex-read-secret-file
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:22:12.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7612f9962ad4
+  - type: implements
+    from: SYM-identity-gen-pb-session-get-created-at
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:37:21.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff757c15c2f1
+  - type: implements
+    from: SYM-identity-gen-pb-session-get-created-at
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:37:21.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed4e67d12200
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-get-created-at
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:37:21.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee42110929c5
+  - type: executable_for
+    from: SYM-ui-test-auth-service-gets-plugin-token
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:59:05.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9262adb47dc
+  - type: executable_for
+    from: SYM-portfolio-test-helper-worst-fall
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:39.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e90a5bbe0e8a
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-index-levels
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-28T22:46:46.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d2623d00bb
+  - type: executable_for
+    from: SYM-ingest-test-bond-lot-cost
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-29T01:17:42.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07a1539bac3d

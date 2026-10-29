@@ -3,11 +3,9 @@ package identity
 import (
 	"crypto/sha256"
 	"crypto/subtle"
-	"encoding/base64"
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"strings"
 	"time"
 )
 
@@ -84,10 +82,7 @@ type ScriptTokenID string
 
 // ParseScriptTokenID checks that s is IDBytes bytes in lowercase hex.
 func ParseScriptTokenID(s string) (ScriptTokenID, error) {
-	if len(s) != hex.EncodedLen(IDBytes) || strings.ToLower(s) != s {
-		return "", fmt.Errorf("%w: want %d lowercase hex digits", ErrInvalidID, hex.EncodedLen(IDBytes))
-	}
-	if _, err := hex.DecodeString(s); err != nil {
+	if !isHexID(s) {
 		return "", fmt.Errorf("%w: want %d lowercase hex digits", ErrInvalidID, hex.EncodedLen(IDBytes))
 	}
 	return ScriptTokenID(s), nil
@@ -179,29 +174,17 @@ func (t *ScriptToken) Status(now time.Time) string {
 // FormatSecret returns the secret of the token id with key:
 // SecretPrefix, the ID, "_" and the key in unpadded base64url.
 func FormatSecret(id ScriptTokenID, key []byte) string {
-	return SecretPrefix + string(id) + secretSep + base64.RawURLEncoding.EncodeToString(key)
+	return formatSecret(SecretPrefix, string(id), key)
 }
 
 // ParseSecret splits a secret written by FormatSecret into the token's ID
 // and key. Its errors never contain the secret.
 func ParseSecret(secret string) (ScriptTokenID, []byte, error) {
-	rest, ok := strings.CutPrefix(secret, SecretPrefix)
-	if !ok {
-		return "", nil, fmt.Errorf("%w: no %s prefix", ErrMalformedSecret, SecretPrefix)
-	}
-	idText, keyText, ok := strings.Cut(rest, secretSep)
-	if !ok {
-		return "", nil, fmt.Errorf("%w: no key", ErrMalformedSecret)
-	}
-	id, err := ParseScriptTokenID(idText)
+	parts, err := parseSecret(SecretPrefix, secret, ErrMalformedSecret)
 	if err != nil {
-		return "", nil, fmt.Errorf("%w: bad ID", ErrMalformedSecret)
+		return "", nil, err
 	}
-	key, err := base64.RawURLEncoding.DecodeString(keyText)
-	if err != nil || len(key) != KeyBytes {
-		return "", nil, fmt.Errorf("%w: want a %d-byte base64url key", ErrMalformedSecret, KeyBytes)
-	}
-	return id, key, nil
+	return ScriptTokenID(parts.id), parts.key, nil
 }
 
 // HashKey returns the SHA-256 hash of a token's key: the only form of the

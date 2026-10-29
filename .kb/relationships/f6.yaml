@@ -160,3 +160,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d76af7d6973
+  - type: implements
+    from: SYM-core-auth-cmd-core-auth-new-callers
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:28:43.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1e05e896ebd
+  - type: covered_by
+    from: SYM-core-auth-cmd-core-auth-new-callers
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:28:43.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2684bb950c56
+  - type: constrains
+    from: REQ-plugins-cli-confirmation
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-10-28T23:36:19.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9212ce5ac43
+  - type: requires_property
+    from: REQ-plugins-cli-confirmation
+    to: FACT-PROP-405D38E345AA2497
+    created_at: 2026-10-28T23:36:19.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c08b358edf3
+  - type: specified_by
+    from: REQ-plugins-cli-confirmation
+    to: SCEN-plugins-cli-confirm
+    created_at: 2026-10-28T23:36:19.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c8464227a5c
+  - type: implements
+    from: SYM-ui-drawdown-row
+    to: REQ-ui-overview
+    created_at: 2026-10-29T00:14:37.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb268d696381
+  - type: implements
+    from: SYM-ui-drawdown-row
+    to: REQ-ui-model-portfolio
+    created_at: 2026-10-29T00:14:37.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-933bb94bcfe9
+  - type: covered_by
+    from: SYM-ui-drawdown-row
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:14:37.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87d09c31c9a6
+  - type: implements
+    from: SYM-views-ghostfolio-projector-trade
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:57:29.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-464b163e212e
+  - type: covered_by
+    from: SYM-views-ghostfolio-projector-trade
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:57:29.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7ee2f61e8a6
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-caller-sync
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:53.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-488f65fe1442
+  - type: implements
+    from: SYM-views-pb-list-plugins-response
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:41:53.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2292709e459d
+  - type: implements
+    from: SYM-views-pb-list-plugins-response
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:41:53.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf9b429a47f5
+  - type: covered_by
+    from: SYM-views-pb-list-plugins-response
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:41:53.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7403cc0dfc99
+  - type: implements
+    from: SYM-views-pb-plugin-proto-message
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:42:51.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3134acd988da
+  - type: implements
+    from: SYM-views-pb-plugin-proto-message
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:42:51.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-034cfe6a2be2
+  - type: covered_by
+    from: SYM-views-pb-plugin-proto-message
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:42:51.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7761cd191c91

@@ -167,3 +167,185 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-777421295d9b
+  - type: implements
+    from: SYM-plugins-parse-signing-keys
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:49:34.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4060ea77d696
+  - type: covered_by
+    from: SYM-plugins-parse-signing-keys
+    to: TEST-plugins-signing-keys
+    created_at: 2026-10-28T16:49:34.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f4acf25e422
+  - type: implements
+    from: SYM-identity-gen-pb-passkey-get-name
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:38:37.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2418527c6104
+  - type: implements
+    from: SYM-identity-gen-pb-passkey-get-name
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:38:37.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e1c02757625
+  - type: covered_by
+    from: SYM-identity-gen-pb-passkey-get-name
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:38:37.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa442edde3ac
+  - type: implements
+    from: SYM-core-auth-cmd-core-auth-demo-marker-demo-marked
+    to: REQ-identity-demo-sessions
+    created_at: 2026-10-28T19:29:32.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4fdf459e30e
+  - type: covered_by
+    from: SYM-core-auth-cmd-core-auth-demo-marker-demo-marked
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:29:32.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e6b7b2afdf
+  - type: executable_for
+    from: SYM-identity-app-auth-test-auth-fixture
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:13.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ab835f6757d
+  - type: executable_for
+    from: SYM-ui-test-overview-date
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:01:15.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de9ee41cb5a3
+  - type: executable_for
+    from: SYM-uiplugin-test-manifest
+    to: TEST-ui-plugin
+    created_at: 2026-10-28T20:01:57.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b948a97efa9
+  - type: executable_for
+    from: SYM-core-test-helper-check-performance
+    to: TEST-core-read-api
+    created_at: 2026-10-28T20:59:49.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-053272fb8adb
+  - type: validates
+    from: TEST-plugins-install
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T22:23:46.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b87ec28102dd
+  - type: constrains
+    from: REQ-plugins-cli-permission-summary
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-10-28T23:36:15.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a298e4ac4f7e
+  - type: requires_property
+    from: REQ-plugins-cli-permission-summary
+    to: FACT-PROP-2D51010092A21267
+    created_at: 2026-10-28T23:36:15.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b94182a6f20f
+  - type: specified_by
+    from: REQ-plugins-cli-permission-summary
+    to: SCEN-plugins-cli-permission-summary
+    created_at: 2026-10-28T23:36:15.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4851dd76c997
+  - type: executable_for
+    from: SYM-plugins-cli-test-cli-fake-cluster
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:40:34.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a28ac02e1869
+  - type: constrains
+    from: REQ-portfolio-drawdown-depth
+    to: FACT-SUBJECT-F3582B3F185BE0BB
+    created_at: 2026-10-28T22:11:49.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7e159a0b879
+  - type: requires_property
+    from: REQ-portfolio-drawdown-depth
+    to: FACT-PROP-9743B4E225D0927F
+    created_at: 2026-10-28T22:11:49.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b6a79c47999
+  - type: specified_by
+    from: REQ-portfolio-drawdown-depth
+    to: SCEN-portfolio-drawdown
+    created_at: 2026-10-28T22:11:49.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72b416f5ab69
+  - type: executable_for
+    from: SYM-portfolio-test-helper-must-dec
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:46.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03220641daf9
+  - type: implements
+    from: SYM-portfolio-app-unsupported-reporting-currency-error-error
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:17:17.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b1c961d3335
+  - type: covered_by
+    from: SYM-portfolio-app-unsupported-reporting-currency-error-error
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:17:17.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd3c853a941e
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-owners
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:20:39.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b632c6e76710
+  - type: executable_for
+    from: SYM-portfolio-pg-test-model-round-trip
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:18.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e70c944a49db
+  - type: implements
+    from: SYM-views-ghostfolio-problem-reason
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:56:52.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29e370d142d7
+  - type: covered_by
+    from: SYM-views-ghostfolio-problem-reason
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:56:52.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a2b2635085d

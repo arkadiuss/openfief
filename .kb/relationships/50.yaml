@@ -223,3 +223,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e2f1f5dfea5
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-attempt
+    to: REQ-ingest-scheduler-retry
+    created_at: 2026-10-28T16:52:21.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a47bc7943a9
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-attempt
+    to: REQ-ingest-core-owns-schedules
+    created_at: 2026-10-28T16:52:21.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a470bd08fbc
+  - type: covered_by
+    from: SYM-ingest-sched-app-scheduler-attempt
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:52:21.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c6adeecc7fa
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-clock-now
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:53:51.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-537291555c55
+  - type: executable_for
+    from: SYM-delivery-test-synthetic
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:21:17.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95c4331ab595
+  - type: implements
+    from: SYM-identity-session-session-idle-expires-at
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:50:58.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66d4d0631524
+  - type: covered_by
+    from: SYM-identity-session-session-idle-expires-at
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:50:58.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b03cefa378e
+  - type: executable_for
+    from: SYM-e2e-test-traefik-routes-to-ui
+    to: TEST-e2e-ui
+    created_at: 2026-10-28T20:21:08.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93b41d0af82e
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-sync-with
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:44:49.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18bf35f1f0c7
+  - type: verified_by
+    from: SCEN-plugins-cli-confirm
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:36:03.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4480864c5e16
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-no-market-prices
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:20:26.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5f46c5241aa
+  - type: implements
+    from: SYM-views-pb-model-history-gap
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:40:57.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71d5970ae17e
+  - type: covered_by
+    from: SYM-views-pb-model-history-gap
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:40:57.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27627aeef067
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-model-locked
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:13:52.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3996aacb94e8
+  - type: executable_for
+    from: SYM-ui-test-settings-shows-plugins
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:46.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a02f0b3a1d1

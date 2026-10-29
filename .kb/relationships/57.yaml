@@ -153,3 +153,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32dbbdb5f95d
+  - type: verified_by
+    from: SCEN-identity-demo-sessions
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:26:50.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08e3230d8b8d
+  - type: verified_by
+    from: SCEN-identity-demo-sessions
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:26:50.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dea285b8817f
+  - type: verified_by
+    from: SCEN-identity-demo-sessions
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:26:50.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ac1bfe16f8d
+  - type: executable_for
+    from: SYM-identity-auth-test-test-session-token
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:10.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5b5f85d47d0
+  - type: implements
+    from: SYM-plugins-app-install-request
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T22:43:57.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-097b720bcea4
+  - type: covered_by
+    from: SYM-plugins-app-install-request
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:43:57.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fe84ce84e6f
+  - type: executable_for
+    from: SYM-plugins-ghostfolio-test-helper-round-trip-func
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:38:50.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8be9c8293ec0
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_bond_lots_proto_raw-desc-gzip
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:32:14.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed105d102797
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_bond_lots_proto_raw-desc-gzip
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:32:14.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8207e6642245

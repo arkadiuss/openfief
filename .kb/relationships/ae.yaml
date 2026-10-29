@@ -209,3 +209,206 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e01e86fa86c
+  - type: executable_for
+    from: SYM-e2e-warsaw-today
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:02:59.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b85e19cbaa06
+  - type: implements
+    from: SYM-identity-app-ports-owner-store
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:38:59.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9707350c3822
+  - type: covered_by
+    from: SYM-identity-app-ports-owner-store
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:59.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a16e11f0452
+  - type: implements
+    from: SYM-identity-enrollment-new-enrollment-code
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:44:26.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5760bfa3d52
+  - type: covered_by
+    from: SYM-identity-enrollment-new-enrollment-code
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:44:26.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f98511f2eaf8
+  - type: implements
+    from: SYM-ui-allocation-view-fragment-link
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:54:08.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab2b6ee920cb
+  - type: implements
+    from: SYM-ui-allocation-view-fragment-link
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T19:54:08.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2cad1ae66ec
+  - type: covered_by
+    from: SYM-ui-allocation-view-fragment-link
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:54:08.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23c2df1653fb
+  - type: implements
+    from: SYM-ui-server-with-owner
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:56:44.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1678749448f
+  - type: covered_by
+    from: SYM-ui-server-with-owner
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:56:44.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8393cd90817
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-performance-day
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T21:01:49.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31d0213553f2
+  - type: implements
+    from: SYM-plugins-eodhd-raw-index
+    to: REQ-plugins-eodhd-config
+    created_at: 2026-10-28T21:42:19.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40173e14bd37
+  - type: covered_by
+    from: SYM-plugins-eodhd-raw-index
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:42:19.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ef82e294c48
+  - type: implements
+    from: SYM-plugins-uninstall-secrets
+    to: REQ-plugins-cli-uninstall-secrets
+    created_at: 2026-10-28T22:31:16.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5b255701a75
+  - type: covered_by
+    from: SYM-plugins-uninstall-secrets
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:31:16.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a5a23e25bb5
+  - type: implements
+    from: SYM-plugins-app-installer-prepare
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T22:44:09.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e22d2d5b61d3
+  - type: implements
+    from: SYM-plugins-app-installer-prepare
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T22:44:09.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f106d96d03f7
+  - type: covered_by
+    from: SYM-plugins-app-installer-prepare
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:44:09.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-291f273c889c
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-lot
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:22:59.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46d4a80bf903
+  - type: executable_for
+    from: SYM-treasurybonds-test-instrument
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:23:13.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99e3ed235291
+  - type: implements
+    from: SYM-treasury-bonds-status
+    to: REQ-plugins-treasury-bonds-connector
+    created_at: 2026-10-29T01:24:03.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9419a262f908
+  - type: implements
+    from: SYM-treasury-bonds-status
+    to: REQ-AUTO-FD618A602F7F9106
+    created_at: 2026-10-29T01:24:03.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3e7e6e7ed22
+  - type: covered_by
+    from: SYM-treasury-bonds-status
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:03.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab317ca0524e
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-as-core
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:40.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d97f95a8d657
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-plugins
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:03.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6807c7c33f1
+  - type: implements
+    from: SYM-ui-plugin-list
+    to: REQ-ui-installed-plugins
+    created_at: 2026-10-29T04:08:11.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68a4e8937a17
+  - type: implements
+    from: SYM-ui-plugin-list
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T04:08:11.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f9d5b375bd7
+  - type: covered_by
+    from: SYM-ui-plugin-list
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:11.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc56b44aa8e1
+  - type: executable_for
+    from: SYM-ui-test-plugins-page-needs-a-session
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:52.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68a1eb22bf67

@@ -202,3 +202,143 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eba76de8f4c5
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-scripted-caller-seen
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:53:44.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c7fdcd7646
+  - type: executable_for
+    from: SYM-sdk-go-test-sign
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:51:01.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12ca11debe19
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-request-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:40:04.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fae41d989ad
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-request-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:40:04.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec773a59f395
+  - type: covered_by
+    from: SYM-identity-gen-pb-get-login-methods-request-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:40:04.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0d89d926223
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-new-user
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:51:56.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1331e6e119e4
+  - type: implements
+    from: SYM-identity-webauthn-ceremonies-new-user
+    to: REQ-AUTO-F311FB1545F33607
+    created_at: 2026-10-28T19:51:56.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf11f0a95c47
+  - type: covered_by
+    from: SYM-identity-webauthn-ceremonies-new-user
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:51:56.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82c04b99669c
+  - type: implements
+    from: SYM-ui-holding-row
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:50:27.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-566dbbd55ce9
+  - type: covered_by
+    from: SYM-ui-holding-row
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:50:27.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c9c95004e12
+  - type: implements
+    from: SYM-ui-parse-dimension
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:53:21.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d89ce655aaed
+  - type: implements
+    from: SYM-ui-parse-dimension
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T19:53:21.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4edd0b48a563
+  - type: covered_by
+    from: SYM-ui-parse-dimension
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:53:21.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-239078c4e902
+  - type: implements
+    from: SYM-plugins-kube-describe-status
+    to: REQ-plugins-cli-list
+    created_at: 2026-10-28T23:14:25.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d092239e8a4a
+  - type: covered_by
+    from: SYM-plugins-kube-describe-status
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:14:25.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc817912a129
+  - type: executable_for
+    from: SYM-portfolio-pg-test-helper-target
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:14.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5efffffad4fe
+  - type: implements
+    from: SYM-ui-server-performance
+    to: REQ-ui-overview
+    created_at: 2026-10-29T00:15:13.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3694c9c9826c
+  - type: implements
+    from: SYM-ui-server-performance
+    to: REQ-ui-model-portfolio
+    created_at: 2026-10-29T00:15:13.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2638a89e479
+  - type: covered_by
+    from: SYM-ui-server-performance
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:15:13.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a19f46b8eef
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-apply
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:20:05.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f679b42dda07

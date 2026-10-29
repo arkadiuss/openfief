@@ -1,5 +1,5 @@
 # Deploys to the Hetzner k3s demo environment (docs/dev/sdlc.md, docs/dev/demo.md#deploys): main from ci.yml,
-# betas from release.yml. Callers gate it on the repository variable DEMO_ENABLED.
+# betas from release.yml. Callers run it on every push to main and every real beta; without a demo machine nothing pulls the artifact.
 # GitOps pull: this job never reaches the cluster and no cluster credential exists outside it. It pins
 # deploy/demo/openfief to the image digests whose keyless cosign signatures from images.yml on main verify (D-17),
 # publishes the rendered manifests as an OCI artifact, and signs it keylessly. Flux on the demo machine applies

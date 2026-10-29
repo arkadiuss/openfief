@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Length: 336
+Content-Type: application/json
+Date: Tue, 07 Jan 2025 22:00:00 GMT
+
+[{"date":"2001-01-02","open":1500,"high":1510.25,"low":1490.5,"close":1505.12,"adjusted_close":1505.12,"volume":0},{"date":"2001-01-03","open":1505.12,"high":1530,"low":1500,"close":1522.6,"adjusted_close":1522.6,"volume":0},{"date":"2001-01-04","open":1522.6,"high":1525,"low":1518,"close":1519.99,"adjusted_close":1519.99,"volume":0}]

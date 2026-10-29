@@ -202,3 +202,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-486ffc8802b5
+  - type: executable_for
+    from: SYM-core-conn-test-helper-deposit-connector
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:00.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ad46546cdf3
+  - type: verified_by
+    from: SCEN-e2e-core-policy-enforced
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:01:00.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f31f889d56a1
+  - type: implements
+    from: SYM-ui-server-revoke-token
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:57:47.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ce66d350e1e
+  - type: covered_by
+    from: SYM-ui-server-revoke-token
+    to: TEST-ui-settings
+    created_at: 2026-10-28T19:57:47.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca8bb781dc88
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-get-login-methods
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:03:06.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-050a1e5bd5e4
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-get-login-methods
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:03:06.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d525e381dfb
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-get-login-methods
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:03:06.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-511fb8132f85
+  - type: implements
+    from: SYM-views-pb-performance-gap-enum-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:07:33.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b57b602eff1e
+  - type: covered_by
+    from: SYM-views-pb-performance-gap-enum-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:07:33.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d10fef376ca6
+  - type: implements
+    from: SYM-plugins-cosign-digest
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:39:58.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c131be940e0a
+  - type: covered_by
+    from: SYM-plugins-cosign-digest
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:39:58.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa5467ae7dc7
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-fake-market
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:16:20.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c4d4b6dfde
+  - type: implements
+    from: SYM-portfolio-pb-get-model-portfolio-response-descriptor
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:25:26.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-945aa4910d0b
+  - type: covered_by
+    from: SYM-portfolio-pb-get-model-portfolio-response-descriptor
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:25:26.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee50aa67684b
+  - type: validates
+    from: TEST-views-ghostfolio-client
+    to: REQ-views-ghostfolio-filtered-delete
+    created_at: 2026-10-29T00:54:18.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efca2e8065dd
+  - type: implements
+    from: SYM-views-ghostfolio-projector-transaction
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:57:18.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d726860fe770
+  - type: implements
+    from: SYM-views-ghostfolio-projector-transaction
+    to: REQ-AUTO-122F6AEE20C6FF6D
+    created_at: 2026-10-29T00:57:18.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2db2b4243cb7
+  - type: covered_by
+    from: SYM-views-ghostfolio-projector-transaction
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:57:18.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4ee27b89f37

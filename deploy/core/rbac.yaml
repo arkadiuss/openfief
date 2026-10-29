@@ -1,0 +1,73 @@
+# What the core may do with the Kubernetes API, in the openfief namespace only (D-15); no cluster-scoped rights.
+# - TokenRequest on its own ServiceAccount: the short-lived token whose audience is a plugin instance,
+#   openfief-plugin:<instance>, that the core presents on every call to a connector (D-59). resourceNames limits it
+#   to openfief-core, so the core can't mint tokens for any other identity, plugins' included.
+# - Read the Plugin resources and the Services the operator creates for them: which connector instances run, and
+#   the ClusterIP and port to call each one at (D-49), and whether a plugin calling the AuthService is a view. The
+#   core never changes them, and has no right to create or change grants (D-46).
+# The ClusterRole at the end allows TokenReviews only: view plugins call the core's AuthService with their projected
+# token (audience openfief-core, D-27), and the core checks it with the cluster-scoped TokenReview API.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: openfief-core
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+rules:
+  - apiGroups: [""]
+    resources: [serviceaccounts/token]
+    resourceNames: [openfief-core]
+    verbs: [create]
+  - apiGroups: [openfief.io]
+    resources: [plugins]
+    verbs: [get, list, watch]
+  - apiGroups: [""]
+    resources: [services]
+    verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: openfief-core
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: openfief-core
+subjects:
+  - kind: ServiceAccount
+    name: openfief-core
+    namespace: openfief
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: openfief-core-tokenreview
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+rules:
+  - apiGroups: [authentication.k8s.io]
+    resources: [tokenreviews]
+    verbs: [create]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: openfief-core-tokenreview
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: openfief-core-tokenreview
+subjects:
+  - kind: ServiceAccount
+    name: openfief-core
+    namespace: openfief

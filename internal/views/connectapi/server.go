@@ -79,7 +79,11 @@ func (s *readService) ListTransactions(ctx context.Context, req *connect.Request
 	}
 	out := &viewsv1.ListTransactionsResponse{Transactions: make([]*viewsv1.Transaction, 0, len(page.Transactions))}
 	for i := range page.Transactions {
-		out.Transactions = append(out.Transactions, pbTransaction(&page.Transactions[i]))
+		var origin views.Origin
+		if i < len(page.Origins) {
+			origin = page.Origins[i]
+		}
+		out.Transactions = append(out.Transactions, pbTransaction(&page.Transactions[i], origin))
 	}
 	if page.Next != nil {
 		out.NextPageToken = page.Next.Encode()
@@ -245,4 +249,54 @@ func (s *readService) GetAllocation(ctx context.Context, req *connect.Request[vi
 		return nil, toConnectError(ctx, s.log, err)
 	}
 	return connect.NewResponse(pbAllocation(&a)), nil
+}
+
+// GetPerformance answers GET /v1/performance.
+func (s *readService) GetPerformance(ctx context.Context, req *connect.Request[viewsv1.GetPerformanceRequest]) (*connect.Response[viewsv1.GetPerformanceResponse], error) {
+	from, err := parseOptionalDate(req.Msg.GetFrom())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	to, err := parseOptionalDate(req.Msg.GetTo())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	p, err := s.views.Performance(ctx, from, to)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	return connect.NewResponse(pbPerformance(&p, s.views.ReportingCurrency())), nil
+}
+
+// GetModelPortfolio answers GET /v1/model-portfolio: not found while the
+// model portfolio is off (D-52).
+func (s *readService) GetModelPortfolio(ctx context.Context, req *connect.Request[viewsv1.GetModelPortfolioRequest]) (*connect.Response[viewsv1.GetModelPortfolioResponse], error) {
+	from, err := parseOptionalDate(req.Msg.GetFrom())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	to, err := parseOptionalDate(req.Msg.GetTo())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	m, err := s.views.ModelPortfolio(ctx, from, to)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	return connect.NewResponse(pbModelPortfolio(&m)), nil
+}
+
+// ListPlugins answers GET /v1/plugins: the installed plugin instances
+// (D-46) with their trust (D-56), or unavailable when the core can't read
+// them.
+func (s *readService) ListPlugins(ctx context.Context, _ *connect.Request[viewsv1.ListPluginsRequest]) (*connect.Response[viewsv1.ListPluginsResponse], error) {
+	plugins, err := s.views.Plugins(ctx)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	out := &viewsv1.ListPluginsResponse{Plugins: make([]*viewsv1.Plugin, 0, len(plugins))}
+	for i := range plugins {
+		out.Plugins = append(out.Plugins, pbPlugin(&plugins[i]))
+	}
+	return connect.NewResponse(out), nil
 }

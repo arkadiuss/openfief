@@ -146,3 +146,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be21aabbd3cb
+  - type: executable_for
+    from: SYM-sdk-go-test-new-verifier
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:51:14.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99dcd89e0116
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:55:09.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80c6411bdd9e
+  - type: implements
+    from: SYM-identity-gen-pb-revoke-script-token-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:55:09.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5d28e927de4
+  - type: covered_by
+    from: SYM-identity-gen-pb-revoke-script-token-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:55:09.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-293f46f288bc
+  - type: implements
+    from: SYM-identity-app-ports-ceremonies
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:39:20.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dac9b7951ffd
+  - type: covered_by
+    from: SYM-identity-app-ports-ceremonies
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:39:20.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea09c8d6c86c
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-bearer
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:42:25.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e2f3e5dfa8
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-authenticator
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:53:17.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4437dae6897
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-authenticator
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:53:17.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac62ca649dbb
+  - type: implements
+    from: SYM-ui-build-allocation
+    to: REQ-ui-overview
+    created_at: 2026-10-28T19:54:33.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1957d2827777
+  - type: implements
+    from: SYM-ui-build-allocation
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-10-28T19:54:33.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aba266d4ec89
+  - type: covered_by
+    from: SYM-ui-build-allocation
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:54:33.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aee4fe37738
+  - type: executable_for
+    from: SYM-ui-test-helper-attrs-of
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:59:18.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-955080e3d0b0
+  - type: executable_for
+    from: SYM-ui-test-account-page
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:01:22.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-124f336449b9
+  - type: implements
+    from: SYM-ingestv1-bond-lot-get-quantity
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:30:04.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c008c2aeac1
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-get-quantity
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:30:04.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de048ff43fc6
+  - type: executable_for
+    from: SYM-core-test-helper-static-tokens
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:55:58.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba47b68c08e9
+  - type: executable_for
+    from: SYM-core-test-helper-check-bond-lot-refusals
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:56:38.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d3c2347ae28

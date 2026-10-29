@@ -209,3 +209,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aacb9930ff57
+  - type: implements
+    from: SYM-ingest-sched-unbound-accounts-error
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:55:25.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41aff0076e8b
+  - type: covered_by
+    from: SYM-ingest-sched-unbound-accounts-error
+    to: TEST-ingest-binding
+    created_at: 2026-10-28T16:55:25.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a45a1c4bcaa
+  - type: implements
+    from: SYM-core-conn-cluster
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:23:27.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dbd08f5da13
+  - type: covered_by
+    from: SYM-core-conn-cluster
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:23:27.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29f06f031a0c
+  - type: implements
+    from: SYM-ui-server-json-redirect
+    to: REQ-ui-login-flows
+    created_at: 2026-10-28T19:52:40.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e04d9cf4ebc4
+  - type: covered_by
+    from: SYM-ui-server-json-redirect
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:52:40.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7063a8a2dbc5
+  - type: executable_for
+    from: SYM-views-test-performance-ignores-deposit-size
+    to: TEST-views-performance-properties
+    created_at: 2026-10-28T21:04:52.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da768163fe3f
+  - type: implements
+    from: SYM-views-pb-transfer-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:08:52.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d343c142892
+  - type: covered_by
+    from: SYM-views-pb-transfer-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:08:52.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad125edb6e00
+  - type: executable_for
+    from: SYM-portfolio-test-max-drawdown-is-the-worst-pair
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:34.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85c4c5d69a94
+  - type: implements
+    from: SYM-views-pb-model-target-kind-enum-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:40:52.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-750199e8d1fc
+  - type: covered_by
+    from: SYM-views-pb-model-target-kind-enum-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:40:52.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f048018827ed
+  - type: implements
+    from: SYM-ingestv1connect-unimplemented-bond-lot-service-handler-add-bond-lot
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:33:10.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4275471a5a
+  - type: covered_by
+    from: SYM-ingestv1connect-unimplemented-bond-lot-service-handler-add-bond-lot
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:33:10.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00fad3fa8651
+  - type: validates
+    from: TEST-views-connectapi-plugins
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:29:24.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c863cdc57b8
+  - type: validates
+    from: TEST-views-connectapi-plugins
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-29T03:29:24.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fbed92d97e0

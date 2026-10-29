@@ -195,3 +195,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d69613d59f60
+  - type: executable_for
+    from: SYM-ingest-sched-test-unbound-accounts-error-message
+    to: TEST-ingest-binding
+    created_at: 2026-10-28T16:56:15.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50535320e21d
+  - type: implements
+    from: SYM-ingest-pg-store
+    to: REQ-ingest-sync-store
+    created_at: 2026-10-28T16:56:58.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e001c9b81c5
+  - type: covered_by
+    from: SYM-ingest-pg-store
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:56:58.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12240a3d8178
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-new-pool
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:58:00.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e85019a234c
+  - type: implements
+    from: SYM-identity-kube-core-tokens
+    to: REQ-identity-core-tokens
+    created_at: 2026-10-28T17:25:53.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef219663d306
+  - type: covered_by
+    from: SYM-identity-kube-core-tokens
+    to: TEST-identity-kube
+    created_at: 2026-10-28T17:25:53.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb258c33d32e
+  - type: executable_for
+    from: SYM-e2e-install-app
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:06:16.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-826dd636ad4d
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-session-lifetime
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:34:40.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc85f4690175
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-demo-sessions
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:35:26.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a5db8e977a8
+  - type: implements
+    from: SYM-plugins-eodhd-index
+    to: REQ-plugins-eodhd-config
+    created_at: 2026-10-28T21:42:35.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09f6abdfcbbf
+  - type: covered_by
+    from: SYM-plugins-eodhd-index
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:42:35.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dad40c3df81
+  - type: implements
+    from: SYM-plugins-cli-confirm
+    to: REQ-plugins-cli-confirmation
+    created_at: 2026-10-28T23:38:14.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53dd23ba697c
+  - type: covered_by
+    from: SYM-plugins-cli-confirm
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:38:14.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b835272fa4d
+  - type: executable_for
+    from: SYM-portfolio-test-helper-within
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:22.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-029551e8a388
+  - type: implements
+    from: SYM-views-ghostfolio-fee-symbol
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:56:14.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce8ab226b0bd
+  - type: covered_by
+    from: SYM-views-ghostfolio-fee-symbol
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:56:14.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ef8421ecb20
+  - type: implements
+    from: SYM-core-entry-caller-import-file
+    to: REQ-core-bond-lot-service
+    created_at: 2026-10-29T01:55:09.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49de264c7800
+  - type: implements
+    from: SYM-core-entry-caller-import-file
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:55:09.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c5458ae788
+  - type: covered_by
+    from: SYM-core-entry-caller-import-file
+    to: TEST-core-bond-lots
+    created_at: 2026-10-29T01:55:09.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ecfbc0d9623

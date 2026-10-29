@@ -202,3 +202,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f174527c1ce2
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:48:35.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b4220bccab4
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-irequest-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:48:35.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e93c97202ae7
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-irequest-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:48:35.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c3c020e6436
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-use-enrollment-code
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:37.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f3855aaf713
+  - type: executable_for
+    from: SYM-ui-test-localhost-cookie
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:59:23.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18bb30b111ca
+  - type: implements
+    from: SYM-views-pb-performance-day-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:07:57.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3922f6694b17
+  - type: covered_by
+    from: SYM-views-pb-performance-day-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:07:57.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09661a6d389e
+  - type: implements
+    from: SYM-plugins-cosign-registry-push
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:39:18.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77a42877b089
+  - type: covered_by
+    from: SYM-plugins-cosign-registry-push
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:39:18.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4eadb6e8790
+  - type: implements
+    from: SYM-portfolio-walk
+    to: REQ-portfolio-backtest-history
+    created_at: 2026-10-28T22:22:56.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28a74f3916ff
+  - type: covered_by
+    from: SYM-portfolio-walk
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:22:56.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ece871d5c05

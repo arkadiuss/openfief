@@ -174,3 +174,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c11cf7d1494
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-scripted-caller
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:53:31.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd20af6a1cb6
+  - type: executable_for
+    from: SYM-views-app-test-helper-val-row-build
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T21:01:25.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc5bb972958d
+  - type: implements
+    from: SYM-plugins-eodhd-sync-run-closes
+    to: REQ-plugins-eodhd-sync
+    created_at: 2026-10-28T21:43:21.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78b76b395831
+  - type: covered_by
+    from: SYM-plugins-eodhd-sync-run-closes
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:43:21.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82e11a6d16d2
+  - type: implements
+    from: SYM-cmd-openfief-main
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:38:25.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3461311a76
+  - type: covered_by
+    from: SYM-cmd-openfief-main
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:38:25.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1221dc5dc91f
+  - type: implements
+    from: SYM-views-ghostfolio-projector-symbol
+    to: REQ-views-ghostfolio-bond-assets
+    created_at: 2026-10-29T00:57:55.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f34b73e6be82
+  - type: implements
+    from: SYM-views-ghostfolio-projector-symbol
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:57:55.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b128a56f3e9
+  - type: covered_by
+    from: SYM-views-ghostfolio-projector-symbol
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:57:55.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc7f6e8d58a8
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-bond-lots-locked
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-29T02:15:19.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-493255b8c3a8
+  - type: executable_for
+    from: SYM-views-app-test-helper-installed-views
+    to: TEST-views-app-plugins
+    created_at: 2026-10-29T03:35:55.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5995eea0f758

@@ -272,3 +272,143 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce2ef5c21981
+  - type: implements
+    from: SYM-ingest-sched-app-sync-claim
+    to: REQ-ingest-scheduler-retry
+    created_at: 2026-10-28T16:51:42.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b395eed7ef9
+  - type: implements
+    from: SYM-ingest-sched-app-sync-claim
+    to: REQ-ingest-scheduler-single-flight
+    created_at: 2026-10-28T16:51:42.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d89b0234a792
+  - type: covered_by
+    from: SYM-ingest-sched-app-sync-claim
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:51:42.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3177bb6384a
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-end
+    to: REQ-ingest-scheduler-single-flight
+    created_at: 2026-10-28T16:52:17.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837ab7032ffc
+  - type: covered_by
+    from: SYM-ingest-sched-app-scheduler-end
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:52:17.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-487d52b5fd5a
+  - type: validates
+    from: TEST-sdk-go-jwks-verifier
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:47:20.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cb1f4cf4b6d
+  - type: executable_for
+    from: SYM-nbp-fx-test-fake-rates-rates
+    to: TEST-plugins-nbp-fx
+    created_at: 2026-10-28T17:24:21.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-351dd3f5b1b1
+  - type: executable_for
+    from: SYM-e2e-install-cnpg
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:06:06.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0945d8f0509
+  - type: executable_for
+    from: SYM-ui-test-new-needs-clients
+    to: TEST-ui-boundary
+    created_at: 2026-10-28T20:00:12.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8f93de9d5e9
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-create-enrollment-link
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:04:11.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8381b82a1c04
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-create-enrollment-link
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:04:11.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a174e521db66
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-create-enrollment-link
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:04:11.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77d0bc821041
+  - type: executable_for
+    from: SYM-views-app-test-helper-failing-statuses-status
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T21:01:15.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a7fb2b66d04
+  - type: implements
+    from: SYM-portfolio-hundred-percent
+    to: REQ-portfolio-model-targets
+    created_at: 2026-10-28T22:23:12.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-568cdff3d106
+  - type: covered_by
+    from: SYM-portfolio-hundred-percent
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:12.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-412cd9f3bb5b
+  - type: implements
+    from: SYM-ingest-delivery-bond-terms
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:21:34.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-084039c06f41
+  - type: covered_by
+    from: SYM-ingest-delivery-bond-terms
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-29T01:21:34.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a52ff4da545
+  - type: implements
+    from: SYM-views-pb-list-plugins-response-descriptor
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:42:22.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9f7c973a32b
+  - type: implements
+    from: SYM-views-pb-list-plugins-response-descriptor
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:42:22.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-802a13f1112b
+  - type: covered_by
+    from: SYM-views-pb-list-plugins-response-descriptor
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:42:22.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8cb49cc6f84

@@ -3,6 +3,7 @@ package connectapi
 import (
 	"fmt"
 	"math"
+	"strings"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -84,12 +85,15 @@ func pbBook(b ledger.Book) *viewsv1.Book {
 	return out
 }
 
-// pbTransaction converts a transaction with its postings.
-func pbTransaction(t *ledger.Transaction) *viewsv1.Transaction {
+// pbTransaction converts a transaction with its postings and its origin:
+// the connector instance that brought it in, and whether that instance is
+// removed (D-58).
+func pbTransaction(t *ledger.Transaction, origin views.Origin) *viewsv1.Transaction {
 	out := &viewsv1.Transaction{
 		Source: t.Key.Source, ExternalId: t.Key.ExternalID, Kind: viewsv1.TransactionKind(enumNumber(int(t.Kind))),
 		Date: pbDate(t.Date), LotOpened: pbDate(t.LotOpened), Description: t.Description,
-		Postings: make([]*viewsv1.Posting, 0, len(t.Postings)),
+		Postings:          make([]*viewsv1.Posting, 0, len(t.Postings)),
+		ConnectorInstance: origin.Instance, ConnectorInstanceRemoved: origin.Removed,
 	}
 	for i := range t.Postings {
 		p := &t.Postings[i]
@@ -100,6 +104,16 @@ func pbTransaction(t *ledger.Transaction) *viewsv1.Transaction {
 		out.Postings = append(out.Postings, pp)
 	}
 	return out
+}
+
+// pbPlugin converts an installed plugin instance.
+func pbPlugin(p *views.Plugin) *viewsv1.Plugin {
+	return &viewsv1.Plugin{
+		Instance: p.Instance, Image: p.Image, ImageDigest: p.Digest,
+		Capabilities: p.Capabilities, RequestedCapabilities: p.Requested,
+		Trust: viewsv1.SignatureTrust(enumNumber(int(p.Trust))), Signer: p.Signer, TrustReason: p.TrustReason,
+		Phase: p.Phase, Ready: p.Ready,
+	}
 }
 
 // pbLot converts an open lot.
@@ -155,4 +169,93 @@ func pbAllocation(a *app.AllocationOn) *viewsv1.GetAllocationResponse {
 		out.Unvalued = append(out.Unvalued, &viewsv1.UnvaluedHolding{AccountId: string(h.Account), Instrument: pbInstrument(h.Instrument), Quantity: h.Quantity.String()})
 	}
 	return out
+}
+
+// parseOptionalDate reads a request's YYYY-MM-DD date; empty is the zero
+// date.
+func parseOptionalDate(s string) (kernel.Date, error) {
+	if s == "" {
+		return kernel.Date{}, nil
+	}
+	return parseDate(s)
+}
+
+// pbPerformance converts the portfolio's performance series.
+func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPerformanceResponse {
+	out := &viewsv1.GetPerformanceResponse{
+		From: pbDate(p.From), To: pbDate(p.To), Gap: viewsv1.PerformanceGap(enumNumber(int(p.Series.Gap))),
+		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(),
+		Days:      make([]*viewsv1.PerformanceDay, 0, len(p.Series.Days)),
+		Transfers: make([]*viewsv1.Transfer, 0, len(p.Series.Transfers)),
+	}
+	for i := range p.Series.Days {
+		d := &p.Series.Days[i]
+		out.Days = append(out.Days, &viewsv1.PerformanceDay{
+			Date: pbDate(d.Date), Index: d.Index.String(), ValueReporting: pbMoney(d.Value), HoldingsReporting: pbMoney(d.Holdings),
+			CashReporting: pbMoney(d.Cash), InTransitReporting: pbMoney(d.InTransit), FlowReporting: pbMoney(d.Flow),
+		})
+	}
+	for i := range p.Series.Transfers {
+		t := &p.Series.Transfers[i]
+		out.Transfers = append(out.Transfers, &viewsv1.Transfer{
+			WithdrawalAccountId: string(t.Withdrawal.Account), WithdrawalDate: pbDate(t.Withdrawal.Date),
+			DepositAccountId: string(t.Deposit.Account), DepositDate: pbDate(t.Deposit.Date), Amount: pbMoney(t.Deposit.Amount),
+		})
+	}
+	return out
+}
+
+// pbModelPortfolio converts the model portfolio, its rebased backtest and
+// its drawdowns.
+func pbModelPortfolio(m *app.ModelPortfolio) *viewsv1.GetModelPortfolioResponse {
+	r := &m.Report
+	out := &viewsv1.GetModelPortfolioResponse{
+		From: pbDate(m.From), To: pbDate(m.To), ReportingCurrency: r.Reporting.String(),
+		Targets:         make([]*viewsv1.ModelTarget, 0, len(r.Model.Targets)),
+		Days:            make([]*viewsv1.BacktestDay, 0, len(m.Line)),
+		Drawdown:        pbDrawdown(&r.Drawdown),
+		TargetHistories: make([]*viewsv1.ModelTargetHistory, 0, len(r.Targets)),
+	}
+	if days := r.Backtest.Days; len(days) > 0 {
+		out.BacktestStart, out.BacktestEnd = pbDate(days[0].Date), pbDate(days[len(days)-1].Date)
+	}
+	for i := range r.Model.Targets {
+		out.Targets = append(out.Targets, pbModelTarget(&r.Model.Targets[i]))
+	}
+	for _, p := range m.Line {
+		out.Days = append(out.Days, &viewsv1.BacktestDay{Date: pbDate(p.Date), Index: p.Value.String()})
+	}
+	for i := range r.Targets {
+		t := &r.Targets[i]
+		out.TargetHistories = append(out.TargetHistories, &viewsv1.ModelTargetHistory{
+			Target: pbModelTarget(&t.Target), FirstDate: pbDate(t.First), LastDate: pbDate(t.Last),
+			Gap: viewsv1.ModelHistoryGap(enumNumber(int(t.Missing))), Drawdown: pbDrawdown(&t.Drawdown),
+		})
+	}
+	return out
+}
+
+// pbModelTarget converts one model target. An instrument's name is
+// "ISIN/symbol", as the ledger writes it.
+func pbModelTarget(t *portfolio.Target) *viewsv1.ModelTarget {
+	out := &viewsv1.ModelTarget{Kind: viewsv1.ModelTargetKind(enumNumber(int(t.Kind))), WeightPercent: t.Weight.String()}
+	switch t.Kind {
+	case portfolio.TargetInstrument:
+		isin, symbol, _ := strings.Cut(t.Name, "/")
+		out.Instrument = &viewsv1.Instrument{Isin: isin, Symbol: symbol}
+	case portfolio.TargetIndex:
+		out.Index, out.Currency = t.Name, t.Currency.String()
+	}
+	return out
+}
+
+// pbDrawdown converts a max drawdown; the zero one, of no days, is unset.
+func pbDrawdown(d *portfolio.Drawdown) *viewsv1.Drawdown {
+	if d.Peak.IsZero() {
+		return nil
+	}
+	return &viewsv1.Drawdown{
+		PeakDate: pbDate(d.Peak), TroughDate: pbDate(d.Trough),
+		PeakValue: d.PeakValue.String(), TroughValue: d.TroughValue.String(), Depth: d.Depth.String(),
+	}
 }

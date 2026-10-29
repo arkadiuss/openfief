@@ -5,10 +5,12 @@ covers:
   - internal/plugins/*.go
   - internal/plugins/app/**
   - internal/plugins/catalog/**
+  - internal/plugins/cli/**
   - proto/openfief/connector/**
   - sdk/go/openfief/**
   - sdk/go/gen/openfief/connector/**
   - sdk/go/go.mod
+  - plugins/**
 ---
 
 A plugin is how OpenFief reaches the outside world: a connector brings data in, a view shows the record somewhere else. Each plugin runs in its own container, out of the core's process, and gets only what its vendor asked for and its owner approved. This page explains that model, what the pure `plugins` package builds from it, and the connector contract and Go SDK a plugin is written with. The [Operator](operator.md) page covers how the operator applies it to a cluster, and [Egress](egress.md) covers the proxy that enforces plugins' outbound hosts.
@@ -55,7 +57,10 @@ Everything in [`internal/plugins`](../../internal/plugins/) is pure: no I/O, no 
 | [trust.go](../../internal/plugins/trust.go) | `Signer`, `SignerIdentity`, `TrustPolicy` and its `Decide`; `Verified` and `Unverified` |
 | [catalog.go](../../internal/plugins/catalog.go), [catalog/](../../internal/plugins/catalog/catalog.go) | `Catalog`, `ParseCatalog`, `ParseOwnerSigners`; the embedded catalog file and `catalog.Load` |
 | [manifest_label.go](../../internal/plugins/manifest_label.go) | `ManifestLabel`, `ParseManifestLabel`, `Manifest.Equal` |
+| [install.go](../../internal/plugins/install.go) | What the `openfief` CLI decides: `ResolveInstallSource` and `DefaultInstanceName` read an install argument, `PlanInstall` builds the `Plugin` and its grant, `SecretsToDelete` picks the Secrets an uninstall removes; see [Installing with the CLI](#installing-with-the-cli) |
+| [signing_keys.go](../../internal/plugins/signing_keys.go) | `SigningKeys`, `ParseSigningKeys`: the cluster's token issuer and public signing keys, checked before the operator publishes them for plugins |
 | [errors.go](../../internal/plugins/errors.go) | Sentinel errors and `FieldError` |
+| [app/install.go](../../internal/plugins/app/install.go) | The CLI's use cases: `Installer.Prepare`, `Install`, `PlanUninstall`, `Uninstall`, `Instances`, and the ports `ImageInspector` and `InstanceStore` they consume |
 | [app/egress.go](../../internal/plugins/app/egress.go), [app/tokencache.go](../../internal/plugins/app/tokencache.go) | The egress proxy's use case, `app.Egress`, and its token cache, `app.CachingTokenReviewer`; see [Egress](egress.md) |
 
 ### From a plugin and its grant to a workload
@@ -197,14 +202,80 @@ The operator publishes every running plugin's egress allow-list in the ConfigMap
 
 `ServiceAccountName` and `PluginForServiceAccount` map between a plugin name and its Kubernetes username. The reverse map accepts only `system:serviceaccount:openfief:plugin-<valid name>`, so another namespace, a prefix trick such as `openfief-x`, or the core's own ServiceAccount is never taken for a plugin.
 
+### Installing with the CLI
+
+The owner installs and uninstalls plugins with the `openfief` command-line tool and their own kubeconfig (D-46, D-58):
+
+```
+openfief plugin install <catalog-name|image@sha256:...> [--name NAME] [--config FILE]
+                        [--trusted-signers FILE] [--yes] [--print]
+openfief plugin uninstall <instance> [--yes]
+openfief plugin list
+```
+
+Every command also takes `--kubeconfig` and `--context`. An install prints what it will apply and asks before applying it:
+
+```
+Instance:     nbp
+Image:        ghcr.io/arkadiuss/openfief/nbp-fx@sha256:4ef5…
+Trust:        unverified: signed by trusted signer openfief-ci (OpenFiefCI, …images.yml@refs/heads/main …); the catalog does not pin this image
+
+It requests, and the PluginGrant will approve, exactly:
+  Capabilities: connector
+  Egress hosts: api.nbp.pl:443
+  Secrets:      none
+  Data tiers:   none
+  Config:       start: string
+                no other keys
+
+Config given: none
+Install nbp? [y/N]
+```
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant O as Owner
+  participant C as openfief CLI
+  participant R as Registry
+  participant K as Kubernetes API (owner's kubeconfig)
+  participant Op as Operator
+  O->>C: plugin install nbp-fx@sha256:…
+  C->>K: read ConfigMap openfief-trusted-signers
+  C->>R: referrers, cosign bundles, image config
+  C->>C: sigstore-go verifies offline, TrustPolicy.Decide, config checked against its schema
+  C->>O: instance, trust, requested permissions
+  O->>C: y
+  C->>K: create Plugin, then PluginGrant
+  K-->>Op: watch event
+  Op->>R: verifies the image again (D-56)
+  Op->>K: workload, allow-list entry
+```
+
+The pieces, from the inside out. The decisions are pure functions in [install.go](../../internal/plugins/install.go):
+
+- **What to install.** `ResolveInstallSource` takes either a catalog entry's name or an image reference. An argument containing `/`, `:` or `@` is an image reference and must be pinned by digest, so a tag is refused (D-17). An image whose digest the catalog pins resolves to that entry even from a mirror, as the trust check does (D-44). A name that several catalog entries share, one per reviewed version, is refused with the list of their images, since which version a bare name means is not decided.
+- **The instance name.** Each install is a named instance (D-48). Without `--name`, `DefaultInstanceName` uses the catalog entry's name, or else the last path component of the image's repository; when neither is a valid name of at most 56 characters, the owner must give one.
+- **What is applied.** `PlanInstall` builds a `Plugin` that requests exactly the image's signed manifest label (D-42), with the owner's config, and a grant of the same name that approves exactly what it requests. The owner confirms that list, so the grant is never wider than what was shown, and `NeedsApproval` finds nothing pending.
+- **Which Secrets go.** `SecretsToDelete` takes the Secrets an uninstalled instance's manifest and grant name, and keeps any that another installed instance still names: Secret names come from the manifest, so instances of one image share them (see [Decisions](#decisions)).
+
+The use cases in [app/install.go](../../internal/plugins/app/install.go) put these together around two ports. `Installer.Prepare` resolves the argument, has an `ImageInspector` read the image's signatures and signed manifest label, and lets the same `TrustPolicy` the operator uses decide (D-56): an image the operator would never deploy is refused with `ErrNotTrusted` before anything is shown (D-57). It then checks the config against the manifest's JSON Schema and returns a `Proposal`: the `Plugin`, the grant, and the trust decision with the signer that earned it. Nothing changes until the owner confirms and `Install` hands the proposal to the `InstanceStore`, which refuses a name that already has a `Plugin` or a grant: an upgrade is the owner's own edit (D-47). `PlanUninstall` finds the instance and its Secrets, and `Uninstall` asks the store to delete the grant, the `Plugin` and the Secrets no other instance names. Nothing in an uninstall reaches the ledger, so the data the instance brought in stays (D-18, D-58).
+
+The command line itself is [internal/plugins/cli](../../internal/plugins/cli/cli.go). `Run` parses the arguments (flags may come before or after the argument), `RenderProposal` and `RenderUninstallPlan` describe what will change, and nothing changes unless the owner answers `y` or `yes` or passed `--yes`; any other answer, or no input at all, aborts. A config property is summarized by its type, its allowed values or `any`, and whether it is required; `--print` shows the full schema. `WriteInstances` writes `plugin list` as a table of each instance's image, the reason of its `SignatureVerified` condition (`Verified` or `SignedByTrustedSigner`), its `Ready` status, whether a grant exists and whether anything waits for approval.
+
+What it trusts is exactly what the operator trusts (D-45, D-56): OpenFief's CI, the embedded catalog's publishers, and the owner's signers, read from the `openfief-trusted-signers` ConfigMap with the owner's kubeconfig, or from a `--trusted-signers` file. With `--print` the CLI doesn't contact the cluster at all: it writes the summary to standard error and the `Plugin` and `PluginGrant` as one YAML stream to standard output, and trusts only OpenFief's CI and the catalog unless `--trusted-signers` names a file. The signature check is the operator's own `cosign.Verifier` on the bundled trust root, reading the registry anonymously. `cmd/openfief` wires it, `operator.ValidateConfig` and the [kube](operator.md#packages-and-binaries) adapter's `Instances` store into the command line's `Env`.
+
+Uninstalling deletes the `PluginGrant` first, so the operator stops the plugin at once, then the `Plugin`: the garbage collector removes the workload objects it owns, and the operator's reconcile of a deleted `Plugin` drops its allow-list key ([Operator](operator.md)). The CLI then deletes the Secrets no other instance names. It never creates Secrets: the summary lists the ones the owner has to create (D-29).
+
 ### The connector contract
 
 [connector.proto](../../proto/openfief/connector/v1/connector.proto) defines `openfief.connector.v1.ConnectorService`, which a connector serves and the core calls (D-49):
 
 - `Sync(SyncRequest)` pulls what the institution reported since the previous sync's `watermark`, an opaque string the connector returns and the core stores once the delivery is imported.
 - `ImportFile(stream ImportFileRequest)` maps one statement file. The first message is a `FileHeader` (batch ID, [ingest mode](../glossary.md), file name as a hint, media type); every later one carries the next bytes.
+- `ImportBondLots(ImportBondLotsRequest)` maps treasury [bond lots](../glossary.md) the owner entered by hand in the built-in UI, which the core hands on (D-9, D-49). Each `BondLot` is D-9's series code, quantity and purchase date, plus the series' first-period rate and margin as fractions and its early-redemption fee in PLN. It is always a transactions batch. A connector that takes no bond lots answers `UNIMPLEMENTED`, which every other first-party connector does through the generated `Unimplemented` handler; a lot it refuses, `INVALID_ARGUMENT` with the rule.
 
-Both answer with a `Delivery`: the batch ID echoed back, the institution, and the connector's [mapping](../glossary.md) (transactions with their postings, balance assertions and [ingest problems](../glossary.md)), plus any prices, FX rates and index readings. The file's conventions keep money exact and the record clean: amounts, prices, rates and quantities are decimal strings, never floating point; dates are `YYYY-MM-DD`; currencies are ISO 4217 codes; `account_id` is OpenFief's own ID, never the institution's account number. Every call carries a batch ID the core generates and reuses on a retry, and the core prefixes each transaction's source with the instance's name, so one instance can never write over another's transactions.
+All three answer with a `Delivery`: the batch ID echoed back, the institution, and the connector's [mapping](../glossary.md) (transactions with their postings, balance assertions and [ingest problems](../glossary.md)), plus any prices, FX rates, index readings, [index levels](../glossary.md) (a market index's closing level, named by the connector's config, D-51) and `bond_terms`: a bond series' instrument with its [series terms](../glossary.md), which make the core value holdings of it as treasury bonds. `ImportBondLots`, `BondLot` and `bond_terms` were added to the contract after it was first published, as additions only, so `task proto:breaking` passes. The file's conventions keep money exact and the record clean: amounts, prices, rates and quantities are decimal strings, never floating point; dates are `YYYY-MM-DD`; currencies are ISO 4217 codes; `account_id` is OpenFief's own ID, never the institution's account number. Every call carries a batch ID the core generates and reuses on a retry, and the core prefixes each transaction's source with the instance's name, so one instance can never write over another's transactions.
 
 `task proto:gen` generates the Go code into [sdk/go/gen](../../sdk/go/gen/), with `protoc-gen-go` and `protoc-gen-connect-go` pinned as local binaries ([buf.gen.yaml](../../buf.gen.yaml)). [buf.yaml](../../buf.yaml) lints the contract with Buf's `STANDARD` rules and checks breaking changes at `FILE` level; `task proto` runs lint, the breaking check against `PROTO_BASE` or `DOCS_BASE` (default `HEAD`), and a check that the generated code is up to date. The core's side of the contract, which translates deliveries into domain values, is on the [Ingest](ingest.md) page.
 
@@ -215,6 +286,8 @@ Both answer with a `Delivery`: the batch ID echoed back, the institution, and th
 - **Environment** ([env.go](../../sdk/go/openfief/env.go)): `CoreURL` from `OPENFIEF_CORE_ADDRESS` (a ClusterIP and port; plugins have no DNS), `ListenAddress` from `OPENFIEF_LISTEN_PORT`, `LoadConfig` from `OPENFIEF_CONFIG`.
 - **Tokens** ([token.go](../../sdk/go/openfief/token.go)): `TokenFile` reads a token file on *every* call, through an `os.Root` of its directory, because the kubelet rotates projected tokens. Its default is `OPENFIEF_TOKEN_FILE`, then `/var/run/secrets/openfief/token`.
 - **Serving the core** ([serve.go](../../sdk/go/openfief/serve.go)): `NewConnectorServer(addr, handler, verifier)` mounts the generated `ConnectorService` handler behind `RequireCore` and speaks HTTP/1.1 and HTTP/2 without TLS (h2c), since `ImportFile` streams. `RequireCore` answers `401` to any request whose `Authorization: Bearer` token the `CoreVerifier` refuses, before the handler sees it. The token's audience is `InstanceAudience(name)`, `openfief-plugin:<instance>`. `ReceiveFile` reads an `ImportFile` stream: exactly one header first, then chunks, up to a size limit the connector sets.
+- **Verifying the core** ([verifier.go](../../sdk/go/openfief/verifier.go)): `NewCoreVerifier` builds the SDK's `CoreVerifier`, a `JWKSVerifier`, from `OPENFIEF_INSTANCE`, `OPENFIEF_CORE_SUBJECT` and `OPENFIEF_SA_JWKS_DIR` (default `/var/run/secrets/openfief-sa-jwks`), which the operator sets. It checks the token with [go-jose](https://github.com/go-jose/go-jose) v4 against the cluster's public keys in `jwks.json` and the issuer in `issuer`, both from the mounted `openfief-sa-jwks` ConfigMap (D-59). It allows only RS256, ES256, ES384 and ES512, the algorithms Kubernetes signs with, so `none` and HMAC are refused before any key is tried; it picks the key by the token's key ID and keeps only public RSA and EC signing keys from the set. The claims must name the mounted issuer, the core's ServiceAccount as subject and this instance's audience, and carry an expiry, checked with a one-minute leeway. The files are read on every call and parsed again only when they change, so a rotated key works as soon as the kubelet updates the mount.
+- **Running** ([run.go](../../sdk/go/openfief/run.go)): `ServeConnector(ctx, handler)` is a connector's whole serving side: it reads the listen port, builds the `CoreVerifier` with `NewCoreVerifier`, serves until the context is done, then stops taking calls and lets the ones in flight finish for up to 20 seconds.
 - **Calling the core** ([core.go](../../sdk/go/openfief/core.go)): `CoreHTTPClient` adds the current `openfief-core` token as a bearer token on every request and never uses a proxy.
 - **Reaching an institution** ([egress.go](../../sdk/go/openfief/egress.go)): `NewEgressClient` reads `HTTPS_PROXY` and `OPENFIEF_EGRESS_TOKEN_FILE`. Its `EgressTransport` rebuilds the proxy URL for every request with user `plugin` and the current egress token as the password; Go's HTTP client sends that as a Basic `Proxy-Authorization` header on the CONNECT (D-63). It refuses plain `http` and refuses to send anything without a proxy.
 
@@ -241,7 +314,23 @@ sequenceDiagram
   S-->>C: SyncResponse
 ```
 
-The comment on `EnvEgressIdentityFile` in [env.go](../../sdk/go/openfief/env.go) (lines 25 to 28) still says the operator doesn't mount the egress token yet; it does, under the same name.
+### First-party plugins
+
+First-party plugins live in [plugins/](../../plugins/), one directory per image: a thin `main.go` that wires an adapter from `internal/` to the SDK, a `manifest.json`, and a `Dockerfile`. CI builds and signs every `plugins/<name>/Dockerfile` as `ghcr.io/<owner>/<repo>/<name>`, like the core's images. The image's final stage carries the manifest as its `io.openfief.plugin.manifest` label (D-42), so the signature covers it. The image runs as the numeric user `65532:65532` (distroless's nonroot): the operator's plugin pods set `runAsNonRoot`, and the kubelet refuses to start a container whose image names its user, since it can't tell that a name isn't root. A third-party plugin image needs a numeric `USER` for the same reason. `manifest.json` is the source: `task plugins:labels` writes it, compacted, into the Dockerfile, and `task plugins:labels:check`, part of `task check`, fails when a label or a demo `Plugin`'s `spec.manifest` differs from it ([plugin-labels.sh](../../scripts/plugin-labels.sh)). Each plugin's `TestManifest` parses `manifest.json` with `ParseManifestLabel` and checks it asks for exactly what the plugin needs.
+
+| Plugin | Serves | Egress | Secrets | Config |
+|---|---|---|---|---|
+| [nbp-fx](../../plugins/nbp-fx/) | `Sync`: NBP table A rates to PLN, through [valuation/nbp](../../internal/valuation/nbp/client.go) and `app.FetchRates`. `ImportFile` is `Unimplemented`. | `api.nbp.pl` | none | `start`, the first day of the first sync; by default the 93 days up to today |
+| [ibkr-flex](../../plugins/ibkr-flex/) | `Sync`: the owner's Flex Query from the Flex Web Service; `ImportFile`: an uploaded Flex statement. Both map with [ingest/ibkrflex](../../internal/ingest/ibkrflex/mapper.go) in the mode the call names. | `ndcdyn.interactivebrokers.com` | `ibkr-flex-credentials`, files `token` and `query-id`, at `/etc/openfief/ibkr-flex` | `accounts`: each IBKR account ID to the OpenFief account it feeds |
+| [ghostfolio](../../plugins/ghostfolio/) | Nothing: a [view](../glossary.md) that runs [internal/views/ghostfolio](../../internal/views/ghostfolio/sync.go)'s reconcile loop on its own timer, reading the read API with its projected token ([Ghostfolio view](ghostfolio.md)) | none yet (see [Not built yet](#not-built-yet)) | `ghostfolio-credentials`, file `security-token`, at `/etc/openfief/ghostfolio` | `url`, the owner's Ghostfolio; `interval`, `1h` by default; `listings`: each listed instrument's Ghostfolio `dataSource` and `symbol` by ISIN |
+| [treasury-bonds](../../plugins/treasury-bonds/) | `ImportBondLots`: the owner's manual bond lots, mapped by [ingest/treasurybonds](../../internal/ingest/treasurybonds/mapper.go) into the configured account, with each series' terms (D-9). `Sync` delivers nothing and keeps the watermark; `ImportFile` is `Unimplemented`. | none | none | `account`: the OpenFief account its lots go into |
+| [eodhd](../../plugins/eodhd/) | `Sync`: end-of-day closes of the configured instruments and levels of the configured market indices, from EODHD (D-22, D-51), through [valuation/eodhd](../../internal/valuation/eodhd/client.go). `ImportFile` is `Unimplemented`. | `eodhd.com` | `eodhd-credentials`, file `api-token`, at `/etc/openfief/eodhd` | `instruments`: each an `isin`, an optional EODHD `exchange` code and an optional ledger `symbol`; `indices`: each a `name` and an EODHD `ticker` such as `FAKE20.INDX`; `start`, the first day of a first sync, by default EODHD's whole history |
+
+`nbp-fx`'s watermark is the date of the latest rates it delivered: a sync asks NBP for the days after it up to today (UTC), and keeps it when nothing new is published. `ibkr-flex`'s Flex Query sets its own period, and importing it again changes nothing (D-18), so it returns the watermark it was given. It reads the Flex token and query ID from their files on every sync and never logs them. Both answer `Unavailable` when the institution fails, so the core retries the batch, and `InvalidArgument` for input they can't read. They write their deliveries with [ingest/delivery](../../internal/ingest/delivery/delivery.go) ([Ingest](ingest.md)).
+
+`treasury-bonds` reaches no host: neither the registry nor the bank that sells the bonds offers an API, so the owner's entries are its only input. It reads each lot with `delivery.BondLots`, maps the lots with `treasurybonds.Mapper` as of today in Warsaw, and writes the terms with `delivery.BondTerms`. A lot that doesn't parse or breaks a rule is `InvalidArgument`, naming the rule, and nothing is delivered. The core still syncs it on its schedule, like any connector instance, so `Sync` answers with an empty delivery. One instance serves one account, which its config names and which the owner binds it to ([Ingest](ingest.md#treasury-bond-lots)).
+
+`eodhd` is the market-data connector. The core's `SyncRequest` names no instruments, so the owner lists them in the instance's config, by ISIN, as `nbp-fx` decides for itself which rates to fetch. On each sync it reads the API key from its Secret, finds each instrument's listing with `eodhd.Pick` (the `exchange` decides between several), and fetches the closes after the instrument's mark up to today (UTC). It delivers each close as a [price](../glossary.md) of the instrument with the configured `symbol`, or EODHD's code, in the listing's currency, so the price matches the ledger's instrument only when the symbol does (D-35). Each index's levels go in the delivery's `index_levels`, under the configured name. Its watermark is JSON with one date per ISIN and per index name, such as `{"prices":{"XX00000SYNT3":"2025-01-03"},"indices":{"FAKE20":"2025-01-03"}}`, so an instrument added later starts at `start` while the others continue. An ISIN that isn't listed on a supported exchange, or is listed on several with no `exchange`, and a ticker EODHD doesn't know, become `unsupported` ingest problems and the rest is still delivered. A missing key is `FailedPrecondition`; EODHD failing otherwise is `Unavailable`. The demo doesn't run it, since it needs a key.
 
 ## Decisions
 
@@ -251,18 +340,20 @@ Implemented, fully or in the part named:
 - **D-13, D-15** `Plugin` resource; operator confined to `openfief`.
 - **D-16** Enforce only what request and grant share.
 - **D-17** Images pinned by digest, signatures verified with cosign bundles.
-- **D-27** (part) Plugins get, and the SDK sends, `openfief-core` tokens.
+- **D-27** (part) Plugins get, and the SDK sends, `openfief-core` tokens; the core accepts view plugins' tokens on the `AuthService` and the read API ([Identity](identity.md#in-the-core)).
 - **D-32** (part) Plugins reach only core and proxy, no DNS.
 - **D-42** Manifest in a signed image label; `spec.manifest` must match it.
 - **D-43** (part) One catalog file, embedded in the operator; still empty.
 - **D-44** Catalog entries pin a digest and the publisher's identity.
 - **D-45** Three signer kinds: OpenFief CI, catalog publishers, owner signers.
+- **D-46** The `openfief` CLI verifies, shows the request, and applies or prints the `Plugin` and an exactly matching grant.
 - **D-47** Upgrades happen only when the owner edits.
 - **D-48** (part) Every instance keyed by its own name, except Secrets.
-- **D-49** (part) Connector contract: the core calls `Sync` and `ImportFile`.
-- **D-56** (part) Operator verifies offline; status tells verified from only signed.
+- **D-49** (part) Connector contract: the core calls `Sync`, `ImportFile` and `ImportBondLots`.
+- **D-56** Operator verifies offline; status tells verified from only signed and names the signer; the built-in UI shows it ([Built-in UI](ui.md#pages)).
 - **D-57** No setting deploys an image the policy refuses.
-- **D-59** (part) Only the core reaches a plugin; SDK refuses other callers.
+- **D-58** Uninstall deletes the grant, the `Plugin` (and so the workload and allow-list entry) and unshared Secrets, and keeps the ledger data, which the read API marks as coming from a removed instance ([Read API](read-api.md#installed-plugins-and-removed-instances)).
+- **D-59** Only the core reaches a plugin; the SDK verifies its TokenRequest token with the keys the operator publishes.
 - **D-63** (part) Separate egress token, rebuilt into the proxy URL per request.
 - **D-5** Contracts and Go SDK licensed Apache-2.0.
 
@@ -295,9 +386,26 @@ Run `task test` from the repository root; it tests both Go modules, the core and
 | Every egress request carries the current token as the proxy URL's password; plain http and a missing proxy or token are refused | [egress_test.go](../../sdk/go/openfief/egress_test.go): `TestEgressSendsCurrentTokenOnEveryConnect`, `TestEgressRefusals`, `TestNewEgressClient` | REQ-sdk-go-egress-proxy-url, REQ-plugins-sdk-token-per-request |
 | Tokens are read from their file on every call, never cached | [token_test.go](../../sdk/go/openfief/token_test.go): `TestTokenFileRereadsRotatedToken`, `TestTokenFile`; [core_test.go](../../sdk/go/openfief/core_test.go): `TestCoreHTTPClientSendsCurrentToken` | REQ-sdk-go-token-rotation |
 | Environment names match what the operator sets | [env_test.go](../../sdk/go/openfief/env_test.go): `TestCoreURL`, `TestListenAddress`, `TestLoadConfig`, `TestTokenFileFromEnv` | REQ-sdk-go-plugin-environment |
+| Only the core's unexpired token for this instance, signed by a cluster key, passes; `none`, HMAC, other audiences, subjects and issuers fail; rotated keys apply at once | [verifier_test.go](../../sdk/go/openfief/verifier_test.go): `TestJWKSVerifier`, `TestJWKSVerifierKeySet`, `TestJWKSVerifierRotatedKeys`, `TestRequireCoreWithJWKSVerifier`, `TestNewCoreVerifier` | REQ-sdk-go-jwks-verifier |
+| `ServeConnector` serves only the core's token and shuts down cleanly | [run_test.go](../../sdk/go/openfief/run_test.go): `TestServeConnector`, `TestServeConnectorNeedsEnvironment` | REQ-sdk-go-serve-connector |
+| nbp-fx: each sync asks for the days after the watermark up to today and moves the watermark to the latest rates; NBP failing is `Unavailable`; no `ImportFile` | [nbp-fx connector_test.go](../../plugins/nbp-fx/connector_test.go): `TestSync`, `TestServedConnector`; [main_test.go](../../plugins/nbp-fx/main_test.go): `TestStartDate`, `TestManifest` | REQ-plugins-nbp-fx-sync |
+| ibkr-flex: `Sync` and `ImportFile` map a Flex statement in the requested mode; credentials from the Secret, never in an error | [ibkr-flex connector_test.go](../../plugins/ibkr-flex/connector_test.go): `TestSync`, `TestSyncModes`, `TestImportFile`, `TestFetchCode`, `TestManifest` | REQ-plugins-ibkr-flex-connector |
+| ghostfolio: the manifest asks for the view capability and the token Secret only; the config is checked; the timer loop | [ghostfolio main_test.go](../../plugins/ghostfolio/main_test.go): `TestManifest`, `TestConfigParse`, `TestReadSecretFile`, `TestNewSyncer`, `TestNewSyncerWith`, `TestLoop` | REQ-plugins-ghostfolio-plugin |
+| treasury-bonds: `ImportBondLots` maps the owner's lots into the configured account, or is `InvalidArgument` naming the rule; only the core may call; `Sync` delivers nothing; the manifest asks for the connector capability alone | [treasury-bonds connector_test.go](../../plugins/treasury-bonds/connector_test.go): `TestImportBondLots`, `TestImportBondLotsRefuses`, `TestSyncDeliversNothing`; [main_test.go](../../plugins/treasury-bonds/main_test.go): `TestManifest`, `TestDateIn` | REQ-plugins-treasury-bonds-connector |
+| eodhd: each sync delivers closes and index levels after each series' mark up to today; unlisted, ambiguous and unknown tickers are problems; EODHD failing is `Unavailable`, a missing key `FailedPrecondition`; no `ImportFile` | [eodhd connector_test.go](../../plugins/eodhd/connector_test.go): `TestSync`, `TestNextFrom`, `TestServedConnector`; [main_test.go](../../plugins/eodhd/main_test.go): `TestManifest`, `TestConfigParse`, `TestNewConnector`, `TestToday` | REQ-plugins-eodhd-sync, REQ-plugins-eodhd-config |
+| Each Dockerfile's label equals its `manifest.json`, and so does a demo `Plugin`'s manifest | [plugin-labels.test.sh](../../scripts/tests/plugin-labels.test.sh) | REQ-plugins-first-party-manifest-label |
+| Only an issuer and public RSA or EC keys with IDs are published | [signing_keys_test.go](../../internal/plugins/signing_keys_test.go): `TestParseSigningKeys`, `TestSigningKeysData` | REQ-plugins-signing-keys-published |
+| Every plugin mounts the keys and gets its instance name and the core's username | `TestCompile` | REQ-plugins-workload-core-auth |
 | Verified only when the catalog pins the digest and its publisher signed it; any other trusted signer gives unverified; unsigned, untrusted or a manifest mismatch is refused | [trust_test.go](../../internal/plugins/trust_test.go): `TestTrustPolicyDecide`, `TestNewTrustPolicy` | REQ-plugins-trust-decision, REQ-plugins-verified-entry-pins, REQ-plugins-trusted-signers-only, REQ-plugins-unsigned-never-deployed |
 | A signature counts only for the exact issuer and an exact or fully matching subject, or the same key | `TestSignerIdentityMatches`, `TestSignerIdentityValidate`, `TestSignerValidate` | REQ-plugins-signer-identity-match |
 | Catalog and owner signers parsed strictly; publishers need exact identities | [catalog_test.go](../../internal/plugins/catalog_test.go): `TestParseCatalog`, `TestCatalogValidate`, `TestParseOwnerSigners` | REQ-plugins-catalog-format |
+| An install argument is one catalog entry or a digest-pinned image; tags, unknown and shared names are refused; the instance is named by default | [install_test.go](../../internal/plugins/install_test.go): `TestResolveInstallSource` | REQ-plugins-cli-install-source |
+| An install requests the signed manifest and grants exactly that; names the CRD refuses are refused | `TestPlanInstall`, `TestPlanInstallRefuses` | REQ-plugins-cli-install-plan |
+| An uninstall keeps Secrets another instance still names | `TestSecretsToDelete` | REQ-plugins-cli-uninstall-secrets |
+| An install is verified with the operator's trust policy and refused when it would never deploy, when the schema rejects its config or when the name exists; uninstall keeps shared Secrets; list sorts by name | [app/install_test.go](../../internal/plugins/app/install_test.go): `TestInstallerPrepare`, `TestInstall`, `TestUninstall` | REQ-plugins-cli-install-verifies, REQ-plugins-cli-uninstall, REQ-plugins-cli-list |
+| The summary shows trust, every requested permission and the config properties; uninstall plans and the list table read as intended | [cli/render_test.go](../../internal/plugins/cli/render_test.go): `TestRenderProposal`, `TestRenderProposalWithoutPermissions`, `TestRenderUninstallPlan`, `TestWriteInstances` | REQ-plugins-cli-permission-summary |
+| Nothing changes without `y`, `yes` or `--yes`; `--print` never contacts the cluster; signers from the cluster or a file | [cli/cli_test.go](../../internal/plugins/cli/cli_test.go): `TestRun` | REQ-plugins-cli-confirmation, REQ-plugins-cli-owner-signers, REQ-plugins-cli-print-resources |
+| The binary verifies a key-signed cosign bundle in a registry with the operator's verifier before installing, and refuses unsigned and untrusted images | [cmd/openfief/main_test.go](../../cmd/openfief/main_test.go): `TestInstallVerifiesSignatures`, `TestPrint`, `TestInstallListUninstall` | REQ-plugins-cli-install-verifies |
 | The embedded catalog loads | [catalog/catalog_test.go](../../internal/plugins/catalog/catalog_test.go): `TestLoad` | REQ-plugins-catalog-in-repo |
 | The manifest label parses strictly and must equal the declared manifest as sets | [manifest_label_test.go](../../internal/plugins/manifest_label_test.go): `TestParseManifestLabel`, `TestManifestEqual` | REQ-plugins-manifest-label-match, REQ-plugins-manifest-in-image |
 
@@ -306,10 +414,12 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 ## Not built yet
 
 - **Verified plugins (D-43, D-44).** The catalog file exists but lists no plugin, so every image that runs today is unverified.
-- **Showing trust (D-56).** The `SignatureVerified` condition tells verified from only signed, but there is no UI yet to show it.
-- **The `openfief` CLI (D-46).** There is no `cmd/openfief`; `Plugin` and `PluginGrant` are applied by hand.
-- **More contracts and SDKs (D-11).** Only the connector contract exists: no view contract (P-9 outlines one, but it is a proposal), no TypeScript SDK, and no first-party plugin built on the SDK yet.
-- **Core-to-plugin auth (D-59).** The NetworkPolicy admits ingress from the core alone, and the SDK refuses callers its `CoreVerifier` rejects. But the SDK ships no `CoreVerifier`, so each plugin must supply one; the operator doesn't publish the cluster's token-signing keys in a ConfigMap for it to use; and the core's token issuer, the `CoreTokens` port in [ingest/app/connectors.go](../../internal/ingest/app/connectors.go), has no TokenRequest implementation.
-- **Core side of plugin identity (D-27).** Plugins get `openfief-core` tokens and the SDK sends them, but nothing in the core verifies them yet.
-- **Uninstall (D-58).** Deleting a `Plugin` removes its objects by garbage collection and drops its allow-list entry. Deleting its grant and Secrets, and marking its data as coming from a removed instance, are not built.
+- **Packaging the CLI.** `cmd/openfief` builds with `go build ./cmd/openfief`; no release step ships the binary yet, and `plugin install` can't upgrade an installed instance (D-47 leaves upgrades to the owner's own edit).
+- **More contracts and SDKs (D-11).** A plugin serves only the connector contract. View plugins serve no contract of their own (P-9 outlines one, but it is a proposal): they are clients of the read API and of the core's services for view plugins (`AuthService`, `ModelPortfolioService`, `BondLotService`), whose Go code `sdk/go/gen` carries. There is no TypeScript SDK.
+- **First-party plugins in the catalog (D-43).** `nbp-fx`, `ibkr-flex`, `eodhd`, `treasury-bonds`, `ghostfolio` and `ui` are built and signed by CI but not in the catalog, so they run as signed by a trusted signer, not verified.
+- **The core naming what to price (D-22).** `eodhd` fetches the instruments its config lists; the core doesn't tell a market-data connector which instruments are held or which indices the model portfolio targets.
+- **One Secret per IBKR instance (D-48).** `ibkr-flex`'s manifest names one Secret, `ibkr-flex-credentials`, so two instances of it, one per IBKR account, read the same credentials (see [Decisions](#decisions)).
+- **Core side of plugin identity (D-27).** The core verifies view plugins' `openfief-core` tokens only; a connector's token is accepted nowhere, since the core calls connectors and not the other way round (D-49).
+- **An owner-chosen egress host.** A manifest is the signed image label (D-42), so it can't request a host the owner picks at install, such as the [Ghostfolio view](ghostfolio.md#not-built-yet)'s Ghostfolio; how such a host enters the grant and the allow-list is not decided.
+- **One Secret per instance on uninstall (D-48, D-58).** A Secret another installed instance names is kept, because instances of one image share Secret names.
 - **Data tiers.** Carried from manifest to workload but enforced nowhere (P-33 is undecided).

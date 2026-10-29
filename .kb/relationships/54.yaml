@@ -160,3 +160,143 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d3231c09dc8
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-clock
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:53:48.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-000487d831da
+  - type: implements
+    from: SYM-plugin-labels-dockerfile-label
+    to: REQ-plugins-first-party-manifest-label
+    created_at: 2026-10-28T17:29:01.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-125699c10f7d
+  - type: covered_by
+    from: SYM-plugin-labels-dockerfile-label
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:29:01.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52fe41bdee57
+  - type: executable_for
+    from: SYM-ui-test-create-enrollment-link
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:01:53.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0475b7f2fc06
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-check
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:05:55.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95a07c68bc7f
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-check
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:05:55.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf1bdbbf31b0
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-check
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:05:55.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc2d1bbf05f8
+  - type: implements
+    from: SYM-views-connectapi-pb-performance
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:01:39.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63c0a4aea22e
+  - type: covered_by
+    from: SYM-views-connectapi-pb-performance
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-28T21:01:39.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de838f605c67
+  - type: implements
+    from: SYM-views-pb-get-performance-response-get-revaluation-pending
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:11:17.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c13121618ebc
+  - type: covered_by
+    from: SYM-views-pb-get-performance-response-get-revaluation-pending
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:11:17.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2101c8001539
+  - type: verified_by
+    from: SCEN-portfolio-rebase
+    to: TEST-portfolio-drawdown
+    created_at: 2026-10-28T22:11:31.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1c2454c9d8a
+  - type: executable_for
+    from: SYM-portfolio-pg-test-helper-new-pool
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:04.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03e782279f48
+  - type: implements
+    from: SYM-portfolio-pb-get-model-portfolio-request-string
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:24:36.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19184e774954
+  - type: covered_by
+    from: SYM-portfolio-pb-get-model-portfolio-request-string
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:24:37.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be5e013f33f9
+  - type: implements
+    from: SYM-views-ghostfolio-plan-is-empty
+    to: REQ-views-ghostfolio-reconcile
+    created_at: 2026-10-29T00:58:46.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-304da395449d
+  - type: covered_by
+    from: SYM-views-ghostfolio-plan-is-empty
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T00:58:46.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72cc9772549f
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-ghostfolio-delete-activity
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:06:37.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ee154a07fc2
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-response-get-new
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:31:58.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d67b447bb687
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-response-get-new
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:31:58.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baf89e47abe8

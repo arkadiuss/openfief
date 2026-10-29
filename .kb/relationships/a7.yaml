@@ -174,3 +174,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-609eaebac1b1
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-request-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:51:59.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b670b6f396ef
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-request-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:52:00.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dfdfa8cb6c4
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-script-token-request-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:52:00.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7732106c8e27
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-price
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:44:19.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8366607f534c
+  - type: implements
+    from: SYM-portfolio-pb-target-kind-type
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:22:45.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5cd96967a4b
+  - type: covered_by
+    from: SYM-portfolio-pb-target-kind-type
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:22:45.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f466836dec7
+  - type: validates
+    from: TEST-views-ghostfolio-plan
+    to: REQ-AUTO-4F8D1E2BADB7AED0
+    created_at: 2026-10-29T00:54:12.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-464d0bdbe0e5
+  - type: validates
+    from: TEST-views-ghostfolio-plan
+    to: REQ-AUTO-54773934AD125DF8
+    created_at: 2026-10-29T00:54:12.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0f7dc17fe8d
+  - type: implements
+    from: SYM-views-ghostfolio-source
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:56:28.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e0861409414
+  - type: covered_by
+    from: SYM-views-ghostfolio-source
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:56:28.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b1529d1146e

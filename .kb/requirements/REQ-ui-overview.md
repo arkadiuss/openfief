@@ -1,0 +1,47 @@
+---
+title: The built-in UI's overview must show the portfolio's total in the reporting currency, each account's valuation status, the allocation by asset class, currency, institution or sleeve, and the value over time as the portfolio's time-weighted return index from go-live, 100 on go-live, from the read API, without computing performance itself.
+status: open
+text_ref: docs/DESIGN.md#D-30
+tags:
+  - strict-modeling
+  - confidence:0.90
+  - confidence-band:high
+  - provenance:docs-design-md-d-30
+  - lane:strict
+semantic_text: The built-in UI's overview must show the portfolio's total in the reporting currency, each account's valuation status, the allocation by asset class, currency, institution or sleeve, and the value over time as the portfolio's time-weighted return index from go-live, 100 on go-live, from the read API, without computing performance itself.
+logic_claims:
+  - CLAIM-CC582DE60310CAC6
+semantic_clauses:
+  - The built-in UI's overview must show the portfolio's total in the reporting currency, each account's valuation status, the allocation by asset class, currency, institution or sleeve, and the value over time as the portfolio's time-weighted return index from go-live, 100 on go-live, from the read API, without computing performance itself.
+semantic_inventory_version: kibi.semantic-inventory.v1
+semantic_source_field: semantic_text
+semantic_source_hash: 9c92235eb3d4a4a564ef4f3bb4339f380e314d66d8a077923220dafe5ff308be
+semantic_inventory:
+  - claim_key: CLAIM-CC582DE60310CAC6
+    claim_text: The built-in UI's overview must show the portfolio's total in the reporting currency, each account's valuation status, the allocation by asset class, currency, institution or sleeve, and the value over time as the portfolio's time-weighted return index from go-live, 100 on go-live, from the read API, without computing performance itself
+    role: normative
+    status: modeled
+    span:
+      start: 0
+      end: 338
+origin:
+  kind: agent
+  recorded_at: '2026-10-28T19:49:57.000Z'
+id: REQ-ui-overview
+type: req
+---
+The built-in UI's overview must show the portfolio's total in the reporting currency, each account's valuation status, the allocation by asset class, currency, institution or sleeve, and the value over time as the portfolio's time-weighted return index from go-live, 100 on go-live, from the read API, without computing performance itself.
+
+## Context
+
+D-30 (two charts), D-36 (valuation status in the UI), D-62 (reporting currency), D-61 (the portfolio's line is its time-weighted return, served by GetPerformance), D-53 (both lines start at 100 on go-live). Revised when the read API gained GetPerformance: the UI no longer says 'TWR: not built'. Modeled by Claude Code for the model portfolio task; the author has not reviewed it yet.
+
+## Source
+
+> **[D-30]** The built-in UI draws two charts in M0: allocation (by asset class, currency, broker or sleeve) and value over time, which starts at go-live (D-23).
+
+docs/DESIGN.md#D-30
+
+> **[D-61]** Both lines are in the reporting currency (D-62). The model's backtest also needs exchange rates into that currency, so it starts no earlier than they do; NBP's rates begin on 2002-01-02.
+
+docs/DESIGN.md#D-61

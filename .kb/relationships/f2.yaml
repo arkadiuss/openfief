@@ -104,3 +104,164 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-08ae4704ada0
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-mem-store-xtb-state
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:53:11.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1984c2a4741
+  - type: implements
+    from: SYM-delivery-from-mapping
+    to: REQ-ingest-delivery-contract-messages
+    created_at: 2026-10-28T17:20:20.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29e8a80ca942
+  - type: covered_by
+    from: SYM-delivery-from-mapping
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:20:20.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d46492243ff
+  - type: implements
+    from: SYM-nbp-fx-connector-from
+    to: REQ-plugins-nbp-fx-sync
+    created_at: 2026-10-28T17:24:08.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d52185f77e9
+  - type: covered_by
+    from: SYM-nbp-fx-connector-from
+    to: TEST-plugins-nbp-fx
+    created_at: 2026-10-28T17:24:08.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06cc102b936a
+  - type: executable_for
+    from: SYM-nbp-fx-test-day
+    to: TEST-plugins-nbp-fx
+    created_at: 2026-10-28T17:24:13.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8450f14e462
+  - type: validates
+    from: TEST-identity-auth-contract
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:34:52.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f4c69087409
+  - type: executable_for
+    from: SYM-identity-test-auth-service-contract
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:35:08.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afc1112c7a66
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-response-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:40:34.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-486093fbf1a1
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-response-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:40:34.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f828de6ed6c
+  - type: covered_by
+    from: SYM-identity-gen-pb-get-login-methods-response-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:40:34.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa123a8e365f
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:46:48.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de049c16cb9d
+  - type: implements
+    from: SYM-identity-gen-pb-create-demo-session-request-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:46:48.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d583191227e
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-demo-session-request-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:46:48.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e82d8f1d5a0
+  - type: executable_for
+    from: SYM-ui-test-as-of-date
+    to: TEST-ui-format
+    created_at: 2026-10-28T20:00:34.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17ba0585474a
+  - type: executable_for
+    from: SYM-portfolio-test-helper-rng
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:16:26.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87f04d3d8e80
+  - type: implements
+    from: SYM-core-conn-valuation-inputs-store-index-levels
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T22:46:21.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0c7e74ab952
+  - type: covered_by
+    from: SYM-core-conn-valuation-inputs-store-index-levels
+    to: TEST-core-connectors
+    created_at: 2026-10-28T22:46:21.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-280b65489b0c
+  - type: implements
+    from: SYM-views-pb-model-target-kind-enum
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:40:25.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83d77b7fa005
+  - type: covered_by
+    from: SYM-views-pb-model-target-kind-enum
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:40:25.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c289e952c93
+  - type: executable_for
+    from: SYM-ui-test-helper-new-fake-model
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:13:31.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fc9e4df5989
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-owners
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:23.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-087a6948989c
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-served
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:33.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fd418de9380

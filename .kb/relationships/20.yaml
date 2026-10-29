@@ -181,3 +181,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-559634dc949e
+  - type: constrains
+    from: REQ-identity-demo-sessions
+    to: FACT-SUBJECT-C2E522A1520A4F19
+    created_at: 2026-10-28T19:27:20.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5be8e2d9b6ac
+  - type: requires_property
+    from: REQ-identity-demo-sessions
+    to: FACT-PROP-566FDE231EADBAD1
+    created_at: 2026-10-28T19:27:20.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b52e445594f
+  - type: specified_by
+    from: REQ-identity-demo-sessions
+    to: SCEN-identity-demo-sessions
+    created_at: 2026-10-28T19:27:20.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6678f833ecce
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-who-am-i
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:03:40.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3213748fbbf6
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-who-am-i
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:03:40.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-befc8756877f
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-who-am-i
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:03:40.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33f5a8cde1e7
+  - type: executable_for
+    from: SYM-views-test-helper-invested-case
+    to: TEST-views-performance-properties
+    created_at: 2026-10-28T21:04:42.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8d7d9488e57
+  - type: implements
+    from: SYM-plugins-kube-resources
+    to: REQ-plugins-cli-print-resources
+    created_at: 2026-10-28T23:14:43.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f18b7a3ba939
+  - type: implements
+    from: SYM-plugins-kube-resources
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:14:43.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1acb1db274b
+  - type: covered_by
+    from: SYM-plugins-kube-resources
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:14:43.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed56f4ca2200
+  - type: implements
+    from: SYM-plugins-cosign-image-ref
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:40:04.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cb58e116371
+  - type: covered_by
+    from: SYM-plugins-cosign-image-ref
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:40:04.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9c1fbf43658
+  - type: implements
+    from: SYM-portfolio-target-validate
+    to: REQ-portfolio-model-targets
+    created_at: 2026-10-28T22:23:34.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-785a3ec86f52
+  - type: covered_by
+    from: SYM-portfolio-target-validate
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:34.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-753fcac0a999

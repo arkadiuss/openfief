@@ -379,6 +379,39 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                 type: object
+              signature:
+                description: |-
+                  Signature says who signed spec.image and how far that is trusted
+                  (D-45, D-56), while the SignatureVerified condition is True; absent
+                  otherwise. The condition's reason tells verified from only signed;
+                  this also names the signer and its kind, for the UI to show.
+                properties:
+                  signer:
+                    description: |-
+                      Signer is the trusted signer's name: openfief-ci, a catalog
+                      publisher's or one the owner added.
+                    maxLength: 253
+                    type: string
+                  signerKind:
+                    description: SignerKind is the kind of trusted signer (D-45).
+                    enum:
+                    - OpenFiefCI
+                    - Publisher
+                    - Owner
+                    type: string
+                  trust:
+                    description: |-
+                      Trust is Verified when the catalog pins the image to the publisher
+                      that signed it (D-44), Unverified when another trusted signer did.
+                    enum:
+                    - Verified
+                    - Unverified
+                    type: string
+                required:
+                - signer
+                - signerKind
+                - trust
+                type: object
             type: object
         required:
         - spec

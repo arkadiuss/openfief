@@ -286,3 +286,157 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c86c986cc64f
+  - type: executable_for
+    from: SYM-sdk-go-test-test-now
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:50:33.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fddc996dd05
+  - type: implements
+    from: SYM-ibkr-flex-flex-credentials
+    to: REQ-plugins-ibkr-flex-connector
+    created_at: 2026-10-28T17:22:04.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76e1c8cca315
+  - type: covered_by
+    from: SYM-ibkr-flex-flex-credentials
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:22:04.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdf2ad53caa6
+  - type: implements
+    from: SYM-identity-gen-pb-passkey
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:38:06.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5b533f1a322
+  - type: implements
+    from: SYM-identity-gen-pb-passkey
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:38:06.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51dfd62f4f24
+  - type: covered_by
+    from: SYM-identity-gen-pb-passkey
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:38:06.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69efd25b75c1
+  - type: validates
+    from: TEST-valuation-eodhd-client
+    to: REQ-valuation-eodhd-connector
+    created_at: 2026-10-28T21:36:58.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a4a098406ed
+  - type: validates
+    from: TEST-valuation-eodhd-client
+    to: REQ-AUTO-0C514DFCDB36FBEB
+    created_at: 2026-10-28T21:36:59.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e26bfe1f802f
+  - type: executable_for
+    from: SYM-plugins-app-test-install-installer
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:44:49.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cf63770d518
+  - type: implements
+    from: SYM-views-pb-get-model-portfolio-request-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:45:32.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2297c4ecd903
+  - type: covered_by
+    from: SYM-views-pb-get-model-portfolio-request-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:45:32.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7171806108d6
+  - type: implements
+    from: SYM-views-ghostfolio-activity-same-as
+    to: REQ-views-ghostfolio-reconcile
+    created_at: 2026-10-29T00:55:37.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df9faecdb4b6
+  - type: implements
+    from: SYM-views-ghostfolio-activity-same-as
+    to: REQ-AUTO-4F8D1E2BADB7AED0
+    created_at: 2026-10-29T00:55:37.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3b0ad92f643
+  - type: covered_by
+    from: SYM-views-ghostfolio-activity-same-as
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T00:55:37.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cf0cfe79af1
+  - type: implements
+    from: SYM-views-ghostfolio-held-on
+    to: REQ-views-ghostfolio-bond-assets
+    created_at: 2026-10-29T00:58:09.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-136b3816282a
+  - type: covered_by
+    from: SYM-views-ghostfolio-held-on
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:58:09.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-455f4d383d3d
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-pb-bond
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:08:42.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a03c49e92f31
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-pb-bond
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:08:42.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a574b5c2d571
+  - type: executable_for
+    from: SYM-ingest-delivery-test-bond-lots
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-29T01:21:49.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1c2ffc69dd0
+  - type: implements
+    from: SYM-views-kube-plugins-start
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:37:39.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d67694e34110
+  - type: implements
+    from: SYM-views-kube-plugins-start
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:37:39.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-206f91b8a1f0
+  - type: covered_by
+    from: SYM-views-kube-plugins-start
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:37:39.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c8f3f78b614

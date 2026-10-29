@@ -11,15 +11,29 @@
 //	OPENFIEF_DSN=postgres://... core token issue --name NAME [--ttl 720h]
 //	OPENFIEF_DSN=postgres://... core token list
 //	OPENFIEF_DSN=postgres://... core token revoke ID
+//	OPENFIEF_DSN=postgres://... core connector bind --instance NAME --account ID
+//	OPENFIEF_DSN=postgres://... core connector sync --instance NAME [--mode opening|transactions]
+//	OPENFIEF_DSN=postgres://... core enroll-link [--host localhost:8080] [--ttl 15m]
 //
 // `token issue` prints the new token's secret once, on stdout, and nowhere
-// else. The service logs internal IDs and counts only: never an amount, a
+// else; it is the break-glass way to a script token, which the owner
+// otherwise creates from a logged-in session. `enroll-link` prints a
+// one-time link for creating a passkey on a host (D-60), localhost by
+// default: the way in for the first passkey.
+//
+// Next to the read API, serve offers view plugins the AuthService
+// (proto/openfief/identity/v1): passkey login and registration, sessions,
+// script tokens and enrollment links. --auth-origin lists the origins the
+// owner's browser may use; --session-idle and --session-max bound sessions;
+// --demo-sessions issues read-only sessions without credentials on a demo
+// database. The service logs internal IDs and counts only: never an amount, a
 // holding, a token or its hash.
 //
-// Not built yet: the core calling connectors (D-49), with their schedules,
-// retries and import batches, and the per-instance tokens it presents to
-// them (D-59). No connector plugin exists yet; data enters through the
-// demo loader (cmd/demo-seed) until then.
+// In a Kubernetes cluster, serve also syncs the running connector
+// instances on a schedule (D-49), presenting a TokenRequest token of its own
+// ServiceAccount whose audience is the instance (D-59). connector bind lets
+// an instance write to an account; connector sync syncs one instance now
+// and needs the cluster too. Outside a cluster serve doesn't sync.
 package main
 
 import (
@@ -73,6 +87,18 @@ func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) err
 				return err
 			}
 			return tokenCommand(ctx, cmd, newTokens(d.pool, time.Now), out, time.Now())
+		})
+	case cmdEnrollLink:
+		return withPool(ctx, cmd.DSN, func(d *deps) error {
+			if err := migrate(ctx, d.pool); err != nil {
+				return err
+			}
+			return enrollLink(ctx, d.pool, cmd.Enroll.Origin, cmd.Enroll.TTL, out, time.Now())
+		})
+	case cmdBind, cmdSync:
+		cl := clusterOrNil(log)
+		return withConnectorDeps(ctx, cmd.DSN, log, func(d *connectorDeps) error {
+			return connectorCommand(ctx, cmd, d, cl, out)
 		})
 	}
 	return fmt.Errorf("%w: %q", errUsage, cmd.Name)

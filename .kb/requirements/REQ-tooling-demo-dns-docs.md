@@ -1,6 +1,6 @@
 ---
 title: task dns:docs must make docs.<DEMO_DOMAIN> a DNS-only CNAME to the GitHub Pages host with the comment managed-by=openfief-docs, creating or updating only a record with that comment, refusing when any other record occupies the name, and task dns:docs:plan must show the change without making it; the Cloudflare token is handled as for the demo.
-status: open
+status: closed
 text_ref: docs/dev/demo.md#dns
 tags:
   - strict-modeling

@@ -1,0 +1,5 @@
+GET https://eodhd.com/api/search/XX00000SYNT3?api_token=SANITIZED&fmt=json&limit=50 HTTP/1.1
+Host: eodhd.com
+User-Agent: openfief
+Accept: application/json
+

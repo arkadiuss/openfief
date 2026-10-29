@@ -1,6 +1,6 @@
 ---
 title: Valuation
-description: How OpenFief values every holding on every day, stores those valuations, and rebuilds them through a revaluation queue whenever a price, FX rate, index reading or the ledger changes.
+description: How OpenFief values every holding on every day, stores those valuations, and rebuilds them through a revaluation queue whenever a price, FX rate, index reading or the ledger changes; and how its NBP and EODHD adapters fetch rates and prices.
 covers:
   - internal/valuation/**
 ---
@@ -49,6 +49,7 @@ The context follows the layering in [code-organization.md](../dev/code-organizat
 | `valuation/app` ([plan.go](../../internal/valuation/app/plan.go), [record.go](../../internal/valuation/app/record.go), [revalue.go](../../internal/valuation/app/revalue.go), [ports.go](../../internal/valuation/app/ports.go), [status.go](../../internal/valuation/app/status.go), [rates.go](../../internal/valuation/app/rates.go)) | Use cases and ports | `Planner`, `InputRecorder`, `Revaluer`, `ValuationStatus`, `FetchRates` |
 | `valuation/postgres` ([store.go](../../internal/valuation/postgres/store.go), [queue.go](../../internal/valuation/postgres/queue.go), [worker.go](../../internal/valuation/postgres/worker.go), [status.go](../../internal/valuation/postgres/status.go), [0001_valuation.sql](../../internal/valuation/postgres/migrations/0001_valuation.sql)) | Adapter | The `valuation` schema, the River queue and its workers |
 | `valuation/nbp` ([client.go](../../internal/valuation/nbp/client.go)) | Adapter | `Client`, which fetches table A for the `RateProvider` port |
+| `valuation/eodhd` ([client.go](../../internal/valuation/eodhd/client.go), [listing.go](../../internal/valuation/eodhd/listing.go)) | Adapter | `Client`, which finds an ISIN's listings and fetches end-of-day closes from EODHD; `Pick` and `Listing.Quote`, which choose a listing and quote its closes |
 
 ### Valuing one holding
 
@@ -95,6 +96,8 @@ flowchart TD
 | End of day | `EndOfDay` River job | Every account with a log | Its valued-through date, or its first transaction |
 
 The `valuation` schema keys prices by instrument and date, rates by currency and date, readings by kind and month, and terms by ISIN; recording one again replaces it. An instrument whose ISIN has stored terms is valued as a bond.
+
+[Index levels](../glossary.md) (`valuation.IndexLevel`, [level.go](../../internal/valuation/level.go)) are the end-of-day closing levels of market indices such as WIG20 (D-51), keyed by the index's name as the market-data connector names it and by date, in `valuation.index_levels` ([0002_index_levels.sql](../../internal/valuation/postgres/migrations/0002_index_levels.sql)). A level has no currency; the model portfolio's index target carries it. `InputRecorder.RecordIndexLevels` checks each level (`IndexLevel.Validate`: a name of at most 64 characters, a date, a positive level) and `Store.SaveIndexLevels` upserts them; no holding is valued from an index, so they enqueue no revaluation. `Store.IndexLevels(index, through)` reads them for the model portfolio's backtest (D-53, [Portfolio](portfolio.md)).
 
 ### The revaluation queue and worker
 
@@ -169,10 +172,42 @@ sequenceDiagram
 
 The adapter keeps NBP's JSON shape inside the package. It parses `mid` from the number's text into a `kernel.Decimal`, never through a float. It rejects, as `ErrMalformedTable`, a body that isn't JSON, a table other than `A`, a bad date or currency code, and a rate that isn't positive. It sends `User-Agent: openfief`, because `api.nbp.pl` answers 403 to Go's default, and reads at most 4 MiB. The caller supplies the `http.Client`, including its proxy.
 
+### Fetching EODHD closes
+
+D-51 makes [EODHD](../glossary.md) the first market-data source, on the owner's own API key (D-22). The `eodhd` package is its adapter; the [eodhd plugin](plugins.md#first-party-plugins) runs it. EODHD names a listing by a ticker, its code plus an exchange code, such as `SYNT.XETRA`, and finds listings by ISIN through its search.
+
+```mermaid
+sequenceDiagram
+  participant P as eodhd plugin
+  participant C as eodhd.Client
+  participant API as eodhd.com
+  P->>C: Listings(ctx, ISIN)
+  C->>API: GET /api/search/ISIN?api_token, fmt=json, limit=50
+  API-->>C: results on every exchange, plus fuzzy matches
+  C-->>P: Listings with a valid ISIN
+  P->>P: Pick(listings, ISIN, exchange): one listing on WAR, LSE, XETRA or a Euronext market
+  P->>C: Closes(ctx, ticker, from, today)
+  C->>API: GET /api/eod/TICKER?api_token, fmt=json, period=d, order=a, from, to
+  alt 200
+    API-->>C: daily bars
+    C-->>P: Close per day, parsed from the number's text, sorted by date
+  else 404
+    C-->>P: ErrNotFound
+  else any other status
+    C-->>P: ErrUnexpectedStatus
+  end
+  P->>P: Listing.Quote(close): money in the listing's currency, GBX to GBP
+```
+
+`Pick` keeps the listings of the asked ISIN on a supported exchange (`SupportedExchange`: `WAR`, `LSE`, `XETRA`, and Euronext's `PA`, `AS`, `BR`, `LS`, `IR`, `MI`, `OL`), on the asked exchange when one is named, each ticker once. None is `ErrNotListed`; more than one, with no exchange named, is `ErrAmbiguous`, which names the tickers. `Quote` turns a close into money in the listing's currency. EODHD quotes most LSE listings in pence, `GBX`, which is not an ISO 4217 code: such a close is divided by 100 exactly and becomes pounds. Any other currency must be a valid code, or the result is `ErrQuoteCurrency`.
+
+`Closes` uses the `close` field, not `adjusted_close`, which EODHD back-adjusts for splits and dividends; a stored price is what the instrument closed at that day. It leaves out a day whose close is null or not positive, and asks for the whole history when `from` is zero. The adapter keeps EODHD's JSON inside the package, parses every close from its text into a `kernel.Decimal`, and rejects, as `ErrMalformedResponse`, a body that isn't the documented array, a bad date or a close that isn't a number. The API key travels as the `api_token` query parameter, so the client strips the request URL from transport errors: no error it returns contains the key. It sends `User-Agent: openfief` and reads at most 16 MiB. The caller supplies the `http.Client`, including its proxy.
+
 ## Decisions
 
-- **D-36**: stored valuations, River queue, coalescing, fixed triggers, configurable settings, basis change revalues all. Built in the valuation context. Only `cmd/demo-seed` runs the store, the import hook and the River client, to value the demo dataset; no product binary does, and no read API or UI shows the status.
-- **D-20**: NBP table A to PLN, swappable rate provider. Two gaps remain: NBP is a package of the core module (`internal/valuation/nbp`), not the FX plugin of D-20 and DESIGN.md's M0 diagram; and "tax always uses NBP rates" isn't enforced, since `RateOnOrBefore` ignores `Source`.
+- **D-22**, **D-51** (part): the EODHD adapter, on the owner's API key, for the Warsaw Stock Exchange, LSE, Xetra and Euronext. Not built: the cross-check against IBKR Flex prices.
+- **D-36**: stored valuations, River queue, coalescing, fixed triggers, configurable settings, basis change revalues all. Built in the valuation context. `cmd/core` migrates the schemas, wires the import hook, records the bond basis with `ApplyBondBasis` and runs the River client, with `--workers`, `--end-of-day` and `--bond-basis` as its settings ([core.go](../../cmd/core/core.go)); the [read API](read-api.md) serves each account's status and the [built-in UI](ui.md) shows it. `cmd/demo-seed` runs the same pieces to value the demo dataset.
+- **D-20**: NBP table A to PLN, swappable rate provider. The NBP adapter stays a package of the core module (`internal/valuation/nbp`); the [nbp-fx plugin](plugins.md#first-party-plugins) is the FX connector that serves it, and the core syncs it like any connector. One gap remains: "tax always uses NBP rates" isn't enforced, since `RateOnOrBefore` ignores `Source`.
 - **D-21**: end-of-day prices only.
 - **D-25**: configurable bond basis, net-if-redeemed by default. The code also withholds no tax inside IKZE (see [Treasury bonds](treasury-bonds.md#decisions)).
 - **D-14**: PostgreSQL holds the `valuation` and `river` schemas.
@@ -186,15 +221,17 @@ The adapter keeps NBP's JSON shape inside the package. It parses `mid` from the 
 | Market value is exact; bond basis defaults to net and rejects market | `TestBasisNames`, `TestMarketValuation`, `TestBondBasis`, `TestBondValuation` in [valuation_test.go](../../internal/valuation/valuation_test.go) | REQ-valuation-market-value, REQ-valuation-bond-basis, TEST-valuation-valuation |
 | Latest rate on or before a date; tax takes the day before; conversion rounds once | `TestRateOnOrBefore`, `TestRateOnOrBeforeConflicts`, `TestTaxRateUsesTheTableBeforeTheEvent`, `TestToPLN`, `TestConvertToPLN` in [fx_test.go](../../internal/valuation/fx_test.go) | REQ-valuation-fx-rate-lookup, REQ-pl-tax-fx-rate-date, REQ-valuation-pln-conversion, TEST-valuation-fx |
 | Each started period gets its CPI or reference-rate reading | `TestIndexKindNames`, `TestLotIndices` in [index_test.go](../../internal/valuation/index_test.go) | REQ-valuation-lot-indices, SCEN-valuation-lot-indices, TEST-valuation-index |
+| Index levels need a name, a date and a positive level; they are stored and read back by index and date, replace an earlier one and revalue nothing | `TestIndexLevelValidate` in [level_test.go](../../internal/valuation/level_test.go); `TestRecordInputs`, `TestRecordRejectsInvalidInputs` in [plan_test.go](../../internal/valuation/app/plan_test.go); `TestIndexLevelsRoundTrip` in [postgres/level_test.go](../../internal/valuation/postgres/level_test.go) | REQ-valuation-index-levels, TEST-valuation-index-level, TEST-valuation-postgres-index-levels |
 | Holdings valued at market or as bond lots; gaps become rows; valued-through rule; coalescing | `TestPriceOnOrBefore`, `TestValueMarketHolding`, `TestValueMarketHoldingConflictingRates`, `TestValueBondHolding`, `TestValueBondHoldingRejects`, `TestValuedThrough`, `TestCoalesce` in [revaluation_test.go](../../internal/valuation/revaluation_test.go) | REQ-valuation-market-holding, REQ-valuation-bond-holding, REQ-valuation-missing-input, REQ-valuation-coalesce, TEST-valuation-revaluation |
 | Fixed trigger rules, input validation, basis change | `TestPlanner`, `TestRecordInputs`, `TestRecordRejectsInvalidInputs`, `TestApplyBondBasis` in [plan_test.go](../../internal/valuation/app/plan_test.go) | REQ-valuation-revaluation-triggers, REQ-valuation-input-validation, REQ-valuation-basis-change, TEST-valuation-app-plan |
 | A revaluation rebuilds rows idempotently from its start and keeps an earlier gap | `TestRevalueStoresMarketValues`, `TestRevalueIsIdempotent`, `TestRevalueStartsAtTheFirstTransaction`, `TestRevalueKeepsAnEarlierGap`, `TestRevalueMissingInputs`, `TestRevalueBonds` in [revalue_test.go](../../internal/valuation/app/revalue_test.go) | REQ-valuation-revaluation-rows, SCEN-valuation-revaluation-rebuild, TEST-valuation-app-revalue |
 | Inputs and imports enqueue in their own transaction; coalescing in `dirty`; status flags | `TestSaveEnqueuesInTheSameTransaction`, `TestEnqueueCoalescesFromTheEarliestDate`, `TestImportHookEnqueuesInTheImportsTransaction`, `TestSaveBondBasisRevaluesOnlyOnAChange`, `TestStatuses` in [queue_test.go](../../internal/valuation/postgres/queue_test.go) | REQ-valuation-enqueue-same-transaction, REQ-valuation-river-jobs, REQ-valuation-status, TEST-valuation-postgres-queue |
 | Inputs and valuations round-trip; replacing rows | `TestInputsRoundTrip`, `TestReplaceValuations` in [store_test.go](../../internal/valuation/postgres/store_test.go) | REQ-valuation-schema, TEST-valuation-postgres-store |
 | Real River workers revalue, close a gap, run end of day; settings checked | `TestWorkerRevaluesEndToEnd`, `TestNewClientChecksTheConfig`, `TestDailyAt` in [worker_test.go](../../internal/valuation/postgres/worker_test.go) | REQ-valuation-settings, SCEN-valuation-river-jobs, TEST-valuation-postgres-worker |
+| EODHD: one listing per ISIN on a supported exchange; closes exact and in the listing's currency, pence to pounds; the API key never in an error | [listing_test.go](../../internal/valuation/eodhd/listing_test.go): `TestSupportedExchange`, `TestPick`, `TestTicker`, `TestQuote`; [client_test.go](../../internal/valuation/eodhd/client_test.go): `TestListings`, `TestListingsNone`, `TestCloses`, `TestClosesWholeHistory`, `TestClosesUnknownTicker`, `TestClosesParsesExactly`, `TestClientRejects`, `TestClientNeverReturnsTheKey` | REQ-valuation-eodhd-listing, REQ-valuation-eodhd-closes-exact, REQ-valuation-eodhd-request, TEST-valuation-eodhd-listing, TEST-valuation-eodhd-client |
 | Rate ranges split per provider limit; NBP parses exactly, no table is empty | `TestSplitRange`, `TestFetchRates` in [rates_test.go](../../internal/valuation/app/rates_test.go); `TestRatesTableA`, `TestRatesNoData`, `TestRatesKeepsEveryDigit`, `TestRatesRejects` in [client_test.go](../../internal/valuation/nbp/client_test.go) | REQ-valuation-fx-range-splitting, REQ-valuation-nbp-decimal-exact, REQ-valuation-nbp-request, TEST-valuation-app-rates, TEST-valuation-nbp-client |
 
-These kibi tests also validate the firm D-36 requirements (REQ-decision-d36-*), except REQ-decision-d36-6-api-valuation-status and REQ-decision-d36-7-ui-valuation-status, and those imported from D-20, D-21 and D-25. The app tests use in-memory fakes. The NBP tests replay [hypert](https://github.com/areknoster/hypert) recordings of the public `api.nbp.pl` from `nbp/testdata/`, with no network.
+These kibi tests also validate the firm D-36 requirements (REQ-decision-d36-*), and those imported from D-20, D-21 and D-25. The two status requirements are validated elsewhere: REQ-decision-d36-6-api-valuation-status by TEST-views-app ([Read API](read-api.md)), REQ-decision-d36-7-ui-valuation-status by TEST-ui-pages ([Built-in UI](ui.md)). The app tests use in-memory fakes. The NBP tests replay [hypert](https://github.com/areknoster/hypert) recordings of the public `api.nbp.pl` from `nbp/testdata/`, with no network. The EODHD tests replay `eodhd/testdata/` the same way, but those files are synthetic: recording needs an API key, so they were written by hand in the response shape EODHD documents for `/api/search` and `/api/eod`, with made-up ISINs (`XX00000SYNT3`), tickers and prices, and the key replaced by `SANITIZED` in both the stored and the replayed request. They follow EODHD's documentation, not a real response.
 
 `task test` runs everything offline; the PostgreSQL tests skip there, because `OPENFIEF_PG_DSN` is unset. `task test:pg` runs every `internal/*/postgres` package against a disposable server: the one `OPENFIEF_PG_DSN` names, or a throwaway cluster started from local PostgreSQL binaries on a Unix socket. Each test creates its own database with every valuation and River migration applied, and drops it.
 
@@ -202,8 +239,7 @@ One behavior differs from its doc comment. `RateOnOrBefore` says two different r
 
 ## Not built yet
 
-- **D-36**: the read API and UI parts. `Store.Statuses` computes each account's status, but no read API or UI exists to show it. Only `cmd/demo-seed` runs `Migrate`, the store, the import hook, the River client and `ApplyBondBasis`; no product binary does, and nothing reads `Config` from settings.
-- **D-49**, **D-20**: passing connector deliveries on. The ingest context's `PriceStore`, `FXRateStore` and `IndexReadingStore` ports have no implementation that calls `InputRecorder`, and the NBP adapter is not a connector plugin. Nothing fetches rates, CPI or reference rates on a schedule.
-- **D-22**, **D-51**: the EODHD market-data connector, and the cross-check against IBKR Flex prices.
+- Fetching CPI and NBP reference rates. `cmd/core`'s `valuationInputs` records every input a connector delivers through `InputRecorder`, index readings included, but no connector delivers index readings yet, so outside the demo dataset a bond whose later interest periods follow CPI or the reference rate stays unvalued from its second period on (`Missing = index_reading`).
+- **D-22**: the cross-check of EODHD's closes against IBKR Flex prices.
+- **D-51**: checking the adapter against a real EODHD response; its recordings are synthetic.
 - **D-62**: the reporting currency setting (`valuation.ReportingCurrency` in the glossary).
-- **D-52**, **D-53**: market index levels (`valuation.Index` in the glossary) for the model portfolio.

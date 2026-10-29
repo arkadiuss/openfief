@@ -125,3 +125,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-505d71416223
+  - type: executable_for
+    from: SYM-identity-kube-test-helper-token-server
+    to: TEST-identity-kube
+    created_at: 2026-10-28T17:26:15.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66a70589655d
+  - type: implements
+    from: SYM-identity-app-passkeys-passkey-authenticator-authenticate
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:38:10.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-439f58dc866e
+  - type: covered_by
+    from: SYM-identity-app-passkeys-passkey-authenticator-authenticate
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:38:10.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3b251bb9123
+  - type: implements
+    from: SYM-ui-static-files
+    to: REQ-ui-browser-security
+    created_at: 2026-10-28T19:55:22.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76eed40e1e1c
+  - type: covered_by
+    from: SYM-ui-static-files
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:55:22.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbdafac4cce6
+  - type: executable_for
+    from: SYM-portfolio-test-backtest-of-one-target-is-its-price
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:26.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15834dab4eea
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-day
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:43:49.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4152d6bc7ede
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-day
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:43:49.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-412596a835cc
+  - type: implements
+    from: SYM-views-pb-model-target-kind-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:40:36.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-428867558bd2
+  - type: covered_by
+    from: SYM-views-pb-model-target-kind-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:40:36.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1c32f5521f4
+  - type: implements
+    from: SYM-views-pb-model-target-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:41:42.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3adde9ea6fe
+  - type: covered_by
+    from: SYM-views-pb-model-target-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:41:42.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0b134d5bc9a
+  - type: implements
+    from: SYM-views-ghostfolio-import-activity
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:01:56.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fc2c8bf095a
+  - type: covered_by
+    from: SYM-views-ghostfolio-import-activity
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:01:56.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f02e0c4c173
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-generator-actual-for
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:05:45.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a742bccfa9a
+  - type: implements
+    from: SYM-plugins-ghostfolio-config
+    to: REQ-plugins-ghostfolio-plugin
+    created_at: 2026-10-29T01:37:53.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92c78253a128
+  - type: covered_by
+    from: SYM-plugins-ghostfolio-config
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:37:53.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30a56944b6b4
+  - type: implements
+    from: SYM-connectorv1-bond-lot-get-margin
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-29T01:27:45.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-467694313ba8
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-get-margin
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-29T01:27:45.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcdd598fec58

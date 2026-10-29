@@ -160,3 +160,150 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e3a25702420
+  - type: implements
+    from: SYM-core-parse-mode
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:23:23.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56aa8693769d
+  - type: covered_by
+    from: SYM-core-parse-mode
+    to: TEST-core-unit
+    created_at: 2026-10-28T17:23:23.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d834248bd94b
+  - type: implements
+    from: SYM-operator-signing-keys-publisher-publish
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:48:43.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e96e57db281
+  - type: covered_by
+    from: SYM-operator-signing-keys-publisher-publish
+    to: TEST-operator-signing-keys
+    created_at: 2026-10-28T16:48:43.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b23c5820ecf6
+  - type: executable_for
+    from: SYM-nbp-fx-test-fake-verifier
+    to: TEST-plugins-nbp-fx
+    created_at: 2026-10-28T17:24:30.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9909896a118
+  - type: implements
+    from: SYM-identity-app-auth-auth-session-on
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:32:44.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca610491bdf5
+  - type: implements
+    from: SYM-identity-app-auth-auth-session-on
+    to: REQ-identity-session-scopes
+    created_at: 2026-10-28T19:32:44.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7702792c90bd
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-session-on
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:44.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9822d9320a88
+  - type: implements
+    from: SYM-identity-app-ports-assertion
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:39:30.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3a126fb25cd
+  - type: covered_by
+    from: SYM-identity-app-ports-assertion
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:39:30.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b281b89a1ffe
+  - type: implements
+    from: SYM-uiplugin-caller-token
+    to: REQ-ui-core-credentials
+    created_at: 2026-10-28T20:42:26.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e24475eac2c5
+  - type: covered_by
+    from: SYM-uiplugin-caller-token
+    to: TEST-ui-plugin
+    created_at: 2026-10-28T20:42:26.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed0978c6025a
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-check-sync
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:44:54.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05885a145e23
+  - type: implements
+    from: SYM-views-pb-drawdown-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:42:48.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e39f7baa8ef
+  - type: covered_by
+    from: SYM-views-pb-drawdown-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:42:48.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33f74e35101e
+  - type: implements
+    from: SYM-ui-performance-view
+    to: REQ-ui-overview
+    created_at: 2026-10-29T00:14:27.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a3b9158e639
+  - type: implements
+    from: SYM-ui-performance-view
+    to: REQ-ui-model-portfolio
+    created_at: 2026-10-29T00:14:27.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99628b8c5efb
+  - type: covered_by
+    from: SYM-ui-performance-view
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:14:27.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f5e810a3098
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-edit-buy
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:07:56.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2373d9de8ea
+  - type: implements
+    from: SYM-ingestv1-bond-lot-descriptor
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:29:54.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a15bfcba7a3a
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-descriptor
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:29:54.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efed2c2baac5

@@ -132,3 +132,143 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c32f4cdbe138
+  - type: executable_for
+    from: SYM-ingest-kube-test-operator-contract
+    to: TEST-ingest-kube
+    created_at: 2026-10-28T17:27:36.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc00ee5c809f
+  - type: implements
+    from: SYM-ibkr-flex-serve
+    to: REQ-plugins-ibkr-flex-connector
+    created_at: 2026-10-28T17:23:40.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e85d525e6f
+  - type: covered_by
+    from: SYM-ibkr-flex-serve
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:23:40.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-419f83a63310
+  - type: executable_for
+    from: SYM-plugin-labels-test-helper-fresh
+    to: TEST-tooling-plugin-labels
+    created_at: 2026-10-28T17:29:14.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8adee34ce638
+  - type: implements
+    from: SYM-identity-app-auth-auth-random-hex
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:32:52.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6da924b671a
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-random-hex
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:52.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0250d4355366
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-touch-session
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:36:50.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cd7571493c7
+  - type: executable_for
+    from: SYM-identity-auth-test-test-passkey-used
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:14.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c64d53c4b43
+  - type: implements
+    from: SYM-identity-webauthn-virtual-virtual-client-data-json
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:54:06.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84e122e39fc9
+  - type: covered_by
+    from: SYM-identity-webauthn-virtual-virtual-client-data-json
+    to: TEST-identity-webauthn
+    created_at: 2026-10-28T19:54:06.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dd2aecfe483
+  - type: implements
+    from: SYM-views-app-views-performance
+    to: REQ-views-performance-query
+    created_at: 2026-10-28T20:59:59.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a243be1a3db
+  - type: implements
+    from: SYM-views-app-views-performance
+    to: REQ-AUTO-718AA30AAFD0E6E8
+    created_at: 2026-10-28T20:59:59.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ad74c8d267b
+  - type: covered_by
+    from: SYM-views-app-views-performance
+    to: TEST-views-app-performance
+    created_at: 2026-10-28T20:59:59.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c88f89a965ec
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-fake-eodhd-closes
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:44:09.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99a9504e2336
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-config-parse
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:45:23.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f207388ed33f
+  - type: implements
+    from: SYM-views-ghostfolio-projector-assets
+    to: REQ-views-ghostfolio-bond-assets
+    created_at: 2026-10-29T00:58:04.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-379da9c3bea2
+  - type: covered_by
+    from: SYM-views-ghostfolio-projector-assets
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:58:04.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d5edb111406
+  - type: implements
+    from: SYM-views-pb-plugin
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:42:33.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-769669854bba
+  - type: implements
+    from: SYM-views-pb-plugin
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:42:33.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05986ea42dd8
+  - type: covered_by
+    from: SYM-views-pb-plugin
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:42:33.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d608e8ffa53

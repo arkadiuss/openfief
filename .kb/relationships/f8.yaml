@@ -258,3 +258,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77664e041af4
+  - type: executable_for
+    from: SYM-e2e-reply
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:02:18.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8386f748d5a8
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-get-name
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:39:31.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3487ea1e177
+  - type: implements
+    from: SYM-identity-gen-pb-script-token-get-name
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:39:31.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae6fb03071a
+  - type: covered_by
+    from: SYM-identity-gen-pb-script-token-get-name
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:39:31.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efcd8cb245d0
+  - type: executable_for
+    from: SYM-identity-auth-test-test-ceremony
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:36.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19b9ce6cad2a
+  - type: executable_for
+    from: SYM-ui-test-share
+    to: TEST-ui-format
+    created_at: 2026-10-28T20:00:22.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f339dbf6ce
+  - type: implements
+    from: SYM-plugins-cli-options
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:37:21.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92d8e66ec006
+  - type: covered_by
+    from: SYM-plugins-cli-options
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:37:21.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-909084f9a66a
+  - type: implements
+    from: SYM-views-connectapi-pb-model-portfolio
+    to: REQ-views-model-portfolio
+    created_at: 2026-10-28T23:39:12.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35d7e7d60304
+  - type: implements
+    from: SYM-views-connectapi-pb-model-portfolio
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:39:12.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-668b739347b5
+  - type: covered_by
+    from: SYM-views-connectapi-pb-model-portfolio
+    to: TEST-views-connectapi-model
+    created_at: 2026-10-28T23:39:12.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b466ff9a8d3
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T01:03:58.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc2237e51b7d
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T01:03:58.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb44871e02c3
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:03:58.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c8fff269786
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:03:58.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7df0906663f1
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:03:58.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aadbc173762
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:03:58.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95edcd2efdca
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-edo-lot
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:24:47.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1a0f6333add

@@ -328,3 +328,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ab808f6320f
+  - type: implements
+    from: SYM-core-conn-ingest-deps
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:25:46.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02a5e7fdda26
+  - type: covered_by
+    from: SYM-core-conn-ingest-deps
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:46.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-080642568a16
+  - type: executable_for
+    from: SYM-ibkr-flex-test-statement
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:22:20.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79fdd7a2d44a
+  - type: implements
+    from: SYM-identity-gen-pb-authenticator-enum
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:35:44.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fad864fa080b
+  - type: implements
+    from: SYM-identity-gen-pb-authenticator-enum
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:35:44.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-875611589ed1
+  - type: covered_by
+    from: SYM-identity-gen-pb-authenticator-enum
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:35:44.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a41e7daef4a8
+  - type: implements
+    from: SYM-identity-postgres-auth-store-delete-passkey
+    to: REQ-identity-passkey-ceremonies
+    created_at: 2026-10-28T19:47:35.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-664fd6ad2127
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-delete-passkey
+    to: TEST-identity-auth-postgres
+    created_at: 2026-10-28T19:47:35.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b8d85a7930b
+  - type: implements
+    from: SYM-ui-template-funcs
+    to: REQ-ui-browser-security
+    created_at: 2026-10-28T19:58:04.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a27c289be9a
+  - type: covered_by
+    from: SYM-ui-template-funcs
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:58:04.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e02de08369e
+  - type: implements
+    from: SYM-views-pb-performance-day-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:07:52.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b61c2c6796a
+  - type: covered_by
+    from: SYM-views-pb-performance-day-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:07:52.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbdb976be068
+  - type: implements
+    from: SYM-views-ghostfolio-problem-reason-string
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:56:57.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49693b73e17a
+  - type: covered_by
+    from: SYM-views-ghostfolio-problem-reason-string
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:56:57.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d52a135ade5d
+  - type: executable_for
+    from: SYM-treasury-bonds-test-sync-delivers-nothing
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:25:08.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-338ddeb95015
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-installed
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:36:36.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-425d7d4109f9
+  - type: executable_for
+    from: SYM-views-connectapi-test-connect-transaction-origins
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:36:51.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00247158bce3

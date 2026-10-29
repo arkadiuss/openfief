@@ -1,6 +1,6 @@
 # Release workflow (docs/dev/sdlc.md#releases): started by hand, always plans and builds as a dry run first,
 # and publishes only when dry_run is false, from main, by the repository owner.
-#   beta:   YYYY.M.N-beta.K, signed images and a tag; deploys to demo (skipped until DEMO_ENABLED is set).
+#   beta:   YYYY.M.N-beta.K, signed images and a tag; publishes the demo artifact, which a demo machine's Flux applies.
 #   stable: YYYY.M.N, signed images, a tag and a GitHub release with the CRDs and bootstrap install
 #           (packaged from deploy/ once it exists).
 # Release notes come from Conventional Commits through scripts/release-notes.sh (task release:notes).
@@ -109,7 +109,7 @@ jobs:
     # Flux applies it. Skipped until the demo machine exists: see the deploy-demo job in ci.yml.
     name: deploy demo
     needs: [plan, publish]
-    if: needs.plan.outputs.publish == 'true' && inputs.channel == 'beta' && vars.DEMO_ENABLED == 'true'
+    if: needs.plan.outputs.publish == 'true' && inputs.channel == 'beta'
     permissions:
       contents: read
       packages: write

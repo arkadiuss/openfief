@@ -10,7 +10,8 @@ import (
 )
 
 // The environment of a plugin container. The operator sets the first four
-// in every plugin; see EnvEgressIdentityFile for the fifth.
+// in every plugin, and the fifth in a plugin with granted egress hosts.
+// verifier.go names the variables a plugin verifies the core's token with.
 const (
 	// EnvConfig holds the plugin's configuration as JSON.
 	EnvConfig = "OPENFIEF_CONFIG"
@@ -23,8 +24,7 @@ const (
 	// EnvListenPort holds the port the plugin serves Connect RPC on.
 	EnvListenPort = "OPENFIEF_LISTEN_PORT"
 	// EnvEgressIdentityFile holds the path of the plugin's projected token
-	// for the egress proxy (audience openfief-egress, D-63). The operator
-	// doesn't mount that token yet; this name is the SDK's proposal.
+	// for the egress proxy (audience openfief-egress, D-63).
 	EnvEgressIdentityFile = "OPENFIEF_EGRESS_TOKEN_FILE"
 )
 

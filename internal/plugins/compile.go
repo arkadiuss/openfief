@@ -24,6 +24,29 @@ const (
 	EnvHTTPSProxy = "HTTPS_PROXY"
 	// EnvNoProxy keeps calls to the core off the egress proxy.
 	EnvNoProxy = "NO_PROXY"
+
+	// SigningKeysConfigMap is the ConfigMap in which the operator publishes
+	// the cluster's ServiceAccount token-signing public keys and issuer
+	// (D-59). Plugins can't reach the Kubernetes API, so every plugin gets it
+	// mounted read-only, to verify the core's token with.
+	SigningKeysConfigMap = "openfief-sa-jwks"
+	// SigningKeysFile is the key of the JSON Web Key Set in
+	// SigningKeysConfigMap, as the API server serves it at /openid/v1/jwks.
+	SigningKeysFile = "jwks.json"
+	// SigningKeysIssuerFile is the key of the token issuer in
+	// SigningKeysConfigMap.
+	SigningKeysIssuerFile = "issuer"
+	// SigningKeysMountPath is where a plugin gets SigningKeysConfigMap.
+	SigningKeysMountPath = ReservedMountPath + "/openfief-sa-jwks"
+
+	// EnvInstance names the plugin instance (D-48): the core's token
+	// carries its audience, "openfief-plugin:<instance>" (D-59).
+	EnvInstance = "OPENFIEF_INSTANCE"
+	// EnvCoreSubject is the core's Kubernetes username, the subject of the
+	// token the core presents to a plugin (D-59).
+	EnvCoreSubject = "OPENFIEF_CORE_SUBJECT"
+	// EnvSigningKeysDir is the directory of the mounted signing keys.
+	EnvSigningKeysDir = "OPENFIEF_SA_JWKS_DIR"
 )
 
 // Service is a cluster Service a plugin talks to. Address is the Service's
@@ -36,12 +59,14 @@ type Service struct {
 	TargetPort uint16
 }
 
-// Topology is where the core and the egress proxy are, and the port every
-// plugin serves Connect RPC on.
+// Topology is where the core and the egress proxy are, the port every
+// plugin serves Connect RPC on, and the core's ServiceAccount, whose tokens
+// plugins accept (D-59).
 type Topology struct {
-	Core        Service
-	EgressProxy Service
-	PluginPort  uint16
+	Core               Service
+	EgressProxy        Service
+	PluginPort         uint16
+	CoreServiceAccount string
 }
 
 // Peer is a party in a plugin's NetworkPolicy.
@@ -92,6 +117,13 @@ type SecretVolume struct {
 	ReadOnly   bool
 }
 
+// ConfigMapVolume mounts one ConfigMap from the openfief namespace into the
+// plugin, read-only.
+type ConfigMapVolume struct {
+	ConfigMapName string
+	MountPath     string
+}
+
 // EnvVar is one environment variable of the plugin container.
 type EnvVar struct {
 	Name  string
@@ -112,6 +144,7 @@ type Workload struct {
 	Token           ProjectedToken
 	EgressToken     *ProjectedToken // nil unless some egress host is granted
 	Secrets         []SecretVolume
+	SigningKeys     ConfigMapVolume
 	Env             []EnvVar
 	NetworkPolicy   NetworkPolicy
 	EgressAllowList EgressAllowList
@@ -129,7 +162,10 @@ type Workload struct {
 //     with audience CoreAudience (D-27), in the openfief namespace (D-15);
 //   - only when some egress host is granted, a second projected token with
 //     audience EgressAudience for the egress proxy (D-63), so the proxy never
-//     sees a token the core would accept.
+//     sees a token the core would accept;
+//   - the cluster's ServiceAccount signing keys, mounted read-only, with the
+//     instance's name and the core's username in the environment, so the
+//     plugin can verify the core's token (D-59).
 func Compile(e *EffectivePermissions, t Topology) (Workload, error) {
 	if e == nil || e.plugin == "" {
 		return Workload{}, fmt.Errorf("%w: empty effective permissions", ErrNoCapabilityGranted)
@@ -154,6 +190,7 @@ func Compile(e *EffectivePermissions, t Topology) (Workload, error) {
 		},
 		EgressAllowList: EgressAllowList{Plugin: e.plugin, Hosts: e.Egress()},
 		Config:          e.Config(),
+		SigningKeys:     ConfigMapVolume{ConfigMapName: SigningKeysConfigMap, MountPath: SigningKeysMountPath},
 	}
 	for _, s := range e.secrets {
 		w.Secrets = append(w.Secrets, SecretVolume{SecretName: s.Name, MountPath: s.MountPath, ReadOnly: true})
@@ -169,6 +206,11 @@ func Compile(e *EffectivePermissions, t Topology) (Workload, error) {
 			{Name: EnvNoProxy, Value: t.Core.Address},
 		}
 	}
+	w.Env = append(w.Env,
+		EnvVar{Name: EnvCoreSubject, Value: serviceAccountUserFmt + t.CoreServiceAccount},
+		EnvVar{Name: EnvInstance, Value: e.plugin},
+		EnvVar{Name: EnvSigningKeysDir, Value: SigningKeysMountPath},
+	)
 	return w, nil
 }
 
@@ -176,6 +218,9 @@ func (t Topology) validate() error {
 	var errs []error
 	if t.PluginPort == 0 {
 		errs = append(errs, fieldErr("pluginPort", ErrInvalidTopology, "0"))
+	}
+	if !validPluginName(t.CoreServiceAccount) {
+		errs = append(errs, fieldErr("coreServiceAccount", ErrInvalidTopology, t.CoreServiceAccount))
 	}
 	errs = append(errs, t.Core.validate("core")...)
 	errs = append(errs, t.EgressProxy.validate("egressProxy")...)

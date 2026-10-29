@@ -7,6 +7,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
@@ -305,10 +306,66 @@ func deliveryFrom(d *connectorv1.Delivery, id ingest.BatchID, watermark string) 
 	if err != nil {
 		return app.Delivery{}, err
 	}
+	levels, err := translate("index_levels", d.GetIndexLevels(), indexLevelFrom)
+	if err != nil {
+		return app.Delivery{}, err
+	}
+	terms, err := translate("bond_terms", d.GetBondTerms(), bondTermsFrom)
+	if err != nil {
+		return app.Delivery{}, err
+	}
 	return app.Delivery{
 		Institution: ingest.InstitutionID(d.GetInstitution()), Mapping: m,
-		Prices: prices, FXRates: rates, IndexReadings: readings, Watermark: watermark,
+		Prices: prices, FXRates: rates, IndexReadings: readings, IndexLevels: levels, BondTerms: terms, Watermark: watermark,
 	}, nil
+}
+
+// bondTermsFrom translates one treasury bond series' terms: the
+// instrument's symbol must be a series code, the rates plain decimals and
+// the fee a PLN amount of zero or more.
+func bondTermsFrom(field string, b *connectorv1.BondTerms) (ingest.BondTerms, error) {
+	in, err := instrumentFrom(field+".instrument", b.GetInstrument())
+	if err != nil {
+		return ingest.BondTerms{}, err
+	}
+	series, err := pl.ParseSeries(in.Symbol)
+	if err != nil {
+		return ingest.BondTerms{}, invalid(field+".instrument.symbol", err)
+	}
+	first, err := decimalFrom(field+".first_period_rate", b.GetFirstPeriodRate())
+	if err != nil {
+		return ingest.BondTerms{}, err
+	}
+	margin, err := decimalFrom(field+".margin", b.GetMargin())
+	if err != nil {
+		return ingest.BondTerms{}, err
+	}
+	fee, err := moneyFrom(field+".early_redemption_fee", b.GetEarlyRedemptionFee())
+	if err != nil {
+		return ingest.BondTerms{}, err
+	}
+	if !fee.Currency().Equal(pl.Nominal().Currency()) || fee.Sign() < 0 {
+		return ingest.BondTerms{}, invalid(field+".early_redemption_fee is not a PLN amount of zero or more", nil)
+	}
+	return ingest.BondTerms{Instrument: in, Terms: pl.Terms{
+		Series: series, FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee,
+	}}, nil
+}
+
+// bondLotsTo writes treasury bond lots as contract messages, rates as
+// fractions and every amount as an exact decimal string.
+func bondLotsTo(lots []ingest.BondLot) []*connectorv1.BondLot {
+	out := make([]*connectorv1.BondLot, 0, len(lots))
+	for i := range lots {
+		l := &lots[i]
+		fee := l.Terms.EarlyRedemptionFee
+		out = append(out, &connectorv1.BondLot{
+			Series: l.Series().String(), Quantity: l.Quantity.String(), PurchaseDate: l.Purchased.String(),
+			FirstPeriodRate: l.Terms.FirstPeriodRate.String(), Margin: l.Terms.Margin.String(),
+			EarlyRedemptionFee: &connectorv1.Money{Amount: fee.Amount().String(), Currency: fee.Currency().String()},
+		})
+	}
+	return out
 }
 
 // mappingFrom translates a delivery's transactions, balance assertions and
@@ -399,4 +456,23 @@ func indexReadingFrom(field string, r *connectorv1.IndexReading) (ingest.IndexRe
 		return ingest.IndexReading{}, err
 	}
 	return ingest.IndexReading{Index: index, Date: date, Value: value}, nil
+}
+
+// indexLevelFrom translates one market index level, keyed by the index's
+// name as the connector sends it; the level must be positive and its source
+// is set by the use case.
+func indexLevelFrom(field string, l *connectorv1.IndexLevel) (valuation.IndexLevel, error) {
+	date, err := dateFrom(field+".date", l.GetDate())
+	if err != nil {
+		return valuation.IndexLevel{}, err
+	}
+	level, err := decimalFrom(field+".level", l.GetLevel())
+	if err != nil {
+		return valuation.IndexLevel{}, err
+	}
+	out := valuation.IndexLevel{Index: l.GetIndex(), Date: date, Level: level}
+	if err := out.Validate(); err != nil {
+		return valuation.IndexLevel{}, invalid(field+" is not a valid index level", err)
+	}
+	return out, nil
 }

@@ -286,3 +286,150 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17499f921122
+  - type: executable_for
+    from: SYM-e2e-install
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:06:01.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78730d8f750b
+  - type: constrains
+    from: REQ-identity-auth-contract
+    to: FACT-SUBJECT-A4B2F5A459913604
+    created_at: 2026-10-28T18:35:01.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e23d986dd0
+  - type: requires_property
+    from: REQ-identity-auth-contract
+    to: FACT-PROP-49FE53C4F73ECEEF
+    created_at: 2026-10-28T18:35:01.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3317e202b8c1
+  - type: specified_by
+    from: REQ-identity-auth-contract
+    to: SCEN-identity-auth-contract
+    created_at: 2026-10-28T18:35:01.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79c7f2a488e3
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-request-get-origin
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:40:22.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d28753e92cd0
+  - type: implements
+    from: SYM-identity-gen-pb-get-login-methods-request-get-origin
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:40:22.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afea1c60dd78
+  - type: covered_by
+    from: SYM-identity-gen-pb-get-login-methods-request-get-origin
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:40:22.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d874cb76251
+  - type: executable_for
+    from: SYM-identity-auth-test-test-authenticators
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:40:07.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e3ed47acef3
+  - type: executable_for
+    from: SYM-ui-test-helper-cookie-attrs
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:59:14.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2b500f5c400
+  - type: validates
+    from: TEST-plugins-eodhd-main
+    to: REQ-AUTO-0C514DFCDB36FBEB
+    created_at: 2026-10-28T21:37:03.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d67d261c4386
+  - type: implements
+    from: SYM-plugins-eodhd-next-from
+    to: REQ-plugins-eodhd-sync
+    created_at: 2026-10-28T21:43:40.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1eef4b362f67
+  - type: covered_by
+    from: SYM-plugins-eodhd-next-from
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:43:40.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f9a0161011a
+  - type: implements
+    from: SYM-plugins-app-instance-store
+    to: REQ-plugins-cli-list
+    created_at: 2026-10-28T22:43:53.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22085e93c38e
+  - type: implements
+    from: SYM-plugins-app-instance-store
+    to: REQ-plugins-cli-uninstall
+    created_at: 2026-10-28T22:43:53.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-108ef95b464b
+  - type: covered_by
+    from: SYM-plugins-app-instance-store
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:43:53.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfc59fe15249
+  - type: executable_for
+    from: SYM-plugins-app-test-install-fake-images
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:44:40.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5926977f57f1
+  - type: implements
+    from: SYM-views-ghostfolio-projector-activities
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:57:23.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19ade4a5574a
+  - type: covered_by
+    from: SYM-views-ghostfolio-projector-activities
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:57:24.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b220aa005a33
+  - type: implements
+    from: SYM-treasury-bonds-config
+    to: REQ-plugins-treasury-bonds-connector
+    created_at: 2026-10-29T01:25:14.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6ee997333b6
+  - type: covered_by
+    from: SYM-treasury-bonds-config
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:25:14.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8aab7332d5dd
+  - type: executable_for
+    from: SYM-treasury-bonds-test-date-in
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T01:25:46.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f22b7c14d432

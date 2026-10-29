@@ -251,3 +251,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8202d92b228b
+  - type: implements
+    from: SYM-ingest-sched-validate-instance-name
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:55:56.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d28af2781e7
+  - type: covered_by
+    from: SYM-ingest-sched-validate-instance-name
+    to: TEST-ingest-binding
+    created_at: 2026-10-28T16:55:56.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30fc5b7392b1
+  - type: executable_for
+    from: SYM-delivery-test-test-from-mapping-ibkr-statement
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:21:27.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8995deacdcf5
+  - type: implements
+    from: SYM-identity-connectapi-handler-callers
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:40:40.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bf720b18387
+  - type: implements
+    from: SYM-identity-connectapi-handler-callers
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:40:40.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34c825a6df38
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-callers
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:40:40.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d91e6b034ea
+  - type: executable_for
+    from: SYM-ui-test-helper-locker
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:02:43.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baa93d2d49bd
+  - type: executable_for
+    from: SYM-ui-test-helper-locker
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:02:43.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1be35a7c1ed
+  - type: executable_for
+    from: SYM-ui-test-helper-locker
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:02:43.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ab9c5cb9c49
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-closes-whole-history
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:40:55.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f03f754d2bde
+  - type: verified_by
+    from: SCEN-portfolio-model-store
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:10:22.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba5c60296f73
+  - type: implements
+    from: SYM-portfolio-pb-target-get-symbol
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:23:36.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dc88ff770c4
+  - type: covered_by
+    from: SYM-portfolio-pb-target-get-symbol
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:23:36.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1267fbce43a2

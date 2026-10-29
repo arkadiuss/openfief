@@ -167,3 +167,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-420acb136dac
+  - type: implements
+    from: SYM-core-conn-jitter
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:24:16.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84836a449a65
+  - type: covered_by
+    from: SYM-core-conn-jitter
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:24:16.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c842f4bf777
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-request-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:52:04.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9a254a70357
+  - type: implements
+    from: SYM-identity-gen-pb-create-script-token-request-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:52:04.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b0c1515b1e
+  - type: covered_by
+    from: SYM-identity-gen-pb-create-script-token-request-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:52:04.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-616f77833c48
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client-begin-registration
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:57:30.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a3ef1aaa083
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client-begin-registration
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:57:30.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-418dfa85aa1c
+  - type: covered_by
+    from: SYM-identity-gen-connect-auth-service-client-begin-registration
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:57:30.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48a7d72d424d
+  - type: implements
+    from: SYM-views-performance-gap
+    to: REQ-views-performance-gaps
+    created_at: 2026-10-28T21:02:43.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0c4cf821a8d
+  - type: covered_by
+    from: SYM-views-performance-gap
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:02:43.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a40243785a28
+  - type: implements
+    from: SYM-views-pb-transfer-get-deposit-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:09:28.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0d70cd444d4
+  - type: covered_by
+    from: SYM-views-pb-transfer-get-deposit-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:09:28.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0a9cbb418ac
+  - type: validates
+    from: TEST-portfolio-backtest-properties
+    to: REQ-portfolio-backtest-yearly-rebalance
+    created_at: 2026-10-28T22:11:20.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aab4186b007
+  - type: validates
+    from: TEST-portfolio-backtest-properties
+    to: REQ-portfolio-max-drawdown
+    created_at: 2026-10-28T22:11:20.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed8fdae00d4b
+  - type: implements
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:27:14.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c049a228a999
+  - type: covered_by
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:27:14.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc24034b59ab

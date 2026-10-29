@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Length: 471
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Date: Thu, 29 Oct 2026 00:38:54 GMT
+Etag: W/"1d7-js1nnfjJa9CoaX0U99kdZoKVts4"
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"3699c05d-f0c4-489d-879a-324b3cc499d1","comment":"openfief:test/bonds/fee-1","createdAt":"2026-10-29T00:38:53.476Z","currency":"PLN","date":"2025-01-06T00:00:00.000Z","fee":2,"id":"a60b0f0e-5ca5-4921-b0aa-d93c7fdca817","quantity":0,"symbolProfileId":"8d4fd1db-ceb7-4c9e-bdf6-296164c2bfcf","type":"FEE","unitPrice":0,"updatedAt":"2026-10-29T00:38:53.476Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1"}

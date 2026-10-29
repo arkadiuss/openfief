@@ -9,6 +9,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/plugins/operator/v1alpha1"
 )
 
 // ImageVerifier checks a plugin image's cosign signature against the trust
@@ -26,6 +27,9 @@ type Verification struct {
 	Status  metav1.ConditionStatus
 	Reason  string
 	Message string
+	// Signature names the trusted signer when Status is True; nil
+	// otherwise.
+	Signature *v1alpha1.SignatureStatus
 }
 
 // Verified reports whether the image may be deployed.
@@ -118,16 +122,17 @@ func (v *PolicyVerifier) VerifyImage(ctx context.Context, image plugins.ImageRef
 	if err != nil {
 		return Verification{Status: metav1.ConditionFalse, Reason: refusalReason(err), Message: err.Error()}
 	}
+	sig := &v1alpha1.SignatureStatus{Trust: string(d.Trust), SignerKind: string(d.Signer.Kind), Signer: d.Signer.Name}
 	switch d.Trust {
 	case plugins.Verified:
 		return Verification{
-			Status: metav1.ConditionTrue, Reason: ReasonVerifiedPlugin,
+			Status: metav1.ConditionTrue, Reason: ReasonVerifiedPlugin, Signature: sig,
 			Message: "verified plugin: the catalog pins this image, signed by its publisher " + d.Signer.Name,
 		}
 	case plugins.Unverified:
 	}
 	return Verification{
-		Status: metav1.ConditionTrue, Reason: ReasonTrustedSigner,
+		Status: metav1.ConditionTrue, Reason: ReasonTrustedSigner, Signature: sig,
 		Message: "unverified plugin signed by trusted signer " + d.Signer.Name + " (" + string(d.Signer.Kind) + ")",
 	}
 }

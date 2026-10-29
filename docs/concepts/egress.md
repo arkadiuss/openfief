@@ -167,7 +167,7 @@ Implemented, fully or in the part named:
 - **D-63** SDK rebuilds the proxy URL per request.
 - **D-63** Smokescreen pinned to a commit after v0.1.0.
 
-The code now follows D-63 in every point above. One stale comment remains: `EnvEgressIdentityFile` in [sdk/go/openfief/env.go](../../sdk/go/openfief/env.go), lines 25 to 28, says the operator doesn't mount the egress token yet, but it does, under that name.
+The code follows D-63 in every point above.
 
 ## Verification
 
@@ -191,9 +191,9 @@ Run `task test` from the repository root. The egress packages need no cluster or
 
 `TestProxyDialsOnlyCheckedAddresses` is a good one to read first: it sends four CONNECTs (private, mixed, unlisted, allowed) and asserts that exactly one address was dialed, the public one.
 
-Not covered by tests: `cmd/egress-proxy` and the deploy manifests, and anything that needs a real cluster, such as NetworkPolicy actually blocking a direct connection or a DNS query, or the kubelet rotating a real token.
+Not covered by tests: `cmd/egress-proxy` and the deploy manifests, and anything that needs a real cluster, such as NetworkPolicy actually blocking a plugin's direct connection or DNS query, or the kubelet rotating a real token. The end-to-end suite ([test/e2e](../../test/e2e/main_test.go)) installs the proxy with the demo's manifests on kind or k3d, but none of its tests goes through it.
 
 ## Not built yet
 
 - **A TypeScript SDK (D-11).** Only Go plugins get the token handling for free; R-14 notes Node's built-in client reads `HTTPS_PROXY` only with `NODE_USE_ENV_PROXY=1`.
-- **End-to-end checks.** There is no `test/e2e` suite. P-10's acceptance items 10 and 16 (a refused host, failed bypass attempts, destinations checked in the proxy's logs) are proposals, not decisions.
+- **End-to-end checks of egress.** `test/e2e` runs the proxy but checks only the core's NetworkPolicy and read API (D-12). P-10's acceptance items 10 and 16 (a refused host, failed bypass attempts, destinations checked in the proxy's logs) are proposals, not decisions.

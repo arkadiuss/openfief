@@ -223,3 +223,192 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b185bd6b7d6d
+  - type: implements
+    from: SYM-ingest-pg-scan-claim
+    to: REQ-ingest-sync-store
+    created_at: 2026-10-28T16:57:21.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c63d4834d410
+  - type: covered_by
+    from: SYM-ingest-pg-scan-claim
+    to: TEST-ingest-postgres
+    created_at: 2026-10-28T16:57:21.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91e204005a13
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-iresponse-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:49:25.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a879ce606b
+  - type: implements
+    from: SYM-identity-gen-pb-who-am-iresponse-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:49:25.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f46c35854eac
+  - type: covered_by
+    from: SYM-identity-gen-pb-who-am-iresponse-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:49:25.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bded268328c
+  - type: implements
+    from: SYM-identity-origin-parse-port
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:45:30.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8200cccfdb0
+  - type: covered_by
+    from: SYM-identity-origin-parse-port
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:45:30.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50f2dacd6eb3
+  - type: implements
+    from: SYM-identity-session-format-session-token
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:51:15.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c98591ae6f0
+  - type: covered_by
+    from: SYM-identity-session-format-session-token
+    to: TEST-identity-auth-domain
+    created_at: 2026-10-28T19:51:15.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0e0d73aebbc
+  - type: implements
+    from: SYM-ui-server-account-page
+    to: REQ-ui-account-pages
+    created_at: 2026-10-28T19:51:01.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-322b9ec880c9
+  - type: covered_by
+    from: SYM-ui-server-account-page
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:51:01.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb19165496d2
+  - type: implements
+    from: SYM-ui-to-login
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:48.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8417c60427ef
+  - type: covered_by
+    from: SYM-ui-to-login
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:56:48.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-865b7d44a9cc
+  - type: implements
+    from: SYM-valuation-eodhd-parse-listings
+    to: REQ-valuation-eodhd-listing
+    created_at: 2026-10-28T21:39:24.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc4497eaa561
+  - type: covered_by
+    from: SYM-valuation-eodhd-parse-listings
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:39:24.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbb09a48eb46
+  - type: implements
+    from: SYM-plugins-cli-describe-schema
+    to: REQ-plugins-cli-permission-summary
+    created_at: 2026-10-28T23:36:33.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f5d4b54ce07
+  - type: covered_by
+    from: SYM-plugins-cli-describe-schema
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-28T23:36:33.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50310cde6053
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-ghostfolio-login
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:06:04.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b93edd26d19
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-account-bindings-bound-instances
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:15:30.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf2f1d03b868
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-request-reset
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:30:35.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a627a0ac78c
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-request-reset
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:30:35.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64a44458e980
+  - type: implements
+    from: SYM-views-installed-origin-of
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:39:08.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bd5e487a99c
+  - type: implements
+    from: SYM-views-installed-origin-of
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-29T03:39:08.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12ac96bc585d
+  - type: covered_by
+    from: SYM-views-installed-origin-of
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:39:09.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b08650984bc6
+  - type: implements
+    from: SYM-ui-server-load-plugins
+    to: REQ-ui-installed-plugins
+    created_at: 2026-10-29T04:08:17.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e253a796b25
+  - type: implements
+    from: SYM-ui-server-load-plugins
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T04:08:17.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf54092ea7ba
+  - type: covered_by
+    from: SYM-ui-server-load-plugins
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:17.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe2d6eee24df

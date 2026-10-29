@@ -209,3 +209,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbacf7232c89
+  - type: implements
+    from: SYM-ingest-sched-app-bind
+    to: REQ-ingest-connector-binding
+    created_at: 2026-10-28T16:51:07.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08a57e4b867d
+  - type: covered_by
+    from: SYM-ingest-sched-app-bind
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:51:07.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc35c8efcb4f
+  - type: executable_for
+    from: SYM-e2e-kube
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:03:17.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e95d1d6859e7
+  - type: executable_for
+    from: SYM-e2e-build
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:03:35.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7c8861014fc
+  - type: executable_for
+    from: SYM-ui-test-settings-page
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:01:42.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-541ae4d064e8
+  - type: executable_for
+    from: SYM-portfolio-test-helper-closes-of
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:21:47.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b87379ba1b9
+  - type: implements
+    from: SYM-portfolio-app-market-data
+    to: REQ-portfolio-model-report
+    created_at: 2026-10-28T23:18:58.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15b9ad30f205
+  - type: covered_by
+    from: SYM-portfolio-app-market-data
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:18:58.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc2cbeac8a09
+  - type: implements
+    from: SYM-portfolio-app-models-backtest-input
+    to: REQ-portfolio-model-report
+    created_at: 2026-10-28T23:19:22.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45038c95b4ad
+  - type: implements
+    from: SYM-portfolio-app-models-backtest-input
+    to: REQ-portfolio-model-optional
+    created_at: 2026-10-28T23:19:22.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e99c0bf29491
+  - type: covered_by
+    from: SYM-portfolio-app-models-backtest-input
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:19:22.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20119e869f63
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-errors
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:21:15.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c21fd76399
+  - type: implements
+    from: SYM-views-pb-drawdown
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:42:37.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d43d8c513864
+  - type: covered_by
+    from: SYM-views-pb-drawdown
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:42:37.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0591e404534
+  - type: verified_by
+    from: SCEN-views-ghostfolio-projection
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:54:24.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f14d7c25cb9e
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-ghostfolio-create-account
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:06:20.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ba2027d4874
+  - type: implements
+    from: SYM-treasurybonds-instrument
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-10-29T01:22:13.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-359873dc3181
+  - type: implements
+    from: SYM-treasurybonds-instrument
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:22:13.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2d4807e972
+  - type: covered_by
+    from: SYM-treasurybonds-instrument
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:22:13.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-615c3bb33c9e

@@ -153,3 +153,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1aeb9cae6bb
+  - type: implements
+    from: SYM-core-conn-valuation-inputs-store-fxrates
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:24:47.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-815efdb7378a
+  - type: covered_by
+    from: SYM-core-conn-valuation-inputs-store-fxrates
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:24:47.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84ebdcd1b616
+  - type: constrains
+    from: REQ-plugins-signing-keys-published
+    to: FACT-SUBJECT-CB6D5D25A98C76A8
+    created_at: 2026-10-28T16:47:42.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbdd8df457c2
+  - type: requires_property
+    from: REQ-plugins-signing-keys-published
+    to: FACT-PROP-22A0B2B7EE62CC89
+    created_at: 2026-10-28T16:47:42.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45d96fabac64
+  - type: specified_by
+    from: REQ-plugins-signing-keys-published
+    to: SCEN-plugins-signing-keys-published
+    created_at: 2026-10-28T16:47:42.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2117af358801
+  - type: implements
+    from: SYM-identity-app-auth-principal
+    to: REQ-identity-read-api-sessions
+    created_at: 2026-10-28T19:32:10.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8888427389c
+  - type: covered_by
+    from: SYM-identity-app-auth-principal
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:10.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0197f36f70a
+  - type: implements
+    from: SYM-views-pb-transfer-reset
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T21:08:47.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f50cb19984c
+  - type: covered_by
+    from: SYM-views-pb-transfer-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T21:08:47.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-384530bf2825
+  - type: executable_for
+    from: SYM-portfolio-test-helper-rates-of
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:21:51.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2b719062c12
+  - type: implements
+    from: SYM-views-pb-model-history-gap-type
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:41:19.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89cbcbc6717e
+  - type: covered_by
+    from: SYM-views-pb-model-history-gap-type
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:41:19.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f3bca685c18
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-generator-activity
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:05:41.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aef0dd5120ac
+  - type: verified_by
+    from: SCEN-identity-read-api-plugins
+    to: TEST-core-read-tokens
+    created_at: 2026-10-29T01:36:15.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eefbadbad2c6
+  - type: implements
+    from: SYM-ingestv1-add-bond-lot-response-proto-reflect
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:31:43.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab520e314caf
+  - type: covered_by
+    from: SYM-ingestv1-add-bond-lot-response-proto-reflect
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:31:43.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-230f04beca31

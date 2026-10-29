@@ -50,6 +50,14 @@ vars:
   # replace directives, so `go install` can't build it: the release archive is checked against these sha256s.
   FLUX_CLI_SHA256_LINUX_AMD64: b4d22673e9246cbd628881f1a9ef3b090085dced291e42d804555cee8e8d42c5
   FLUX_CLI_SHA256_LINUX_ARM64: 6663c154755b732f43dc993d72321f71c2fc1ff0bcb94b2696e0a8638fa562b4
+  # CloudNativePG for the end-to-end suite (task e2e): the operator version that the demo's chart pins
+  # (deploy/demo/cnpg/helmrelease.yaml, chart 0.29.1 ships 1.30.1), from its release manifest. Bump both together,
+  # with the manifest's new sha256.
+  CNPG_VERSION: 1.30.1
+  CNPG_MANIFEST_SHA256: 37237f145d8138256ea25ae830f87759255665ff08f8d552fdd8224a5ec032fb
+  E2E_CNPG_MANIFEST: '{{.ROOT_DIR}}/.bin/e2e/cnpg-{{.CNPG_VERSION}}.yaml'
+  # The cluster the CI e2e job creates (.github/workflows/ci.yml); task e2e:images loads the images into it.
+  E2E_CLUSTER_NAME: openfief-e2e
   # Generates the read API's OpenAPI document from its protobuf definitions (D-50).
   # renovate: datasource=go depName=github.com/sudorandom/protoc-gen-connect-openapi
   PROTOC_GEN_CONNECT_OPENAPI_VERSION: v0.28.0
@@ -242,6 +250,7 @@ tasks:
     desc: Full local pipeline, identical to CI
     cmds:
       - task: gen:check
+      - task: plugins:labels:check
       - task: fmt:check
       - task: lint
       - task: lint:ci
@@ -258,6 +267,7 @@ tasks:
     desc: Pre-commit pipeline (like check, with kibi on staged changes)
     cmds:
       - task: gen:check
+      - task: plugins:labels:check
       - task: fmt:check
       - task: lint
       - task: lint:ci
@@ -282,6 +292,18 @@ tasks:
     cmds:
       - task: gen
       - bash scripts/gen-check.sh deploy/crds deploy/operator/role.yaml internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+
+  plugins:labels:
+    desc: Write each first-party plugin's manifest label (D-42) into plugins/<name>/Dockerfile from its manifest.json
+    deps: [tool:gojq]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/plugin-labels.sh write
+
+  plugins:labels:check:
+    desc: Fail if a plugin's Dockerfile label, or a demo Plugin's spec.manifest, differs from plugins/<name>/manifest.json
+    deps: [tool:gojq]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/plugin-labels.sh check
 
   fmt:
     desc: Format Go code (gofumpt, goimports) in every Go module
@@ -355,6 +377,7 @@ tasks:
       - bash scripts/tests/check-docs.test.sh
       - bash scripts/tests/vulncheck.test.sh
       - bash scripts/tests/ci-images.test.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/plugin-labels.test.sh
       - bash scripts/tests/dco-check.test.sh
       - bash scripts/tests/release-version.test.sh
       - bash scripts/tests/release-notes.test.sh
@@ -369,10 +392,43 @@ tasks:
       - '{{.GO_GUARD}} bash scripts/test-pg.sh {{.CLI_ARGS}}'
 
   e2e:
-    desc: End-to-end tests on a local k3s; refuses non-local clusters
+    desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images; refuses non-local clusters'
+    deps: [tool:kustomize]
     cmds:
       - bash scripts/assert-local-cluster.sh
-      - 'if [ ! -d test/e2e ]; then echo "no e2e suite yet, skipping"; exit 0; fi; go test -tags e2e -count=1 ./test/e2e/...'
+      - task: e2e:cnpg
+      # -v streams each step and wait as it happens, so a CI log shows where a run stopped.
+      # The suite runs kustomize by name, so the pinned one goes first on PATH.
+      - PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}' go test -tags e2e -count=1 -v -timeout 20m ./test/e2e/...
+
+  e2e:images:
+    desc: 'Build the core, operator, egress-proxy, demo-seed and ui images from this checkout (Docker) and load them into the local e2e cluster, e.g. task e2e:images CLUSTER=k3d'
+    requires:
+      vars: [CLUSTER]
+    cmds:
+      - bash scripts/assert-local-cluster.sh
+      - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}'
+
+  e2e:k3s-image:
+    desc: 'The k3s image the k3d e2e cluster runs: the demo machine''s pinned K3S_VERSION (CI passes it to k3d)'
+    silent: true
+    cmds:
+      - echo 'rancher/k3s:{{replace "+" "-" .K3S_VERSION}}'
+
+  e2e:cnpg:
+    internal: true
+    # The CloudNativePG release manifest the suite installs, checked against its pinned sha256 and kept in .bin.
+    cmds:
+      - |
+        set -e
+        mkdir -p '{{.BIN}}/e2e'
+        work="$(mktemp -d)"
+        trap 'rm -rf "$work"' EXIT
+        curl -fsSL --retry 3 -o "$work/cnpg.yaml" 'https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v{{.CNPG_VERSION}}/cnpg-{{.CNPG_VERSION}}.yaml'
+        echo '{{.CNPG_MANIFEST_SHA256}}  '"$work/cnpg.yaml" | sha256sum -c -
+        mv "$work/cnpg.yaml" '{{.E2E_CNPG_MANIFEST}}'
+    status:
+      - echo '{{.CNPG_MANIFEST_SHA256}}  {{.E2E_CNPG_MANIFEST}}' | sha256sum -c - >/dev/null 2>&1
 
   dco:
     desc: 'DCO sign-off check (D-5) on the commits in BASE..HEAD, e.g. task dco BASE=origin/main HEAD=HEAD'
@@ -395,7 +451,10 @@ tasks:
       # cosign v3's default: a Sigstore bundle (DSSE, predicate https://sigstore.dev/cosign/sign/v1) stored as an
       # OCI referrer of the digest. The operator reads only this format (internal/plugins/cosign); its certificate
       # subject is images.yml at refs/heads/main (plugins.OpenFiefCISubject), so keep signing in that workflow.
-      - cosign sign --yes '{{.IMAGE}}'
+      # One retry: Rekor can answer 409 "equivalent entry already exists" when cosign's own upload retry follows a
+      # write that landed; a second run signs with fresh ephemeral keys, so it can't conflict with the first.
+      - >-
+        cosign sign --yes '{{.IMAGE}}' || { echo 'image:sign: retrying once'; sleep 10; cosign sign --yes '{{.IMAGE}}'; }
 
   trustroot:update:
     desc: Refresh the operator's bundled Sigstore trust root (D-56) through TUF; review the diff and commit it
@@ -495,26 +554,28 @@ tasks:
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh '{{.ACTION}}'
 
-  dns:docs:plan:
-    desc: 'What `task dns:docs` would change in the docs site''s DNS record docs.<DEMO_DOMAIN>, without changing anything (CLOUDFLARE_API_TOKEN), e.g. task dns:docs:plan'
+  dns:site:plan:
+    desc: 'What `task dns:site` would change in the website''s DNS records at <DEMO_DOMAIN> and www.<DEMO_DOMAIN>, without changing anything (CLOUDFLARE_API_TOKEN), e.g. task dns:site:plan'
     cmds:
-      - task: dns:docs:run
+      - task: dns:site:run
         vars: {ACTION: plan}
 
-  dns:docs:
-    desc: 'Make docs.<DEMO_DOMAIN> (docs.openfief.dev) a DNS-only CNAME to GitHub Pages, touching only the record commented managed-by=openfief-docs (CLOUDFLARE_API_TOKEN), e.g. task dns:docs'
+  dns:site:
+    desc: 'Point <DEMO_DOMAIN> (A and AAAA) and www (CNAME) at GitHub Pages, DNS-only, with the verification TXT when GITHUB_PAGES_CHALLENGE is set; changes only records commented managed-by=openfief-site and deletes the retired managed-by=openfief-docs record (CLOUDFLARE_API_TOKEN), e.g. task dns:site'
     cmds:
-      - task: dns:docs:run
+      - task: dns:site:run
         vars: {ACTION: apply}
 
-  dns:docs:run:
+  dns:site:run:
     internal: true
     deps: [tool:gojq]
     # CLOUDFLARE_API_TOKEN is inherited from the environment and never templated here, so Task never prints it.
+    # GITHUB_PAGES_CHALLENGE is the public value of a DNS TXT record, not a secret.
     env:
       DEMO_DOMAIN: '{{.DEMO_DOMAIN}}'
+      GITHUB_PAGES_CHALLENGE: '{{.GITHUB_PAGES_CHALLENGE}}'
     cmds:
-      - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh dns-docs '{{.ACTION}}'
+      - PATH='{{.BIN}}':"$PATH" bash scripts/demo/demo.sh dns-site '{{.ACTION}}'
 
   demo:validate:
     desc: Build the demo's GitOps manifests (deploy/demo) offline and check that every image is pinned by digest

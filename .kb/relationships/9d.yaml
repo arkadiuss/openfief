@@ -97,3 +97,164 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52a4fad42408
+  - type: implements
+    from: SYM-ingest-sched-app-open-batch
+    to: REQ-ingest-scheduler-retry
+    created_at: 2026-10-28T16:51:38.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35735a7a4060
+  - type: covered_by
+    from: SYM-ingest-sched-app-open-batch
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-28T16:51:38.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e132c8c5bc2
+  - type: implements
+    from: SYM-core-conn-start-cluster
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:25:50.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ebd148d6068
+  - type: covered_by
+    from: SYM-core-conn-start-cluster
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:25:50.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bbed729aa6a
+  - type: constrains
+    from: REQ-plugins-first-party-manifest-label
+    to: FACT-SUBJECT-57B03311DFB635B0
+    created_at: 2026-10-28T17:07:40.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de8a7f1e1a0a
+  - type: requires_property
+    from: REQ-plugins-first-party-manifest-label
+    to: FACT-PROP-A3A93445001658A0
+    created_at: 2026-10-28T17:07:40.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1117a6f51f4
+  - type: specified_by
+    from: REQ-plugins-first-party-manifest-label
+    to: SCEN-plugins-first-party-manifest-label
+    created_at: 2026-10-28T17:07:40.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2dc826a7b6
+  - type: implements
+    from: SYM-identity-app-auth-auth-origin
+    to: REQ-identity-origins-per-host
+    created_at: 2026-10-28T19:32:48.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0aa35886959
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-origin
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:32:48.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24e65642e770
+  - type: implements
+    from: SYM-ui-server-json-error
+    to: REQ-ui-login-flows
+    created_at: 2026-10-28T19:52:45.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7d380f28ab0
+  - type: covered_by
+    from: SYM-ui-server-json-error
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:52:45.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68755f20c03b
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth
+    to: TEST-ui-auth
+    created_at: 2026-10-28T20:06:18.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-842194af45a6
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth
+    to: TEST-ui-pages
+    created_at: 2026-10-28T20:06:18.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9293082ff4c8
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth
+    to: TEST-ui-settings
+    created_at: 2026-10-28T20:06:18.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f7f765a28f6
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-helper-closing
+    to: TEST-valuation-eodhd-client
+    created_at: 2026-10-28T21:41:43.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f09d47272c75
+  - type: implements
+    from: SYM-views-ghostfolio-uuid-v5
+    to: REQ-views-ghostfolio-owned-accounts
+    created_at: 2026-10-29T00:56:19.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec01e2ffd46c
+  - type: covered_by
+    from: SYM-views-ghostfolio-uuid-v5
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:56:19.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b51161b25800
+  - type: implements
+    from: SYM-views-ghostfolio-client
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:00:50.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c645b9932de4
+  - type: covered_by
+    from: SYM-views-ghostfolio-client
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:00:50.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdf55b5bd494
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-generator
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:05:36.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82f151031f41
+  - type: implements
+    from: SYM-treasurybonds-mapper
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-10-29T01:22:18.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0c6b36a36d7
+  - type: implements
+    from: SYM-treasurybonds-mapper
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:22:18.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fe3b824683d
+  - type: covered_by
+    from: SYM-treasurybonds-mapper
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-29T01:22:18.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3fc8b9c6602

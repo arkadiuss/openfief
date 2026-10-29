@@ -15,8 +15,18 @@ func topology() plugins.Topology {
 	return plugins.Topology{
 		Core:        plugins.Service{Address: "192.0.2.10", Port: 80, TargetPort: 8080},
 		EgressProxy: plugins.Service{Address: "192.0.2.20", Port: 4750, TargetPort: 4750},
-		PluginPort:  9090,
+		PluginPort:  9090, CoreServiceAccount: "openfief-core",
 	}
+}
+
+// coreAuthEnv is env plus the variables every plugin verifies the core's
+// token with (D-59).
+func coreAuthEnv(env ...plugins.EnvVar) []plugins.EnvVar {
+	return append(env,
+		plugins.EnvVar{Name: "OPENFIEF_CORE_SUBJECT", Value: "system:serviceaccount:openfief:openfief-core"},
+		plugins.EnvVar{Name: "OPENFIEF_INSTANCE", Value: "sample"},
+		plugins.EnvVar{Name: "OPENFIEF_SA_JWKS_DIR", Value: "/var/run/secrets/openfief-sa-jwks"},
+	)
 }
 
 // identityParts are the parts of a Workload every plugin gets the same way.
@@ -26,6 +36,8 @@ func identityParts(w *plugins.Workload) {
 	w.Token = plugins.ProjectedToken{
 		Audience: "openfief-core", ExpirationSeconds: 3600, MountPath: "/var/run/secrets/openfief", Path: "token",
 	}
+	w.SigningKeys = plugins.ConfigMapVolume{ConfigMapName: "openfief-sa-jwks", MountPath: "/var/run/secrets/openfief-sa-jwks"}
+	w.Env = coreAuthEnv(w.Env...)
 }
 
 func TestCompile(t *testing.T) {
@@ -77,10 +89,10 @@ func TestCompile(t *testing.T) {
 	}
 	identityParts(&noEgress)
 	ipv6Proxy := withEgress
-	ipv6Proxy.Env = []plugins.EnvVar{
-		{Name: "HTTPS_PROXY", Value: "http://[2001:db8::20]:4750"},
-		{Name: "NO_PROXY", Value: "2001:db8::10"},
-	}
+	ipv6Proxy.Env = coreAuthEnv(
+		plugins.EnvVar{Name: "HTTPS_PROXY", Value: "http://[2001:db8::20]:4750"},
+		plugins.EnvVar{Name: "NO_PROXY", Value: "2001:db8::10"},
+	)
 
 	tests := []struct {
 		name     string
@@ -115,6 +127,10 @@ func TestCompile(t *testing.T) {
 		{
 			name: "missing target port", grant: func(*plugins.Grant) {},
 			topology: func(t *plugins.Topology) { t.Core.TargetPort = 0 }, wantErr: plugins.ErrInvalidTopology,
+		},
+		{
+			name: "missing core ServiceAccount", grant: func(*plugins.Grant) {},
+			topology: func(t *plugins.Topology) { t.CoreServiceAccount = "" }, wantErr: plugins.ErrInvalidTopology,
 		},
 		{
 			name: "missing plugin port", grant: func(*plugins.Grant) {},

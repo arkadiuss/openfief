@@ -1,0 +1,358 @@
+// OpenFief's authentication contract (docs/DESIGN.md D-26, D-27, D-60).
+//
+// The core serves AuthService to VIEW plugins only, such as the built-in
+// UI, which acts as the backend for the owner's browser: browser <-> view
+// plugin <-> core. It is not part of the public read API (D-6), which stays
+// read-only.
+//
+// Authentication and the session are separate. An authenticator proves
+// that the person at the browser is the owner, the only person an
+// installation has (GR-2), and with what scope; the core then issues a
+// session. M0 has two authenticators: passkeys (WebAuthn, D-26), which give
+// an owner-scoped session, and the demo authenticator, which gives a
+// read-scoped session without credentials, only on a demo database and only
+// when the core runs with --demo-sessions.
+//
+// Calling conventions:
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>". A
+//   call without one, with an invalid one, or from a plugin that is not a
+//   view plugin fails with PERMISSION_DENIED.
+// - The owner's session token never travels in the Authorization header:
+//   it is the session_token field of the request. The view plugin keeps it
+//   in an HttpOnly, Secure (except on http://localhost), SameSite=Strict
+//   cookie and presents it as the bearer token to the read API (/v1).
+// - Every request carries origin: the origin the owner's browser uses,
+//   scheme, host and port, such as "https://dev.openfief.dev" or
+//   "http://localhost:8080". It must be on the core's allow-list
+//   (--auth-origin), or the call fails with PERMISSION_DENIED. Its host is
+//   the WebAuthn relying party ID: a passkey works only on the host it was
+//   created on (D-60), and a session only on the host it was issued on.
+// - A missing, unknown, expired or revoked session fails with
+//   UNAUTHENTICATED: the view plugin drops its cookie and shows the login.
+//   A read-scoped session calling an owner-only method fails with
+//   PERMISSION_DENIED.
+// - WebAuthn options and credentials travel as JSON text in the WebAuthn
+//   Level 3 JSON forms, so the browser uses
+//   PublicKeyCredential.parseCreationOptionsFromJSON,
+//   parseRequestOptionsFromJSON and credential.toJSON() unchanged.
+syntax = "proto3";
+
+package openfief.identity.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+// AuthService authenticates the owner and manages their sessions, passkeys,
+// script tokens and enrollment links.
+service AuthService {
+  // GetLoginMethods says which ways in the login page can offer at origin.
+  // It needs no session.
+  rpc GetLoginMethods(GetLoginMethodsRequest) returns (GetLoginMethodsResponse);
+
+  // BeginRegistration starts creating a passkey on origin's host. It needs
+  // either a valid one-time enrollment code issued for origin (D-60) or an
+  // owner-scoped session issued on origin's host.
+  rpc BeginRegistration(BeginRegistrationRequest) returns (BeginRegistrationResponse);
+
+  // FinishRegistration verifies the new credential and stores the passkey.
+  // A registration begun with an enrollment code uses the code up and also
+  // logs the owner in: the response carries a new owner-scoped session.
+  rpc FinishRegistration(FinishRegistrationRequest) returns (FinishRegistrationResponse);
+
+  // BeginLogin starts a passkey login on origin's host. It needs no session.
+  rpc BeginLogin(BeginLoginRequest) returns (BeginLoginResponse);
+
+  // FinishLogin verifies the assertion against the passkeys of origin's
+  // host and issues an owner-scoped session. A passkey whose signature
+  // counter went backwards is refused (a cloned authenticator).
+  rpc FinishLogin(FinishLoginRequest) returns (FinishLoginResponse);
+
+  // CreateDemoSession issues a read-scoped session without credentials. It
+  // works only when the database carries the demo marker and the core runs
+  // with --demo-sessions; otherwise it fails with PERMISSION_DENIED.
+  rpc CreateDemoSession(CreateDemoSessionRequest) returns (CreateDemoSessionResponse);
+
+  // Logout revokes the session. Any scope.
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+
+  // WhoAmI returns the owner and the session. Any scope.
+  rpc WhoAmI(WhoAmIRequest) returns (WhoAmIResponse);
+
+  // ListPasskeys returns every passkey, on every host. Owner scope.
+  rpc ListPasskeys(ListPasskeysRequest) returns (ListPasskeysResponse);
+
+  // RemovePasskey removes a passkey. The last passkey can't be removed
+  // (FAILED_PRECONDITION). Owner scope.
+  rpc RemovePasskey(RemovePasskeyRequest) returns (RemovePasskeyResponse);
+
+  // CreateScriptToken issues a read-only script token (D-27) and returns its
+  // secret, the only time it is shown. Owner scope.
+  rpc CreateScriptToken(CreateScriptTokenRequest) returns (CreateScriptTokenResponse);
+
+  // ListScriptTokens returns every script token, expired and revoked ones
+  // included, in creation order. Owner scope.
+  rpc ListScriptTokens(ListScriptTokensRequest) returns (ListScriptTokensResponse);
+
+  // RevokeScriptToken revokes a script token. Owner scope.
+  rpc RevokeScriptToken(RevokeScriptTokenRequest) returns (RevokeScriptTokenResponse);
+
+  // CreateEnrollmentLink issues a one-time link for creating a passkey on
+  // another allowed origin, such as the owner's own Ingress host (D-60).
+  // Owner scope.
+  rpc CreateEnrollmentLink(CreateEnrollmentLinkRequest) returns (CreateEnrollmentLinkResponse);
+}
+
+// SessionScope is what a session may do.
+enum SessionScope {
+  SESSION_SCOPE_UNSPECIFIED = 0;
+  // Read paths only: the read API, WhoAmI and Logout.
+  SESSION_SCOPE_READ = 1;
+  // Everything the owner may do: read, plus passkeys, script tokens and
+  // enrollment links.
+  SESSION_SCOPE_OWNER = 2;
+}
+
+// Authenticator is how a session was authenticated.
+enum Authenticator {
+  AUTHENTICATOR_UNSPECIFIED = 0;
+  // A passkey (WebAuthn, D-26).
+  AUTHENTICATOR_PASSKEY = 1;
+  // The demo authenticator: no credentials, read scope, demo databases only.
+  AUTHENTICATOR_DEMO = 2;
+}
+
+// Session describes a session. It never holds the session token.
+message Session {
+  // The session's ID; not secret.
+  string id = 1;
+  SessionScope scope = 2;
+  Authenticator authenticator = 3;
+  // The host the session was issued on, and the only one it works on.
+  string rp_id = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp last_seen_at = 6;
+  // When the session expires if it is not used: last_seen_at plus the idle
+  // timeout.
+  google.protobuf.Timestamp idle_expires_at = 7;
+  // When the session expires however much it is used.
+  google.protobuf.Timestamp expires_at = 8;
+}
+
+// Owner is the one person an installation has (GR-2).
+message Owner {
+  google.protobuf.Timestamp created_at = 1;
+}
+
+// Passkey is a WebAuthn credential of the owner, valid on one host only.
+message Passkey {
+  // The credential ID in unpadded base64url.
+  string id = 1;
+  string name = 2;
+  // The host the passkey works on (the WebAuthn relying party ID).
+  string rp_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+  // Unset when the passkey was never used to log in.
+  google.protobuf.Timestamp last_used_at = 5;
+  // The transports the authenticator reported, such as "internal" or "usb".
+  repeated string transports = 6;
+  // Whether the passkey is synced or backed up by its provider.
+  bool backed_up = 7;
+}
+
+// ScriptTokenStatus is a script token's status now.
+enum ScriptTokenStatus {
+  SCRIPT_TOKEN_STATUS_UNSPECIFIED = 0;
+  SCRIPT_TOKEN_STATUS_ACTIVE = 1;
+  SCRIPT_TOKEN_STATUS_EXPIRED = 2;
+  SCRIPT_TOKEN_STATUS_REVOKED = 3;
+}
+
+// ScriptToken describes a script token. It never holds the secret.
+message ScriptToken {
+  // 16 lowercase hex digits; not secret.
+  string id = 1;
+  string name = 2;
+  // "read", the only scope in M0.
+  string scope = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp expires_at = 5;
+  // Unset while the token is not revoked.
+  google.protobuf.Timestamp revoked_at = 6;
+  ScriptTokenStatus status = 7;
+}
+
+message GetLoginMethodsRequest {
+  string origin = 1;
+}
+
+message GetLoginMethodsResponse {
+  // Whether a passkey exists for origin's host. When none does, the owner
+  // needs an enrollment link (core enroll-link, or another host's session).
+  bool passkey_registered = 1;
+  // Whether CreateDemoSession would succeed.
+  bool demo_sessions = 2;
+}
+
+message BeginRegistrationRequest {
+  string origin = 1;
+  // What allows creating a passkey: exactly one of them.
+  oneof authorization {
+    // The one-time code from an enrollment link's fragment (#code=...).
+    string enrollment_code = 2;
+    // An owner-scoped session issued on origin's host.
+    string session_token = 3;
+  }
+}
+
+message BeginRegistrationResponse {
+  // Names the ceremony in FinishRegistration; single use.
+  string ceremony_id = 1;
+  // PublicKeyCredentialCreationOptionsJSON, for
+  // PublicKeyCredential.parseCreationOptionsFromJSON.
+  string options_json = 2;
+  // When the ceremony expires.
+  google.protobuf.Timestamp expires_at = 3;
+}
+
+message FinishRegistrationRequest {
+  string origin = 1;
+  string ceremony_id = 2;
+  // RegistrationResponseJSON: the new credential's toJSON().
+  string credential_json = 3;
+  // A label for the passkey, such as "laptop"; 1 to 64 printable
+  // characters. Empty names it after the host.
+  string name = 4;
+}
+
+message FinishRegistrationResponse {
+  Passkey passkey = 1;
+  // Set only when the registration used an enrollment code: a new
+  // owner-scoped session, shown only here.
+  string session_token = 2;
+  Session session = 3;
+}
+
+message BeginLoginRequest {
+  string origin = 1;
+}
+
+message BeginLoginResponse {
+  // Names the ceremony in FinishLogin; single use.
+  string ceremony_id = 1;
+  // PublicKeyCredentialRequestOptionsJSON, for
+  // PublicKeyCredential.parseRequestOptionsFromJSON. It names no
+  // credentials: passkeys are discoverable.
+  string options_json = 2;
+  google.protobuf.Timestamp expires_at = 3;
+}
+
+message FinishLoginRequest {
+  string origin = 1;
+  string ceremony_id = 2;
+  // AuthenticationResponseJSON: the assertion's toJSON().
+  string credential_json = 3;
+}
+
+message FinishLoginResponse {
+  // The new session's token, shown only here.
+  string session_token = 1;
+  Session session = 2;
+}
+
+message CreateDemoSessionRequest {
+  string origin = 1;
+}
+
+message CreateDemoSessionResponse {
+  // The new read-scoped session's token, shown only here.
+  string session_token = 1;
+  Session session = 2;
+}
+
+message LogoutRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message LogoutResponse {}
+
+message WhoAmIRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message WhoAmIResponse {
+  Owner owner = 1;
+  Session session = 2;
+}
+
+message ListPasskeysRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message ListPasskeysResponse {
+  // In creation order.
+  repeated Passkey passkeys = 1;
+}
+
+message RemovePasskeyRequest {
+  string origin = 1;
+  string session_token = 2;
+  // Passkey.id.
+  string passkey_id = 3;
+}
+
+message RemovePasskeyResponse {}
+
+message CreateScriptTokenRequest {
+  string origin = 1;
+  string session_token = 2;
+  // 1 to 64 letters, digits, '.', '_' or '-'.
+  string name = 3;
+  // How long the token is valid, at most a year; unset is 30 days.
+  google.protobuf.Duration ttl = 4;
+}
+
+message CreateScriptTokenResponse {
+  ScriptToken token = 1;
+  // The secret, ofs_<id>_<key>: shown only here, never stored.
+  string secret = 2;
+}
+
+message ListScriptTokensRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message ListScriptTokensResponse {
+  repeated ScriptToken tokens = 1;
+}
+
+message RevokeScriptTokenRequest {
+  string origin = 1;
+  string session_token = 2;
+  // ScriptToken.id.
+  string token_id = 3;
+}
+
+message RevokeScriptTokenResponse {}
+
+message CreateEnrollmentLinkRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The origin the new passkey is for, such as "https://dev.openfief.dev";
+  // it must be on the allow-list. Empty is origin itself.
+  string target_origin = 3;
+  // How long the link is valid, at most 24 hours; unset is 15 minutes.
+  google.protobuf.Duration ttl = 4;
+}
+
+message CreateEnrollmentLinkResponse {
+  // <target_origin>/enroll#code=<code>. The code is in the fragment, so the
+  // browser never sends it in a request line or a Referer: the enrollment
+  // page reads it and passes it to BeginRegistration.
+  string url = 1;
+  google.protobuf.Timestamp expires_at = 2;
+}

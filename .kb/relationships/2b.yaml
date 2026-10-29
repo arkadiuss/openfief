@@ -237,3 +237,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-037b66c7fc5b
+  - type: specified_by
+    from: REQ-demo-real-pipelines
+    to: SCEN-e2e-demo-seed-completes
+    created_at: 2026-10-28T18:01:26.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d2a06548c49
+  - type: specified_by
+    from: REQ-demo-real-pipelines
+    to: SCEN-e2e-read-api-demo-accounts
+    created_at: 2026-10-28T18:01:26.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cde3518495dc
+  - type: executable_for
+    from: SYM-e2e-kube-exec
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:03:58.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c4edfa9c67
+  - type: implements
+    from: SYM-ui-session-owner
+    to: REQ-ui-owner-actions
+    created_at: 2026-10-28T19:55:53.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b05876bb3891
+  - type: covered_by
+    from: SYM-ui-session-owner
+    to: TEST-ui-pages
+    created_at: 2026-10-28T19:55:53.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcda35b2c378
+  - type: constrains
+    from: REQ-plugins-cli-install-source
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-10-28T22:24:04.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4d877dd9e03
+  - type: requires_property
+    from: REQ-plugins-cli-install-source
+    to: FACT-PROP-FF2109D7BECBB423
+    created_at: 2026-10-28T22:24:04.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07699e732e1e
+  - type: specified_by
+    from: REQ-plugins-cli-install-source
+    to: SCEN-plugins-cli-install-source
+    created_at: 2026-10-28T22:24:04.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a98087bc639a
+  - type: implements
+    from: SYM-plugins-app-image-inspector
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T22:43:45.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17cad0312f84
+  - type: covered_by
+    from: SYM-plugins-app-image-inspector
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:43:45.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-debefe10bc68
+  - type: implements
+    from: SYM-views-pb-model-target-kind-type
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:40:41.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a351c28365b2
+  - type: covered_by
+    from: SYM-views-pb-model-target-kind-type
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:40:41.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9268ca5b34c4
+  - type: implements
+    from: SYM-views-pb-model-target-history-string
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:43:44.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cd460f2243c
+  - type: covered_by
+    from: SYM-views-pb-model-target-history-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:43:44.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ff44fa58dc1
+  - type: implements
+    from: SYM-ingest-connectapi-service-fail
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:18:14.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83c04e4bfc0c
+  - type: implements
+    from: SYM-ingest-connectapi-service-fail
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:18:14.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7421d15f6e3
+  - type: covered_by
+    from: SYM-ingest-connectapi-service-fail
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:14.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c94551783477
+  - type: implements
+    from: SYM-ingestv1-bond-lot-proto-message
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:29:43.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-301f4339822c
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-proto-message
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:29:43.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ef0b6088b97

@@ -209,3 +209,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad2040720f5d
+  - type: implements
+    from: SYM-identity-app-owner-enrollment-link
+    to: REQ-identity-enrollment-code
+    created_at: 2026-10-28T19:37:23.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05feadb1c034
+  - type: covered_by
+    from: SYM-identity-app-owner-enrollment-link
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:37:23.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be0318f134aa
+  - type: executable_for
+    from: SYM-ui-test-cross-origin-refused
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:59:51.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3791d27f9cb1
+  - type: verified_by
+    from: SCEN-views-performance-gaps
+    to: TEST-views-performance
+    created_at: 2026-10-28T20:54:41.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543393dc49ae
+  - type: implements
+    from: SYM-views-holding-key
+    to: REQ-views-performance-value
+    created_at: 2026-10-28T21:03:26.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff02a6846822
+  - type: covered_by
+    from: SYM-views-holding-key
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:03:26.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed55c66ff356
+  - type: verified_by
+    from: SCEN-plugins-eodhd-sync
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:37:14.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-820ce5911317
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-sync
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-28T21:44:44.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f9a28eed5f7
+  - type: executable_for
+    from: SYM-plugins-kube-test-instances-test-instances-create-and-list
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:15:28.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e21d5b3ab34d
+  - type: implements
+    from: SYM-views-ghostfolio-read-valuations
+    to: REQ-views-ghostfolio-read-record
+    created_at: 2026-10-29T00:59:54.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd82a54b1ee3
+  - type: covered_by
+    from: SYM-views-ghostfolio-read-valuations
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T00:59:54.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb2907e08388
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-in-a2
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T01:04:28.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c73a94a06c1d
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-security-token
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:07:31.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77bda734b2f5
+  - type: implements
+    from: SYM-ingest-app-bond-lots
+    to: REQ-ingest-bond-lot-handoff
+    created_at: 2026-10-29T01:15:06.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-444ce7ff63a2
+  - type: implements
+    from: SYM-ingest-app-bond-lots
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:15:06.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73fc93b9d768
+  - type: covered_by
+    from: SYM-ingest-app-bond-lots
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-29T01:15:06.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b04508bdf541

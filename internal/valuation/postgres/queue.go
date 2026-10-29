@@ -166,6 +166,25 @@ func (s *Store) SaveFXRates(ctx context.Context, rates []valuation.FXRate, reval
 	return nil
 }
 
+// SaveIndexLevels upserts market index levels in one transaction. They
+// cause no revaluation.
+func (s *Store) SaveIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error {
+	err := s.inTx(ctx, nil, func(tx pgx.Tx) error {
+		batch := &pgx.Batch{}
+		for _, l := range levels {
+			batch.Queue(`
+				INSERT INTO valuation.index_levels (index, date, level, source) VALUES ($1, $2, $3, $4)
+				ON CONFLICT (index, date) DO UPDATE SET level = EXCLUDED.level, source = EXCLUDED.source`,
+				l.Index, l.Date.String(), l.Level.String(), l.Source)
+		}
+		return tx.SendBatch(ctx, batch).Close()
+	})
+	if err != nil {
+		return fmt.Errorf("saving index levels: %w", err)
+	}
+	return nil
+}
+
 // SaveIndexReadings upserts readings and enqueues revals in one transaction.
 func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) error {
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {

@@ -181,3 +181,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d5e73a687130
+  - type: implements
+    from: SYM-core-conn-ledger-importer
+    to: REQ-core-connector-commands
+    created_at: 2026-10-28T17:24:19.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff6c8eaecd70
+  - type: covered_by
+    from: SYM-core-conn-ledger-importer
+    to: TEST-core-connectors
+    created_at: 2026-10-28T17:24:19.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c919a023f819
+  - type: validates
+    from: TEST-plugins-signing-keys
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-28T16:47:22.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd2437edaa8c
+  - type: verified_by
+    from: SCEN-plugins-ibkr-flex-modes
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-28T17:06:58.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90fa2fa57c23
+  - type: executable_for
+    from: SYM-delivery-test-date
+    to: TEST-ingest-delivery
+    created_at: 2026-10-28T17:21:14.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2ed5636085c
+  - type: implements
+    from: SYM-identity-app-auth-auth-login
+    to: REQ-identity-session-opaque
+    created_at: 2026-10-28T19:31:52.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cfbe91db4aa
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-login
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:31:52.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8158f86dde2
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: REQ-identity-auth-callers
+    created_at: 2026-10-28T19:41:04.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b8028dc64d
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T19:41:04.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e18a78328d3e
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T19:41:04.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58565833d73
+  - type: implements
+    from: SYM-views-performance-input
+    to: REQ-views-performance-twr
+    created_at: 2026-10-28T21:02:52.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b5230419164
+  - type: covered_by
+    from: SYM-views-performance-input
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:02:52.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e00e3dcee012
+  - type: implements
+    from: SYM-portfolio-pg-store-save-model
+    to: REQ-portfolio-model-store
+    created_at: 2026-10-28T23:22:00.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ec516a1eeea
+  - type: covered_by
+    from: SYM-portfolio-pg-store-save-model
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:00.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b97be56f18ef
+  - type: implements
+    from: SYM-views-pb-model-target-get-weight-percent
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:42:33.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-524cb3a698e2
+  - type: covered_by
+    from: SYM-views-pb-model-target-get-weight-percent
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:42:33.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9971be2cf34
+  - type: implements
+    from: SYM-views-ghostfolio-import-price
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:02:05.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-231c73ed274c
+  - type: covered_by
+    from: SYM-views-ghostfolio-import-price
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:02:05.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-779cc37efad3
+  - type: validates
+    from: TEST-ingest-bondlot
+    to: REQ-AUTO-FD50BCD71546E83F
+    created_at: 2026-10-29T01:13:39.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfec8c72bd54

@@ -1,0 +1,16 @@
+{{define "transaction-rows"}}
+{{range .Transactions}}
+<tr>
+  <td>{{.Date}}</td>
+  <td>{{enum .Kind.String "TRANSACTION_KIND_"}}{{if .LotOpened}} (opened {{.LotOpened}}){{end}}</td>
+  <td>{{.Description}}</td>
+  <td><ul class="postings">{{range .Postings}}<li>{{book .Book}}: {{money .Amount}}{{if .Quantity}} ({{amount .Quantity}} units){{end}}</li>{{end}}</ul></td>
+  <td>{{if .ConnectorInstance}}{{.ConnectorInstance}}{{if .ConnectorInstanceRemoved}} <span class="removed" title="This plugin instance is no longer installed; the data it brought in stays.">removed instance</span>{{end}}{{else}}{{.Source}}{{end}}</td>
+</tr>
+{{end}}
+{{if .Next}}
+<tr class="more">
+  <td colspan="5"><a href="{{.NextLink}}" hx-get="{{.NextFragment}}" hx-target="closest tr" hx-swap="outerHTML">More transactions</a></td>
+</tr>
+{{end}}
+{{end}}

@@ -209,3 +209,199 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8da891eb312
+  - type: implements
+    from: SYM-operator-signing-key-source
+    to: REQ-plugins-signing-keys-published
+    created_at: 2026-10-28T16:48:32.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e4f466efa14
+  - type: covered_by
+    from: SYM-operator-signing-key-source
+    to: TEST-operator-signing-keys
+    created_at: 2026-10-28T16:48:32.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1679f397947b
+  - type: executable_for
+    from: SYM-sdk-go-test-check-refusal
+    to: TEST-sdk-go-jwks-verifier
+    created_at: 2026-10-28T16:51:10.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef75befe3607
+  - type: executable_for
+    from: SYM-sdk-go-test-test-serve-connector-needs-environment
+    to: TEST-sdk-go-serve-connector
+    created_at: 2026-10-28T17:25:43.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee2e862e17d2
+  - type: implements
+    from: SYM-identity-gen-pb-session-scope-enum
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:35:15.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ca1bc913eb8
+  - type: implements
+    from: SYM-identity-gen-pb-session-scope-enum
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:35:15.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11828e880fbc
+  - type: covered_by
+    from: SYM-identity-gen-pb-session-scope-enum
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:35:15.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8134beee349d
+  - type: executable_for
+    from: SYM-identity-app-auth-test-origin
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:26.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22a78ffebe89
+  - type: executable_for
+    from: SYM-identity-app-auth-test-auth-fixture-link
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:33:30.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b8d992b3819
+  - type: implements
+    from: SYM-ui-register-start
+    to: REQ-ui-login-flows
+    created_at: 2026-10-28T19:51:51.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-914b1a4e2e53
+  - type: covered_by
+    from: SYM-ui-register-start
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:51:51.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e791930ad17
+  - type: implements
+    from: SYM-ui-server-demo-login
+    to: REQ-ui-login-flows
+    created_at: 2026-10-28T19:52:05.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9424b51ae01c
+  - type: covered_by
+    from: SYM-ui-server-demo-login
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:52:05.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c25e1ef9006a
+  - type: executable_for
+    from: SYM-views-test-helper-event
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:05:23.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75438a7c5a08
+  - type: executable_for
+    from: SYM-views-test-helper-rate
+    to: TEST-views-performance
+    created_at: 2026-10-28T21:05:42.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71a7cd4b5414
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-manifest
+    to: TEST-plugins-eodhd-main
+    created_at: 2026-10-28T21:45:19.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecf277a430b1
+  - type: implements
+    from: SYM-portfolio-pg-new
+    to: REQ-portfolio-model-store
+    created_at: 2026-10-28T23:21:46.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b24e84b2ed0c
+  - type: covered_by
+    from: SYM-portfolio-pg-new
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:21:46.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54c695ac6f8b
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-ghostfolio-accounts
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:06:15.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31081bcb5f8a
+  - type: implements
+    from: SYM-ingest-connectapi-service-add-bond-lot
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-29T01:18:03.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b92c030ec57
+  - type: implements
+    from: SYM-ingest-connectapi-service-add-bond-lot
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T01:18:03.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b3130dbcad2
+  - type: covered_by
+    from: SYM-ingest-connectapi-service-add-bond-lot
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-29T01:18:03.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcbe0682b4c4
+  - type: implements
+    from: SYM-views-origin
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:39:03.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e4266bbfba3
+  - type: implements
+    from: SYM-views-origin
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-29T03:39:03.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d306c384f34f
+  - type: covered_by
+    from: SYM-views-origin
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:39:03.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7165f07a124e
+  - type: implements
+    from: SYM-views-pb-list-plugins-request
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:41:20.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0a7001c562a
+  - type: implements
+    from: SYM-views-pb-list-plugins-request
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:41:20.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a5b2e8e7bf9
+  - type: covered_by
+    from: SYM-views-pb-list-plugins-request
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:41:20.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec8f5a76bbe8

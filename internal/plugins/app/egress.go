@@ -1,5 +1,6 @@
 // Package app holds the plugins context's use cases and the ports they
-// consume. The egress use case decides, for the egress proxy, which plugin
+// consume. The install use cases (install.go) serve the openfief CLI (D-46,
+// D-58). The egress use case decides, for the egress proxy, which plugin
 // is asking and whether it may reach a destination (D-27, D-32, D-63).
 package app
 

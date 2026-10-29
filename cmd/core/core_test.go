@@ -113,6 +113,12 @@ func tokenCmd(t *testing.T, dsn string, args ...string) string {
 // it with its HTTP server; both stop when the test ends.
 func startCore(t *testing.T, dsn string) (*core, *httptest.Server, *pgxpool.Pool) {
 	t.Helper()
+	return startCoreWith(t, dsn, func(*serveConfig) {})
+}
+
+// startCoreWith is startCore with the serve configuration edited by edit.
+func startCoreWith(t *testing.T, dsn string, edit func(cfg *serveConfig)) (*core, *httptest.Server, *pgxpool.Pool) {
+	t.Helper()
 	ctx := t.Context()
 	pool, err := pgxpool.New(ctx, dsn)
 	if err != nil {
@@ -121,7 +127,8 @@ func startCore(t *testing.T, dsn string) (*core, *httptest.Server, *pgxpool.Pool
 	t.Cleanup(pool.Close)
 	cfg := defaultServe(t)
 	cfg.Workers = 3
-	c, err := start(ctx, pool, &cfg, coreNow, quiet())
+	edit(&cfg)
+	c, err := start(ctx, pool, &cfg, coreNow, quiet(), nil)
 	if err != nil {
 		t.Fatalf("start: %v", err)
 	}
@@ -288,6 +295,21 @@ func waitValued(t *testing.T, srv *httptest.Server, token string, ds *demo.Datas
 	}
 }
 
+// checkPerformance checks that GET /v1/performance over the valued demo
+// data is a series in PLN that starts at 100 and reaches today with no gap.
+func checkPerformance(t *testing.T, srv *httptest.Server, token string, ds *demo.Dataset) {
+	t.Helper()
+	var perf viewsv1.GetPerformanceResponse
+	getJSON(t, srv, "/v1/performance", token, &perf)
+	days := perf.GetDays()
+	if len(days) == 0 || days[0].GetIndex() != "100" || days[len(days)-1].GetDate() != ds.Today.String() {
+		t.Errorf("GET /v1/performance days = %v, want a series from 100 through %s", days, ds.Today)
+	}
+	if perf.GetGap() != viewsv1.PerformanceGap_PERFORMANCE_GAP_UNSPECIFIED || perf.GetReportingCurrency() != "PLN" {
+		t.Errorf("GET /v1/performance = gap %v in %q, want no gap, in PLN", perf.GetGap(), perf.GetReportingCurrency())
+	}
+}
+
 func TestCoreServesTheReadAPI(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
@@ -319,6 +341,7 @@ func TestCoreServesTheReadAPI(t *testing.T) {
 		t.Errorf("GET holdings = %v, want the XTB account's holdings on %s", &holdings, ds.Today)
 	}
 	waitValued(t, srv, secret, ds)
+	checkPerformance(t, srv, secret, ds)
 
 	checkRefused(t, srv, "", "no token")
 	checkRefused(t, srv, "ofs_0123456789abcdef_"+strings.Repeat("A", 43), "an unknown token")

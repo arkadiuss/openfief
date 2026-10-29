@@ -146,3 +146,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5903f3eff2e6
+  - type: verified_by
+    from: SCEN-e2e-core-ready
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-28T18:00:55.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4b79c353fe9
+  - type: implements
+    from: SYM-identity-gen-pb-passkey-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-10-28T18:38:19.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77bb7fb977cd
+  - type: implements
+    from: SYM-identity-gen-pb-passkey-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-10-28T18:38:19.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a97558aaa5bc
+  - type: covered_by
+    from: SYM-identity-gen-pb-passkey-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-10-28T18:38:19.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-041e54390d75
+  - type: executable_for
+    from: SYM-core-auth-cmd-core-auth-test-test-demo-sessions-off-by-default
+    to: TEST-core-auth
+    created_at: 2026-10-28T19:30:23.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3e447ee47c1
+  - type: executable_for
+    from: SYM-identity-app-auth-test-auth-fixture-who-at
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:34:45.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95290cda2f74
+  - type: implements
+    from: SYM-ui-session-cookie
+    to: REQ-ui-session-cookie
+    created_at: 2026-10-28T19:56:12.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e4ece1d4b5c
+  - type: covered_by
+    from: SYM-ui-session-cookie
+    to: TEST-ui-auth
+    created_at: 2026-10-28T19:56:12.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f928fc2c727a
+  - type: implements
+    from: SYM-plugins-cosign-pae
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:48:48.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3910b23850d
+  - type: covered_by
+    from: SYM-plugins-cosign-pae
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:48:48.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37cddaed2e96
+  - type: implements
+    from: SYM-portfolio-pg-store
+    to: REQ-portfolio-model-store
+    created_at: 2026-10-28T23:21:42.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec8c33b25142
+  - type: covered_by
+    from: SYM-portfolio-pg-store
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:21:42.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d4ccfd7496
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-check-httperror
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:10:49.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-468e921d6095

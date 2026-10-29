@@ -230,3 +230,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1607ea3079f3
+  - type: implements
+    from: SYM-identity-app-owner-auth-revoke-script-token
+    to: REQ-identity-script-token-from-session
+    created_at: 2026-10-28T19:37:18.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-686b20c5224e
+  - type: covered_by
+    from: SYM-identity-app-owner-auth-revoke-script-token
+    to: TEST-identity-auth-app
+    created_at: 2026-10-28T19:37:18.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1448e9a9337c
+  - type: implements
+    from: SYM-portfolio-sorted-closes
+    to: REQ-portfolio-backtest-history
+    created_at: 2026-10-28T22:23:00.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4291c7b27faa
+  - type: covered_by
+    from: SYM-portfolio-sorted-closes
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:23:00.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4706ccd55495
+  - type: implements
+    from: SYM-views-pb-model-target
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:41:36.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24aff019360e
+  - type: covered_by
+    from: SYM-views-pb-model-target
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:41:36.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2859609479da
+  - type: implements
+    from: SYM-views-pb-get-model-portfolio-request-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:45:57.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4cce1f37cf0
+  - type: covered_by
+    from: SYM-views-pb-get-model-portfolio-request-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:45:57.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bad376fc6605
