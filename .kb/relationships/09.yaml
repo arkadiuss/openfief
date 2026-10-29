@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c9bee760a46
+  - type: implements
+    from: SYM-pl-rate-in-force
+    to: REQ-pl-reference-rate-day
+    created_at: 2026-10-29T03:52:02.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c48eb713d279
+  - type: covered_by
+    from: SYM-pl-rate-in-force
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:52:02.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11def0f258e9

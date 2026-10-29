@@ -16,7 +16,7 @@ RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags=
 
 FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
 # The plugin's manifest (D-42), signed with the image: written from manifest.json by `task plugins:labels`.
-LABEL io.openfief.plugin.manifest='{"capabilities":["connector"],"configSchema":{"additionalProperties":false,"properties":{"account":{"minLength":1,"type":"string"}},"required":["account"],"type":"object"}}'
+LABEL io.openfief.plugin.manifest='{"capabilities":["connector"],"configSchema":{"additionalProperties":false,"properties":{"account":{"minLength":1,"type":"string"},"start":{"maxLength":10,"minLength":10,"pattern":"^[0-9]{4}-[0-9]{2}-[0-9]{2}","type":"string"}},"required":["account"],"type":"object"},"egress":["api-sdp.stat.gov.pl","static.nbp.pl"]}'
 COPY --from=build /out/plugin /plugin
 # Numeric, not nonroot:nonroot: the pods run with runAsNonRoot, and the kubelet refuses to start a container
 # whose image names its user, since it can't tell that a name isn't root (CreateContainerConfigError).

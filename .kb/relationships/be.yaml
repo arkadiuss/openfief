@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec8f5a76bbe8
+  - type: executable_for
+    from: SYM-treasurybonds-test-reference-readings
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:04:41.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96ce7fa92606

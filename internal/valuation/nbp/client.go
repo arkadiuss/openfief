@@ -1,7 +1,9 @@
 // Package nbp is the default FX rate provider (D-20): an HTTP adapter for
 // the National Bank of Poland's public Web API that fetches table A, the
-// daily average exchange rates, and maps it to valuation.FXRate. NBP's JSON
-// shape never leaves this package.
+// daily average exchange rates, and maps it to valuation.FXRate. It also
+// reads NBP's published archive of interest rates for the reference rate
+// that sets ROR and DOR treasury bond interest (D-9), as pl.RateChange.
+// NBP's JSON and XML shapes never leave this package.
 package nbp
 
 import (

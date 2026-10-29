@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d819037035e
+  - type: verified_by
+    from: SCEN-pl-reference-rate-day
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:45:50.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31639f230d26
+  - type: verified_by
+    from: SCEN-pl-reference-rate-day
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T03:56:21.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4805aef2114

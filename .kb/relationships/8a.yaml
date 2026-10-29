@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a317624d1fbf
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-fake-cpi
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:04:45.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cb3b5e29471

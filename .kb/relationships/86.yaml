@@ -370,3 +370,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a46ce6b3d00
+  - type: executable_for
+    from: SYM-valuation-gus-test-helper-stub-transport-round-trip
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:07:26.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c69254299fe7

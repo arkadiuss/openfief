@@ -384,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf312e8d6336
+  - type: executable_for
+    from: SYM-treasurybonds-test-index-sync-readings
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:05:12.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef2933a00628

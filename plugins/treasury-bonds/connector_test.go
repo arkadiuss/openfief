@@ -2,16 +2,20 @@ package main
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"connectrpc.com/connect"
 	"github.com/google/go-cmp/cmp"
 	"google.golang.org/protobuf/testing/protocmp"
 
 	"github.com/arkadiuss/openfief/internal/ingest/treasurybonds"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/valuation"
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
@@ -35,16 +39,59 @@ type coreClient struct {
 	connectorv1connect.ConnectorServiceClient
 }
 
-// served serves a connector for account acc-bonds, whose today is
-// 2026-10-29, with the SDK as the plugin does, and returns a client that
-// calls it as the core.
-func served(t *testing.T) coreClient {
-	t.Helper()
-	today, err := kernel.ParseDate("2026-10-29")
-	if err != nil {
-		t.Fatalf("ParseDate: %v", err)
+// fakeCPI serves synthetic CPI: 2.9% for every month of 2025, and January
+// to September 2026 at 4.1%.
+type fakeCPI struct{ err error }
+
+func (f fakeCPI) CPI(_ context.Context, year int) ([]valuation.IndexReading, error) {
+	if f.err != nil {
+		return nil, f.err
 	}
-	c := &connector{mapper: treasurybonds.Mapper{Account: "acc-bonds"}, today: func() kernel.Date { return today }}
+	months, value := 12, kernel.NewDecimal(29, -3)
+	switch {
+	case year == 2026:
+		months, value = 9, kernel.NewDecimal(41, -3)
+	case year > 2026:
+		months = 0
+	}
+	out := make([]valuation.IndexReading, 0, months)
+	for m := time.January; int(m) <= months; m++ {
+		out = append(out, valuation.IndexReading{Kind: valuation.CPI, Year: year, Month: m, Value: value})
+	}
+	return out, nil
+}
+
+// fakeRates serves two synthetic reference rate changes: 4.00% from
+// 2025-12-04, then 3.75% from 2026-03-05.
+type fakeRates struct{ err error }
+
+func (f fakeRates) ReferenceRates(context.Context) ([]pl.RateChange, error) {
+	return []pl.RateChange{
+		{From: mustDate("2025-12-04"), Rate: kernel.NewDecimal(4, -2)},
+		{From: mustDate("2026-03-05"), Rate: kernel.NewDecimal(375, -4)},
+	}, f.err
+}
+
+// mustDate parses a date that is valid by construction.
+func mustDate(s string) kernel.Date {
+	d, err := kernel.ParseDate(s)
+	if err != nil {
+		return kernel.Date{}
+	}
+	return d
+}
+
+// served serves a connector for account acc-bonds, whose today is
+// 2026-10-29 and whose index readings start in September 2026, with the SDK
+// as the plugin does, and returns a client that calls it as the core.
+func served(t *testing.T, cpi treasurybonds.CPISource, rates treasurybonds.ReferenceRateSource) coreClient {
+	t.Helper()
+	today := mustDate("2026-10-29")
+	c := &connector{
+		mapper:  treasurybonds.Mapper{Account: "acc-bonds"},
+		indices: &treasurybonds.IndexSync{CPI: cpi, Rates: rates, Start: mustDate("2026-09-01")},
+		today:   func() kernel.Date { return today },
+	}
 	server := openfief.NewConnectorServer("", c, fakeVerifier{})
 	srv := httptest.NewUnstartedServer(server.Handler)
 	srv.Config.Protocols = server.Protocols
@@ -72,7 +119,7 @@ func edoLot() *connectorv1.BondLot {
 
 func TestImportBondLots(t *testing.T) {
 	t.Parallel()
-	client := served(t)
+	client := served(t, fakeCPI{}, fakeRates{})
 	resp, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", Lots: []*connectorv1.BondLot{edoLot()}}))
 	if err != nil {
 		t.Fatalf("ImportBondLots: %v", err)
@@ -112,7 +159,7 @@ func TestImportBondLots(t *testing.T) {
 
 func TestImportBondLotsRefuses(t *testing.T) {
 	t.Parallel()
-	client := served(t)
+	client := served(t, fakeCPI{}, fakeRates{})
 	with := func(change func(l *connectorv1.BondLot)) []*connectorv1.BondLot {
 		l := edoLot()
 		change(l)
@@ -144,14 +191,72 @@ func TestImportBondLotsRefuses(t *testing.T) {
 	}
 }
 
-func TestSyncDeliversNothing(t *testing.T) {
+func TestSyncDeliversIndexReadings(t *testing.T) {
 	t.Parallel()
-	resp, err := served(t).Sync(t.Context(), asCore(&connectorv1.SyncRequest{BatchId: "b-1", Mode: connectorv1.Mode_MODE_OPENING, Watermark: "w"}))
+	client := served(t, fakeCPI{}, fakeRates{})
+	resp, err := client.Sync(t.Context(), asCore(&connectorv1.SyncRequest{BatchId: "b-1", Mode: connectorv1.Mode_MODE_TRANSACTIONS}))
 	if err != nil {
 		t.Fatalf("Sync: %v", err)
 	}
-	want := &connectorv1.SyncResponse{Delivery: &connectorv1.Delivery{BatchId: "b-1", Institution: "treasury-bonds"}, Watermark: "w"}
+	cpi, ref := connectorv1.Index_INDEX_CPI, connectorv1.Index_INDEX_REFERENCE_RATE
+	// September's CPI is the last published. The reference rate's day for
+	// September 2026 is 18 August, for October 17 September and for
+	// November 19 October, all over; December's, 17 November, is not.
+	want := &connectorv1.SyncResponse{
+		Delivery: &connectorv1.Delivery{BatchId: "b-1", Institution: "treasury-bonds", IndexReadings: []*connectorv1.IndexReading{
+			{Index: cpi, Date: "2026-09-01", Value: "0.041"},
+			{Index: ref, Date: "2026-09-01", Value: "0.0375"},
+			{Index: ref, Date: "2026-10-01", Value: "0.0375"},
+			{Index: ref, Date: "2026-11-01", Value: "0.0375"},
+		}},
+		Watermark: "cpi=2026-09;reference-rate=2026-11",
+	}
 	if diff := cmp.Diff(want, resp.Msg, protocmp.Transform()); diff != "" {
 		t.Errorf("Sync (-want +got):\n%s", diff)
+	}
+	resp, err = client.Sync(t.Context(), asCore(&connectorv1.SyncRequest{BatchId: "b-2", Mode: connectorv1.Mode_MODE_TRANSACTIONS, Watermark: want.GetWatermark()}))
+	if err != nil {
+		t.Fatalf("second Sync: %v", err)
+	}
+	again := &connectorv1.SyncResponse{
+		Delivery:  &connectorv1.Delivery{BatchId: "b-2", Institution: "treasury-bonds"},
+		Watermark: "cpi=2026-09;reference-rate=2026-11",
+	}
+	if diff := cmp.Diff(again, resp.Msg, protocmp.Transform()); diff != "" {
+		t.Errorf("second Sync (-want +got):\n%s", diff)
+	}
+}
+
+// errOutage is a synthetic outage of GUS or NBP.
+var errOutage = errors.New("synthetic outage")
+
+func TestSyncRefuses(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name      string
+		cpi       fakeCPI
+		rates     fakeRates
+		watermark string
+		asCore    bool
+		want      connect.Code
+	}{
+		{name: "a watermark it never returned", watermark: "2026-10-28", asCore: true, want: connect.CodeInvalidArgument},
+		{name: "GUS is down", cpi: fakeCPI{err: errOutage}, asCore: true, want: connect.CodeUnavailable},
+		{name: "NBP is down", rates: fakeRates{err: errOutage}, asCore: true, want: connect.CodeUnavailable},
+		{name: "not the core", want: connect.CodeUnauthenticated},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			msg := &connectorv1.SyncRequest{BatchId: "b-1", Mode: connectorv1.Mode_MODE_TRANSACTIONS, Watermark: tt.watermark}
+			req := connect.NewRequest(msg)
+			if tt.asCore {
+				req = asCore(msg)
+			}
+			_, err := served(t, tt.cpi, tt.rates).Sync(t.Context(), req)
+			if got := connect.CodeOf(err); got != tt.want {
+				t.Errorf("Sync = %v, want %s", err, tt.want)
+			}
+		})
 	}
 }

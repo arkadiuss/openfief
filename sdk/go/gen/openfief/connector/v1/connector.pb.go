@@ -987,7 +987,9 @@ type IndexReading struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Index Index                  `protobuf:"varint,1,opt,name=index,proto3,enum=openfief.connector.v1.Index" json:"index,omitempty"`
 	// For CPI, the first day of the month the reading measures; for the
-	// reference rate, the day it takes effect.
+	// reference rate, the first day of the month whose ROR and DOR interest
+	// periods it sets: the rate in force on the tenth business day before that
+	// day. The core records each reading for the month of its date.
 	Date string `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
 	// A yearly fraction as a decimal string: CPI of 104.9 (previous year =
 	// 100) is "0.049", a 5.75% reference rate is "0.0575".

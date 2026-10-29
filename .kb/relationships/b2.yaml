@@ -293,3 +293,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2ada8ad97a5
+  - type: implements
+    from: SYM-valuation-gus-value
+    to: REQ-valuation-gus-cpi
+    created_at: 2026-10-29T04:05:48.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39c052f5f27f
+  - type: implements
+    from: SYM-valuation-gus-value
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:05:48.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-129b926a2ed3
+  - type: covered_by
+    from: SYM-valuation-gus-value
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:05:48.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27316803d2b0

@@ -1,0 +1,19 @@
+HTTP/1.1 404 Not Found
+Content-Length: 201
+Access-Control-Allow-Methods: GET, HEAD
+Access-Control-Allow-Origin: *
+Cache-Control: public,max-age=300
+Content-Type: application/json; charset=utf-8
+Date: Thu, 29 Oct 2026 03:36:08 GMT
+Strict-Transport-Security: max-age=15552000; includeSubDomains
+Vary: Accept
+X-Rate-Limit-Limit: 7d
+X-Rate-Limit-Remaining: 9999
+X-Rate-Limit-Reset: 2026-11-05T03:36:08.2705478Z
+
+{
+  "error-help": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+  "error-reason": "Not Found",
+  "status": "404",
+  "error-code": "00-54fa72a6bd69924d889ece85f96ce802-3212c3e290444349-00"
+}

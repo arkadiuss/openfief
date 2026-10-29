@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66fcb7a72100
+  - type: implements
+    from: SYM-pl-must-date
+    to: REQ-pl-reference-rate-day
+    created_at: 2026-10-29T03:51:45.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72e85088740d
+  - type: covered_by
+    from: SYM-pl-must-date
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:51:45.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d6f841b3ca1

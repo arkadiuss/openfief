@@ -237,3 +237,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed26618c433b
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-changes
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:04:20.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c37f26e1ad5
+  - type: executable_for
+    from: SYM-valuation-nbp-test-reference-rates-archive
+    to: TEST-valuation-nbp-refrate
+    created_at: 2026-10-29T04:08:31.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e60ee241e7d

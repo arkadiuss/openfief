@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-924b7ba47acb
+  - type: implements
+    from: SYM-valuation-nbp-archive
+    to: REQ-valuation-nbp-reference-rates
+    created_at: 2026-10-29T04:07:37.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23f0a9ae44ca
+  - type: implements
+    from: SYM-valuation-nbp-archive
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:07:37.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4874675e8d6c
+  - type: covered_by
+    from: SYM-valuation-nbp-archive
+    to: TEST-valuation-nbp-refrate
+    created_at: 2026-10-29T04:07:37.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b93ff0d68fa9

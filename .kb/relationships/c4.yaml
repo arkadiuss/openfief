@@ -419,3 +419,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-335a57a793ee
+  - type: implements
+    from: SYM-pl-rate-change
+    to: REQ-pl-reference-rate-day
+    created_at: 2026-10-29T03:51:56.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1815f8eaffbf
+  - type: covered_by
+    from: SYM-pl-rate-change
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:51:56.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79c6422d3540

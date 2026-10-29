@@ -314,3 +314,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40779b05682c
+  - type: executable_for
+    from: SYM-valuation-gus-test-cpi-rejects
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:07:16.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24586b4aa955

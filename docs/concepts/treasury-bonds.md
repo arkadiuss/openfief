@@ -39,9 +39,15 @@ Interest periods count from the purchase date: a bond bought on 15 March has yea
 The first period pays the first-period rate, and fixed-rate types (OTS, TOS) keep it for the whole term. Later periods pay the [period index](../glossary.md) reading plus the margin, with a negative reading counted as zero, so the rate never drops below the margin:
 
 - **Inflation-indexed** (COI, EDO, ROS, ROD): the reading is [CPI](../glossary.md) year on year, as announced by [GUS](../glossary.md) in the month before the period's first month. GUS announces a month's CPI in the following month, so a period starting in March takes January's CPI. If that reading shows prices 5% higher than a year before, the period pays 5% plus the margin: the rate follows past inflation, a little late, plus a fixed extra.
-- **ROR and DOR**: the reading is the [NBP reference rate](../glossary.md) in force on the tenth business day before the first day of the calendar month in which the period starts.
+- **ROR and DOR**: the reading is the [NBP reference rate](../glossary.md) in force on the tenth [business day](../glossary.md) before the first day of the calendar month in which the period starts.
 
 A reading is a yearly fraction too: a CPI of 104.9 (previous year = 100) is `0.049`.
+
+### Business days and the reference-rate day
+
+The issue letters count business days (dni robocze) without Saturdays (ROR1027 letter, ust. 29) and without statutory days off work (ust. 33). Those are Sundays and the holidays art. 1 of the act on days off work lists: 1 and 6 January, Easter Sunday and Monday, 1 and 3 May, Pentecost Sunday, Corpus Christi, 15 August, 1 and 11 November, and 24 to 26 December. Easter and the days counted from it move every year; 6 January is a day off from 2011 and 24 December from 2025, so the calendar depends on the year. `IsBusinessDay` models the act from 1991 and fails with `ErrOutsideCalendar` before that. A day off the Prime Minister may declare during an epidemic (art. 1a) is not modeled, since none has been declared.
+
+`ReferenceRateDay(year, month)` counts ten business days back from the month's first day, so the first counted is the last business day of the month before. For January 2026 it skips 24, 25 and 26 December and lands on 15 December 2025; for July 2025 it skips Corpus Christi (19 June) and lands on 16 June. `RateInForce` then picks, from the NBP's list of rate changes (`RateChange`, each with the day it takes effect), the latest one in force on that day, the day of a change included.
 
 ### Capitalized interest and coupons
 
@@ -82,6 +88,7 @@ A [lot value](../glossary.md) has two answers. The gross accrued value is the no
 | [series.go](../../internal/jurisdiction/pl/series.go) | `BondType` and its `Structure` (term, period, `Indexation`, `Payout`); `Series` and `ParseSeries` |
 | [terms.go](../../internal/jurisdiction/pl/terms.go) | `Nominal`, `Terms`, `Indices`, `Terms.PeriodRate`, `MissingIndexError` |
 | [calendar.go](../../internal/jurisdiction/pl/calendar.go) | `Maturity`, `PeriodStart`, `CPIMonth` |
+| [businessday.go](../../internal/jurisdiction/pl/businessday.go) | `IsBusinessDay`, `ReferenceRateDay`, `RateChange`, `RateInForce`, `FirstCalendarYear`, `ErrOutsideCalendar` |
 | [value.go](../../internal/jurisdiction/pl/value.go) | `Purchase`, `LotValue`, `ValueLot` |
 | [tax.go](../../internal/jurisdiction/pl/tax.go) | `TaxWrapper`, `BelkaRate`, `BelkaTax`, `TaxRateCutoff` |
 
@@ -132,7 +139,7 @@ flowchart TD
 
 Here `months` is the period length (1, 3 or 12) and `a` is the days from the period's start to the date. All arithmetic is exact decimal until the single `Quo` that rounds half up to grosze; the lot amounts are the per-bond amounts times the quantity. Belka tax, by contrast, is computed once on the lot's total. On the day a coupon is paid, a coupon type has started a new period, so its accrued interest is zero.
 
-`ValueLot` needs an index reading for every period up to the one the date falls in, coupon types included: their earlier periods were paid out and don't change the value, but without a reading `PeriodRate` still fails with `MissingIndexError`. `ValueLot` takes readings by period number. In a revaluation, [`valuation.LotIndices`](valuation.md#valuing-one-holding) picks them from the stored monthly readings: the CPI of `CPIMonth(start)` for inflation-indexed types, and for ROR and DOR the reference-rate reading recorded for the month the period starts. Which rate that is, the one in force on the tenth business day before the month, is left to whoever records it, because it needs Poland's holiday calendar, which neither package has. A missing reading makes the holding's stored row a gap (`index_reading`), not an error.
+`ValueLot` needs an index reading for every period up to the one the date falls in, coupon types included: their earlier periods were paid out and don't change the value, but without a reading `PeriodRate` still fails with `MissingIndexError`. `ValueLot` takes readings by period number. In a revaluation, [`valuation.LotIndices`](valuation.md#valuing-one-holding) picks them from the stored monthly readings: the CPI of `CPIMonth(start)` for inflation-indexed types, and for ROR and DOR the reference-rate reading recorded for the month the period starts. Which rate that is, the one in force on the tenth business day before the month, is picked when the reading is recorded, with `ReferenceRateDay` and `RateInForce`: the treasury-bonds connector fetches GUS's CPI and NBP's reference rate changes and delivers one reading per month ([Plugins](plugins.md#first-party-plugins)). A missing reading makes the holding's stored row a gap (`index_reading`), not an error.
 
 A synthetic EDO0334 lot shows the periods and a value on a date:
 
@@ -172,6 +179,7 @@ The same lot in IKE is worth 1030.20 PLN net. Bought by exchange at 99.90 PLN, i
 | Maturity; a lot under the wrong series fails | `TestMaturity` in [calendar_test.go](../../internal/jurisdiction/pl/calendar_test.go), `TestValueLotRejectsBadInput` | REQ-pl-series-code, SCEN-pl-series-code, TEST-pl-calendar, TEST-pl-value |
 | Period dates from the purchase date, including rows of the ROR1027 issue letter | `TestPeriodStart` | REQ-pl-bond-accrual, SCEN-pl-bond-accrual, TEST-pl-calendar |
 | CPI month two months before the period | `TestCPIMonth` | REQ-pl-cpi-indexation, SCEN-pl-cpi-indexation, TEST-pl-calendar |
+| Business days skip Saturdays, Sundays and each year's statutory holidays; the reference rate is the one in force on the tenth business day before the month | `TestIsBusinessDay`, `TestReferenceRateDay`, `TestRateInForce` in [businessday_test.go](../../internal/jurisdiction/pl/businessday_test.go) | REQ-pl-reference-rate-day, SCEN-pl-reference-rate-day, TEST-pl-businessday |
 | Index plus margin, negative readings floored, missing readings fail | `TestPeriodRate`, `TestPeriodRateNeedsTheIndexReading` in [terms_test.go](../../internal/jurisdiction/pl/terms_test.go) | REQ-pl-cpi-indexation, SCEN-pl-cpi-indexation, TEST-pl-terms |
 | Lot values: accrual, fee cap, wrappers, discount, maturity | `TestValueLot`, `TestValueLotRejectsBadInput` | REQ-pl-bond-accrual, REQ-pl-early-redemption-fee-cap, REQ-pl-belka-tax, REQ-pl-tax-wrapper-exempt, TEST-pl-value |
 | Matches the issuer's daily interest tables | `TestValueLotMatchesInterestTables` in [official_test.go](../../internal/jurisdiction/pl/official_test.go) | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-2-tos-base-unrounded, TEST-pl-official |
@@ -185,6 +193,5 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 
 ## Not built yet
 
-- **D-9**: anything that fetches series terms, CPI or NBP reference rates (the DESIGN.md diagram's treasury bonds connector does manual lots only so far; the owner types each series' terms with its lots) and records them through `valuation/app.InputRecorder`; entering a lot bought by exchange at the [exchange price](../glossary.md), since entered lots are cash purchases at the nominal; and an import of the bond service's export, if one exists (OQ-22).
-- **D-9**: picking the NBP reference rate in force on the tenth business day before a month, which needs a business-day calendar.
+- **D-9**: anything that fetches series terms (the owner types each series' terms with its lots); entering a lot bought by exchange at the [exchange price](../glossary.md), since entered lots are cash purchases at the nominal; and an import of the bond service's export, if one exists (OQ-22).
 - **D-62**, **GR-13**: the jurisdiction pack (`jurisdiction.Pack` in the glossary) that would make these rules pluggable and set PLN as the default reporting currency; today `pl` is a plain package.
