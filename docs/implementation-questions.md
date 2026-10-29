@@ -9,11 +9,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Blocking real use
 
-2. **The Ghostfolio view can't reach the owner's Ghostfolio.**
-   - *Problem:* a plugin's manifest is its signed image label (D-42), and its egress allow-list holds only the hosts the manifest requests and the grant approves (D-16). An image built and signed in CI can't name a host the owner picks at install time.
-   - *Today:* the Ghostfolio manifest requests no host, so the plugin refuses to start without one. The owner would have to rebuild the image with their host and sign it themselves (D-45).
-   - *Options:* a manifest placeholder (for example "the host of config field `url`") that `openfief plugin install` fills from the config and the grant approves explicitly; or an owner-signed overlay of the manifest; or something else.
-
 3. **XTB import needs the export's real layout.**
    - *Problem:* D-9 says XTB data arrives as uploaded xStation export files, but the export's columns, and whether it separates CFDs from stocks, are unverified (OQ-22).
    - *Today:* no XTB parser exists.
