@@ -38466,19 +38466,6 @@ symbols:
         target: TEST-core-unit
       - type: implements
         target: REQ-core-health-endpoints
-  - id: SYM-core-server-handler
-    title: server.handler
-    sourceFile: cmd/core/serve.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T14:35:03.332Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-unit
-      - type: implements
-        target: REQ-core-health-endpoints
   - id: SYM-core-server-healthz
     title: server.healthz
     sourceFile: cmd/core/serve.go
@@ -38505,19 +38492,6 @@ symbols:
         target: TEST-core-unit
       - type: implements
         target: REQ-core-graceful-shutdown
-      - type: implements
-        target: REQ-core-health-endpoints
-  - id: SYM-core-server-serve-api
-    title: server.serveAPI
-    sourceFile: cmd/core/serve.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T14:35:14.610Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-unit
       - type: implements
         target: REQ-core-health-endpoints
   - id: SYM-core-plain
@@ -76163,16 +76137,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-auth
-  - id: SYM-core-test-helper-start-core-in
-    title: startCoreIn
-    sourceFile: cmd/core/core_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T10:55:37.543Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-read-api
   - id: SYM-uiplugin-test-helper-token-file
     title: tokenFile
     sourceFile: plugins/ui/main_test.go
@@ -76620,7 +76584,7 @@ symbols:
       - type: covered_by
         target: TEST-core-front-door
       - type: implements
-        target: REQ-core-browser-entry-point
+        target: REQ-core-only-browser-entry-point
       - type: implements
         target: REQ-core-reverse-proxies-view-plugins
   - id: SYM-fd-core-new-front-door
@@ -76859,7 +76823,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-browser-path
       - type: implements
-        target: REQ-core-browser-entry-point
+        target: REQ-core-only-browser-entry-point
       - type: implements
         target: REQ-plugins-view-browser-path-grant
   - id: SYM-fd-plugins-valid-browser-path
@@ -77022,6 +76986,8 @@ symbols:
         target: TEST-views-browser-routing
       - type: implements
         target: REQ-core-reverse-proxies-view-plugins
+      - type: implements
+        target: REQ-plugins-one-browser-view
       - type: implements
         target: REQ-views-browser-route-longest-prefix
   - id: SYM-fd-browserproxy-proxy
@@ -77263,7 +77229,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-require-core
       - type: implements
-        target: REQ-core-browser-entry-point
+        target: REQ-core-only-browser-entry-point
       - type: implements
         target: REQ-plugins-core-only-caller
   - id: SYM-fd-core-test-helper-browser-cluster
@@ -86071,3 +86037,133 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-release-catalog
+  - id: SYM-exp-core-server-ready
+    title: server.ready
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:59:26.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-core-browser-port-scope
+      - type: implements
+        target: REQ-core-plugin-port-scope
+  - id: SYM-exp-core-server-browser-handler
+    title: server.browserHandler
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:59:37.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-core-browser-port-scope
+  - id: SYM-exp-core-server-plugin-handler
+    title: server.pluginHandler
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:59:48.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-core-plugin-port-scope
+  - id: SYM-exp-core-serve-when-ready
+    title: serveWhenReady
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:59:59.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-health-endpoints
+  - id: SYM-exp-core-listen
+    title: listen
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:09.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-exp-core-close-all
+    title: closeAll
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:19.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-exp-core-test-helper-start-core-ports
+    title: startCorePorts
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:29.856Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-exp-core-test-helper-core-ports
+    title: corePorts
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:40.194Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-exp-core-test-helper-plugin-only-paths
+    title: pluginOnlyPaths
+    sourceFile: cmd/core/frontdoor_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:50.265Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-front-door
+  - id: SYM-exp-core-test-helper-check-statuses
+    title: checkStatuses
+    sourceFile: cmd/core/frontdoor_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:01:00.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-front-door
+  - id: SYM-exp-deploy-test-gateway-check
+    title: check
+    sourceFile: scripts/tests/gateway.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:10:39.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-gateway-component

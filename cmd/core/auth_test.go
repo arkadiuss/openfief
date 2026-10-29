@@ -72,9 +72,12 @@ func reviewTokens(users map[string]string) k8stesting.ReactionFunc {
 
 // startCoreForUI is startCoreWith in viewCluster, so the view plugin ui
 // may call the AuthService and the owner's entry services with uiCaller.
+// The server it returns is the plugin port, where the view plugin calls
+// them (D-115).
 func startCoreForUI(t *testing.T, dsn string, edit func(cfg *serveConfig)) (*core, *httptest.Server, *pgxpool.Pool) {
 	t.Helper()
-	return startCoreIn(t, dsn, viewCluster(t), edit)
+	c, p, pool := startCorePorts(t, dsn, viewCluster(t), edit)
+	return c, p.plugin, pool
 }
 
 // localUI is the origin the tests' browser uses.

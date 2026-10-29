@@ -117,14 +117,25 @@ func startCore(t *testing.T, dsn string) (*core, *httptest.Server, *pgxpool.Pool
 }
 
 // startCoreWith is startCore with the serve configuration edited by edit.
+// The server it returns is the browser port, where scripts and browsers
+// call the core.
 func startCoreWith(t *testing.T, dsn string, edit func(cfg *serveConfig)) (*core, *httptest.Server, *pgxpool.Pool) {
 	t.Helper()
-	return startCoreIn(t, dsn, nil, edit)
+	c, p, pool := startCorePorts(t, dsn, nil, edit)
+	return c, p.browser, pool
 }
 
-// startCoreIn is startCoreWith in cluster cl, or outside a cluster when cl
-// is nil.
-func startCoreIn(t *testing.T, dsn string, cl *cluster, edit func(cfg *serveConfig)) (*core, *httptest.Server, *pgxpool.Pool) {
+// corePorts are the core's two ports' servers (D-115).
+type corePorts struct {
+	// browser serves the health endpoints, the front door and the read API.
+	browser *httptest.Server
+	// plugin serves the read API, the AuthService and the owner services.
+	plugin *httptest.Server
+}
+
+// startCorePorts is startCoreWith in cluster cl, or outside a cluster when
+// cl is nil, and returns both ports' servers.
+func startCorePorts(t *testing.T, dsn string, cl *cluster, edit func(cfg *serveConfig)) (*core, corePorts, *pgxpool.Pool) {
 	t.Helper()
 	ctx := t.Context()
 	pool, err := pgxpool.New(ctx, dsn)
@@ -140,15 +151,16 @@ func startCoreIn(t *testing.T, dsn string, cl *cluster, edit func(cfg *serveConf
 		t.Fatalf("start: %v", err)
 	}
 	s := &server{pool: pool}
-	s.api.Store(&c.api)
-	srv := httptest.NewServer(s.handler())
+	s.ready(c)
+	p := corePorts{browser: httptest.NewServer(s.browserHandler()), plugin: httptest.NewServer(s.pluginHandler())}
 	t.Cleanup(func() {
-		srv.Close()
-		if err := shutdown(context.WithoutCancel(ctx), s, srv.Config, c, 10*time.Second); err != nil {
+		p.browser.Close()
+		p.plugin.Close()
+		if err := shutdown(context.WithoutCancel(ctx), s, c, 10*time.Second, p.browser.Config, p.plugin.Config); err != nil {
 			t.Errorf("shutdown: %v", err)
 		}
 	})
-	return c, srv, pool
+	return c, p, pool
 }
 
 // loadDemo loads part of the demo dataset as a separate process would, the

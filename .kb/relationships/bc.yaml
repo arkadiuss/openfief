@@ -496,3 +496,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4159e36d6b4c
+  - type: implements
+    from: SYM-exp-core-listen
+    to: REQ-core-config
+    created_at: 2026-10-29T21:00:11.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0389fd9c7b1
+  - type: covered_by
+    from: SYM-exp-core-listen
+    to: TEST-core-unit
+    created_at: 2026-10-29T21:00:11.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25fe07e3d50a

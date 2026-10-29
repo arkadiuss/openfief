@@ -307,3 +307,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8420e6c0f78
+  - type: implements
+    from: SYM-exp-core-server-ready
+    to: REQ-core-browser-port-scope
+    created_at: 2026-10-29T20:59:28.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dff1d78f78b6
+  - type: implements
+    from: SYM-exp-core-server-ready
+    to: REQ-core-plugin-port-scope
+    created_at: 2026-10-29T20:59:28.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df4d1ea27eaa
+  - type: covered_by
+    from: SYM-exp-core-server-ready
+    to: TEST-core-front-door
+    created_at: 2026-10-29T20:59:28.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e0682925608

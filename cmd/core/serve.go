@@ -23,24 +23,48 @@ const (
 	// retryEvery is how often start retries a database that is not reachable
 	// yet, such as one still starting next to the core.
 	retryEvery = 5 * time.Second
+	// portCount is how many ports the core listens on: the browser port and
+	// the plugin port (D-115).
+	portCount = 2
 )
 
-// server answers the health endpoints at once and the read API from when
-// the core is ready until it starts shutting down.
+// server answers the health endpoints at once and its two ports' APIs from
+// when the core is ready until it starts shutting down (D-115): the browser
+// port, which the Service's http port targets and a route points at, and
+// the plugin port, which the Service's connect port targets and only plugin
+// pods may reach.
 type server struct {
-	pool     *pgxpool.Pool
-	api      atomic.Pointer[http.Handler]
+	pool *pgxpool.Pool
+	// browser is what the browser port serves past the health endpoints:
+	// the front door and the read API.
+	browser atomic.Pointer[http.Handler]
+	// plugin is what the plugin port serves: the read API, the AuthService
+	// and the owner services.
+	plugin   atomic.Pointer[http.Handler]
 	draining atomic.Bool
 }
 
-// handler returns the mux: GET /healthz and GET /readyz, unauthenticated
-// and never returning data, and the read API at every other path.
-func (s *server) handler() http.Handler {
+// ready stores the handlers c serves on each port; s then reports ready.
+func (s *server) ready(c *core) {
+	s.plugin.Store(&c.pluginPort)
+	s.browser.Store(&c.browserPort)
+}
+
+// browserHandler returns the browser port's mux: GET /healthz and GET
+// /readyz, unauthenticated and never returning data, and the front door
+// with the read API at every other path.
+func (s *server) browserHandler() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /healthz", s.healthz)
 	mux.HandleFunc("GET /readyz", s.readyz)
-	mux.HandleFunc("/", s.serveAPI)
+	mux.Handle("/", serveWhenReady(&s.browser))
 	return mux
+}
+
+// pluginHandler returns the plugin port's handler: the read API and the
+// services only plugins call, with no health endpoint and no front door.
+func (s *server) pluginHandler() http.Handler {
+	return serveWhenReady(&s.plugin)
 }
 
 // healthz reports that the process serves HTTP: liveness.
@@ -55,7 +79,7 @@ func (s *server) readyz(w http.ResponseWriter, r *http.Request) {
 	case s.draining.Load():
 		plain(w, http.StatusServiceUnavailable, "shutting down")
 		return
-	case s.api.Load() == nil:
+	case s.browser.Load() == nil:
 		plain(w, http.StatusServiceUnavailable, "starting")
 		return
 	}
@@ -68,15 +92,18 @@ func (s *server) readyz(w http.ResponseWriter, r *http.Request) {
 	plain(w, http.StatusOK, "ok")
 }
 
-// serveAPI hands r to the read API, or answers 503 until it is ready.
-func (s *server) serveAPI(w http.ResponseWriter, r *http.Request) {
-	api := s.api.Load()
-	if api == nil {
-		w.Header().Set("Retry-After", "5")
-		plain(w, http.StatusServiceUnavailable, "starting")
-		return
-	}
-	(*api).ServeHTTP(w, r)
+// serveWhenReady hands each request to the handler h holds, or answers 503
+// until the core stored it.
+func serveWhenReady(h *atomic.Pointer[http.Handler]) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		api := h.Load()
+		if api == nil {
+			w.Header().Set("Retry-After", "5")
+			plain(w, http.StatusServiceUnavailable, "starting")
+			return
+		}
+		(*api).ServeHTTP(w, r)
+	})
 }
 
 // plain writes a short plain-text answer that nothing may cache.
@@ -91,11 +118,11 @@ func plain(w http.ResponseWriter, status int, body string) {
 	}
 }
 
-// serve runs the core until ctx ends: it listens at once, so the health
-// endpoints answer while it starts, then migrates, wires and starts the
-// revaluation workers, and serves the read API. On shutdown it stops
-// reporting ready, drains requests and running revaluations for up to the
-// shutdown timeout, and cancels what is left.
+// serve runs the core until ctx ends: it listens on both ports at once, so
+// the health endpoints answer while it starts, then migrates, wires and
+// starts the revaluation workers, and serves both ports' APIs. On shutdown
+// it stops reporting ready, drains requests and running revaluations for up
+// to the shutdown timeout, and cancels what is left.
 func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.Time) error {
 	cfg := &cmd.Serve
 	pool, err := pgxpool.New(ctx, cmd.DSN)
@@ -103,19 +130,15 @@ func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.
 		return fmt.Errorf("connecting: %w", err)
 	}
 	defer pool.Close()
-	ln, err := (&net.ListenConfig{}).Listen(ctx, "tcp", cfg.Listen)
-	if err != nil {
-		return fmt.Errorf("listening on %s: %w", cfg.Listen, err)
-	}
 	s := &server{pool: pool}
-	httpSrv := &http.Server{Handler: s.handler(), ReadHeaderTimeout: readHeaderTimeout}
-	served := make(chan error, 1)
-	go func() { served <- httpSrv.Serve(ln) }()
-	log.Info("listening", "address", ln.Addr().String())
-
+	served := make(chan error, portCount)
+	servers, err := listen(ctx, s, cfg, served, log)
+	if err != nil {
+		return err
+	}
 	c, startErr := start(ctx, pool, cfg, now, log, clusterOrNil(log))
 	if startErr == nil {
-		s.api.Store(&c.api)
+		s.ready(c)
 		log.Info("ready")
 	}
 	var serveErr error
@@ -126,7 +149,7 @@ func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.
 		}
 	}
 	log.Info("shutting down")
-	stopErr := shutdown(ctx, s, httpSrv, c, cfg.ShutdownTimeout)
+	stopErr := shutdown(ctx, s, c, cfg.ShutdownTimeout, servers...)
 	if errors.Is(startErr, context.Canceled) && ctx.Err() != nil {
 		startErr = nil // stopped while starting
 	}
@@ -136,10 +159,46 @@ func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.
 	return errors.Join(startErr, serveErr, stopErr)
 }
 
+// listen starts serving s's browser port on cfg.Listen and its plugin port
+// on cfg.PluginListen (D-115), sending what each server's Serve returns to
+// served. When a port can't listen, it closes what it started.
+func listen(ctx context.Context, s *server, cfg *serveConfig, served chan<- error, log *slog.Logger) ([]*http.Server, error) {
+	ports := []struct {
+		name, address string
+		handler       http.Handler
+	}{
+		{"browser", cfg.Listen, s.browserHandler()},
+		{"plugin", cfg.PluginListen, s.pluginHandler()},
+	}
+	servers := make([]*http.Server, 0, len(ports))
+	for _, port := range ports {
+		ln, err := (&net.ListenConfig{}).Listen(ctx, "tcp", port.address)
+		if err != nil {
+			return nil, errors.Join(fmt.Errorf("listening on %s: %w", port.address, err), closeAll(servers))
+		}
+		httpSrv := &http.Server{Handler: port.handler, ReadHeaderTimeout: readHeaderTimeout}
+		servers = append(servers, httpSrv)
+		go func() { served <- httpSrv.Serve(ln) }()
+		log.Info("listening", "port", port.name, "address", ln.Addr().String())
+	}
+	return servers, nil
+}
+
+// closeAll closes servers at once, for a start that failed.
+func closeAll(servers []*http.Server) error {
+	var errs []error
+	for _, srv := range servers {
+		if err := srv.Close(); err != nil {
+			errs = append(errs, fmt.Errorf("closing an HTTP server: %w", err))
+		}
+	}
+	return errors.Join(errs...)
+}
+
 // start migrates the database, retrying until it is reachable or ctx ends,
 // wires the core and starts its revaluation workers. In cluster cl it puts
-// the front door before the read API, which proxies browsers to the view
-// plugins that serve them (D-81), and, as cfg asks, starts the connector
+// the front door before the browser port's read API, which proxies browsers
+// to the view plugin that serves them (D-81, D-114), and, as cfg asks, starts the connector
 // scheduler in the background, which can't fail the start, so the read API
 // serves whatever the cluster does.
 func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger, cl *cluster) (*core, error) {
@@ -170,7 +229,7 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	if cl != nil {
 		var proxy http.Handler
 		c.browser, proxy = newFrontDoor(cl, cfg.Sync.ServiceAccount, now, log)
-		c.api = withFrontDoor(c.api, proxy)
+		c.browserPort = withFrontDoor(c.browserPort, proxy)
 	}
 	// The workers outlive ctx: shutdown stops them gracefully.
 	if err := c.river.Start(context.WithoutCancel(ctx)); err != nil {
@@ -214,16 +273,18 @@ func startCluster(ctx context.Context, c *core, cfg *serveConfig, cl *cluster, l
 	}
 }
 
-// shutdown marks s as draining, then stops the HTTP server and c's workers,
-// each letting in-flight work finish until timeout; workers still running
-// then are cancelled, and River retries their jobs on the next start.
-func shutdown(ctx context.Context, s *server, httpSrv *http.Server, c *core, timeout time.Duration) error {
+// shutdown marks s as draining, then stops the HTTP servers and c's
+// workers, each letting in-flight work finish until timeout; workers still
+// running then are cancelled, and River retries their jobs on the next start.
+func shutdown(ctx context.Context, s *server, c *core, timeout time.Duration, servers ...*http.Server) error {
 	s.draining.Store(true)
 	sctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), timeout)
 	defer cancel()
 	var errs []error
-	if err := httpSrv.Shutdown(sctx); err != nil {
-		errs = append(errs, fmt.Errorf("stopping the HTTP server: %w", err))
+	for _, httpSrv := range servers {
+		if err := httpSrv.Shutdown(sctx); err != nil {
+			errs = append(errs, fmt.Errorf("stopping an HTTP server: %w", err))
+		}
 	}
 	if c == nil {
 		return errors.Join(errs...)

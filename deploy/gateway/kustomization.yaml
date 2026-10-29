@@ -1,0 +1,30 @@
+# An optional way in (D-28): a Gateway API HTTPRoute to the core, for an owner who runs a Gateway. OpenFief's bases
+# expose nothing, and this component lives outside them; add it to your own overlay. docs/guides/expose.md shows a
+# complete overlay that replaces every placeholder, which scripts/tests/gateway.test.sh builds.
+#
+# It adds three things, each with a placeholder an overlay replaces:
+#   httproute.yaml      the route: the Gateway it attaches to (parentRefs: Gateway gateway in namespace gateway-system,
+#                       listener https) and the hostname (openfief.invalid), every path to Service openfief-core port
+#                       8080, named http: the core's browser port, the only entry point for browsers (D-81, D-115).
+#                       Never the connect port, which serves plugins alone, and never a plugin.
+#   networkpolicy.yaml  admits the Gateway's data plane to the core's browser port 8080 alone; the core's own policy
+#                       admits only plugin pods, on the plugin port. Placeholder: every pod in namespace
+#                       gateway-system; narrow it to your implementation's proxy pods.
+#   the patch below     adds https://openfief.invalid to the origins the core accepts the owner's browser from (D-60).
+#                       It must be the route's hostname: the guide's overlay copies the hostname into it with a
+#                       replacement.
+# The .invalid name can never resolve, so a placeholder left in place exposes nothing. Passkeys need HTTPS outside
+# localhost, so the Gateway's listener terminates TLS for the hostname.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  - httproute.yaml
+  - networkpolicy.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: openfief-core
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --auth-origin=https://openfief.invalid

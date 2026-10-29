@@ -377,3 +377,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ae50e84bcab
+  - type: implements
+    from: SYM-exp-core-server-plugin-handler
+    to: REQ-core-plugin-port-scope
+    created_at: 2026-10-29T20:59:50.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfd1e1fdd843
+  - type: covered_by
+    from: SYM-exp-core-server-plugin-handler
+    to: TEST-core-front-door
+    created_at: 2026-10-29T20:59:50.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e864cf36b743

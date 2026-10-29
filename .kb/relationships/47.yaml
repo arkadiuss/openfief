@@ -482,3 +482,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d20a94bc6d84
+  - type: executable_for
+    from: SYM-exp-core-test-helper-plugin-only-paths
+    to: TEST-core-front-door
+    created_at: 2026-10-29T21:00:52.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f001e84288e

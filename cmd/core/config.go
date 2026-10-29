@@ -41,6 +41,7 @@ const (
 // Defaults of the serve flags.
 const (
 	defaultListen          = ":8080"
+	defaultPluginListen    = ":8081"
 	defaultReporting       = "PLN"
 	defaultTimeZone        = "Europe/Warsaw"
 	defaultEndOfDay        = "23:30"
@@ -108,7 +109,10 @@ type connectorArgs struct {
 
 // serveConfig is what D-36 and D-62 make configurable, and where to listen.
 type serveConfig struct {
-	Listen string
+	// Listen is the browser port's address; PluginListen the plugin
+	// port's (D-115).
+	Listen       string
+	PluginListen string
 	// Reporting is the reporting currency (D-62).
 	Reporting kernel.Currency
 	// EndOfDay is when the end-of-day revaluation runs; its Location is also
@@ -202,7 +206,8 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	inCluster := getenv(inClusterEnv) != ""
 	fs := newFlags(cmdServe)
 	c := serveConfig{}
-	fs.StringVar(&c.Listen, "listen", defaultListen, "address of the read API and the health endpoints")
+	fs.StringVar(&c.Listen, "listen", defaultListen, "address of the browser port: the front door, the read API and the health endpoints (D-115)")
+	fs.StringVar(&c.PluginListen, "plugin-listen", defaultPluginListen, "address of the plugin port: the read API, the AuthService and the owner services, for plugins only (D-115)")
 	reporting := fs.String("reporting-currency", defaultReporting, "the reporting currency (D-62)")
 	zone := fs.String("time-zone", defaultTimeZone, "time zone of today and of the end of day")
 	eod := fs.String("end-of-day", defaultEndOfDay, "when the end-of-day revaluation runs, HH:MM")
