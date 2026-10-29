@@ -15,16 +15,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Needed:* a header row and two or three rows with made-up values, copied from a real export. The parser's fixtures will be synthetic.
    - *Known so far:* the author holds stocks and ETFs only at XTB (so D-24's CFD handling stays as written) and will send the headers from a real export. The export's language is not known yet. Public parsers disagree on the sheet names (R-19).
 
-## Plugins and the CLI
-
-16. **Data from a removed instance (D-58).**
-    - *Today:* a transaction is marked as coming from a removed instance when no `Plugin` of that name exists. The mark is worked out on every read, so the log stays append-only and reinstalling under the same name clears it. Only transactions are marked, not lots or holdings, and nothing is marked outside a cluster.
-    - *Question:* mark lots and holdings too?
-
-19. **Core egress to the Kubernetes API.**
-    - *Problem:* k3s serves the API on the node's address, so the product's NetworkPolicy lets the core reach port 6443 on any address.
-    - *Options:* narrow it per install (an overlay with the API server's address); or document it.
-
 ## Market data and connectors
 
 20. **Who names what a market-data connector prices (D-22).**
