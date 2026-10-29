@@ -53,7 +53,7 @@ flowchart TD
   o2 -- no --> e3["ErrRoleOverride: needs the owner's explicit override"]
 ```
 
-The portfolio context has no store of its own in M0, so the ledger keeps sleeves and kinds next to the accounts that refer to them, and the `ledger` package imports `portfolio`, not the other way round. [0002_sleeve_kinds.sql](../../internal/ledger/postgres/migrations/0002_sleeve_kinds.sql) creates `ledger.sleeve_kinds`, seeds the six built-in kinds, and adds a trigger that refuses any change to a kind's key or default role. Each sleeve gets a required `kind` and an `offensive_override` that a `CHECK` allows only on offensive sleeves; sleeves stored before kinds existed became `core` or `satellite`, whichever matches their role. In `internal/ledger/app`, `SaveKind` runs `CheckKind`, `SaveSleeve` runs `CheckSleeve`, and `SaveAccount` refuses an account whose sleeve isn't stored ([ledger.go](../../internal/ledger/app/ledger.go), [kinds.go](../../internal/ledger/app/kinds.go)). `EnsureDefaults` stores whichever default kinds and sleeves are missing, in one transaction, and never changes a stored one.
+The portfolio context's own store, the `portfolio` schema, holds only the model portfolio, so the ledger keeps sleeves and kinds next to the accounts that refer to them, and the `ledger` package imports `portfolio`, not the other way round. [0002_sleeve_kinds.sql](../../internal/ledger/postgres/migrations/0002_sleeve_kinds.sql) creates `ledger.sleeve_kinds`, seeds the six built-in kinds, and adds a trigger that refuses any change to a kind's key or default role. Each sleeve gets a required `kind` and an `offensive_override` that a `CHECK` allows only on offensive sleeves; sleeves stored before kinds existed became `core` or `satellite`, whichever matches their role. In `internal/ledger/app`, `SaveKind` runs `CheckKind`, `SaveSleeve` runs `CheckSleeve`, and `SaveAccount` refuses an account whose sleeve isn't stored ([ledger.go](../../internal/ledger/app/ledger.go), [kinds.go](../../internal/ledger/app/kinds.go)). `EnsureDefaults` stores whichever default kinds and sleeves are missing, in one transaction, and never changes a stored one; `cmd/core` runs it on every start unless `--ensure-defaults=false`, so an install starts with the default sleeves.
 
 ```mermaid
 flowchart LR
@@ -143,10 +143,10 @@ The [built-in UI](ui.md) draws it as the second line of the value-over-time char
 ## Decisions
 
 - **GR-6**: one fixed role per sleeve; offensive in a defensive kind needs an override.
-- **D-30**: `KindBySleeve` lets the allocation group by kind; the chart isn't built.
+- **D-30**: the read API's allocation and the built-in UI's chart group by sleeve, and `ListSleeves` gives each sleeve's kind ([Read API](read-api.md)). `KindBySleeve` would let the allocation group by kind, but nothing calls it.
 - **D-52, D-53, D-54**: the model's targets and weights, its backtest and max drawdowns are built as pure rules. When it rebalances (each December 31), the 0.01% weight step, the 50-target limit and the precision are this context's reading, not the author's.
 - **D-61, D-62**: the backtest is in the reporting currency and a foreign target starts with its first FX rate.
-- **D-52, D-49: how the UI hands the model to the core is not decided in detail.** The core serves `ModelPortfolioService` to view plugins only, with the `AuthService`'s caller check and owner-scoped sessions, as the narrowest write path that keeps the read API read-only. Whether this is the shape the author wants for owner entries (manual bond lots will need one too) is for the author.
+- **D-52, D-49: how the UI hands the model to the core is not decided in detail.** The core serves `ModelPortfolioService` to view plugins only, with the `AuthService`'s caller check and owner-scoped sessions, as the narrowest write path that keeps the read API read-only. Manual bond lots now take the same shape, `BondLotService` ([Ingest](ingest.md#treasury-bond-lots)); whether this is the shape the author wants for owner entries is for the author.
 - **A target's own drawdown (D-54) is in the reporting currency** over the target's history where it has both closes and FX rates. P-48, not decided, would compute it in the target's own currency over its whole history.
 - **No decision ID for sleeve kinds.** The commit and the migration call them an "author decision", and the glossary defines the term, but DESIGN.md records no D-ID for the built-in kinds, the default sleeves or the override.
 - **Which offensive sleeves agents may lease from.** The glossary makes every offensive sleeve "the part fiefs are leased from". [kind.go](../../internal/portfolio/kind.go) says only `agent-pool` is what fiefs are leased from and `satellite` holds the owner's own higher-risk positions, yet both are offensive and the default Satellite sleeve is offensive. Nothing in the code tells them apart; OQ-20 is still open.
@@ -175,5 +175,5 @@ From reading the code: the override guards only one path to offensive. Saving a 
 ## Not built yet
 
 - **D-62**: the reporting currency setting and its default from the jurisdiction pack. The backtest also needs FX history into it, which starts no earlier than NBP's first rate on 2002-01-02.
-- **D-30, D-6**: sleeves and kinds in the read API, and the allocation chart.
-- Nothing calls `EnsureDefaults`, because no core binary exists yet, so no install starts with the default sleeves. Only `cmd/demo-seed` saves sleeves, for the demo dataset. No API or UI adds kinds, renames them or sets the override.
+- An allocation grouped by sleeve kind: `KindBySleeve` is unused, and the read API's dimensions are asset class, currency, institution and sleeve.
+- Managing sleeves. Only `cmd/demo-seed` saves sleeves other than the defaults, for the demo dataset; no API or UI adds sleeves or kinds, renames them or sets the override.
