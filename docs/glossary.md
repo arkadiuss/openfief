@@ -170,6 +170,7 @@ Don't create code for these before their milestone.
 | FIFO | First in, first out: the oldest lots are treated as sold first when computing gains. |
 | Flex Query | IBKR's configurable reporting export (trades, positions, cash), retrievable through a web service with a token. |
 | Frontier model | The most capable models from the large labs, typically cloud-hosted. |
+| Gateway API / HTTPRoute | The Kubernetes networking API that succeeds Ingress. A cluster's operator runs a Gateway, which listens for traffic and terminates TLS; an application attaches an HTTPRoute to it for its hostname and paths. |
 | GPW | Giełda Papierów Wartościowych w Warszawie, the Warsaw Stock Exchange. |
 | GUS | Główny Urząd Statystyczny, Statistics Poland. |
 | HITL | Human in the loop: a person must approve before the system acts. |
@@ -182,6 +183,7 @@ Don't create code for these before their milestone.
 | Ingress | The Kubernetes resource that exposes an HTTP service outside the cluster. |
 | JWT / JWKS | A JSON Web Token (RFC 7519) is a signed set of claims, such as issuer, subject, audience and expiry; Kubernetes ServiceAccount tokens are JWTs. A JSON Web Key Set (RFC 7517) is a JSON list of the public keys that verify them. |
 | kind / k3d / k3s | kind and k3d run Kubernetes clusters in containers for testing; k3s is a lightweight Kubernetes distribution. |
+| Kustomize component | Kustomize builds Kubernetes manifests from a base plus overlays, with no templating; a component is an optional piece an installation opts into by listing it. |
 | KNF | Komisja Nadzoru Finansowego, the Polish Financial Supervision Authority. |
 | KV | Key-value store. |
 | Limit order | An order that executes only at a stated price or better. |

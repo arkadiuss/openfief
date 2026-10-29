@@ -1,6 +1,6 @@
 ---
 title: The core must be the only entry point for browsers, so that kubectl port-forward or the owner's own Ingress needs to reach the core alone.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

@@ -51,7 +51,7 @@ Interface outlines, not code. Every plugin also follows D-11, D-13, D-16, D-17, 
   10. **Plugin isolation.** Each plugin runs in its own pod. The XTB parser has no egress at all. A test plugin's request through the proxy for a host outside its grant is refused, and attempts to bypass the proxy (a direct connection, a DNS lookup) fail.
   11. **Operator.** A `Plugin` without a matching `PluginGrant` is not deployed. An upgrade requesting a new egress host stays on the old version until granted. An image referenced by tag, or without a valid cosign signature from a trusted signer, is rejected, including when applied with plain `kubectl`. The `Plugin`'s status shows verified only for an image the catalog pins.
   12. **Operator scope.** The operator's ServiceAccount cannot create or change anything outside the `openfief` namespace.
-  13. **Exposure.** The installation creates no Ingress, no LoadBalancer or NodePort Service and no tunnel; the UI is reachable through `kubectl port-forward`.
+  13. **Exposure.** The default installation creates no route, no LoadBalancer or NodePort Service and no tunnel. With the HTTPRoute component, the core, and through it the UI, is reachable over HTTPS on the owner's hostname through their Gateway.
   14. **Secrets.** Credentials exist only as Kubernetes Secrets, mounted only into plugins granted them.
   15. **Portability.** The whole acceptance suite passes on both kind and k3d.
   16. **Egress.** Outbound traffic goes only to configured destinations (IBKR's Flex service, NBP, GUS, the market-data vendor, the user's Ghostfolio), verified from the egress proxy's logs.
