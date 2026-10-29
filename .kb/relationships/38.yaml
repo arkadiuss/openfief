@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4038f915babb
+  - type: constrains
+    from: REQ-plugins-cli-no-install-over-instance
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-10-29T08:34:56.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e789f59d540b
+  - type: requires_property
+    from: REQ-plugins-cli-no-install-over-instance
+    to: FACT-PROP-B1289E7F445C4D98
+    created_at: 2026-10-29T08:34:56.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cd34c504bc9

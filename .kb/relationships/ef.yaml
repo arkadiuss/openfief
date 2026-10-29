@@ -342,6 +342,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ea3f48cf93c
+  - type: constrains
+    from: REQ-ledger-account-tax-wrapper
+    to: FACT-SUBJECT-DC19372821FB6174
+    created_at: 2026-10-29T07:53:58.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dac493ea6805
+  - type: requires_property
+    from: REQ-ledger-account-tax-wrapper
+    to: FACT-PROP-B5A96F535E2EBD0B
+    created_at: 2026-10-29T07:53:58.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e45d4174eaa
   - type: executable_for
     from: SYM-ingest-app-test-helper-check-uploaded
     to: TEST-ingest-app-uploads

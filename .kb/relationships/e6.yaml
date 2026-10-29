@@ -413,20 +413,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-52008eece8fe
   - type: implements
-    from: SYM-ingestv1-mode-string
-    to: REQ-ingest-statement-service
-    created_at: 2026-10-29T05:17:05.040Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-05d7a36eadeb
-  - type: covered_by
-    from: SYM-ingestv1-mode-string
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-29T05:17:05.100Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e39c3f3a413c
-  - type: implements
     from: SYM-valuation-nbp-new-archive
     to: REQ-valuation-nbp-reference-rates
     created_at: 2026-10-29T04:07:43.469Z
@@ -447,6 +433,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3d620e985e3
+  - type: constrains
+    from: REQ-pl-business-day-calendar
+    to: FACT-SUBJECT-FE4A9F4E007DAFCA
+    created_at: 2026-10-29T09:59:35.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b273e5cf4104
+  - type: requires_property
+    from: REQ-pl-business-day-calendar
+    to: FACT-PROP-D4AC1BDFE559EA39
+    created_at: 2026-10-29T09:59:35.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddf88052b520
+  - type: implements
+    from: SYM-ingestv1-mode-string
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:17:05.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05d7a36eadeb
+  - type: covered_by
+    from: SYM-ingestv1-mode-string
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:17:05.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e39c3f3a413c
   - type: constrains
     from: REQ-valuation-price-check-threshold
     to: FACT-SUBJECT-ECF86A4CFE17F2A3

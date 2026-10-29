@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79c6422d3540
+  - type: constrains
+    from: REQ-identity-first-passkey-link
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: 2026-10-29T08:10:34.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9051d6281396
+  - type: requires_property
+    from: REQ-identity-first-passkey-link
+    to: FACT-PROP-533E40BEF4DAF14E
+    created_at: 2026-10-29T08:10:34.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-464f79b0c524

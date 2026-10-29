@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e5cba2bc724
+  - type: constrains
+    from: REQ-views-removed-instance-mark-at-read
+    to: FACT-SUBJECT-3422D3BAA7C1074F
+    created_at: 2026-10-29T08:37:11.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-811e4cff591d
+  - type: requires_property
+    from: REQ-views-removed-instance-mark-at-read
+    to: FACT-PROP-0872D9542106D3F8
+    created_at: 2026-10-29T08:37:11.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-439e0df1647d

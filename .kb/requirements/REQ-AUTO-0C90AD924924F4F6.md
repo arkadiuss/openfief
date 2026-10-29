@@ -1,6 +1,6 @@
 ---
 title: The bond valuation basis for totals must be configurable.
-status: open
+status: closed
 text_ref: design-decisions:D-25#1
 tags:
   - strict-modeling

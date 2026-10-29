@@ -300,6 +300,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85c2d819cf4a
+  - type: constrains
+    from: REQ-portfolio-model-weight-step
+    to: FACT-SUBJECT-1FEA6AF758EE9559
+    created_at: 2026-10-29T10:19:30.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4762cf811cd8
+  - type: requires_property
+    from: REQ-portfolio-model-weight-step
+    to: FACT-PROP-DCA858D165D98BF9
+    created_at: 2026-10-29T10:19:30.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-599e91dd53ea
   - type: implements
     from: SYM-ingest-file-name-hint
     to: REQ-ingest-statement-upload-limits

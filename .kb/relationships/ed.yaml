@@ -251,6 +251,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4e65985aa0d
+  - type: constrains
+    from: REQ-ui-session-cookie-localhost-fallback
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-29T08:24:16.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-068b879d6feb
+  - type: requires_property
+    from: REQ-ui-session-cookie-localhost-fallback
+    to: FACT-PROP-EFC235E62E37B81D
+    created_at: 2026-10-29T08:24:16.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdf098bced5a
   - type: implements
     from: SYM-ingestv1-mode-enum-descriptor
     to: REQ-ingest-statement-service

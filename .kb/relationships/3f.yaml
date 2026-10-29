@@ -356,6 +356,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f379d6c8d282
+  - type: constrains
+    from: REQ-plugins-in-cluster-service-plain-http-warning
+    to: FACT-SUBJECT-D637ED85034E36A7
+    created_at: 2026-10-29T07:37:49.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fcae5383ad6
+  - type: requires_property
+    from: REQ-plugins-in-cluster-service-plain-http-warning
+    to: FACT-PROP-A527685156E0B20B
+    created_at: 2026-10-29T07:37:49.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-043d8e25d17d
+  - type: constrains
+    from: REQ-pl-oki-no-belka-tax
+    to: FACT-SUBJECT-D76C92870F5380B6
+    created_at: 2026-10-29T07:55:22.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5de3c1d72b4
+  - type: requires_property
+    from: REQ-pl-oki-no-belka-tax
+    to: FACT-PROP-C4F63AD587664804
+    created_at: 2026-10-29T07:55:22.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-851e6a0c714b
   - type: implements
     from: SYM-ingest-connectapi-receive-code
     to: REQ-ingest-statement-service
@@ -391,17 +419,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbe46950babb
-  - type: constrains
-    from: REQ-plugins-in-cluster-service-plain-http-warning
-    to: FACT-SUBJECT-D637ED85034E36A7
-    created_at: 2026-10-29T07:37:49.142Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1fcae5383ad6
-  - type: requires_property
-    from: REQ-plugins-in-cluster-service-plain-http-warning
-    to: FACT-PROP-A527685156E0B20B
-    created_at: 2026-10-29T07:37:49.150Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-043d8e25d17d

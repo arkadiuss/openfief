@@ -391,6 +391,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-511471c609f3
+  - type: constrains
+    from: REQ-ingest-bond-lot-delete-supersedes
+    to: FACT-SUBJECT-BDB16DBA9CB82400
+    created_at: 2026-10-29T09:56:36.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6d52e14e99a
+  - type: requires_property
+    from: REQ-ingest-bond-lot-delete-supersedes
+    to: FACT-PROP-B9A631CA259D9C42
+    created_at: 2026-10-29T09:56:36.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27e038f5c8c2
   - type: implements
     from: SYM-ingestv1-statement-header-get-account-id
     to: REQ-ingest-statement-service

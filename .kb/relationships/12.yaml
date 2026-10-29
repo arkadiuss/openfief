@@ -468,3 +468,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-26a0c34292b5
+  - type: constrains
+    from: REQ-ingest-bond-lot-purchase-kinds
+    to: FACT-SUBJECT-DC4F7EC29743B12A
+    created_at: 2026-10-29T09:55:10.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09f4b094d8d6
+  - type: requires_property
+    from: REQ-ingest-bond-lot-purchase-kinds
+    to: FACT-PROP-744399F213334D11
+    created_at: 2026-10-29T09:55:10.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e247a637e533
+  - type: constrains
+    from: REQ-ui-transfer-confirmation
+    to: FACT-SUBJECT-2ED66112542A7725
+    created_at: 2026-10-29T10:10:05.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dce781c0a42a
+  - type: requires_property
+    from: REQ-ui-transfer-confirmation
+    to: FACT-PROP-BC2CC2641F2D09F6
+    created_at: 2026-10-29T10:10:05.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc30428f4da

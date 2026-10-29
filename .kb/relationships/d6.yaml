@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccaf7230cb12
+  - type: constrains
+    from: REQ-pl-calendar-from-1991
+    to: FACT-SUBJECT-FE4A9F4E007DAFCA
+    created_at: 2026-10-29T10:00:48.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-029d226eb768
+  - type: requires_property
+    from: REQ-pl-calendar-from-1991
+    to: FACT-PROP-2663E9FD8D8B5FC5
+    created_at: 2026-10-29T10:00:48.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e04adab9b4e2
