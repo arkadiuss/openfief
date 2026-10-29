@@ -36,6 +36,10 @@ A sleeve whose role differs from its sleeve kind's default role, defensive in an
 
 D-71 makes any role that differs from the kind's default the owner's explicit choice, in either direction, so capital moves into or out of agents' reach (GR-6) only when the owner asks for exactly that. The earlier rule let a sleeve be defensive in an offensive kind without it; migration 0003 gives such stored sleeves the override. Refines REQ-portfolio-role-differs-explicit. Modeled by Claude Code for the onboarding work package (D-71, D-72, D-73, impl/onboarding); the author has not reviewed it yet.
 
+## Why this changed
+
+REQ-portfolio-sleeve-role-override required an explicit override only for an offensive sleeve in a defensive kind. D-71 says any sleeve whose role differs from its kind's needs the owner's explicit choice, so the override now covers both directions and is refused when the role matches.
+
 ## Source
 
 > **[D-71]** Every sleeve has a sleeve kind, which gives it a default role: defensive (never available to agents) or offensive (fiefs are leased from it, GR-6). The built-in kinds are agent pool and satellite, which are offensive, and bonds, core, emergency fund and retirement, which are defensive. The owner can add kinds and rename any kind, but a kind's default role never changes, and a sleeve whose role differs from its kind's needs the owner's explicit choice. An install starts with three sleeves: bonds, core and satellite.

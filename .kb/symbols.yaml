@@ -23125,19 +23125,6 @@ symbols:
         target: REQ-portfolio-defaults-on-fresh-install
       - type: implements
         target: REQ-portfolio-install-sleeves
-  - id: SYM-portfolio-has-sleeve
-    title: hasSleeve
-    sourceFile: internal/portfolio/kind.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:38:59.881Z
-    relationships:
-      - type: covered_by
-        target: TEST-portfolio-sleeve-kind
-      - type: implements
-        target: REQ-portfolio-default-kinds
   - id: SYM-portfolio-kind-by-sleeve
     title: KindBySleeve
     sourceFile: internal/portfolio/kind.go
@@ -42107,30 +42094,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-ibkr-flex
-  - id: SYM-ibkr-flex-test-test-ledger-accounts
-    title: TestLedgerAccounts
-    sourceFile: plugins/ibkr-flex/connector_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T17:23:26.580Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-ibkr-flex
-  - id: SYM-ibkr-flex-config
-    title: config
-    sourceFile: plugins/ibkr-flex/main.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T17:23:29.913Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-ibkr-flex
-      - type: implements
-        target: REQ-plugins-ibkr-flex-connector
   - id: SYM-ibkr-flex-main
     title: main
     sourceFile: plugins/ibkr-flex/main.go
@@ -42165,19 +42128,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T17:23:44.072Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-ibkr-flex
-      - type: implements
-        target: REQ-plugins-ibkr-flex-connector
-  - id: SYM-ibkr-flex-config-ledger-accounts
-    title: config.ledgerAccounts
-    sourceFile: plugins/ibkr-flex/main.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T17:23:49.227Z
     relationships:
       - type: covered_by
         target: TEST-plugins-ibkr-flex

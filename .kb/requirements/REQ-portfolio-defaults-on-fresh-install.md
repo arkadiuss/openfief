@@ -36,6 +36,10 @@ Ensuring the defaults must store every missing built-in sleeve kind and, only wh
 
 D-71: an install starts with three sleeves. The core ensures the defaults on every start, so once any sleeve is stored, the owner's or the demo dataset's, the install has started and no default sleeve is added again, which keeps the demo dataset's own two sleeves alone. Refines REQ-portfolio-install-sleeves and REQ-portfolio-builtin-kinds. Modeled by Claude Code for the onboarding work package (D-71, D-72, D-73, impl/onboarding); the author has not reviewed it yet.
 
+## Why this changed
+
+REQ-portfolio-default-kinds and REQ-ledger-app-ensure-defaults added each missing default sleeve on every start, so a sleeve the owner deliberately removed or never wanted came back. D-71 says an install starts with bonds, core and satellite, which is a starting point only, so default sleeves are now added only while no sleeve is stored.
+
 ## Source
 
 > **[D-71]** Every sleeve has a sleeve kind, which gives it a default role: defensive (never available to agents) or offensive (fiefs are leased from it, GR-6). The built-in kinds are agent pool and satellite, which are offensive, and bonds, core, emergency fund and retirement, which are defensive. The owner can add kinds and rename any kind, but a kind's default role never changes, and a sleeve whose role differs from its kind's needs the owner's explicit choice. An install starts with three sleeves: bonds, core and satellite.

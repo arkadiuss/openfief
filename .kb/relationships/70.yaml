@@ -112,20 +112,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ca3fc6a5e22a
   - type: implements
-    from: SYM-ibkr-flex-config-ledger-accounts
-    to: REQ-plugins-ibkr-flex-connector
-    created_at: 2026-10-28T17:23:50.372Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5cd4d50c254f
-  - type: covered_by
-    from: SYM-ibkr-flex-config-ledger-accounts
-    to: TEST-plugins-ibkr-flex
-    created_at: 2026-10-28T17:23:50.394Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5f081d342002
-  - type: implements
     from: SYM-identity-app-passkeys-auth-begin-registration
     to: REQ-identity-passkey-ceremonies
     created_at: 2026-10-28T19:37:45.007Z

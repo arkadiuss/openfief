@@ -181,20 +181,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9827c218009
-  - type: implements
-    from: SYM-ibkr-flex-config
-    to: REQ-plugins-ibkr-flex-connector
-    created_at: 2026-10-28T17:23:31.262Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b68c25dee71c
-  - type: covered_by
-    from: SYM-ibkr-flex-config
-    to: TEST-plugins-ibkr-flex
-    created_at: 2026-10-28T17:23:31.277Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a1510840db61
   - type: executable_for
     from: SYM-e2e-kube-dump-network
     to: TEST-e2e-demo-stack
