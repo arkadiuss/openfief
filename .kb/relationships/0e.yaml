@@ -223,3 +223,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8b10f753572
+  - type: executable_for
+    from: SYM-ui-test-overview-model
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:14:11.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28b3ba3d2ffc

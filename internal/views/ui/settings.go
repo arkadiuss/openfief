@@ -21,8 +21,8 @@ const (
 	hoursPerDay = 24
 )
 
-// settingsData is what the settings page shows: the owner's passkeys and
-// script tokens, and once, right after it was made, a new token's secret
+// settingsData is what the settings page shows: the owner's passkeys,
+// script tokens and model portfolio, and once, right after it was made, a new token's secret
 // or a new enrollment link.
 type settingsData struct {
 	Origin      string
@@ -33,6 +33,9 @@ type settingsData struct {
 	Enrollment  *identityv1.CreateEnrollmentLinkResponse
 	Error       string
 	DefaultDays int
+	// Model is the model portfolio form (D-52): as stored, or as posted
+	// when the core refused it.
+	Model *modelForm
 }
 
 // settingsPage shows the owner's settings.
@@ -52,6 +55,14 @@ func (s *server) renderSettings(w http.ResponseWriter, r *http.Request, sess ses
 	if err != nil {
 		s.coreFailed(w, r, "ListScriptTokens", err)
 		return
+	}
+	if data.Model == nil {
+		form, err := s.loadModel(r, sess)
+		if err != nil {
+			s.coreFailed(w, r, "GetModelPortfolio", err)
+			return
+		}
+		data.Model = form.withBlankRows()
 	}
 	data.Origin, data.Passkeys, data.Tokens, data.DefaultDays = sess.Origin, keys.Msg.GetPasskeys(), tokens.Msg.GetTokens(), defaultTokenDays
 	s.show(w, r, status, "settings", page{Title: "Settings", Session: &sess, Data: data})

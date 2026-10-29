@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63fe56fc4d45
+  - type: executable_for
+    from: SYM-ui-test-settings-model-refusals
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:14:21.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa63b9d4a5dc

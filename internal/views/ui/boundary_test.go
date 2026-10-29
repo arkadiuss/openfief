@@ -15,7 +15,9 @@ import (
 // TestReadsOnlyThroughPublicAPI checks D-6 at the source: the UI's code
 // imports no OpenFief package but the shared kernel and the SDK's
 // generated clients, so it can reach the record only through the public
-// read API, never the core's own contexts or adapters.
+// read API, never the core's own contexts or adapters. The AuthService and
+// ModelPortfolioService clients are the core's contracts for view plugins:
+// they log the owner in and hand the model portfolio to the core (D-52).
 func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 	t.Parallel()
 	files, err := filepath.Glob("*.go")
@@ -26,6 +28,7 @@ func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 		"github.com/arkadiuss/openfief/internal/kernel",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1",
+		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1",
 		"github.com/arkadiuss/openfief/sdk/go/openfief",
 	}
 	fset := token.NewFileSet()

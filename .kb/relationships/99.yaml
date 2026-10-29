@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6f3957d4800
+  - type: implements
+    from: SYM-ui-drawdown-of
+    to: REQ-ui-overview
+    created_at: 2026-10-29T00:14:57.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42440c1566e3
+  - type: implements
+    from: SYM-ui-drawdown-of
+    to: REQ-ui-model-portfolio
+    created_at: 2026-10-29T00:14:57.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72fdab66963c
+  - type: covered_by
+    from: SYM-ui-drawdown-of
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:14:57.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-489dc41706f4

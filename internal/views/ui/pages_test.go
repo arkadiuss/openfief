@@ -51,8 +51,9 @@ func TestExpiredSession(t *testing.T) {
 // TestOverview checks the overview: the total in the reporting currency,
 // each account with its valuation status (D-36) and holdings value, the
 // allocation chart and table (D-30) on the latest valued-through date, the
-// value-over-time chart from go-live, "TWR: not built", and every read with
-// the session token as the bearer token, never the plugin's.
+// value-over-time chart as the time-weighted return from go-live (D-61),
+// no model portfolio while it is off (D-52), and every read with the
+// session token as the bearer token, never the plugin's.
 func TestOverview(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
@@ -64,11 +65,12 @@ func TestOverview(t *testing.T) {
 		`id="allocation"`, "66.7%", "33.3%",
 		`data-chart="{&#34;kind&#34;:&#34;bar&#34;`, `&#34;values&#34;:[&#34;1000.00&#34;,&#34;500.00&#34;]`,
 		`data-chart="{&#34;kind&#34;:&#34;line&#34;`, "From go-live (2026-03-30) to 2026-03-31",
-		"TWR: not built",
+		"time-weighted return as an index, 100 on 2026-03-30", "Its value with cash on 2026-03-31 is 1",
+		`&#34;values&#34;:[&#34;100&#34;,&#34;101.5&#34;]`,
 		"/static/vendor/chart-4.5.1.umd.min.js", "/static/app.js",
 		`href="/assertions" class="warn">1 flagged`,
 	)
-	wantNoBody(t, rec, "model portfolio", "Model")
+	wantNoBody(t, rec, "model portfolio", "Model", "TWR: not built", "series")
 	bearers := seen(h.read, func() []string { return h.read.bearers })
 	if len(bearers) == 0 || slices.ContainsFunc(bearers, func(b string) bool { return b != "Bearer "+ownerSession }) {
 		t.Errorf("read API bearers = %v, want the session token on every call", bearers)

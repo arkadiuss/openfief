@@ -138,16 +138,7 @@ sequenceDiagram
 
 The read API serves the report as `GetModelPortfolio`, rebased to 100 on go-live, and answers 404 while the model is off ([Read API](read-api.md#the-model-portfolio)).
 
-### Not built: showing the model
-
-```mermaid
-flowchart LR
-  store["Stored model<br/>off by default"] --> rep["app.Models.Report"]
-  rep --> api["Read API: GetModelPortfolio"]
-  api --> chart["Value-over-time chart<br/>two lines from go-live, both at 100"]
-  classDef notbuilt stroke-dasharray: 5 5
-  class chart notbuilt
-```
+The [built-in UI](ui.md) draws it as the second line of the value-over-time chart, from go-live, both lines at 100, with the drawdowns in a table, and offers the form on its settings page.
 
 ## Decisions
 
@@ -183,8 +174,6 @@ From reading the code: the override guards only one path to offensive. Saving a 
 
 ## Not built yet
 
-- **D-52**: the model portfolio's entry form in the built-in UI.
-- **D-53, D-54**: the model's line in the value-over-time chart (D-30) and its drawdowns in the UI.
 - **D-62**: the reporting currency setting and its default from the jurisdiction pack. The backtest also needs FX history into it, which starts no earlier than NBP's first rate on 2002-01-02.
 - **D-30, D-6**: sleeves and kinds in the read API, and the allocation chart.
 - Nothing calls `EnsureDefaults`, because no core binary exists yet, so no install starts with the default sleeves. Only `cmd/demo-seed` saves sleeves, for the demo dataset. No API or UI adds kinds, renames them or sets the override.

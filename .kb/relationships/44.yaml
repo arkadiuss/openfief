@@ -440,5 +440,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-14b5da1cf1c8
+      },
+    {
+        type: implements,
+        from: SYM-ui-model-form-with-blank-rows,
+        to: REQ-ui-model-portfolio,
+        created_at: 2026-10-29T00:12:53.984Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-2f820b3d638b
+      },
+    {
+        type: covered_by,
+        from: SYM-ui-model-form-with-blank-rows,
+        to: TEST-ui-model,
+        created_at: 2026-10-29T00:12:54.024Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-d618e8fd874c
       }
   ]

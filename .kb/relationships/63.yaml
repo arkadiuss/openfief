@@ -188,3 +188,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62998622bf7b
+  - type: implements
+    from: SYM-ui-model-form-message
+    to: REQ-ui-model-portfolio
+    created_at: 2026-10-29T00:13:09.947Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91869e98cb25
+  - type: covered_by
+    from: SYM-ui-model-form-message
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:13:09.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-329b1310f8cf

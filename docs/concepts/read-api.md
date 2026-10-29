@@ -234,6 +234,5 @@ These requirements refine the firm ones imported from D-6, D-7, D-30, D-36 #6, D
 
 - **D-27**: accepting plugins' projected ServiceAccount tokens (audience `openfief-core`); the core's verifier accepts sessions and script tokens only.
 - **D-4**: the Ghostfolio view. The [built-in UI](ui.md) reads this API with the owner's session token for D-30's charts and D-36's valuation status.
-- The built-in UI's use of the performance series: it still shows "TWR: not built" and charts `ListValuationTotals`.
 - Cash in `ListValuationTotals`. Its totals stay sums of stored holding valuations; the value with cash is the performance series' `value_reporting`.
 - **D-62**: a reporting currency other than PLN, waiting on T-12.

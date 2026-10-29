@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-27627aeef067
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-model-locked
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:13:52.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3996aacb94e8

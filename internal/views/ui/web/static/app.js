@@ -14,25 +14,33 @@
     const ink = token('--text-secondary');
     const grid = token('--grid');
     const exact = function (ctx) {
-      return data.values[ctx.dataIndex] + ' ' + data.currency;
+      const values = ctx.datasetIndex === 0 ? data.values : data.series[ctx.datasetIndex - 1].values;
+      return ctx.dataset.label + ': ' + values[ctx.dataIndex] + ' ' + data.currency;
     };
     const line = data.kind === 'line';
+    const lines = [{ label: data.label, values: data.values }].concat(data.series || []);
+    const colors = [series, token('--series-2')];
+    const datasets = lines.map(function (l, i) {
+      return {
+        label: l.label,
+        // An empty value is a day the line has none.
+        data: l.values.map(function (v) { return v === '' ? null : v; }),
+        borderColor: colors[i % colors.length],
+        backgroundColor: colors[i % colors.length],
+        borderWidth: 2,
+        borderRadius: line ? 0 : 4,
+        maxBarThickness: 28,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        tension: 0,
+        spanGaps: false,
+      };
+    });
     return {
       type: line ? 'line' : 'bar',
       data: {
         labels: data.labels,
-        datasets: [{
-          label: data.label,
-          data: data.values,
-          borderColor: series,
-          backgroundColor: series,
-          borderWidth: 2,
-          borderRadius: line ? 0 : 4,
-          maxBarThickness: 28,
-          pointRadius: 0,
-          pointHoverRadius: 4,
-          tension: 0,
-        }],
+        datasets: datasets,
       },
       options: {
         indexAxis: line ? 'x' : 'y',
@@ -40,7 +48,7 @@
         animation: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { display: false },
+          legend: { display: lines.length > 1, labels: { color: ink } },
           tooltip: { callbacks: { label: exact } },
         },
         scales: {

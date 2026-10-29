@@ -7,4 +7,4 @@ origin:
 id: SCEN-ui-overview
 type: scenario
 ---
-Given a synthetic record valued through a date, when the owner opens the overview, then it shows the total in the reporting currency on the latest valued-through date, each account with its holdings value and valuation status, the allocation as a chart and a table with shares, the value over time from the first stored valuation, and 'TWR: not built'.
+Given a session and a synthetic record, when the overview is shown, then it gives the total in the reporting currency, each account with its valuation status and holdings value, the allocation chart and table, and the value over time as the time-weighted return index from go-live, 100 on go-live, with the value with cash on the last day, and no model portfolio while it is off.

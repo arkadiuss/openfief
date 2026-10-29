@@ -53087,21 +53087,6 @@ symbols:
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
         target: REQ-ui-overview
-  - id: SYM-ui-history-view
-    title: historyView
-    sourceFile: internal/views/ui/overview.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:54:12.059Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-AUTO-718AA30AAFD0E6E8
-      - type: implements
-        target: REQ-ui-overview
   - id: SYM-ui-overview-data
     title: overviewData
     sourceFile: internal/views/ui/overview.go
@@ -53174,21 +53159,6 @@ symbols:
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
         target: REQ-ui-overview
-  - id: SYM-ui-build-history
-    title: buildHistory
-    sourceFile: internal/views/ui/overview.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:54:37.252Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-AUTO-718AA30AAFD0E6E8
-      - type: implements
-        target: REQ-ui-overview
   - id: SYM-ui-server-overview
     title: server.overview
     sourceFile: internal/views/ui/overview.go
@@ -53217,21 +53187,6 @@ symbols:
         target: TEST-ui-pages
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
-      - type: implements
-        target: REQ-ui-overview
-  - id: SYM-ui-server-history
-    title: server.history
-    sourceFile: internal/views/ui/overview.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:54:50.670Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-AUTO-718AA30AAFD0E6E8
       - type: implements
         target: REQ-ui-overview
   - id: SYM-ui-server-account-rows
@@ -62569,3 +62524,379 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: implements
         target: REQ-views-api-contract
+  - id: SYM-ui-target-row
+    title: targetRow
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:12:42.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-model-form
+    title: modelForm
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:12:46.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-model-form-with-blank-rows
+    title: modelForm.withBlankRows
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:12:52.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-form-of
+    title: formOf
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:12:57.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-parse-model-form
+    title: parseModelForm
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:02.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-model-form-message
+    title: modelForm.message
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:08.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-server-load-model
+    title: server.loadModel
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:14.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-server-save-model
+    title: server.saveModel
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:19.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-test-helper-fake-model
+    title: fakeModel
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:24.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-new-fake-model
+    title: newFakeModel
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:29.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-get-model-portfolio
+    title: fakeModel.GetModelPortfolio
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:35.302Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-save-model-portfolio
+    title: fakeModel.SaveModelPortfolio
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:40.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-check
+    title: fakeModel.check
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:45.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-locked
+    title: fakeModel.locked
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:50.746Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-stored
+    title: fakeModel.stored
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:55.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-read-get-performance
+    title: fakeRead.GetPerformance
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:00.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-read-get-model-portfolio
+    title: fakeRead.GetModelPortfolio
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:05.289Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-overview-model
+    title: TestOverviewModel
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:10.286Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-settings-model
+    title: TestSettingsModel
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:15.298Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-settings-model-refusals
+    title: TestSettingsModelRefusals
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:20.473Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-performance-view
+    title: performanceView
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:25.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-model-view
+    title: modelView
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:30.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-drawdown-row
+    title: drawdownRow
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:35.777Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-chart-series
+    title: chartSeries
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:40.873Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-target-label
+    title: targetLabel
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:46.092Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-gap-label
+    title: gapLabel
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:51.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-drawdown-of
+    title: drawdownOf
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:56.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-build-model
+    title: buildModel
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:15:01.370Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-build-performance
+    title: buildPerformance
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:15:06.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-server-performance
+    title: server.performance
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:15:11.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview

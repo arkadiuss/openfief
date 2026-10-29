@@ -40,13 +40,37 @@
 
 <section class="card" aria-labelledby="history-title">
   <h2 id="history-title">Value over time</h2>
-  {{if .History.Points}}
-  <div class="chart"><canvas data-chart="{{.History.Chart}}" role="img" aria-label="Value of holdings from {{.History.From}} to {{.History.To}} in {{.History.Currency}}"></canvas></div>
-  <p class="muted">From go-live ({{.History.From}}) to {{.History.To}}: the stored valuations of holdings per day, in {{.History.Currency}}. Cash has no stored valuations, so it is not in this line.</p>
+  {{with .History}}
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}"></canvas></div>
+  <p class="muted">From go-live ({{.From}}) to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and transfers between your accounts don't count as performance.{{with .Value}} Its value with cash on {{$.Data.History.To}} is {{money .}}.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}{{if .Pending}} A revaluation is pending, so the line may still change.{{end}}</p>
   {{else}}
-  <p>No stored valuations yet.</p>
+  <p>No valued days yet.</p>
   {{end}}
-  <p class="muted">TWR: not built. Performance (time-weighted return, D-61) is not computed yet; this chart shows value, which deposits and withdrawals move too.</p>
+  {{with .Model}}
+  <h3>Model portfolio</h3>
+  {{if .BacktestStart}}
+  <p class="muted">The second line is the model portfolio's backtest, rebalanced to its target weights at each year end, 100 on the same first day. Its history runs from {{.BacktestStart}} to {{.BacktestEnd}}.</p>
+  {{else}}
+  <p class="warn">The model portfolio has no backtest yet: some target has no history in the reporting currency.</p>
+  {{end}}
+  <table>
+    <thead><tr><th scope="col">Max drawdown</th><th scope="col" class="num">Fall</th><th scope="col">Peak</th><th scope="col">Trough</th><th scope="col">Over</th></tr></thead>
+    <tbody>
+    {{range .Drawdowns}}
+    <tr>
+      <td>{{.Name}}</td>
+      {{if .Missing}}<td colspan="4" class="warn">No history: {{.Missing}}</td>
+      {{else if not .Peak}}<td colspan="4">No history</td>
+      {{else}}<td class="num">{{if .NeverFell}}never fell{{else}}{{.Depth}}{{end}}</td><td>{{.Peak}}</td><td>{{.Trough}}</td><td>{{.First}} to {{.Last}}</td>
+      {{end}}
+    </tr>
+    {{end}}
+    </tbody>
+  </table>
+  <p class="muted">The worst fall from a peak to a later trough over each one's whole history (D-54): the model over its backtest, each target in the reporting currency from its first day with a price and an FX rate.</p>
+  {{end}}
+  {{end}}
 </section>
 {{end}}
 {{end}}

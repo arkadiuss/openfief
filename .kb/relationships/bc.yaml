@@ -258,3 +258,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef93af1df144
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-views-model-line-from-go-live
+    created_at: 2026-10-29T00:07:41.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ef4b63c4aaa
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-portfolio-model-optional
+    created_at: 2026-10-29T00:07:41.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6845e96c2f8a
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-portfolio-max-drawdown
+    created_at: 2026-10-29T00:07:41.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b56708564032
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-portfolio-twr-comparison
+    created_at: 2026-10-29T00:07:41.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4063d562c2fd
