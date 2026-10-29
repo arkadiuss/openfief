@@ -48,3 +48,15 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* D-72 has the UI show unmapped broker accounts, which the read API lists (`ListBrokerAccounts`). Every read caller reads it: owner and read sessions, script tokens and view plugins such as Ghostfolio's.
    - *Today:* any read caller may list them, as it may read the rest of the record. The demo has none.
    - *Options:* keep; or list them only through the owner's `AccountService`, so read sessions and plugins never see an account number.
+
+## Exposure
+
+8. **Which of two views keeps the browser path.**
+   - *Problem:* D-114 has the operator not run a plugin with a browser path while another instance holds one. Two such plugins applied at once, as GitOps may, can both start before either's status records a path, and then each sees the other holding one.
+   - *Today:* a plugin holds a browser path when its status records a deployed version with an effective browser path. One that holds none yet yields to any holder; of two that both hold one, the older Plugin (by creation time, then by name) keeps it and the other is torn down with `Ready=False/BrowserPathHeld`. The core serves no view while it reads more than one.
+   - *Options:* keep; or let the newer one keep it; or refuse both until the owner deletes one.
+
+9. **How `openfief enroll --origin` knows the origins the core allows.**
+   - *Problem:* D-80 requires the origin to be one the core allows, but `core enroll-link` runs as its own process in the core's pod, without `serve`'s flags.
+   - *Today:* the CLI reads the `--auth-origin` flags from the running core pod's container spec (none means the core's default, `http://localhost:8080`) and refuses any other origin before it runs `core enroll-link`.
+   - *Options:* keep; or move the allowed origins into a ConfigMap or environment variable that both `serve` and `enroll-link` read, so the core itself refuses.

@@ -1,12 +1,12 @@
 ---
 title: Serves On Kind And K3d With Netpol = true
 status: active
-text_ref: docs/DESIGN.md#D-12
+text_ref: docs/DESIGN.md#D-115
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-12
+  - provenance:docs-design-md-d-115
   - lane:strict
   - fact:property_value
 fact_kind: property_value
@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:deploy.demo_stack:serves_on_kind_and_k
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-E57CA9DAB6653EF4
-claim_text: The demo's stack, installed from the repository's manifests and this checkout's images, must start and serve on both kind and k3d clusters that enforce NetworkPolicy, with the core reachable through its Service from admitted pods only and, on k3s, through the demo's Traefik route.
+claim_key: CLAIM-6A92D67E5E3FB186
+claim_text: The demo's stack, installed from the repository's manifests and this checkout's images, must start and serve on both kind and k3d clusters that enforce NetworkPolicy, with the core's browser port reachable through its Service from admitted pods only, its plugin port from plugin pods only, and, on k3s, the browser port through the demo's Traefik route.
 origin:
   kind: agent
   recorded_at: '2026-10-28T18:01:13.627Z'

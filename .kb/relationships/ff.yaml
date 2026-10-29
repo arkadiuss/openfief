@@ -265,20 +265,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcf73c6b69ee
-  - type: constrains
-    from: REQ-ui-plugin-packaging
-    to: FACT-SUBJECT-90104E84491E6BE9
-    created_at: 2026-10-28T19:50:19.118Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-326aeb129349
-  - type: requires_property
-    from: REQ-ui-plugin-packaging
-    to: FACT-PROP-1B08A057CAE7C1E7
-    created_at: 2026-10-28T19:50:19.154Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-989292718f98
   - type: specified_by
     from: REQ-ui-plugin-packaging
     to: SCEN-ui-manifest
@@ -461,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1038444d2c3
+  - type: constrains
+    from: REQ-ui-plugin-packaging
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-29T23:10:52.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-326aeb129349
+  - type: requires_property
+    from: REQ-ui-plugin-packaging
+    to: FACT-PROP-1B08A057CAE7C1E7
+    created_at: 2026-10-29T23:10:53.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-989292718f98

@@ -7,4 +7,4 @@ origin:
 id: SCEN-identity-auth-contract
 type: scenario
 ---
-Given the core serves openfief.identity.v1.AuthService next to the read API, when a view plugin such as the built-in UI calls one of its methods with the generated Go or TypeScript client, then the call reaches the core over Connect with the browser's origin and, where needed, the owner's session token in the request message, and the read API itself stays read-only.
+Given the core's plugin port, which only plugin pods reach (D-115), when a view plugin calls the AuthService over Connect with its own token, then the generated client reaches the generated handler and the core answers; the same procedure on the core's browser port is not found.
