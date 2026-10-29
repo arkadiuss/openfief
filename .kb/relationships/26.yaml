@@ -393,13 +393,6 @@ relationships:
     id: rel-0ab3441ba3c1
   - type: validates
     from: TEST-e2e-first-passkey
-    to: REQ-identity-first-passkey-link
-    created_at: 2026-10-29T12:01:54.934Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fb6add938991
-  - type: validates
-    from: TEST-e2e-first-passkey
     to: REQ-ui-session-cookie-host-prefix
     created_at: 2026-10-29T12:01:54.977Z
     created_by: kibi/upsert
@@ -475,3 +468,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c59f1eec7076
+  - type: validates
+    from: TEST-e2e-first-passkey
+    to: REQ-identity-enroll-localhost-forward
+    created_at: 2026-10-29T22:34:24.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7993fb7d5075

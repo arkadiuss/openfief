@@ -48406,7 +48406,7 @@ symbols:
       - type: implements
         target: REQ-identity-enrollment-code
       - type: implements
-        target: REQ-identity-install-without-hostname
+        target: REQ-identity-first-passkey-own-host-or-localhost
   - id: SYM-core-auth-cmd-core-auth-origin-for-host
     title: originForHost
     sourceFile: cmd/core/auth.go
@@ -48569,7 +48569,7 @@ symbols:
       - type: implements
         target: REQ-identity-enrollment-code
       - type: implements
-        target: REQ-identity-install-without-hostname
+        target: REQ-identity-first-passkey-own-host-or-localhost
   - id: SYM-core-auth-cmd-core-core-test-start-core-with
     title: startCoreWith
     sourceFile: cmd/core/core_test.go
@@ -76690,9 +76690,11 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
-        target: REQ-identity-first-passkey-command
+        target: REQ-identity-enroll-localhost-forward
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-origin
+      - type: implements
+        target: REQ-identity-first-passkey-command
   - id: SYM-fd-identity-cli-until-stopped
     title: untilStopped
     sourceFile: internal/identity/cli/enroll.go
@@ -76705,7 +76707,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-localhost-forward
   - id: SYM-fd-identity-cli-forward-ended
     title: forwardEnded
     sourceFile: internal/identity/cli/enroll.go
@@ -76718,7 +76720,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-localhost-forward
   - id: SYM-fd-identity-cli-print-link
     title: printLink
     sourceFile: internal/identity/cli/enroll.go
@@ -76731,7 +76733,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-localhost-forward
+      - type: implements
+        target: REQ-identity-first-run-wizard-follows
   - id: SYM-fd-identity-kube-core-access
     title: CoreAccess
     sourceFile: internal/identity/kube/firstpasskey.go
@@ -76797,7 +76801,7 @@ symbols:
       - type: covered_by
         target: TEST-e2e-first-passkey
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-localhost-forward
   - id: SYM-fd-plugins-core-own-paths
     title: coreOwnPaths
     sourceFile: internal/plugins/browser_path.go
@@ -86362,3 +86366,107 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-browser-view
+  - id: SYM-exp-identity-cli-enroll-origin
+    title: enrollOrigin
+    sourceFile: internal/identity/cli/enroll.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:11.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-cli
+      - type: implements
+        target: REQ-identity-enroll-origin
+      - type: implements
+        target: REQ-identity-first-run-wizard-follows
+  - id: SYM-exp-identity-kube-core-access-ready-pod
+    title: CoreAccess.readyPod
+    sourceFile: internal/identity/kube/firstpasskey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:22.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-identity-first-passkey-command
+  - id: SYM-exp-identity-kube-core-access-allowed-origins
+    title: CoreAccess.AllowedOrigins
+    sourceFile: internal/identity/kube/origins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:33.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-identity-enroll-origin
+  - id: SYM-exp-identity-kube-auth-origins
+    title: AuthOrigins
+    sourceFile: internal/identity/kube/origins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:44.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-identity-enroll-origin
+  - id: SYM-exp-identity-cli-test-enroll-origin
+    title: TestEnrollOrigin
+    sourceFile: internal/identity/cli/enroll_origin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:58.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-exp-identity-cli-test-enroll-origin-refused
+    title: TestEnrollOriginRefused
+    sourceFile: internal/identity/cli/enroll_origin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:37:09.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-exp-identity-cli-test-helper-fake-core-allowed-origins
+    title: fakeCore.AllowedOrigins
+    sourceFile: internal/identity/cli/enroll_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:37:20.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-exp-identity-kube-test-auth-origins
+    title: TestAuthOrigins
+    sourceFile: internal/identity/kube/origins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:37:29.234Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-core-access
+  - id: SYM-exp-identity-kube-test-allowed-origins
+    title: TestAllowedOrigins
+    sourceFile: internal/identity/kube/origins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:37:38.202Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-core-access

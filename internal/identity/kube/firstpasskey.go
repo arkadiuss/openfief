@@ -52,21 +52,11 @@ type CoreAccess struct {
 // CorePod returns the name of a running core pod whose containers are all
 // ready, the first in name order, or ErrNoCorePod.
 func (a *CoreAccess) CorePod(ctx context.Context) (string, error) {
-	pods, err := a.Client.CoreV1().Pods(a.Namespace).List(ctx, metav1.ListOptions{LabelSelector: CoreLabel})
+	p, err := a.readyPod(ctx)
 	if err != nil {
-		return "", fmt.Errorf("listing the core's pods: %w", err)
+		return "", err
 	}
-	var names []string
-	for i := range pods.Items {
-		if podReady(&pods.Items[i]) {
-			names = append(names, pods.Items[i].Name)
-		}
-	}
-	if len(names) == 0 {
-		return "", fmt.Errorf("%w in namespace %s", ErrNoCorePod, a.Namespace)
-	}
-	slices.Sort(names)
-	return names[0], nil
+	return p.Name, nil
 }
 
 // podReady reports whether a pod runs, is not being deleted, and has its
@@ -145,4 +135,22 @@ func (a *CoreAccess) Forward(ctx context.Context, localPort int, ready chan stru
 		return fmt.Errorf("port-forward to %s: %w", pod, err)
 	}
 	return nil
+}
+
+// readyPod returns the pod CorePod names.
+func (a *CoreAccess) readyPod(ctx context.Context) (*corev1.Pod, error) {
+	pods, err := a.Client.CoreV1().Pods(a.Namespace).List(ctx, metav1.ListOptions{LabelSelector: CoreLabel})
+	if err != nil {
+		return nil, fmt.Errorf("listing the core's pods: %w", err)
+	}
+	var ready []*corev1.Pod
+	for i := range pods.Items {
+		if podReady(&pods.Items[i]) {
+			ready = append(ready, &pods.Items[i])
+		}
+	}
+	if len(ready) == 0 {
+		return nil, fmt.Errorf("%w in namespace %s", ErrNoCorePod, a.Namespace)
+	}
+	return slices.MinFunc(ready, func(p, q *corev1.Pod) int { return strings.Compare(p.Name, q.Name) }), nil
 }

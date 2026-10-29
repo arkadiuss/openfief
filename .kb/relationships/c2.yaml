@@ -370,3 +370,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5329cc839944
+  - type: implements
+    from: SYM-exp-identity-cli-enroll-origin
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:36:13.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09ec5128a42c
+  - type: implements
+    from: SYM-exp-identity-cli-enroll-origin
+    to: REQ-identity-first-run-wizard-follows
+    created_at: 2026-10-29T22:36:13.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c821a966f01
+  - type: covered_by
+    from: SYM-exp-identity-cli-enroll-origin
+    to: TEST-identity-cli
+    created_at: 2026-10-29T22:36:13.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36f3a4e951ba
