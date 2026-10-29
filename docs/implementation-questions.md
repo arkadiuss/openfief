@@ -125,3 +125,14 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 25. **How transactions become Ghostfolio activities.**
     - *Today:* a dividend is quantity 1 at the gross amount, with the withheld tax as its fee. Standalone fees go against a manual "OpenFief fees" asset per currency. Cash movements produce no activity, so Ghostfolio shows holdings without cash. Listed instruments need the owner's mapping from ISIN to Ghostfolio's data source and symbol. Bond assets are keyed by the series code only, so two users of one Ghostfolio would collide.
     - *Question:* keep these?
+
+## End-to-end tests
+
+43. **How the end-to-end suite gets signed plugin images to the operator.**
+    - *Problem:* the operator deploys only images whose signature it reads from their registry (D-56, D-57), and kind and k3d configure their registries differently (D-12).
+    - *Today:* `task e2e:images` runs a `registry:3.0.0` container on the cluster's Docker network and pushes `nbp-fx` there; the suite signs it with a key made for the run, trusted through `openfief-trusted-signers` (D-45). The operator reads that registry over plain HTTP only because its address is a private IPv4 address, for which go-containerregistry allows HTTP; the nodes get the image through `ctr --plain-http` pulls, so containerd needs no registry configuration. No operator flag or setting was added for the tests.
+    - *Options:* keep; or give the registry TLS with a test CA the operator and the nodes trust, closer to a real registry but with per-distribution node configuration.
+
+44. **The built-in UI in the end-to-end suite.**
+    - *Today:* the UI still runs from a stand-in of the operator's workload, while `nbp-fx` shows the operator's real deployment path. The UI's Plugin could now be deployed the same way, but how browsers reach a view plugin is being redesigned (the core is to proxy them).
+    - *Question:* deploy the UI through the operator once that design lands?
