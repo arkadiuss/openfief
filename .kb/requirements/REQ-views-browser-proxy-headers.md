@@ -34,10 +34,10 @@ When the core proxies a browser request to a view plugin, it must present its ow
 
 ## Context
 
-D-81 makes the core the only entry point for browsers and D-59 has only the core call a plugin with its TokenRequest token. The UI builds the origin it hands the core's AuthService from Host and X-Forwarded-Proto, so after D-81 those must be what the core decided (orchestrator brief: trust only what the core sets). The scheme comes from TLS or the owner's Ingress; a forged one gains nothing, since origins are allow-listed.
+D-81 makes the core the only entry point for browsers, which reach its browser port through the owner's route (D-28) or a port-forward; D-59 has the core present its own token to every plugin. A view must trust what the core sets and nothing a client forged.
 
 ## Source
 
-> [D-81] The core is the only entry point for browsers. It reverse-proxies the paths a browser-facing view plugin serves, such as the built-in UI's, to that plugin, so only the core ever calls a plugin (D-59), and kubectl port-forward or the owner's own Ingress (D-28) needs to reach the core alone. A view plugin's manifest declares the path prefix it serves to browsers, and the grant approves it.
+> The core is the only entry point for browsers. It reverse-proxies the paths a browser-facing view plugin serves, such as the built-in UI's, to that plugin, so only the core ever calls a plugin (D-59).
 
 docs/DESIGN.md#D-81

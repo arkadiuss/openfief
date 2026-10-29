@@ -398,6 +398,7 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo.test.sh
       - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo-pin-images.test.sh
       - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo-validate.test.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/gateway.test.sh
 
   test:pg:
     desc: 'PostgreSQL integration tests on a disposable server (OPENFIEF_PG_DSN, or local PostgreSQL binaries), e.g. task test:pg -- -run TestAppend'

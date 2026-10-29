@@ -561,13 +561,6 @@ relationships:
     id: rel-b1754464834b
   - type: implements
     from: SYM-fd-core-with-front-door
-    to: REQ-core-browser-entry-point
-    created_at: 2026-10-29T12:02:43.246Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-86183f602971
-  - type: implements
-    from: SYM-fd-core-with-front-door
     to: REQ-core-reverse-proxies-view-plugins
     created_at: 2026-10-29T12:02:43.288Z
     created_by: kibi/upsert
@@ -636,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb12394b14fb
+  - type: implements
+    from: SYM-fd-core-with-front-door
+    to: REQ-core-only-browser-entry-point
+    created_at: 2026-10-29T21:01:08.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8dc5a958f01
+  - type: implements
+    from: SYM-exp-plugins-browser-view
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T21:59:10.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39a0b26dbc6a
+  - type: covered_by
+    from: SYM-exp-plugins-browser-view
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T21:59:10.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-054a3e89dca2

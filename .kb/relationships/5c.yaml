@@ -349,13 +349,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a975f13d7cd
-  - type: validates
-    from: TEST-core-auth
-    to: REQ-identity-install-without-hostname
-    created_at: 2026-10-28T19:26:44.288Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d2932a06a3e
   - type: executable_for
     from: SYM-identity-connectapi-handler-test-test-callers
     to: TEST-identity-auth-connectapi
@@ -559,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60d5dc46190a
+  - type: validates
+    from: TEST-core-auth
+    to: REQ-identity-first-passkey-own-host-or-localhost
+    created_at: 2026-10-29T22:34:27.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee72b4a9e214

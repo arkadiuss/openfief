@@ -79,7 +79,8 @@ func (b *Browser) Start(ctx context.Context) error {
 
 // BrowserRoutes returns the route of every view plugin that serves
 // browsers now (BrowserRouteOf), in instance order, or an error wrapping
-// app.ErrViewsUnknown before Start synced the caches.
+// app.ErrViewsUnknown before Start synced the caches. The operator runs at
+// most one (D-114); should it list more, the front door serves none.
 func (b *Browser) BrowserRoutes(context.Context) ([]views.BrowserRoute, error) {
 	if !b.started.Load() {
 		return nil, fmt.Errorf("%w: the plugin cache has not synced", app.ErrViewsUnknown)

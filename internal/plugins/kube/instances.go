@@ -59,7 +59,7 @@ func (s *Instances) List(ctx context.Context) ([]app.Instance, error) {
 	for i := range ps.Items {
 		p := &ps.Items[i]
 		in := get(p.Name)
-		in.HasPlugin, in.Image = true, p.Spec.Image
+		in.HasPlugin, in.Image, in.BrowserPath = true, p.Spec.Image, p.Spec.Manifest.BrowserPath
 		for _, sm := range p.Spec.Manifest.Secrets {
 			in.Secrets = append(in.Secrets, plugins.SecretName(p.Name, sm.Role))
 		}

@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c17b0a8186c
+  - type: executable_for
+    from: SYM-exp-identity-kube-test-auth-origins
+    to: TEST-identity-kube-core-access
+    created_at: 2026-10-29T22:37:31.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd0413d3187b

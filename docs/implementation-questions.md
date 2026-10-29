@@ -55,3 +55,15 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* D-94 has the owner rank "the sources" of prices, exchange rates and index readings, with the first-party connector of each first by default, and keep the lower-ranked values as cross-checks (D-22). It doesn't say whether a source is a connector instance or a plugin, how the core knows which instance is the first-party one, whether D-22's cross-check prices are a ranked source, or whether index levels are ranked.
    - *Today:* a source is the connector instance that delivered the value (D-48). Its default place comes from the institution it names on its deliveries: `eodhd` ranks first for prices, `nbp` for exchange rates and `treasury-bonds` for index readings, the rest by name. Cross-check prices are stored apart and never win (D-112 gates who may send them); lower-ranked prices are checked against the winner like cross-check prices. Index levels of market indices keep one value per index and date, the last delivered. A change of ranking revalues every account from its first transaction.
    - *Options:* keep; or rank by plugin image rather than instance, or by a manifest field naming the kinds a connector serves; or rank IBKR's mark prices as one more price source, so they fill days the market-data connector lacks; or rank index levels too.
+
+## Exposure
+
+9. **Which of two views keeps the browser path.**
+   - *Problem:* D-114 has the operator not run a plugin with a browser path while another instance holds one. Two such plugins applied at once, as GitOps may, can both start before either's status records a path, and then each sees the other holding one.
+   - *Today:* a plugin holds a browser path when its status records a deployed version with an effective browser path. One that holds none yet yields to any holder; of two that both hold one, the older Plugin (by creation time, then by name) keeps it and the other is torn down with `Ready=False/BrowserPathHeld`. The core serves no view while it reads more than one.
+   - *Options:* keep; or let the newer one keep it; or refuse both until the owner deletes one.
+
+10. **How `openfief enroll --origin` knows the origins the core allows.**
+   - *Problem:* D-80 requires the origin to be one the core allows, but `core enroll-link` runs as its own process in the core's pod, without `serve`'s flags.
+   - *Today:* the CLI reads the `--auth-origin` flags from the running core pod's container spec (none means the core's default, `http://localhost:8080`) and refuses any other origin before it runs `core enroll-link`.
+   - *Options:* keep; or move the allowed origins into a ConfigMap or environment variable that both `serve` and `enroll-link` read, so the core itself refuses.

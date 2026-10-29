@@ -155,8 +155,8 @@ func TestProxyRefuses(t *testing.T) {
 	}{
 		{name: "no route", door: &app.FrontDoor{Views: fakeViews{}, Tokens: fakeTokens{}}, want: http.StatusNotFound},
 		{
-			name: "two plugins on one prefix",
-			door: &app.FrontDoor{Views: fakeViews{routes: []views.BrowserRoute{route, {Instance: "twin", Prefix: "/"}}}, Tokens: fakeTokens{}},
+			name: "two views hold a browser path",
+			door: &app.FrontDoor{Views: fakeViews{routes: []views.BrowserRoute{route, {Instance: "gallery", Prefix: "/gallery"}}}, Tokens: fakeTokens{}},
 			want: http.StatusServiceUnavailable,
 		},
 		{

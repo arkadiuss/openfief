@@ -279,20 +279,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76d3e3654aa5
-  - type: constrains
-    from: REQ-core-config
-    to: FACT-SUBJECT-D6A091F8C6B86AD8
-    created_at: 2026-10-28T14:33:18.495Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-36de92724e5e
-  - type: requires_property
-    from: REQ-core-config
-    to: FACT-PROP-2883F03840CE90F8
-    created_at: 2026-10-28T14:33:18.550Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5c675d037a56
   - type: specified_by
     from: REQ-core-config
     to: SCEN-core-config
@@ -503,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d914aceb990
+  - type: constrains
+    from: REQ-core-config
+    to: FACT-SUBJECT-D6A091F8C6B86AD8
+    created_at: 2026-10-29T20:58:47.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36de92724e5e
+  - type: requires_property
+    from: REQ-core-config
+    to: FACT-PROP-2883F03840CE90F8
+    created_at: 2026-10-29T20:58:47.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c675d037a56

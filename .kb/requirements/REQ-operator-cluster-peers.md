@@ -1,43 +1,43 @@
 ---
-title: The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and numeric target ports, and must refuse a Service without a pod selector or whose selector also matches plugin pods.
+title: The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and the numeric target ports of the ports plugins dial, the core's being its connect port, which targets the core's plugin port, and must refuse a Service without a pod selector or whose selector also matches plugin pods.
 status: open
-text_ref: docs/DESIGN.md#D-32
+text_ref: docs/DESIGN.md#D-115
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-32
+  - provenance:docs-design-md-d-115
   - lane:strict
-semantic_text: The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and numeric target ports, and must refuse a Service without a pod selector or whose selector also matches plugin pods.
+semantic_text: The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and the numeric target ports of the ports plugins dial, the core's being its connect port, which targets the core's plugin port, and must refuse a Service without a pod selector or whose selector also matches plugin pods.
 logic_claims:
-  - CLAIM-89E9516DE59E88C9
+  - CLAIM-51CF57BD5449D2C0
 semantic_clauses:
-  - The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and numeric target ports, and must refuse a Service without a pod selector or whose selector also matches plugin pods.
+  - The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and the numeric target ports of the ports plugins dial, the core's being its connect port, which targets the core's plugin port, and must refuse a Service without a pod selector or whose selector also matches plugin pods.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 61d91fecb976891968e234e9c9b7575aafbe067d4bbe52bef50123b37898358b
+semantic_source_hash: 2e11d9457a7f27765f1843b11d10bb181d808358d62e176f170973f41c2b9782
 semantic_inventory:
-  - claim_key: CLAIM-89E9516DE59E88C9
-    claim_text: The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and numeric target ports, and must refuse a Service without a pod selector or whose selector also matches plugin pods
+  - claim_key: CLAIM-51CF57BD5449D2C0
+    claim_text: The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and the numeric target ports of the ports plugins dial, the core's being its connect port, which targets the core's plugin port, and must refuse a Service without a pod selector or whose selector also matches plugin pods
     role: normative
     status: modeled
     span:
       start: 0
-      end: 212
+      end: 315
 origin:
   kind: agent
   recorded_at: '2026-10-28T06:50:42.954Z'
 id: REQ-operator-cluster-peers
 type: req
 ---
-The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and numeric target ports, and must refuse a Service without a pod selector or whose selector also matches plugin pods.
+The operator must take the core's and egress proxy's addresses from their Services' ClusterIPs and the numeric target ports of the ports plugins dial, the core's being its connect port, which targets the core's plugin port, and must refuse a Service without a pod selector or whose selector also matches plugin pods.
 
 ## Context
 
-D-32 gives plugins no DNS, so they reach the core and the proxy by ClusterIP, and their NetworkPolicy names the core and the proxy as the only peers. An empty selector would select every pod, and a selector that matches plugin pods would let one plugin pass as the core or the proxy, so both are refused and no plugin runs. Refines REQ-AUTO-3C8B1ED0D820F0C9. Modeled by Claude Code for the M0 operator task; the author has not reviewed it yet.
+Plugins have no DNS (D-32), so the operator hands them ClusterIPs and ports, and NetworkPolicy matches pod ports, so the target ports must be numbers. D-115 gives the core a plugin port behind the Service's connect port, which the operator's --core-port names, so every plugin's core address and egress rule name that port and never the browser port.
 
 ## Source
 
-> NetworkPolicy lets plugins reach only the core and the proxy, with no DNS
+> The plugin port, which the Service's `connect` port targets and only plugin pods may reach, serves the read API and the services only plugins call: the AuthService (D-69) and the owner services (D-79).
 
-docs/DESIGN.md D-32
+docs/DESIGN.md#D-115

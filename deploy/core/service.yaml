@@ -10,6 +10,9 @@ spec:
   type: ClusterIP
   selector:
     app.kubernetes.io/name: openfief-core
+  # Two ports on two listeners (D-115). http is the browser port, the one a route points at: the front door, the
+  # read API and the health endpoints. connect is the plugin port, which only plugin pods reach
+  # (networkpolicy.yaml): the read API, the AuthService and the owner services.
   ports:
     - name: http
       port: 8080
@@ -18,4 +21,4 @@ spec:
       port: 8081
       # A number, not the port's name: the operator copies it into every plugin's NetworkPolicy,
       # which matches pod ports.
-      targetPort: 8080
+      targetPort: 8081

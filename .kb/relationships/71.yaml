@@ -337,8 +337,8 @@ relationships:
     id: rel-e63c1796dcbb
   - type: validates
     from: TEST-views-browser-proxy
-    to: REQ-core-browser-entry-point
-    created_at: 2026-10-29T12:01:41.916Z
+    to: REQ-core-only-browser-entry-point
+    created_at: 2026-10-29T20:58:06.284Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-5c2879132a09
+    id: rel-8818356ef7e8

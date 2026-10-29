@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-027d9089b5e2
-  - type: implements
-    from: SYM-core-auth-cmd-core-config-parse-enroll-link
-    to: REQ-identity-install-without-hostname
-    created_at: 2026-10-28T19:31:03.704Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-852e12a59d6d
   - type: covered_by
     from: SYM-core-auth-cmd-core-config-parse-enroll-link
     to: TEST-core-unit
@@ -678,3 +671,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09cbf5d44078
+  - type: validates
+    from: TEST-plugins-browser-view
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T21:58:43.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a08446dc13a
+  - type: validates
+    from: TEST-plugins-browser-view
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T21:58:43.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c738d9a2a5a
+  - type: validates
+    from: TEST-plugins-browser-view
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T21:58:43.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2372a29e5df8
+  - type: implements
+    from: SYM-core-auth-cmd-core-config-parse-enroll-link
+    to: REQ-identity-first-passkey-own-host-or-localhost
+    created_at: 2026-10-29T22:35:56.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-373c7d718ab6

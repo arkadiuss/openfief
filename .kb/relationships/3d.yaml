@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1d96674db49
+  - type: executable_for
+    from: SYM-exp-plugins-test-may-hold-browser-path
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T22:01:07.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdbc25570cad

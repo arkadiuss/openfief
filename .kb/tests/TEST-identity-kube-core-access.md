@@ -1,5 +1,5 @@
 ---
-title: openfief enroll finds a running, ready core pod to exec into and forward to
+title: CoreAccess finds the running, ready core pod and reads the origins it allows
 status: active
 sourceFile: internal/identity/kube/firstpasskey_test.go
 origin:
@@ -8,4 +8,4 @@ origin:
 id: TEST-identity-kube-core-access
 type: test
 ---
-Table test of CoreAccess.CorePod over the client-go fake clientset: among synthetic pods it picks the first in name order that is a core pod, running, ready and not being deleted; with none it fails with ErrNoCorePod.
+With the client-go fake clientset: CorePod picks the first running, ready, not deleted pod labelled openfief-core by name, ignoring other workloads, and fails with ErrNoCorePod when there is none. AuthOrigins (origins_test.go) reads --auth-origin values written with = or as the next argument, with one dash or two, in order, ignores flags that only start alike or lack a value, and falls back to the core's default http://localhost:8080; AllowedOrigins reads them from the core container of the ready core pod, not from another container, and fails without a core pod.

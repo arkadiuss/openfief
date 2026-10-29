@@ -38466,19 +38466,6 @@ symbols:
         target: TEST-core-unit
       - type: implements
         target: REQ-core-health-endpoints
-  - id: SYM-core-server-handler
-    title: server.handler
-    sourceFile: cmd/core/serve.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T14:35:03.332Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-unit
-      - type: implements
-        target: REQ-core-health-endpoints
   - id: SYM-core-server-healthz
     title: server.healthz
     sourceFile: cmd/core/serve.go
@@ -38505,19 +38492,6 @@ symbols:
         target: TEST-core-unit
       - type: implements
         target: REQ-core-graceful-shutdown
-      - type: implements
-        target: REQ-core-health-endpoints
-  - id: SYM-core-server-serve-api
-    title: server.serveAPI
-    sourceFile: cmd/core/serve.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T14:35:14.610Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-unit
       - type: implements
         target: REQ-core-health-endpoints
   - id: SYM-core-plain
@@ -48417,7 +48391,7 @@ symbols:
       - type: implements
         target: REQ-identity-enrollment-code
       - type: implements
-        target: REQ-identity-install-without-hostname
+        target: REQ-identity-first-passkey-own-host-or-localhost
   - id: SYM-core-auth-cmd-core-auth-origin-for-host
     title: originForHost
     sourceFile: cmd/core/auth.go
@@ -48580,7 +48554,7 @@ symbols:
       - type: implements
         target: REQ-identity-enrollment-code
       - type: implements
-        target: REQ-identity-install-without-hostname
+        target: REQ-identity-first-passkey-own-host-or-localhost
   - id: SYM-core-auth-cmd-core-core-test-start-core-with
     title: startCoreWith
     sourceFile: cmd/core/core_test.go
@@ -76148,16 +76122,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-auth
-  - id: SYM-core-test-helper-start-core-in
-    title: startCoreIn
-    sourceFile: cmd/core/core_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T10:55:37.543Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-read-api
   - id: SYM-uiplugin-test-helper-token-file
     title: tokenFile
     sourceFile: plugins/ui/main_test.go
@@ -76605,7 +76569,7 @@ symbols:
       - type: covered_by
         target: TEST-core-front-door
       - type: implements
-        target: REQ-core-browser-entry-point
+        target: REQ-core-only-browser-entry-point
       - type: implements
         target: REQ-core-reverse-proxies-view-plugins
   - id: SYM-fd-core-new-front-door
@@ -76711,9 +76675,11 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
-        target: REQ-identity-first-passkey-command
+        target: REQ-identity-enroll-localhost-forward
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-origin
+      - type: implements
+        target: REQ-identity-first-passkey-command
   - id: SYM-fd-identity-cli-until-stopped
     title: untilStopped
     sourceFile: internal/identity/cli/enroll.go
@@ -76726,7 +76692,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-localhost-forward
   - id: SYM-fd-identity-cli-forward-ended
     title: forwardEnded
     sourceFile: internal/identity/cli/enroll.go
@@ -76739,7 +76705,7 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-localhost-forward
   - id: SYM-fd-identity-cli-print-link
     title: printLink
     sourceFile: internal/identity/cli/enroll.go
@@ -76752,7 +76718,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-localhost-forward
+      - type: implements
+        target: REQ-identity-first-run-wizard-follows
   - id: SYM-fd-identity-kube-core-access
     title: CoreAccess
     sourceFile: internal/identity/kube/firstpasskey.go
@@ -76818,7 +76786,7 @@ symbols:
       - type: covered_by
         target: TEST-e2e-first-passkey
       - type: implements
-        target: REQ-identity-first-passkey-link
+        target: REQ-identity-enroll-localhost-forward
   - id: SYM-fd-plugins-core-own-paths
     title: coreOwnPaths
     sourceFile: internal/plugins/browser_path.go
@@ -76844,7 +76812,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-browser-path
       - type: implements
-        target: REQ-core-browser-entry-point
+        target: REQ-core-only-browser-entry-point
       - type: implements
         target: REQ-plugins-view-browser-path-grant
   - id: SYM-fd-plugins-valid-browser-path
@@ -77007,6 +76975,8 @@ symbols:
         target: TEST-views-browser-routing
       - type: implements
         target: REQ-core-reverse-proxies-view-plugins
+      - type: implements
+        target: REQ-plugins-one-browser-view
       - type: implements
         target: REQ-views-browser-route-longest-prefix
   - id: SYM-fd-browserproxy-proxy
@@ -77248,7 +77218,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-require-core
       - type: implements
-        target: REQ-core-browser-entry-point
+        target: REQ-core-only-browser-entry-point
       - type: implements
         target: REQ-plugins-core-only-caller
   - id: SYM-fd-core-test-helper-browser-cluster
@@ -88793,3 +88763,432 @@ symbols:
         target: TEST-core-market-data
       - type: implements
         target: REQ-valuation-market-data-service
+  - id: SYM-exp-core-server-ready
+    title: server.ready
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:59:26.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-core-browser-port-scope
+      - type: implements
+        target: REQ-core-plugin-port-scope
+  - id: SYM-exp-core-server-browser-handler
+    title: server.browserHandler
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:59:37.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-core-browser-port-scope
+  - id: SYM-exp-core-server-plugin-handler
+    title: server.pluginHandler
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:59:48.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-core-plugin-port-scope
+  - id: SYM-exp-core-serve-when-ready
+    title: serveWhenReady
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T20:59:59.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-health-endpoints
+  - id: SYM-exp-core-listen
+    title: listen
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:09.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-exp-core-close-all
+    title: closeAll
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:19.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-exp-core-test-helper-start-core-ports
+    title: startCorePorts
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:29.856Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-exp-core-test-helper-core-ports
+    title: corePorts
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:40.194Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-exp-core-test-helper-plugin-only-paths
+    title: pluginOnlyPaths
+    sourceFile: cmd/core/frontdoor_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:00:50.265Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-front-door
+  - id: SYM-exp-core-test-helper-check-statuses
+    title: checkStatuses
+    sourceFile: cmd/core/frontdoor_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:01:00.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-front-door
+  - id: SYM-exp-deploy-test-gateway-check
+    title: check
+    sourceFile: scripts/tests/gateway.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:10:39.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-gateway-component
+  - id: SYM-exp-plugins-browser-view
+    title: BrowserView
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:08.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-plugins-one-browser-view
+  - id: SYM-exp-plugins-browser-view-senior
+    title: BrowserView.senior
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:18.745Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+  - id: SYM-exp-plugins-refuse-second-browser-view
+    title: RefuseSecondBrowserView
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:29.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-plugins-cli-refuses-second-browser-view
+      - type: implements
+        target: REQ-plugins-one-browser-view
+  - id: SYM-exp-plugins-may-hold-browser-path
+    title: MayHoldBrowserPath
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:40.139Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+      - type: implements
+        target: REQ-plugins-one-browser-view
+  - id: SYM-exp-plugins-held-by
+    title: heldBy
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:50.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-plugins-one-browser-view
+  - id: SYM-exp-plugins-app-check-browser-view
+    title: CheckBrowserView
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:01.537Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-browser-view
+      - type: implements
+        target: REQ-plugins-cli-refuses-second-browser-view
+  - id: SYM-exp-plugins-app-check-browser-view-all
+    title: checkBrowserView
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:12.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-browser-view
+      - type: implements
+        target: REQ-plugins-cli-refuses-second-browser-view
+  - id: SYM-exp-operator-one-browser-view
+    title: PluginReconciler.oneBrowserView
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:23.425Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+  - id: SYM-exp-operator-held-browser-view
+    title: heldBrowserView
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:33.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+  - id: SYM-exp-operator-other-browser-views
+    title: PluginReconciler.otherBrowserViews
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:43.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+  - id: SYM-exp-plugins-test-refuse-second-browser-view
+    title: TestRefuseSecondBrowserView
+    sourceFile: internal/plugins/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:54.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-browser-view
+  - id: SYM-exp-plugins-test-may-hold-browser-path
+    title: TestMayHoldBrowserPath
+    sourceFile: internal/plugins/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:05.650Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-browser-view
+  - id: SYM-exp-plugins-cli-test-helper-with-ui
+    title: withUI
+    sourceFile: internal/plugins/cli/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:15.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-browser-view
+  - id: SYM-exp-plugins-cli-test-run-refuses-second-browser-view
+    title: TestRunRefusesSecondBrowserView
+    sourceFile: internal/plugins/cli/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:26.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-browser-view
+  - id: SYM-exp-operator-test-helper-view-plugin
+    title: viewPlugin
+    sourceFile: internal/plugins/operator/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:35.441Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-browser-view
+  - id: SYM-exp-operator-test-helper-test-one-browser-view
+    title: testOneBrowserView
+    sourceFile: internal/plugins/operator/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:44.213Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-browser-view
+  - id: SYM-exp-identity-cli-enroll-origin
+    title: enrollOrigin
+    sourceFile: internal/identity/cli/enroll.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:11.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-cli
+      - type: implements
+        target: REQ-identity-enroll-origin
+      - type: implements
+        target: REQ-identity-first-run-wizard-follows
+  - id: SYM-exp-identity-kube-core-access-ready-pod
+    title: CoreAccess.readyPod
+    sourceFile: internal/identity/kube/firstpasskey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:22.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-identity-first-passkey-command
+  - id: SYM-exp-identity-kube-core-access-allowed-origins
+    title: CoreAccess.AllowedOrigins
+    sourceFile: internal/identity/kube/origins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:33.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-identity-enroll-origin
+  - id: SYM-exp-identity-kube-auth-origins
+    title: AuthOrigins
+    sourceFile: internal/identity/kube/origins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:44.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-identity-enroll-origin
+  - id: SYM-exp-identity-cli-test-enroll-origin
+    title: TestEnrollOrigin
+    sourceFile: internal/identity/cli/enroll_origin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:36:58.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-exp-identity-cli-test-enroll-origin-refused
+    title: TestEnrollOriginRefused
+    sourceFile: internal/identity/cli/enroll_origin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:37:09.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-exp-identity-cli-test-helper-fake-core-allowed-origins
+    title: fakeCore.AllowedOrigins
+    sourceFile: internal/identity/cli/enroll_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:37:20.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-exp-identity-kube-test-auth-origins
+    title: TestAuthOrigins
+    sourceFile: internal/identity/kube/origins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:37:29.234Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-core-access
+  - id: SYM-exp-identity-kube-test-allowed-origins
+    title: TestAllowedOrigins
+    sourceFile: internal/identity/kube/origins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:37:38.202Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-core-access

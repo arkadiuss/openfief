@@ -328,13 +328,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db1f1d7e380d
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-first-passkey-link
-    created_at: 2026-10-29T12:01:50.456Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-24e0807f4112
   - type: executable_for
     from: SYM-pl-test-helper-op-get
     to: TEST-operator-cluster-service
@@ -370,3 +363,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f04c1f438ca
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:34:18.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc8780801b5f
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-enroll-localhost-forward
+    created_at: 2026-10-29T22:34:18.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48f2fdf1294a
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-first-run-wizard-follows
+    created_at: 2026-10-29T22:34:18.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82f378bf5e72
