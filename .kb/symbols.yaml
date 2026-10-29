@@ -68294,6 +68294,7 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T01:25:12.618Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-plugins-treasury-bonds
