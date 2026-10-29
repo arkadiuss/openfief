@@ -176,3 +176,4 @@ In the end-to-end suite the UI runs from a stand-in Deployment ([ui-standin.yaml
 
 - Removing a bond lot: entering the same series and day again replaces it, but nothing deletes one.
 - A way to change the reporting currency or the bond basis from the UI.
+- The number format (D-113): amounts are written `5 000.00 PLN` whatever the setting, and the charts' axes use Chart.js's own format.
