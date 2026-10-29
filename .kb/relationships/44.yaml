@@ -422,5 +422,32 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-c5be058fdb3d
+      },
+    {
+        type: implements,
+        from: SYM-plugins-cli-owner-signers,
+        to: REQ-plugins-cli-owner-signers,
+        created_at: 2026-10-28T23:37:53.035Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-7c9b6dee7211
+      },
+    {
+        type: covered_by,
+        from: SYM-plugins-cli-owner-signers,
+        to: TEST-plugins-cli-run,
+        created_at: 2026-10-28T23:37:53.075Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-28ca9bcd68f2
+      },
+    {
+        type: executable_for,
+        from: SYM-plugins-cli-test-cli-installed,
+        to: TEST-plugins-cli-run,
+        created_at: 2026-10-28T23:41:17.844Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-a4e122dcab00
       }
   ]

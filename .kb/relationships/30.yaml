@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3527b9667bc
+  - type: verified_by
+    from: SCEN-plugins-cli-uninstall-shared-secrets
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:23:52.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b38b949d4d0
+  - type: implements
+    from: SYM-plugins-cli-render-uninstall-plan
+    to: REQ-plugins-cli-uninstall
+    created_at: 2026-10-28T23:36:43.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30bd2c93b002
+  - type: covered_by
+    from: SYM-plugins-cli-render-uninstall-plan
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-28T23:36:43.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1767023ff48c

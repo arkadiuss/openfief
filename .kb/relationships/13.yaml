@@ -244,3 +244,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-053272fb8adb
+  - type: validates
+    from: TEST-plugins-install
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T22:23:46.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b87ec28102dd
+  - type: constrains
+    from: REQ-plugins-cli-permission-summary
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-10-28T23:36:15.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a298e4ac4f7e
+  - type: requires_property
+    from: REQ-plugins-cli-permission-summary
+    to: FACT-PROP-2D51010092A21267
+    created_at: 2026-10-28T23:36:15.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b94182a6f20f
+  - type: specified_by
+    from: REQ-plugins-cli-permission-summary
+    to: SCEN-plugins-cli-permission-summary
+    created_at: 2026-10-28T23:36:15.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4851dd76c997
+  - type: executable_for
+    from: SYM-plugins-cli-test-cli-fake-cluster
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:40:34.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a28ac02e1869

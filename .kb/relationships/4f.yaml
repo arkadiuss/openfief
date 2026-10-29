@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-148a52e72986
+  - type: implements
+    from: SYM-plugins-app-proposal
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T22:44:02.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-160921bc4ee7
+  - type: covered_by
+    from: SYM-plugins-app-proposal
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:44:02.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4cdd9c1d570

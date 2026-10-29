@@ -370,3 +370,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82580fe062a4
+  - type: implements
+    from: SYM-plugins-cosign-new-registry
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:39:12.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a6c98d31e00
+  - type: covered_by
+    from: SYM-plugins-cosign-new-registry
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:39:12.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8acc2c9977fc
+  - type: implements
+    from: SYM-plugins-cosign-registry-sign-with-key
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:39:23.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b936fa8e4aae
+  - type: covered_by
+    from: SYM-plugins-cosign-registry-sign-with-key
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:39:23.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afd6b3f813a9
+  - type: executable_for
+    from: SYM-cmd-openfief-test-main-world
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:41:32.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0d0ead7fc62

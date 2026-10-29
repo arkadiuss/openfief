@@ -384,3 +384,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4d2ba2992c9
+  - type: implements
+    from: SYM-plugins-unique-sorted
+    to: REQ-plugins-cli-uninstall-secrets
+    created_at: 2026-10-28T22:24:46.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e466c9a6406
+  - type: covered_by
+    from: SYM-plugins-unique-sorted
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:24:46.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebb6e93eaa1b
+  - type: verified_by
+    from: SCEN-plugins-cli-list-instances
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:43:27.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fa6bf6d845d
+  - type: verified_by
+    from: SCEN-plugins-cli-list-instances
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:14:04.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0a01989e363
+  - type: implements
+    from: SYM-plugins-cli-read-config
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:37:42.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10561f906b04
+  - type: covered_by
+    from: SYM-plugins-cli-read-config
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:37:42.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f18aa1aa656

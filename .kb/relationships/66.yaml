@@ -146,3 +146,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3718c270584
+  - type: implements
+    from: SYM-plugins-app-instance
+    to: REQ-plugins-cli-list
+    created_at: 2026-10-28T22:43:49.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8de06c5f356
+  - type: covered_by
+    from: SYM-plugins-app-instance
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:43:49.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e188ccc194aa
+  - type: executable_for
+    from: SYM-plugins-app-test-install-install-samples
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:45:19.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b97906bc0e75

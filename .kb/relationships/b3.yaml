@@ -265,3 +265,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af8b3752249e
+  - type: verified_by
+    from: SCEN-plugins-cli-install-grants-request
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:23:50.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df4421b11715
+  - type: executable_for
+    from: SYM-plugins-app-test-install-fake-store-delete
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:45:14.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-011003eb8fbf

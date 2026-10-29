@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93c9fff31976
+  - type: implements
+    from: SYM-plugins-cli-trust-text
+    to: REQ-plugins-cli-permission-summary
+    created_at: 2026-10-28T23:36:28.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3a0216c61cb
+  - type: covered_by
+    from: SYM-plugins-cli-trust-text
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-28T23:36:28.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cbf038016cd
+  - type: executable_for
+    from: SYM-cmd-openfief-test-main-run-cli
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:41:48.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cacadfed29e6

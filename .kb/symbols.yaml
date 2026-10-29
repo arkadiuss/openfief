@@ -58236,3 +58236,1591 @@ symbols:
         target: TEST-ingest-delivery
       - type: implements
         target: REQ-ingest-delivery-market-data
+  - id: SYM-plugins-install-source
+    title: InstallSource
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:19.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install-source
+  - id: SYM-plugins-resolve-install-source
+    title: ResolveInstallSource
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:23.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-source
+  - id: SYM-plugins-default-instance-name
+    title: DefaultInstanceName
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:27.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install-source
+      - type: implements
+        target: REQ-plugins-instance-per-install
+  - id: SYM-plugins-valid-instance-name
+    title: validInstanceName
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:31.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install-source
+  - id: SYM-plugins-plan-install
+    title: PlanInstall
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:36.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-plan
+  - id: SYM-plugins-secrets-to-delete
+    title: SecretsToDelete
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:40.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall-secrets
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-unique-sorted
+    title: uniqueSorted
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:45.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall-secrets
+  - id: SYM-plugins-test-install-install-catalog
+    title: installCatalog
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:49.131Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-install-outcome
+    title: installOutcome
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:53.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-test-resolve-install-source
+    title: TestResolveInstallSource
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:57.494Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-test-plan-install
+    title: TestPlanInstall
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:25:01.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-test-secrets-to-delete
+    title: TestSecretsToDelete
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:25:05.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-signed-sample
+    title: signedSample
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:29:53.453Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-install-test-plan-install-refuses
+    title: TestPlanInstallRefuses
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:29:57.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-uninstall-secrets
+    title: UninstallSecrets
+    sourceFile: internal/plugins/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:31:15.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall-secrets
+  - id: SYM-plugins-app-image-inspector
+    title: ImageInspector
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:43:43.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-instance
+    title: Instance
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:43:48.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-app-instance-store
+    title: InstanceStore
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:43:52.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-list
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+  - id: SYM-plugins-app-install-request
+    title: InstallRequest
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:43:56.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-proposal
+    title: Proposal
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:01.022Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-installer
+    title: Installer
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:04.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-installer-prepare
+    title: Installer.Prepare
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:08.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-install
+    title: Install
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:12.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-app-uninstall-plan
+    title: UninstallPlan
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:16.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+  - id: SYM-plugins-app-plan-uninstall
+    title: PlanUninstall
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:21.268Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-app-uninstall
+    title: Uninstall
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:25.497Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-app-instances
+    title: Instances
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:29.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-app-test-install-sample-manifest
+    title: sampleManifest
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:34.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-images
+    title: fakeImages
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:39.773Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-images-inspect
+    title: fakeImages.Inspect
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:43.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-installer
+    title: installer
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:48.195Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-proposed
+    title: proposed
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:52.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-test-installer-prepare
+    title: TestInstallerPrepare
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:44:56.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-store
+    title: fakeStore
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:00.874Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-store-list
+    title: fakeStore.List
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:05.183Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-store-create
+    title: fakeStore.Create
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:09.369Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-fake-store-delete
+    title: fakeStore.Delete
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:13.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-install-samples
+    title: installSamples
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:18.001Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-test-install
+    title: TestInstall
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:22.376Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-uninstall
+    title: uninstall
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:26.641Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-install-test-uninstall
+    title: TestUninstall
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:45:30.908Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-kube-instances
+    title: Instances
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:14.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+  - id: SYM-plugins-kube-instances-list
+    title: Instances.List
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:19.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-kube-describe-status
+    title: describeStatus
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:23.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-kube-instances-create
+    title: Instances.Create
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:28.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-kube-instances-delete
+    title: Instances.Delete
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:32.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-kube-owner-signers
+    title: OwnerSigners
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:37.431Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-owner-signers
+  - id: SYM-plugins-kube-resources
+    title: Resources
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:42.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-resources-yaml
+    title: ResourcesYAML
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:46.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-clean-yaml
+    title: cleanYAML
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:51.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-strs
+    title: strs
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:14:55.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-hosts
+    title: hosts
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:00.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-raw
+    title: raw
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:04.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-kube-test-instances-sample-plan
+    title: samplePlan
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:08.816Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-fake-cluster
+    title: fakeCluster
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:13.231Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-secret
+    title: secret
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:17.507Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-test-resources-yaml
+    title: TestResourcesYAML
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:22.091Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-test-instances-create-and-list
+    title: TestInstancesCreateAndList
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:26.900Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-test-instances-delete
+    title: TestInstancesDelete
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:31.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-kube-test-instances-test-owner-signers
+    title: TestOwnerSigners
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:36.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-plugins-cli-render-proposal
+    title: RenderProposal
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:36:22.103Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-permission-summary
+  - id: SYM-plugins-cli-trust-text
+    title: trustText
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:36:27.086Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-permission-summary
+  - id: SYM-plugins-cli-describe-schema
+    title: describeSchema
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:36:32.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-permission-summary
+  - id: SYM-plugins-cli-property-type
+    title: propertyType
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:36:36.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-permission-summary
+  - id: SYM-plugins-cli-render-uninstall-plan
+    title: RenderUninstallPlan
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:36:41.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+  - id: SYM-plugins-cli-write-instances
+    title: WriteInstances
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:36:46.446Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-cli-strs-of
+    title: strsOf
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:36:51.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-permission-summary
+  - id: SYM-plugins-cli-join-or
+    title: joinOr
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:36:56.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-permission-summary
+  - id: SYM-plugins-cli-or-dash
+    title: orDash
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:01.134Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-cli-yes-no
+    title: yesNo
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:06.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-cli-cluster
+    title: Cluster
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:11.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-owner-signers
+  - id: SYM-plugins-cli-env
+    title: Env
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:15.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-plugins-cli-options
+    title: options
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:20.535Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-plugins-cli-run
+    title: Run
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:25.501Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-plugins-cli-parse-flags
+    title: parseFlags
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:30.162Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-plugins-cli-install
+    title: install
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:35.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-confirmation
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cli-read-config
+    title: readConfig
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:40.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cli-installer
+    title: installer
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:46.121Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-owner-signers
+  - id: SYM-plugins-cli-owner-signers
+    title: ownerSigners
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:51.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-owner-signers
+  - id: SYM-plugins-cli-print-resources
+    title: printResources
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:57.015Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-print-resources
+  - id: SYM-plugins-cli-uninstall
+    title: uninstall
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:02.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-confirmation
+      - type: implements
+        target: REQ-plugins-cli-uninstall
+  - id: SYM-plugins-cli-list
+    title: list
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:07.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-plugins-cli-confirm
+    title: confirm
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:13.034Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-confirmation
+  - id: SYM-plugins-cli-say
+    title: say
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:18.521Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-confirmation
+  - id: SYM-cmd-openfief-main
+    title: main
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:23.994Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-cmd-openfief-run
+    title: run
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:29.613Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-cmd-openfief-new-env
+    title: newEnv
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:34.755Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-cmd-openfief-images
+    title: images
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:40.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-cmd-openfief-cluster
+    title: cluster
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:44.353Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-owner-signers
+  - id: SYM-cmd-openfief-cluster-owner-signers
+    title: cluster.OwnerSigners
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:49.760Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-owner-signers
+  - id: SYM-cmd-openfief-connect
+    title: connect
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:55.328Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-cmd-openfief-new-scheme
+    title: newScheme
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:01.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install
+  - id: SYM-plugins-cosign-registry
+    title: Registry
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:05.282Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-new-registry
+    title: NewRegistry
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:11.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-registry-push
+    title: Registry.Push
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:16.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-registry-sign-with-key
+    title: Registry.SignWithKey
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:22.523Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-statement
+    title: statement
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:27.463Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-raw-manifest
+    title: rawManifest
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:31.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-raw-manifest-raw-manifest
+    title: rawManifest.RawManifest
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:36.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-raw-manifest-media-type
+    title: rawManifest.MediaType
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:41.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-attach
+    title: attach
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:47.011Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-descriptor
+    title: descriptor
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:52.092Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-digest
+    title: digest
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:57.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-image-ref
+    title: imageRef
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:03.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cli-test-render-proposal
+    title: proposal
+    sourceFile: internal/plugins/cli/render_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:08.626Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-render
+  - id: SYM-plugins-cli-test-render-test-render-proposal
+    title: TestRenderProposal
+    sourceFile: internal/plugins/cli/render_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:13.846Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-render
+  - id: SYM-plugins-cli-test-render-test-render-proposal-without-permissions
+    title: TestRenderProposalWithoutPermissions
+    sourceFile: internal/plugins/cli/render_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:18.694Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-render
+  - id: SYM-plugins-cli-test-render-test-render-uninstall-plan
+    title: TestRenderUninstallPlan
+    sourceFile: internal/plugins/cli/render_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:24.012Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-render
+  - id: SYM-plugins-cli-test-render-test-write-instances
+    title: TestWriteInstances
+    sourceFile: internal/plugins/cli/render_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:28.822Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-render
+  - id: SYM-plugins-cli-test-cli-fake-cluster
+    title: fakeCluster
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:32.747Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-fake-cluster-list
+    title: fakeCluster.List
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:37.711Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-fake-cluster-create
+    title: fakeCluster.Create
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:42.533Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-fake-cluster-delete
+    title: fakeCluster.Delete
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:47.460Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-fake-cluster-owner-signers
+    title: fakeCluster.OwnerSigners
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:52.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-fake-images
+    title: fakeImages
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:56.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-fake-images-inspect
+    title: fakeImages.Inspect
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:01.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-run-case
+    title: runCase
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:06.275Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-env
+    title: env
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:11.270Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-installed
+    title: installed
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:16.382Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-test-run
+    title: TestRun
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:21.693Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-cli-check-run
+    title: checkRun
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:26.950Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-cmd-openfief-test-main-world
+    title: world
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:31.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-cmd-openfief-test-main-world-file
+    title: world.file
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:36.145Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-cmd-openfief-test-main-new-world
+    title: newWorld
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:41.432Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-cmd-openfief-test-main-run-cli
+    title: runCLI
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:46.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-cmd-openfief-test-main-fake-client
+    title: fakeClient
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:52.306Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-cmd-openfief-test-main-test-install-verifies-signatures
+    title: TestInstallVerifiesSignatures
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:57.560Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-cmd-openfief-test-main-check-installed
+    title: checkInstalled
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:02.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-cmd-openfief-test-main-test-print
+    title: TestPrint
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:08.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-cmd-openfief-test-main-test-install-list-uninstall
+    title: TestInstallListUninstall
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:13.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief
+  - id: SYM-plugins-cosign-pae
+    title: pae
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:48:47.725Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies

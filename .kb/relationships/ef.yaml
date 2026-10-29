@@ -265,3 +265,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb4b51e07b5f
+  - type: implements
+    from: SYM-plugins-cli-run
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:37:26.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a080da50fe7e
+  - type: covered_by
+    from: SYM-plugins-cli-run
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:37:26.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13dc4cbed2cb
+  - type: implements
+    from: SYM-plugins-cosign-raw-manifest-raw-manifest
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:39:38.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c07ac04ae79b
+  - type: covered_by
+    from: SYM-plugins-cosign-raw-manifest-raw-manifest
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:39:38.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3cfeef81bbb

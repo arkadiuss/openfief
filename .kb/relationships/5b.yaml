@@ -216,3 +216,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c30963125f70
+  - type: implements
+    from: SYM-plugins-cli-or-dash
+    to: REQ-plugins-cli-list
+    created_at: 2026-10-28T23:37:02.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42e2b302f2bb
+  - type: covered_by
+    from: SYM-plugins-cli-or-dash
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-28T23:37:02.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed951897992f

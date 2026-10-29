@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f4e42bfd5bb
+  - type: executable_for
+    from: SYM-plugins-test-install-test-resolve-install-source
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:24:58.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-277ede0c30d0

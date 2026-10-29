@@ -272,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5412f1f940f
+  - type: validates
+    from: TEST-plugins-kube-instances
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:13:56.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-670a9b4ef1bc
+  - type: validates
+    from: TEST-plugins-kube-instances
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-28T23:13:56.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71aa35952d3b
+  - type: executable_for
+    from: SYM-cmd-openfief-test-main-test-install-list-uninstall
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:42:14.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36d28f62a31d

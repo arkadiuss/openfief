@@ -300,3 +300,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7de1be3f661
+  - type: implements
+    from: SYM-plugins-kube-instances
+    to: REQ-plugins-cli-list
+    created_at: 2026-10-28T23:14:15.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4a811b7c578
+  - type: implements
+    from: SYM-plugins-kube-instances
+    to: REQ-plugins-cli-uninstall
+    created_at: 2026-10-28T23:14:15.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41510616f8a2
+  - type: covered_by
+    from: SYM-plugins-kube-instances
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:14:16.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60b2d378423b

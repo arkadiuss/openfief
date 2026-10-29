@@ -314,3 +314,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35cd320d1f1b
+  - type: executable_for
+    from: SYM-plugins-cli-test-render-test-write-instances
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-28T23:40:30.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9af8d7d83497

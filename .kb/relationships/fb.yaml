@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ef20c8c6223
+  - type: validates
+    from: TEST-cmd-openfief
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:35:59.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-520507c0885b
+  - type: validates
+    from: TEST-cmd-openfief
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-28T23:35:59.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45c4e80ca196

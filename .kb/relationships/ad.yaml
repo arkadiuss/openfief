@@ -475,3 +475,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b439dcd18241
+  - type: implements
+    from: SYM-plugins-cli-render-proposal
+    to: REQ-plugins-cli-permission-summary
+    created_at: 2026-10-28T23:36:23.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0f014a1eca2
+  - type: implements
+    from: SYM-plugins-cli-render-proposal
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:36:23.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15c592662e80
+  - type: covered_by
+    from: SYM-plugins-cli-render-proposal
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-28T23:36:23.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f4a97ee0ee2

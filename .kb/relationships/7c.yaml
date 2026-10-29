@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9686b8a8695c
+  - type: executable_for
+    from: SYM-plugins-kube-test-instances-sample-plan
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:15:10.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-133e5b39f74d

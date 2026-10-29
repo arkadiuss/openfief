@@ -42,7 +42,7 @@ flowchart TB
   classDef built fill:#d8efd9,stroke:#2f7d32,color:#1d1d1f
   classDef partial fill:#fff1c7,stroke:#a77d00,color:#1d1d1f
   classDef missing fill:#f3f3f3,stroke:#9a9a9a,color:#555,stroke-dasharray: 4 3
-  cli(["openfief CLI"]):::missing
+  cli(["openfief CLI"]):::built
   subgraph ns["namespace openfief"]
     op["Operator<br/>Plugin + PluginGrant"]:::partial
     proxy["Egress proxy<br/>Smokescreen"]:::built
@@ -85,7 +85,8 @@ flowchart TB
 | Core service | D-2, D-14, D-27, D-28, D-36, D-50 | `cmd/core`, installed by `deploy/core` (below). It migrates every context's schema, runs the River revaluation workers, and serves the read API on port 8080, accepting the owner's [sessions](concepts/identity.md) and script tokens from `internal/identity`, plus unauthenticated `/healthz` and `/readyz`. On the same port it serves view plugins the identity context's `AuthService`: passkey login and registration (D-26), sessions with a read or owner scope, read-only demo sessions behind `--demo-sessions`, script tokens and enrollment links (D-60), for the origins in `--auth-origin`. `core enroll-link` prints the one-time link for the first passkey; `core token issue`, `list` and `revoke` manage script tokens as a break-glass. In a cluster it syncs every running connector instance on a schedule (D-49), as the ingest page explains; `core connector bind` and `core connector sync` bind an instance to an account and sync one now. No connector plugin is installed on the demo yet, so its data enters through `cmd/demo-seed` | [Identity](concepts/identity.md), [Read API](concepts/read-api.md) |
 | Built-in UI | D-3, D-6, D-26, D-30, D-60 | The view plugin `plugins/ui` on `internal/views/ui`: server-rendered pages with htmx and Chart.js, passkey and demo sign-in through the core's AuthService, the overview with the allocation and value-over-time charts, accounts, flagged balance assertions, and the owner's settings. Against a real core it needs the core's `--auth-origin` to list its origin | [Built-in UI](concepts/ui.md) |
 | Market data | D-22, D-51 | The `plugins/eodhd` connector on `internal/valuation/eodhd`: end-of-day closes of the instruments in its config, found by ISIN, and market index levels, on the owner's EODHD key. The core stores the closes as prices but not the index levels yet, and no IBKR cross-check exists | [Valuation](concepts/valuation.md), [Plugins](concepts/plugins.md) |
-| Ghostfolio view, CLI, XTB parser | D-3 to D-5, D-46 | Not built | [Status](/status/) |
+| openfief CLI | D-46, D-58 | `cmd/openfief` on `internal/plugins/cli`: `plugin install` verifies an image with the operator's own signature check and trust policy, shows what its signed manifest requests and, once the owner confirms, creates the `Plugin` and a `PluginGrant` approving exactly that with the owner's kubeconfig, or prints them for GitOps (`--print`); `plugin uninstall` deletes the grant, the `Plugin` and the Secrets no other instance uses; `plugin list`. Built and tested, not yet packaged for release, and the core doesn't mark a removed instance's data | [Plugins](concepts/plugins.md#installing-with-the-cli) |
+| Ghostfolio view, XTB parser | D-3 to D-5 | Not built | [Status](/status/) |
 
 The [status page](/status/) gives the same picture decision by decision, from the requirements in kibi.
 

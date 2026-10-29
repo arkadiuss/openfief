@@ -223,3 +223,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4e41d580b66
+  - type: executable_for
+    from: SYM-plugins-cli-test-cli-fake-images-inspect
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:41:02.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e407519efeb3

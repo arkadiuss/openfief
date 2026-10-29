@@ -377,3 +377,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aacc9238dec2
+  - type: implements
+    from: SYM-plugins-resolve-install-source
+    to: REQ-plugins-cli-install-source
+    created_at: 2026-10-28T22:24:24.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42d6c75d6d20
+  - type: implements
+    from: SYM-plugins-resolve-install-source
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T22:24:24.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-beef71b1703f
+  - type: covered_by
+    from: SYM-plugins-resolve-install-source
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:24:24.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c31eb95c6d7
+  - type: implements
+    from: SYM-plugins-cli-list
+    to: REQ-plugins-cli-list
+    created_at: 2026-10-28T23:38:08.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a487565cbcd0
+  - type: covered_by
+    from: SYM-plugins-cli-list
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:38:09.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-700dae043cfc
+  - type: executable_for
+    from: SYM-plugins-cli-test-cli-fake-images
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:40:57.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-314606cd17c8

@@ -503,3 +503,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9352eb06b629
+  - type: implements
+    from: SYM-plugins-valid-instance-name
+    to: REQ-plugins-cli-install-source
+    created_at: 2026-10-28T22:24:33.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d9b9df8c1a0
+  - type: covered_by
+    from: SYM-plugins-valid-instance-name
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:24:33.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cab0a7c16adc
+  - type: implements
+    from: SYM-plugins-cosign-registry
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:39:06.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e022abe6e8f7
+  - type: covered_by
+    from: SYM-plugins-cosign-registry
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:39:06.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8eccb77e5e5

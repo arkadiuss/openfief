@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-493530fc5e01
+  - type: implements
+    from: SYM-plugins-install-source
+    to: REQ-plugins-cli-install-source
+    created_at: 2026-10-28T22:24:20.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a68d9e6cc9a5
+  - type: covered_by
+    from: SYM-plugins-install-source
+    to: TEST-plugins-install
+    created_at: 2026-10-28T22:24:20.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3cde1ecc380

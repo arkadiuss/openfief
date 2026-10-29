@@ -363,3 +363,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33e11c10528e
+  - type: validates
+    from: TEST-plugins-cli-run
+    to: REQ-plugins-cli-install
+    created_at: 2026-10-28T23:35:57.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82b2b3fe6cf1
+  - type: validates
+    from: TEST-plugins-cli-run
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-28T23:35:57.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-544420778374
+  - type: implements
+    from: SYM-plugins-cli-install
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-28T23:37:36.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99266c4cf40f
+  - type: implements
+    from: SYM-plugins-cli-install
+    to: REQ-plugins-cli-confirmation
+    created_at: 2026-10-28T23:37:36.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-651580332ae6
+  - type: covered_by
+    from: SYM-plugins-cli-install
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:37:36.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6694d9b8ab0e

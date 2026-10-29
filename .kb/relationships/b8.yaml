@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1f02100eb48
+  - type: verified_by
+    from: SCEN-plugins-cli-uninstall-removes-instance
+    to: TEST-plugins-app-install
+    created_at: 2026-10-28T22:43:25.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14fccaa1be12
+  - type: verified_by
+    from: SCEN-plugins-cli-uninstall-removes-instance
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:14:02.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-835211033eff

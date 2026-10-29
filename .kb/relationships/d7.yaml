@@ -258,3 +258,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2b462928614
+  - type: executable_for
+    from: SYM-cmd-openfief-test-main-new-world
+    to: TEST-cmd-openfief
+    created_at: 2026-10-28T23:41:42.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0218d2dd04b0

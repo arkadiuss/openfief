@@ -265,3 +265,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e2b1bb5c196
+  - type: implements
+    from: SYM-plugins-kube-hosts
+    to: REQ-plugins-cli-print-resources
+    created_at: 2026-10-28T23:15:01.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f63b9fce820
+  - type: covered_by
+    from: SYM-plugins-kube-hosts
+    to: TEST-plugins-kube-instances
+    created_at: 2026-10-28T23:15:01.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a9da834863a
+  - type: executable_for
+    from: SYM-plugins-cli-test-render-test-render-proposal
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-28T23:40:15.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a756b0ed83b
+  - type: executable_for
+    from: SYM-plugins-cli-test-cli-run-case
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-28T23:41:07.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1babeb1a5e05
