@@ -20,6 +20,9 @@ const (
 	// such as a treasury bond lot (D-9), which the core handed to a
 	// connector plugin.
 	SourceEntry = "entry"
+	// SourceUpload is the ingest path of a statement file the owner
+	// uploaded, which the core handed to a connector plugin (D-49).
+	SourceUpload = "upload"
 )
 
 // Delivery is what a connector plugin returns for one import batch: its
@@ -38,13 +41,14 @@ type Delivery struct {
 }
 
 // Errors a ConnectorCaller wraps when the connector answers that it won't
-// take what the owner entered, so the owner learns why.
+// take what the owner entered or uploaded, so the owner learns why.
 var (
 	// ErrEntryRefused reports entries the connector refused, such as a bond
-	// lot that breaks a rule; the error carries the connector's reason.
+	// lot that breaks a rule or a file it can't read; the error carries the
+	// connector's reason.
 	ErrEntryRefused = errors.New("the connector refused the entry")
 	// ErrNoEntries reports a connector that takes no entries of the kind,
-	// such as one that takes no bond lots.
+	// such as one that takes no bond lots or no files.
 	ErrNoEntries = errors.New("the connector takes no such entries")
 	// ErrConnectorUnavailable reports a connector instance that can't be
 	// reached now, such as one that isn't running; the same entry may be
@@ -58,6 +62,11 @@ var (
 // Delivery; a delivery for another batch than id is an error.
 type ConnectorCaller interface {
 	Sync(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (Delivery, error)
+	// ImportFile streams a statement file to instance. A file the connector
+	// refuses wraps ErrEntryRefused with its reason, a connector that takes
+	// no files ErrNoEntries, one that can't be reached
+	// ErrConnectorUnavailable, and a failure to read the file the read's
+	// error.
 	ImportFile(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, file NamedFile) (Delivery, error)
 	// ImportBondLots hands treasury bond lots the owner entered to instance
 	// as a transactions batch. A refusal wraps ErrEntryRefused, a connector
@@ -166,14 +175,20 @@ func (c *Connectors) Sync(ctx context.Context, instance string, id ingest.BatchI
 	return SyncResult{Batch: batch, Watermark: d.Watermark}, nil
 }
 
-// ImportFile hands file to instance as import batch id and imports what it
-// maps (D-49: uploads go through the core to the right connector).
-func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, file NamedFile) (ingest.Batch, error) {
+// ImportFile hands file, a statement the owner uploaded for account, to
+// instance as import batch id and imports what it maps, with source
+// SourceUpload (D-49: uploads go through the core to the right connector).
+// Every transaction and balance assertion delivered must be in account, or
+// nothing is imported.
+func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, mode ingest.Mode, file NamedFile) (ingest.Batch, error) {
 	d, err := c.Caller.ImportFile(ctx, instance, id, mode, file)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import file into %s batch %s: %w", instance, id, err)
 	}
-	return c.deliver(ctx, instance, id, SourceFile, mode, &d)
+	if err := ingest.CheckBound(instance, []ledger.AccountID{account}, &d.Mapping); err != nil {
+		return ingest.Batch{}, fmt.Errorf("import file into %s batch %s: refused: %w", instance, id, err)
+	}
+	return c.deliver(ctx, instance, id, SourceUpload, mode, &d)
 }
 
 // ImportBondLots hands treasury bond lots the owner entered for account to

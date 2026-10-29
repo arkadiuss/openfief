@@ -308,6 +308,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d480f906ab3a
   - type: implements
+    from: SYM-ingestv1-problem-reset
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:20:51.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae1e8d482c77
+  - type: covered_by
+    from: SYM-ingestv1-problem-reset
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:20:51.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac26e9203302
+  - type: implements
     from: SYM-valuation-gus-monthly
     to: REQ-valuation-gus-cpi
     created_at: 2026-10-29T04:06:05.065Z

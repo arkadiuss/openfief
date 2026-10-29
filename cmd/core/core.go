@@ -97,11 +97,12 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 // accepts as its verifier (readTokens, D-27). It stores
 // the built-in sleeve kinds and sleeves when cfg asks, and records the bond
 // basis, which revalues everything when it changed. Next to the read API it
-// serves the AuthService, the ModelPortfolioService (D-52) and the
-// BondLotService (D-9, D-49) to the view plugins callers accepts (author
-// decision, auth split). The read API lists the installed plugins from
-// installed, and without it, outside a cluster, answers that they are
-// unknown. Start the River client to run the workers.
+// serves the AuthService, the ModelPortfolioService (D-52), the
+// BondLotService (D-9, D-49) and the StatementService (D-7, D-49) to the
+// view plugins callers accepts (author decision, auth split). The read API
+// lists the installed plugins from installed, and without it, outside a
+// cluster, answers that they are unknown. Start the River client to run
+// the workers.
 func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger,
 	callers identityconnect.Callers, installed *viewskube.Plugins,
 ) (*core, error) {
@@ -151,6 +152,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	}
 	served := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
 	served = withBondLotService(served, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	served = withStatementService(served, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	return &core{api: served, river: client, deps: deps, plugins: installed}, nil
 }
 

@@ -392,6 +392,13 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7124e913ee26
   - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-file-bindings
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:13:07.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-080ec6d6dab6
+  - type: executable_for
     from: SYM-valuation-gus-test-helper-recording-client
     to: TEST-valuation-gus-client
     created_at: 2026-10-29T04:06:28.606Z

@@ -104,6 +104,11 @@ func (i importer) Seed(ctx context.Context, txs []ledger.Transaction, a []ledger
 	return i.Import(ctx, txs, a)
 }
 
+// recorder takes every batch.
+type recorder struct{}
+
+func (recorder) RecordBatch(context.Context, string, *ingest.Batch) error { return nil }
+
 // viewOnly admits calls bearing viewCaller, like cmd/core's view-plugin
 // check.
 func viewOnly() connect.UnaryInterceptorFunc {
@@ -142,7 +147,7 @@ func newClient(t *testing.T, c *caller, l importer, callerToken string) client {
 		t.Fatalf("ParseDate: %v", err)
 	}
 	lots := &app.BondLots{
-		Owners: owners{}, Bindings: bindings{},
+		Owners: owners{}, Bindings: bindings{}, Batches: recorder{},
 		Connectors: &app.Connectors{Caller: c, Bindings: bindings{}, Ledger: l, Today: func() kernel.Date { return today }},
 		Today:      func() kernel.Date { return today },
 		NewBatchID: func() ingest.BatchID { return "b-1" },

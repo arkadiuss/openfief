@@ -482,6 +482,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c71fd0318ec7
+  - type: validates
+    from: TEST-core-statements
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T04:59:56.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfef4a1dbec9
+  - type: validates
+    from: TEST-core-statements
+    to: REQ-AUTO-41A1F4D687DAA771
+    created_at: 2026-10-29T04:59:56.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8784415e29cb
+  - type: executable_for
+    from: SYM-ingest-test-file-name-hint
+    to: TEST-ingest-file
+    created_at: 2026-10-29T05:15:33.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4619617f0b7a
   - type: executable_for
     from: SYM-ingest-delivery-test-index-readings
     to: TEST-ingest-delivery

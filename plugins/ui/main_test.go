@@ -65,6 +65,37 @@ func TestAuthClient(t *testing.T) {
 	}
 }
 
+// TestUploadClient checks that statement uploads present the same token
+// as the AuthService client, with the longer upload timeout.
+func TestUploadClient(t *testing.T) {
+	t.Parallel()
+	var got string
+	srv := httptest.NewServer(http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
+		got = r.Header.Get("Authorization")
+	}))
+	t.Cleanup(srv.Close)
+	c := uploadClient(func(name string) string {
+		if name == authCallerEnv {
+			return "local-caller"
+		}
+		return ""
+	})
+	req, err := http.NewRequestWithContext(t.Context(), http.MethodPost, srv.URL, http.NoBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err := c.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := resp.Body.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if got != "Bearer local-caller" || c.Timeout != uploadTimeout {
+		t.Errorf("Authorization = %q, timeout %v; want the caller token and %v", got, c.Timeout, uploadTimeout)
+	}
+}
+
 // TestReadClient checks that the read API client never goes through a
 // proxy, sets no Authorization of its own and has a timeout.
 func TestReadClient(t *testing.T) {

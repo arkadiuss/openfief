@@ -384,3 +384,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd22f80c8a19
+  - type: verified_by
+    from: SCEN-ingest-statement-service
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T04:58:11.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53a5fc9f49e3
+  - type: verified_by
+    from: SCEN-ingest-statement-service
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-29T04:58:11.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fad908dd20e
+  - type: verified_by
+    from: SCEN-ingest-statement-service
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:00:03.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23be8b050ef5
+  - type: implements
+    from: SYM-ingestv1-problem
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:20:46.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4ad2b02fbeb
+  - type: covered_by
+    from: SYM-ingestv1-problem
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:20:46.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e46a4aff95b9

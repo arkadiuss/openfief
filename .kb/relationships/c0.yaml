@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1548a8566814
+  - type: executable_for
+    from: SYM-uiplugin-test-upload-client
+    to: TEST-ui-plugin
+    created_at: 2026-10-29T06:21:41.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6e33b6b7a2b

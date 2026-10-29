@@ -363,3 +363,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-354cef3b1940
+  - type: implements
+    from: SYM-ingestv1-statement-header-get-mode
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:19:22.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be6a733db5dd
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-get-mode
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:19:22.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-398d09b13615
+  - type: constrains
+    from: REQ-ui-statement-upload
+    to: FACT-SUBJECT-BC0039283445C1DB
+    created_at: 2026-10-29T05:52:12.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92bbb9010216
+  - type: requires_property
+    from: REQ-ui-statement-upload
+    to: FACT-PROP-C14DB65AD8F865A1
+    created_at: 2026-10-29T05:52:12.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17bd7ea9fa58
+  - type: specified_by
+    from: REQ-ui-statement-upload
+    to: SCEN-ui-statement-upload
+    created_at: 2026-10-29T05:52:12.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71e5e37ab1d9

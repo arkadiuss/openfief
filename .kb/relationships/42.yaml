@@ -336,6 +336,41 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-5d2fe5a39d58
   - type: implements
+    from: SYM-ingestv1-upload-statement-request_header-is-upload-statement-request_part
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:20:36.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f332c156dba
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-request_header-is-upload-statement-request_part
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:20:36.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b45298e79c58
+  - type: implements
+    from: SYM-ui-server-send-statement
+    to: REQ-ui-statement-upload
+    created_at: 2026-10-29T06:19:56.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b043ab1a39c
+  - type: implements
+    from: SYM-ui-server-send-statement
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T06:19:56.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78094e1cca5f
+  - type: covered_by
+    from: SYM-ui-server-send-statement
+    to: TEST-ui-statements
+    created_at: 2026-10-29T06:19:56.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bf9fddb5f4c
+  - type: implements
     from: SYM-valuation-gus-client-cpi
     to: REQ-valuation-gus-cpi
     created_at: 2026-10-29T04:05:38.561Z

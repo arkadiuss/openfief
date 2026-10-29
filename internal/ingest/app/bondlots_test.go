@@ -41,6 +41,21 @@ func (f fakeAccountBindings) BoundInstances(context.Context, ledger.AccountID) (
 	return f.instances, f.err
 }
 
+// fakeRecorder records the batches it is given, or fails with err.
+type fakeRecorder struct {
+	err       error
+	instances []string
+	batches   []ingest.Batch
+}
+
+func (f *fakeRecorder) RecordBatch(_ context.Context, instance string, b *ingest.Batch) error {
+	if f.err != nil {
+		return f.err
+	}
+	f.instances, f.batches = append(f.instances, instance), append(f.batches, *b)
+	return nil
+}
+
 // edoLot is a synthetic lot of 40 EDO0536 bonds bought on 2026-05-04.
 func edoLot(t *testing.T) ingest.BondLot {
 	t.Helper()
@@ -100,6 +115,7 @@ func bondLots(t *testing.T, caller *fakeCaller, l *fakeLedger, stores *fakeStore
 	n := 0
 	return &app.BondLots{
 		Owners: fakeOwners{err: app.ErrNoSession}, Bindings: fakeAccountBindings{instances: instances}, Connectors: c,
+		Batches:    &fakeRecorder{},
 		Today:      func() kernel.Date { return today },
 		NewBatchID: func() ingest.BatchID { n++; return ingest.BatchID(fmt.Sprintf("b-%d", n)) },
 	}
@@ -111,7 +127,8 @@ func TestBondLotsAdd(t *testing.T) {
 	l := &fakeLedger{summary: ingest.ImportSummary{New: 2}}
 	stores := &fakeStores{}
 	lot := edoLot(t)
-	got, err := bondLots(t, caller, l, stores, []string{"bonds-main"}).Add(t.Context(), "https://ui.example.com", "owner", bondsAccount, &lot)
+	b := bondLots(t, caller, l, stores, []string{"bonds-main"})
+	got, err := b.Add(t.Context(), "https://ui.example.com", "owner", bondsAccount, &lot)
 	if err != nil {
 		t.Fatalf("Add: %v", err)
 	}
@@ -121,6 +138,13 @@ func TestBondLotsAdd(t *testing.T) {
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty()); diff != "" {
 		t.Errorf("Add batch (-want +got):\n%s", diff)
+	}
+	rec, isFake := b.Batches.(*fakeRecorder)
+	if !isFake {
+		t.Fatalf("Batches is %T, want the fake recorder", b.Batches)
+	}
+	if diff := cmp.Diff([]ingest.Batch{want}, rec.batches, cmpopts.EquateEmpty()); diff != "" || len(rec.instances) != 1 || rec.instances[0] != "bonds-main" {
+		t.Errorf("recorded %v for %v; want the batch once for bonds-main (-want +got):\n%s", rec.batches, rec.instances, diff)
 	}
 	checkHandedOver(t, caller, l, stores)
 }
@@ -187,9 +211,9 @@ func TestBondLotsAddRefuses(t *testing.T) {
 		with(ok("a lot under the wrong series"), func(r *refusal) {
 			r.lot, r.wantErr = func(l *ingest.BondLot) { l.Purchased = l.Purchased.AddDays(40) }, ingest.ErrInvalidBondLot
 		}),
-		with(ok("no connector bound to the account"), func(r *refusal) { r.instances, r.wantErr = nil, app.ErrNoBondConnector }),
+		with(ok("no connector bound to the account"), func(r *refusal) { r.instances, r.wantErr = nil, app.ErrNoConnector }),
 		with(ok("two connectors bound to the account"), func(r *refusal) {
-			r.instances, r.wantErr = []string{"bonds-a", "bonds-b"}, app.ErrNoBondConnector
+			r.instances, r.wantErr = []string{"bonds-a", "bonds-b"}, app.ErrNoConnector
 		}),
 		with(ok("bindings that can't be read"), func(r *refusal) { r.bindErr, r.wantErr = errStore, errStore }),
 		with(ok("the connector refuses the lot"), func(r *refusal) {

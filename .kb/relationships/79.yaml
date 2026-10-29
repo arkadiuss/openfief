@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d45084288d48
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-chunk-part
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:14:08.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a6277a179c7

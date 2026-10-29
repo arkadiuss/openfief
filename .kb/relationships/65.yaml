@@ -251,3 +251,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5995eea0f758
+  - type: executable_for
+    from: SYM-core-test-helper-check-upload-scoped
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:09:24.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c845f5ddd44f
+  - type: implements
+    from: SYM-ui-upload-mode
+    to: REQ-ui-statement-upload
+    created_at: 2026-10-29T06:19:40.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2ab082e92a2
+  - type: implements
+    from: SYM-ui-upload-mode
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T06:19:40.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c78677fede7
+  - type: covered_by
+    from: SYM-ui-upload-mode
+    to: TEST-ui-statements
+    created_at: 2026-10-29T06:19:40.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bdf09e74be2

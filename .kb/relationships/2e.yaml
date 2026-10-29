@@ -391,6 +391,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed5b38cb9d2d
+  - type: implements
+    from: SYM-core-entry-connectors
+    to: REQ-ingest-statement-upload-handoff
+    created_at: 2026-10-29T05:08:14.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff402d1aafe7
+  - type: covered_by
+    from: SYM-core-entry-connectors
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:08:14.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b73e7ffeb43
+  - type: implements
+    from: SYM-ingest-postgres-store-record-batch
+    to: REQ-ingest-recorded-batches
+    created_at: 2026-10-29T05:15:39.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55e30c7341d5
+  - type: covered_by
+    from: SYM-ingest-postgres-store-record-batch
+    to: TEST-ingest-postgres
+    created_at: 2026-10-29T05:15:39.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f0a66544f99
+  - type: implements
+    from: SYM-ingestv1connect-statement-service-client
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:16:01.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6301cf23df7c
+  - type: covered_by
+    from: SYM-ingestv1connect-statement-service-client
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:16:01.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f490a76789e9
   - type: executable_for
     from: SYM-valuation-gus-test-helper-cpi
     to: TEST-valuation-gus-client

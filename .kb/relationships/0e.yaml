@@ -258,6 +258,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04a325aea5ef
+  - type: implements
+    from: SYM-ingestv1-problem-kind-enum-descriptor
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:18:16.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bc8a80cb837
+  - type: covered_by
+    from: SYM-ingestv1-problem-kind-enum-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:18:16.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab9b3c588584
   - type: requires_property
     from: REQ-plugins-treasury-bonds-connector
     to: FACT-PROP-495B97CE1B5014CF

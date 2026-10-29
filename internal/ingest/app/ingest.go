@@ -25,8 +25,8 @@ var ErrSeedingOutsideOpening = errors.New("seeding transaction outside an openin
 
 // The ingest paths a batch records as its source.
 const (
-	// SourceFile is a statement file, whether uploaded, passed to the CLI or
-	// dropped in a watched folder.
+	// SourceFile is a statement file an in-core mapper read, such as the
+	// demo dataset's; a file the owner uploads is SourceUpload.
 	SourceFile = "file"
 	// SourcePull is a statement the connector pulled from the institution.
 	SourcePull = "pull"

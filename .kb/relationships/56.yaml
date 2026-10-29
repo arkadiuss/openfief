@@ -258,6 +258,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcdd598fec58
+  - type: implements
+    from: SYM-ingestv1-problem-get-reason
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:21:35.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc39424de38e
+  - type: covered_by
+    from: SYM-ingestv1-problem-get-reason
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:21:35.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac6373ddca66
   - type: executable_for
     from: SYM-treasury-bonds-test-helper-fake-cpi
     to: TEST-plugins-treasury-bonds

@@ -426,6 +426,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3197edb9148
+  - type: executable_for
+    from: SYM-core-test-helper-flex-connector-import-file
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:08:36.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225891780d62
   - type: implements
     from: SYM-treasurybonds-parse-index-watermark
     to: REQ-treasurybonds-index-sync

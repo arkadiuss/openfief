@@ -371,6 +371,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2adc0cd9ac85
   - type: implements
+    from: SYM-ingestv1-statement-header-proto-reflect
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:18:46.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7e9be7e972d
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-proto-reflect
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:18:46.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80277a26cbbe
+  - type: implements
     from: SYM-ingest-delivery-index-readings
     to: REQ-treasurybonds-index-sync
     created_at: 2026-10-29T04:02:40.254Z

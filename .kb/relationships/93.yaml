@@ -483,6 +483,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ee7170480e67
   - type: implements
+    from: SYM-ingest-connectapi-new-statements
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:11:55.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b2216da5e2
+  - type: implements
+    from: SYM-ingest-connectapi-new-statements
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T05:11:55.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee2f5bdf8781
+  - type: covered_by
+    from: SYM-ingest-connectapi-new-statements
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:11:55.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9037ef8fd29
+  - type: implements
     from: SYM-valuation-gus-new
     to: REQ-valuation-gus-cpi
     created_at: 2026-10-29T04:05:32.893Z

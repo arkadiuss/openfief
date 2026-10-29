@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-809e1bf302b1
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fine
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:11:26.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80402bb5f882

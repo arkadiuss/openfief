@@ -90,8 +90,8 @@ type ImportSummary struct {
 type Batch struct {
 	ID          BatchID
 	Institution InstitutionID
-	// Source names the ingest path that ran, such as "upload" or
-	// "flex-web-service".
+	// Source names the ingest path that ran, such as "sync" or
+	// "upload" (the app package's Source constants).
 	Source  string
 	Mode    Mode
 	Started kernel.Date

@@ -32,6 +32,7 @@ type fakeCaller struct {
 	mode      ingest.Mode
 	watermark string
 	file      string
+	media     string
 	lots      []ingest.BondLot
 }
 
@@ -46,7 +47,7 @@ func (f *fakeCaller) ImportFile(_ context.Context, instance string, id ingest.Ba
 	if err != nil {
 		return app.Delivery{}, errors.Join(errCaller, err)
 	}
-	f.file = file.Name + ":" + string(b)
+	f.file, f.media = file.Name+":"+string(b), file.MediaType
 	return f.delivery, f.err
 }
 
@@ -180,14 +181,14 @@ func TestConnectorsImportFile(t *testing.T) {
 	stores := &fakeStores{}
 	file := app.NamedFile{Name: "statement.csv", Contents: strings.NewReader("synthetic")}
 	l := &fakeLedger{}
-	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeOpening, file)
+	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", "acc-1", ingest.ModeOpening, file)
 	if err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
 	if l.seeds != 1 {
 		t.Errorf("an opening batch seeded %d times, want 1", l.seeds)
 	}
-	if got.ID != "b-2" || got.Source != app.SourceFile || got.Mode != ingest.ModeOpening || got.Transactions != 1 {
+	if got.ID != "b-2" || got.Source != app.SourceUpload || got.Mode != ingest.ModeOpening || got.Transactions != 1 {
 		t.Errorf("ImportFile = %+v", got)
 	}
 	if caller.file != "statement.csv:synthetic" {
@@ -236,7 +237,7 @@ func TestConnectorsFailures(t *testing.T) {
 			if got := l.calls == 1; got != tt.wantImport {
 				t.Errorf("ledger imported = %v, want %v", got, tt.wantImport)
 			}
-			_, err = c.ImportFile(t.Context(), "xtb-main", "b-1", tt.mode, app.NamedFile{Contents: strings.NewReader("")})
+			_, err = c.ImportFile(t.Context(), "xtb-main", "b-1", "acc-1", tt.mode, app.NamedFile{Contents: strings.NewReader("")})
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("ImportFile error (-want +got):\n%s", diff)
 			}

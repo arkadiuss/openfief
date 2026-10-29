@@ -223,3 +223,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f21cf63b88a
+  - type: implements
+    from: SYM-ingestv1-mode-enum
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:16:57.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e38dee79e22
+  - type: covered_by
+    from: SYM-ingestv1-mode-enum
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:16:57.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1289baf8b0e
