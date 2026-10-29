@@ -1,9 +1,9 @@
-# The demo's routes, on one host. cert-manager issues the certificate through HTTP-01.
-#   /v1 and /openfief.views.v1.ReadService  the core's public read API (D-50): REST and Connect, Service
-#                                           openfief-core, port http. Scripts call it with a script token (D-27).
-#   everything else                         the built-in UI (plugins/ui, D-3): Service plugin-ui, which the operator
-#                                           creates for the Plugin ui (deploy/demo/plugins), port connect (8080).
-# Nothing routes to the core's AuthService (/openfief.identity.v1.*): only view plugins call it, from inside the cluster.
+# The demo's route, on one host, to the core alone: the core is the only entry point for browsers (D-81). It serves
+# its public read API itself (/v1 REST and /openfief.views.v1.ReadService Connect, D-50), which scripts call with a
+# script token (D-27), and proxies every other path to the view plugin whose granted browser path covers it: the
+# built-in UI (plugins/ui, browser path /) with the core's own token for it (D-59). Service openfief-core, port http.
+# The core's other Connect services (/openfief.identity.v1.AuthService and the owner's entry services) answer only
+# view plugins' tokens. cert-manager issues the certificate through HTTP-01.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -23,24 +23,10 @@ spec:
     - host: ${DEMO_HOST}
       http:
         paths:
-          - path: /v1
-            pathType: Prefix
-            backend:
-              service:
-                name: openfief-core
-                port:
-                  name: http
-          - path: /openfief.views.v1.ReadService
-            pathType: Prefix
-            backend:
-              service:
-                name: openfief-core
-                port:
-                  name: http
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: plugin-ui
+                name: openfief-core
                 port:
-                  name: connect
+                  name: http

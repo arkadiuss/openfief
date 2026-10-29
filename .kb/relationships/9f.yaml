@@ -293,3 +293,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75c5c0ba4d9a
+  - type: executable_for
+    from: SYM-fd-e2e-test-first-passkey
+    to: TEST-e2e-first-passkey
+    created_at: 2026-10-29T12:12:28.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d5d401d4b07

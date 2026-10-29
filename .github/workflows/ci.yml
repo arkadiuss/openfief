@@ -123,6 +123,8 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           tools: 'false'
+          # The passkey test drives the runner's Chrome with playwright-core (task e2e installs the npm packages).
+          node: 'true'
       - name: task e2e:k3s-image
         id: k3s
         if: matrix.cluster == 'k3d'

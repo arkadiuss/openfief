@@ -5,11 +5,13 @@ import (
 	"context"
 	"errors"
 	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 	"time"
 
 	"connectrpc.com/connect"
+	"github.com/jackc/pgx/v5/pgxpool"
 	authnv1 "k8s.io/api/authentication/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -25,8 +27,55 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 )
 
-// uiCaller is the synthetic dev caller token of the tests.
+// uiCaller is the synthetic projected token of the tests' view plugin ui,
+// which viewCluster's TokenReview accepts.
 const uiCaller = "synthetic-ui-caller"
+
+// viewCluster is a fake cluster with the view plugin ui installed and
+// ready: the TokenReview API accepts uiCaller as ui's ServiceAccount, so
+// the core admits it through the same check as in a real cluster, with no
+// way around authentication in the binary (D-84).
+func viewCluster(t *testing.T) *cluster {
+	t.Helper()
+	dyn := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(runtime.NewScheme(),
+		map[schema.GroupVersionResource]string{ingestkube.PluginResource(): "PluginList"},
+		&unstructured.Unstructured{Object: map[string]any{
+			"apiVersion": "openfief.io/v1alpha1", "kind": "Plugin",
+			"metadata": map[string]any{"name": "ui", "namespace": "openfief"},
+			"status": map[string]any{
+				"conditions": []any{map[string]any{"type": "Ready", "status": "True"}},
+				"effective":  map[string]any{"capabilities": []any{"view"}},
+			},
+		}})
+	client := fake.NewClientset()
+	client.PrependReactor("create", "tokenreviews", reviewTokens(map[string]string{uiCaller: "system:serviceaccount:openfief:plugin-ui"}))
+	return &cluster{client: client, dynamic: dyn, namespace: "openfief"}
+}
+
+// reviewTokens is a TokenReview reactor that authenticates the tokens in
+// users as their usernames and no other token.
+func reviewTokens(users map[string]string) k8stesting.ReactionFunc {
+	return func(a k8stesting.Action) (bool, runtime.Object, error) {
+		create, ok := a.(k8stesting.CreateAction)
+		if !ok {
+			return false, nil, nil
+		}
+		review, ok := create.GetObject().(*authnv1.TokenReview)
+		if !ok {
+			return false, nil, nil
+		}
+		user, known := users[review.Spec.Token]
+		review.Status = authnv1.TokenReviewStatus{Authenticated: known, User: authnv1.UserInfo{Username: user}, Audiences: review.Spec.Audiences}
+		return true, review, nil
+	}
+}
+
+// startCoreForUI is startCoreWith in viewCluster, so the view plugin ui
+// may call the AuthService and the owner's entry services with uiCaller.
+func startCoreForUI(t *testing.T, dsn string, edit func(cfg *serveConfig)) (*core, *httptest.Server, *pgxpool.Pool) {
+	t.Helper()
+	return startCoreIn(t, dsn, viewCluster(t), edit)
+}
 
 // localUI is the origin the tests' browser uses.
 const localUI = "http://localhost:8080"
@@ -71,7 +120,7 @@ func TestPasskeyLoginEndToEnd(t *testing.T) {
 	if !ok {
 		t.Fatalf("enroll-link printed %q", out)
 	}
-	_, srv, _ := startCoreWith(t, dsn, func(cfg *serveConfig) { cfg.Auth.DevCallerToken = uiCaller })
+	_, srv, _ := startCoreForUI(t, dsn, func(*serveConfig) {})
 	ctx := t.Context()
 	_, err := authClient(srv.URL, srv.Client(), "wrong").GetLoginMethods(ctx, connect.NewRequest(&identityv1.GetLoginMethodsRequest{Origin: localUI}))
 	if connect.CodeOf(err) != connect.CodePermissionDenied {
@@ -151,10 +200,7 @@ func passkeyLogin(t *testing.T, c authAPI, dev *virtual.Authenticator) string {
 func TestDemoSessionsNeedTheMarker(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
-	_, srv, pool := startCoreWith(t, dsn, func(cfg *serveConfig) {
-		cfg.Auth.DevCallerToken = uiCaller
-		cfg.Auth.DemoSessions = true
-	})
+	_, srv, pool := startCoreForUI(t, dsn, func(cfg *serveConfig) { cfg.Auth.DemoSessions = true })
 	ctx := t.Context()
 	c := authClient(srv.URL, srv.Client(), uiCaller)
 	req := func() *connect.Request[identityv1.CreateDemoSessionRequest] {
@@ -193,7 +239,7 @@ func TestDemoSessionsNeedTheMarker(t *testing.T) {
 func TestDemoSessionsOffByDefault(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
-	_, srv, pool := startCoreWith(t, dsn, func(cfg *serveConfig) { cfg.Auth.DevCallerToken = uiCaller })
+	_, srv, pool := startCoreForUI(t, dsn, func(*serveConfig) {})
 	ctx := t.Context()
 	if _, err := pool.Exec(ctx, `CREATE SCHEMA demo;
 		CREATE TABLE demo.marker (demo boolean PRIMARY KEY CHECK (demo), seed text NOT NULL, loaded_on date NOT NULL);
@@ -206,24 +252,16 @@ func TestDemoSessionsOffByDefault(t *testing.T) {
 	}
 }
 
-func TestDevCallers(t *testing.T) {
+func TestCallersOutsideACluster(t *testing.T) {
 	t.Parallel()
-	tests := []struct {
-		name, configured, presented string
-		want                        bool
-	}{
-		{name: "matching token", configured: "abc", presented: "abc", want: true},
-		{name: "other token", configured: "abc", presented: "abd"},
-		{name: "no token configured", configured: "", presented: ""},
+	callers, err := newCallers(nil, time.Now, quiet())
+	if err != nil {
+		t.Fatalf("newCallers: %v", err)
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			name, err := devCallers{token: tt.configured}.VerifyCaller(t.Context(), tt.presented)
-			if tt.want != (err == nil) || (err != nil && !errors.Is(err, identityconnect.ErrCallerRefused)) {
-				t.Errorf("VerifyCaller = %q, %v; want accepted %v", name, err, tt.want)
-			}
-		})
+	for _, token := range []string{"", uiCaller, "anything"} {
+		if name, err := callers.VerifyCaller(t.Context(), token); !errors.Is(err, identityconnect.ErrCallerRefused) {
+			t.Errorf("VerifyCaller(%q) outside a cluster = %q, %v; want refused", token, name, err)
+		}
 	}
 }
 
@@ -244,21 +282,9 @@ func TestKubeCallers(t *testing.T) {
 		"ui-token": "system:serviceaccount:openfief:plugin-ui", "ibkr-token": "system:serviceaccount:openfief:plugin-ibkr-main",
 		"ghost-token": "system:serviceaccount:openfief:plugin-ghost", "core-token": "system:serviceaccount:openfief:openfief-core",
 	}
-	client.PrependReactor("create", "tokenreviews", func(a k8stesting.Action) (bool, runtime.Object, error) {
-		create, ok := a.(k8stesting.CreateAction)
-		if !ok {
-			return false, nil, nil
-		}
-		review, ok := create.GetObject().(*authnv1.TokenReview)
-		if !ok {
-			return false, nil, nil
-		}
-		user, known := users[review.Spec.Token]
-		review.Status = authnv1.TokenReviewStatus{Authenticated: known, User: authnv1.UserInfo{Username: user}, Audiences: review.Spec.Audiences}
-		return true, review, nil
-	})
+	client.PrependReactor("create", "tokenreviews", reviewTokens(users))
 	cl := &cluster{client: client, dynamic: dyn, namespace: "openfief"}
-	callers, err := newCallers(cl, &authConfig{}, time.Now, quiet())
+	callers, err := newCallers(cl, time.Now, quiet())
 	if err != nil {
 		t.Fatalf("newCallers: %v", err)
 	}

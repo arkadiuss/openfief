@@ -119,6 +119,13 @@ func startCore(t *testing.T, dsn string) (*core, *httptest.Server, *pgxpool.Pool
 // startCoreWith is startCore with the serve configuration edited by edit.
 func startCoreWith(t *testing.T, dsn string, edit func(cfg *serveConfig)) (*core, *httptest.Server, *pgxpool.Pool) {
 	t.Helper()
+	return startCoreIn(t, dsn, nil, edit)
+}
+
+// startCoreIn is startCoreWith in cluster cl, or outside a cluster when cl
+// is nil.
+func startCoreIn(t *testing.T, dsn string, cl *cluster, edit func(cfg *serveConfig)) (*core, *httptest.Server, *pgxpool.Pool) {
+	t.Helper()
 	ctx := t.Context()
 	pool, err := pgxpool.New(ctx, dsn)
 	if err != nil {
@@ -128,7 +135,7 @@ func startCoreWith(t *testing.T, dsn string, edit func(cfg *serveConfig)) (*core
 	cfg := defaultServe(t)
 	cfg.Workers = 3
 	edit(&cfg)
-	c, err := start(ctx, pool, &cfg, coreNow, quiet(), nil)
+	c, err := start(ctx, pool, &cfg, coreNow, quiet(), cl)
 	if err != nil {
 		t.Fatalf("start: %v", err)
 	}

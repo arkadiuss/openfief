@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b4daab30d09
+  - type: implements
+    from: SYM-core-auth-cmd-core-auth-callers
+    to: REQ-identity-no-auth-bypass
+    created_at: 2026-10-29T10:54:44.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa19430582d0

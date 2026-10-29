@@ -321,3 +321,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-390d144f06bf
+  - type: validates
+    from: TEST-identity-kube-core-access
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:01:52.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b56b2271a343

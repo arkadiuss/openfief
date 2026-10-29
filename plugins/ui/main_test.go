@@ -4,17 +4,20 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
 
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), asks for exactly what the UI needs: the view
-// capability, no egress host, no Secret, and a schema that takes no config.
+// capability, the browser path "/" the core proxies to it (D-81), no egress
+// host, no Secret, and a schema that takes no config.
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -25,7 +28,7 @@ func TestManifest(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParseManifestLabel: %v", err)
 	}
-	want := plugins.Manifest{Capabilities: []plugins.Capability{plugins.CapabilityView}}
+	want := plugins.Manifest{Capabilities: []plugins.Capability{plugins.CapabilityView}, BrowserPath: "/"}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)
 	}
@@ -34,8 +37,19 @@ func TestManifest(t *testing.T) {
 	}
 }
 
-// TestAuthClient checks what the UI presents to the AuthService: the
-// OPENFIEF_AUTH_CALLER_TOKEN token when it is set, outside a cluster.
+// tokenFile writes a synthetic projected token to a file and returns it as
+// the UI reads it.
+func tokenFile(t *testing.T) openfief.TokenFile {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "token")
+	if err := os.WriteFile(path, []byte("synthetic-projected-token\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	return openfief.TokenFile{Path: path}
+}
+
+// TestAuthClient checks what the UI presents to the AuthService: its
+// projected token, read from the token file.
 func TestAuthClient(t *testing.T) {
 	t.Parallel()
 	var got string
@@ -43,12 +57,7 @@ func TestAuthClient(t *testing.T) {
 		got = r.Header.Get("Authorization")
 	}))
 	t.Cleanup(srv.Close)
-	c := authClient(func(name string) string {
-		if name == authCallerEnv {
-			return "local-caller"
-		}
-		return ""
-	})
+	c := authClient(tokenFile(t))
 	req, err := http.NewRequestWithContext(t.Context(), http.MethodGet, srv.URL, http.NoBody)
 	if err != nil {
 		t.Fatal(err)
@@ -60,8 +69,8 @@ func TestAuthClient(t *testing.T) {
 	if err := resp.Body.Close(); err != nil {
 		t.Fatal(err)
 	}
-	if got != "Bearer local-caller" || c.Timeout != coreTimeout {
-		t.Errorf("Authorization = %q, timeout %v; want the caller token and %v", got, c.Timeout, coreTimeout)
+	if got != "Bearer synthetic-projected-token" || c.Timeout != coreTimeout {
+		t.Errorf("Authorization = %q, timeout %v; want the projected token and %v", got, c.Timeout, coreTimeout)
 	}
 }
 
@@ -74,12 +83,7 @@ func TestUploadClient(t *testing.T) {
 		got = r.Header.Get("Authorization")
 	}))
 	t.Cleanup(srv.Close)
-	c := uploadClient(func(name string) string {
-		if name == authCallerEnv {
-			return "local-caller"
-		}
-		return ""
-	})
+	c := uploadClient(tokenFile(t))
 	req, err := http.NewRequestWithContext(t.Context(), http.MethodPost, srv.URL, http.NoBody)
 	if err != nil {
 		t.Fatal(err)
@@ -91,8 +95,8 @@ func TestUploadClient(t *testing.T) {
 	if err := resp.Body.Close(); err != nil {
 		t.Fatal(err)
 	}
-	if got != "Bearer local-caller" || c.Timeout != uploadTimeout {
-		t.Errorf("Authorization = %q, timeout %v; want the caller token and %v", got, c.Timeout, uploadTimeout)
+	if got != "Bearer synthetic-projected-token" || c.Timeout != uploadTimeout {
+		t.Errorf("Authorization = %q, timeout %v; want the projected token and %v", got, c.Timeout, uploadTimeout)
 	}
 }
 

@@ -56,7 +56,7 @@ classDiagram
   class Plugin {
     metadata.name : the instance name
     spec.image : repository@sha256 digest
-    spec.manifest : capabilities, egress, secrets, dataTiers, configSchema
+    spec.manifest : capabilities, egress, secrets, dataTiers, configSchema, browserPath
     spec.config : JSON object
     status.conditions : Ready, ApprovalRequired, SignatureVerified
     status.deployed : the PluginSpec that runs now
@@ -66,7 +66,7 @@ classDiagram
   }
   class PluginGrant {
     metadata.name : same as its Plugin
-    spec : capabilities, egress, secrets, dataTiers
+    spec : capabilities, egress, secrets, dataTiers, browserPaths
     status.conditions : Valid
   }
   class ServiceAccount {
@@ -110,7 +110,7 @@ classDiagram
   Deployment ..> Secret : mounts read-only if granted
 ```
 
-The CRD schema rejects bad input before the operator sees it. Names must be lower-case DNS labels of at most 56 characters starting with a letter, so `plugin-<name>` fits a 63-character Service name. `spec.image` must match `^[^@]+@sha256:[0-9a-f]{64}$`. Capabilities are `connector` or `view`; egress lists hold at most 64 [egress hosts](../glossary.md). The operator then validates everything again in the domain, where rules such as "no wildcard hosts" live, because a CRD schema can't express them all.
+The CRD schema rejects bad input before the operator sees it. Names must be lower-case DNS labels of at most 56 characters starting with a letter, so `plugin-<name>` fits a 63-character Service name. `spec.image` must match `^[^@]+@sha256:[0-9a-f]{64}$`. Capabilities are `connector` or `view`; egress lists hold at most 64 [egress hosts](../glossary.md). A manifest's `browserPath` and a grant's `browserPaths` (at most 8) are paths starting with `/` of at most 256 bytes; the domain checks the rest, such as never claiming a path the core serves itself. The effective one appears in `status.effective.browserPaths`, which is what the core reads to proxy browsers to a view plugin (D-81). The operator then validates everything again in the domain, where rules such as "no wildcard hosts" live, because a CRD schema can't express them all.
 
 The operator never creates a Secret (D-29) and its Role can't even read one: it only names the owner's Secrets in the pod spec. The allow-list ConfigMap has no owner reference; each plugin's key is applied by its own field manager, `openfief-operator/allowlist/<name>`.
 
@@ -267,6 +267,8 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 - **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`, and `status.signature` names the signer and its kind. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. The read API lists it and the built-in UI shows it ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-57**: nothing deploys without a `True` verification; no flag or setting overrides it.
 - **D-58**: **partly.** Deleting a `Plugin` removes its workload (by garbage collection) and its allow-list key. The operator never deletes a `PluginGrant` or a Secret; `openfief plugin uninstall` deletes them ([Plugins](plugins.md#installing-with-the-cli)). The core marks the ledger data of a removed instance when it reads it: an instance with no `Plugin` left is removed ([Read API](read-api.md#installed-plugins-and-removed-instances)).
+- **D-81**: the operator only carries the browser path: `spec.manifest.browserPath`, the grant's `browserPaths`, and the effective one in the status. It compiles nothing new for it: the plugin's NetworkPolicy still admits the core alone, and the core proxies browsers to the plugin ([Built-in UI](ui.md#the-front-door)). The demo's Traefik has no way to the UI any more.
+- **D-92**: the core's NetworkPolicy, not the operator's, allows the Kubernetes API on port 6443 at any address; [Architecture](../architecture.md) explains the risk and how to narrow it.
 - **D-59**: the NetworkPolicy admits ingress only from the core, and the operator publishes the cluster's token-signing public keys in `openfief-sa-jwks`, with which the SDK verifies the core's per-instance TokenRequest tokens.
 - **D-63**: separate `openfief-egress` token, checked by TokenReview and cached. The operator projects it only for plugins with granted egress; `kube.AllowLists` swaps allow-lists atomically and fails closed.
 
@@ -307,7 +309,7 @@ What the tests don't show:
 - From server-side apply's rules, not a test: a re-apply restores the fields the operator owns, but keeps fields another field manager added, such as an extra container, volume or environment variable added with `kubectl edit`. NetworkPolicy rule lists are atomic, so they are restored whole.
 - The cosign tests run against an in-process registry and sigstore-go's virtual Sigstore. No test reads a real registry such as GHCR or a bundle from the public-good instance; `TestTrustedRoot` only checks that the bundled root loads.
 - From reading the code: the signed-image cache lives in memory. If the operator restarts while a plugin's registry is down, the running version's check is `Unknown`, so the plugin is torn down and comes back on a retry after the registry does.
-- The end-to-end suite ([test/e2e](../../test/e2e/main_test.go), `task e2e` on kind or k3d) installs the operator with the demo's manifests and deploys one plugin through it, `nbp-fx` as instance `nbp-e2e`. `task e2e:images` pushes its image to a registry container on the cluster's Docker network ([e2e-images.sh](../../scripts/e2e-images.sh)); the suite signs it there with a key it makes at run time and never writes down, and adds the public key to `openfief-trusted-signers` before the operator starts ([registry_test.go](../../test/e2e/registry_test.go)). The operator reads that registry over plain HTTP because its address is a private IPv4 address, which go-containerregistry allows; GHCR, the keyless CI signature and the public-good trust root are not exercised. The instance's config starts its sync in 2999, so the connector never calls NBP. Not checked end to end: an upgrade waiting for approval, a refused signature, Secrets, and the egress proxy actually forwarding a CONNECT. The UI still runs from a stand-in Deployment, since how browsers reach view plugins is being redesigned.
+- The end-to-end suite ([test/e2e](../../test/e2e/main_test.go), `task e2e` on kind or k3d) installs the operator with the demo's manifests and deploys two plugins through it, `nbp-fx` as instance `nbp-e2e` and the demo's `ui` instance of the built-in UI. `task e2e:images` pushes their images to a registry container on the cluster's Docker network ([e2e-images.sh](../../scripts/e2e-images.sh)); the suite signs them there with a key it makes at run time and never writes down, and adds the public key to `openfief-trusted-signers` before the operator starts ([registry_test.go](../../test/e2e/registry_test.go)). The operator reads that registry over plain HTTP because its address is a private IPv4 address, which go-containerregistry allows; GHCR, the keyless CI signature and the public-good trust root are not exercised. The instance's config starts its sync in 2999, so the connector never calls NBP. Not checked end to end: an upgrade waiting for approval, a refused signature, Secrets, and the egress proxy actually forwarding a CONNECT. The UI runs with its browser path `/`, and the suite reaches it only through the core (D-81).
 
 ## Not built yet
 

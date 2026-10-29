@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"crypto/subtle"
 	"errors"
 	"fmt"
 	"io"
@@ -29,15 +28,6 @@ import (
 	pluginskube "github.com/arkadiuss/openfief/internal/plugins/kube"
 )
 
-// devCallerTokenEnv names the environment variable with the token a local
-// view plugin presents to the AuthService when the core runs outside a
-// cluster, where there are no ServiceAccount tokens to review. In a cluster
-// it is ignored.
-const devCallerEnv = "OPENFIEF_AUTH_CALLER_TOKEN"
-
-// devCallerName is the plugin name a caller with the dev token gets.
-const devCallerName = "local-view"
-
 // rpName is the relying party name browsers show in passkey prompts.
 const rpName = "OpenFief"
 
@@ -51,9 +41,6 @@ type authConfig struct {
 	// DemoSessions turns the demo authenticator on; it also needs the demo
 	// marker in the database.
 	DemoSessions bool
-	// DevCallerToken is OPENFIEF_AUTH_CALLER_TOKEN, used outside a cluster
-	// only; empty refuses every caller there.
-	DevCallerToken string
 }
 
 // stringsFlag is a repeatable string flag.
@@ -95,32 +82,29 @@ func withAuthService(api http.Handler, auth *identityapp.Auth, callers identityc
 }
 
 // callers is who may call the AuthService: view plugins whose token the
-// reviewer accepts, in a cluster, or the dev callers outside one.
+// reviewer accepts. Without a reviewer, outside a cluster, it refuses every
+// caller: no build has a fixed token or another way around authentication
+// (D-84).
 type callers struct {
 	reviewer pluginsapp.TokenReviewer
-	dev      devCallers
 }
 
 // VerifyCaller implements identityconnect.Callers.
 func (c callers) VerifyCaller(ctx context.Context, token string) (string, error) {
 	if c.reviewer == nil {
-		return c.dev.VerifyCaller(ctx, token)
+		return "", fmt.Errorf("%w: not in a Kubernetes cluster", identityconnect.ErrCallerRefused)
 	}
-	return kubeCallers{reviewer: c.reviewer}.VerifyCaller(ctx, token)
+	return kubeCallers(c).VerifyCaller(ctx, token)
 }
 
 // newCallers returns who may call the AuthService: in cluster cl, view
 // plugins proven by their projected ServiceAccount token (audience
-// openfief-core, D-27) through TokenReview, cached; outside one, a local
-// view plugin presenting cfg's dev token, or no one.
-func newCallers(cl *cluster, cfg *authConfig, now func() time.Time, log *slog.Logger) (callers, error) {
+// openfief-core, D-27) through TokenReview, cached; outside one, no one
+// (D-84).
+func newCallers(cl *cluster, now func() time.Time, log *slog.Logger) (callers, error) {
 	if cl == nil {
-		if cfg.DevCallerToken == "" {
-			log.Info("not in a Kubernetes cluster and " + devCallerEnv + " is not set: the AuthService refuses every caller")
-		} else {
-			log.Warn("not in a Kubernetes cluster: the AuthService accepts the " + devCallerEnv + " token as a view plugin")
-		}
-		return callers{dev: devCallers{token: cfg.DevCallerToken}}, nil
+		log.Info("not in a Kubernetes cluster: the AuthService refuses every caller")
+		return callers{}, nil
 	}
 	view := &viewReviewer{
 		next:    pluginskube.NewTokenReviewer(cl.client, plugins.CoreAudience),
@@ -193,20 +177,6 @@ func isView(u *unstructured.Unstructured) bool {
 	}
 	caps, _, err := unstructured.NestedStringSlice(u.Object, "status", "effective", "capabilities")
 	return err == nil && slices.Contains(caps, string(plugins.CapabilityView))
-}
-
-// devCallers accepts the dev token, compared in constant time, outside a
-// cluster; with no token it refuses everyone.
-type devCallers struct {
-	token string
-}
-
-// VerifyCaller implements identityconnect.Callers.
-func (d devCallers) VerifyCaller(_ context.Context, token string) (string, error) {
-	if d.token == "" || subtle.ConstantTimeCompare([]byte(token), []byte(d.token)) != 1 {
-		return "", identityconnect.ErrCallerRefused
-	}
-	return devCallerName, nil
 }
 
 // demoMarker reads the demo marker that cmd/demo-seed writes: a row

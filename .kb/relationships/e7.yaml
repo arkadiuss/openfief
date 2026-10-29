@@ -447,3 +447,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a412e0f36eac
+  - type: executable_for
+    from: SYM-fd-plugins-test-browser-path-needs-effective-view
+    to: TEST-plugins-browser-path
+    created_at: 2026-10-29T12:10:27.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb3fefb7ab39

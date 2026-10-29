@@ -186,6 +186,7 @@ func describe(p *plugins.Permissions) string {
 		{"egress", api.Egress},
 		{"secrets", api.Secrets},
 		{"dataTiers", api.DataTiers},
+		{"browserPaths", api.BrowserPaths},
 	} {
 		if len(f.items) > 0 {
 			parts = append(parts, f.name+": "+strings.Join(f.items, ", "))

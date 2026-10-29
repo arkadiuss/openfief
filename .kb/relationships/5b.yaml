@@ -307,3 +307,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f61946e3e69
+  - type: constrains
+    from: REQ-views-browser-proxy-headers
+    to: FACT-SUBJECT-058686C92437C05A
+    created_at: 2026-10-29T12:02:12.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3ed2e82abd6
+  - type: requires_property
+    from: REQ-views-browser-proxy-headers
+    to: FACT-PROP-9540BE3755B3AFC2
+    created_at: 2026-10-29T12:02:12.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8df3845e91d9
+  - type: specified_by
+    from: REQ-views-browser-proxy-headers
+    to: SCEN-views-browser-proxy-headers
+    created_at: 2026-10-29T12:02:13.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ff698a3822c
+  - type: implements
+    from: SYM-fd-identity-cli-parse
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:03:34.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76ece7d5996c
+  - type: covered_by
+    from: SYM-fd-identity-cli-parse
+    to: TEST-identity-cli
+    created_at: 2026-10-29T12:03:34.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-570edfc20f3b
+  - type: implements
+    from: SYM-fd-identity-kube-pod-ready
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:04:21.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-debed80d0a7a
+  - type: covered_by
+    from: SYM-fd-identity-kube-pod-ready
+    to: TEST-identity-kube-core-access
+    created_at: 2026-10-29T12:04:21.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07c97e05abfc

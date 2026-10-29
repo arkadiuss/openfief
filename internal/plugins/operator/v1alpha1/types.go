@@ -96,6 +96,14 @@ type Manifest struct {
 	// +kubebuilder:validation:Type=object
 	// +kubebuilder:pruning:PreserveUnknownFields
 	ConfigSchema *runtime.RawExtension `json:"configSchema,omitempty"`
+
+	// BrowserPath is the path prefix a view plugin serves to browsers: the
+	// core, the only entry point for browsers, proxies it to the plugin
+	// (D-81). "/" means every path the core doesn't serve itself.
+	// +optional
+	// +kubebuilder:validation:MaxLength=256
+	// +kubebuilder:validation:Pattern=`^/[-a-z0-9_./]*$`
+	BrowserPath string `json:"browserPath,omitempty"`
 }
 
 // SecretMount asks for one Secret to be mounted read-only at MountPath.
@@ -136,6 +144,13 @@ type Permissions struct {
 	// +kubebuilder:validation:items:MaxLength=32
 	// +listType=set
 	DataTiers []string `json:"dataTiers,omitempty"`
+	// BrowserPaths lists path prefixes a view plugin serves to browsers
+	// through the core (D-81).
+	// +optional
+	// +kubebuilder:validation:MaxItems=8
+	// +kubebuilder:validation:items:MaxLength=256
+	// +listType=set
+	BrowserPaths []string `json:"browserPaths,omitempty"`
 }
 
 // PluginStatus is what the operator observed and did.

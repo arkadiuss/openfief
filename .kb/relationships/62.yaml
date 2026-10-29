@@ -447,20 +447,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-495767bc3e29
-  - type: implements
-    from: SYM-uiplugin-caller-token-token
-    to: REQ-ui-core-credentials
-    created_at: 2026-10-28T20:42:30.761Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5cda723b167b
-  - type: covered_by
-    from: SYM-uiplugin-caller-token-token
-    to: TEST-ui-plugin
-    created_at: 2026-10-28T20:42:30.801Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-982ea0289615
   - type: executable_for
     from: SYM-views-test-helper-price-path
     to: TEST-views-performance-properties
@@ -580,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2304e4453fa
+  - type: executable_for
+    from: SYM-fd-browserproxy-test-helper-fake-tokens
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:11:09.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c354612e293

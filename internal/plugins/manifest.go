@@ -58,14 +58,19 @@ type SecretMount struct {
 const ReservedMountPath = "/var/run/secrets"
 
 // Manifest is what a plugin declares: capabilities, egress hosts, secrets,
-// data tiers and config schema (D-11). The config schema is a JSON Schema
-// document kept as bytes; checking a config against it is an adapter's job.
+// data tiers, config schema (D-11) and, for a view plugin that serves
+// browsers, the path prefix the core proxies to it (D-81). The config schema
+// is a JSON Schema document kept as bytes; checking a config against it is
+// an adapter's job.
 type Manifest struct {
 	Capabilities []Capability
 	Egress       []EgressHost
 	Secrets      []SecretMount
 	DataTiers    []DataTier
 	ConfigSchema []byte
+	// BrowserPath is the path prefix the plugin serves to browsers through
+	// the core, such as "/"; empty when it serves no browser.
+	BrowserPath string
 }
 
 // Validate returns every problem in m, each a *FieldError, joined; or nil.
@@ -78,6 +83,7 @@ func (m *Manifest) Validate() error {
 	errs = append(errs, validateEgress(m.Egress)...)
 	errs = append(errs, validateSecretMounts(m.Secrets)...)
 	errs = append(errs, validateDataTiers(m.DataTiers)...)
+	errs = append(errs, validateManifestBrowserPath(m)...)
 	if len(m.ConfigSchema) > 0 && !json.Valid(m.ConfigSchema) {
 		errs = append(errs, &FieldError{Field: "configSchema", Err: ErrInvalidJSON})
 	}
@@ -95,6 +101,9 @@ func (m *Manifest) Requested() Permissions {
 		Egress:       m.Egress,
 		Secrets:      names,
 		DataTiers:    m.DataTiers,
+	}
+	if m.BrowserPath != "" {
+		p.BrowserPaths = []string{m.BrowserPath}
 	}
 	return p.sorted()
 }
