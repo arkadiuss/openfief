@@ -21,15 +21,18 @@ var ErrBatchNotOpen = errors.New("import batch is not open")
 // ErrUnknownMode reports a stored mode that is not an ingest mode.
 var ErrUnknownMode = errors.New("unknown ingest mode")
 
-// Store is app.SyncStore and app.BindingStore in PostgreSQL, in the ingest
-// schema that Migrate creates.
+// Store is app.SyncStore, app.BindingStore, app.AccountBindings and
+// app.BatchRecorder in PostgreSQL, in the ingest schema that Migrate
+// creates.
 type Store struct {
 	pool *pgxpool.Pool
 }
 
 var (
-	_ app.SyncStore    = (*Store)(nil)
-	_ app.BindingStore = (*Store)(nil)
+	_ app.SyncStore       = (*Store)(nil)
+	_ app.BindingStore    = (*Store)(nil)
+	_ app.BatchRecorder   = (*Store)(nil)
+	_ app.AccountBindings = (*Store)(nil)
 )
 
 // New returns the store over pool. Run Migrate first.
@@ -173,6 +176,23 @@ func (s *Store) FailSync(ctx context.Context, instance string, id ingest.BatchID
 	})
 	if err != nil {
 		return fmt.Errorf("failing batch %s of %s: %w", id, instance, err)
+	}
+	return nil
+}
+
+// RecordBatch records b, a completed batch of instance that is not a sync,
+// such as an upload or a manual entry, in the batch history: started and
+// finished now, after one attempt, with its counts. Its source must be one
+// the history knows (sync, file, upload, entry), and recording an ID again
+// is an error.
+func (s *Store) RecordBatch(ctx context.Context, instance string, b *ingest.Batch) error {
+	if _, err := s.pool.Exec(ctx, `
+		INSERT INTO ingest.import_batches (id, instance, source, mode, started_at, state, attempts, last_attempt_at,
+			institution, transactions, assertions, new, new_versions, unchanged, failed_assertions, problems, finished_at)
+		VALUES ($1, $2, $3, $4, now(), 'completed', 1, now(), $5, $6, $7, $8, $9, $10, $11, $12, now())`,
+		string(b.ID), instance, b.Source, b.Mode.String(), string(b.Institution), b.Transactions, b.Assertions,
+		b.Imported.New, b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems)); err != nil {
+		return fmt.Errorf("recording batch %s of %s: %w", b.ID, instance, err)
 	}
 	return nil
 }

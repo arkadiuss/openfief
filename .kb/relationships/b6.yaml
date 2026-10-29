@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f851186626d6
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-file-refuser
+    to: TEST-ingest-connectrpc-files
+    created_at: 2026-10-29T05:14:53.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-230f9f6dcd71

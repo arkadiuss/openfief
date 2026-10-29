@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1163f6260e81
+  - type: implements
+    from: SYM-ingestv1-upload-statement-response-get-unchanged
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:22:53.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91ad76ac087e
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-response-get-unchanged
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:22:53.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e73d61a8b0

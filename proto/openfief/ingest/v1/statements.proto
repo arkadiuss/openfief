@@ -1,0 +1,118 @@
+// OpenFief's statement upload contract (docs/DESIGN.md D-7, D-49).
+//
+// The owner uploads a statement file for an account in the built-in UI,
+// which streams it to the core (D-49). The core hands it to the connector
+// instance bound to the account, through the connector contract's
+// ImportFile (proto/openfief/connector/v1/connector.proto), and imports what
+// that connector delivers as one import batch, like any other: data enters
+// the ledger only through a connector's ingest path (D-7). The connector
+// decides which files it takes. The core serves StatementService to VIEW
+// plugins only, next to the AuthService. It is not part of the public read
+// API (D-6), which stays read-only.
+//
+// Calling conventions are the BondLotService's
+// (proto/openfief/ingest/v1/bond_lots.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - The header carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED. The core checks them before it reads the file.
+// - A stream without a header first, a second header, no mode, an empty
+//   file, or a file the connector refuses (it can't read it, or it isn't a
+//   statement it takes) fails with INVALID_ARGUMENT and the reason, and
+//   nothing is imported. A file larger than the core's limit (64 MiB) fails
+//   with RESOURCE_EXHAUSTED.
+// - An account with no connector instance bound to it, or with more than
+//   one, fails with FAILED_PRECONDITION; so does a bound connector that
+//   takes no files (its UNIMPLEMENTED). A connector that can't be reached
+//   fails with UNAVAILABLE, and the owner may simply upload the file again:
+//   importing the same statement again changes nothing (D-18).
+syntax = "proto3";
+
+package openfief.ingest.v1;
+
+// StatementService takes statement files the owner uploads.
+service StatementService {
+  // UploadStatement streams one statement file: the first message carries
+  // the header, every later one the file's next bytes, in order. The core
+  // hands the file to the connector bound to the account and answers with
+  // the import batch it became.
+  rpc UploadStatement(stream UploadStatementRequest) returns (UploadStatementResponse);
+}
+
+// Mode says what an import batch takes from the statement (D-23).
+enum Mode {
+  MODE_UNSPECIFIED = 0;
+  // The statement seeds the account at go-live: opening lots and opening
+  // cash, plus balance assertions. An account is seeded only once.
+  MODE_OPENING = 1;
+  // Transactions from go-live on, plus balance assertions.
+  MODE_TRANSACTIONS = 2;
+}
+
+// StatementHeader describes the upload.
+message StatementHeader {
+  string origin = 1;
+  string session_token = 2;
+  // The OpenFief account the statement is for.
+  string account_id = 3;
+  // The file's name as the owner's browser gave it, such as
+  // "statement.xml"; only a hint for the connector, never a path. The core
+  // keeps its last path element, without control characters, cut to 255
+  // bytes.
+  string file_name = 4;
+  Mode mode = 5;
+}
+
+message UploadStatementRequest {
+  oneof part {
+    // The first message's part.
+    StatementHeader header = 1;
+    // Every later message's part: the next bytes of the file.
+    bytes chunk = 2;
+  }
+}
+
+// ProblemKind says why a statement row was left out of the ledger.
+enum ProblemKind {
+  PROBLEM_KIND_UNSPECIFIED = 0;
+  // The row cannot be booked yet, such as an option trade.
+  PROBLEM_KIND_UNSUPPORTED = 1;
+  // The row was left out on purpose, such as a summary row.
+  PROBLEM_KIND_SKIPPED = 2;
+}
+
+// Problem is a statement row the mapping left out of the ledger, with its
+// reason (an ingest problem). Its text never carries amounts or account
+// numbers.
+message Problem {
+  ProblemKind kind = 1;
+  // Where the row is in the statement.
+  string ref = 2;
+  string reason = 3;
+}
+
+message UploadStatementResponse {
+  // The import batch the statement came in by.
+  string batch_id = 1;
+  // The institution the connector says the statement is from.
+  string institution = 2;
+  // How many transactions and balance assertions the connector mapped.
+  int32 transactions = 3;
+  int32 assertions = 4;
+  // How many of the transactions were new, new versions of ones imported
+  // before, or unchanged.
+  int32 new = 5;
+  int32 new_versions = 6;
+  int32 unchanged = 7;
+  // How many balance assertions the derived balances did not match: each
+  // is a flagged error (D-18).
+  int32 failed_assertions = 8;
+  // The first 100 ingest problems, in statement order.
+  repeated Problem problems = 9;
+  // How many ingest problems there were in all.
+  int32 problems_total = 10;
+}

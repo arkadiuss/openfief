@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb76c2827cf1
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-file-bindings-bound-instances
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:13:12.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35783de22ae8
+  - type: implements
+    from: SYM-ingestv1connect-unimplemented-statement-service-handler
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:16:38.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dded0f5ba567
+  - type: covered_by
+    from: SYM-ingestv1connect-unimplemented-statement-service-handler
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:16:39.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9233c45da75c

@@ -391,3 +391,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d91e47cb78e
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-broken-reader
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:10:32.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0b477e77cc5

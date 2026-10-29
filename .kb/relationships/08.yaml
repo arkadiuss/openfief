@@ -272,3 +272,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39cf86e97085
+  - type: implements
+    from: SYM-ingest-app-bound-instance
+    to: REQ-ingest-statement-upload-handoff
+    created_at: 2026-10-29T05:09:41.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-558310b97bee
+  - type: covered_by
+    from: SYM-ingest-app-bound-instance
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:09:41.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-587383cfd7f0
+  - type: implements
+    from: SYM-ingestv1-upload-statement-response-get-transactions
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:22:26.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bfff07bf609
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-response-get-transactions
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:22:26.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb74cbe8f283

@@ -391,3 +391,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-636a7bb3a798
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-view-streams
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:13:22.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ac738041bd2

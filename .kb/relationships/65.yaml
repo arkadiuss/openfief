@@ -251,3 +251,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5995eea0f758
+  - type: executable_for
+    from: SYM-core-test-helper-check-upload-scoped
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:09:24.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c845f5ddd44f

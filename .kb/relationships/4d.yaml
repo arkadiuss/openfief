@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1cd8af33e926
+  - type: executable_for
+    from: SYM-identity-connectapi-test-caller-interceptor-streams
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-29T05:09:29.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afa12f77f135

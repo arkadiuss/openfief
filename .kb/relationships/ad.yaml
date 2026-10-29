@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba0d7ada9427
+  - type: implements
+    from: SYM-ingest-app-capped-reader-read
+    to: REQ-ingest-statement-upload-limits
+    created_at: 2026-10-29T05:10:27.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c935b3da4d69
+  - type: covered_by
+    from: SYM-ingest-app-capped-reader-read
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:10:27.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51bf27031e88

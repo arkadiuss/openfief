@@ -74,20 +74,27 @@ func (c *CallerInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc 
 	}
 }
 
-// WrapStreamingClient leaves client streams alone: the service has none.
+// WrapStreamingClient leaves client streams alone: it guards handlers.
 func (*CallerInterceptor) WrapStreamingClient(next connect.StreamingClientFunc) connect.StreamingClientFunc {
 	return next
 }
 
-// WrapStreamingHandler refuses every stream: the service has none.
-func (*CallerInterceptor) WrapStreamingHandler(connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
-	return func(context.Context, connect.StreamingHandlerConn) error {
-		return connect.NewError(connect.CodeUnimplemented, errNoStreams)
+// WrapStreamingHandler refuses a streaming call, such as a statement
+// upload (D-49), from a caller the port refuses, before the handler reads
+// any of it, like WrapUnary.
+func (c *CallerInterceptor) WrapStreamingHandler(next connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
+	return func(ctx context.Context, conn connect.StreamingHandlerConn) error {
+		plugin, refused := c.verify(ctx, conn.RequestHeader().Get("Authorization"))
+		if refused != nil {
+			c.log.LogAttrs(ctx, slog.LevelWarn, "auth call refused", slog.String("procedure", conn.Spec().Procedure))
+			return refused
+		}
+		err := next(ctx, conn)
+		c.log.LogAttrs(ctx, slog.LevelInfo, "auth call", slog.String("procedure", conn.Spec().Procedure),
+			slog.String("plugin", plugin), slog.String("code", codeOf(err)))
+		return err
 	}
 }
-
-// errNoStreams reports a streaming call.
-var errNoStreams = errors.New("AuthService has no streaming methods")
 
 // verify returns the plugin the bearer token of header proves, or a
 // permission_denied (refused) or internal (not checkable) error.

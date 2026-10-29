@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f679b42dda07
+  - type: implements
+    from: SYM-ingestv1-problem-proto-message
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:21:03.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccd9ec82068f
+  - type: covered_by
+    from: SYM-ingestv1-problem-proto-message
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:21:03.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-786cda8e650c

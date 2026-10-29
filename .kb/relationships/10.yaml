@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-511471c609f3
+  - type: implements
+    from: SYM-ingestv1-statement-header-get-account-id
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:19:10.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1278d46ec950
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-get-account-id
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:19:10.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0333aec9036b

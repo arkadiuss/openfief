@@ -265,3 +265,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6fd418de9380
+  - type: constrains
+    from: REQ-ingest-statement-upload-handoff
+    to: FACT-SUBJECT-6E456E81146115C7
+    created_at: 2026-10-29T04:58:22.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ddeaa25b367
+  - type: requires_property
+    from: REQ-ingest-statement-upload-handoff
+    to: FACT-PROP-C242E41F62FE1479
+    created_at: 2026-10-29T04:58:22.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28791da149e8
+  - type: specified_by
+    from: REQ-ingest-statement-upload-handoff
+    to: SCEN-ingest-statement-upload-handoff
+    created_at: 2026-10-29T04:58:22.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93db063e9262

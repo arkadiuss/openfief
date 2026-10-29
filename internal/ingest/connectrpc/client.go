@@ -67,26 +67,37 @@ func (c *Client) Sync(ctx context.Context, instance string, id ingest.BatchID, m
 }
 
 // ImportFile streams file to instance as batch id: a header, then the
-// contents in chunks of ChunkSize bytes.
+// contents in chunks of ChunkSize bytes. A file that can't be read stops
+// the call, so the connector maps nothing, and the read's error is
+// returned. The connector's INVALID_ARGUMENT wraps app.ErrEntryRefused with
+// its reason, its UNIMPLEMENTED app.ErrNoEntries, and an instance that
+// can't be reached app.ErrConnectorUnavailable.
 func (c *Client) ImportFile(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, file app.NamedFile) (app.Delivery, error) {
 	call, err := c.service(ctx, instance)
 	if err != nil {
-		return app.Delivery{}, err
+		return app.Delivery{}, fmt.Errorf("%w: %w", app.ErrConnectorUnavailable, err)
 	}
 	m, err := modeTo(mode)
 	if err != nil {
 		return app.Delivery{}, err
 	}
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
 	stream := call.svc.ImportFile(ctx)
 	stream.RequestHeader().Set("Authorization", call.auth)
 	header := &connectorv1.FileHeader{BatchId: string(id), Mode: m, FileName: file.Name, MediaType: file.MediaType}
 	sendErr := stream.Send(&connectorv1.ImportFileRequest{Part: &connectorv1.ImportFileRequest_Header{Header: header}})
 	if sendErr == nil {
 		sendErr = sendChunks(stream, file.Contents)
+		if readErr, unread := errors.AsType[*readError](sendErr); unread {
+			cancel()
+			_, closeErr := stream.CloseAndReceive()
+			return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, errors.Join(readErr.err, ignoreCanceled(closeErr)))
+		}
 	}
 	resp, err := stream.CloseAndReceive()
 	if err != nil {
-		return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, errors.Join(err, ignoreEOF(sendErr)))
+		return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, errors.Join(entryError(err), ignoreEOF(sendErr)))
 	}
 	if sendErr != nil {
 		return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, sendErr)
@@ -135,7 +146,7 @@ func entryError(err error) error {
 
 // sendChunks sends src's bytes on stream in chunks of ChunkSize. A send that
 // fails with io.EOF means the connector answered early; CloseAndReceive
-// returns its answer.
+// returns its answer. A failed read is a *readError.
 func sendChunks(stream *connect.ClientStreamForClient[connectorv1.ImportFileRequest, connectorv1.ImportFileResponse], src io.Reader) error {
 	buf := make([]byte, ChunkSize)
 	for {
@@ -150,9 +161,28 @@ func sendChunks(stream *connect.ClientStreamForClient[connectorv1.ImportFileRequ
 			return nil
 		}
 		if err != nil {
-			return fmt.Errorf("read file: %w", err)
+			return &readError{err: fmt.Errorf("read file: %w", err)}
 		}
 	}
+}
+
+// readError is a file that could not be read while it was sent.
+type readError struct {
+	err error
+}
+
+// Error returns the read's error.
+func (r *readError) Error() string { return r.err.Error() }
+
+// Unwrap returns the read's error.
+func (r *readError) Unwrap() error { return r.err }
+
+// ignoreCanceled drops the error of a call the client cancelled itself.
+func ignoreCanceled(err error) error {
+	if connect.CodeOf(err) == connect.CodeCanceled {
+		return nil
+	}
+	return err
 }
 
 // ignoreEOF drops a send error that only says the stream was closed.

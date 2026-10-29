@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68a1eb22bf67
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-client-import-file-stops-on-read-error
+    to: TEST-ingest-connectrpc-files
+    created_at: 2026-10-29T05:15:22.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73f5469657d3
+  - type: implements
+    from: SYM-ingestv1-statement-header-reset
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:18:27.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a788a75a394
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-reset
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:18:27.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a18ea2d9af56

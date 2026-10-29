@@ -49,9 +49,9 @@ func authClient(srvURL string, client *http.Client, token string) authAPI {
 }
 
 // enrollCmd runs core enroll-link as the CLI does and returns its output.
-func enrollCmd(t *testing.T, dsn string, args ...string) string {
+func enrollCmd(t *testing.T, dsn string) string {
 	t.Helper()
-	cmd, err := parseArgs(append([]string{"enroll-link"}, args...), func(string) string { return dsn })
+	cmd, err := parseArgs([]string{"enroll-link"}, func(string) string { return dsn })
 	if err != nil {
 		t.Fatalf("parseArgs: %v", err)
 	}

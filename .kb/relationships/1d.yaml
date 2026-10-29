@@ -384,3 +384,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92316cc08e65
+  - type: executable_for
+    from: SYM-core-test-helper-flex-statement
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:08:54.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f4487c3e9b8
+  - type: implements
+    from: SYM-ingestv1-problem-descriptor
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:21:15.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c858ea574151
+  - type: covered_by
+    from: SYM-ingestv1-problem-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:21:15.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b7d31cce22f

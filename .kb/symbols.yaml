@@ -71460,3 +71460,1935 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-plugins
+  - id: SYM-core-entry-connectors
+    title: entryConnectors
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:11.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-statements
+      - type: implements
+        target: REQ-ingest-statement-upload-handoff
+  - id: SYM-core-new-uploads
+    title: newUploads
+    sourceFile: cmd/core/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:17.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-with-statement-service
+    title: withStatementService
+    sourceFile: cmd/core/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:23.413Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-core-test-helper-flex-connector
+    title: flexConnector
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:28.352Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-flex-connector-import-file
+    title: flexConnector.ImportFile
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:34.734Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-statement-api
+    title: statementAPI
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:40.911Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-upload-statement
+    title: uploadStatement
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:46.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-flex-statement
+    title: flexStatement
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:52.892Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-statement-service
+    title: TestStatementService
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:08:58.991Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-check-upload-twice
+    title: checkUploadTwice
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:05.232Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-check-upload-recorded
+    title: checkUploadRecorded
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:10.813Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-check-upload-refusals
+    title: checkUploadRefusals
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:16.502Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-check-upload-scoped
+    title: checkUploadScoped
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:22.580Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-identity-connectapi-test-caller-interceptor-streams
+    title: TestCallerInterceptorStreams
+    sourceFile: internal/identity/connectapi/interceptor_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:27.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-ingest-app-batch-recorder
+    title: BatchRecorder
+    sourceFile: internal/ingest/app/bondlots.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:33.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-recorded-batches
+  - id: SYM-ingest-app-bound-instance
+    title: boundInstance
+    sourceFile: internal/ingest/app/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:40.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-statement-upload-handoff
+  - id: SYM-ingest-app-test-helper-fake-recorder
+    title: fakeRecorder
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:45.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-fake-recorder-record-batch
+    title: fakeRecorder.RecordBatch
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:51.580Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-uploads
+    title: Uploads
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:09:56.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-statement-upload-handoff
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-app-uploads-upload
+    title: Uploads.Upload
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:02.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-statement-upload-handoff
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-app-uploads-prepare
+    title: Uploads.prepare
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:08.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-app-uploads-max-bytes
+    title: Uploads.maxBytes
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:14.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-app-capped-reader
+    title: cappedReader
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:19.719Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-app-capped-reader-read
+    title: cappedReader.Read
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:25.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-app-test-helper-broken-reader
+    title: brokenReader
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:30.838Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-broken-reader-read
+    title: brokenReader.Read
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:36.704Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-uploads
+    title: uploads
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:42.566Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-file-delivery
+    title: fileDelivery
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:48.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-uploads-upload
+    title: TestUploadsUpload
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:10:55.114Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-handed-file
+    title: handedFile
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:01.716Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-check-uploaded
+    title: checkUploaded
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:07.641Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-bool-int
+    title: boolInt
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:13.398Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-upload-refusal
+    title: uploadRefusal
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:19.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-fine
+    title: fine
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:25.201Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-but
+    title: but
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:30.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-uploads-upload-refuses
+    title: TestUploadsUploadRefuses
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:36.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-connectapi-test-helper-recorder
+    title: recorder
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:41.590Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-helper-recorder-record-batch
+    title: recorder.RecordBatch
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:47.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-new-statements
+    title: NewStatements
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:53.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-statements
+    title: statements
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:11:58.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-statements-upload-statement
+    title: statements.UploadStatement
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:04.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-statements-fail
+    title: statements.fail
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:10.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-receive-code
+    title: receiveCode
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:16.846Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-chunk-reader
+    title: chunkReader
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:21.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-chunk-reader-read
+    title: chunkReader.Read
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:27.121Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-mode-from
+    title: modeFrom
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:33.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-upload-response
+    title: uploadResponse
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:39.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-problem-kind-to
+    title: problemKindTo
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:45.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-connectapi-test-helper-synthetic-statement
+    title: syntheticStatement
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:50.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-file-caller
+    title: fileCaller
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:12:55.044Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-file-caller-import-file
+    title: fileCaller.ImportFile
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:01.005Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-file-bindings
+    title: fileBindings
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:05.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-file-bindings-bound-instances
+    title: fileBindings.BoundInstances
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:11.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-file-bindings-bound-accounts
+    title: fileBindings.BoundAccounts
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:16.476Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-view-streams
+    title: viewStreams
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:21.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-view-streams-wrap-unary
+    title: viewStreams.WrapUnary
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:26.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-view-streams-wrap-streaming-client
+    title: viewStreams.WrapStreamingClient
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:32.529Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-view-streams-wrap-streaming-handler
+    title: viewStreams.WrapStreamingHandler
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:37.838Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-statements-client
+    title: statementsClient
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:43.593Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-new-statements-client
+    title: newStatementsClient
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:49.475Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-header
+    title: header
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:13:55.199Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-header-part
+    title: headerPart
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:00.784Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-chunk-part
+    title: chunkPart
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:06.783Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-helper-upload
+    title: upload
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:12.848Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-upload-statement
+    title: TestUploadStatement
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:18.700Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-upload-statement-refusals
+    title: TestUploadStatementRefusals
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:24.939Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectrpc-read-error
+    title: readError
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:29.716Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-files
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-connectrpc-read-error-error
+    title: readError.Error
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:35.606Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-files
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-connectrpc-read-error-unwrap
+    title: readError.Unwrap
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:41.535Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-files
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-connectrpc-ignore-canceled
+    title: ignoreCanceled
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:46.915Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-files
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-connectrpc-test-helper-file-refuser
+    title: fileRefuser
+    sourceFile: internal/ingest/connectrpc/files_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:51.586Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-files
+  - id: SYM-ingest-connectrpc-test-helper-file-refuser-import-file
+    title: fileRefuser.ImportFile
+    sourceFile: internal/ingest/connectrpc/files_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:14:57.822Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-files
+  - id: SYM-ingest-connectrpc-test-helper-broken-file
+    title: brokenFile
+    sourceFile: internal/ingest/connectrpc/files_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:03.279Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-files
+  - id: SYM-ingest-connectrpc-test-helper-broken-file-read
+    title: brokenFile.Read
+    sourceFile: internal/ingest/connectrpc/files_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:09.483Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-files
+  - id: SYM-ingest-connectrpc-test-client-import-file-refusals
+    title: TestClientImportFileRefusals
+    sourceFile: internal/ingest/connectrpc/files_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:15.256Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-files
+  - id: SYM-ingest-connectrpc-test-client-import-file-stops-on-read-error
+    title: TestClientImportFileStopsOnReadError
+    sourceFile: internal/ingest/connectrpc/files_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:20.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-files
+  - id: SYM-ingest-file-name-hint
+    title: FileNameHint
+    sourceFile: internal/ingest/file.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:26.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-file
+      - type: implements
+        target: REQ-ingest-statement-upload-limits
+  - id: SYM-ingest-test-file-name-hint
+    title: TestFileNameHint
+    sourceFile: internal/ingest/file_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:31.575Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-file
+  - id: SYM-ingest-postgres-store-record-batch
+    title: Store.RecordBatch
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:37.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-recorded-batches
+  - id: SYM-ingest-postgres-test-helper-recorded-row
+    title: recordedRow
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:44.429Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingest-postgres-test-record-batch
+    title: TestRecordBatch
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:51.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ingestv1connect-statement-service-client
+    title: StatementServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/statements.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:15:59.081Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1connect-new-statement-service-client
+    title: NewStatementServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/statements.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:16:06.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1connect-statement-service-client-upload-statement
+    title: statementServiceClient.UploadStatement
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/statements.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:16:19.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1connect-statement-service-handler
+    title: StatementServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/statements.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:16:26.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1connect-new-statement-service-handler
+    title: NewStatementServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/statements.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:16:32.715Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1connect-unimplemented-statement-service-handler
+    title: UnimplementedStatementServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/statements.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:16:37.308Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1connect-unimplemented-statement-service-handler-upload-statement
+    title: UnimplementedStatementServiceHandler.UploadStatement
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/statements.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:16:44.212Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-mode
+    title: Mode
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:16:49.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-mode-enum
+    title: Mode.Enum
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:16:55.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-mode-string
+    title: Mode.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:02.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-mode-descriptor
+    title: Mode.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:11.439Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-mode-type
+    title: Mode.Type
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:19.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-mode-number
+    title: Mode.Number
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:28.208Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-mode-enum-descriptor
+    title: Mode.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:34.192Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-kind
+    title: ProblemKind
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:38.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-kind-enum
+    title: ProblemKind.Enum
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:44.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-kind-string
+    title: ProblemKind.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:50.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-kind-descriptor
+    title: ProblemKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:17:56.859Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-kind-type
+    title: ProblemKind.Type
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:03.280Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-kind-number
+    title: ProblemKind.Number
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:09.011Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-kind-enum-descriptor
+    title: ProblemKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:14.646Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header
+    title: StatementHeader
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:19.310Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-reset
+    title: StatementHeader.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:24.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-string
+    title: StatementHeader.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:30.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-proto-message
+    title: StatementHeader.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:37.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-proto-reflect
+    title: StatementHeader.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:44.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-descriptor
+    title: StatementHeader.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:50.365Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-get-origin
+    title: StatementHeader.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:18:56.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-get-session-token
+    title: StatementHeader.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:02.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-get-account-id
+    title: StatementHeader.GetAccountId
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:09.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-get-file-name
+    title: StatementHeader.GetFileName
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:14.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-statement-header-get-mode
+    title: StatementHeader.GetMode
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:20.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request
+    title: UploadStatementRequest
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:25.709Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request-reset
+    title: UploadStatementRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:32.810Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request-string
+    title: UploadStatementRequest.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:39.047Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request-proto-message
+    title: UploadStatementRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:45.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request-proto-reflect
+    title: UploadStatementRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:50.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request-descriptor
+    title: UploadStatementRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:19:57.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request-get-part
+    title: UploadStatementRequest.GetPart
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:03.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request-get-header
+    title: UploadStatementRequest.GetHeader
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:09.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request-get-chunk
+    title: UploadStatementRequest.GetChunk
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:14.655Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-is-upload-statement-request_part
+    title: isUploadStatementRequest_Part
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:20.253Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request_header
+    title: UploadStatementRequest_Header
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:25.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request_chunk
+    title: UploadStatementRequest_Chunk
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:29.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request_header-is-upload-statement-request_part
+    title: UploadStatementRequest_Header.isUploadStatementRequest_Part
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:35.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-request_chunk-is-upload-statement-request_part
+    title: UploadStatementRequest_Chunk.isUploadStatementRequest_Part
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:40.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem
+    title: Problem
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:44.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-reset
+    title: Problem.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:50.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-string
+    title: Problem.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:20:55.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-proto-message
+    title: Problem.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:01.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-proto-reflect
+    title: Problem.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:07.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-descriptor
+    title: Problem.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:13.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-get-kind
+    title: Problem.GetKind
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:19.359Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-get-ref
+    title: Problem.GetRef
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:25.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-problem-get-reason
+    title: Problem.GetReason
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:33.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response
+    title: UploadStatementResponse
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:39.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-reset
+    title: UploadStatementResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:44.911Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-string
+    title: UploadStatementResponse.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:50.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-proto-message
+    title: UploadStatementResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:21:55.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-proto-reflect
+    title: UploadStatementResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:01.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-descriptor
+    title: UploadStatementResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:06.759Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-batch-id
+    title: UploadStatementResponse.GetBatchId
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:12.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-institution
+    title: UploadStatementResponse.GetInstitution
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:18.666Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-transactions
+    title: UploadStatementResponse.GetTransactions
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:24.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-assertions
+    title: UploadStatementResponse.GetAssertions
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:31.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-new
+    title: UploadStatementResponse.GetNew
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:38.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-new-versions
+    title: UploadStatementResponse.GetNewVersions
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:45.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-unchanged
+    title: UploadStatementResponse.GetUnchanged
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:51.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-failed-assertions
+    title: UploadStatementResponse.GetFailedAssertions
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:22:57.239Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-problems
+    title: UploadStatementResponse.GetProblems
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:23:03.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-upload-statement-response-get-problems-total
+    title: UploadStatementResponse.GetProblemsTotal
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:23:10.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-file_openfief_ingest_v1_statements_proto_raw-desc-gzip
+    title: file_openfief_ingest_v1_statements_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:23:17.552Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-init-statements-pb
+    title: init
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:23:24.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-file_openfief_ingest_v1_statements_proto_init
+    title: file_openfief_ingest_v1_statements_proto_init
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:23:31.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1-x-statements-pb
+    title: x
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:23:37.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service
+  - id: SYM-ingestv1connect-statement-service-client-impl
+    title: statementServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/statements.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:30:03.200Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-statement-service

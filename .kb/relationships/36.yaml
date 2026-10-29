@@ -328,3 +328,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58401f7796d7
+  - type: implements
+    from: SYM-core-with-statement-service
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:08:25.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e5d4d504474
+  - type: implements
+    from: SYM-core-with-statement-service
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T05:08:25.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03480ba8a422
+  - type: covered_by
+    from: SYM-core-with-statement-service
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:08:25.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ea74cdb984e

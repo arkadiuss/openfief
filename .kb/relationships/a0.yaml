@@ -342,3 +342,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-615c3bb33c9e
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-file-delivery
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:10:50.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15b8289a55e3
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_statements_proto_init
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:23:33.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbacc2cdd36d
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_statements_proto_init
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:23:33.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70b16114420a

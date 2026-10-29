@@ -28,7 +28,7 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 4. **How the owner's entries reach the core.**
    - *Problem:* D-52 says the model portfolio is entered in the UI and handed to the core "like manual bond lots" (D-49), but no decision gives the shape of that path.
-   - *Today:* the core serves `ModelPortfolioService` and `BondLotService` next to the AuthService. Only view plugins may call them (the AuthService's caller check), and each call carries an owner-scope session for an allowed origin. The read API stays read-only. Statement uploads are being built the same way.
+   - *Today:* the core serves `ModelPortfolioService` and `BondLotService` next to the AuthService. Only view plugins may call them (the AuthService's caller check), and each call carries an owner-scope session for an allowed origin. The read API stays read-only. Statement uploads (`StatementService`) work the same way.
    - *Options:* keep this; or one owner write service for all such entries; or something else.
 
 5. **The first passkey from the `openfief` CLI.**

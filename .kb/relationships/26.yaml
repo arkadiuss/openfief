@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2250eaf43fbd
+  - type: executable_for
+    from: SYM-ingest-app-test-uploads-upload-refuses
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:11:38.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47b452b199f5

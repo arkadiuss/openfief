@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9706fc364a64
+  - type: implements
+    from: SYM-ingest-connectrpc-read-error-error
+    to: REQ-ingest-statement-upload-limits
+    created_at: 2026-10-29T05:14:37.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5519d4fb141d
+  - type: covered_by
+    from: SYM-ingest-connectrpc-read-error-error
+    to: TEST-ingest-connectrpc-files
+    created_at: 2026-10-29T05:14:37.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d6814c950bd
