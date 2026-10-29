@@ -165,6 +165,28 @@ type PluginStatus struct {
 	// approve. The owner approves it by adding it to the PluginGrant.
 	// +optional
 	PendingApproval *Permissions `json:"pendingApproval,omitempty"`
+
+	// Signature says who signed spec.image and how far that is trusted
+	// (D-45, D-56), while the SignatureVerified condition is True; absent
+	// otherwise. The condition's reason tells verified from only signed;
+	// this also names the signer and its kind, for the UI to show.
+	// +optional
+	Signature *SignatureStatus `json:"signature,omitempty"`
+}
+
+// SignatureStatus is the trusted signature on a plugin's image.
+type SignatureStatus struct {
+	// Trust is Verified when the catalog pins the image to the publisher
+	// that signed it (D-44), Unverified when another trusted signer did.
+	// +kubebuilder:validation:Enum=Verified;Unverified
+	Trust string `json:"trust"`
+	// SignerKind is the kind of trusted signer (D-45).
+	// +kubebuilder:validation:Enum=OpenFiefCI;Publisher;Owner
+	SignerKind string `json:"signerKind"`
+	// Signer is the trusted signer's name: openfief-ci, a catalog
+	// publisher's or one the owner added.
+	// +kubebuilder:validation:MaxLength=253
+	Signer string `json:"signer"`
 }
 
 // PluginList is a list of Plugins.

@@ -45,6 +45,7 @@ func templateFuncs() template.FuncMap {
 		"instrument": instrumentLabel,
 		"enum":       enumLabel,
 		"status":     valuationState,
+		"trust":      trustLabel,
 	}
 }
 

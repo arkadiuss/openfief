@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00fad3fa8651
+  - type: validates
+    from: TEST-views-connectapi-plugins
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:29:24.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c863cdc57b8
+  - type: validates
+    from: TEST-views-connectapi-plugins
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-29T03:29:24.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fbed92d97e0

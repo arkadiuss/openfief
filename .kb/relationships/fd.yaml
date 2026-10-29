@@ -230,3 +230,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77e1ed1a0360
+  - type: executable_for
+    from: SYM-views-app-test-helper-record
+    to: TEST-views-app-plugins
+    created_at: 2026-10-29T03:36:00.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed26618c433b

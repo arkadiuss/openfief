@@ -300,3 +300,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f22c48fab78f
+  - type: constrains
+    from: REQ-operator-signature-signer-status
+    to: FACT-SUBJECT-D4980B15C47DCF8A
+    created_at: 2026-10-29T03:01:20.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-112d1fd1c26c
+  - type: requires_property
+    from: REQ-operator-signature-signer-status
+    to: FACT-PROP-B2D2A265E765BB6B
+    created_at: 2026-10-29T03:01:20.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2a70c723353
+  - type: specified_by
+    from: REQ-operator-signature-signer-status
+    to: SCEN-operator-signature-signer-status
+    created_at: 2026-10-29T03:01:20.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9d6c0d47b24
+  - type: executable_for
+    from: SYM-views-kube-test-helper-operator-plugin
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:38:10.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a908a4f003d

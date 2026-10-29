@@ -23,6 +23,7 @@ import (
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
 	viewsapp "github.com/arkadiuss/openfief/internal/views/app"
 	"github.com/arkadiuss/openfief/internal/views/connectapi"
+	viewskube "github.com/arkadiuss/openfief/internal/views/kube"
 )
 
 // deps holds a database pool for one command.
@@ -77,6 +78,9 @@ type core struct {
 	// connectors is closed when the connector scheduler has stopped; nil
 	// when it doesn't run.
 	connectors chan struct{}
+	// plugins reads the installed plugins for the read API (D-46, D-58);
+	// nil outside a cluster.
+	plugins *viewskube.Plugins
 }
 
 // ingestDeps returns the ledger, with valuation's import hook (D-36), and
@@ -95,8 +99,12 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 // basis, which revalues everything when it changed. Next to the read API it
 // serves the AuthService, the ModelPortfolioService (D-52) and the
 // BondLotService (D-9, D-49) to the view plugins callers accepts (author
-// decision, auth split). Start the River client to run the workers.
-func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger, callers identityconnect.Callers) (*core, error) {
+// decision, auth split). The read API lists the installed plugins from
+// installed, and without it, outside a cluster, answers that they are
+// unknown. Start the River client to run the workers.
+func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger,
+	callers identityconnect.Callers, installed *viewskube.Plugins,
+) (*core, error) {
 	vstore, err := valuationpg.NewStore(pool)
 	if err != nil {
 		return nil, fmt.Errorf("valuation store: %w", err)
@@ -128,7 +136,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewsapp.WithModel(models))
+	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewOptions(models, installed)...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
 	}
@@ -143,7 +151,17 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	}
 	served := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
 	served = withBondLotService(served, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
-	return &core{api: served, river: client, deps: deps}, nil
+	return &core{api: served, river: client, deps: deps, plugins: installed}, nil
+}
+
+// viewOptions configures the views with the model portfolio's reports and,
+// when installed is not nil, the installed plugins (D-46, D-58).
+func viewOptions(models viewsapp.ModelReports, installed *viewskube.Plugins) []viewsapp.Option {
+	opts := []viewsapp.Option{viewsapp.WithModel(models)}
+	if installed != nil {
+		opts = append(opts, viewsapp.WithPlugins(installed))
+	}
+	return opts
 }
 
 // tokenAuthenticator checks the owner's bearer tokens;

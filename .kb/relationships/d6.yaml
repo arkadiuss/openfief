@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62ba2bc6b4c7
+  - type: executable_for
+    from: SYM-views-kube-test-start-gives-up
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:38:33.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a758acf57cc

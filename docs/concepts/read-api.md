@@ -35,6 +35,7 @@ The [read API](../glossary.md) is how anything outside the core reads the record
 | `GetAllocation` | `GET /v1/allocation` | `date`, `by`, such as `ALLOCATION_DIMENSION_SLEEVE` |
 | `GetPerformance` | `GET /v1/performance` | `from`, `to`, both optional |
 | `GetModelPortfolio` | `GET /v1/model-portfolio` | `from`, `to`, both optional; `404` while the model portfolio is off |
+| `ListPlugins` | `GET /v1/plugins` | `503` while the core can't read the cluster |
 
 **Money, quantities and dates on the wire.** [Money](../glossary.md) is a `Money` message: `amount` as a decimal string such as `"-1234.56"`, never a JSON number, and `currency` as an ISO 4217 code. A JSON number is a binary float in most clients, which can't hold every decimal amount exactly. Quantities are decimal strings too. Dates are `YYYY-MM-DD` strings with no time of day.
 
@@ -116,6 +117,7 @@ Errors never carry their own text to the client, because it can quote an account
 |---|---|---|---|
 | `app.ErrUnknownAccount` | not found | 404 | `no such account` |
 | `app.ErrModelOff` | not found | 404 | `no model portfolio` |
+| `app.ErrPluginsUnknown` | unavailable | 503 | `the installed plugins can't be read now` |
 | `views.ErrInvalidRange`, `ErrInvalidCursor`, `ErrInvalidPageSize`, `ErrUnknownDimension`, a malformed field | invalid argument | 400 | a fixed sentence per cause |
 | No bearer token, or one the verifier rejects | unauthenticated | 401 | a fixed sentence and a `WWW-Authenticate: Bearer` challenge |
 | Anything else, including a token that can't be checked | internal | 500 | `the request failed; its request ID names it in the server log` and the request ID |
@@ -124,7 +126,27 @@ Errors never carry their own text to the client, because it can quote an account
 
 ### Account queries
 
-Sleeves, accounts, holdings, lots, cash and balance assertion checks come straight from the `Ledger` port; [Ledger](ledger.md) explains how they are derived. A query about an account the ledger doesn't store fails with `ErrUnknownAccount`. Any other store failure stays a failure, so a broken database never looks like a missing account. `AssertionChecks` filters to one status when asked. `Transactions` loads the current transactions and hands them to `PageTransactions`, which sorts a copy, starts after the cursor, and returns at most `size` of them with a cursor when more follow.
+Sleeves, accounts, holdings, lots, cash and balance assertion checks come straight from the `Ledger` port; [Ledger](ledger.md) explains how they are derived. A query about an account the ledger doesn't store fails with `ErrUnknownAccount`. Any other store failure stays a failure, so a broken database never looks like a missing account. `AssertionChecks` filters to one status when asked. `Transactions` loads the current transactions and hands them to `PageTransactions`, which sorts a copy, starts after the cursor, and returns at most `size` of them with a cursor when more follow. It then gives each one its origin, as the next section explains.
+
+### Installed plugins and removed instances
+
+`ListPlugins` lists the installed [plugin](../glossary.md) instances (D-46, D-48), so the built-in UI can show them and how far each image is trusted (D-56). It only reads: nothing in the API installs, removes or approves a plugin, and the core can't change a grant (D-46). Each `Plugin` carries its instance name, its image and the image's digest, the capabilities its running version may use and those its manifest requests, a `trust` level with the signer's name, the operator's reason for it, and a `phase`: the operator's `Ready` reason, such as `Running` or `AwaitingApproval`, `Removing` while it is being uninstalled, or `Pending` before the operator reconciled it.
+
+The [operator](operator.md#the-signature-and-manifest-check) records the trust in each `Plugin`'s status: the `SignatureVerified` condition and, while that is `True`, `status.signature` with the trust, the signer's kind and its name. `views.PluginOf` turns that into one `SignatureTrust` level:
+
+| Status | Level |
+|---|---|
+| `True`, `status.signature.trust` `Verified` (a [verified plugin](../glossary.md), D-44) | `SIGNATURE_TRUST_VERIFIED` |
+| `True`, signed by OpenFief's CI, a catalog publisher or a signer the owner added (D-45) | `SIGNATURE_TRUST_OPENFIEF_CI`, `_PUBLISHER`, `_OWNER` |
+| `True` without `status.signature`, as an older operator writes it | `SIGNATURE_TRUST_TRUSTED_SIGNER`, or `_VERIFIED` when the reason is `Verified` |
+| `False`: unsigned, an untrusted signer, a manifest that doesn't match (D-57) | `SIGNATURE_TRUST_REFUSED` |
+| `Unknown` or no condition yet | `SIGNATURE_TRUST_NOT_CHECKED` |
+
+The signer is named only for a trusted signature, so a refused image never shows one.
+
+The list comes from the `Plugins` port, set with `WithPlugins`. `internal/views/kube` implements it: `kube.Plugins` watches the `Plugin` resources of the `openfief` namespace with a client-go informer and reads the fields above from them as unstructured data (`RecordOf`), so the views context doesn't import the operator's Go types; a test converts an operator-written `v1alpha1.Plugin` to check the field names. `cmd/core serve` starts it in a cluster with the core's ServiceAccount, which already has `get`, `list` and `watch` on Plugins for connector discovery; PluginGrants aren't read, since the `Plugin`'s status holds the effective capabilities. Outside a cluster, or until the watch has synced, `Plugins` fails with `ErrPluginsUnknown`, which the API answers as `UNAVAILABLE` (`503`).
+
+**A removed instance's transactions (D-58).** Uninstalling an instance keeps the data it brought in. A connector instance's transactions have the key source `plugin:<instance>:<source>` ([Ingest](ingest.md#calling-a-connector-plugin)), so `views.ConnectorInstance` reads the instance back from it. `Transactions` asks the `Plugins` port which instances are installed and gives each transaction an `Origin`: `connector_instance`, and `connector_instance_removed` when no `Plugin` of that name exists any more. The mark is derived each time it is read, never written: the transaction log stays append-only (D-18), and reinstalling an instance under the same name makes its transactions current again, as its syncs continue from its own keys and watermark. While the installed plugins are unknown, nothing is marked removed and the listing still answers. A source that no connector instance wrote, such as the demo dataset's, has no instance.
 
 ### Valuations and totals
 
@@ -208,6 +230,9 @@ The series stops before the first day that lacks an input and says why in `gap`:
 - **D-52**: while the model portfolio is off, `GetModelPortfolio` answers `NOT_FOUND` and nothing else mentions it. The method itself is in the contract and the OpenAPI document either way; that it answers 404 rather than an empty response is this context's reading.
 - **D-53**: the model's backtest as a second line, both starting at 100 on `from`. Built as `GetModelPortfolio`'s `days`.
 - **D-62** and **T-12**: totals, the allocation and the performance series are in the reporting currency, next to each original currency. `app.New` refuses any reporting currency but PLN with an `*UnsupportedReportingCurrencyError`, because stored valuations and FX rates are against PLN only (D-20) and T-12 (proposal P-49) is open.
+- **D-46**: the core only reads the installed plugins, with the `get`, `list` and `watch` on Plugins it already has; `ListPlugins` is how the UI shows them. Read sessions may list them too: no decision restricts it.
+- **D-56**: the trust levels above. The task's split of "only signed" into OpenFief's CI, a catalog publisher and the owner needs `status.signature`, which the operator writes next to the condition; `refused` and `not checked` cover the images D-56's two levels don't.
+- **D-58**: transactions of a removed instance stay and are marked, at read time from the plugin list. Lots, holdings and balance assertions carry no mark; the transaction listing is where the read API shows a source.
 - **D-27**: the bearer tokens the API accepts. The core accepts the owner's sessions and script tokens, and view plugins' projected tokens with audience `openfief-core` ([Identity](identity.md)). Connector plugins' tokens are refused: nothing decided gives a connector the read API.
 - Half-up rounding of cash in the allocation and the performance series follows `valuation.ValueRounding`, which no decision fixes (see [Valuation](valuation.md#decisions)).
 - Flows at the end of their day, 12 decimal places half-even for the factors and the five-day transfer window are this context's choices; no decision fixes them.
@@ -226,6 +251,10 @@ The series stops before the first day that lacks an input and says why in `gap`:
 | A generated Connect client and Connect's GET form; error codes; every method read-only in the descriptor; enums match the domain | `TestConnectQueries`, `TestConnectValuation`, `TestConnectPerformance`, `TestConnectPages`, `TestConnectErrors`, `TestConnectGET`, `TestServiceIsReadOnly`, `TestEnumsMatch` in [connect_test.go](../../internal/views/connectapi/connect_test.go) | REQ-views-api-contract, REQ-views-api-read-only, TEST-views-connectapi-connect |
 | The model portfolio: its range, the rebased line, off and not served, a reversed range | `TestModelPortfolio`, `TestModelPortfolioRefusals` in [app/model_test.go](../../internal/views/app/model_test.go) | REQ-views-model-portfolio, REQ-views-model-line-from-go-live, REQ-portfolio-model-optional |
 | The model portfolio over Connect and REST: the whole answer, 404 while off, the OpenAPI shape, enum numbers | `TestConnectModelPortfolio`, `TestModelPortfolioOff`, `TestRESTModelPortfolio`, `TestModelEnumsMatch` in [model_test.go](../../internal/views/connectapi/model_test.go) | REQ-views-model-portfolio, REQ-views-api-contract |
+| Trust levels from the operator's status, phases, digests; reading the instance back from `ingest.ConnectorKeySource`; removed marks, and none while unknown | `TestPluginOf`, `TestImageDigest`, `TestConnectorInstance`, `TestOrigins` in [plugins_test.go](../../internal/views/plugins_test.go) | REQ-views-plugin-trust-level, REQ-views-removed-instance-mark, TEST-views-plugins |
+| The plugin list in name order; unknown without the port or before the watch synced, and transactions still listed then; removed marks over the ports | `TestPlugins`, `TestPluginsUnknown`, `TestTransactionsMarkRemovedInstances` in [app/plugins_test.go](../../internal/views/app/plugins_test.go) | REQ-views-installed-plugins, REQ-views-removed-instance-mark, TEST-views-app-plugins |
+| Plugins read from the operator's own `v1alpha1.Plugin`, deleting ones included, other namespaces not, later ones once watched | `TestRecordOf`, `TestPlugins`, `TestStartGivesUp` in [kube/plugins_test.go](../../internal/views/kube/plugins_test.go) | REQ-views-installed-plugins, TEST-views-kube |
+| `ListPlugins` and the transaction origins over Connect and REST, against the OpenAPI document; 503 without the list; enum numbers | `TestConnectListPlugins`, `TestConnectTransactionOrigins`, `TestRESTPlugins`, `TestRESTTransactionOrigins`, `TestRESTPluginsUnavailable`, `TestPluginEnumsMatch` in [connectapi/plugins_test.go](../../internal/views/connectapi/plugins_test.go) | REQ-views-installed-plugins, REQ-views-removed-instance-mark, TEST-views-connectapi-plugins |
 | REST responses validated against the generated OpenAPI; 405 with `Allow: GET`; tokens; headers; money as strings; a log without data | `TestREST`, `TestRESTInternalError`, `TestRESTUnauthenticated`, `TestRESTReadOnly`, `TestOpenAPIIsReadOnly`, `TestSecurityHeaders`, `TestMoneyIsADecimalString`, `TestLogNamesNoData`, `TestRESTPerformance` in [handler_test.go](../../internal/views/connectapi/handler_test.go) | REQ-views-api-contract, REQ-views-api-read-only, REQ-views-api-auth, REQ-views-api-logs, TEST-views-connectapi-rest |
 
 These requirements refine the firm ones imported from D-6, D-7, D-30, D-36 #6, D-50 (REQ-views-read-api-protobuf) and D-61 (REQ-portfolio-twr-comparison). Every test runs over in-memory fakes of the ports with synthetic accounts and ISINs, offline, under `task test`. The REST tests go through the real Vanguard transcoder and check each response body against `gen/openapi` with kin-openapi. `task proto:check` fails when the generated Go or OpenAPI differs from what the protobuf produces. Over the real stores, `TestCoreServesTheReadAPI` in [cmd/core](../../cmd/core/core_test.go), under `task test:pg`, starts the core on a fresh PostgreSQL with part of the demo dataset, issues a script token with `core token issue`, decodes REST answers strictly into the protobuf messages, checks that the performance series runs from 100 through today with no gap once the demo data is valued, and gets 401 without a token or with an unknown or revoked one.

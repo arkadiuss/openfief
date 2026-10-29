@@ -349,3 +349,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80ef3338ce33
+  - type: executable_for
+    from: SYM-views-app-test-transactions-mark-removed-instances
+    to: TEST-views-app-plugins
+    created_at: 2026-10-29T03:36:16.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24114d15ac65

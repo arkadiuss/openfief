@@ -370,3 +370,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64a44458e980
+  - type: implements
+    from: SYM-views-installed-origin-of
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:39:08.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bd5e487a99c
+  - type: implements
+    from: SYM-views-installed-origin-of
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-29T03:39:08.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12ac96bc585d
+  - type: covered_by
+    from: SYM-views-installed-origin-of
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:39:09.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b08650984bc6
+  - type: implements
+    from: SYM-ui-server-load-plugins
+    to: REQ-ui-installed-plugins
+    created_at: 2026-10-29T04:08:17.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e253a796b25
+  - type: implements
+    from: SYM-ui-server-load-plugins
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T04:08:17.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf54092ea7ba
+  - type: covered_by
+    from: SYM-ui-server-load-plugins
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:17.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe2d6eee24df

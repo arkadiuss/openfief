@@ -447,3 +447,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a923ee8390f2
+  - type: verified_by
+    from: SCEN-operator-signature-signer-status
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-29T03:01:14.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-656732877388
+  - type: verified_by
+    from: SCEN-operator-signature-signer-status
+    to: TEST-operator-reconcile
+    created_at: 2026-10-29T03:01:15.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68178a1bdb03
+  - type: implements
+    from: SYM-views-pb-plugin-get-instance
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:43:08.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8636cc4f92fe
+  - type: implements
+    from: SYM-views-pb-plugin-get-instance
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:43:08.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a67c87e9e8f
+  - type: covered_by
+    from: SYM-views-pb-plugin-get-instance
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:43:08.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d62dad58a3db

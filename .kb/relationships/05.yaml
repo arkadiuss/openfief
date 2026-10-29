@@ -349,3 +349,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45f536c551b4
+  - type: implements
+    from: SYM-views-pb-signature-trust-enum
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:40:36.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c73e80132d6
+  - type: implements
+    from: SYM-views-pb-signature-trust-enum
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:40:36.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b397c9719ff1
+  - type: covered_by
+    from: SYM-views-pb-signature-trust-enum
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:40:36.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a51a1120b988

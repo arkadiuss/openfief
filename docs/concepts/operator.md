@@ -62,6 +62,7 @@ classDiagram
     status.deployed : the PluginSpec that runs now
     status.effective : Permissions
     status.pendingApproval : Permissions
+    status.signature : trust, signerKind, signer
   }
   class PluginGrant {
     metadata.name : same as its Plugin
@@ -183,7 +184,7 @@ flowchart TD
   decide -- "another trusted signer" --> signed["True: SignedByTrustedSigner"]
 ```
 
-`PolicyVerifier` ([verify.go](../../internal/plugins/operator/verify.go)) turns the outcome into the `SignatureVerified` condition, so the status tells a [verified plugin](../glossary.md) from one only signed by a trusted signer (D-56). It runs for the current spec with its manifest, and again for the previous version with that version's manifest when the previous version would keep running. The manifest label is compared as sets with `spec.manifest` (`Manifest.Equal`), and it is read only from an image a trusted signer signed (D-42). Its signature covers the image config, and so the label.
+`PolicyVerifier` ([verify.go](../../internal/plugins/operator/verify.go)) turns the outcome into the `SignatureVerified` condition, so the status tells a [verified plugin](../glossary.md) from one only signed by a trusted signer (D-56). It runs for the current spec with its manifest, and again for the previous version with that version's manifest when the previous version would keep running. While the current spec's condition is `True`, `status.signature` also names who signed: `trust` (`Verified` or `Unverified`), the signer's kind (`OpenFiefCI`, `Publisher` or `Owner`) and its name, such as `openfief-ci` or a name from `signers.json`. The core reads it, with the condition, to show each instance's trust in the [read API](read-api.md) and the [built-in UI](ui.md) (D-56); the condition's reason alone can't tell OpenFief's CI from an owner's signer. It is absent while the condition isn't `True`. The manifest label is compared as sets with `spec.manifest` (`Manifest.Equal`), and it is read only from an image a trusted signer signed (D-42). Its signature covers the image config, and so the label.
 
 `cmd/operator` builds the trust policy once at start ([main.go](../../cmd/operator/main.go)). It holds OpenFief's CI (keyless, GitHub Actions, the `images.yml` workflow on `main`), each publisher in the embedded catalog, and the owner's signers from `signers.json` in the optional ConfigMap `openfief-trusted-signers`, mounted at `/etc/openfief/trust`. A missing file adds no signer; an invalid one stops the operator; a change needs a restart. No flag skips the check (D-57). The registry is read anonymously, so plugin images must be public, and the operator needs HTTPS egress to every registry plugins come from and the blob storage it redirects to.
 
@@ -263,9 +264,9 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 - **D-45**: three kinds of trusted signer; the owner's come from a ConfigMap.
 - **D-48**: each `Plugin` name is an instance with its own ServiceAccount, config, grant and allow-list key. **Gap:** Secret names come from the manifest, and D-42 now makes `spec.manifest` equal the image's label. So two instances of one image always request the same Secrets, and can't have their own as D-48 says.
 - **D-55**: `Plugin` and `PluginGrant` are the only custom resources; no money.
-- **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. No UI shows the status yet.
+- **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`, and `status.signature` names the signer and its kind. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. The read API lists it and the built-in UI shows it ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-57**: nothing deploys without a `True` verification; no flag or setting overrides it.
-- **D-58**: **partly.** Deleting a `Plugin` removes its workload (by garbage collection) and its allow-list key. The operator never deletes a `PluginGrant` or a Secret; `openfief plugin uninstall` deletes them ([Plugins](plugins.md#installing-with-the-cli)). Nothing marks the ledger data of a removed instance yet.
+- **D-58**: **partly.** Deleting a `Plugin` removes its workload (by garbage collection) and its allow-list key. The operator never deletes a `PluginGrant` or a Secret; `openfief plugin uninstall` deletes them ([Plugins](plugins.md#installing-with-the-cli)). The core marks the ledger data of a removed instance when it reads it: an instance with no `Plugin` left is removed ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-59**: the NetworkPolicy admits ingress only from the core, and the operator publishes the cluster's token-signing public keys in `openfief-sa-jwks`, with which the SDK verifies the core's per-instance TokenRequest tokens.
 - **D-63**: separate `openfief-egress` token, checked by TokenReview and cached. The operator projects it only for plugins with granted egress; `kube.AllowLists` swaps allow-lists atomically and fails closed.
 
@@ -310,7 +311,5 @@ What the tests don't show:
 ## Not built yet
 
 - **D-43**: the catalog lists no plugin, so the `openfief` CLI's preview of the signature check (`cosign.Verifier` and the same trust policy) never shows a verified plugin yet.
-- **D-56**: the UI that shows the verification status.
 - Private registries: the operator and the CLI read registries anonymously.
-- **D-58**: marking the ledger data of a removed instance.
 - **D-12**, partly: end-to-end tests of the operator's plugin workloads on kind or k3d. The suite covers the core, the demo dataset and the UI's stand-in; a signed test plugin, deployed by the operator, is not in it.

@@ -168,6 +168,7 @@ type state struct {
 	DeployedImage   string
 	EffectiveEgress []string
 	Pending         *v1alpha1.Permissions
+	Signature       *v1alpha1.SignatureStatus
 }
 
 func (tc *testCluster) state(ctx context.Context, t *testing.T, name string) state {
@@ -193,6 +194,7 @@ func (tc *testCluster) state(ctx context.Context, t *testing.T, name string) sta
 		s.EffectiveEgress = p.Status.Effective.Egress
 	}
 	s.Pending = p.Status.PendingApproval
+	s.Signature = p.Status.Signature
 	return s
 }
 
@@ -525,6 +527,7 @@ func testPolicyVerifier(t *testing.T, tc *testCluster) {
 		TokenAudiences: []string{"openfief-core OPENFIEF_TOKEN_FILE", "openfief-egress OPENFIEF_EGRESS_TOKEN_FILE"},
 		Conditions:     conditions("False/Progressing", "False/Approved", "True/SignedByTrustedSigner"),
 		DeployedImage:  imageB, EffectiveEgress: []string{"api.example.com:443"},
+		Signature: &v1alpha1.SignatureStatus{Trust: "Unverified", SignerKind: "OpenFiefCI", Signer: "openfief-ci"},
 	}
 	if diff := cmp.Diff(running, tc.state(ctx, t, "signedci"), cmpopts.EquateEmpty()); diff != "" {
 		t.Errorf("label matches: state mismatch (-want +got):\n%s", diff)

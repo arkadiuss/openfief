@@ -384,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21c1cdabd822
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-plugins
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:36:26.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2bf80fca8a2

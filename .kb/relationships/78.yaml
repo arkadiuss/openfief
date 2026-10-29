@@ -461,3 +461,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2fe69984eba
+  - type: implements
+    from: SYM-views-installed
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:38:50.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6930ca4d569f
+  - type: implements
+    from: SYM-views-installed
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-29T03:38:50.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bc858dae05e
+  - type: covered_by
+    from: SYM-views-installed
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:38:50.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c71fd0318ec7

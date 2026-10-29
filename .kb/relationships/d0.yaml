@@ -321,3 +321,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-715838dccaa1
+  - type: executable_for
+    from: SYM-views-app-test-plugins
+    to: TEST-views-app-plugins
+    created_at: 2026-10-29T03:36:05.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f996a02217ad

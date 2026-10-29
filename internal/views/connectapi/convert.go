@@ -85,12 +85,15 @@ func pbBook(b ledger.Book) *viewsv1.Book {
 	return out
 }
 
-// pbTransaction converts a transaction with its postings.
-func pbTransaction(t *ledger.Transaction) *viewsv1.Transaction {
+// pbTransaction converts a transaction with its postings and its origin:
+// the connector instance that brought it in, and whether that instance is
+// removed (D-58).
+func pbTransaction(t *ledger.Transaction, origin views.Origin) *viewsv1.Transaction {
 	out := &viewsv1.Transaction{
 		Source: t.Key.Source, ExternalId: t.Key.ExternalID, Kind: viewsv1.TransactionKind(enumNumber(int(t.Kind))),
 		Date: pbDate(t.Date), LotOpened: pbDate(t.LotOpened), Description: t.Description,
-		Postings: make([]*viewsv1.Posting, 0, len(t.Postings)),
+		Postings:          make([]*viewsv1.Posting, 0, len(t.Postings)),
+		ConnectorInstance: origin.Instance, ConnectorInstanceRemoved: origin.Removed,
 	}
 	for i := range t.Postings {
 		p := &t.Postings[i]
@@ -101,6 +104,16 @@ func pbTransaction(t *ledger.Transaction) *viewsv1.Transaction {
 		out.Postings = append(out.Postings, pp)
 	}
 	return out
+}
+
+// pbPlugin converts an installed plugin instance.
+func pbPlugin(p *views.Plugin) *viewsv1.Plugin {
+	return &viewsv1.Plugin{
+		Instance: p.Instance, Image: p.Image, ImageDigest: p.Digest,
+		Capabilities: p.Capabilities, RequestedCapabilities: p.Requested,
+		Trust: viewsv1.SignatureTrust(enumNumber(int(p.Trust))), Signer: p.Signer, TrustReason: p.TrustReason,
+		Phase: p.Phase, Ready: p.Ready,
+	}
 }
 
 // pbLot converts an open lot.

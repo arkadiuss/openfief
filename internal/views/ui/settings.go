@@ -22,8 +22,8 @@ const (
 )
 
 // settingsData is what the settings page shows: the owner's passkeys,
-// script tokens and model portfolio, and once, right after it was made, a new token's secret
-// or a new enrollment link.
+// script tokens and model portfolio, the installed plugins, and once, right
+// after it was made, a new token's secret or a new enrollment link.
 type settingsData struct {
 	Origin      string
 	Passkeys    []*identityv1.Passkey
@@ -36,6 +36,8 @@ type settingsData struct {
 	// Model is the model portfolio form (D-52): as stored, or as posted
 	// when the core refused it.
 	Model *modelForm
+	// Plugins are the installed plugins, shown read-only (D-46, D-56).
+	Plugins pluginList
 }
 
 // settingsPage shows the owner's settings.
@@ -56,6 +58,12 @@ func (s *server) renderSettings(w http.ResponseWriter, r *http.Request, sess ses
 		s.coreFailed(w, r, "ListScriptTokens", err)
 		return
 	}
+	plugins, err := s.loadPlugins(r, sess)
+	if err != nil {
+		s.coreFailed(w, r, "ListPlugins", err)
+		return
+	}
+	data.Plugins = plugins
 	if data.Model == nil {
 		form, err := s.loadModel(r, sess)
 		if err != nil {

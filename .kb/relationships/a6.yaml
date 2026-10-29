@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6fcdc87470df
+  - type: implements
+    from: SYM-operator-api-signature-status-deep-copy-into
+    to: REQ-operator-signature-signer-status
+    created_at: 2026-10-29T03:06:23.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-597f44042b77
+  - type: covered_by
+    from: SYM-operator-api-signature-status-deep-copy-into
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-29T03:06:23.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88bc73da043d

@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4cdd9c1d570
+  - type: implements
+    from: SYM-ui-server-plugins-page
+    to: REQ-ui-installed-plugins
+    created_at: 2026-10-29T04:08:24.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ffdb2324df6
+  - type: implements
+    from: SYM-ui-server-plugins-page
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T04:08:24.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6091b35dcbd
+  - type: covered_by
+    from: SYM-ui-server-plugins-page
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:24.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5c6f319db7a

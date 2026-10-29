@@ -12,6 +12,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
+	"github.com/arkadiuss/openfief/internal/plugins/operator/v1alpha1"
 )
 
 // Synthetic signer identities.
@@ -22,6 +23,10 @@ func ciSignature() plugins.SignerIdentity {
 
 func publisherSignature() plugins.SignerIdentity {
 	return plugins.SignerIdentity{Issuer: "https://issuer.example.com", Subject: "https://example.com/release"}
+}
+
+func ownerSignature() plugins.SignerIdentity {
+	return plugins.SignerIdentity{Issuer: "https://issuer.example.com", Subject: "https://example.com/owner"}
 }
 
 func strangerSignature() plugins.SignerIdentity {
@@ -68,13 +73,14 @@ func viewManifest() plugins.Manifest {
 	return plugins.Manifest{Capabilities: []plugins.Capability{plugins.CapabilityView}}
 }
 
-// testPolicy pins imageA in the catalog, published by publisherSignature.
+// testPolicy pins imageA in the catalog, published by publisherSignature,
+// and trusts the owner's signer ownerSignature.
 func testPolicy(t *testing.T) *plugins.TrustPolicy {
 	t.Helper()
 	p, err := plugins.NewTrustPolicy(plugins.Catalog{Entries: []plugins.CatalogEntry{{
 		Name: "sample", Image: mustImage(t, imageA),
 		Publisher: plugins.Signer{Name: "example-publisher", Kind: plugins.SignerPublisher, Identity: publisherSignature()},
-	}}}, nil)
+	}}}, []plugins.Signer{{Name: "owner-ci", Kind: plugins.SignerOwner, Identity: ownerSignature()}})
 	if err != nil {
 		t.Fatalf("policy: %v", err)
 	}
@@ -97,14 +103,24 @@ func TestPolicyVerifier(t *testing.T) {
 			name: "verified plugin", image: imageA, sigs: []plugins.SignerIdentity{publisherSignature()}, declared: &view,
 			want: operator.Verification{
 				Status: metav1.ConditionTrue, Reason: operator.ReasonVerifiedPlugin,
-				Message: "verified plugin: the catalog pins this image, signed by its publisher example-publisher",
+				Message:   "verified plugin: the catalog pins this image, signed by its publisher example-publisher",
+				Signature: &v1alpha1.SignatureStatus{Trust: "Verified", SignerKind: "Publisher", Signer: "example-publisher"},
 			},
 		},
 		{
 			name: "signed by OpenFief's CI", image: imageB, sigs: []plugins.SignerIdentity{ciSignature()}, declared: &view,
 			want: operator.Verification{
 				Status: metav1.ConditionTrue, Reason: operator.ReasonTrustedSigner,
-				Message: "unverified plugin signed by trusted signer openfief-ci (OpenFiefCI)",
+				Message:   "unverified plugin signed by trusted signer openfief-ci (OpenFiefCI)",
+				Signature: &v1alpha1.SignatureStatus{Trust: "Unverified", SignerKind: "OpenFiefCI", Signer: "openfief-ci"},
+			},
+		},
+		{
+			name: "signed by the owner's signer", image: imageB, sigs: []plugins.SignerIdentity{ownerSignature()}, declared: &view,
+			want: operator.Verification{
+				Status: metav1.ConditionTrue, Reason: operator.ReasonTrustedSigner,
+				Message:   "unverified plugin signed by trusted signer owner-ci (Owner)",
+				Signature: &v1alpha1.SignatureStatus{Trust: "Unverified", SignerKind: "Owner", Signer: "owner-ci"},
 			},
 		},
 		{

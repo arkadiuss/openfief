@@ -278,6 +278,5 @@ Behaviors the tests don't pin down, worth knowing when reviewing:
 
 ## Not built yet
 
-- **D-58**: marking data that came from a removed plugin instance.
 - Adding or changing accounts and sleeves outside the demo. `cmd/core` wires `app.Ledger` to `postgres.Store` with valuation's `ImportHook` ([core.go](../../cmd/core/core.go)) and serves the queries through the [read API](read-api.md), but nothing in it calls `SaveAccount` or `SaveSleeve`: only `cmd/demo-seed` stores accounts, for the demo dataset. A connector binding needs a stored account, so an installation has no way yet to create the account a connector writes into.
 - The adapter from `app.ImportSummary` to `ingest.ImportSummary` exists twice, as `cmd/core`'s `ledgerImporter` and `cmd/demo-seed`'s `importer` ([load.go](../../cmd/demo-seed/load.go)), not in a shared package.

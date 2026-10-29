@@ -349,3 +349,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0553fc82a56
+  - type: executable_for
+    from: SYM-views-test-helper-signed
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:40:05.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b72403c94a4

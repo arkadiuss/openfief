@@ -131,6 +131,16 @@ service ReadService {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/model-portfolio"};
   }
+
+  // ListPlugins returns the installed plugin instances (D-46, D-48), in
+  // name order, each with what it may do and how far its image's signature
+  // is trusted (D-56), as the operator recorded them. It only reads: nothing
+  // in this API installs, removes or approves a plugin. It fails with
+  // UNAVAILABLE when the core can't read the cluster.
+  rpc ListPlugins(ListPluginsRequest) returns (ListPluginsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/plugins"};
+  }
 }
 
 // Money is an exact decimal amount in one currency.
@@ -230,6 +240,13 @@ message Transaction {
   string lot_opened = 5;
   string description = 6;
   repeated Posting postings = 7;
+  // The connector instance whose delivery brought the transaction in, read
+  // from its source; empty when no connector instance did.
+  string connector_instance = 8;
+  // True when that instance is no longer installed (D-58). The transaction
+  // stays; reinstalling the instance under the same name continues from it.
+  // False while the core can't tell which instances are installed.
+  bool connector_instance_removed = 9;
 }
 
 // Holding is the quantity of one instrument held.
@@ -671,4 +688,59 @@ message GetModelPortfolioResponse {
   repeated ModelTargetHistory target_histories = 8;
   // The currency of the backtest and of the targets' values.
   string reporting_currency = 9;
+}
+
+// ListPluginsRequest has no parameters.
+message ListPluginsRequest {}
+
+// ListPluginsResponse lists the installed plugin instances.
+message ListPluginsResponse {
+  repeated Plugin plugins = 1;
+}
+
+// SignatureTrust is how far an installed plugin's image is trusted (D-45,
+// D-56).
+enum SignatureTrust {
+  SIGNATURE_TRUST_UNSPECIFIED = 0;
+  // A verified plugin: the catalog pins this image and its publisher
+  // signed it (D-44).
+  SIGNATURE_TRUST_VERIFIED = 1;
+  // Signed by OpenFief's CI, not a verified plugin.
+  SIGNATURE_TRUST_OPENFIEF_CI = 2;
+  // Signed by a catalog publisher, but the catalog doesn't pin this image.
+  SIGNATURE_TRUST_PUBLISHER = 3;
+  // Signed by a signer the owner added.
+  SIGNATURE_TRUST_OWNER = 4;
+  // Signed by a trusted signer whose kind the status doesn't name.
+  SIGNATURE_TRUST_TRUSTED_SIGNER = 5;
+  // Refused: no trusted signer signed it, or its manifest doesn't match. It
+  // is never deployed (D-57).
+  SIGNATURE_TRUST_REFUSED = 6;
+  // Not checked yet, or its registry couldn't be read.
+  SIGNATURE_TRUST_NOT_CHECKED = 7;
+}
+
+// Plugin is one installed plugin instance.
+message Plugin {
+  // The instance's name, the name of its Plugin resource.
+  string instance = 1;
+  // The image reference, pinned by digest.
+  string image = 2;
+  // The image's digest, such as "sha256:...".
+  string image_digest = 3;
+  // What the running version may act as: requested and granted (D-16).
+  repeated string capabilities = 4;
+  // What the image's signed manifest requests.
+  repeated string requested_capabilities = 5;
+  SignatureTrust trust = 6;
+  // The trusted signer's name; empty unless a trusted signer signed it.
+  string signer = 7;
+  // The operator's reason for the trust, such as "Verified" or "Unsigned".
+  string trust_reason = 8;
+  // The operator's Ready reason, such as "Running" or "AwaitingApproval";
+  // "Removing" while it is being uninstalled, "Pending" before the operator
+  // reconciled it.
+  string phase = 9;
+  // Whether a version of it runs.
+  bool ready = 10;
 }

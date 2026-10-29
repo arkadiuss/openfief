@@ -433,3 +433,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5284cbb935c
+  - type: constrains
+    from: REQ-views-removed-instance-mark
+    to: FACT-SUBJECT-3422D3BAA7C1074F
+    created_at: 2026-10-29T03:29:52.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0206512c5a7
+  - type: requires_property
+    from: REQ-views-removed-instance-mark
+    to: FACT-PROP-F2FB718EACF342E2
+    created_at: 2026-10-29T03:29:52.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db91e3d411ce
+  - type: specified_by
+    from: REQ-views-removed-instance-mark
+    to: SCEN-views-removed-instance-mark
+    created_at: 2026-10-29T03:29:52.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f642f3b1dd3
+  - type: implements
+    from: SYM-views-pb-plugin-get-image
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:43:14.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-919da7029d11
+  - type: implements
+    from: SYM-views-pb-plugin-get-image
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:43:14.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56c716a00439
+  - type: covered_by
+    from: SYM-views-pb-plugin-get-image
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:43:14.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebfef75759f0

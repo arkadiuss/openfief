@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3ea267ec603
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-plugins
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:44:11.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43e01ef986e4
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-plugins
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:44:11.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb8aca2f8b0b

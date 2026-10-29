@@ -319,6 +319,9 @@ type fakeRead struct {
 	// institution is the account's institution; empty is a synthetic
 	// broker.
 	institution string
+	// pluginsUnavailable makes ListPlugins answer UNAVAILABLE, as a core
+	// that can't read its cluster does.
+	pluginsUnavailable bool
 }
 
 func pln(amount string) *viewsv1.Money { return &viewsv1.Money{Amount: amount, Currency: "PLN"} }
@@ -458,11 +461,50 @@ func (f *fakeRead) ListTransactions(_ context.Context, r *connect.Request[viewsv
 		Postings: []*viewsv1.Posting{{
 			Book: &viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "EUR"}, Amount: &viewsv1.Money{Amount: "100.00", Currency: "EUR"},
 		}},
+	}, {
+		Source: "plugin:ibkr-old:ibkr", ExternalId: "t2", Kind: viewsv1.TransactionKind_TRANSACTION_KIND_DEPOSIT, Date: "2026-01-03",
+		Description: "Synthetic deposit from a removed instance", ConnectorInstance: "ibkr-old", ConnectorInstanceRemoved: true,
+		Postings: []*viewsv1.Posting{{
+			Book: &viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "EUR"}, Amount: &viewsv1.Money{Amount: "50.00", Currency: "EUR"},
+		}},
 	}}}
 	if r.Msg.GetPageToken() == "" {
 		resp.NextPageToken = "page-2"
 	}
 	return connect.NewResponse(resp), nil
+}
+
+// errPluginsUnavailable is the core's answer while it can't read its
+// cluster.
+var errPluginsUnavailable = errors.New("the installed plugins can't be read now")
+
+// ListPlugins lists two synthetic plugins: ibkr-main, signed by OpenFief's
+// CI and running, and ui-local, signed by the owner's own signer; or it
+// answers UNAVAILABLE when pluginsUnavailable is set.
+func (f *fakeRead) ListPlugins(_ context.Context, r *connect.Request[viewsv1.ListPluginsRequest]) (*connect.Response[viewsv1.ListPluginsResponse], error) {
+	if err := f.check(r.Header()); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	unavailable := f.pluginsUnavailable
+	f.mu.Unlock()
+	if unavailable {
+		return nil, codeErr(connect.CodeUnavailable, errPluginsUnavailable)
+	}
+	return connect.NewResponse(&viewsv1.ListPluginsResponse{Plugins: []*viewsv1.Plugin{
+		{
+			Instance: "ibkr-main", Image: "registry.example.com/openfief/ibkr-flex@sha256:a1a1", ImageDigest: "sha256:a1a1",
+			Capabilities: []string{"connector"}, RequestedCapabilities: []string{"connector"},
+			Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI, Signer: "openfief-ci", TrustReason: "SignedByTrustedSigner",
+			Phase: "Running", Ready: true,
+		},
+		{
+			Instance: "ui-local", Image: "registry.example.com/owner/ui@sha256:b2b2", ImageDigest: "sha256:b2b2",
+			RequestedCapabilities: []string{"view"},
+			Trust:                 viewsv1.SignatureTrust_SIGNATURE_TRUST_REFUSED, TrustReason: "UntrustedSigner",
+			Phase: "SignatureNotVerified",
+		},
+	}}), nil
 }
 
 // locked runs fn with the fake's lock held, for reading what it recorded.

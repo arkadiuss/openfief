@@ -86,6 +86,8 @@ const (
 	// ReadServiceGetModelPortfolioProcedure is the fully-qualified name of the ReadService's
 	// GetModelPortfolio RPC.
 	ReadServiceGetModelPortfolioProcedure = "/openfief.views.v1.ReadService/GetModelPortfolio"
+	// ReadServiceListPluginsProcedure is the fully-qualified name of the ReadService's ListPlugins RPC.
+	ReadServiceListPluginsProcedure = "/openfief.views.v1.ReadService/ListPlugins"
 )
 
 // ReadServiceClient is a client for the openfief.views.v1.ReadService service.
@@ -143,6 +145,12 @@ type ReadServiceClient interface {
 	// target (D-54), in the reporting currency. While the model portfolio is
 	// off it fails with NOT_FOUND and says nothing about it.
 	GetModelPortfolio(context.Context, *connect.Request[v1.GetModelPortfolioRequest]) (*connect.Response[v1.GetModelPortfolioResponse], error)
+	// ListPlugins returns the installed plugin instances (D-46, D-48), in
+	// name order, each with what it may do and how far its image's signature
+	// is trusted (D-56), as the operator recorded them. It only reads: nothing
+	// in this API installs, removes or approves a plugin. It fails with
+	// UNAVAILABLE when the core can't read the cluster.
+	ListPlugins(context.Context, *connect.Request[v1.ListPluginsRequest]) (*connect.Response[v1.ListPluginsResponse], error)
 }
 
 // NewReadServiceClient constructs a client for the openfief.views.v1.ReadService service. By
@@ -261,6 +269,13 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		listPlugins: connect.NewClient[v1.ListPluginsRequest, v1.ListPluginsResponse](
+			httpClient,
+			baseURL+ReadServiceListPluginsProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListPlugins")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -281,6 +296,7 @@ type readServiceClient struct {
 	getAllocation         *connect.Client[v1.GetAllocationRequest, v1.GetAllocationResponse]
 	getPerformance        *connect.Client[v1.GetPerformanceRequest, v1.GetPerformanceResponse]
 	getModelPortfolio     *connect.Client[v1.GetModelPortfolioRequest, v1.GetModelPortfolioResponse]
+	listPlugins           *connect.Client[v1.ListPluginsRequest, v1.ListPluginsResponse]
 }
 
 // ListSleeves calls openfief.views.v1.ReadService.ListSleeves.
@@ -358,6 +374,11 @@ func (c *readServiceClient) GetModelPortfolio(ctx context.Context, req *connect.
 	return c.getModelPortfolio.CallUnary(ctx, req)
 }
 
+// ListPlugins calls openfief.views.v1.ReadService.ListPlugins.
+func (c *readServiceClient) ListPlugins(ctx context.Context, req *connect.Request[v1.ListPluginsRequest]) (*connect.Response[v1.ListPluginsResponse], error) {
+	return c.listPlugins.CallUnary(ctx, req)
+}
+
 // ReadServiceHandler is an implementation of the openfief.views.v1.ReadService service.
 type ReadServiceHandler interface {
 	// ListSleeves returns every sleeve, in ID order.
@@ -413,6 +434,12 @@ type ReadServiceHandler interface {
 	// target (D-54), in the reporting currency. While the model portfolio is
 	// off it fails with NOT_FOUND and says nothing about it.
 	GetModelPortfolio(context.Context, *connect.Request[v1.GetModelPortfolioRequest]) (*connect.Response[v1.GetModelPortfolioResponse], error)
+	// ListPlugins returns the installed plugin instances (D-46, D-48), in
+	// name order, each with what it may do and how far its image's signature
+	// is trusted (D-56), as the operator recorded them. It only reads: nothing
+	// in this API installs, removes or approves a plugin. It fails with
+	// UNAVAILABLE when the core can't read the cluster.
+	ListPlugins(context.Context, *connect.Request[v1.ListPluginsRequest]) (*connect.Response[v1.ListPluginsResponse], error)
 }
 
 // NewReadServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -527,6 +554,13 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	readServiceListPluginsHandler := connect.NewUnaryHandler(
+		ReadServiceListPluginsProcedure,
+		svc.ListPlugins,
+		connect.WithSchema(readServiceMethods.ByName("ListPlugins")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.views.v1.ReadService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ReadServiceListSleevesProcedure:
@@ -559,6 +593,8 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 			readServiceGetPerformanceHandler.ServeHTTP(w, r)
 		case ReadServiceGetModelPortfolioProcedure:
 			readServiceGetModelPortfolioHandler.ServeHTTP(w, r)
+		case ReadServiceListPluginsProcedure:
+			readServiceListPluginsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -626,4 +662,8 @@ func (UnimplementedReadServiceHandler) GetPerformance(context.Context, *connect.
 
 func (UnimplementedReadServiceHandler) GetModelPortfolio(context.Context, *connect.Request[v1.GetModelPortfolioRequest]) (*connect.Response[v1.GetModelPortfolioResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.GetModelPortfolio is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListPlugins(context.Context, *connect.Request[v1.ListPluginsRequest]) (*connect.Response[v1.ListPluginsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListPlugins is not implemented"))
 }

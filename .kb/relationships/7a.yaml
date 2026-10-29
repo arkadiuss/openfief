@@ -279,3 +279,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bbf33ae39d3
+  - type: implements
+    from: SYM-views-pb-signature-trust-number
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:40:58.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fef9a3c9de4e
+  - type: implements
+    from: SYM-views-pb-signature-trust-number
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:40:58.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75de80b84155
+  - type: covered_by
+    from: SYM-views-pb-signature-trust-number
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:40:58.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3befc368f3c
+  - type: implements
+    from: SYM-views-pb-plugin-reset
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:42:39.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-488ba091adc1
+  - type: implements
+    from: SYM-views-pb-plugin-reset
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:42:39.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5331e805e9a
+  - type: covered_by
+    from: SYM-views-pb-plugin-reset
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:42:39.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f7b6642ecfe

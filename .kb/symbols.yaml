@@ -69930,3 +69930,1533 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-bond-lots
+  - id: SYM-operator-api-signature-status
+    title: SignatureStatus
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:06:16.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-signature-signer-status
+      - type: implements
+        target: REQ-plugins-verified-status
+  - id: SYM-operator-api-signature-status-deep-copy-into
+    title: SignatureStatus.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:06:21.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-signature-signer-status
+  - id: SYM-operator-api-signature-status-deep-copy
+    title: SignatureStatus.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:06:26.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-signature-signer-status
+  - id: SYM-operator-test-helper-owner-signature
+    title: ownerSignature
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:06:32.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier
+  - id: SYM-core-test-helper-wait-for-installed
+    title: waitForInstalled
+    sourceFile: cmd/core/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:11.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
+  - id: SYM-core-view-options
+    title: viewOptions
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:16.701Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-app-plugins
+    title: Plugins
+    sourceFile: internal/views/app/plugins.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:22.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-app-with-plugins
+    title: WithPlugins
+    sourceFile: internal/views/app/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:27.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-app-views-plugins
+    title: Views.Plugins
+    sourceFile: internal/views/app/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:32.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-app-views-installed
+    title: Views.installed
+    sourceFile: internal/views/app/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:37.940Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-app-test-helper-fake-plugins
+    title: fakePlugins
+    sourceFile: internal/views/app/plugins_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:42.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-plugins
+  - id: SYM-views-app-test-helper-fake-plugins-installed-plugins
+    title: fakePlugins.InstalledPlugins
+    sourceFile: internal/views/app/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:48.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-plugins
+  - id: SYM-views-app-test-helper-installed-views
+    title: installedViews
+    sourceFile: internal/views/app/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:53.659Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-plugins
+  - id: SYM-views-app-test-helper-record
+    title: record
+    sourceFile: internal/views/app/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:35:58.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-plugins
+  - id: SYM-views-app-test-plugins
+    title: TestPlugins
+    sourceFile: internal/views/app/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:04.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-plugins
+  - id: SYM-views-app-test-plugins-unknown
+    title: TestPluginsUnknown
+    sourceFile: internal/views/app/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:09.446Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-plugins
+  - id: SYM-views-app-test-transactions-mark-removed-instances
+    title: TestTransactionsMarkRemovedInstances
+    sourceFile: internal/views/app/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:14.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-plugins
+  - id: SYM-views-connectapi-pb-plugin
+    title: pbPlugin
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:20.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-connectapi-test-helper-fake-plugins
+    title: fakePlugins
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:24.701Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-helper-fake-plugins-installed-plugins
+    title: fakePlugins.InstalledPlugins
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:29.917Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-helper-installed
+    title: installed
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:35.228Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-helper-plugin-api
+    title: pluginAPI
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:40.430Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-connect-list-plugins
+    title: TestConnectListPlugins
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:45.436Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-connect-transaction-origins
+    title: TestConnectTransactionOrigins
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:50.425Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-rest-plugins
+    title: TestRESTPlugins
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:36:55.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-rest-transaction-origins
+    title: TestRESTTransactionOrigins
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:01.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-rest-plugins-unavailable
+    title: TestRESTPluginsUnavailable
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:07.016Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-test-plugin-enums-match
+    title: TestPluginEnumsMatch
+    sourceFile: internal/views/connectapi/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:12.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-plugins
+  - id: SYM-views-connectapi-read-service-list-plugins
+    title: readService.ListPlugins
+    sourceFile: internal/views/connectapi/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:17.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-kube-plugin-resource
+    title: PluginResource
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:22.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-plugins
+    title: Plugins
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:27.086Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-new-plugins
+    title: NewPlugins
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:32.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-plugins-start
+    title: Plugins.Start
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:37.763Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-plugins-installed-plugins
+    title: Plugins.InstalledPlugins
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:43.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-record-of
+    title: RecordOf
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:48.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-nested-string
+    title: nestedString
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:53.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-nested-strings
+    title: nestedStrings
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:37:58.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-string-field
+    title: stringField
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:04.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-kube-test-helper-operator-plugin
+    title: operatorPlugin
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:09.292Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-views-kube-test-helper-signed-record
+    title: signedRecord
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:14.491Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-views-kube-test-record-of
+    title: TestRecordOf
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:19.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-views-kube-test-plugins
+    title: TestPlugins
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:25.940Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-views-kube-test-start-gives-up
+    title: TestStartGivesUp
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:32.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-views-kube-test-helper-sorted
+    title: sorted
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:38.575Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-views-connector-instance
+    title: ConnectorInstance
+    sourceFile: internal/views/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:44.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-installed
+    title: Installed
+    sourceFile: internal/views/origin.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:49.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-installed-of
+    title: InstalledOf
+    sourceFile: internal/views/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:38:55.382Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-origin
+    title: Origin
+    sourceFile: internal/views/origin.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:01.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-installed-origin-of
+    title: Installed.OriginOf
+    sourceFile: internal/views/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:07.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-installed-origins
+    title: Installed.Origins
+    sourceFile: internal/views/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:12.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-signature-trust
+    title: SignatureTrust
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:16.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-condition
+    title: Condition
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:22.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-plugin-record
+    title: PluginRecord
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:27.395Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-plugin
+    title: Plugin
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:32.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-plugin-of
+    title: PluginOf
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:37.730Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-trust-of
+    title: TrustOf
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:42.839Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-signature-trust-string
+    title: SignatureTrust.String
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:47.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-signature-trust-signed
+    title: SignatureTrust.Signed
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:53.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-image-digest
+    title: ImageDigest
+    sourceFile: internal/views/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:39:58.151Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-trust-level
+  - id: SYM-views-test-helper-signed
+    title: signed
+    sourceFile: internal/views/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:03.536Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-plugins
+  - id: SYM-views-test-plugin-of
+    title: TestPluginOf
+    sourceFile: internal/views/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:09.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-plugins
+  - id: SYM-views-test-image-digest
+    title: TestImageDigest
+    sourceFile: internal/views/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:14.265Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-plugins
+  - id: SYM-views-test-connector-instance
+    title: TestConnectorInstance
+    sourceFile: internal/views/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:19.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-plugins
+  - id: SYM-views-test-origins
+    title: TestOrigins
+    sourceFile: internal/views/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:24.899Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-plugins
+  - id: SYM-views-pb-signature-trust
+    title: SignatureTrust
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:29.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-signature-trust-enum
+    title: SignatureTrust.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:34.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-signature-trust-string
+    title: SignatureTrust.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:40.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-signature-trust-descriptor
+    title: SignatureTrust.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:45.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-signature-trust-type
+    title: SignatureTrust.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:51.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-signature-trust-number
+    title: SignatureTrust.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:40:56.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-signature-trust-enum-descriptor
+    title: SignatureTrust.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:02.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-transaction-get-connector-instance
+    title: Transaction.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:08.370Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-transaction-get-connector-instance-removed
+    title: Transaction.GetConnectorInstanceRemoved
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:13.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-request
+    title: ListPluginsRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:18.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-request-reset
+    title: ListPluginsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:24.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-request-string
+    title: ListPluginsRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:29.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-request-proto-message
+    title: ListPluginsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:35.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-request-proto-reflect
+    title: ListPluginsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:41.240Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-request-descriptor
+    title: ListPluginsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:46.911Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-response
+    title: ListPluginsResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:51.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-response-reset
+    title: ListPluginsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:41:57.383Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-response-string
+    title: ListPluginsResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:03.156Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-response-proto-message
+    title: ListPluginsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:08.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-response-proto-reflect
+    title: ListPluginsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:14.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-response-descriptor
+    title: ListPluginsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:20.413Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-list-plugins-response-get-plugins
+    title: ListPluginsResponse.GetPlugins
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:26.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin
+    title: Plugin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:31.264Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-reset
+    title: Plugin.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:37.410Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-string
+    title: Plugin.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:43.635Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-proto-message
+    title: Plugin.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:49.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-proto-reflect
+    title: Plugin.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:42:55.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-descriptor
+    title: Plugin.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:01.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-instance
+    title: Plugin.GetInstance
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:07.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-image
+    title: Plugin.GetImage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:13.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-image-digest
+    title: Plugin.GetImageDigest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:18.825Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-capabilities
+    title: Plugin.GetCapabilities
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:24.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-requested-capabilities
+    title: Plugin.GetRequestedCapabilities
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:30.365Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-trust
+    title: Plugin.GetTrust
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:36.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-signer
+    title: Plugin.GetSigner
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:42.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-trust-reason
+    title: Plugin.GetTrustReason
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:47.650Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-phase
+    title: Plugin.GetPhase
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:53.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pb-plugin-get-ready
+    title: Plugin.GetReady
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:43:59.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-removed-instance-mark
+  - id: SYM-views-pbconnect-read-service-client-list-plugins
+    title: readServiceClient.ListPlugins
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:44:04.912Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-list-plugins
+    title: UnimplementedReadServiceHandler.ListPlugins
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:44:10.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-ui-test-helper-fake-read-list-plugins
+    title: fakeRead.ListPlugins
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:01.988Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-plugin-list
+    title: pluginList
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:08.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-ui-installed-plugins
+  - id: SYM-ui-server-load-plugins
+    title: server.loadPlugins
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:15.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-ui-installed-plugins
+  - id: SYM-ui-server-plugins-page
+    title: server.pluginsPage
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:22.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-ui-installed-plugins
+  - id: SYM-ui-trust-label
+    title: trustLabel
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:28.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-ui-installed-plugins
+  - id: SYM-ui-test-plugins-page
+    title: TestPluginsPage
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:34.354Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-test-plugins-page-unavailable
+    title: TestPluginsPageUnavailable
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:39.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-test-settings-shows-plugins
+    title: TestSettingsShowsPlugins
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:45.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-test-plugins-page-needs-a-session
+    title: TestPluginsPageNeedsASession
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:50.368Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-test-transactions-mark-removed-instance
+    title: TestTransactionsMarkRemovedInstance
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:56.021Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins

@@ -79,7 +79,11 @@ func (s *readService) ListTransactions(ctx context.Context, req *connect.Request
 	}
 	out := &viewsv1.ListTransactionsResponse{Transactions: make([]*viewsv1.Transaction, 0, len(page.Transactions))}
 	for i := range page.Transactions {
-		out.Transactions = append(out.Transactions, pbTransaction(&page.Transactions[i]))
+		var origin views.Origin
+		if i < len(page.Origins) {
+			origin = page.Origins[i]
+		}
+		out.Transactions = append(out.Transactions, pbTransaction(&page.Transactions[i], origin))
 	}
 	if page.Next != nil {
 		out.NextPageToken = page.Next.Encode()
@@ -280,4 +284,19 @@ func (s *readService) GetModelPortfolio(ctx context.Context, req *connect.Reques
 		return nil, toConnectError(ctx, s.log, err)
 	}
 	return connect.NewResponse(pbModelPortfolio(&m)), nil
+}
+
+// ListPlugins answers GET /v1/plugins: the installed plugin instances
+// (D-46) with their trust (D-56), or unavailable when the core can't read
+// them.
+func (s *readService) ListPlugins(ctx context.Context, _ *connect.Request[viewsv1.ListPluginsRequest]) (*connect.Response[viewsv1.ListPluginsResponse], error) {
+	plugins, err := s.views.Plugins(ctx)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	out := &viewsv1.ListPluginsResponse{Plugins: make([]*viewsv1.Plugin, 0, len(plugins))}
+	for i := range plugins {
+		out.Plugins = append(out.Plugins, pbPlugin(&plugins[i]))
+	}
+	return connect.NewResponse(out), nil
 }

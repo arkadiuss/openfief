@@ -596,6 +596,22 @@ components:
           title: lots
       title: ListLotsResponse
       additionalProperties: false
+    openfief.views.v1.ListPluginsRequest:
+      type: object
+      title: ListPluginsRequest
+      additionalProperties: false
+      description: ListPluginsRequest has no parameters.
+    openfief.views.v1.ListPluginsResponse:
+      type: object
+      properties:
+        plugins:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Plugin'
+          title: plugins
+      title: ListPluginsResponse
+      additionalProperties: false
+      description: ListPluginsResponse lists the installed plugin instances.
     openfief.views.v1.ListSleevesRequest:
       type: object
       title: ListSleevesRequest
@@ -878,6 +894,59 @@ components:
       description: |-
         PerformanceGap says why a performance series ends before the last date
          asked for.
+    openfief.views.v1.Plugin:
+      type: object
+      properties:
+        instance:
+          type: string
+          title: instance
+          description: The instance's name, the name of its Plugin resource.
+        image:
+          type: string
+          title: image
+          description: The image reference, pinned by digest.
+        imageDigest:
+          type: string
+          title: image_digest
+          description: The image's digest, such as "sha256:...".
+        capabilities:
+          type: array
+          items:
+            type: string
+          title: capabilities
+          description: 'What the running version may act as: requested and granted (D-16).'
+        requestedCapabilities:
+          type: array
+          items:
+            type: string
+          title: requested_capabilities
+          description: What the image's signed manifest requests.
+        trust:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.SignatureTrust'
+          title: trust
+        signer:
+          type: string
+          title: signer
+          description: The trusted signer's name; empty unless a trusted signer signed it.
+        trustReason:
+          type: string
+          title: trust_reason
+          description: The operator's reason for the trust, such as "Verified" or "Unsigned".
+        phase:
+          type: string
+          title: phase
+          description: |-
+            The operator's Ready reason, such as "Running" or "AwaitingApproval";
+             "Removing" while it is being uninstalled, "Pending" before the operator
+             reconciled it.
+        ready:
+          type: boolean
+          title: ready
+          description: Whether a version of it runs.
+      title: Plugin
+      additionalProperties: false
+      description: Plugin is one installed plugin instance.
     openfief.views.v1.Posting:
       type: object
       properties:
@@ -898,6 +967,21 @@ components:
       title: Posting
       additionalProperties: false
       description: Posting is one leg of a transaction.
+    openfief.views.v1.SignatureTrust:
+      type: string
+      title: SignatureTrust
+      enum:
+        - SIGNATURE_TRUST_UNSPECIFIED
+        - SIGNATURE_TRUST_VERIFIED
+        - SIGNATURE_TRUST_OPENFIEF_CI
+        - SIGNATURE_TRUST_PUBLISHER
+        - SIGNATURE_TRUST_OWNER
+        - SIGNATURE_TRUST_TRUSTED_SIGNER
+        - SIGNATURE_TRUST_REFUSED
+        - SIGNATURE_TRUST_NOT_CHECKED
+      description: |-
+        SignatureTrust is how far an installed plugin's image is trusted (D-45,
+         D-56).
     openfief.views.v1.Sleeve:
       type: object
       properties:
@@ -957,6 +1041,19 @@ components:
           items:
             $ref: '#/components/schemas/openfief.views.v1.Posting'
           title: postings
+        connectorInstance:
+          type: string
+          title: connector_instance
+          description: |-
+            The connector instance whose delivery brought the transaction in, read
+             from its source; empty when no connector instance did.
+        connectorInstanceRemoved:
+          type: boolean
+          title: connector_instance_removed
+          description: |-
+            True when that instance is no longer installed (D-58). The transaction
+             stays; reinstalling the instance under the same name continues from it.
+             False while the core can't tell which instances are installed.
       title: Transaction
       additionalProperties: false
       description: |-
@@ -1450,6 +1547,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetPerformanceResponse'
+  /v1/plugins:
+    get:
+      tags:
+        - ReadService
+      summary: ListPlugins
+      description: |-
+        ListPlugins returns the installed plugin instances (D-46, D-48), in
+         name order, each with what it may do and how far its image's signature
+         is trusted (D-56), as the operator recorded them. It only reads: nothing
+         in this API installs, removes or approves a plugin. It fails with
+         UNAVAILABLE when the core can't read the cluster.
+      operationId: openfief.views.v1.ReadService.ListPlugins
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListPluginsResponse'
   /v1/sleeves:
     get:
       tags:
