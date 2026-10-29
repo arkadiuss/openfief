@@ -286,3 +286,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed912342d49a
+  - type: constrains
+    from: REQ-ui-charts-number-format
+    to: FACT-SUBJECT-9A296B3D7B3E9839
+    created_at: 2026-10-29T11:36:01.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fc18bf03285
+  - type: requires_property
+    from: REQ-ui-charts-number-format
+    to: FACT-PROP-E78EB39F42B9ADDB
+    created_at: 2026-10-29T11:36:01.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-398e0fdc1c77
