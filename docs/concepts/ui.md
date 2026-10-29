@@ -16,7 +16,7 @@ The built-in UI is OpenFief's default [view](../glossary.md) (D-3): a small webs
 
 **Backend for frontend.** The browser's application is the UI, and the UI talks to the core. This split, called backend for frontend (Sam Newman, 2015), keeps every credential out of the browser's reach: the UI holds the plugin's own token, and the owner's session token sits in a cookie that no script can read. The browser never calls the core's services itself, so the core's API needs no browser-facing CORS rules.
 
-**The core is the front door.** Browsers reach the UI only through the core (D-81): the core is the only entry point for browsers, and it reverse-proxies every path the UI serves to the UI's pod, presenting its own token for that instance as it does to any plugin (D-59). So `kubectl port-forward` and the owner's own Ingress (D-28) reach the core alone, and the UI, like every plugin, admits the core and nothing else. A reverse proxy is a server that forwards a client's request to another server and passes the answer back, so the client sees one origin. The UI's manifest declares the path prefix it serves, its [browser path](../glossary.md) `/`, and its grant approves it; `/` means every path the core doesn't serve itself.
+**The core is the front door.** Browsers reach the UI only through the core (D-81): the core is the only entry point for browsers, and it reverse-proxies every path the UI serves to the UI's pod, presenting its own token for that instance as it does to any plugin (D-59). So whatever route the owner adds, or a port-forward, reaches the core alone (D-28), and the UI, like every plugin, admits the core and nothing else. A reverse proxy is a server that forwards a client's request to another server and passes the answer back, so the client sees one origin. The UI's manifest declares the path prefix it serves, its [browser path](../glossary.md) `/`, and its grant approves it; `/` means every path the core doesn't serve itself.
 
 **Two tokens, two jobs.** The UI presents two different tokens to the core:
 
@@ -37,13 +37,13 @@ The code is in [`internal/views/ui`](../../internal/views/ui/doc.go); [`plugins/
 
 ```mermaid
 flowchart LR
-  browser(["Owner's browser"])
+  browser@{ icon: "fief:browser", form: "square", label: "Owner's browser", pos: "b", h: 40 }
   subgraph ns["namespace openfief"]
-    door["openfief-core front door<br/>http 8080"]
-    ui["plugin-ui pod<br/>internal/views/ui"]
-    core["openfief-core services<br/>connect 8081 → 8080"]
+    door@{ icon: "fief:gate", form: "square", label: "openfief-core front door<br/>http 8080", pos: "b", h: 40 }
+    ui@{ icon: "fief:view", form: "square", label: "plugin-ui pod<br/>internal/views/ui", pos: "b", h: 40 }
+    core@{ icon: "fief:gate", form: "square", label: "openfief-core services<br/>connect 8081 → 8080", pos: "b", h: 40 }
   end
-  browser -- "HTML, forms, htmx,<br/>session cookie<br/>(port-forward or Ingress)" --> door
+  browser -- "HTML, forms, htmx,<br/>session cookie<br/>(your route)" --> door
   door -- "browser path /<br/>Bearer: core token for ui (D-59)<br/>Host, X-Forwarded-Proto" --> ui
   ui -- "AuthService<br/>Bearer: plugin token (D-27)<br/>session token + origin in the message" --> core
   ui -- "ReadService (Connect)<br/>Bearer: session token" --> core
@@ -155,7 +155,7 @@ The pages follow the [design system](../dev/design-system.md) and take every col
 
 - **D-3** makes the UI the default view; **D-6** says it reads through the public API like any view. `TestReadsOnlyThroughPublicAPI` keeps the package from importing anything of OpenFief's but the kernel and the SDK.
 - **D-26** and **D-60**: passkeys only, per host, the first through a one-time link. **D-27**: the UI authenticates as a plugin with its projected token.
-- **D-28**, **D-81**: the UI is a ClusterIP Service that only the core calls; port-forward and the demo's Ingress reach the core, which proxies the UI's browser path. Which browser path the UI takes is the narrowest that works with the core's own paths: `/`, so the UI's pages keep their paths and enrollment links stay `<origin>/enroll#code=...`.
+- **D-28**, **D-81**: the UI is a ClusterIP Service that only the core calls; a route, a port-forward or the demo's Ingress reaches the core, which proxies the UI's browser path. Which browser path the UI takes is the narrowest that works with the core's own paths: `/`, so the UI's pages keep their paths and enrollment links stay `<origin>/enroll#code=...`.
 - **D-84**: no fixed token: the UI only ever presents its projected token, and is developed against kind or k3d.
 - **D-85**: the `__Host-` cookie everywhere, `localhost` included; Safari on `http://localhost` is still to verify (above).
 - **D-30**, **D-36**, **D-62**: two of the three charts, the valuation status per account, the reporting currency. **D-106** is not built: value and performance are still one chart (below).

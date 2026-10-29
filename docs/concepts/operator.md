@@ -1,6 +1,6 @@
 ---
 title: Operator
-description: How the Kubernetes operator turns Plugin and PluginGrant resources into isolated plugin workloads, and how much of that is built.
+description: How the Kubernetes operator turns Plugin and PluginGrant resources into isolated plugin workloads, and checks each image's signature before it runs.
 covers:
   - internal/plugins/operator/**
   - internal/plugins/kube/**
@@ -212,19 +212,19 @@ The discovery endpoints are non-resource URLs, which no namespaced Role can gran
 
 ```mermaid
 flowchart LR
-  api[("Kubernetes API server")]
-  ext(["External hosts"])
-  reg(["Container registries"])
+  api@{ icon: "fief:cluster", form: "square", label: "Kubernetes API server", pos: "b", h: 40 }
+  ext@{ icon: "fief:globe", form: "square", label: "External hosts", pos: "b", h: 40 }
+  reg@{ icon: "fief:image", form: "square", label: "Container registries", pos: "b", h: 40 }
   subgraph ns["namespace openfief, Pod Security restricted"]
-    op["openfief-operator<br/>Role in openfief only"]
+    op@{ icon: "fief:operator", form: "square", label: "openfief-operator<br/>Role in openfief only", pos: "b", h: 40 }
     ts[/"ConfigMap openfief-trusted-signers, optional"/]
     al[/"ConfigMap openfief-egress-allowlist"/]
     jwks[/"ConfigMap openfief-sa-jwks"/]
-    proxy["egress-proxy<br/>Service port 4750"]
-    core["openfief-core<br/>Service port connect"]
+    proxy@{ icon: "fief:egress", form: "square", label: "egress-proxy<br/>Service port 4750", pos: "b", h: 40 }
+    core@{ icon: "fief:gate", form: "square", label: "openfief-core<br/>Service port connect", pos: "b", h: 40 }
     subgraph one["per Plugin NAME"]
-      np{{"NetworkPolicy plugin-NAME"}}
-      pod["plugin pod<br/>ServiceAccount plugin-NAME, no API token"]
+      np@{ icon: "fief:wall", form: "square", label: "NetworkPolicy plugin-NAME", pos: "b", h: 40 }
+      pod@{ icon: "fief:connector", form: "square", label: "plugin pod<br/>ServiceAccount plugin-NAME,<br/>no API token", pos: "b", h: 40 }
     end
   end
   op -- "watch Plugin, PluginGrant; apply objects" --> api

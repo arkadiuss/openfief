@@ -142,7 +142,7 @@ The tunnelled kubeconfig points at `127.0.0.1`, which `task e2e` takes for a loc
 
 ## Use the read API
 
-The core serves the read API (D-50) at `https://demo.openfief.dev`: REST under `/v1` and Connect under `/openfief.views.v1.ReadService/`. Every call needs a [script token](../glossary.md) (D-27). The core's `/healthz` and `/readyz` are not routed: reach them through `kubectl port-forward`. The core's image has no shell, so issue a token by running the binary itself in its pod:
+The core serves the read API (D-50) at `https://demo.openfief.dev`: REST under `/v1` and Connect under `/openfief.views.v1.ReadService/`. Every call needs a [script token](../glossary.md) (D-27). The core's `/healthz` and `/readyz` answer through the same route without a token and return no data. The core's image has no shell, so issue a token by running the binary itself in its pod:
 
 ```bash
 ssh root@"$ip" k3s kubectl -n openfief exec deploy/openfief-core -- /core token issue --name demo --ttl 168h

@@ -30,6 +30,22 @@ Everything OpenFief shows people (the docs site, the landing page and the built-
 - Keep clear space of a quarter of the mark's width around it. On a dark or vert ground, use the reversed file.
 - The square inside the gate is always gold. It is the one fixed point of the brand.
 
+## Icons
+
+The icons in [`design/icons/`](../../design/icons/) draw OpenFief's parts in diagrams, on the landing page and, later, in the UI. They are drawn like the marks: on a 24 px grid, with a 2 px stroke and square joins. Strokes are `currentColor`, so an icon takes the color of the text around it. Gold appears only where it means what it means in the marks, the fief or the owner's seal: the gate's square, the canton, the seal's center, the bond's rosette and the agent's eyes, since an agent holds a fief.
+
+| Group | For | Icons |
+|---|---|---|
+| OpenFief's parts | the core, its operator and proxy, the plugin kinds, and the walls between them | ![gate](../../design/icons/gate.svg) `gate` ![operator](../../design/icons/operator.svg) `operator` ![egress](../../design/icons/egress.svg) `egress` ![connector](../../design/icons/connector.svg) `connector` ![view](../../design/icons/view.svg) `view` ![agent](../../design/icons/agent.svg) `agent` ![wall](../../design/icons/wall.svg) `wall` ![route](../../design/icons/route.svg) `route` |
+| The money | what the record holds and how it is valued | ![ledger](../../design/icons/ledger.svg) `ledger` ![chart](../../design/icons/chart.svg) `chart` ![fx](../../design/icons/fx.svg) `fx` ![bond](../../design/icons/bond.svg) `bond` ![statement](../../design/icons/statement.svg) `statement` ![database](../../design/icons/database.svg) `database` ![fief](../../design/icons/fief.svg) `fief` |
+| People and the outside | who and what OpenFief talks to | ![owner](../../design/icons/owner.svg) `owner` ![browser](../../design/icons/browser.svg) `browser` ![script](../../design/icons/script.svg) `script` ![phone](../../design/icons/phone.svg) `phone` ![institution](../../design/icons/institution.svg) `institution` ![globe](../../design/icons/globe.svg) `globe` |
+| Trust and control | signatures, credentials and the levers that stop things | ![seal](../../design/icons/seal.svg) `seal` ![key](../../design/icons/key.svg) `key` ![secret](../../design/icons/secret.svg) `secret` ![image](../../design/icons/image.svg) `image` ![cluster](../../design/icons/cluster.svg) `cluster` ![clock](../../design/icons/clock.svg) `clock` ![killswitch](../../design/icons/killswitch.svg) `killswitch` |
+
+- An icon labels a thing; it never replaces its name. Every icon in a diagram or a card has its text next to it.
+- One icon means one thing everywhere. The `gate` is OpenFief's core, as the Gate mark is OpenFief; `connector`, `view` and `agent` are the plugin kinds; `institution` is any bank, broker or data publisher.
+- In a Mermaid diagram, an icon is a node shape from the pack `fief`, which the docs build registers from this folder: `core@{ icon: "fief:gate", form: "square", label: "Core", pos: "b", h: 40 }`. Use them for diagrams of parts and how they connect; diagrams of code stay plain ([Documentation](docs.md#writing-a-concept-page)).
+- A new icon is one more file in the folder, on the same grid, with a `<title>`. The docs build picks it up by its file name.
+
 ## Color
 
 Tinctures are the palette; components use the semantic tokens built on them, so dark mode redefines only those. The values live in [`tokens.css`](../../design/tokens.css), the only place a hex code is written.
@@ -119,7 +135,9 @@ flowchart LR
     fonts["fonts/<br/>fonts.css and woff2"]
     marks["marks/<br/>gate, seal, canton"]
     mascot["mascot/<br/>four Kasztan poses"]
+    icons["icons/<br/>line icons"]
   end
+  diagrams["scripts/docs-diagrams.mjs<br/>Mermaid icon pack fief"]
   site["Docs site<br/>site/assets/css/site.css"]
   ui["Built-in UI<br/>internal/views/ui"]
   embed["design/design.go<br/>go:embed"]
@@ -127,6 +145,7 @@ flowchart LR
   fonts -- "served under /docs/design/" --> site
   marks --> site
   mascot --> site
+  icons --> diagrams --> site
   design --> embed
   embed -- "served under /static/design/" --> ui
 ```
@@ -135,7 +154,7 @@ flowchart LR
 - The site's own stylesheet uses only semantic tokens. The Gate in its top bar is inline SVG ([`mark.html`](../../site/layouts/_partials/mark.html)) in `currentColor` with a gold square, so the content security policy needs no image source for it.
 - The built-in UI serves the same files. [`design/design.go`](../../design/design.go) is a Go package with one embedded file system holding `tokens.css`, `fonts/`, `marks/` and `mascot/` at their own paths, because Go's `embed` can't reach files outside its package's directory. The UI serves it under `/static/design/`, and every page loads `fonts.css`, then `tokens.css`, then the UI's own [`style.css`](../../internal/views/ui/web/static/style.css), which uses only semantic tokens. Nothing is copied, so there is no copy to drift; the UI's image build copies `design/` next to `internal/`, and Hugo's mounts leave `design.go` out of the site. The Gate in the UI's top bar is inline SVG, as on the site; Kasztan and the favicon are images from the same files, which the UI's content security policy allows as its own (`img-src 'self'`, `font-src 'self'`).
 - The UI's charts take their colors from the tokens at runtime: `style.css` maps the five series onto semantic tokens (`--series-1` is `--accent`, then `--highlight`, `--label`, `--border-strong` and `--accent-soft`), and the chart script reads them as computed CSS custom properties, so the charts follow light, dark and `data-theme`, and redraw when the reader's scheme changes. Tests in [`design_test.go`](../../internal/views/ui/design_test.go) fail on any color written outside `tokens.css` in the UI's templates, scripts or stylesheet, on a custom property the stylesheet uses that nothing defines, and on a page that doesn't load the design system.
-- Mermaid diagrams render in the same palette: [`docs-diagrams.mjs`](../../scripts/docs-diagrams.mjs) passes a light and a dark set of tincture-based theme variables.
+- Mermaid diagrams render in the same palette: [`docs-diagrams.mjs`](../../scripts/docs-diagrams.mjs) passes a light and a dark set of tincture-based theme variables, and registers the icons as the Mermaid icon pack `fief`, swapping their gold for `--or-bright` in the dark rendering. The landing page inlines its feature icons, so they take the text color. The built-in UI doesn't use the icons yet, so `design.go` doesn't embed them.
 
 ## Not built yet
 
