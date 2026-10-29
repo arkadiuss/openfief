@@ -1,0 +1,132 @@
+/*
+OpenFief design tokens: the one source of every color, font, size and radius on the docs site and in the built-in UI
+(docs/dev/design-system.md). Tinctures are the raw palette, named after heraldry's colors; use the semantic tokens
+below them in components, so dark mode only has to redefine those.
+
+Dark mode follows the reader's system setting. A page may force a scheme with data-theme="light" or "dark" on <html>.
+Fonts are declared in fonts/fonts.css; load it before this file.
+*/
+:root {
+  color-scheme: light dark;
+
+  /* Tinctures. Metals (or, argent) are for fills and for text on colors; never or text on a light ground. */
+  --vert: #1e3a2b;
+  --vert-bright: #3f7a5a;
+  --or: #c99a2e;
+  --or-bright: #d9ae4a;
+  --gules: #b4232a;
+  --gules-bright: #e0575c;
+  --kasztan: #8a4b2a;
+  --sable: #14171a;
+  --argent: #f3f4ef;
+
+  /* Grounds and text */
+  --bg: #fbfbf8;
+  --surface: #ffffff;
+  --sunken: #f3f4ef;
+  --text: #14171a;
+  --muted: #5b6460;
+  --border: #dde2db;
+  --border-strong: #9aa59e;
+  --label: var(--kasztan);        /* small uppercase labels and eyebrows */
+
+  /* Roles */
+  --accent: var(--vert);          /* primary fills: primary button, active nav, hero */
+  --on-accent: var(--argent);     /* text and marks on --accent */
+  --accent-soft: #e3ece5;         /* selected rows, current page */
+  --link: #1e3a2b;
+  --highlight: var(--or);         /* the fief: the gate's square, the canton, the seal, focus */
+  --on-highlight: var(--sable);
+  --highlight-text: #7a5a12;      /* when gold has to be text */
+  --danger: var(--gules);
+  --on-danger: #ffffff;
+  --focus: var(--or);
+
+  /* Status pills: background, then text. Always pair color with an icon or a word. */
+  --ok-soft: #dce8df;
+  --ok-text: #1e3a2b;
+  --warn-soft: #f4e6c4;
+  --warn-text: #5e4511;
+  --danger-soft: #f6dadb;
+  --danger-text: #8e1b21;
+  --neutral-soft: #eceeea;
+  --neutral-text: #3e4744;
+
+  /* Type */
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Space: a 4 px base */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Shape: near-square, like a shield's edge */
+  --radius-input: 2px;
+  --radius: 6px;
+  --radius-pill: 999px;
+  --shadow-raised: 0 12px 32px rgba(20, 23, 26, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101412;
+    --surface: #18201c;
+    --sunken: #22302a;
+    --text: #e8ece8;
+    --muted: #a9b5ad;
+    --border: #2c3a33;
+    --border-strong: #4f5f56;
+    --label: #d29a74;
+    --accent: var(--vert-bright);
+    --accent-soft: #1c3326;
+    --link: #8ccba6;
+    --highlight: var(--or-bright);
+    --highlight-text: var(--or-bright);
+    --danger: var(--gules-bright);
+    --on-danger: var(--sable);
+    --focus: var(--or-bright);
+    --ok-soft: #1c3326;
+    --ok-text: #8ccba6;
+    --warn-soft: #3a3016;
+    --warn-text: #e8c76a;
+    --danger-soft: #3a1e20;
+    --danger-text: #f2a19a;
+    --neutral-soft: #22302a;
+    --neutral-text: #c4cec7;
+    --shadow-raised: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #101412;
+  --surface: #18201c;
+  --sunken: #22302a;
+  --text: #e8ece8;
+  --muted: #a9b5ad;
+  --border: #2c3a33;
+  --border-strong: #4f5f56;
+  --label: #d29a74;
+  --accent: var(--vert-bright);
+  --accent-soft: #1c3326;
+  --link: #8ccba6;
+  --highlight: var(--or-bright);
+  --highlight-text: var(--or-bright);
+  --danger: var(--gules-bright);
+  --on-danger: var(--sable);
+  --focus: var(--or-bright);
+  --ok-soft: #1c3326;
+  --ok-text: #8ccba6;
+  --warn-soft: #3a3016;
+  --warn-text: #e8c76a;
+  --danger-soft: #3a1e20;
+  --danger-text: #f2a19a;
+  --neutral-soft: #22302a;
+  --neutral-text: #c4cec7;
+  --shadow-raised: 0 12px 32px rgba(0, 0, 0, 0.4);
+}

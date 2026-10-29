@@ -13,7 +13,33 @@ import { chromium } from 'playwright-core';
 const require = createRequire(import.meta.url);
 const mermaidScript = require.resolve('mermaid/dist/mermaid.min.js');
 const mermaidVersion = require('mermaid/package.json').version;
-const themes = { light: 'neutral', dark: 'dark' };
+// The design system's palette (docs/dev/design-system.md, design/tokens.css): vert nodes, gold notes, sable text.
+// Pie slices are light tints so one dark label color reads on every slice in both schemes.
+const pie = { pie1: '#8ccba6', pie2: '#d9ae4a', pie3: '#cbd2c9', pie4: '#c99a6e', pieSectionTextColor: '#14171a', pieStrokeColor: '#14171a', pieOuterStrokeColor: '#9aa59e' };
+const themes = {
+  light: {
+    theme: 'base',
+    themeVariables: {
+      ...pie, background: '#ffffff', fontSize: '15px',
+      primaryColor: '#e3ece5', primaryBorderColor: '#1e3a2b', primaryTextColor: '#14171a',
+      secondaryColor: '#f4e6c4', secondaryBorderColor: '#c99a2e', tertiaryColor: '#f3f4ef', tertiaryBorderColor: '#9aa59e',
+      lineColor: '#3e4744', textColor: '#14171a', clusterBkg: '#f3f4ef', clusterBorder: '#9aa59e', edgeLabelBackground: '#ffffff',
+      noteBkgColor: '#f4e6c4', noteBorderColor: '#c99a2e', pieTitleTextColor: '#14171a', pieLegendTextColor: '#14171a',
+    },
+  },
+  dark: {
+    theme: 'base',
+    themeVariables: {
+      ...pie, darkMode: true, background: '#18201c', fontSize: '15px',
+      primaryColor: '#22302a', primaryBorderColor: '#3f7a5a', primaryTextColor: '#e8ece8',
+      secondaryColor: '#3a3016', secondaryBorderColor: '#d9ae4a', tertiaryColor: '#18201c', tertiaryBorderColor: '#4f5f56',
+      lineColor: '#a9b5ad', textColor: '#e8ece8', clusterBkg: '#18201c', clusterBorder: '#4f5f56', edgeLabelBackground: '#18201c',
+      noteBkgColor: '#3a3016', noteBorderColor: '#d9ae4a', noteTextColor: '#e8ece8', pieTitleTextColor: '#e8ece8', pieLegendTextColor: '#e8ece8',
+    },
+  },
+};
+// The cache of rendered SVGs is valid for one Mermaid version and one set of themes.
+const cacheKey = `${mermaidVersion} ${JSON.stringify(themes)}`;
 const fontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
 // browserOptions picks the Chromium to drive, without downloading one.
@@ -48,14 +74,14 @@ function uniqueDiagrams(collected) {
   return [...byHash.values()];
 }
 
-// renderAll renders each missing SVG and returns the failures; SVGs already in outDir for this Mermaid version are kept.
+// renderAll renders each missing SVG and returns the failures; SVGs already in outDir for this cache key are kept.
 async function renderAll(diagrams, outDir) {
   const versionFile = path.join(outDir, '.mermaid-version');
-  if (!existsSync(versionFile) || (await readFile(versionFile, 'utf8')) !== mermaidVersion) {
+  if (!existsSync(versionFile) || (await readFile(versionFile, 'utf8')) !== cacheKey) {
     await rm(outDir, { recursive: true, force: true });
   }
   await mkdir(outDir, { recursive: true });
-  await writeFile(versionFile, mermaidVersion);
+  await writeFile(versionFile, cacheKey);
 
   const todo = diagrams.flatMap((d) => Object.keys(themes).map((variant) => ({ ...d, variant })))
     .filter((job) => !existsSync(path.join(outDir, `${job.hash}-${job.variant}.svg`)));
@@ -71,7 +97,7 @@ async function renderAll(diagrams, outDir) {
     for (const job of todo) {
       const result = await page.evaluate(async ({ code, id, theme, font }) => {
         try {
-          globalThis.mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme, fontFamily: font });
+          globalThis.mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', ...theme, fontFamily: font });
           const { svg } = await globalThis.mermaid.render(id, code);
           return { svg };
         } catch (error) {
