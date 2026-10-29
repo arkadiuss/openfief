@@ -17,15 +17,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Identity and the UI
 
-6. **View plugins that browsers reach.**
-   - *Problem:* D-59 says only the core may call a plugin. The built-in UI is a view plugin that browsers reach through the Ingress.
-   - *Today:* the demo allows it with a demo-only NetworkPolicy from Traefik (like the core's own). The operator's rules are unchanged.
-   - *Options:* an explicit exception in D-59 for view plugins that serve browsers, and what the operator then compiles for them; or serve the UI from the core.
-
-7. **The core's own cluster role for TokenReview.**
-   - *Problem:* the core checks view plugins' tokens with TokenReview, so it has a narrow ClusterRole (create `tokenreviews` only). That is the second cluster-scoped grant after the egress proxy's (D-63).
-   - *Options:* keep it; or another way to authenticate view plugins.
-
 8. **Which tokens the read API accepts (D-27).**
    - *Today:* owner sessions, script tokens and view plugins' projected tokens, checked by the same rules as the AuthService's callers. Connector tokens are refused, since the core calls connectors and not the other way round.
    - *Question:* is that the intended scope?
