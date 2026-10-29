@@ -475,3 +475,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-976f3f8d3ab6
+  - type: implements
+    from: SYM-ingest-broker-account-mapped
+    to: REQ-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:49:02.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74aaf0429073
+  - type: covered_by
+    from: SYM-ingest-broker-account-mapped
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:49:02.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-646151bc9972

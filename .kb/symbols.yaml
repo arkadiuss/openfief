@@ -23053,7 +23053,7 @@ symbols:
       - type: covered_by
         target: TEST-portfolio-sleeve-kind
       - type: implements
-        target: REQ-portfolio-default-kinds
+        target: REQ-portfolio-builtin-kinds
   - id: SYM-portfolio-check-kind
     title: CheckKind
     sourceFile: internal/portfolio/kind.go
@@ -23092,9 +23092,11 @@ symbols:
       - type: covered_by
         target: TEST-portfolio-sleeve-kind
       - type: implements
-        target: REQ-portfolio-sleeve-kind
+        target: REQ-portfolio-role-differs-explicit
       - type: implements
-        target: REQ-portfolio-sleeve-role-override
+        target: REQ-portfolio-role-override-explicit
+      - type: implements
+        target: REQ-portfolio-sleeve-kind
   - id: SYM-portfolio-default-sleeves
     title: DefaultSleeves
     sourceFile: internal/portfolio/kind.go
@@ -23107,7 +23109,7 @@ symbols:
       - type: covered_by
         target: TEST-portfolio-sleeve-kind
       - type: implements
-        target: REQ-portfolio-default-kinds
+        target: REQ-portfolio-install-sleeves
   - id: SYM-portfolio-missing-defaults
     title: MissingDefaults
     sourceFile: internal/portfolio/kind.go
@@ -23120,7 +23122,9 @@ symbols:
       - type: covered_by
         target: TEST-portfolio-sleeve-kind
       - type: implements
-        target: REQ-portfolio-default-kinds
+        target: REQ-portfolio-defaults-on-fresh-install
+      - type: implements
+        target: REQ-portfolio-install-sleeves
   - id: SYM-portfolio-has-sleeve
     title: hasSleeve
     sourceFile: internal/portfolio/kind.go
@@ -23267,7 +23271,9 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-kinds
       - type: implements
-        target: REQ-ledger-app-ensure-defaults
+        target: REQ-portfolio-defaults-on-fresh-install
+      - type: implements
+        target: REQ-portfolio-install-sleeves
   - id: SYM-ledger-app-test-save-kind
     title: TestSaveKind
     sourceFile: internal/ledger/app/kinds_test.go
@@ -76679,3 +76685,895 @@ symbols:
         target: TEST-e2e-demo-stack
       - type: executable_for
         target: TEST-e2e-plugins
+  - id: SYM-ingest-app-broker-account-store
+    title: BrokerAccountStore
+    sourceFile: internal/ingest/app/brokers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:46:54.835Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-record
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-app-connectors-resolve-broker-accounts
+    title: Connectors.resolveBrokerAccounts
+    sourceFile: internal/ingest/app/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:47:02.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-record
+      - type: implements
+        target: REQ-ingest-broker-account-resolve
+  - id: SYM-ingest-app-connectors-mark-seeded
+    title: Connectors.markSeeded
+    sourceFile: internal/ingest/app/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:47:09.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-app-test-helper-fake-brokers
+    title: fakeBrokers
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:47:16.408Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-helper-fake-brokers-record-broker-accounts
+    title: fakeBrokers.RecordBrokerAccounts
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:47:23.879Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-helper-fake-brokers-broker-accounts
+    title: fakeBrokers.BrokerAccounts
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:47:31.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-helper-fake-brokers-mark-seeded
+    title: fakeBrokers.MarkSeeded
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:47:38.810Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-helper-fake-brokers-map-broker-account
+    title: fakeBrokers.MapBrokerAccount
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:47:46.136Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-helper-by-broker
+    title: byBroker
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:47:53.337Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-connectors-resolve-broker-accounts
+    title: TestConnectorsResolveBrokerAccounts
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:00.529Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-helper-check-booked
+    title: checkBooked
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:07.521Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-helper-check-recorded
+    title: checkRecorded
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:14.306Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-connectors-broker-accounts-need-a-store
+    title: TestConnectorsBrokerAccountsNeedAStore
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:21.575Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-test-connectors-import-file-by-broker-account
+    title: TestConnectorsImportFileByBrokerAccount
+    sourceFile: internal/ingest/app/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:28.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-brokers
+  - id: SYM-ingest-app-connectors-admit
+    title: Connectors.admit
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:35.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-resolve
+  - id: SYM-ingest-broker-account-id
+    title: BrokerAccountID
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:41.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-record
+  - id: SYM-ingest-broker-account-id-validate
+    title: BrokerAccountID.Validate
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:48.291Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-record
+  - id: SYM-ingest-broker-account
+    title: BrokerAccount
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:48:53.600Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-record
+  - id: SYM-ingest-broker-account-mapped
+    title: BrokerAccount.Mapped
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:00.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-resolve
+  - id: SYM-ingest-broker-entries
+    title: BrokerEntries
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:06.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-resolve
+      - type: implements
+        target: REQ-ingest-unmapped-broker-account
+  - id: SYM-ingest-resolution
+    title: Resolution
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:12.927Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-resolve
+      - type: implements
+        target: REQ-ingest-unmapped-broker-account
+  - id: SYM-ingest-resolve-broker-accounts
+    title: ResolveBrokerAccounts
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:19.492Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-resolve
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-book
+    title: book
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:26.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-resolve
+      - type: implements
+        target: REQ-ingest-unmapped-broker-account
+  - id: SYM-ingest-reported-broker-accounts
+    title: ReportedBrokerAccounts
+    sourceFile: internal/ingest/brokeraccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:32.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-broker-accounts
+      - type: implements
+        target: REQ-ingest-broker-account-record
+  - id: SYM-ingest-test-broker-account-id-validate
+    title: TestBrokerAccountIDValidate
+    sourceFile: internal/ingest/brokeraccount_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:38.351Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-broker-accounts
+  - id: SYM-ingest-test-helper-broker-tx
+    title: brokerTx
+    sourceFile: internal/ingest/brokeraccount_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:44.729Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-broker-accounts
+  - id: SYM-ingest-test-helper-booked
+    title: booked
+    sourceFile: internal/ingest/brokeraccount_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:51.057Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-broker-accounts
+  - id: SYM-ingest-test-resolve-broker-accounts
+    title: TestResolveBrokerAccounts
+    sourceFile: internal/ingest/brokeraccount_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:49:56.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-broker-accounts
+  - id: SYM-ingest-test-reported-broker-accounts
+    title: TestReportedBrokerAccounts
+    sourceFile: internal/ingest/brokeraccount_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:50:02.265Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-broker-accounts
+  - id: SYM-ingest-connectrpc-broker-account-from
+    title: brokerAccountFrom
+    sourceFile: internal/ingest/connectrpc/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:50:10.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-ingest-connectrpc-broker-entries
+    title: brokerEntries
+    sourceFile: internal/ingest/connectrpc/brokers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:50:16.737Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-ingest-connectrpc-broker-entries-entries
+    title: brokerEntries.entries
+    sourceFile: internal/ingest/connectrpc/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:50:25.660Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-ingest-connectrpc-broker-entries-list
+    title: brokerEntries.list
+    sourceFile: internal/ingest/connectrpc/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:50:35.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-ingest-connectrpc-owner
+    title: owner
+    sourceFile: internal/ingest/connectrpc/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:50:44.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-ingest-connectrpc-split-by-broker-account
+    title: splitByBrokerAccount
+    sourceFile: internal/ingest/connectrpc/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:50:52.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-ingest-connectrpc-test-delivery-from-by-broker-account
+    title: TestDeliveryFromByBrokerAccount
+    sourceFile: internal/ingest/connectrpc/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:50:59.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-brokers
+  - id: SYM-ingest-connectrpc-test-helper-check-split
+    title: checkSplit
+    sourceFile: internal/ingest/connectrpc/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:51:05.977Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-brokers
+  - id: SYM-ingest-connectrpc-test-helper-entry
+    title: entry
+    sourceFile: internal/ingest/connectrpc/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:51:12.844Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-brokers
+  - id: SYM-ingest-delivery-by-broker-account
+    title: byBrokerAccount
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:51:20.180Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-ingest-delivery-test-from-mapping-by-broker-account
+    title: TestFromMappingByBrokerAccount
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:51:27.155Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-ingest-delivery-test-helper-check-named-by-broker-account
+    title: checkNamedByBrokerAccount
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:51:34.304Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-ibkrflex-test-map-by-broker-account
+    title: TestMapByBrokerAccount
+    sourceFile: internal/ingest/ibkrflex/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:51:43.595Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ibkrflex-brokers
+  - id: SYM-ibkrflex-test-helper-check-same-entries
+    title: checkSameEntries
+    sourceFile: internal/ingest/ibkrflex/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:51:50.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ibkrflex-brokers
+  - id: SYM-ibkrflex-test-helper-map-by-broker-account
+    title: mapByBrokerAccount
+    sourceFile: internal/ingest/ibkrflex/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:51:56.080Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ibkrflex-brokers
+  - id: SYM-ibkrflex-map-by-broker-account
+    title: mapByBrokerAccount
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:52:03.512Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ibkrflex-brokers
+      - type: implements
+        target: REQ-ingest-ibkrflex-by-broker-account
+  - id: SYM-ibkrflex-statement-account
+    title: statementAccount
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:52:10.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ibkrflex-brokers
+      - type: implements
+        target: REQ-ingest-ibkrflex-by-broker-account
+  - id: SYM-ibkrflex-map-sections
+    title: mapSections
+    sourceFile: internal/ingest/ibkrflex/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:52:19.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ibkrflex-brokers
+      - type: implements
+        target: REQ-ingest-ibkrflex-by-broker-account
+  - id: SYM-ingest-postgres-store-record-broker-accounts
+    title: Store.RecordBrokerAccounts
+    sourceFile: internal/ingest/postgres/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:52:26.839Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-record
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-postgres-store-broker-accounts
+    title: Store.BrokerAccounts
+    sourceFile: internal/ingest/postgres/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:52:34.398Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-record
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-postgres-store-all-broker-accounts
+    title: Store.AllBrokerAccounts
+    sourceFile: internal/ingest/postgres/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:52:41.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-record
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-postgres-scan-broker-account
+    title: scanBrokerAccount
+    sourceFile: internal/ingest/postgres/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:52:49.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-record
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-postgres-store-mark-seeded
+    title: Store.MarkSeeded
+    sourceFile: internal/ingest/postgres/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:52:57.703Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-record
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-postgres-store-map-broker-account
+    title: Store.MapBrokerAccount
+    sourceFile: internal/ingest/postgres/brokers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:53:06.036Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres-brokers
+      - type: implements
+        target: REQ-ingest-broker-account-record
+      - type: implements
+        target: REQ-ingest-broker-account-seeding
+  - id: SYM-ingest-postgres-test-helper-day
+    title: day
+    sourceFile: internal/ingest/postgres/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:53:12.494Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres-brokers
+  - id: SYM-ingest-postgres-test-helper-complete-opening
+    title: completeOpening
+    sourceFile: internal/ingest/postgres/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:53:19.403Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres-brokers
+  - id: SYM-ingest-postgres-test-broker-account-store
+    title: TestBrokerAccountStore
+    sourceFile: internal/ingest/postgres/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:53:25.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres-brokers
+  - id: SYM-ingest-postgres-test-helper-check-mapping
+    title: checkMapping
+    sourceFile: internal/ingest/postgres/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:53:32.257Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres-brokers
+  - id: SYM-ingest-postgres-test-broker-accounts-reseed-the-instance
+    title: TestBrokerAccountsReseedTheInstance
+    sourceFile: internal/ingest/postgres/brokers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:53:38.877Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres-brokers
+  - id: SYM-ledger-app-test-ensure-defaults-only-on-a-fresh-install
+    title: TestEnsureDefaultsOnlyOnAFreshInstall
+    sourceFile: internal/ledger/app/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:53:45.843Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-kinds
+  - id: SYM-ledger-pg-test-migrate-gives-differing-sleeves-a-role-override
+    title: TestMigrateGivesDifferingSleevesARoleOverride
+    sourceFile: internal/ledger/postgres/kinds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:53:53.110Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-kinds
+  - id: SYM-portfolio-key-rune
+    title: keyRune
+    sourceFile: internal/portfolio/key.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:54:01.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-key
+      - type: implements
+        target: REQ-portfolio-key-from-name
+  - id: SYM-portfolio-key-from-name
+    title: KeyFromName
+    sourceFile: internal/portfolio/key.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:54:13.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-key
+      - type: implements
+        target: REQ-portfolio-key-from-name
+  - id: SYM-portfolio-test-key-from-name
+    title: TestKeyFromName
+    sourceFile: internal/portfolio/key_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:54:23.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-key
+  - id: SYM-ibkr-flex-plugin-test-helper-check-broker-accounts
+    title: checkBrokerAccounts
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:54:33.977Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-connectorv1-transaction-get-broker-account
+    title: Transaction.GetBrokerAccount
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:54:43.158Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-balance-assertion-get-broker-account
+    title: BalanceAssertion.GetBrokerAccount
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:54:51.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-broker-account
+    title: BrokerAccount
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:54:58.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-broker-account-reset
+    title: BrokerAccount.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:55:07.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-broker-account-string
+    title: BrokerAccount.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:55:16.182Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-broker-account-proto-message
+    title: BrokerAccount.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:55:24.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-broker-account-proto-reflect
+    title: BrokerAccount.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:55:31.994Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-broker-account-descriptor
+    title: BrokerAccount.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:55:39.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-broker-account-get-id
+    title: BrokerAccount.GetId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:55:47.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts
+  - id: SYM-connectorv1-delivery-get-broker-accounts
+    title: Delivery.GetBrokerAccounts
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T11:55:55.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-brokers
+      - type: implements
+        target: REQ-connector-broker-accounts

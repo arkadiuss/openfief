@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5525813cb016
+  - type: implements
+    from: SYM-ingest-postgres-scan-broker-account
+    to: REQ-ingest-broker-account-record
+    created_at: 2026-10-29T11:52:52.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f5e482aacc9
+  - type: implements
+    from: SYM-ingest-postgres-scan-broker-account
+    to: REQ-ingest-broker-account-seeding
+    created_at: 2026-10-29T11:52:52.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaf4c937ed01
+  - type: covered_by
+    from: SYM-ingest-postgres-scan-broker-account
+    to: TEST-ingest-postgres-brokers
+    created_at: 2026-10-29T11:52:52.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c2fad9bcf5b

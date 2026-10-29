@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-486125f55377
+  - type: validates
+    from: TEST-ingest-ibkrflex-brokers
+    to: REQ-ingest-unmapped-broker-account
+    created_at: 2026-10-29T11:35:33.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-534a885118b5

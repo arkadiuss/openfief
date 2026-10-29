@@ -447,3 +447,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3a7b9bd3641
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-import-file-by-broker-account
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:48:30.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1c54bfb4080

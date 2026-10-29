@@ -356,3 +356,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-399ad81046fe
+  - type: validates
+    from: TEST-ledger-app-kinds
+    to: REQ-portfolio-install-sleeves
+    created_at: 2026-10-29T11:35:23.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e369bfb1bbc0

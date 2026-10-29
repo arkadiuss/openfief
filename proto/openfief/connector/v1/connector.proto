@@ -115,7 +115,8 @@ message TransactionKey {
 // sum to zero per currency (D-19).
 message Transaction {
   TransactionKey key = 1;
-  // The OpenFief account ID, never the institution's account number.
+  // The OpenFief account ID, never the institution's account number. Empty
+  // when broker_account names the account instead.
   string account_id = 2;
   TransactionKind kind = 3;
   // The date the transaction takes effect, "YYYY-MM-DD".
@@ -124,16 +125,35 @@ message Transaction {
   string lot_opened = 5;
   string description = 6;
   repeated Posting postings = 7;
+  // The institution's own ID of the account, such as an IBKR Flex account
+  // ID, set by a broker connector that doesn't know the OpenFief account
+  // (D-72); account_id is then empty. The core maps it to the OpenFief
+  // account the owner chose, and books nothing for a broker account that
+  // isn't mapped. The key's source must then name no account: the core
+  // appends ":" and the OpenFief account ID to it.
+  string broker_account = 8;
 }
 
 // BalanceAssertion is a balance the institution reports for a cash or
 // holding ledger account on a date; the derived balance must match it (D-18).
 message BalanceAssertion {
+  // The OpenFief account ID; empty when broker_account names the account.
   string account_id = 1;
   string date = 2;
   Book book = 3;
   // The reported balance: an amount for cash, units for a holding.
   string balance = 4;
+  // The institution's own ID of the account, as on Transaction (D-72).
+  string broker_account = 5;
+}
+
+// BrokerAccount is one of the owner's accounts at the institution, as the
+// institution names it (D-72). The core shows it to the owner to map to an
+// OpenFief account, so the owner never types it.
+message BrokerAccount {
+  // The institution's own ID of the account, such as an IBKR Flex account
+  // ID: 1 to 64 printable characters without spaces.
+  string id = 1;
 }
 
 // ProblemKind says why a statement row was left out of the ledger.
@@ -256,6 +276,10 @@ message Delivery {
   // (D-22): unlike prices, they never value a holding and never replace a
   // stored price.
   repeated Price cross_check_prices = 11;
+  // Every broker account the institution reported in this delivery, those
+  // without any transaction too (D-72). A broker account a transaction or
+  // balance assertion names counts as reported even when it is not listed.
+  repeated BrokerAccount broker_accounts = 12;
 }
 
 message SyncRequest {

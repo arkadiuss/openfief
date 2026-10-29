@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a67ff4803cf2
+  - type: implements
+    from: SYM-connectorv1-balance-assertion-get-broker-account
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:54:54.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa7fa28efaf2
+  - type: covered_by
+    from: SYM-connectorv1-balance-assertion-get-broker-account
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:54:54.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7e9aa38ccc1

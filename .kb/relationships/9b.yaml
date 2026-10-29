@@ -146,13 +146,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af7cadcb8211
-  - type: specified_by
-    from: REQ-portfolio-default-kinds
-    to: SCEN-portfolio-default-kinds
-    created_at: 2026-10-28T09:35:32.976Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-64ae89c2fcc8
   - type: executable_for
     from: SYM-cosign-test-verifier-new-world
     to: TEST-plugins-cosign

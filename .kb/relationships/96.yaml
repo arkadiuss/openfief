@@ -265,3 +265,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a52fe476e34
+  - type: implements
+    from: SYM-ingest-connectrpc-broker-entries-entries
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:50:28.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbad029f3edb
+  - type: covered_by
+    from: SYM-ingest-connectrpc-broker-entries-entries
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:50:28.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32eb301e4bc8

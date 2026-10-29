@@ -363,3 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ce91fe4af2e
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-entry
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:51:15.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c092a915bece

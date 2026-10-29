@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31e0cce44e97
+  - type: verified_by
+    from: SCEN-connector-broker-accounts
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:36:01.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b742e897c00
+  - type: verified_by
+    from: SCEN-connector-broker-accounts
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-29T11:36:01.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-592f1e3ef0fe
+  - type: verified_by
+    from: SCEN-connector-broker-accounts
+    to: TEST-ingest-delivery
+    created_at: 2026-10-29T11:36:01.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-832829217e91

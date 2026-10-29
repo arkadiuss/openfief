@@ -349,3 +349,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a248e482762
+  - type: constrains
+    from: REQ-ingest-ibkrflex-by-broker-account
+    to: FACT-SUBJECT-4417410D7D0B92B1
+    created_at: 2026-10-29T11:37:14.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-500283e1692b
+  - type: requires_property
+    from: REQ-ingest-ibkrflex-by-broker-account
+    to: FACT-PROP-B82DFAE47CFF7418
+    created_at: 2026-10-29T11:37:14.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d79dbfda9bed
+  - type: specified_by
+    from: REQ-ingest-ibkrflex-by-broker-account
+    to: SCEN-ingest-ibkrflex-by-broker-account
+    created_at: 2026-10-29T11:37:15.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f5b4c172759

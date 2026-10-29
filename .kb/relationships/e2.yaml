@@ -650,3 +650,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1439bdd23b80
+  - type: verified_by
+    from: SCEN-portfolio-defaults-on-fresh-install
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-29T11:35:47.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-167f2a9ebb91
+  - type: verified_by
+    from: SCEN-portfolio-defaults-on-fresh-install
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-29T11:35:47.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bb7f8d2d1c4
+  - type: verified_by
+    from: SCEN-portfolio-defaults-on-fresh-install
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-29T11:35:48.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d0c59f38687

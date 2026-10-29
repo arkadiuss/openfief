@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7537c1a3871a
+  - type: implements
+    from: SYM-portfolio-key-rune
+    to: REQ-portfolio-key-from-name
+    created_at: 2026-10-29T11:54:04.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81139b8f03a2
+  - type: covered_by
+    from: SYM-portfolio-key-rune
+    to: TEST-portfolio-key
+    created_at: 2026-10-29T11:54:04.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee68b288a080

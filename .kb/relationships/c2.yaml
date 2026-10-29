@@ -286,3 +286,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b806b1e8aa76
+  - type: verified_by
+    from: SCEN-portfolio-key-from-name
+    to: TEST-portfolio-key
+    created_at: 2026-10-29T11:35:50.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feaf8d84643a
+  - type: implements
+    from: SYM-ibkrflex-map-sections
+    to: REQ-ingest-ibkrflex-by-broker-account
+    created_at: 2026-10-29T11:52:21.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a815c0e0bbed
+  - type: covered_by
+    from: SYM-ibkrflex-map-sections
+    to: TEST-ingest-ibkrflex-brokers
+    created_at: 2026-10-29T11:52:21.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc2fc23bba4e
+  - type: executable_for
+    from: SYM-ledger-pg-test-migrate-gives-differing-sleeves-a-role-override
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-29T11:53:55.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10108af57a80

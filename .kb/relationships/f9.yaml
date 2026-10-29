@@ -160,13 +160,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1479a996575a
-  - type: implements
-    from: SYM-portfolio-default-kinds
-    to: REQ-portfolio-default-kinds
-    created_at: 2026-10-28T09:38:09.819Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-89a1f5b165aa
   - type: covered_by
     from: SYM-portfolio-default-kinds
     to: TEST-portfolio-sleeve-kind
@@ -202,13 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eed9be54e1e1
-  - type: specified_by
-    from: REQ-ledger-app-ensure-defaults
-    to: SCEN-ledger-app-ensure-defaults
-    created_at: 2026-10-28T09:53:27.234Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-92a3dec5f4bb
   - type: executable_for
     from: SYM-views-test-value-holdings
     to: TEST-views-allocation
@@ -454,3 +440,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c9ae7aac2b2
+  - type: implements
+    from: SYM-portfolio-default-kinds
+    to: REQ-portfolio-builtin-kinds
+    created_at: 2026-10-29T11:38:43.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61330f0aa8d8

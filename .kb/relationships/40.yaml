@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2f61dd909b2
+  - type: implements
+    from: SYM-ingest-app-connectors-admit
+    to: REQ-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:48:37.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0110a66f3759
+  - type: covered_by
+    from: SYM-ingest-app-connectors-admit
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:48:37.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef97fc11f8b3

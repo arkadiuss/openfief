@@ -503,3 +503,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6117bb6a1cd
+  - type: implements
+    from: SYM-ingest-resolve-broker-accounts
+    to: REQ-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:49:21.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-509f796a2462
+  - type: implements
+    from: SYM-ingest-resolve-broker-accounts
+    to: REQ-ingest-broker-account-seeding
+    created_at: 2026-10-29T11:49:21.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ced581b7fee8
+  - type: covered_by
+    from: SYM-ingest-resolve-broker-accounts
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:49:21.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30aadf03f86d

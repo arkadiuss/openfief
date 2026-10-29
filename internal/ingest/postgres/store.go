@@ -21,8 +21,8 @@ var ErrBatchNotOpen = errors.New("import batch is not open")
 // ErrUnknownMode reports a stored mode that is not an ingest mode.
 var ErrUnknownMode = errors.New("unknown ingest mode")
 
-// Store is app.SyncStore, app.BindingStore, app.AccountBindings and
-// app.BatchRecorder in PostgreSQL, in the ingest schema that Migrate
+// Store is app.SyncStore, app.BindingStore, app.AccountBindings,
+// app.BatchRecorder and app.BrokerAccountStore in PostgreSQL, in the ingest schema that Migrate
 // creates.
 type Store struct {
 	pool *pgxpool.Pool
@@ -41,13 +41,19 @@ func New(pool *pgxpool.Pool) *Store {
 }
 
 // ClaimSync claims instance until until, unless an unexpired claim holds
-// it at now, and returns its state; a new instance starts with none.
+// it at now, and returns its state; a new instance starts with none. The
+// instance counts as seeded only while every broker account mapped for it
+// is seeded too, so a broker account the owner maps later is seeded by the
+// next sync (D-72, D-23).
 func (s *Store) ClaimSync(ctx context.Context, instance string, now, until time.Time) (app.SyncClaim, error) {
 	rows, err := s.pool.Query(ctx, `
 		INSERT INTO ingest.connector_instances AS i (instance, lease_until) VALUES ($1, $3)
 		ON CONFLICT (instance) DO UPDATE SET lease_until = EXCLUDED.lease_until
 			WHERE i.lease_until IS NULL OR i.lease_until <= $2
-		RETURNING watermark, seeded, failures, open_batch,
+		RETURNING watermark,
+			seeded AND NOT EXISTS (SELECT FROM ingest.broker_accounts b
+				WHERE b.instance = i.instance AND b.account_id IS NOT NULL AND NOT b.seeded),
+			failures, open_batch,
 			(SELECT b.mode FROM ingest.import_batches b WHERE b.id = i.open_batch)`,
 		instance, now, until)
 	if err != nil {

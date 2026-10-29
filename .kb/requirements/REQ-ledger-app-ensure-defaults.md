@@ -1,6 +1,6 @@
 ---
 title: Ensuring the defaults must store every missing built-in sleeve kind and default sleeve in one database transaction, never change a stored kind or sleeve, and store nothing more when run again or by several processes at once.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#GR-6
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ Ensuring the defaults must store every missing built-in sleeve kind and default 
 
 ## Context
 
-Author decision, sleeve kinds (given in chat to the orchestrator, not yet recorded in docs/DESIGN.md): role stays a fixed enum, defensive or offensive, because code enforces that agents may lease only from offensive sleeves (GR-6); a sleeve kind is a named category with a default role, from a built-in set the owner can extend; a sleeve has a kind, and its role defaults from the kind but is stored on the sleeve. The author asked for a small default set of sleeves created at install, idempotently. Running it on every start is safe, so the core does not need to remember whether it was installed. Refines REQ-portfolio-default-kinds. Modeled by Claude Code for the sleeve-kinds task; the author has not reviewed it yet.
-
-## Source
-
-> Role stays a fixed enum: defensive | offensive. Code enforces it: agents may only lease from offensive sleeves (GR-6), so roles are never owner-defined. Sleeve kind is new: a named category with a default role, from a built-in default set that the owner can extend. Defaults: emergency-fund (defensive), bonds (defensive), retirement (defensive; IKE/IKZE), core (defensive; long-term), satellite (offensive), agent-pool (offensive). A sleeve has a kind. Its role defaults from the kind but is stored on the sleeve. A default set of sleeves is created at install. The allocation chart (D-30) can group by kind.
-
-author decision, sleeve kinds (chat); docs/DESIGN.md#GR-6, docs/DESIGN.md#D-30
+Closed: superseded by REQ-portfolio-defaults-on-fresh-install. Default sleeves are stored only while no sleeve is stored, so a started install, the demo's included, gets none. Closed by Claude Code for the onboarding work package (D-71); the author has not reviewed it yet.

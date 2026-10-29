@@ -342,3 +342,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a4c4b895a00
+  - type: constrains
+    from: REQ-connector-broker-accounts
+    to: FACT-SUBJECT-F2AEADC36D3854FB
+    created_at: 2026-10-29T11:37:08.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d89b47ed808a
+  - type: requires_property
+    from: REQ-connector-broker-accounts
+    to: FACT-PROP-17646B667B6EDC0E
+    created_at: 2026-10-29T11:37:08.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fdb0387cc6e
+  - type: specified_by
+    from: REQ-connector-broker-accounts
+    to: SCEN-connector-broker-accounts
+    created_at: 2026-10-29T11:37:08.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e26b5d85f37c

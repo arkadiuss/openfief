@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f761d92c1e07
+  - type: verified_by
+    from: SCEN-ingest-broker-account-record
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:35:53.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0612ccb4f396
+  - type: verified_by
+    from: SCEN-ingest-broker-account-record
+    to: TEST-ingest-postgres-brokers
+    created_at: 2026-10-29T11:35:53.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2705573210f9
+  - type: verified_by
+    from: SCEN-ingest-broker-account-record
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:46:51.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-142b8b07e898

@@ -321,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ceddbe6713d7
+  - type: implements
+    from: SYM-ingest-book
+    to: REQ-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:49:28.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cb2bf4df4c8
+  - type: implements
+    from: SYM-ingest-book
+    to: REQ-ingest-unmapped-broker-account
+    created_at: 2026-10-29T11:49:28.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a05b94f04b6f
+  - type: covered_by
+    from: SYM-ingest-book
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:49:28.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f152752d777b

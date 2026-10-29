@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2cc3f32c7ee
+  - type: implements
+    from: SYM-ingest-app-broker-account-store
+    to: REQ-ingest-broker-account-record
+    created_at: 2026-10-29T11:46:57.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63aaa54e13c7
+  - type: implements
+    from: SYM-ingest-app-broker-account-store
+    to: REQ-ingest-broker-account-seeding
+    created_at: 2026-10-29T11:46:57.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa11bebc28f1
+  - type: covered_by
+    from: SYM-ingest-app-broker-account-store
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:46:57.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837bd53ba6ab

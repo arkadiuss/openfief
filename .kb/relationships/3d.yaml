@@ -209,3 +209,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad54f6ef73d7
+  - type: implements
+    from: SYM-ingest-delivery-by-broker-account
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:51:22.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d188fb7948
+  - type: covered_by
+    from: SYM-ingest-delivery-by-broker-account
+    to: TEST-ingest-delivery
+    created_at: 2026-10-29T11:51:22.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cf89207ee41

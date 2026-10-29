@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d49d129d2e2
-  - type: implements
-    from: SYM-portfolio-missing-defaults
-    to: REQ-portfolio-default-kinds
-    created_at: 2026-10-28T09:38:53.511Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-74485a3c4ddc
   - type: covered_by
     from: SYM-portfolio-missing-defaults
     to: TEST-portfolio-sleeve-kind
@@ -258,3 +251,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4069e98a56e5
+  - type: implements
+    from: SYM-portfolio-missing-defaults
+    to: REQ-portfolio-defaults-on-fresh-install
+    created_at: 2026-10-29T11:38:56.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f11f440bb0e
+  - type: implements
+    from: SYM-portfolio-missing-defaults
+    to: REQ-portfolio-install-sleeves
+    created_at: 2026-10-29T11:38:56.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543069774345
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-brokers
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:47:18.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f16ea5f6f093
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-broker-accounts-need-a-store
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:48:23.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad5730e6158b

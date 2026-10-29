@@ -1,5 +1,5 @@
 ---
-title: Sleeve kinds are checked before they are stored, and the defaults are ensured once
+title: The ledger stores sleeve kinds checked by the portfolio rules and ensures the defaults on a fresh install
 status: active
 sourceFile: internal/ledger/app/kinds_test.go
 origin:
@@ -8,4 +8,4 @@ origin:
 id: TEST-ledger-app-kinds
 type: test
 ---
-Table tests over the in-memory store seeded with the built-in kinds. SaveKind stores a custom kind in key order, renames a built-in kind, and refuses changing core's default role and an invalid key with the portfolio errors, leaving the stored kinds unchanged, which Kinds returns in full. EnsureDefaults on an empty store, run twice, stores exactly the six built-in kinds and the sleeves Bonds, Core and Satellite; after the owner renames the core kind and moves the satellite sleeve to agent-pool, running it again keeps both changes. A store that duplicated or overwrote defaults would fail the full go-cmp comparison.
+Use-case tests of ledger app over the in-memory store: SaveKind adds and renames kinds and refuses a role change, EnsureDefaults stores the built-in kinds and the three default sleeves on an empty ledger, keeps the owner's renames and moves when run again, and on a ledger that already holds a sleeve of its own, such as the demo dataset's, adds the missing kinds and no default sleeve.
