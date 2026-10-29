@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24231f198644
+  - type: executable_for
+    from: SYM-identity-connectapi-test-caller-interceptor
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-10-28T23:16:02.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee2636ba86ec

@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dc6c6ef71ef
+  - type: implements
+    from: SYM-portfolio-app-models-settings
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:17:35.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41ece7ff640a
+  - type: covered_by
+    from: SYM-portfolio-app-models-settings
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:17:35.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a429017513c8

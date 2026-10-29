@@ -206,8 +206,8 @@ func newLedger(t *testing.T) *fakeLedger {
 }
 
 // newViews returns the views over l with a bond and an ETF valued on
-// 2026-03-02 and USD at 4.00 PLN.
-func newViews(t *testing.T, l *fakeLedger) *app.Views {
+// 2026-03-02 and USD at 4.00 PLN, configured by opts.
+func newViews(t *testing.T, l *fakeLedger, opts ...app.Option) *app.Views {
 	t.Helper()
 	on := date(t, "2026-03-02")
 	vals := fakeValuations{
@@ -215,7 +215,7 @@ func newViews(t *testing.T, l *fakeLedger) *app.Views {
 		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Quantity: kernel.NewQuantity(dec(t, "3")), Value: money(t, "31.5", "USD"), PLN: money(t, "126.00", "PLN")},
 	}
 	rates := fakeRates{{Currency: cur(t, "USD"), Date: on, Rate: dec(t, "4.00"), Source: "test"}}
-	v, err := app.New(l, vals, fakeStatuses{through: on}, rates, cur(t, "PLN"))
+	v, err := app.New(l, vals, fakeStatuses{through: on}, rates, cur(t, "PLN"), opts...)
 	if err != nil {
 		t.Fatalf("app.New(PLN): %v", err)
 	}

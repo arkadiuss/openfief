@@ -174,3 +174,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3242a4439c6f
+  - type: constrains
+    from: REQ-ingest-index-levels
+    to: FACT-SUBJECT-34E18BC161541BC9
+    created_at: 2026-10-28T22:42:35.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd8aef017b34
+  - type: requires_property
+    from: REQ-ingest-index-levels
+    to: FACT-PROP-8E3F40C770CC1478
+    created_at: 2026-10-28T22:42:35.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed570676e7e1
+  - type: specified_by
+    from: REQ-ingest-index-levels
+    to: SCEN-ingest-index-levels
+    created_at: 2026-10-28T22:42:35.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbce5f7c5eaf
+  - type: executable_for
+    from: SYM-core-test-model-portfolio-service
+    to: TEST-core-model-service
+    created_at: 2026-10-28T23:15:54.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91778e6cecec
+  - type: executable_for
+    from: SYM-portfolio-pg-test-model-constraints
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:23.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a00b4894f19
+  - type: implements
+    from: SYM-portfolio-pb-target-string
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:23:07.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49b8ee4e90ad
+  - type: covered_by
+    from: SYM-portfolio-pb-target-string
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:23:07.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb32fd4ed653
+  - type: implements
+    from: SYM-views-app-with-model
+    to: REQ-views-model-portfolio
+    created_at: 2026-10-28T23:38:01.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17829448bb80
+  - type: implements
+    from: SYM-views-app-with-model
+    to: REQ-views-model-line-from-go-live
+    created_at: 2026-10-28T23:38:01.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b16f4551f5d
+  - type: covered_by
+    from: SYM-views-app-with-model
+    to: TEST-views-app-model
+    created_at: 2026-10-28T23:38:01.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ada269c4a172

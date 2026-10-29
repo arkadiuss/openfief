@@ -1,0 +1,94 @@
+// OpenFief's model portfolio entry contract (docs/DESIGN.md D-52, D-49).
+//
+// The owner enters the model portfolio in the built-in UI, which hands it to
+// the core (D-52: "like manual bond lots", D-49). The core serves
+// ModelPortfolioService to VIEW plugins only, next to the AuthService. It is
+// not part of the public read API (D-6), which stays read-only: the read
+// API serves the model, its backtest and drawdowns only while it is on.
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED. Only an owner-scoped session may read or change the
+//   model here, whether it is on or off.
+// - A model that breaks a rule (weights not summing to 100%, a target
+//   twice, an index without a currency, a malformed ISIN) fails with
+//   INVALID_ARGUMENT and nothing is stored.
+syntax = "proto3";
+
+package openfief.portfolio.v1;
+
+// ModelPortfolioService reads and replaces the owner's model portfolio.
+service ModelPortfolioService {
+  // GetModelPortfolio returns the stored model portfolio, on or off. A model
+  // never saved is off with no targets.
+  rpc GetModelPortfolio(GetModelPortfolioRequest) returns (GetModelPortfolioResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // SaveModelPortfolio replaces the whole model portfolio, whether it is on
+  // and its targets, in one step.
+  rpc SaveModelPortfolio(SaveModelPortfolioRequest) returns (SaveModelPortfolioResponse);
+}
+
+// TargetKind says what a target is.
+enum TargetKind {
+  TARGET_KIND_UNSPECIFIED = 0;
+  // An instrument, such as an index ETF or a stock: isin and symbol.
+  TARGET_KIND_INSTRUMENT = 1;
+  // A market index, such as WIG20: index and currency.
+  TARGET_KIND_INDEX = 2;
+}
+
+// Target is one instrument or index of the model portfolio, with its
+// weight.
+message Target {
+  TargetKind kind = 1;
+  // An instrument's ISIN and venue symbol, as the ledger and the prices
+  // know it; empty for an index.
+  string isin = 2;
+  string symbol = 3;
+  // An index's name as the market-data connector names it, such as
+  // "WIG20"; empty for an instrument.
+  string index = 4;
+  // The ISO 4217 code of an index's levels; empty for an instrument, whose
+  // prices carry theirs.
+  string currency = 5;
+  // The weight in percent as a decimal string with at most two decimal
+  // places, such as "60" or "33.33". All weights sum to exactly 100.
+  string weight_percent = 6;
+}
+
+// ModelPortfolio is the whole model portfolio.
+message ModelPortfolio {
+  // Whether it is on: only then do the read API and the UI show it.
+  bool enabled = 1;
+  // In the owner's order. An off model may have none.
+  repeated Target targets = 2;
+}
+
+message GetModelPortfolioRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message GetModelPortfolioResponse {
+  ModelPortfolio model = 1;
+}
+
+message SaveModelPortfolioRequest {
+  string origin = 1;
+  string session_token = 2;
+  ModelPortfolio model = 3;
+}
+
+message SaveModelPortfolioResponse {
+  // The model as stored.
+  ModelPortfolio model = 1;
+}

@@ -279,3 +279,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67712a5a7263
+  - type: implements
+    from: SYM-views-pb-drawdown-get-peak-value
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:43:19.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1ec539016f0
+  - type: covered_by
+    from: SYM-views-pb-drawdown-get-peak-value
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:43:19.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fccb5a5f6fd3

@@ -419,3 +419,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-314606cd17c8
+  - type: implements
+    from: SYM-portfolio-backtest-series
+    to: REQ-portfolio-backtest-index
+    created_at: 2026-10-28T22:15:56.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb96f63a1b2e
+  - type: covered_by
+    from: SYM-portfolio-backtest-series
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:15:56.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eadcce298205
+  - type: executable_for
+    from: SYM-portfolio-test-target-kind
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:24:08.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b553e3f4a69
+  - type: implements
+    from: SYM-portfolio-pg-migration-type
+    to: REQ-portfolio-model-store
+    created_at: 2026-10-28T23:21:20.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e4f0a265bbe
+  - type: covered_by
+    from: SYM-portfolio-pg-migration-type
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:21:20.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72a0995ab1ca

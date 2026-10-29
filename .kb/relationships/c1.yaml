@@ -223,3 +223,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98bb618bfedb
+  - type: implements
+    from: SYM-portfolio-app-models-report
+    to: REQ-portfolio-model-report
+    created_at: 2026-10-28T23:19:17.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae6e0546741b
+  - type: implements
+    from: SYM-portfolio-app-models-report
+    to: REQ-portfolio-model-optional
+    created_at: 2026-10-28T23:19:17.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e4b9d0207ff
+  - type: covered_by
+    from: SYM-portfolio-app-models-report
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:19:17.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e5eca05acfc

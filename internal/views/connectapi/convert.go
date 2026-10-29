@@ -3,6 +3,7 @@ package connectapi
 import (
 	"fmt"
 	"math"
+	"strings"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -189,4 +190,59 @@ func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPe
 		})
 	}
 	return out
+}
+
+// pbModelPortfolio converts the model portfolio, its rebased backtest and
+// its drawdowns.
+func pbModelPortfolio(m *app.ModelPortfolio) *viewsv1.GetModelPortfolioResponse {
+	r := &m.Report
+	out := &viewsv1.GetModelPortfolioResponse{
+		From: pbDate(m.From), To: pbDate(m.To), ReportingCurrency: r.Reporting.String(),
+		Targets:         make([]*viewsv1.ModelTarget, 0, len(r.Model.Targets)),
+		Days:            make([]*viewsv1.BacktestDay, 0, len(m.Line)),
+		Drawdown:        pbDrawdown(&r.Drawdown),
+		TargetHistories: make([]*viewsv1.ModelTargetHistory, 0, len(r.Targets)),
+	}
+	if days := r.Backtest.Days; len(days) > 0 {
+		out.BacktestStart, out.BacktestEnd = pbDate(days[0].Date), pbDate(days[len(days)-1].Date)
+	}
+	for i := range r.Model.Targets {
+		out.Targets = append(out.Targets, pbModelTarget(&r.Model.Targets[i]))
+	}
+	for _, p := range m.Line {
+		out.Days = append(out.Days, &viewsv1.BacktestDay{Date: pbDate(p.Date), Index: p.Value.String()})
+	}
+	for i := range r.Targets {
+		t := &r.Targets[i]
+		out.TargetHistories = append(out.TargetHistories, &viewsv1.ModelTargetHistory{
+			Target: pbModelTarget(&t.Target), FirstDate: pbDate(t.First), LastDate: pbDate(t.Last),
+			Gap: viewsv1.ModelHistoryGap(enumNumber(int(t.Missing))), Drawdown: pbDrawdown(&t.Drawdown),
+		})
+	}
+	return out
+}
+
+// pbModelTarget converts one model target. An instrument's name is
+// "ISIN/symbol", as the ledger writes it.
+func pbModelTarget(t *portfolio.Target) *viewsv1.ModelTarget {
+	out := &viewsv1.ModelTarget{Kind: viewsv1.ModelTargetKind(enumNumber(int(t.Kind))), WeightPercent: t.Weight.String()}
+	switch t.Kind {
+	case portfolio.TargetInstrument:
+		isin, symbol, _ := strings.Cut(t.Name, "/")
+		out.Instrument = &viewsv1.Instrument{Isin: isin, Symbol: symbol}
+	case portfolio.TargetIndex:
+		out.Index, out.Currency = t.Name, t.Currency.String()
+	}
+	return out
+}
+
+// pbDrawdown converts a max drawdown; the zero one, of no days, is unset.
+func pbDrawdown(d *portfolio.Drawdown) *viewsv1.Drawdown {
+	if d.Peak.IsZero() {
+		return nil
+	}
+	return &viewsv1.Drawdown{
+		PeakDate: pbDate(d.Peak), TroughDate: pbDate(d.Trough),
+		PeakValue: d.PeakValue.String(), TroughValue: d.TroughValue.String(), Depth: d.Depth.String(),
+	}
 }

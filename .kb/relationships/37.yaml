@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69bd91726007
+  - type: executable_for
+    from: SYM-views-app-test-helper-new-fake-models
+    to: TEST-views-app-model
+    created_at: 2026-10-28T23:38:45.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdd9e603ef1e

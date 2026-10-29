@@ -321,3 +321,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73822bd94148
+  - type: implements
+    from: SYM-portfolio-max-drawdown
+    to: REQ-portfolio-drawdown-depth
+    created_at: 2026-10-28T22:22:37.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b3603c39468
+  - type: implements
+    from: SYM-portfolio-max-drawdown
+    to: REQ-portfolio-max-drawdown
+    created_at: 2026-10-28T22:22:37.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d107c904cec
+  - type: covered_by
+    from: SYM-portfolio-max-drawdown
+    to: TEST-portfolio-drawdown
+    created_at: 2026-10-28T22:22:37.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9620dd317610
+  - type: implements
+    from: SYM-portfolio-app-unsupported-reporting-currency-error
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:17:12.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9933c231a578
+  - type: covered_by
+    from: SYM-portfolio-app-unsupported-reporting-currency-error
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:17:12.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-317f46153c64
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-client
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:20:57.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87a1b3bd2673
+  - type: constrains
+    from: REQ-views-model-portfolio
+    to: FACT-SUBJECT-5D5273B6E7DF2D96
+    created_at: 2026-10-28T23:32:32.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-433ff6684e35
+  - type: requires_property
+    from: REQ-views-model-portfolio
+    to: FACT-PROP-67848E5351394723
+    created_at: 2026-10-28T23:32:32.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8abc5ef55227
+  - type: specified_by
+    from: REQ-views-model-portfolio
+    to: SCEN-views-model-portfolio
+    created_at: 2026-10-28T23:32:32.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b1ea6491bea

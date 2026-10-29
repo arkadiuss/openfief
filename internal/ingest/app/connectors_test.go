@@ -56,6 +56,7 @@ type fakeStores struct {
 	prices   []valuation.Price
 	rates    []valuation.FXRate
 	readings []ingest.IndexReading
+	levels   []valuation.IndexLevel
 }
 
 func (f *fakeStores) StorePrices(_ context.Context, _ ingest.BatchID, prices []valuation.Price) error {
@@ -76,8 +77,15 @@ func (f *fakeStores) StoreIndexReadings(_ context.Context, _ ingest.BatchID, rea
 	return f.err
 }
 
+func (f *fakeStores) StoreIndexLevels(_ context.Context, _ ingest.BatchID, levels []valuation.IndexLevel) error {
+	f.calls++
+	f.levels = levels
+	return f.err
+}
+
 // delivery returns a synthetic delivery from xtb: mapping(t) plus one price,
-// FX rate and index reading, each with a source the core must overwrite.
+// FX rate, index reading and index level, each with a source the core must
+// overwrite.
 func delivery(t *testing.T) app.Delivery {
 	t.Helper()
 	day := march2(t)
@@ -91,6 +99,7 @@ func delivery(t *testing.T) app.Delivery {
 		Prices:        []valuation.Price{{Instrument: "PLTEST000010/TST", Date: day, Close: kernel.NewMoney(kernel.NewDecimal(1234, -2), usd), Source: "spoofed"}},
 		FXRates:       []valuation.FXRate{{Currency: usd, Date: day, Rate: kernel.NewDecimal(39876, -4), Source: "spoofed"}},
 		IndexReadings: []ingest.IndexReading{{Index: ingest.IndexCPI, Date: cpi, Value: kernel.NewDecimal(49, -3), Source: "spoofed"}},
+		IndexLevels:   []valuation.IndexLevel{{Index: "FAKE20", Date: day, Level: kernel.NewDecimal(152260, -2), Source: "spoofed"}},
 	}
 }
 
@@ -112,7 +121,7 @@ func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, 
 	t.Helper()
 	day := march2(t)
 	return &app.Connectors{
-		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores,
+		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores,
 		Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
 		Today:    func() kernel.Date { return day },
 	}
@@ -144,8 +153,8 @@ func TestConnectorsSync(t *testing.T) {
 		t.Errorf("imported transactions (-want +got):\n%s", diff)
 	}
 	d := delivery(t)
-	d.Prices[0].Source, d.FXRates[0].Source, d.IndexReadings[0].Source = "xtb-main", "xtb-main", "xtb-main"
-	if diff := cmp.Diff([]any{d.Prices, d.FXRates, d.IndexReadings}, []any{stores.prices, stores.rates, stores.readings}); diff != "" {
+	d.Prices[0].Source, d.FXRates[0].Source, d.IndexReadings[0].Source, d.IndexLevels[0].Source = "xtb-main", "xtb-main", "xtb-main", "xtb-main"
+	if diff := cmp.Diff([]any{d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels}, []any{stores.prices, stores.rates, stores.readings, stores.levels}); diff != "" {
 		t.Errorf("stored inputs (-want +got):\n%s", diff)
 	}
 }
@@ -153,7 +162,7 @@ func TestConnectorsSync(t *testing.T) {
 func TestConnectorsImportFile(t *testing.T) {
 	t.Parallel()
 	d := delivery(t)
-	d.Prices, d.FXRates, d.IndexReadings, d.Watermark = nil, nil, nil, ""
+	d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels, d.Watermark = nil, nil, nil, nil, ""
 	caller := &fakeCaller{delivery: d}
 	stores := &fakeStores{}
 	file := app.NamedFile{Name: "statement.csv", Contents: strings.NewReader("synthetic")}

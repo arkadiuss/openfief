@@ -163,6 +163,13 @@ func TestRecordInputs(t *testing.T) {
 			want: recorded{what: "index", revals: revals(t, "acc-1", "2026-02-01", "acc-2", "2026-02-01")},
 		},
 		{
+			name: "index levels revalue nothing",
+			record: func(r *app.InputRecorder) error {
+				return r.RecordIndexLevels(t.Context(), []valuation.IndexLevel{{Index: "FAKE20", Date: date(t, "2026-03-02"), Level: dec(t, "1522.6")}})
+			},
+			want: recorded{what: "levels"},
+		},
+		{
 			name: "bond terms revalue its holders from the start",
 			record: func(r *app.InputRecorder) error {
 				return r.RecordBondTerms(t.Context(), bond, &pl.Terms{Series: series, EarlyRedemptionFee: money(t, "2", "PLN")})
@@ -222,6 +229,12 @@ func TestRecordRejectsInvalidInputs(t *testing.T) {
 		}},
 		{name: "a reading for month 13", record: func(r *app.InputRecorder) error {
 			return r.RecordIndexReadings(t.Context(), []valuation.IndexReading{{Kind: valuation.CPI, Year: 2026, Month: 13}})
+		}},
+		{name: "an index level without a name", record: func(r *app.InputRecorder) error {
+			return r.RecordIndexLevels(t.Context(), []valuation.IndexLevel{{Date: date(t, "2026-03-02"), Level: dec(t, "1")}})
+		}},
+		{name: "a zero index level", record: func(r *app.InputRecorder) error {
+			return r.RecordIndexLevels(t.Context(), []valuation.IndexLevel{{Index: "FAKE20", Date: date(t, "2026-03-02")}})
 		}},
 		{name: "bond terms without an ISIN", record: func(r *app.InputRecorder) error {
 			return r.RecordBondTerms(t.Context(), ledger.ISIN{}, &pl.Terms{})

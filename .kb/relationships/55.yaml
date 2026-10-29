@@ -314,3 +314,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24e61f04d5a0
+  - type: verified_by
+    from: SCEN-portfolio-model-validate
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:11:24.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-623ab7803bec

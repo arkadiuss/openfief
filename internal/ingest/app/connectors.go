@@ -16,14 +16,16 @@ import (
 const SourceSync = "sync"
 
 // Delivery is what a connector plugin returns for one import batch: its
-// mapping of what the institution reported, plus any prices, FX rates and
-// index readings, and for a sync the watermark the next one continues from.
+// mapping of what the institution reported, plus any prices, FX rates,
+// index readings and market index levels, and for a sync the watermark the
+// next one continues from.
 type Delivery struct {
 	Institution   ingest.InstitutionID
 	Mapping       ingest.Mapping
 	Prices        []valuation.Price
 	FXRates       []valuation.FXRate
 	IndexReadings []ingest.IndexReading
+	IndexLevels   []valuation.IndexLevel
 	Watermark     string
 }
 
@@ -70,6 +72,12 @@ type IndexReadingStore interface {
 	StoreIndexReadings(ctx context.Context, batch ingest.BatchID, readings []ingest.IndexReading) error
 }
 
+// IndexLevelStore records market index levels (D-51), idempotently like
+// PriceStore, keyed by index and date.
+type IndexLevelStore interface {
+	StoreIndexLevels(ctx context.Context, batch ingest.BatchID, levels []valuation.IndexLevel) error
+}
+
 // ConnectorBindings knows which accounts each connector instance may write
 // to: its connector bindings.
 type ConnectorBindings interface {
@@ -104,6 +112,7 @@ type Connectors struct {
 	Prices   PriceStore
 	FXRates  FXRateStore
 	Indices  IndexReadingStore
+	Levels   IndexLevelStore
 	// Today returns the date a batch starts on.
 	Today func() kernel.Date
 }
@@ -134,7 +143,8 @@ func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.
 
 // deliver imports a delivery as one import batch: transactions scoped to the
 // instance into the ledger, seeded in an opening batch (D-23), then prices,
-// FX rates and index readings with the instance as their source. Every
+// FX rates, index readings and index levels with the instance as their
+// source. Every
 // index reading must be valid and every transaction and balance assertion
 // must be in an account the instance is bound to, or nothing is imported.
 func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.BatchID, source string, mode ingest.Mode, d *Delivery) (ingest.Batch, error) {
@@ -204,6 +214,23 @@ func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest
 		if err := c.Indices.StoreIndexReadings(ctx, id, readings); err != nil {
 			return fmt.Errorf("store index readings: %w", err)
 		}
+	}
+	return c.storeLevels(ctx, instance, id, d.IndexLevels)
+}
+
+// storeLevels stores a delivery's market index levels with the instance as
+// their source; none is skipped.
+func (c *Connectors) storeLevels(ctx context.Context, instance string, id ingest.BatchID, levels []valuation.IndexLevel) error {
+	if len(levels) == 0 {
+		return nil
+	}
+	out := make([]valuation.IndexLevel, len(levels))
+	for i, l := range levels {
+		l.Source = instance
+		out[i] = l
+	}
+	if err := c.Levels.StoreIndexLevels(ctx, id, out); err != nil {
+		return fmt.Errorf("store index levels: %w", err)
 	}
 	return nil
 }

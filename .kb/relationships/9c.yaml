@@ -384,3 +384,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9172f1f74d63
+  - type: implements
+    from: SYM-portfolio-target-key
+    to: REQ-portfolio-model-targets
+    created_at: 2026-10-28T22:23:30.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37f71b23eb91
+  - type: covered_by
+    from: SYM-portfolio-target-key
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:30.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd9f65c93237
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-must-dec
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:16:50.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c732a206ab24
+  - type: verified_by
+    from: SCEN-views-model-portfolio
+    to: TEST-views-app-model
+    created_at: 2026-10-28T23:32:27.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a8c85da434d
+  - type: verified_by
+    from: SCEN-views-model-portfolio
+    to: TEST-views-connectapi-model
+    created_at: 2026-10-28T23:32:27.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a15f0591624

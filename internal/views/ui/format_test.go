@@ -2,6 +2,7 @@ package ui
 
 import (
 	"net/http"
+	"strings"
 	"testing"
 	"time"
 
@@ -151,18 +152,25 @@ func TestBuildCharts(t *testing.T) {
 	if got := []string{alloc.Groups[0].Share, alloc.Groups[1].Share}; got[0] != "66.7%" || got[1] != "33.3%" {
 		t.Errorf("shares = %v", got)
 	}
-	hist := buildHistory(&viewsv1.ListValuationTotalsResponse{ReportingCurrency: "PLN", Totals: []*viewsv1.DateTotal{
-		{Date: "2026-01-02", ValueReporting: pln("10.00")}, {Date: "2026-01-05", ValueReporting: pln("11.00")},
-	}})
-	wantHist := historyView{
-		From: "2026-01-02", To: "2026-01-05", Currency: "PLN", Points: 2,
-		Chart: `{"kind":"line","label":"Holdings value","currency":"PLN","labels":["2026-01-02","2026-01-05"],"values":["10.00","11.00"]}`,
+	perf := &viewsv1.GetPerformanceResponse{ReportingCurrency: "PLN", Gap: viewsv1.PerformanceGap_PERFORMANCE_GAP_UNVALUED, Days: []*viewsv1.PerformanceDay{
+		{Date: "2026-01-02", Index: "100", ValueReporting: pln("10.00")}, {Date: "2026-01-03", Index: "110", ValueReporting: pln("11.00")},
+	}}
+	hist := buildPerformance(perf, nil)
+	wantHist := performanceView{
+		From: "2026-01-02", To: "2026-01-03", Currency: "PLN", Points: 2, Value: pln("11.00"), Gap: "the next day is not fully valued yet",
+		Chart: `{"kind":"line","label":"Portfolio (time-weighted return)","currency":"index","labels":["2026-01-02","2026-01-03"],"values":["100","110"]}`,
 	}
-	if diff := cmp.Diff(wantHist, hist); diff != "" {
-		t.Errorf("history (-want +got):\n%s", diff)
+	if diff := cmp.Diff(wantHist, hist, protocmp.Transform()); diff != "" {
+		t.Errorf("performance (-want +got):\n%s", diff)
 	}
-	if empty := buildHistory(&viewsv1.ListValuationTotalsResponse{}); empty.Points != 0 || empty.From != "" {
-		t.Errorf("empty history = %+v", empty)
+	// The model's line is aligned with the portfolio's days; a day it lacks
+	// is empty.
+	withModel := buildPerformance(perf, &viewsv1.GetModelPortfolioResponse{Days: []*viewsv1.BacktestDay{{Date: "2026-01-03", Index: "100"}}})
+	if want := `"series":[{"label":"Model portfolio (backtest)","values":["","100"]}]`; !strings.Contains(withModel.Chart, want) || withModel.Model == nil {
+		t.Errorf("chart with the model = %s, want %s", withModel.Chart, want)
+	}
+	if empty := buildPerformance(&viewsv1.GetPerformanceResponse{}, nil); empty.Points != 0 || empty.From != "" || empty.Model != nil {
+		t.Errorf("empty performance = %+v", empty)
 	}
 }
 

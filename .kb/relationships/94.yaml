@@ -307,3 +307,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af64d8f5372a
+  - type: implements
+    from: SYM-portfolio-pg-store-model
+    to: REQ-portfolio-model-store
+    created_at: 2026-10-28T23:21:50.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd19e16644d
+  - type: covered_by
+    from: SYM-portfolio-pg-store-model
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:21:50.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ba7550d97d8
+  - type: implements
+    from: SYM-portfolio-pb-get-model-portfolio-request-proto-reflect
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:24:46.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ded403e6b1f6
+  - type: covered_by
+    from: SYM-portfolio-pb-get-model-portfolio-request-proto-reflect
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:24:46.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac065c32e60b

@@ -321,3 +321,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f75296ca063
+  - type: executable_for
+    from: SYM-portfolio-test-helper-rng-path
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:10.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28756115fe7b
+  - type: executable_for
+    from: SYM-portfolio-test-backtest-target-histories
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:22:24.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b09c0c39e15b

@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed87c28d7f51
+  - type: implements
+    from: SYM-ui-target-row
+    to: REQ-ui-model-portfolio
+    created_at: 2026-10-29T00:12:43.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3ecd6b77eb0
+  - type: covered_by
+    from: SYM-ui-target-row
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:12:43.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1922fb4af5

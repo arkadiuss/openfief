@@ -104,6 +104,22 @@ func (r *InputRecorder) RecordIndexReadings(ctx context.Context, readings []valu
 	return nil
 }
 
+// RecordIndexLevels stores market index levels (D-51) for the model
+// portfolio's index targets (D-53). No holding is valued from an index
+// level, so they enqueue no revaluation. Every level must be valid, or
+// nothing is stored.
+func (r *InputRecorder) RecordIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error {
+	for i := range levels {
+		if err := levels[i].Validate(); err != nil {
+			return fmt.Errorf("%w: %w", ErrInvalidInput, err)
+		}
+	}
+	if err := r.recorder.SaveIndexLevels(ctx, levels); err != nil {
+		return fmt.Errorf("recording index levels: %w", err)
+	}
+	return nil
+}
+
 // RecordBondTerms stores the series terms of the retail treasury bond with
 // isin, which makes holdings of it valued as bonds, and enqueues a
 // revaluation of every account that held it, from its first transaction.

@@ -263,3 +263,21 @@ func (s *readService) GetPerformance(ctx context.Context, req *connect.Request[v
 	}
 	return connect.NewResponse(pbPerformance(&p, s.views.ReportingCurrency())), nil
 }
+
+// GetModelPortfolio answers GET /v1/model-portfolio: not found while the
+// model portfolio is off (D-52).
+func (s *readService) GetModelPortfolio(ctx context.Context, req *connect.Request[viewsv1.GetModelPortfolioRequest]) (*connect.Response[viewsv1.GetModelPortfolioResponse], error) {
+	from, err := parseOptionalDate(req.Msg.GetFrom())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	to, err := parseOptionalDate(req.Msg.GetTo())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	m, err := s.views.ModelPortfolio(ctx, from, to)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	return connect.NewResponse(pbModelPortfolio(&m)), nil
+}

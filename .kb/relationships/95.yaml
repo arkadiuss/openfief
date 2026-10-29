@@ -321,3 +321,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6108b2ed6a5
+  - type: executable_for
+    from: SYM-portfolio-test-helper-property-start
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:21:14.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4b30562c951
+  - type: executable_for
+    from: SYM-portfolio-app-test-owner-only
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:18:12.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94b1deac575c
+  - type: implements
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client-impl
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:27:23.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-393742d31da8
+  - type: covered_by
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client-impl
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:27:23.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f543788bce8
+  - type: implements
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client-save-model-portfolio
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:27:34.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dd45d9388ba
+  - type: covered_by
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client-save-model-portfolio
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:27:34.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d86e20b4a6a

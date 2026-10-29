@@ -279,3 +279,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a28ac02e1869
+  - type: constrains
+    from: REQ-portfolio-drawdown-depth
+    to: FACT-SUBJECT-F3582B3F185BE0BB
+    created_at: 2026-10-28T22:11:49.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7e159a0b879
+  - type: requires_property
+    from: REQ-portfolio-drawdown-depth
+    to: FACT-PROP-9743B4E225D0927F
+    created_at: 2026-10-28T22:11:49.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b6a79c47999
+  - type: specified_by
+    from: REQ-portfolio-drawdown-depth
+    to: SCEN-portfolio-drawdown
+    created_at: 2026-10-28T22:11:49.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72b416f5ab69
+  - type: executable_for
+    from: SYM-portfolio-test-helper-must-dec
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:46.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03220641daf9
+  - type: implements
+    from: SYM-portfolio-app-unsupported-reporting-currency-error-error
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:17:17.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b1c961d3335
+  - type: covered_by
+    from: SYM-portfolio-app-unsupported-reporting-currency-error-error
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-28T23:17:17.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd3c853a941e
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-owners
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:20:39.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b632c6e76710
+  - type: executable_for
+    from: SYM-portfolio-pg-test-model-round-trip
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:18.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e70c944a49db

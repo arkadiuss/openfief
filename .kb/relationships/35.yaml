@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e54e166af78b
+  - type: implements
+    from: SYM-views-pb-get-model-portfolio-response-get-days
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:47:18.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-846881a5fcf4
+  - type: covered_by
+    from: SYM-views-pb-get-model-portfolio-response-get-days
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:47:18.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f97f813b6c8

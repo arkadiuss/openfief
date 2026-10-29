@@ -370,3 +370,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3cde1ecc380
+  - type: implements
+    from: SYM-portfolio-target
+    to: REQ-portfolio-model-targets
+    created_at: 2026-10-28T22:23:26.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cddea0a7e625
+  - type: implements
+    from: SYM-portfolio-target
+    to: REQ-portfolio-model-weights
+    created_at: 2026-10-28T22:23:26.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbdad94c57bd
+  - type: covered_by
+    from: SYM-portfolio-target
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:26.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-537310b276fa
+  - type: implements
+    from: SYM-views-pb-drawdown-get-trough-date
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:43:14.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e962e48300e
+  - type: covered_by
+    from: SYM-views-pb-drawdown-get-trough-date
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:43:14.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-010173a66afe

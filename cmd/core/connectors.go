@@ -126,7 +126,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 	return &ingestapp.Scheduler{
 		Connectors: &ingestapp.Connectors{
 			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
-			Prices: inputs, FXRates: inputs, Indices: inputs, Today: d.today,
+			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Today: d.today,
 		},
 		Instances:  discovery,
 		Store:      store,
@@ -254,8 +254,8 @@ func importSummary(s *ledgerapp.ImportSummary) ingest.ImportSummary {
 	}
 }
 
-// valuationInputs records a delivery's prices, FX rates and index readings
-// through valuation's input use cases, each with the revaluations it causes
+// valuationInputs records a delivery's prices, FX rates, index readings and
+// index levels through valuation's input use cases, each with the revaluations it causes
 // (D-36). Recording one again replaces it, so a retried batch has no
 // further effect.
 type valuationInputs struct {
@@ -290,6 +290,14 @@ func (v valuationInputs) StoreIndexReadings(ctx context.Context, _ ingest.BatchI
 		out = append(out, r)
 	}
 	if err := v.recorder.RecordIndexReadings(ctx, out); err != nil {
+		return fmt.Errorf("valuation: %w", err)
+	}
+	return nil
+}
+
+// StoreIndexLevels records market index levels.
+func (v valuationInputs) StoreIndexLevels(ctx context.Context, _ ingest.BatchID, levels []valuation.IndexLevel) error {
+	if err := v.recorder.RecordIndexLevels(ctx, levels); err != nil {
 		return fmt.Errorf("valuation: %w", err)
 	}
 	return nil

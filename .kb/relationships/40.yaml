@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-420d5c4e9ec6
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-mem-store-model
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:20:12.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7add74d477d1

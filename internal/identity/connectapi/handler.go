@@ -41,17 +41,26 @@ type Callers interface {
 // only the callers the Callers port accepts and logging to log.
 func New(auth *app.Auth, callers Callers, log *slog.Logger) (string, http.Handler) {
 	return identityv1connect.NewAuthServiceHandler(&authService{auth: auth, log: log},
-		connect.WithInterceptors(&callerInterceptor{callers: callers, log: log}))
+		connect.WithInterceptors(NewCallerInterceptor(callers, log)))
 }
 
-// callerInterceptor admits only verified view plugins.
-type callerInterceptor struct {
+// CallerInterceptor admits only verified view plugins.
+type CallerInterceptor struct {
 	callers Callers
 	log     *slog.Logger
 }
 
+// NewCallerInterceptor returns the interceptor New puts in front of the
+// AuthService: it admits only the view plugins callers accepts, refusing
+// any other call with permission_denied. cmd/core puts it in front of the
+// other services it serves to view plugins only, such as the model
+// portfolio's (D-52), so they admit callers the same way.
+func NewCallerInterceptor(callers Callers, log *slog.Logger) *CallerInterceptor {
+	return &CallerInterceptor{callers: callers, log: log}
+}
+
 // WrapUnary refuses a unary call from a caller the port refuses.
-func (c *callerInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
+func (c *CallerInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
 	return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
 		plugin, refused := c.verify(ctx, req.Header().Get("Authorization"))
 		if refused != nil {
@@ -66,12 +75,12 @@ func (c *callerInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc 
 }
 
 // WrapStreamingClient leaves client streams alone: the service has none.
-func (*callerInterceptor) WrapStreamingClient(next connect.StreamingClientFunc) connect.StreamingClientFunc {
+func (*CallerInterceptor) WrapStreamingClient(next connect.StreamingClientFunc) connect.StreamingClientFunc {
 	return next
 }
 
 // WrapStreamingHandler refuses every stream: the service has none.
-func (*callerInterceptor) WrapStreamingHandler(connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
+func (*CallerInterceptor) WrapStreamingHandler(connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
 	return func(context.Context, connect.StreamingHandlerConn) error {
 		return connect.NewError(connect.CodeUnimplemented, errNoStreams)
 	}
@@ -82,7 +91,7 @@ var errNoStreams = errors.New("AuthService has no streaming methods")
 
 // verify returns the plugin the bearer token of header proves, or a
 // permission_denied (refused) or internal (not checkable) error.
-func (c *callerInterceptor) verify(ctx context.Context, header string) (string, *connect.Error) {
+func (c *CallerInterceptor) verify(ctx context.Context, header string) (string, *connect.Error) {
 	const prefix = "bearer "
 	if len(header) <= len(prefix) || !strings.EqualFold(header[:len(prefix)], prefix) {
 		return "", connect.NewError(connect.CodePermissionDenied, errNoCallerToken)

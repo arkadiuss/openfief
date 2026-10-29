@@ -224,27 +224,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-48a7d72d424d
   - type: implements
-    from: SYM-ui-build-history
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:38.334Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bb65841e8e92
-  - type: implements
-    from: SYM-ui-build-history
-    to: REQ-AUTO-718AA30AAFD0E6E8
-    created_at: 2026-10-28T19:54:38.363Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-69c5e9b347b4
-  - type: covered_by
-    from: SYM-ui-build-history
-    to: TEST-ui-pages
-    created_at: 2026-10-28T19:54:38.383Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5021068abbec
-  - type: implements
     from: SYM-views-performance-gap
     to: REQ-views-performance-gaps
     created_at: 2026-10-28T21:02:43.000Z
@@ -272,3 +251,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0a9cbb418ac
+  - type: validates
+    from: TEST-portfolio-backtest-properties
+    to: REQ-portfolio-backtest-yearly-rebalance
+    created_at: 2026-10-28T22:11:20.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aab4186b007
+  - type: validates
+    from: TEST-portfolio-backtest-properties
+    to: REQ-portfolio-max-drawdown
+    created_at: 2026-10-28T22:11:20.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed8fdae00d4b
+  - type: implements
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:27:14.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c049a228a999
+  - type: covered_by
+    from: SYM-portfolio-pbconnect-model-portfolio-service-client
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:27:14.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc24034b59ab

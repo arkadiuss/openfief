@@ -216,3 +216,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37cddaed2e96
+  - type: implements
+    from: SYM-portfolio-pg-store
+    to: REQ-portfolio-model-store
+    created_at: 2026-10-28T23:21:42.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec8c33b25142
+  - type: covered_by
+    from: SYM-portfolio-pg-store
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:21:42.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d4ccfd7496

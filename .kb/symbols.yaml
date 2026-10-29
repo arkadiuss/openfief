@@ -50229,7 +50229,7 @@ symbols:
       - type: implements
         target: REQ-identity-auth-contract
   - id: SYM-identity-connectapi-handler-caller-interceptor
-    title: callerInterceptor
+    title: CallerInterceptor
     sourceFile: internal/identity/connectapi/handler.go
     status: active
     symbol_role: type-shape
@@ -50245,7 +50245,7 @@ symbols:
       - type: implements
         target: REQ-identity-auth-contract
   - id: SYM-identity-connectapi-handler-caller-interceptor-wrap-unary
-    title: callerInterceptor.WrapUnary
+    title: CallerInterceptor.WrapUnary
     sourceFile: internal/identity/connectapi/handler.go
     status: active
     symbol_role: behavioral
@@ -50260,7 +50260,7 @@ symbols:
       - type: implements
         target: REQ-identity-auth-contract
   - id: SYM-identity-connectapi-handler-caller-interceptor-wrap-streaming-client
-    title: callerInterceptor.WrapStreamingClient
+    title: CallerInterceptor.WrapStreamingClient
     sourceFile: internal/identity/connectapi/handler.go
     status: active
     symbol_role: behavioral
@@ -50275,7 +50275,7 @@ symbols:
       - type: implements
         target: REQ-identity-auth-contract
   - id: SYM-identity-connectapi-handler-caller-interceptor-wrap-streaming-handler
-    title: callerInterceptor.WrapStreamingHandler
+    title: CallerInterceptor.WrapStreamingHandler
     sourceFile: internal/identity/connectapi/handler.go
     status: active
     symbol_role: behavioral
@@ -50290,7 +50290,7 @@ symbols:
       - type: implements
         target: REQ-identity-auth-contract
   - id: SYM-identity-connectapi-handler-caller-interceptor-verify
-    title: callerInterceptor.verify
+    title: CallerInterceptor.verify
     sourceFile: internal/identity/connectapi/handler.go
     status: active
     symbol_role: behavioral
@@ -53087,21 +53087,6 @@ symbols:
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
         target: REQ-ui-overview
-  - id: SYM-ui-history-view
-    title: historyView
-    sourceFile: internal/views/ui/overview.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:54:12.059Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-AUTO-718AA30AAFD0E6E8
-      - type: implements
-        target: REQ-ui-overview
   - id: SYM-ui-overview-data
     title: overviewData
     sourceFile: internal/views/ui/overview.go
@@ -53174,21 +53159,6 @@ symbols:
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
         target: REQ-ui-overview
-  - id: SYM-ui-build-history
-    title: buildHistory
-    sourceFile: internal/views/ui/overview.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:54:37.252Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-AUTO-718AA30AAFD0E6E8
-      - type: implements
-        target: REQ-ui-overview
   - id: SYM-ui-server-overview
     title: server.overview
     sourceFile: internal/views/ui/overview.go
@@ -53217,21 +53187,6 @@ symbols:
         target: TEST-ui-pages
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
-      - type: implements
-        target: REQ-ui-overview
-  - id: SYM-ui-server-history
-    title: server.history
-    sourceFile: internal/views/ui/overview.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:54:50.670Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-AUTO-718AA30AAFD0E6E8
       - type: implements
         target: REQ-ui-overview
   - id: SYM-ui-server-account-rows
@@ -59824,3 +59779,4712 @@ symbols:
         target: TEST-cmd-openfief
       - type: implements
         target: REQ-plugins-cli-install-verifies
+  - id: SYM-portfolio-close-type
+    title: Close
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:25.250Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-rate-type
+    title: Rate
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:29.649Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-point-type
+    title: Point
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:34.031Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-missing-data
+    title: MissingData
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:37.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-missing-data-string
+    title: MissingData.String
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:41.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-backtest-input
+    title: BacktestInput
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:46.232Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-target-history
+    title: targetHistory
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:50.382Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+      - type: implements
+        target: REQ-valuation-reporting-currency
+  - id: SYM-portfolio-backtest-series
+    title: BacktestSeries
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:54.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-backtest-func
+    title: Backtest
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:15:59.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+      - type: implements
+        target: REQ-portfolio-backtest-yearly-rebalance
+  - id: SYM-portfolio-span-type
+    title: span
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:03.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-common-span
+    title: commonSpan
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:07.783Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+      - type: implements
+        target: REQ-portfolio-backtest-yearly-rebalance
+  - id: SYM-portfolio-simulate
+    title: simulate
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:12.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+      - type: implements
+        target: REQ-portfolio-backtest-yearly-rebalance
+  - id: SYM-portfolio-rebalance
+    title: rebalance
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:17.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+      - type: implements
+        target: REQ-portfolio-backtest-yearly-rebalance
+  - id: SYM-portfolio-value-on
+    title: valueOn
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:21.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-index
+  - id: SYM-portfolio-test-helper-rng
+    title: rng
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:24.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-rng-next
+    title: rng.next
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:16:29.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-rng-intn
+    title: rng.intn
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:05.551Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-rng-path
+    title: rng.path
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:09.534Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-property-start
+    title: propertyStart
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:13.479Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-closes-from
+    title: closesFrom
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:17.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-within
+    title: within
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:21.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-backtest-of-one-target-is-its-price
+    title: TestBacktestOfOneTargetIsItsPrice
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:25.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-backtest-ignores-price-scale
+    title: TestBacktestIgnoresPriceScale
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:29.608Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-max-drawdown-is-the-worst-pair
+    title: TestMaxDrawdownIsTheWorstPair
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:33.442Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-worst-fall
+    title: worstFall
+    sourceFile: internal/portfolio/backtest_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:37.847Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest-properties
+  - id: SYM-portfolio-test-helper-must-date
+    title: mustDate
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:42.110Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-closes-of
+    title: closesOf
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:46.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-rates-of
+    title: ratesOf
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:50.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-points-of
+    title: pointsOf
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:54.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-backtest-case
+    title: backtestCase
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:21:58.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-backtest-case-input
+    title: backtestCase.input
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:02.185Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-backtest
+    title: TestBacktest
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:06.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-backtest-case-want-missing
+    title: backtestCase.wantMissing
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:10.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-missing-of
+    title: missingOf
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:14.604Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-helper-backtest-cases
+    title: backtestCases
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:18.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-backtest-target-histories
+    title: TestBacktestTargetHistories
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:23.319Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-test-missing-data-string
+    title: TestMissingDataString
+    sourceFile: internal/portfolio/backtest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:27.605Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-backtest
+  - id: SYM-portfolio-drawdown
+    title: Drawdown
+    sourceFile: internal/portfolio/drawdown.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:31.975Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-drawdown
+      - type: implements
+        target: REQ-portfolio-drawdown-depth
+      - type: implements
+        target: REQ-portfolio-max-drawdown
+  - id: SYM-portfolio-max-drawdown
+    title: MaxDrawdown
+    sourceFile: internal/portfolio/drawdown.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:36.031Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-drawdown
+      - type: implements
+        target: REQ-portfolio-drawdown-depth
+      - type: implements
+        target: REQ-portfolio-max-drawdown
+  - id: SYM-portfolio-since
+    title: Since
+    sourceFile: internal/portfolio/drawdown.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:40.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-drawdown
+      - type: implements
+        target: REQ-portfolio-rebase
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+  - id: SYM-portfolio-test-max-drawdown
+    title: TestMaxDrawdown
+    sourceFile: internal/portfolio/drawdown_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:44.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-drawdown
+  - id: SYM-portfolio-test-since
+    title: TestSince
+    sourceFile: internal/portfolio/drawdown_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:48.604Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-drawdown
+  - id: SYM-portfolio-walk
+    title: walk
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:55.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-sorted-closes
+    title: sortedCloses
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:22:59.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-sorted-rates
+    title: sortedRates
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:02.625Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-later-date
+    title: laterDate
+    sourceFile: internal/portfolio/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:06.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-portfolio-hundred-percent
+    title: hundredPercent
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:10.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-target-kind
+    title: TargetKind
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:14.158Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-target-kind-string
+    title: TargetKind.String
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:18.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-parse-target-kind
+    title: ParseTargetKind
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:22.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-target
+    title: Target
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:25.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+      - type: implements
+        target: REQ-portfolio-model-weights
+  - id: SYM-portfolio-target-key
+    title: Target.Key
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:29.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-target-validate
+    title: Target.Validate
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:33.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+  - id: SYM-portfolio-model
+    title: Model
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:36.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+      - type: implements
+        target: REQ-portfolio-model-weights
+  - id: SYM-portfolio-model-validate
+    title: Model.Validate
+    sourceFile: internal/portfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:40.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-model
+      - type: implements
+        target: REQ-portfolio-model-targets
+      - type: implements
+        target: REQ-portfolio-model-weights
+  - id: SYM-portfolio-test-helper-must-dec
+    title: mustDec
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:44.771Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-helper-must-currency
+    title: mustCurrency
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:49.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-helper-target-spec
+    title: targetSpec
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:52.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-helper-target-spec-build
+    title: targetSpec.build
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:23:58.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-helper-build-targets
+    title: buildTargets
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:02.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-target-kind
+    title: TestTargetKind
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:07.322Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-model-validate
+    title: TestModelValidate
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:11.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-test-target-key
+    title: TestTargetKey
+    sourceFile: internal/portfolio/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:24:16.602Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-model
+  - id: SYM-portfolio-target-history-type
+    title: TargetHistory
+    sourceFile: internal/portfolio/backtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:28:30.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-backtest
+      - type: implements
+        target: REQ-portfolio-backtest-history
+  - id: SYM-core-conn-valuation-inputs-store-index-levels
+    title: valuationInputs.StoreIndexLevels
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:19.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-connectors
+      - type: implements
+        target: REQ-core-connector-commands
+  - id: SYM-ingest-app-index-level-store
+    title: IndexLevelStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:24.512Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-index-levels
+  - id: SYM-ingest-app-connectors-store-levels
+    title: Connectors.storeLevels
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:29.689Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-index-levels
+  - id: SYM-ingest-app-test-helper-fake-stores-store-index-levels
+    title: fakeStores.StoreIndexLevels
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:34.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-connectrpc-index-level-from
+    title: indexLevelFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:40.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-index-levels
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-index-levels
+    title: fakeRecorder.SaveIndexLevels
+    sourceFile: internal/valuation/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:45.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-input-recorder-record-index-levels
+    title: InputRecorder.RecordIndexLevels
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:49.636Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-index-level-type
+    title: IndexLevel
+    sourceFile: internal/valuation/level.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:53.328Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index-level
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-index-level-validate
+    title: IndexLevel.Validate
+    sourceFile: internal/valuation/level.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:46:58.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-index-level
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-test-index-level-validate
+    title: TestIndexLevelValidate
+    sourceFile: internal/valuation/level_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:01.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-index-level
+  - id: SYM-valuation-pg-test-index-levels-round-trip
+    title: TestIndexLevelsRoundTrip
+    sourceFile: internal/valuation/postgres/level_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:05.734Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-index-levels
+  - id: SYM-valuation-pg-store-save-index-levels
+    title: Store.SaveIndexLevels
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:10.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-index-levels
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-pg-store-index-levels
+    title: Store.IndexLevels
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:14.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-index-levels
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-valuation-pg-scan-index-level
+    title: scanIndexLevel
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T22:47:18.822Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-index-levels
+      - type: implements
+        target: REQ-valuation-index-levels
+  - id: SYM-core-owner-sessions
+    title: ownerSessions
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:19.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-service
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-core-owner-sessions-check-owner
+    title: ownerSessions.CheckOwner
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:24.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-service
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-core-new-model-portfolio-use-cases
+    title: newModels
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:29.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-service
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-core-with-model-service
+    title: withModelService
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:34.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-service
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-core-test-helper-model-api
+    title: modelAPI
+    sourceFile: cmd/core/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:39.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-service
+  - id: SYM-core-test-helper-model-client
+    title: modelClient
+    sourceFile: cmd/core/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:44.175Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-service
+  - id: SYM-core-test-helper-owner-session
+    title: ownerSession
+    sourceFile: cmd/core/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:48.568Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-service
+  - id: SYM-core-test-model-portfolio-service
+    title: TestModelPortfolioService
+    sourceFile: cmd/core/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:53.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-service
+  - id: SYM-identity-connectapi-new-caller-interceptor
+    title: NewCallerInterceptor
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:15:57.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-connectapi
+      - type: implements
+        target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-connectapi-test-caller-interceptor
+    title: TestCallerInterceptor
+    sourceFile: internal/identity/connectapi/interceptor_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:01.446Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-portfolio-app-test-helper-fake-store
+    title: fakeStore
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:05.252Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-fake-store-model
+    title: fakeStore.Model
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:10.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-fake-store-save-model
+    title: fakeStore.SaveModel
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:15.267Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-fake-market
+    title: fakeMarket
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:19.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-fake-market-prices
+    title: fakeMarket.Prices
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:24.215Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-fake-market-index-levels
+    title: fakeMarket.IndexLevels
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:29.335Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-fake-market-fx-rates
+    title: fakeMarket.FXRates
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:34.462Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-fake-owners
+    title: fakeOwners
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:39.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-fake-owners-check-owner
+    title: fakeOwners.CheckOwner
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:43.978Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-must-dec
+    title: mustDec
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:48.928Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-must-date
+    title: mustDate
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:53.877Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-must-currency
+    title: mustCurrency
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:16:59.882Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-new-models
+    title: newModels
+    sourceFile: internal/portfolio/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:05.450Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-unsupported-reporting-currency-error
+    title: UnsupportedReportingCurrencyError
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:10.404Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-unsupported-reporting-currency-error-error
+    title: UnsupportedReportingCurrencyError.Error
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:15.805Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-models
+    title: Models
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:20.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-new
+    title: New
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:26.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-models-settings
+    title: Models.Settings
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:32.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-models-save
+    title: Models.Save
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:39.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-check-model
+    title: CheckModel
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:44.759Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-parse-instrument
+    title: ParseInstrument
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:50.564Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-models-check-owner
+    title: Models.checkOwner
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:17:56.136Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-test-helper-sixty-forty
+    title: sixtyForty
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:00.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-settings-and-save
+    title: TestSettingsAndSave
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:05.502Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-owner-only
+    title: TestOwnerOnly
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:10.922Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-save-rejects
+    title: TestSaveRejects
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:16.004Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-parse-instrument
+    title: TestParseInstrument
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:21.490Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-new-refuses-other-reporting-currencies
+    title: TestNewRefusesOtherReportingCurrencies
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:26.731Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-helper-report-market
+    title: reportMarket
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:32.483Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-report
+    title: TestReport
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:37.232Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-report-off
+    title: TestReportOff
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:42.175Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-test-report-missing-and-failures
+    title: TestReportMissingAndFailures
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:46.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-portfolio-app-model-store
+    title: ModelStore
+    sourceFile: internal/portfolio/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:51.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-app-market-data
+    title: MarketData
+    sourceFile: internal/portfolio/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:18:56.828Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-report
+  - id: SYM-portfolio-app-owners
+    title: Owners
+    sourceFile: internal/portfolio/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:02.108Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-app-target-report
+    title: TargetReport
+    sourceFile: internal/portfolio/app/report.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:06.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-optional
+      - type: implements
+        target: REQ-portfolio-model-report
+  - id: SYM-portfolio-app-report
+    title: Report
+    sourceFile: internal/portfolio/app/report.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:11.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-optional
+      - type: implements
+        target: REQ-portfolio-model-report
+  - id: SYM-portfolio-app-models-report
+    title: Models.Report
+    sourceFile: internal/portfolio/app/report.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:16.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-optional
+      - type: implements
+        target: REQ-portfolio-model-report
+  - id: SYM-portfolio-app-models-backtest-input
+    title: Models.backtestInput
+    sourceFile: internal/portfolio/app/report.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:21.019Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-optional
+      - type: implements
+        target: REQ-portfolio-model-report
+  - id: SYM-portfolio-app-models-closes
+    title: Models.closes
+    sourceFile: internal/portfolio/app/report.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:25.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-portfolio-model-optional
+      - type: implements
+        target: REQ-portfolio-model-report
+  - id: SYM-portfolio-connectapi-new
+    title: New
+    sourceFile: internal/portfolio/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:30.319Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-connectapi-service
+    title: service
+    sourceFile: internal/portfolio/connectapi/service.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:34.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-connectapi-service-get-model-portfolio
+    title: service.GetModelPortfolio
+    sourceFile: internal/portfolio/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:38.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-connectapi-service-save-model-portfolio
+    title: service.SaveModelPortfolio
+    sourceFile: internal/portfolio/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:43.958Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-connectapi-service-fail
+    title: service.fail
+    sourceFile: internal/portfolio/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:48.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-connectapi-pb-model
+    title: pbModel
+    sourceFile: internal/portfolio/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:53.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-connectapi-model-from
+    title: modelFrom
+    sourceFile: internal/portfolio/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:19:58.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-connectapi-target-from
+    title: targetFrom
+    sourceFile: internal/portfolio/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:03.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-connectapi-test-helper-mem-store
+    title: memStore
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:06.811Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-mem-store-model
+    title: memStore.Model
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:11.636Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-mem-store-save-model
+    title: memStore.SaveModel
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:16.348Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-no-market
+    title: noMarket
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:20.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-no-market-prices
+    title: noMarket.Prices
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:24.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-no-market-index-levels
+    title: noMarket.IndexLevels
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:29.497Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-no-market-fx-rates
+    title: noMarket.FXRates
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:34.122Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-owners
+    title: owners
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:37.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-owners-check-owner
+    title: owners.CheckOwner
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:42.414Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-view-only
+    title: viewOnly
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:47.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-bearer
+    title: bearer
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:51.813Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-client
+    title: client
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:20:56.335Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-new-client
+    title: newClient
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:00.967Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-helper-sample
+    title: sample
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:05.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-save-and-get
+    title: TestSaveAndGet
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:10.064Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-connectapi-test-errors
+    title: TestErrors
+    sourceFile: internal/portfolio/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:14.697Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi
+  - id: SYM-portfolio-pg-migration-type
+    title: migration
+    sourceFile: internal/portfolio/postgres/migrate.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:19.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-migrate
+    title: Migrate
+    sourceFile: internal/portfolio/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:23.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-migrate-tx
+    title: migrateTx
+    sourceFile: internal/portfolio/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:28.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-applied-versions
+    title: appliedVersions
+    sourceFile: internal/portfolio/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:32.660Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-migrations-func
+    title: migrations
+    sourceFile: internal/portfolio/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:37.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-store
+    title: Store
+    sourceFile: internal/portfolio/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:40.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-new
+    title: New
+    sourceFile: internal/portfolio/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:45.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-store-model
+    title: Store.Model
+    sourceFile: internal/portfolio/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:49.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-scan-target
+    title: scanTarget
+    sourceFile: internal/portfolio/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:54.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-store-save-model
+    title: Store.SaveModel
+    sourceFile: internal/portfolio/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:21:58.911Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres
+      - type: implements
+        target: REQ-portfolio-model-store
+  - id: SYM-portfolio-pg-test-helper-new-pool
+    title: newPool
+    sourceFile: internal/portfolio/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:03.543Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-postgres
+  - id: SYM-portfolio-pg-test-helper-admin-exec
+    title: adminExec
+    sourceFile: internal/portfolio/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:08.214Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-postgres
+  - id: SYM-portfolio-pg-test-helper-target
+    title: target
+    sourceFile: internal/portfolio/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:12.931Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-postgres
+  - id: SYM-portfolio-pg-test-model-round-trip
+    title: TestModelRoundTrip
+    sourceFile: internal/portfolio/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:17.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-postgres
+  - id: SYM-portfolio-pg-test-model-constraints
+    title: TestModelConstraints
+    sourceFile: internal/portfolio/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:21.994Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-postgres
+  - id: SYM-portfolio-pb-target-kind
+    title: TargetKind
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:25.568Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-kind-enum
+    title: TargetKind.Enum
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:29.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-kind-string
+    title: TargetKind.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:34.810Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-kind-descriptor
+    title: TargetKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:39.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-kind-type
+    title: TargetKind.Type
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:44.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-kind-number
+    title: TargetKind.Number
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:48.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-kind-enum-descriptor
+    title: TargetKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:53.383Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target
+    title: Target
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:22:57.113Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-reset
+    title: Target.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:01.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-string
+    title: Target.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:06.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-proto-message
+    title: Target.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:11.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-proto-reflect
+    title: Target.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:16.240Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-descriptor
+    title: Target.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:20.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-get-kind
+    title: Target.GetKind
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:25.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-get-isin
+    title: Target.GetIsin
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:30.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-get-symbol
+    title: Target.GetSymbol
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:34.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-get-index
+    title: Target.GetIndex
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:39.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-get-currency
+    title: Target.GetCurrency
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:43.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-target-get-weight-percent
+    title: Target.GetWeightPercent
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:48.353Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-model-portfolio
+    title: ModelPortfolio
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:51.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-model-portfolio-reset
+    title: ModelPortfolio.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:23:56.564Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-model-portfolio-string
+    title: ModelPortfolio.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:01.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-model-portfolio-proto-message
+    title: ModelPortfolio.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:05.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-model-portfolio-proto-reflect
+    title: ModelPortfolio.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:10.002Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-model-portfolio-descriptor
+    title: ModelPortfolio.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:14.387Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-model-portfolio-get-enabled
+    title: ModelPortfolio.GetEnabled
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:18.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-model-portfolio-get-targets
+    title: ModelPortfolio.GetTargets
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:23.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-request
+    title: GetModelPortfolioRequest
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:26.756Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-request-reset
+    title: GetModelPortfolioRequest.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:31.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-request-string
+    title: GetModelPortfolioRequest.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:35.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-request-proto-message
+    title: GetModelPortfolioRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:40.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-request-proto-reflect
+    title: GetModelPortfolioRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:44.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-request-descriptor
+    title: GetModelPortfolioRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:49.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-request-get-origin
+    title: GetModelPortfolioRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:54.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-request-get-session-token
+    title: GetModelPortfolioRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:24:58.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-response
+    title: GetModelPortfolioResponse
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:02.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-response-reset
+    title: GetModelPortfolioResponse.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:06.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-response-string
+    title: GetModelPortfolioResponse.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:11.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-response-proto-message
+    title: GetModelPortfolioResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:16.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-response-proto-reflect
+    title: GetModelPortfolioResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:20.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-response-descriptor
+    title: GetModelPortfolioResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:25.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-get-model-portfolio-response-get-model
+    title: GetModelPortfolioResponse.GetModel
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:30.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request
+    title: SaveModelPortfolioRequest
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:33.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request-reset
+    title: SaveModelPortfolioRequest.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:38.557Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request-string
+    title: SaveModelPortfolioRequest.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:43.196Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request-proto-message
+    title: SaveModelPortfolioRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:47.785Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request-proto-reflect
+    title: SaveModelPortfolioRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:52.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request-descriptor
+    title: SaveModelPortfolioRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:25:57.181Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request-get-origin
+    title: SaveModelPortfolioRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:01.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request-get-session-token
+    title: SaveModelPortfolioRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:06.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-request-get-model
+    title: SaveModelPortfolioRequest.GetModel
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:11.184Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-response
+    title: SaveModelPortfolioResponse
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:15.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-response-reset
+    title: SaveModelPortfolioResponse.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:19.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-response-string
+    title: SaveModelPortfolioResponse.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:24.639Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-response-proto-message
+    title: SaveModelPortfolioResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:29.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-response-proto-reflect
+    title: SaveModelPortfolioResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:34.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-response-descriptor
+    title: SaveModelPortfolioResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:39.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-save-model-portfolio-response-get-model
+    title: SaveModelPortfolioResponse.GetModel
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:44.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-file_openfief_portfolio_v1_model_proto_raw-desc-gzip
+    title: file_openfief_portfolio_v1_model_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:49.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:26:55.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-file_openfief_portfolio_v1_model_proto_init
+    title: file_openfief_portfolio_v1_model_proto_init
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:01.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pb-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/model.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:07.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-model-portfolio-service-client
+    title: ModelPortfolioServiceClient
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:13.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-new-model-portfolio-service-client
+    title: NewModelPortfolioServiceClient
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:18.177Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-model-portfolio-service-client-impl
+    title: modelPortfolioServiceClient
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:21.875Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-model-portfolio-service-client-get-model-portfolio
+    title: modelPortfolioServiceClient.GetModelPortfolio
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:27.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-model-portfolio-service-client-save-model-portfolio
+    title: modelPortfolioServiceClient.SaveModelPortfolio
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:33.282Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-model-portfolio-service-handler
+    title: ModelPortfolioServiceHandler
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:39.029Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-new-model-portfolio-service-handler
+    title: NewModelPortfolioServiceHandler
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:44.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-unimplemented-model-portfolio-service-handler
+    title: UnimplementedModelPortfolioServiceHandler
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:48.070Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-unimplemented-model-portfolio-service-handler-get-model-portfolio
+    title: UnimplementedModelPortfolioServiceHandler.GetModelPortfolio
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:53.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-portfolio-pbconnect-unimplemented-model-portfolio-service-handler-save-model-portfolio
+    title: UnimplementedModelPortfolioServiceHandler.SaveModelPortfolio
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/model.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:27:57.871Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-connectapi
+      - type: implements
+        target: REQ-portfolio-model-entry
+  - id: SYM-core-test-helper-owner-core
+    title: ownerCore
+    sourceFile: cmd/core/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:32.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-service
+  - id: SYM-core-test-helper-check-model-refusals
+    title: checkModelRefusals
+    sourceFile: cmd/core/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:38.080Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-service
+  - id: SYM-core-test-helper-check-model-read
+    title: checkModelRead
+    sourceFile: cmd/core/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:43.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-service
+  - id: SYM-views-app-model-reports
+    title: ModelReports
+    sourceFile: internal/views/app/model.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:48.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-model
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-app-option-type
+    title: Option
+    sourceFile: internal/views/app/model.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:37:54.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-model
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-app-with-model
+    title: WithModel
+    sourceFile: internal/views/app/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:00.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-model
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-app-model-portfolio-type
+    title: ModelPortfolio
+    sourceFile: internal/views/app/model.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:05.643Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-model
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-app-end-of-history
+    title: endOfHistory
+    sourceFile: internal/views/app/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:11.298Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-model
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-app-views-model-portfolio
+    title: Views.ModelPortfolio
+    sourceFile: internal/views/app/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:17.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-model
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-app-model-days
+    title: modelDays
+    sourceFile: internal/views/app/model.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:22.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-model
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-app-views-model-range
+    title: Views.modelRange
+    sourceFile: internal/views/app/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:28.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-model
+      - type: implements
+        target: REQ-views-model-line-from-go-live
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-app-test-helper-fake-models
+    title: fakeModels
+    sourceFile: internal/views/app/model_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:32.709Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-model
+  - id: SYM-views-app-test-helper-fake-models-report
+    title: fakeModels.Report
+    sourceFile: internal/views/app/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:38.016Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-model
+  - id: SYM-views-app-test-helper-new-fake-models
+    title: newFakeModels
+    sourceFile: internal/views/app/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:43.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-model
+  - id: SYM-views-app-test-helper-model-views
+    title: modelViews
+    sourceFile: internal/views/app/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:48.922Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-model
+  - id: SYM-views-app-test-model-portfolio
+    title: TestModelPortfolio
+    sourceFile: internal/views/app/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:38:54.581Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-model
+  - id: SYM-views-app-test-helper-points
+    title: points
+    sourceFile: internal/views/app/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:00.356Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-model
+  - id: SYM-views-app-test-model-portfolio-refusals
+    title: TestModelPortfolioRefusals
+    sourceFile: internal/views/app/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:05.753Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-model
+  - id: SYM-views-connectapi-pb-model-portfolio
+    title: pbModelPortfolio
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:10.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-model
+      - type: implements
+        target: REQ-views-api-contract
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-connectapi-pb-model-target
+    title: pbModelTarget
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:16.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-model
+      - type: implements
+        target: REQ-views-api-contract
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-connectapi-pb-drawdown
+    title: pbDrawdown
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:20.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-model
+      - type: implements
+        target: REQ-views-api-contract
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-connectapi-test-helper-fake-models
+    title: fakeModels
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:25.392Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-test-helper-fake-models-report
+    title: fakeModels.Report
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:30.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-test-helper-synthetic-report
+    title: syntheticReport
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:35.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-test-helper-model-handler
+    title: modelHandler
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:41.327Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-test-connect-model-portfolio
+    title: TestConnectModelPortfolio
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:46.673Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-test-model-portfolio-off
+    title: TestModelPortfolioOff
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:51.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-test-rest-model-portfolio
+    title: TestRESTModelPortfolio
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:39:57.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-test-model-enums-match
+    title: TestModelEnumsMatch
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:03.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-test-helper-authed-get
+    title: authedGet
+    sourceFile: internal/views/connectapi/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:08.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-model
+  - id: SYM-views-connectapi-read-service-get-model-portfolio
+    title: readService.GetModelPortfolio
+    sourceFile: internal/views/connectapi/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:14.075Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-model
+      - type: implements
+        target: REQ-views-api-contract
+      - type: implements
+        target: REQ-views-model-portfolio
+  - id: SYM-views-pb-model-target-kind
+    title: ModelTargetKind
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:18.069Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-kind-enum
+    title: ModelTargetKind.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:23.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-kind-string
+    title: ModelTargetKind.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:29.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-kind-descriptor
+    title: ModelTargetKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:34.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-kind-type
+    title: ModelTargetKind.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:40.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-kind-number
+    title: ModelTargetKind.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:45.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-kind-enum-descriptor
+    title: ModelTargetKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:51.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-history-gap
+    title: ModelHistoryGap
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:40:55.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-history-gap-enum
+    title: ModelHistoryGap.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:01.549Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-history-gap-string
+    title: ModelHistoryGap.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:07.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-history-gap-descriptor
+    title: ModelHistoryGap.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:12.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-history-gap-type
+    title: ModelHistoryGap.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:18.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-history-gap-number
+    title: ModelHistoryGap.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:24.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-history-gap-enum-descriptor
+    title: ModelHistoryGap.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:30.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target
+    title: ModelTarget
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:34.910Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-reset
+    title: ModelTarget.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:40.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-string
+    title: ModelTarget.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:47.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-proto-message
+    title: ModelTarget.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:53.185Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-proto-reflect
+    title: ModelTarget.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:41:58.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-descriptor
+    title: ModelTarget.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:04.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-get-kind
+    title: ModelTarget.GetKind
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:10.874Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-get-instrument
+    title: ModelTarget.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:16.748Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-get-index
+    title: ModelTarget.GetIndex
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:21.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-get-currency
+    title: ModelTarget.GetCurrency
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:27.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-get-weight-percent
+    title: ModelTarget.GetWeightPercent
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:32.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown
+    title: Drawdown
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:36.439Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-reset
+    title: Drawdown.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:41.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-string
+    title: Drawdown.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:47.003Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-proto-message
+    title: Drawdown.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:52.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-proto-reflect
+    title: Drawdown.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:42:57.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-descriptor
+    title: Drawdown.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:02.398Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-get-peak-date
+    title: Drawdown.GetPeakDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:07.595Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-get-trough-date
+    title: Drawdown.GetTroughDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:12.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-get-peak-value
+    title: Drawdown.GetPeakValue
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:17.968Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-get-trough-value
+    title: Drawdown.GetTroughValue
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:23.297Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-drawdown-get-depth
+    title: Drawdown.GetDepth
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:28.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history
+    title: ModelTargetHistory
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:32.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-reset
+    title: ModelTargetHistory.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:37.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-string
+    title: ModelTargetHistory.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:43.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-proto-message
+    title: ModelTargetHistory.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:48.414Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-proto-reflect
+    title: ModelTargetHistory.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:54.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-descriptor
+    title: ModelTargetHistory.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:43:59.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-get-target
+    title: ModelTargetHistory.GetTarget
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:06.013Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-get-first-date
+    title: ModelTargetHistory.GetFirstDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:12.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-get-last-date
+    title: ModelTargetHistory.GetLastDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:19.090Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-get-gap
+    title: ModelTargetHistory.GetGap
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:25.045Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-model-target-history-get-drawdown
+    title: ModelTargetHistory.GetDrawdown
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:31.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-backtest-day
+    title: BacktestDay
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:36.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-backtest-day-reset
+    title: BacktestDay.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:42.523Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-backtest-day-string
+    title: BacktestDay.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:49.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-backtest-day-proto-message
+    title: BacktestDay.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:44:56.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-backtest-day-proto-reflect
+    title: BacktestDay.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:02.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-backtest-day-descriptor
+    title: BacktestDay.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:08.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-backtest-day-get-date
+    title: BacktestDay.GetDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:15.503Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-backtest-day-get-index
+    title: BacktestDay.GetIndex
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:21.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-request
+    title: GetModelPortfolioRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:25.569Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-request-reset
+    title: GetModelPortfolioRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:31.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-request-string
+    title: GetModelPortfolioRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:37.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-request-proto-message
+    title: GetModelPortfolioRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:43.894Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-request-proto-reflect
+    title: GetModelPortfolioRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:50.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-request-descriptor
+    title: GetModelPortfolioRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:45:56.606Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-request-get-from
+    title: GetModelPortfolioRequest.GetFrom
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:02.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-request-get-to
+    title: GetModelPortfolioRequest.GetTo
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:09.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response
+    title: GetModelPortfolioResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:14.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-reset
+    title: GetModelPortfolioResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:20.613Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-string
+    title: GetModelPortfolioResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:25.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-proto-message
+    title: GetModelPortfolioResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:31.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-proto-reflect
+    title: GetModelPortfolioResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:37.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-descriptor
+    title: GetModelPortfolioResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:44.285Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-from
+    title: GetModelPortfolioResponse.GetFrom
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:50.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-to
+    title: GetModelPortfolioResponse.GetTo
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:46:55.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-targets
+    title: GetModelPortfolioResponse.GetTargets
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:01.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-backtest-start
+    title: GetModelPortfolioResponse.GetBacktestStart
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:06.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-backtest-end
+    title: GetModelPortfolioResponse.GetBacktestEnd
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:11.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-days
+    title: GetModelPortfolioResponse.GetDays
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:16.913Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-drawdown
+    title: GetModelPortfolioResponse.GetDrawdown
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:22.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-target-histories
+    title: GetModelPortfolioResponse.GetTargetHistories
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:27.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-model-portfolio-response-get-reporting-currency
+    title: GetModelPortfolioResponse.GetReportingCurrency
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:32.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pbconnect-read-service-client-get-model-portfolio
+    title: readServiceClient.GetModelPortfolio
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:37.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-get-model-portfolio
+    title: UnimplementedReadServiceHandler.GetModelPortfolio
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-28T23:47:44.073Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-ui-target-row
+    title: targetRow
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:12:42.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-model-form
+    title: modelForm
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:12:46.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-model-form-with-blank-rows
+    title: modelForm.withBlankRows
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:12:52.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-form-of
+    title: formOf
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:12:57.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-parse-model-form
+    title: parseModelForm
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:02.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-model-form-message
+    title: modelForm.message
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:08.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-server-load-model
+    title: server.loadModel
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:14.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-server-save-model
+    title: server.saveModel
+    sourceFile: internal/views/ui/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:19.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+  - id: SYM-ui-test-helper-fake-model
+    title: fakeModel
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:24.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-new-fake-model
+    title: newFakeModel
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:29.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-get-model-portfolio
+    title: fakeModel.GetModelPortfolio
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:35.302Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-save-model-portfolio
+    title: fakeModel.SaveModelPortfolio
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:40.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-check
+    title: fakeModel.check
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:45.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-locked
+    title: fakeModel.locked
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:50.746Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-model-stored
+    title: fakeModel.stored
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:13:55.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-read-get-performance
+    title: fakeRead.GetPerformance
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:00.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-helper-fake-read-get-model-portfolio
+    title: fakeRead.GetModelPortfolio
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:05.289Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-overview-model
+    title: TestOverviewModel
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:10.286Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-settings-model
+    title: TestSettingsModel
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:15.298Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-test-settings-model-refusals
+    title: TestSettingsModelRefusals
+    sourceFile: internal/views/ui/model_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:20.473Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-model
+  - id: SYM-ui-performance-view
+    title: performanceView
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:25.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-model-view
+    title: modelView
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:30.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-drawdown-row
+    title: drawdownRow
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:35.777Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-chart-series
+    title: chartSeries
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:40.873Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-target-label
+    title: targetLabel
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:46.092Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-gap-label
+    title: gapLabel
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:51.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-drawdown-of
+    title: drawdownOf
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:14:56.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-build-model
+    title: buildModel
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:15:01.370Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-build-performance
+    title: buildPerformance
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:15:06.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview
+  - id: SYM-ui-server-performance
+    title: server.performance
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T00:15:11.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-model
+      - type: implements
+        target: REQ-ui-model-portfolio
+      - type: implements
+        target: REQ-ui-overview

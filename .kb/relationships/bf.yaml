@@ -419,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f6740a855d0
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-model-save-model-portfolio
+    to: TEST-ui-model
+    created_at: 2026-10-29T00:13:42.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55c3a8cec3ae

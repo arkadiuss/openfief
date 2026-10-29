@@ -286,3 +286,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f0fbab57b7e
+  - type: executable_for
+    from: SYM-valuation-test-index-level-validate
+    to: TEST-valuation-index-level
+    created_at: 2026-10-28T22:47:03.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22ac0887f30d
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-no-market
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:20:21.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86747ab526b6

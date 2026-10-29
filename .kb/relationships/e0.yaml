@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38e72ad4d24c
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-bearer
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:20:53.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-047b8d1ad449
+  - type: implements
+    from: SYM-portfolio-pg-migrate-tx
+    to: REQ-portfolio-model-store
+    created_at: 2026-10-28T23:21:29.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7358c7e6d7b7
+  - type: covered_by
+    from: SYM-portfolio-pg-migrate-tx
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:21:29.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f76420f04b83

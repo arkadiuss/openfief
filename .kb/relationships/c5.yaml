@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97472824aa59
+  - type: implements
+    from: SYM-valuation-pg-store-save-index-levels
+    to: REQ-valuation-index-levels
+    created_at: 2026-10-28T22:47:11.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa0fa3b0c479
+  - type: covered_by
+    from: SYM-valuation-pg-store-save-index-levels
+    to: TEST-valuation-postgres-index-levels
+    created_at: 2026-10-28T22:47:11.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c7eb748b349

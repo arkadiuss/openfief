@@ -24,6 +24,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/views/ui"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
@@ -72,17 +73,18 @@ func run(ctx context.Context, log *slog.Logger) error {
 }
 
 // newHandler builds the UI's handler from the plugin's environment: the
-// core's address, and the token the AuthService client presents
-// (authClient).
+// core's address, and the token the AuthService and ModelPortfolioService
+// clients present (authClient).
 func newHandler(log *slog.Logger) (http.Handler, error) {
 	coreURL, err := openfief.CoreURL()
 	if err != nil {
 		return nil, fmt.Errorf("core address: %w", err)
 	}
 	h, err := ui.New(ui.Config{
-		Auth: identityv1connect.NewAuthServiceClient(authClient(os.Getenv), coreURL),
-		Read: viewsv1connect.NewReadServiceClient(readClient(), coreURL),
-		Log:  log,
+		Auth:  identityv1connect.NewAuthServiceClient(authClient(os.Getenv), coreURL),
+		Model: portfoliov1connect.NewModelPortfolioServiceClient(authClient(os.Getenv), coreURL),
+		Read:  viewsv1connect.NewReadServiceClient(readClient(), coreURL),
+		Log:   log,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("ui: %w", err)

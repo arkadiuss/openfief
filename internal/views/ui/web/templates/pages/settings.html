@@ -79,5 +79,28 @@
     <button type="submit">Create script token</button>
   </form>
 </section>
+{{with .Model}}
+<section class="card" aria-labelledby="model-title">
+  <h2 id="model-title">Model portfolio</h2>
+  <p class="muted">An optional basket for the whole portfolio to compare with (D-52). While it is off, it appears nowhere else. Each target is an instrument, written <code>ISIN/symbol</code> as your broker's prices know it, or a market index by the name your market-data connector gives it, with the currency of its levels. Weights are in percent, in steps of 0.01, and sum to 100. Leave a row empty to drop it.</p>
+  <form method="post" action="/settings/model">
+    <label class="check"><input type="checkbox" name="enabled"{{if .Enabled}} checked{{end}}> Show the model portfolio</label>
+    <table class="targets">
+      <thead><tr><th scope="col">Kind</th><th scope="col">Instrument or index</th><th scope="col">Index currency</th><th scope="col" class="num">Weight %</th></tr></thead>
+      <tbody>
+      {{range $i, $row := .Rows}}
+      <tr>
+        <td><select name="kind" aria-label="Kind of target {{$i}}"><option value="instrument"{{if eq $row.Kind "instrument"}} selected{{end}}>Instrument</option><option value="index"{{if eq $row.Kind "index"}} selected{{end}}>Index</option></select></td>
+        <td><input name="id" value="{{$row.ID}}" aria-label="Instrument or index of target {{$i}}" autocomplete="off" maxlength="64"></td>
+        <td><input name="currency" value="{{$row.Currency}}" aria-label="Currency of target {{$i}}" autocomplete="off" maxlength="3" size="4"></td>
+        <td><input name="weight" value="{{$row.Weight}}" aria-label="Weight of target {{$i}} in percent" inputmode="decimal" autocomplete="off" size="7"></td>
+      </tr>
+      {{end}}
+      </tbody>
+    </table>
+    <button type="submit" class="primary">Save model portfolio</button>
+  </form>
+</section>
+{{end}}
 {{end}}
 {{end}}

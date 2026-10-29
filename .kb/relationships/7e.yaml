@@ -258,3 +258,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-571c2fb3b623
+  - type: constrains
+    from: REQ-portfolio-model-store
+    to: FACT-SUBJECT-1FEA6AF758EE9559
+    created_at: 2026-10-28T23:10:36.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4d3855bddbe
+  - type: requires_property
+    from: REQ-portfolio-model-store
+    to: FACT-PROP-298860A285D23588
+    created_at: 2026-10-28T23:10:36.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4b058f9ba7e
+  - type: specified_by
+    from: REQ-portfolio-model-store
+    to: SCEN-portfolio-model-store
+    created_at: 2026-10-28T23:10:36.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7218f5c39e3a

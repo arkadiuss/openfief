@@ -342,6 +342,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ed34337b1e4
+  - type: constrains
+    from: REQ-portfolio-backtest-index
+    to: FACT-SUBJECT-CC375F51A146E82A
+    created_at: 2026-10-28T22:11:44.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cc7f0d8ad2e
+  - type: requires_property
+    from: REQ-portfolio-backtest-index
+    to: FACT-PROP-54F151073BA682BF
+    created_at: 2026-10-28T22:11:44.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84573cac37c2
+  - type: specified_by
+    from: REQ-portfolio-backtest-index
+    to: SCEN-portfolio-backtest-rebalance
+    created_at: 2026-10-28T22:11:44.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bee8a6c336a
   - type: verified_by
     from: SCEN-valuation-eodhd-closes-exact
     to: TEST-valuation-eodhd-client

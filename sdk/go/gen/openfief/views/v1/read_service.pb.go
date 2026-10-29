@@ -433,6 +433,112 @@ func (PerformanceGap) EnumDescriptor() ([]byte, []int) {
 	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{6}
 }
 
+// ModelTargetKind says what a model portfolio target is.
+type ModelTargetKind int32
+
+const (
+	ModelTargetKind_MODEL_TARGET_KIND_UNSPECIFIED ModelTargetKind = 0
+	// An instrument, such as an index ETF or a stock.
+	ModelTargetKind_MODEL_TARGET_KIND_INSTRUMENT ModelTargetKind = 1
+	// A market index, such as WIG20, which can't be held.
+	ModelTargetKind_MODEL_TARGET_KIND_INDEX ModelTargetKind = 2
+)
+
+// Enum value maps for ModelTargetKind.
+var (
+	ModelTargetKind_name = map[int32]string{
+		0: "MODEL_TARGET_KIND_UNSPECIFIED",
+		1: "MODEL_TARGET_KIND_INSTRUMENT",
+		2: "MODEL_TARGET_KIND_INDEX",
+	}
+	ModelTargetKind_value = map[string]int32{
+		"MODEL_TARGET_KIND_UNSPECIFIED": 0,
+		"MODEL_TARGET_KIND_INSTRUMENT":  1,
+		"MODEL_TARGET_KIND_INDEX":       2,
+	}
+)
+
+func (x ModelTargetKind) Enum() *ModelTargetKind {
+	p := new(ModelTargetKind)
+	*p = x
+	return p
+}
+
+func (x ModelTargetKind) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ModelTargetKind) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_views_v1_read_service_proto_enumTypes[7].Descriptor()
+}
+
+func (ModelTargetKind) Type() protoreflect.EnumType {
+	return &file_openfief_views_v1_read_service_proto_enumTypes[7]
+}
+
+func (x ModelTargetKind) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ModelTargetKind.Descriptor instead.
+func (ModelTargetKind) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{7}
+}
+
+// ModelHistoryGap says why a target has no history in the reporting
+// currency.
+type ModelHistoryGap int32
+
+const (
+	// It has history.
+	ModelHistoryGap_MODEL_HISTORY_GAP_UNSPECIFIED ModelHistoryGap = 0
+	// No price or index level is stored for it.
+	ModelHistoryGap_MODEL_HISTORY_GAP_NO_CLOSES ModelHistoryGap = 1
+	// Its currency has no FX rate on or before its last close.
+	ModelHistoryGap_MODEL_HISTORY_GAP_NO_FX_RATE ModelHistoryGap = 2
+)
+
+// Enum value maps for ModelHistoryGap.
+var (
+	ModelHistoryGap_name = map[int32]string{
+		0: "MODEL_HISTORY_GAP_UNSPECIFIED",
+		1: "MODEL_HISTORY_GAP_NO_CLOSES",
+		2: "MODEL_HISTORY_GAP_NO_FX_RATE",
+	}
+	ModelHistoryGap_value = map[string]int32{
+		"MODEL_HISTORY_GAP_UNSPECIFIED": 0,
+		"MODEL_HISTORY_GAP_NO_CLOSES":   1,
+		"MODEL_HISTORY_GAP_NO_FX_RATE":  2,
+	}
+)
+
+func (x ModelHistoryGap) Enum() *ModelHistoryGap {
+	p := new(ModelHistoryGap)
+	*p = x
+	return p
+}
+
+func (x ModelHistoryGap) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ModelHistoryGap) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_views_v1_read_service_proto_enumTypes[8].Descriptor()
+}
+
+func (ModelHistoryGap) Type() protoreflect.EnumType {
+	return &file_openfief_views_v1_read_service_proto_enumTypes[8]
+}
+
+func (x ModelHistoryGap) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ModelHistoryGap.Descriptor instead.
+func (ModelHistoryGap) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{8}
+}
+
 // Money is an exact decimal amount in one currency.
 type Money struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -3201,6 +3307,485 @@ func (x *GetPerformanceResponse) GetReportingCurrency() string {
 	return ""
 }
 
+// ModelTarget is one instrument or index of the model portfolio, with its
+// weight.
+type ModelTarget struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Kind  ModelTargetKind        `protobuf:"varint,1,opt,name=kind,proto3,enum=openfief.views.v1.ModelTargetKind" json:"kind,omitempty"`
+	// An instrument target's instrument; unset for an index.
+	Instrument *Instrument `protobuf:"bytes,2,opt,name=instrument,proto3" json:"instrument,omitempty"`
+	// An index target's name as the market-data connector names it, such as
+	// "WIG20"; empty for an instrument.
+	Index string `protobuf:"bytes,3,opt,name=index,proto3" json:"index,omitempty"`
+	// An index target's currency, the one its levels are in; empty for an
+	// instrument, whose prices carry theirs.
+	Currency string `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency,omitempty"`
+	// The weight in percent as a decimal string, such as "60". The weights
+	// sum to 100.
+	WeightPercent string `protobuf:"bytes,5,opt,name=weight_percent,json=weightPercent,proto3" json:"weight_percent,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ModelTarget) Reset() {
+	*x = ModelTarget{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ModelTarget) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModelTarget) ProtoMessage() {}
+
+func (x *ModelTarget) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModelTarget.ProtoReflect.Descriptor instead.
+func (*ModelTarget) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *ModelTarget) GetKind() ModelTargetKind {
+	if x != nil {
+		return x.Kind
+	}
+	return ModelTargetKind_MODEL_TARGET_KIND_UNSPECIFIED
+}
+
+func (x *ModelTarget) GetInstrument() *Instrument {
+	if x != nil {
+		return x.Instrument
+	}
+	return nil
+}
+
+func (x *ModelTarget) GetIndex() string {
+	if x != nil {
+		return x.Index
+	}
+	return ""
+}
+
+func (x *ModelTarget) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+func (x *ModelTarget) GetWeightPercent() string {
+	if x != nil {
+		return x.WeightPercent
+	}
+	return ""
+}
+
+// Drawdown is the worst fall of a series from a peak to a later trough. A
+// series that never falls has depth "0" with its first day as both.
+type Drawdown struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// YYYY-MM-DD.
+	PeakDate   string `protobuf:"bytes,1,opt,name=peak_date,json=peakDate,proto3" json:"peak_date,omitempty"`
+	TroughDate string `protobuf:"bytes,2,opt,name=trough_date,json=troughDate,proto3" json:"trough_date,omitempty"`
+	// The series' values on those days, as decimal strings.
+	PeakValue   string `protobuf:"bytes,3,opt,name=peak_value,json=peakValue,proto3" json:"peak_value,omitempty"`
+	TroughValue string `protobuf:"bytes,4,opt,name=trough_value,json=troughValue,proto3" json:"trough_value,omitempty"`
+	// The fall as a fraction of the peak, such as "0.25" for 25%.
+	Depth         string `protobuf:"bytes,5,opt,name=depth,proto3" json:"depth,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Drawdown) Reset() {
+	*x = Drawdown{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Drawdown) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Drawdown) ProtoMessage() {}
+
+func (x *Drawdown) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Drawdown.ProtoReflect.Descriptor instead.
+func (*Drawdown) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *Drawdown) GetPeakDate() string {
+	if x != nil {
+		return x.PeakDate
+	}
+	return ""
+}
+
+func (x *Drawdown) GetTroughDate() string {
+	if x != nil {
+		return x.TroughDate
+	}
+	return ""
+}
+
+func (x *Drawdown) GetPeakValue() string {
+	if x != nil {
+		return x.PeakValue
+	}
+	return ""
+}
+
+func (x *Drawdown) GetTroughValue() string {
+	if x != nil {
+		return x.TroughValue
+	}
+	return ""
+}
+
+func (x *Drawdown) GetDepth() string {
+	if x != nil {
+		return x.Depth
+	}
+	return ""
+}
+
+// ModelTargetHistory is one target's own history in the reporting currency:
+// its value per unit from its first day with a close (and an FX rate) to its
+// last close, and its max drawdown over it.
+type ModelTargetHistory struct {
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Target *ModelTarget           `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
+	// YYYY-MM-DD; both empty when gap says why there is none.
+	FirstDate string          `protobuf:"bytes,2,opt,name=first_date,json=firstDate,proto3" json:"first_date,omitempty"`
+	LastDate  string          `protobuf:"bytes,3,opt,name=last_date,json=lastDate,proto3" json:"last_date,omitempty"`
+	Gap       ModelHistoryGap `protobuf:"varint,4,opt,name=gap,proto3,enum=openfief.views.v1.ModelHistoryGap" json:"gap,omitempty"`
+	// Values in reporting_currency per unit of the target.
+	Drawdown      *Drawdown `protobuf:"bytes,5,opt,name=drawdown,proto3" json:"drawdown,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ModelTargetHistory) Reset() {
+	*x = ModelTargetHistory{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ModelTargetHistory) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModelTargetHistory) ProtoMessage() {}
+
+func (x *ModelTargetHistory) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModelTargetHistory.ProtoReflect.Descriptor instead.
+func (*ModelTargetHistory) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *ModelTargetHistory) GetTarget() *ModelTarget {
+	if x != nil {
+		return x.Target
+	}
+	return nil
+}
+
+func (x *ModelTargetHistory) GetFirstDate() string {
+	if x != nil {
+		return x.FirstDate
+	}
+	return ""
+}
+
+func (x *ModelTargetHistory) GetLastDate() string {
+	if x != nil {
+		return x.LastDate
+	}
+	return ""
+}
+
+func (x *ModelTargetHistory) GetGap() ModelHistoryGap {
+	if x != nil {
+		return x.Gap
+	}
+	return ModelHistoryGap_MODEL_HISTORY_GAP_UNSPECIFIED
+}
+
+func (x *ModelTargetHistory) GetDrawdown() *Drawdown {
+	if x != nil {
+		return x.Drawdown
+	}
+	return nil
+}
+
+// BacktestDay is the model portfolio's backtest at the end of one day.
+type BacktestDay struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// YYYY-MM-DD.
+	Date string `protobuf:"bytes,1,opt,name=date,proto3" json:"date,omitempty"`
+	// The backtest as an index, 100 on the response's from, as a decimal
+	// string.
+	Index         string `protobuf:"bytes,2,opt,name=index,proto3" json:"index,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BacktestDay) Reset() {
+	*x = BacktestDay{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[48]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BacktestDay) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BacktestDay) ProtoMessage() {}
+
+func (x *BacktestDay) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[48]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BacktestDay.ProtoReflect.Descriptor instead.
+func (*BacktestDay) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *BacktestDay) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *BacktestDay) GetIndex() string {
+	if x != nil {
+		return x.Index
+	}
+	return ""
+}
+
+type GetModelPortfolioRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The first date of days, YYYY-MM-DD; empty, or a date before go-live,
+	// means go-live, the first transaction's date. The index is 100 on the
+	// first day of days.
+	From string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	// The last date, inclusive, YYYY-MM-DD; empty means the latest date any
+	// account is valued through. Nothing later is used.
+	To            string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetModelPortfolioRequest) Reset() {
+	*x = GetModelPortfolioRequest{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetModelPortfolioRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetModelPortfolioRequest) ProtoMessage() {}
+
+func (x *GetModelPortfolioRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetModelPortfolioRequest.ProtoReflect.Descriptor instead.
+func (*GetModelPortfolioRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *GetModelPortfolioRequest) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *GetModelPortfolioRequest) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+type GetModelPortfolioResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The range of days as resolved.
+	From string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	To   string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	// The targets in the owner's order.
+	Targets []*ModelTarget `protobuf:"bytes,3,rep,name=targets,proto3" json:"targets,omitempty"`
+	// The first and last day every target has history, both empty when some
+	// target has none or they don't overlap.
+	BacktestStart string `protobuf:"bytes,4,opt,name=backtest_start,json=backtestStart,proto3" json:"backtest_start,omitempty"`
+	BacktestEnd   string `protobuf:"bytes,5,opt,name=backtest_end,json=backtestEnd,proto3" json:"backtest_end,omitempty"`
+	// One per day from the later of from and backtest_start to the earlier of
+	// to and backtest_end, in date order, rebalanced to the weights at the
+	// end of each December 31.
+	Days []*BacktestDay `protobuf:"bytes,6,rep,name=days,proto3" json:"days,omitempty"`
+	// The model's max drawdown over its whole backtest, from backtest_start,
+	// in index points of a backtest that is 100 on backtest_start.
+	Drawdown *Drawdown `protobuf:"bytes,7,opt,name=drawdown,proto3" json:"drawdown,omitempty"`
+	// Each target's history and max drawdown, in the owner's order.
+	TargetHistories []*ModelTargetHistory `protobuf:"bytes,8,rep,name=target_histories,json=targetHistories,proto3" json:"target_histories,omitempty"`
+	// The currency of the backtest and of the targets' values.
+	ReportingCurrency string `protobuf:"bytes,9,opt,name=reporting_currency,json=reportingCurrency,proto3" json:"reporting_currency,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GetModelPortfolioResponse) Reset() {
+	*x = GetModelPortfolioResponse{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetModelPortfolioResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetModelPortfolioResponse) ProtoMessage() {}
+
+func (x *GetModelPortfolioResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetModelPortfolioResponse.ProtoReflect.Descriptor instead.
+func (*GetModelPortfolioResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *GetModelPortfolioResponse) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *GetModelPortfolioResponse) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *GetModelPortfolioResponse) GetTargets() []*ModelTarget {
+	if x != nil {
+		return x.Targets
+	}
+	return nil
+}
+
+func (x *GetModelPortfolioResponse) GetBacktestStart() string {
+	if x != nil {
+		return x.BacktestStart
+	}
+	return ""
+}
+
+func (x *GetModelPortfolioResponse) GetBacktestEnd() string {
+	if x != nil {
+		return x.BacktestEnd
+	}
+	return ""
+}
+
+func (x *GetModelPortfolioResponse) GetDays() []*BacktestDay {
+	if x != nil {
+		return x.Days
+	}
+	return nil
+}
+
+func (x *GetModelPortfolioResponse) GetDrawdown() *Drawdown {
+	if x != nil {
+		return x.Drawdown
+	}
+	return nil
+}
+
+func (x *GetModelPortfolioResponse) GetTargetHistories() []*ModelTargetHistory {
+	if x != nil {
+		return x.TargetHistories
+	}
+	return nil
+}
+
+func (x *GetModelPortfolioResponse) GetReportingCurrency() string {
+	if x != nil {
+		return x.ReportingCurrency
+	}
+	return ""
+}
+
 var File_openfief_views_v1_read_service_proto protoreflect.FileDescriptor
 
 const file_openfief_views_v1_read_service_proto_rawDesc = "" +
@@ -3413,7 +3998,46 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x03gap\x18\x04 \x01(\x0e2!.openfief.views.v1.PerformanceGapR\x03gap\x12/\n" +
 	"\x13revaluation_pending\x18\x05 \x01(\bR\x12revaluationPending\x129\n" +
 	"\ttransfers\x18\x06 \x03(\v2\x1b.openfief.views.v1.TransferR\ttransfers\x12-\n" +
-	"\x12reporting_currency\x18\a \x01(\tR\x11reportingCurrency*_\n" +
+	"\x12reporting_currency\x18\a \x01(\tR\x11reportingCurrency\"\xdd\x01\n" +
+	"\vModelTarget\x126\n" +
+	"\x04kind\x18\x01 \x01(\x0e2\".openfief.views.v1.ModelTargetKindR\x04kind\x12=\n" +
+	"\n" +
+	"instrument\x18\x02 \x01(\v2\x1d.openfief.views.v1.InstrumentR\n" +
+	"instrument\x12\x14\n" +
+	"\x05index\x18\x03 \x01(\tR\x05index\x12\x1a\n" +
+	"\bcurrency\x18\x04 \x01(\tR\bcurrency\x12%\n" +
+	"\x0eweight_percent\x18\x05 \x01(\tR\rweightPercent\"\xa0\x01\n" +
+	"\bDrawdown\x12\x1b\n" +
+	"\tpeak_date\x18\x01 \x01(\tR\bpeakDate\x12\x1f\n" +
+	"\vtrough_date\x18\x02 \x01(\tR\n" +
+	"troughDate\x12\x1d\n" +
+	"\n" +
+	"peak_value\x18\x03 \x01(\tR\tpeakValue\x12!\n" +
+	"\ftrough_value\x18\x04 \x01(\tR\vtroughValue\x12\x14\n" +
+	"\x05depth\x18\x05 \x01(\tR\x05depth\"\xf7\x01\n" +
+	"\x12ModelTargetHistory\x126\n" +
+	"\x06target\x18\x01 \x01(\v2\x1e.openfief.views.v1.ModelTargetR\x06target\x12\x1d\n" +
+	"\n" +
+	"first_date\x18\x02 \x01(\tR\tfirstDate\x12\x1b\n" +
+	"\tlast_date\x18\x03 \x01(\tR\blastDate\x124\n" +
+	"\x03gap\x18\x04 \x01(\x0e2\".openfief.views.v1.ModelHistoryGapR\x03gap\x127\n" +
+	"\bdrawdown\x18\x05 \x01(\v2\x1b.openfief.views.v1.DrawdownR\bdrawdown\"7\n" +
+	"\vBacktestDay\x12\x12\n" +
+	"\x04date\x18\x01 \x01(\tR\x04date\x12\x14\n" +
+	"\x05index\x18\x02 \x01(\tR\x05index\">\n" +
+	"\x18GetModelPortfolioRequest\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\"\xb1\x03\n" +
+	"\x19GetModelPortfolioResponse\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\x128\n" +
+	"\atargets\x18\x03 \x03(\v2\x1e.openfief.views.v1.ModelTargetR\atargets\x12%\n" +
+	"\x0ebacktest_start\x18\x04 \x01(\tR\rbacktestStart\x12!\n" +
+	"\fbacktest_end\x18\x05 \x01(\tR\vbacktestEnd\x122\n" +
+	"\x04days\x18\x06 \x03(\v2\x1e.openfief.views.v1.BacktestDayR\x04days\x127\n" +
+	"\bdrawdown\x18\a \x01(\v2\x1b.openfief.views.v1.DrawdownR\bdrawdown\x12P\n" +
+	"\x10target_histories\x18\b \x03(\v2%.openfief.views.v1.ModelTargetHistoryR\x0ftargetHistories\x12-\n" +
+	"\x12reporting_currency\x18\t \x01(\tR\x11reportingCurrency*_\n" +
 	"\n" +
 	"SleeveRole\x12\x1b\n" +
 	"\x17SLEEVE_ROLE_UNSPECIFIED\x10\x00\x12\x19\n" +
@@ -3455,7 +4079,15 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x0ePerformanceGap\x12\x1f\n" +
 	"\x1bPERFORMANCE_GAP_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18PERFORMANCE_GAP_UNVALUED\x10\x01\x12\x1e\n" +
-	"\x1aPERFORMANCE_GAP_NO_FX_RATE\x10\x022\xec\x0f\n" +
+	"\x1aPERFORMANCE_GAP_NO_FX_RATE\x10\x02*s\n" +
+	"\x0fModelTargetKind\x12!\n" +
+	"\x1dMODEL_TARGET_KIND_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cMODEL_TARGET_KIND_INSTRUMENT\x10\x01\x12\x1b\n" +
+	"\x17MODEL_TARGET_KIND_INDEX\x10\x02*w\n" +
+	"\x0fModelHistoryGap\x12!\n" +
+	"\x1dMODEL_HISTORY_GAP_UNSPECIFIED\x10\x00\x12\x1f\n" +
+	"\x1bMODEL_HISTORY_GAP_NO_CLOSES\x10\x01\x12 \n" +
+	"\x1cMODEL_HISTORY_GAP_NO_FX_RATE\x10\x022\xfd\x10\n" +
 	"\vReadService\x12t\n" +
 	"\vListSleeves\x12%.openfief.views.v1.ListSleevesRequest\x1a&.openfief.views.v1.ListSleevesResponse\"\x16\x82\xd3\xe4\x93\x02\r\x12\v/v1/sleeves\x90\x02\x01\x12x\n" +
 	"\fListAccounts\x12&.openfief.views.v1.ListAccountsRequest\x1a'.openfief.views.v1.ListAccountsResponse\"\x17\x82\xd3\xe4\x93\x02\x0e\x12\f/v1/accounts\x90\x02\x01\x12\x7f\n" +
@@ -3471,7 +4103,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x13ListValuationTotals\x12-.openfief.views.v1.ListValuationTotalsRequest\x1a..openfief.views.v1.ListValuationTotalsResponse\"\x19\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/valuations\x90\x02\x01\x12\x9b\x01\n" +
 	"\x15ListValuationStatuses\x12/.openfief.views.v1.ListValuationStatusesRequest\x1a0.openfief.views.v1.ListValuationStatusesResponse\"\x1f\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/valuation-status\x90\x02\x01\x12}\n" +
 	"\rGetAllocation\x12'.openfief.views.v1.GetAllocationRequest\x1a(.openfief.views.v1.GetAllocationResponse\"\x19\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/allocation\x90\x02\x01\x12\x81\x01\n" +
-	"\x0eGetPerformance\x12(.openfief.views.v1.GetPerformanceRequest\x1a).openfief.views.v1.GetPerformanceResponse\"\x1a\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/performance\x90\x02\x01B\xd3\x01\n" +
+	"\x0eGetPerformance\x12(.openfief.views.v1.GetPerformanceRequest\x1a).openfief.views.v1.GetPerformanceResponse\"\x1a\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/performance\x90\x02\x01\x12\x8e\x01\n" +
+	"\x11GetModelPortfolio\x12+.openfief.views.v1.GetModelPortfolioRequest\x1a,.openfief.views.v1.GetModelPortfolioResponse\"\x1e\x82\xd3\xe4\x93\x02\x15\x12\x13/v1/model-portfolio\x90\x02\x01B\xd3\x01\n" +
 	"\x15com.openfief.views.v1B\x10ReadServiceProtoP\x01ZBgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1;viewsv1\xa2\x02\x03OVX\xaa\x02\x11Openfief.Views.V1\xca\x02\x11Openfief\\Views\\V1\xe2\x02\x1dOpenfief\\Views\\V1\\GPBMetadata\xea\x02\x13Openfief::Views::V1b\x06proto3"
 
 var (
@@ -3486,8 +4119,8 @@ func file_openfief_views_v1_read_service_proto_rawDescGZIP() []byte {
 	return file_openfief_views_v1_read_service_proto_rawDescData
 }
 
-var file_openfief_views_v1_read_service_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
-var file_openfief_views_v1_read_service_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
+var file_openfief_views_v1_read_service_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
+var file_openfief_views_v1_read_service_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
 var file_openfief_views_v1_read_service_proto_goTypes = []any{
 	(SleeveRole)(0),                       // 0: openfief.views.v1.SleeveRole
 	(BookKind)(0),                         // 1: openfief.views.v1.BookKind
@@ -3496,134 +4129,153 @@ var file_openfief_views_v1_read_service_proto_goTypes = []any{
 	(ValuationBasis)(0),                   // 4: openfief.views.v1.ValuationBasis
 	(AllocationDimension)(0),              // 5: openfief.views.v1.AllocationDimension
 	(PerformanceGap)(0),                   // 6: openfief.views.v1.PerformanceGap
-	(*Money)(nil),                         // 7: openfief.views.v1.Money
-	(*Instrument)(nil),                    // 8: openfief.views.v1.Instrument
-	(*Sleeve)(nil),                        // 9: openfief.views.v1.Sleeve
-	(*Account)(nil),                       // 10: openfief.views.v1.Account
-	(*Book)(nil),                          // 11: openfief.views.v1.Book
-	(*Posting)(nil),                       // 12: openfief.views.v1.Posting
-	(*Transaction)(nil),                   // 13: openfief.views.v1.Transaction
-	(*Holding)(nil),                       // 14: openfief.views.v1.Holding
-	(*Lot)(nil),                           // 15: openfief.views.v1.Lot
-	(*AssertionCheck)(nil),                // 16: openfief.views.v1.AssertionCheck
-	(*Valuation)(nil),                     // 17: openfief.views.v1.Valuation
-	(*DateTotal)(nil),                     // 18: openfief.views.v1.DateTotal
-	(*ValuationStatus)(nil),               // 19: openfief.views.v1.ValuationStatus
-	(*AllocationGroup)(nil),               // 20: openfief.views.v1.AllocationGroup
-	(*UnvaluedHolding)(nil),               // 21: openfief.views.v1.UnvaluedHolding
-	(*ListSleevesRequest)(nil),            // 22: openfief.views.v1.ListSleevesRequest
-	(*ListSleevesResponse)(nil),           // 23: openfief.views.v1.ListSleevesResponse
-	(*ListAccountsRequest)(nil),           // 24: openfief.views.v1.ListAccountsRequest
-	(*ListAccountsResponse)(nil),          // 25: openfief.views.v1.ListAccountsResponse
-	(*GetAccountRequest)(nil),             // 26: openfief.views.v1.GetAccountRequest
-	(*GetAccountResponse)(nil),            // 27: openfief.views.v1.GetAccountResponse
-	(*ListTransactionsRequest)(nil),       // 28: openfief.views.v1.ListTransactionsRequest
-	(*ListTransactionsResponse)(nil),      // 29: openfief.views.v1.ListTransactionsResponse
-	(*ListHoldingsRequest)(nil),           // 30: openfief.views.v1.ListHoldingsRequest
-	(*ListHoldingsResponse)(nil),          // 31: openfief.views.v1.ListHoldingsResponse
-	(*ListLotsRequest)(nil),               // 32: openfief.views.v1.ListLotsRequest
-	(*ListLotsResponse)(nil),              // 33: openfief.views.v1.ListLotsResponse
-	(*ListCashRequest)(nil),               // 34: openfief.views.v1.ListCashRequest
-	(*ListCashResponse)(nil),              // 35: openfief.views.v1.ListCashResponse
-	(*ListAssertionChecksRequest)(nil),    // 36: openfief.views.v1.ListAssertionChecksRequest
-	(*ListAssertionChecksResponse)(nil),   // 37: openfief.views.v1.ListAssertionChecksResponse
-	(*ListAccountValuationsRequest)(nil),  // 38: openfief.views.v1.ListAccountValuationsRequest
-	(*ListAccountValuationsResponse)(nil), // 39: openfief.views.v1.ListAccountValuationsResponse
-	(*GetValuationStatusRequest)(nil),     // 40: openfief.views.v1.GetValuationStatusRequest
-	(*GetValuationStatusResponse)(nil),    // 41: openfief.views.v1.GetValuationStatusResponse
-	(*ListValuationTotalsRequest)(nil),    // 42: openfief.views.v1.ListValuationTotalsRequest
-	(*ListValuationTotalsResponse)(nil),   // 43: openfief.views.v1.ListValuationTotalsResponse
-	(*ListValuationStatusesRequest)(nil),  // 44: openfief.views.v1.ListValuationStatusesRequest
-	(*ListValuationStatusesResponse)(nil), // 45: openfief.views.v1.ListValuationStatusesResponse
-	(*GetAllocationRequest)(nil),          // 46: openfief.views.v1.GetAllocationRequest
-	(*GetAllocationResponse)(nil),         // 47: openfief.views.v1.GetAllocationResponse
-	(*PerformanceDay)(nil),                // 48: openfief.views.v1.PerformanceDay
-	(*Transfer)(nil),                      // 49: openfief.views.v1.Transfer
-	(*GetPerformanceRequest)(nil),         // 50: openfief.views.v1.GetPerformanceRequest
-	(*GetPerformanceResponse)(nil),        // 51: openfief.views.v1.GetPerformanceResponse
+	(ModelTargetKind)(0),                  // 7: openfief.views.v1.ModelTargetKind
+	(ModelHistoryGap)(0),                  // 8: openfief.views.v1.ModelHistoryGap
+	(*Money)(nil),                         // 9: openfief.views.v1.Money
+	(*Instrument)(nil),                    // 10: openfief.views.v1.Instrument
+	(*Sleeve)(nil),                        // 11: openfief.views.v1.Sleeve
+	(*Account)(nil),                       // 12: openfief.views.v1.Account
+	(*Book)(nil),                          // 13: openfief.views.v1.Book
+	(*Posting)(nil),                       // 14: openfief.views.v1.Posting
+	(*Transaction)(nil),                   // 15: openfief.views.v1.Transaction
+	(*Holding)(nil),                       // 16: openfief.views.v1.Holding
+	(*Lot)(nil),                           // 17: openfief.views.v1.Lot
+	(*AssertionCheck)(nil),                // 18: openfief.views.v1.AssertionCheck
+	(*Valuation)(nil),                     // 19: openfief.views.v1.Valuation
+	(*DateTotal)(nil),                     // 20: openfief.views.v1.DateTotal
+	(*ValuationStatus)(nil),               // 21: openfief.views.v1.ValuationStatus
+	(*AllocationGroup)(nil),               // 22: openfief.views.v1.AllocationGroup
+	(*UnvaluedHolding)(nil),               // 23: openfief.views.v1.UnvaluedHolding
+	(*ListSleevesRequest)(nil),            // 24: openfief.views.v1.ListSleevesRequest
+	(*ListSleevesResponse)(nil),           // 25: openfief.views.v1.ListSleevesResponse
+	(*ListAccountsRequest)(nil),           // 26: openfief.views.v1.ListAccountsRequest
+	(*ListAccountsResponse)(nil),          // 27: openfief.views.v1.ListAccountsResponse
+	(*GetAccountRequest)(nil),             // 28: openfief.views.v1.GetAccountRequest
+	(*GetAccountResponse)(nil),            // 29: openfief.views.v1.GetAccountResponse
+	(*ListTransactionsRequest)(nil),       // 30: openfief.views.v1.ListTransactionsRequest
+	(*ListTransactionsResponse)(nil),      // 31: openfief.views.v1.ListTransactionsResponse
+	(*ListHoldingsRequest)(nil),           // 32: openfief.views.v1.ListHoldingsRequest
+	(*ListHoldingsResponse)(nil),          // 33: openfief.views.v1.ListHoldingsResponse
+	(*ListLotsRequest)(nil),               // 34: openfief.views.v1.ListLotsRequest
+	(*ListLotsResponse)(nil),              // 35: openfief.views.v1.ListLotsResponse
+	(*ListCashRequest)(nil),               // 36: openfief.views.v1.ListCashRequest
+	(*ListCashResponse)(nil),              // 37: openfief.views.v1.ListCashResponse
+	(*ListAssertionChecksRequest)(nil),    // 38: openfief.views.v1.ListAssertionChecksRequest
+	(*ListAssertionChecksResponse)(nil),   // 39: openfief.views.v1.ListAssertionChecksResponse
+	(*ListAccountValuationsRequest)(nil),  // 40: openfief.views.v1.ListAccountValuationsRequest
+	(*ListAccountValuationsResponse)(nil), // 41: openfief.views.v1.ListAccountValuationsResponse
+	(*GetValuationStatusRequest)(nil),     // 42: openfief.views.v1.GetValuationStatusRequest
+	(*GetValuationStatusResponse)(nil),    // 43: openfief.views.v1.GetValuationStatusResponse
+	(*ListValuationTotalsRequest)(nil),    // 44: openfief.views.v1.ListValuationTotalsRequest
+	(*ListValuationTotalsResponse)(nil),   // 45: openfief.views.v1.ListValuationTotalsResponse
+	(*ListValuationStatusesRequest)(nil),  // 46: openfief.views.v1.ListValuationStatusesRequest
+	(*ListValuationStatusesResponse)(nil), // 47: openfief.views.v1.ListValuationStatusesResponse
+	(*GetAllocationRequest)(nil),          // 48: openfief.views.v1.GetAllocationRequest
+	(*GetAllocationResponse)(nil),         // 49: openfief.views.v1.GetAllocationResponse
+	(*PerformanceDay)(nil),                // 50: openfief.views.v1.PerformanceDay
+	(*Transfer)(nil),                      // 51: openfief.views.v1.Transfer
+	(*GetPerformanceRequest)(nil),         // 52: openfief.views.v1.GetPerformanceRequest
+	(*GetPerformanceResponse)(nil),        // 53: openfief.views.v1.GetPerformanceResponse
+	(*ModelTarget)(nil),                   // 54: openfief.views.v1.ModelTarget
+	(*Drawdown)(nil),                      // 55: openfief.views.v1.Drawdown
+	(*ModelTargetHistory)(nil),            // 56: openfief.views.v1.ModelTargetHistory
+	(*BacktestDay)(nil),                   // 57: openfief.views.v1.BacktestDay
+	(*GetModelPortfolioRequest)(nil),      // 58: openfief.views.v1.GetModelPortfolioRequest
+	(*GetModelPortfolioResponse)(nil),     // 59: openfief.views.v1.GetModelPortfolioResponse
 }
 var file_openfief_views_v1_read_service_proto_depIdxs = []int32{
 	0,  // 0: openfief.views.v1.Sleeve.role:type_name -> openfief.views.v1.SleeveRole
 	1,  // 1: openfief.views.v1.Book.kind:type_name -> openfief.views.v1.BookKind
-	8,  // 2: openfief.views.v1.Book.instrument:type_name -> openfief.views.v1.Instrument
-	11, // 3: openfief.views.v1.Posting.book:type_name -> openfief.views.v1.Book
-	7,  // 4: openfief.views.v1.Posting.amount:type_name -> openfief.views.v1.Money
+	10, // 2: openfief.views.v1.Book.instrument:type_name -> openfief.views.v1.Instrument
+	13, // 3: openfief.views.v1.Posting.book:type_name -> openfief.views.v1.Book
+	9,  // 4: openfief.views.v1.Posting.amount:type_name -> openfief.views.v1.Money
 	2,  // 5: openfief.views.v1.Transaction.kind:type_name -> openfief.views.v1.TransactionKind
-	12, // 6: openfief.views.v1.Transaction.postings:type_name -> openfief.views.v1.Posting
-	8,  // 7: openfief.views.v1.Holding.instrument:type_name -> openfief.views.v1.Instrument
-	8,  // 8: openfief.views.v1.Lot.instrument:type_name -> openfief.views.v1.Instrument
-	7,  // 9: openfief.views.v1.Lot.cost:type_name -> openfief.views.v1.Money
-	11, // 10: openfief.views.v1.AssertionCheck.book:type_name -> openfief.views.v1.Book
+	14, // 6: openfief.views.v1.Transaction.postings:type_name -> openfief.views.v1.Posting
+	10, // 7: openfief.views.v1.Holding.instrument:type_name -> openfief.views.v1.Instrument
+	10, // 8: openfief.views.v1.Lot.instrument:type_name -> openfief.views.v1.Instrument
+	9,  // 9: openfief.views.v1.Lot.cost:type_name -> openfief.views.v1.Money
+	13, // 10: openfief.views.v1.AssertionCheck.book:type_name -> openfief.views.v1.Book
 	3,  // 11: openfief.views.v1.AssertionCheck.status:type_name -> openfief.views.v1.AssertionStatus
-	8,  // 12: openfief.views.v1.Valuation.instrument:type_name -> openfief.views.v1.Instrument
+	10, // 12: openfief.views.v1.Valuation.instrument:type_name -> openfief.views.v1.Instrument
 	4,  // 13: openfief.views.v1.Valuation.basis:type_name -> openfief.views.v1.ValuationBasis
-	7,  // 14: openfief.views.v1.Valuation.value:type_name -> openfief.views.v1.Money
-	7,  // 15: openfief.views.v1.Valuation.value_reporting:type_name -> openfief.views.v1.Money
-	7,  // 16: openfief.views.v1.DateTotal.value_reporting:type_name -> openfief.views.v1.Money
-	7,  // 17: openfief.views.v1.DateTotal.by_currency:type_name -> openfief.views.v1.Money
-	7,  // 18: openfief.views.v1.AllocationGroup.value_reporting:type_name -> openfief.views.v1.Money
-	8,  // 19: openfief.views.v1.UnvaluedHolding.instrument:type_name -> openfief.views.v1.Instrument
-	9,  // 20: openfief.views.v1.ListSleevesResponse.sleeves:type_name -> openfief.views.v1.Sleeve
-	10, // 21: openfief.views.v1.ListAccountsResponse.accounts:type_name -> openfief.views.v1.Account
-	10, // 22: openfief.views.v1.GetAccountResponse.account:type_name -> openfief.views.v1.Account
-	13, // 23: openfief.views.v1.ListTransactionsResponse.transactions:type_name -> openfief.views.v1.Transaction
-	14, // 24: openfief.views.v1.ListHoldingsResponse.holdings:type_name -> openfief.views.v1.Holding
-	15, // 25: openfief.views.v1.ListLotsResponse.lots:type_name -> openfief.views.v1.Lot
-	7,  // 26: openfief.views.v1.ListCashResponse.balances:type_name -> openfief.views.v1.Money
+	9,  // 14: openfief.views.v1.Valuation.value:type_name -> openfief.views.v1.Money
+	9,  // 15: openfief.views.v1.Valuation.value_reporting:type_name -> openfief.views.v1.Money
+	9,  // 16: openfief.views.v1.DateTotal.value_reporting:type_name -> openfief.views.v1.Money
+	9,  // 17: openfief.views.v1.DateTotal.by_currency:type_name -> openfief.views.v1.Money
+	9,  // 18: openfief.views.v1.AllocationGroup.value_reporting:type_name -> openfief.views.v1.Money
+	10, // 19: openfief.views.v1.UnvaluedHolding.instrument:type_name -> openfief.views.v1.Instrument
+	11, // 20: openfief.views.v1.ListSleevesResponse.sleeves:type_name -> openfief.views.v1.Sleeve
+	12, // 21: openfief.views.v1.ListAccountsResponse.accounts:type_name -> openfief.views.v1.Account
+	12, // 22: openfief.views.v1.GetAccountResponse.account:type_name -> openfief.views.v1.Account
+	15, // 23: openfief.views.v1.ListTransactionsResponse.transactions:type_name -> openfief.views.v1.Transaction
+	16, // 24: openfief.views.v1.ListHoldingsResponse.holdings:type_name -> openfief.views.v1.Holding
+	17, // 25: openfief.views.v1.ListLotsResponse.lots:type_name -> openfief.views.v1.Lot
+	9,  // 26: openfief.views.v1.ListCashResponse.balances:type_name -> openfief.views.v1.Money
 	3,  // 27: openfief.views.v1.ListAssertionChecksRequest.status:type_name -> openfief.views.v1.AssertionStatus
-	16, // 28: openfief.views.v1.ListAssertionChecksResponse.checks:type_name -> openfief.views.v1.AssertionCheck
-	17, // 29: openfief.views.v1.ListAccountValuationsResponse.valuations:type_name -> openfief.views.v1.Valuation
-	18, // 30: openfief.views.v1.ListAccountValuationsResponse.totals:type_name -> openfief.views.v1.DateTotal
-	19, // 31: openfief.views.v1.GetValuationStatusResponse.status:type_name -> openfief.views.v1.ValuationStatus
-	18, // 32: openfief.views.v1.ListValuationTotalsResponse.totals:type_name -> openfief.views.v1.DateTotal
-	19, // 33: openfief.views.v1.ListValuationStatusesResponse.statuses:type_name -> openfief.views.v1.ValuationStatus
+	18, // 28: openfief.views.v1.ListAssertionChecksResponse.checks:type_name -> openfief.views.v1.AssertionCheck
+	19, // 29: openfief.views.v1.ListAccountValuationsResponse.valuations:type_name -> openfief.views.v1.Valuation
+	20, // 30: openfief.views.v1.ListAccountValuationsResponse.totals:type_name -> openfief.views.v1.DateTotal
+	21, // 31: openfief.views.v1.GetValuationStatusResponse.status:type_name -> openfief.views.v1.ValuationStatus
+	20, // 32: openfief.views.v1.ListValuationTotalsResponse.totals:type_name -> openfief.views.v1.DateTotal
+	21, // 33: openfief.views.v1.ListValuationStatusesResponse.statuses:type_name -> openfief.views.v1.ValuationStatus
 	5,  // 34: openfief.views.v1.GetAllocationRequest.by:type_name -> openfief.views.v1.AllocationDimension
 	5,  // 35: openfief.views.v1.GetAllocationResponse.by:type_name -> openfief.views.v1.AllocationDimension
-	7,  // 36: openfief.views.v1.GetAllocationResponse.total_reporting:type_name -> openfief.views.v1.Money
-	20, // 37: openfief.views.v1.GetAllocationResponse.groups:type_name -> openfief.views.v1.AllocationGroup
-	21, // 38: openfief.views.v1.GetAllocationResponse.unvalued:type_name -> openfief.views.v1.UnvaluedHolding
-	7,  // 39: openfief.views.v1.PerformanceDay.value_reporting:type_name -> openfief.views.v1.Money
-	7,  // 40: openfief.views.v1.PerformanceDay.holdings_reporting:type_name -> openfief.views.v1.Money
-	7,  // 41: openfief.views.v1.PerformanceDay.cash_reporting:type_name -> openfief.views.v1.Money
-	7,  // 42: openfief.views.v1.PerformanceDay.in_transit_reporting:type_name -> openfief.views.v1.Money
-	7,  // 43: openfief.views.v1.PerformanceDay.flow_reporting:type_name -> openfief.views.v1.Money
-	7,  // 44: openfief.views.v1.Transfer.amount:type_name -> openfief.views.v1.Money
-	48, // 45: openfief.views.v1.GetPerformanceResponse.days:type_name -> openfief.views.v1.PerformanceDay
+	9,  // 36: openfief.views.v1.GetAllocationResponse.total_reporting:type_name -> openfief.views.v1.Money
+	22, // 37: openfief.views.v1.GetAllocationResponse.groups:type_name -> openfief.views.v1.AllocationGroup
+	23, // 38: openfief.views.v1.GetAllocationResponse.unvalued:type_name -> openfief.views.v1.UnvaluedHolding
+	9,  // 39: openfief.views.v1.PerformanceDay.value_reporting:type_name -> openfief.views.v1.Money
+	9,  // 40: openfief.views.v1.PerformanceDay.holdings_reporting:type_name -> openfief.views.v1.Money
+	9,  // 41: openfief.views.v1.PerformanceDay.cash_reporting:type_name -> openfief.views.v1.Money
+	9,  // 42: openfief.views.v1.PerformanceDay.in_transit_reporting:type_name -> openfief.views.v1.Money
+	9,  // 43: openfief.views.v1.PerformanceDay.flow_reporting:type_name -> openfief.views.v1.Money
+	9,  // 44: openfief.views.v1.Transfer.amount:type_name -> openfief.views.v1.Money
+	50, // 45: openfief.views.v1.GetPerformanceResponse.days:type_name -> openfief.views.v1.PerformanceDay
 	6,  // 46: openfief.views.v1.GetPerformanceResponse.gap:type_name -> openfief.views.v1.PerformanceGap
-	49, // 47: openfief.views.v1.GetPerformanceResponse.transfers:type_name -> openfief.views.v1.Transfer
-	22, // 48: openfief.views.v1.ReadService.ListSleeves:input_type -> openfief.views.v1.ListSleevesRequest
-	24, // 49: openfief.views.v1.ReadService.ListAccounts:input_type -> openfief.views.v1.ListAccountsRequest
-	26, // 50: openfief.views.v1.ReadService.GetAccount:input_type -> openfief.views.v1.GetAccountRequest
-	28, // 51: openfief.views.v1.ReadService.ListTransactions:input_type -> openfief.views.v1.ListTransactionsRequest
-	30, // 52: openfief.views.v1.ReadService.ListHoldings:input_type -> openfief.views.v1.ListHoldingsRequest
-	32, // 53: openfief.views.v1.ReadService.ListLots:input_type -> openfief.views.v1.ListLotsRequest
-	34, // 54: openfief.views.v1.ReadService.ListCash:input_type -> openfief.views.v1.ListCashRequest
-	36, // 55: openfief.views.v1.ReadService.ListAssertionChecks:input_type -> openfief.views.v1.ListAssertionChecksRequest
-	38, // 56: openfief.views.v1.ReadService.ListAccountValuations:input_type -> openfief.views.v1.ListAccountValuationsRequest
-	40, // 57: openfief.views.v1.ReadService.GetValuationStatus:input_type -> openfief.views.v1.GetValuationStatusRequest
-	42, // 58: openfief.views.v1.ReadService.ListValuationTotals:input_type -> openfief.views.v1.ListValuationTotalsRequest
-	44, // 59: openfief.views.v1.ReadService.ListValuationStatuses:input_type -> openfief.views.v1.ListValuationStatusesRequest
-	46, // 60: openfief.views.v1.ReadService.GetAllocation:input_type -> openfief.views.v1.GetAllocationRequest
-	50, // 61: openfief.views.v1.ReadService.GetPerformance:input_type -> openfief.views.v1.GetPerformanceRequest
-	23, // 62: openfief.views.v1.ReadService.ListSleeves:output_type -> openfief.views.v1.ListSleevesResponse
-	25, // 63: openfief.views.v1.ReadService.ListAccounts:output_type -> openfief.views.v1.ListAccountsResponse
-	27, // 64: openfief.views.v1.ReadService.GetAccount:output_type -> openfief.views.v1.GetAccountResponse
-	29, // 65: openfief.views.v1.ReadService.ListTransactions:output_type -> openfief.views.v1.ListTransactionsResponse
-	31, // 66: openfief.views.v1.ReadService.ListHoldings:output_type -> openfief.views.v1.ListHoldingsResponse
-	33, // 67: openfief.views.v1.ReadService.ListLots:output_type -> openfief.views.v1.ListLotsResponse
-	35, // 68: openfief.views.v1.ReadService.ListCash:output_type -> openfief.views.v1.ListCashResponse
-	37, // 69: openfief.views.v1.ReadService.ListAssertionChecks:output_type -> openfief.views.v1.ListAssertionChecksResponse
-	39, // 70: openfief.views.v1.ReadService.ListAccountValuations:output_type -> openfief.views.v1.ListAccountValuationsResponse
-	41, // 71: openfief.views.v1.ReadService.GetValuationStatus:output_type -> openfief.views.v1.GetValuationStatusResponse
-	43, // 72: openfief.views.v1.ReadService.ListValuationTotals:output_type -> openfief.views.v1.ListValuationTotalsResponse
-	45, // 73: openfief.views.v1.ReadService.ListValuationStatuses:output_type -> openfief.views.v1.ListValuationStatusesResponse
-	47, // 74: openfief.views.v1.ReadService.GetAllocation:output_type -> openfief.views.v1.GetAllocationResponse
-	51, // 75: openfief.views.v1.ReadService.GetPerformance:output_type -> openfief.views.v1.GetPerformanceResponse
-	62, // [62:76] is the sub-list for method output_type
-	48, // [48:62] is the sub-list for method input_type
-	48, // [48:48] is the sub-list for extension type_name
-	48, // [48:48] is the sub-list for extension extendee
-	0,  // [0:48] is the sub-list for field type_name
+	51, // 47: openfief.views.v1.GetPerformanceResponse.transfers:type_name -> openfief.views.v1.Transfer
+	7,  // 48: openfief.views.v1.ModelTarget.kind:type_name -> openfief.views.v1.ModelTargetKind
+	10, // 49: openfief.views.v1.ModelTarget.instrument:type_name -> openfief.views.v1.Instrument
+	54, // 50: openfief.views.v1.ModelTargetHistory.target:type_name -> openfief.views.v1.ModelTarget
+	8,  // 51: openfief.views.v1.ModelTargetHistory.gap:type_name -> openfief.views.v1.ModelHistoryGap
+	55, // 52: openfief.views.v1.ModelTargetHistory.drawdown:type_name -> openfief.views.v1.Drawdown
+	54, // 53: openfief.views.v1.GetModelPortfolioResponse.targets:type_name -> openfief.views.v1.ModelTarget
+	57, // 54: openfief.views.v1.GetModelPortfolioResponse.days:type_name -> openfief.views.v1.BacktestDay
+	55, // 55: openfief.views.v1.GetModelPortfolioResponse.drawdown:type_name -> openfief.views.v1.Drawdown
+	56, // 56: openfief.views.v1.GetModelPortfolioResponse.target_histories:type_name -> openfief.views.v1.ModelTargetHistory
+	24, // 57: openfief.views.v1.ReadService.ListSleeves:input_type -> openfief.views.v1.ListSleevesRequest
+	26, // 58: openfief.views.v1.ReadService.ListAccounts:input_type -> openfief.views.v1.ListAccountsRequest
+	28, // 59: openfief.views.v1.ReadService.GetAccount:input_type -> openfief.views.v1.GetAccountRequest
+	30, // 60: openfief.views.v1.ReadService.ListTransactions:input_type -> openfief.views.v1.ListTransactionsRequest
+	32, // 61: openfief.views.v1.ReadService.ListHoldings:input_type -> openfief.views.v1.ListHoldingsRequest
+	34, // 62: openfief.views.v1.ReadService.ListLots:input_type -> openfief.views.v1.ListLotsRequest
+	36, // 63: openfief.views.v1.ReadService.ListCash:input_type -> openfief.views.v1.ListCashRequest
+	38, // 64: openfief.views.v1.ReadService.ListAssertionChecks:input_type -> openfief.views.v1.ListAssertionChecksRequest
+	40, // 65: openfief.views.v1.ReadService.ListAccountValuations:input_type -> openfief.views.v1.ListAccountValuationsRequest
+	42, // 66: openfief.views.v1.ReadService.GetValuationStatus:input_type -> openfief.views.v1.GetValuationStatusRequest
+	44, // 67: openfief.views.v1.ReadService.ListValuationTotals:input_type -> openfief.views.v1.ListValuationTotalsRequest
+	46, // 68: openfief.views.v1.ReadService.ListValuationStatuses:input_type -> openfief.views.v1.ListValuationStatusesRequest
+	48, // 69: openfief.views.v1.ReadService.GetAllocation:input_type -> openfief.views.v1.GetAllocationRequest
+	52, // 70: openfief.views.v1.ReadService.GetPerformance:input_type -> openfief.views.v1.GetPerformanceRequest
+	58, // 71: openfief.views.v1.ReadService.GetModelPortfolio:input_type -> openfief.views.v1.GetModelPortfolioRequest
+	25, // 72: openfief.views.v1.ReadService.ListSleeves:output_type -> openfief.views.v1.ListSleevesResponse
+	27, // 73: openfief.views.v1.ReadService.ListAccounts:output_type -> openfief.views.v1.ListAccountsResponse
+	29, // 74: openfief.views.v1.ReadService.GetAccount:output_type -> openfief.views.v1.GetAccountResponse
+	31, // 75: openfief.views.v1.ReadService.ListTransactions:output_type -> openfief.views.v1.ListTransactionsResponse
+	33, // 76: openfief.views.v1.ReadService.ListHoldings:output_type -> openfief.views.v1.ListHoldingsResponse
+	35, // 77: openfief.views.v1.ReadService.ListLots:output_type -> openfief.views.v1.ListLotsResponse
+	37, // 78: openfief.views.v1.ReadService.ListCash:output_type -> openfief.views.v1.ListCashResponse
+	39, // 79: openfief.views.v1.ReadService.ListAssertionChecks:output_type -> openfief.views.v1.ListAssertionChecksResponse
+	41, // 80: openfief.views.v1.ReadService.ListAccountValuations:output_type -> openfief.views.v1.ListAccountValuationsResponse
+	43, // 81: openfief.views.v1.ReadService.GetValuationStatus:output_type -> openfief.views.v1.GetValuationStatusResponse
+	45, // 82: openfief.views.v1.ReadService.ListValuationTotals:output_type -> openfief.views.v1.ListValuationTotalsResponse
+	47, // 83: openfief.views.v1.ReadService.ListValuationStatuses:output_type -> openfief.views.v1.ListValuationStatusesResponse
+	49, // 84: openfief.views.v1.ReadService.GetAllocation:output_type -> openfief.views.v1.GetAllocationResponse
+	53, // 85: openfief.views.v1.ReadService.GetPerformance:output_type -> openfief.views.v1.GetPerformanceResponse
+	59, // 86: openfief.views.v1.ReadService.GetModelPortfolio:output_type -> openfief.views.v1.GetModelPortfolioResponse
+	72, // [72:87] is the sub-list for method output_type
+	57, // [57:72] is the sub-list for method input_type
+	57, // [57:57] is the sub-list for extension type_name
+	57, // [57:57] is the sub-list for extension extendee
+	0,  // [0:57] is the sub-list for field type_name
 }
 
 func init() { file_openfief_views_v1_read_service_proto_init() }
@@ -3636,8 +4288,8 @@ func file_openfief_views_v1_read_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_views_v1_read_service_proto_rawDesc), len(file_openfief_views_v1_read_service_proto_rawDesc)),
-			NumEnums:      7,
-			NumMessages:   45,
+			NumEnums:      9,
+			NumMessages:   51,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

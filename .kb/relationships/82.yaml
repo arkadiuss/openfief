@@ -230,3 +230,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad5af5142a0d
+  - type: executable_for
+    from: SYM-core-test-helper-owner-session
+    to: TEST-core-model-service
+    created_at: 2026-10-28T23:15:49.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1faf03483370
+  - type: implements
+    from: SYM-portfolio-pg-migrations-func
+    to: REQ-portfolio-model-store
+    created_at: 2026-10-28T23:21:38.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-418e5ac1f6ef
+  - type: covered_by
+    from: SYM-portfolio-pg-migrations-func
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:21:38.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-126b7e2af52d

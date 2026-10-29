@@ -11,11 +11,6 @@ import (
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
-// historyDays is how far back the value-over-time chart asks for: 3650 of
-// the 3700 days one ListValuationTotals call may span. The series starts at
-// the first date with stored valuations, go-live (D-23), when that is later.
-const historyDays = 3650
-
 // dateParam is the query parameter that picks the date a page shows.
 const dateParam = "date"
 
@@ -60,23 +55,13 @@ func (a *allocationView) FragmentLink(d dimension) string {
 	return "/allocation?" + url.Values{"by": {d.Key}, dateParam: {a.Date}}.Encode()
 }
 
-// historyView is the value-over-time chart (D-30): the portfolio's stored
-// holding valuations per date in the reporting currency.
-type historyView struct {
-	From     string
-	To       string
-	Currency string
-	Points   int
-	Chart    string
-}
-
 // overviewData is what the overview shows.
 type overviewData struct {
 	Date       string
 	Accounts   []accountRow
 	Flagged    int
 	Allocation *allocationView
-	History    historyView
+	History    performanceView
 }
 
 // chartData is the data a chart canvas carries for app.js: amounts stay
@@ -87,6 +72,8 @@ type chartData struct {
 	Currency string   `json:"currency"`
 	Labels   []string `json:"labels"`
 	Values   []string `json:"values"`
+	// Series are more lines on a line chart, such as the model portfolio's.
+	Series []chartSeries `json:"series,omitempty"`
 }
 
 // encode returns the chart data as JSON for a data attribute.
@@ -139,24 +126,10 @@ func buildAllocation(resp *viewsv1.GetAllocationResponse, d dimension) *allocati
 	return v
 }
 
-// buildHistory turns ListValuationTotals' answer into the value-over-time
-// chart: one point per date with stored valuations.
-func buildHistory(resp *viewsv1.ListValuationTotalsResponse) historyView {
-	chart := chartData{Kind: "line", Label: "Holdings value", Currency: resp.GetReportingCurrency()}
-	for _, t := range resp.GetTotals() {
-		chart.Labels = append(chart.Labels, t.GetDate())
-		chart.Values = append(chart.Values, t.GetValueReporting().GetAmount())
-	}
-	v := historyView{Currency: resp.GetReportingCurrency(), Points: len(chart.Labels), Chart: chart.encode()}
-	if v.Points > 0 {
-		v.From, v.To = chart.Labels[0], chart.Labels[v.Points-1]
-	}
-	return v
-}
-
 // overview shows the whole portfolio on one date: the allocation's total,
 // every account with its valuation status, the allocation chart and the
-// value over time.
+// value over time as the time-weighted return, with the model portfolio
+// while it is on.
 func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) {
 	ctx := r.Context()
 	accounts, err := s.read.ListAccounts(ctx, bearer(&viewsv1.ListAccountsRequest{}, sess))
@@ -179,8 +152,8 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		s.coreFailed(w, r, "GetAllocation", err)
 		return
 	}
-	if data.History, err = s.history(r, sess, date); err != nil {
-		s.coreFailed(w, r, "ListValuationTotals", err)
+	if data.History, err = s.performance(r, sess, date); err != nil {
+		s.coreFailed(w, r, "GetPerformance", err)
 		return
 	}
 	if data.Accounts, err = s.accountRows(r, sess, date, accounts.Msg.GetAccounts(), statuses.Msg.GetStatuses()); err != nil {
@@ -200,17 +173,6 @@ func (s *server) allocation(r *http.Request, sess session, date kernel.Date, d d
 		return nil, fmt.Errorf("GetAllocation: %w", err)
 	}
 	return buildAllocation(resp.Msg, d), nil
-}
-
-// history reads the portfolio's value per date up to date.
-func (s *server) history(r *http.Request, sess session, date kernel.Date) (historyView, error) {
-	resp, err := s.read.ListValuationTotals(r.Context(), bearer(&viewsv1.ListValuationTotalsRequest{
-		From: date.AddDays(-historyDays).String(), To: date.String(),
-	}, sess))
-	if err != nil {
-		return historyView{}, fmt.Errorf("ListValuationTotals: %w", err)
-	}
-	return buildHistory(resp.Msg), nil
 }
 
 // accountRows reads, for every account, its holdings' value on date and

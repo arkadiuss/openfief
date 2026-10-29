@@ -265,3 +265,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0218d2dd04b0
+  - type: executable_for
+    from: SYM-portfolio-pg-test-helper-admin-exec
+    to: TEST-portfolio-postgres
+    created_at: 2026-10-28T23:22:09.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-587a541d9268
+  - type: implements
+    from: SYM-views-pb-drawdown-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:43:03.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e26d92ed187b
+  - type: covered_by
+    from: SYM-views-pb-drawdown-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:43:03.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fc90bbd3bd8

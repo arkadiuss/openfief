@@ -230,3 +230,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed951897992f
+  - type: implements
+    from: SYM-views-pb-backtest-day-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:44:58.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cad624e573d6
+  - type: covered_by
+    from: SYM-views-pb-backtest-day-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:44:58.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb0313274c12

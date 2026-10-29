@@ -307,3 +307,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9eb0bf15cfc0
+  - type: verified_by
+    from: SCEN-portfolio-drawdown
+    to: TEST-portfolio-drawdown
+    created_at: 2026-10-28T22:11:29.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d9f5ddc9ce8
+  - type: verified_by
+    from: SCEN-portfolio-drawdown
+    to: TEST-portfolio-backtest-properties
+    created_at: 2026-10-28T22:11:29.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c7801a62fc9
+  - type: executable_for
+    from: SYM-portfolio-test-backtest
+    to: TEST-portfolio-backtest
+    created_at: 2026-10-28T22:22:07.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93f701c40b21
+  - type: implements
+    from: SYM-portfolio-pb-target-get-isin
+    to: REQ-portfolio-model-entry
+    created_at: 2026-10-28T23:23:31.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20aa3a09c3ff
+  - type: covered_by
+    from: SYM-portfolio-pb-target-get-isin
+    to: TEST-portfolio-connectapi
+    created_at: 2026-10-28T23:23:31.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e7f7ff1b826
+  - type: implements
+    from: SYM-views-pb-get-model-portfolio-response-get-target-histories
+    to: REQ-views-api-contract
+    created_at: 2026-10-28T23:47:28.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59cec10393d0
+  - type: covered_by
+    from: SYM-views-pb-get-model-portfolio-response-get-target-histories
+    to: TEST-views-connectapi-connect
+    created_at: 2026-10-28T23:47:28.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd6bf10f1cdf

@@ -286,3 +286,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92873e5922d9
+  - type: implements
+    from: SYM-ingest-connectrpc-index-level-from
+    to: REQ-ingest-index-levels
+    created_at: 2026-10-28T22:46:42.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a22d68d1af08
+  - type: covered_by
+    from: SYM-ingest-connectrpc-index-level-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-10-28T22:46:42.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a6446a396b2

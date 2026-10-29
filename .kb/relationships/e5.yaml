@@ -230,3 +230,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e407519efeb3
+  - type: implements
+    from: SYM-portfolio-target-kind-string
+    to: REQ-portfolio-model-targets
+    created_at: 2026-10-28T22:23:19.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab485e368e05
+  - type: covered_by
+    from: SYM-portfolio-target-kind-string
+    to: TEST-portfolio-model
+    created_at: 2026-10-28T22:23:19.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62f13f69a3eb

@@ -342,27 +342,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e3ed47acef3
-  - type: implements
-    from: SYM-ui-history-view
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:13.200Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8b14cdbe2927
-  - type: implements
-    from: SYM-ui-history-view
-    to: REQ-AUTO-718AA30AAFD0E6E8
-    created_at: 2026-10-28T19:54:13.232Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eec1e4fe5e9b
-  - type: covered_by
-    from: SYM-ui-history-view
-    to: TEST-ui-pages
-    created_at: 2026-10-28T19:54:13.250Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fb73d531f1ce
   - type: executable_for
     from: SYM-ui-test-helper-cookie-attrs
     to: TEST-ui-auth
