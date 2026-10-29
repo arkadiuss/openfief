@@ -116,6 +116,9 @@ type serveConfig struct {
 	EndOfDay  valuationpg.DailyAt
 	Workers   int
 	BondBasis valuation.Basis
+	// PriceCheckThreshold is the relative difference beyond which a price
+	// check is flagged (D-22).
+	PriceCheckThreshold kernel.Decimal
 	// EnsureDefaults stores the built-in sleeve kinds and sleeves at start.
 	EnsureDefaults  bool
 	ShutdownTimeout time.Duration
@@ -206,6 +209,8 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	eod := fs.String("end-of-day", defaultEndOfDay, "when the end-of-day revaluation runs, HH:MM")
 	fs.IntVar(&c.Workers, "workers", defaultWorkers, "revaluations that run at once (D-36)")
 	basis := fs.String("bond-basis", valuation.DefaultBondBasis.String(), "bond basis for totals: gross_accrued or net_if_redeemed (D-25)")
+	threshold := fs.String("price-check-threshold", valuation.DefaultPriceCheckThreshold().String(),
+		"relative difference beyond which a cross-check price is flagged, as a fraction: 0.01 is 1% (D-22)")
 	fs.BoolVar(&c.EnsureDefaults, "ensure-defaults", true, "store the built-in sleeve kinds and sleeves that are missing")
 	fs.DurationVar(&c.ShutdownTimeout, "shutdown-timeout", defaultShutdownTimeout, "how long requests and revaluations may drain on shutdown")
 	fs.BoolVar(&c.Connectors, "connectors", inCluster, "sync the cluster's connector instances (D-49); on by default in a cluster")
@@ -233,8 +238,8 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	if c.Reporting, err = kernel.ParseCurrency(*reporting); err != nil {
 		return serveConfig{}, fmt.Errorf("--reporting-currency: %w", err)
 	}
-	if c.BondBasis, err = parseBondBasis(*basis); err != nil {
-		return serveConfig{}, fmt.Errorf("--bond-basis: %w", err)
+	if flagErr := parseValuationFlags(&c, *basis, *threshold); flagErr != nil {
+		return serveConfig{}, flagErr
 	}
 	loc, err := time.LoadLocation(*zone)
 	if err != nil {
@@ -300,6 +305,32 @@ func parseBondBasis(s string) (valuation.Basis, error) {
 		return 0, fmt.Errorf("checking: %w", err)
 	}
 	return b, nil
+}
+
+// parseValuationFlags parses the bond basis and the price check threshold
+// into c.
+func parseValuationFlags(c *serveConfig, basis, threshold string) error {
+	var err error
+	if c.BondBasis, err = parseBondBasis(basis); err != nil {
+		return fmt.Errorf("--bond-basis: %w", err)
+	}
+	if c.PriceCheckThreshold, err = parseThreshold(threshold); err != nil {
+		return fmt.Errorf("--price-check-threshold: %w", err)
+	}
+	return nil
+}
+
+// parseThreshold parses a price check threshold: a fraction greater than 0
+// and less than 1.
+func parseThreshold(s string) (kernel.Decimal, error) {
+	d, err := kernel.ParseDecimal(s)
+	if err != nil {
+		return kernel.Decimal{}, fmt.Errorf("parsing: %w", err)
+	}
+	if _, err := valuation.CheckThreshold(d); err != nil {
+		return kernel.Decimal{}, fmt.Errorf("checking: %w", err)
+	}
+	return d, nil
 }
 
 // parseEndOfDay parses HH:MM in loc.

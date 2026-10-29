@@ -258,6 +258,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9abd57b4248
+  - type: implements
+    from: SYM-ingestv1-statement-header
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:18:20.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9c6a5ccde7
+  - type: covered_by
+    from: SYM-ingestv1-statement-header
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:18:21.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce7843763a0d
+  - type: implements
+    from: SYM-ingestv1-problem-proto-reflect
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:21:09.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54bc58dbef07
+  - type: covered_by
+    from: SYM-ingestv1-problem-proto-reflect
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:21:09.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e770c6fb13f2
   - type: verified_by
     from: SCEN-treasurybonds-index-sync
     to: TEST-treasurybonds-indices

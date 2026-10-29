@@ -307,3 +307,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb8aca2f8b0b
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-broken-reader-read
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:10:38.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4468632375c5
+  - type: executable_for
+    from: SYM-valuation-test-check-price
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:38:54.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4535a3fc14ae
+  - type: implements
+    from: SYM-views-pb-list-price-checks-response
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:09:55.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c54dfd738b49
+  - type: covered_by
+    from: SYM-views-pb-list-price-checks-response
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:09:55.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c41ffbc8321a

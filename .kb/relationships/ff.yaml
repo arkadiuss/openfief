@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0970a7b8c09
+  - type: constrains
+    from: REQ-valuation-cross-check-prices
+    to: FACT-SUBJECT-E5DC341E1B9CAE01
+    created_at: 2026-10-29T05:37:29.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21f44ddf5635
+  - type: requires_property
+    from: REQ-valuation-cross-check-prices
+    to: FACT-PROP-20DB0B11D299F55F
+    created_at: 2026-10-29T05:37:29.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfda24d2be74
+  - type: specified_by
+    from: REQ-valuation-cross-check-prices
+    to: SCEN-valuation-cross-check-prices
+    created_at: 2026-10-29T05:37:29.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b1343db1d7e

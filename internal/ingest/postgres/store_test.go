@@ -226,6 +226,57 @@ func TestBoundInstances(t *testing.T) {
 	}
 }
 
+// recordedRow is one row of the batch history, as TestRecordBatch reads it.
+type recordedRow struct {
+	Source, Mode, State, Institution                                   string
+	Attempts, Txs, Assertions, New, NewVersions, Unchanged, Failed, Pb int
+	Finished                                                           bool
+}
+
+func TestRecordBatch(t *testing.T) {
+	t.Parallel()
+	pool := newPool(t)
+	s := postgres.New(pool)
+	ctx := t.Context()
+	upload := &ingest.Batch{
+		ID: "b-7", Institution: "ibkr", Source: app.SourceUpload, Mode: ingest.ModeTransactions, Transactions: 3,
+		Assertions: 2, Imported: ingest.ImportSummary{New: 2, Unchanged: 1, FailedAssertions: 1},
+		Problems: []ingest.Problem{ingest.Skipped("row 3", "summary row"), ingest.Unsupported("row 4", "option trade")},
+	}
+	entry := &ingest.Batch{ID: "b-8", Institution: "treasury-bonds", Source: app.SourceEntry, Mode: ingest.ModeTransactions, Transactions: 2}
+	for _, b := range []*ingest.Batch{upload, entry} {
+		if err := s.RecordBatch(ctx, "flex-main", b); err != nil {
+			t.Fatalf("RecordBatch %s: %v", b.ID, err)
+		}
+	}
+	var got recordedRow
+	if err := pool.QueryRow(ctx, `
+		SELECT source, mode, state, institution, attempts, transactions, assertions, new, new_versions, unchanged,
+			failed_assertions, problems, finished_at IS NOT NULL
+		FROM ingest.import_batches WHERE id = 'b-7' AND instance = 'flex-main'`).Scan(
+		&got.Source, &got.Mode, &got.State, &got.Institution, &got.Attempts, &got.Txs, &got.Assertions, &got.New,
+		&got.NewVersions, &got.Unchanged, &got.Failed, &got.Pb, &got.Finished,
+	); err != nil {
+		t.Fatalf("loading b-7: %v", err)
+	}
+	want := recordedRow{
+		Source: "upload", Mode: "transactions", State: "completed", Institution: "ibkr",
+		Attempts: 1, Txs: 3, Assertions: 2, New: 2, Unchanged: 1, Failed: 1, Pb: 2, Finished: true,
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("recorded upload (-want +got):\n%s", diff)
+	}
+	if got := batchState(t, pool, "b-8"); got != "completed after 1" {
+		t.Errorf("recorded entry is %s, want completed after 1", got)
+	}
+	if err := s.RecordBatch(ctx, "flex-main", upload); err == nil {
+		t.Error("recording b-7 again succeeded, want an error")
+	}
+	if diff := cmp.Diff(app.SyncClaim{}, claim(t, s, "flex-main", t0())); diff != "" {
+		t.Errorf("a recorded batch changed the instance's sync state (-want +got):\n%s", diff)
+	}
+}
+
 // checkCompletion completes xtb-main's open batch b-1 and checks the state
 // and the stored counts, and that a completed batch can't complete or fail.
 func checkCompletion(t *testing.T, pool *pgxpool.Pool, s *postgres.Store) {

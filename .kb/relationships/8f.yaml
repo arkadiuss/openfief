@@ -419,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a786363a39af
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-synthetic-checks
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:05:09.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cec4ec676ba1

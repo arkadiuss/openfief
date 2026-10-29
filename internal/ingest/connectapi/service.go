@@ -1,14 +1,16 @@
 // Package connectapi serves the ingest context's BondLotService
-// (proto/openfief/ingest/v1/bond_lots.proto) to view plugins over Connect:
-// the built-in UI hands each treasury bond lot the owner enters to the core
-// through it (D-9, D-49). Callers are admitted by the interceptor the
-// caller passes, cmd/core's view-plugin check; the owner's session travels
-// in the request and the use case checks its scope. Errors map to Connect
-// codes: no valid session is unauthenticated, a session that is not the
-// owner's permission_denied, a lot that breaks a rule invalid_argument with
-// the rule, an account without its one bond connector failed_precondition,
-// a connector that can't be reached unavailable, anything else internal
-// with nothing of the error.
+// (proto/openfief/ingest/v1/bond_lots.proto) and StatementService
+// (statements.proto) to view plugins over Connect: the built-in UI hands
+// each treasury bond lot the owner enters, and streams each statement file
+// the owner uploads, to the core through them (D-7, D-9, D-49). Callers are
+// admitted by the interceptor the caller passes, cmd/core's view-plugin
+// check; the owner's session travels in the request and the use case
+// checks its scope. Errors map to Connect codes: no valid session is
+// unauthenticated, a session that is not the owner's permission_denied, a
+// lot that breaks a rule or a file the connector refuses invalid_argument
+// with the reason, a file over the limit resource_exhausted, an account
+// without its one connector failed_precondition, a connector that can't be
+// reached unavailable, anything else internal with nothing of the error.
 package connectapi
 
 import (
@@ -88,7 +90,7 @@ func (s *service) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
 	case errors.Is(err, ingest.ErrInvalidBondLot), errors.Is(err, app.ErrEntryRefused):
 		return connect.NewError(connect.CodeInvalidArgument, err)
-	case errors.Is(err, app.ErrNoBondConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound):
+	case errors.Is(err, app.ErrNoConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	case errors.Is(err, app.ErrConnectorUnavailable):
 		return connect.NewError(connect.CodeUnavailable, app.ErrConnectorUnavailable)

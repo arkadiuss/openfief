@@ -426,3 +426,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-baed8be478d1
+  - type: implements
+    from: SYM-ingestv1-statement-header-descriptor
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:18:52.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281cd54084e7
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:18:52.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7085cb465f2f
+  - type: implements
+    from: SYM-ingestv1-upload-statement-request-get-chunk
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:20:16.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f77f31658390
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-request-get-chunk
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:20:16.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9933a7194b3

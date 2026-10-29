@@ -342,3 +342,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94cf95fb3f86
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-header
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:13:56.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12c4d94d6d39
+  - type: implements
+    from: SYM-ingestv1-upload-statement-response-get-problems-total
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:23:12.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72803613b2e7
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-response-get-problems-total
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:23:13.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e807913534c
+  - type: executable_for
+    from: SYM-valuation-app-test-price-checks
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-29T05:40:06.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd0cc97aee02

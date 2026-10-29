@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-677ecd179c51
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-upload-refusal
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:11:21.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90def81656d0
+  - type: implements
+    from: SYM-ingestv1-problem-get-ref
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:21:27.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bbbabc6cc14
+  - type: covered_by
+    from: SYM-ingestv1-problem-get-ref
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:21:27.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73cc7cb9cd78

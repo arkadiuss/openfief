@@ -86,6 +86,9 @@ func TestFromMapping(t *testing.T) {
 			{Account: "acc-ibkr", Date: date(t, "2026-03-13"), Book: ledger.CashBook(eur), Balance: dec(t, "-1.20")},
 		},
 		Problems: []ingest.Problem{ingest.Unsupported("row#4", "option trade"), ingest.Skipped("row#5", "summary row")},
+		CrossCheckPrices: []ingest.CrossCheckPrice{
+			{Instrument: in, Date: date(t, "2026-03-13"), Close: kernel.NewMoney(dec(t, "106.50"), eur)},
+		},
 	}
 	holding := &connectorv1.Book{Kind: connectorv1.BookKind_BOOK_KIND_HOLDING, Instrument: &connectorv1.Instrument{Isin: "IETEST000026", Symbol: "TSTB"}}
 	want := &connectorv1.Delivery{
@@ -117,6 +120,10 @@ func TestFromMapping(t *testing.T) {
 			{Kind: connectorv1.ProblemKind_PROBLEM_KIND_UNSUPPORTED, Ref: "row#4", Reason: "option trade"},
 			{Kind: connectorv1.ProblemKind_PROBLEM_KIND_SKIPPED, Ref: "row#5", Reason: "summary row"},
 		},
+		CrossCheckPrices: []*connectorv1.Price{{
+			Instrument: &connectorv1.Instrument{Isin: "IETEST000026", Symbol: "TSTB"}, Date: "2026-03-13",
+			Close: &connectorv1.Money{Amount: "106.5", Currency: "EUR"},
+		}},
 	}
 	got, err := delivery.FromMapping("b-1", "ibkr", &m)
 	if err != nil {
@@ -181,9 +188,12 @@ func TestFromMappingIBKRStatement(t *testing.T) {
 // problem of m, in order, with each posting's amount as m's decimal string.
 func checkWritten(t *testing.T, m *ingest.Mapping, d *connectorv1.Delivery) {
 	t.Helper()
-	got := []int{len(d.GetTransactions()), len(d.GetBalanceAssertions()), len(d.GetProblems())}
-	if want := []int{len(m.Transactions), len(m.Assertions), len(m.Problems)}; !cmp.Equal(want, got) || got[0] == 0 {
-		t.Fatalf("counts = %v, want %v and some transactions", got, want)
+	got := []int{len(d.GetTransactions()), len(d.GetBalanceAssertions()), len(d.GetProblems()), len(d.GetCrossCheckPrices())}
+	if want := []int{len(m.Transactions), len(m.Assertions), len(m.Problems), len(m.CrossCheckPrices)}; !cmp.Equal(want, got) || got[0] == 0 || got[3] == 0 {
+		t.Fatalf("counts = %v, want %v and some transactions and cross-check prices", got, want)
+	}
+	if len(d.GetPrices()) != 0 {
+		t.Errorf("prices = %v, want none: IBKR's marks are cross-check prices only", d.GetPrices())
 	}
 	for i, tx := range d.GetTransactions() {
 		if tx.GetKey().GetExternalId() != m.Transactions[i].Key.ExternalID {

@@ -67,6 +67,43 @@
 </section>
 {{end}}
 
+{{with .Upload}}
+<section class="card" aria-labelledby="upload-result-title">
+  <h2 id="upload-result-title">Statement imported</h2>
+  <p role="status">Import batch {{.BatchId}} from {{.Institution}}: {{.Transactions}} transactions ({{.New}} new, {{.NewVersions}} new versions, {{.Unchanged}} unchanged) and {{.Assertions}} balance assertions{{if .FailedAssertions}}, {{.FailedAssertions}} of them flagged{{end}}.</p>
+  {{if .ProblemsTotal}}
+  <p>{{.ProblemsTotal}} rows were left out of the ledger{{if lt (len .Problems) .ProblemsTotal}}; the first {{len .Problems}} are listed{{end}}:</p>
+  <table>
+    <thead><tr><th scope="col">Kind</th><th scope="col">Row</th><th scope="col">Reason</th></tr></thead>
+    <tbody>
+    {{range .Problems}}
+    <tr><td>{{enum .Kind.String "PROBLEM_KIND_"}}</td><td>{{.Ref}}</td><td>{{.Reason}}</td></tr>
+    {{end}}
+    </tbody>
+  </table>
+  {{else}}
+  <p>Every row was imported.</p>
+  {{end}}
+</section>
+{{end}}
+
+{{if .UploadForm}}
+<section class="card" aria-labelledby="upload-title">
+  <h2 id="upload-title">Upload statement</h2>
+  <p class="muted">A statement file this account's institution exported, up to 64 MiB, such as an IBKR Flex Query statement. The core hands it to the connector bound to this account, which decides whether it can read it; importing the same statement again changes nothing. Choose opening only for the statement that seeds the account at go-live.</p>
+  <form method="post" action="/accounts/{{$.Data.Account.Id}}/statements" enctype="multipart/form-data" class="row">
+    <label for="upload-mode">Statement</label>
+    <select id="upload-mode" name="mode">
+      <option value="transactions" selected>transactions</option>
+      <option value="opening">opening (seeds the account)</option>
+    </select>
+    <label for="upload-file">File</label>
+    <input id="upload-file" name="statement" type="file" required>
+    <button type="submit" class="primary">Upload statement</button>
+  </form>
+</section>
+{{end}}
+
 <section class="card" aria-labelledby="checks-title">
   <h2 id="checks-title">Balance assertions</h2>
   {{template "checks" .Checks}}

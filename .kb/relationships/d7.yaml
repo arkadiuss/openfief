@@ -321,3 +321,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8bf5c1e1856b
+  - type: implements
+    from: SYM-ingestv1connect-unimplemented-statement-service-handler-upload-statement
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:16:46.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a3d954d59b9
+  - type: covered_by
+    from: SYM-ingestv1connect-unimplemented-statement-service-handler-upload-statement
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:16:46.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a71ab5cf037
+  - type: executable_for
+    from: SYM-views-connectapi-test-price-check-enums-match
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:05:28.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93cf9a1b34ad
+  - type: implements
+    from: SYM-views-pb-price-check-get-date
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:07:58.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-830d0f7242c1
+  - type: covered_by
+    from: SYM-views-pb-price-check-get-date
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:07:58.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3388be3f6a9e

@@ -384,6 +384,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e3783e63156
+  - type: implements
+    from: SYM-ui-server-flagged-price-checks
+    to: REQ-ui-price-checks
+    created_at: 2026-10-29T07:05:54.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acd36efedc53
+  - type: covered_by
+    from: SYM-ui-server-flagged-price-checks
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-29T07:05:54.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d94762fee7f4
   - type: constrains
     from: REQ-portfolio-sleeve-has-kind
     to: FACT-SUBJECT-20F39635C8813292

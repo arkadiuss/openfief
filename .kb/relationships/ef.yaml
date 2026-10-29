@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e45d4174eaa
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-check-uploaded
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:11:09.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc8c4e3ad596
+  - type: implements
+    from: SYM-core-parse-valuation-flags
+    to: REQ-core-config
+    created_at: 2026-10-29T06:26:39.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdb2a067f531
+  - type: covered_by
+    from: SYM-core-parse-valuation-flags
+    to: TEST-core-unit
+    created_at: 2026-10-29T06:26:39.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-486125f55377

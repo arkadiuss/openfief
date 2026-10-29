@@ -78,18 +78,27 @@ func (e *entryCaller) get() (*connectrpc.Client, error) {
 // newBondLots returns the manual bond lot use case (D-9, D-49) over d: the
 // owner's sessions checked by owners, the account's bound instance from the
 // ingest schema, the lot handed to it through d.entries and its delivery
-// imported into the ledger and valuation like a sync's.
+// imported into the ledger and valuation like a sync's, and the batch
+// recorded in the ingest schema.
 func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots {
 	store := ingestpg.New(d.pool)
-	inputs := valuationInputs{recorder: d.recorder}
 	return &ingestapp.BondLots{
-		Owners: owners, Bindings: store,
-		Connectors: &ingestapp.Connectors{
-			Caller: d.entries, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
-			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs, Today: d.today,
-		},
+		Owners: owners, Bindings: store, Batches: store, Connectors: entryConnectors(d, store),
 		Today:      d.today,
 		NewBatchID: newBatchID,
+	}
+}
+
+// entryConnectors returns the connector use case the owner's entries and
+// uploads go through: d.entries as the client, store's connector bindings,
+// and the delivery imported into the ledger and valuation like a sync's,
+// cross-check prices included (D-22).
+func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connectors {
+	inputs := valuationInputs{recorder: d.recorder}
+	return &ingestapp.Connectors{
+		Caller: d.entries, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
+		Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
+		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Today: d.today,
 	}
 }
 

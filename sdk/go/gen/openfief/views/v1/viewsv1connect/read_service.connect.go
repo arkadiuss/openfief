@@ -77,6 +77,9 @@ const (
 	// ReadServiceListValuationStatusesProcedure is the fully-qualified name of the ReadService's
 	// ListValuationStatuses RPC.
 	ReadServiceListValuationStatusesProcedure = "/openfief.views.v1.ReadService/ListValuationStatuses"
+	// ReadServiceListPriceChecksProcedure is the fully-qualified name of the ReadService's
+	// ListPriceChecks RPC.
+	ReadServiceListPriceChecksProcedure = "/openfief.views.v1.ReadService/ListPriceChecks"
 	// ReadServiceGetAllocationProcedure is the fully-qualified name of the ReadService's GetAllocation
 	// RPC.
 	ReadServiceGetAllocationProcedure = "/openfief.views.v1.ReadService/GetAllocation"
@@ -127,6 +130,12 @@ type ReadServiceClient interface {
 	// ListValuationStatuses returns every account's valuation status, in
 	// account ID order.
 	ListValuationStatuses(context.Context, *connect.Request[v1.ListValuationStatusesRequest]) (*connect.Response[v1.ListValuationStatusesResponse], error)
+	// ListPriceChecks returns every price compared with an institution's own
+	// price of the same instrument, date and currency, such as IBKR's mark
+	// price (D-22), in date, instrument and cross-check source order, with
+	// the threshold beyond which a check is flagged. A flagged check is for
+	// the owner to look at; it changes no price or valuation.
+	ListPriceChecks(context.Context, *connect.Request[v1.ListPriceChecksRequest]) (*connect.Response[v1.ListPriceChecksResponse], error)
 	// GetAllocation returns the portfolio's value on a date in the reporting
 	// currency, split by asset class, currency, institution or sleeve (D-30).
 	// Holdings count at their stored valuation on the date and cash at the FX
@@ -248,6 +257,13 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		listPriceChecks: connect.NewClient[v1.ListPriceChecksRequest, v1.ListPriceChecksResponse](
+			httpClient,
+			baseURL+ReadServiceListPriceChecksProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListPriceChecks")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 		getAllocation: connect.NewClient[v1.GetAllocationRequest, v1.GetAllocationResponse](
 			httpClient,
 			baseURL+ReadServiceGetAllocationProcedure,
@@ -293,6 +309,7 @@ type readServiceClient struct {
 	getValuationStatus    *connect.Client[v1.GetValuationStatusRequest, v1.GetValuationStatusResponse]
 	listValuationTotals   *connect.Client[v1.ListValuationTotalsRequest, v1.ListValuationTotalsResponse]
 	listValuationStatuses *connect.Client[v1.ListValuationStatusesRequest, v1.ListValuationStatusesResponse]
+	listPriceChecks       *connect.Client[v1.ListPriceChecksRequest, v1.ListPriceChecksResponse]
 	getAllocation         *connect.Client[v1.GetAllocationRequest, v1.GetAllocationResponse]
 	getPerformance        *connect.Client[v1.GetPerformanceRequest, v1.GetPerformanceResponse]
 	getModelPortfolio     *connect.Client[v1.GetModelPortfolioRequest, v1.GetModelPortfolioResponse]
@@ -359,6 +376,11 @@ func (c *readServiceClient) ListValuationStatuses(ctx context.Context, req *conn
 	return c.listValuationStatuses.CallUnary(ctx, req)
 }
 
+// ListPriceChecks calls openfief.views.v1.ReadService.ListPriceChecks.
+func (c *readServiceClient) ListPriceChecks(ctx context.Context, req *connect.Request[v1.ListPriceChecksRequest]) (*connect.Response[v1.ListPriceChecksResponse], error) {
+	return c.listPriceChecks.CallUnary(ctx, req)
+}
+
 // GetAllocation calls openfief.views.v1.ReadService.GetAllocation.
 func (c *readServiceClient) GetAllocation(ctx context.Context, req *connect.Request[v1.GetAllocationRequest]) (*connect.Response[v1.GetAllocationResponse], error) {
 	return c.getAllocation.CallUnary(ctx, req)
@@ -416,6 +438,12 @@ type ReadServiceHandler interface {
 	// ListValuationStatuses returns every account's valuation status, in
 	// account ID order.
 	ListValuationStatuses(context.Context, *connect.Request[v1.ListValuationStatusesRequest]) (*connect.Response[v1.ListValuationStatusesResponse], error)
+	// ListPriceChecks returns every price compared with an institution's own
+	// price of the same instrument, date and currency, such as IBKR's mark
+	// price (D-22), in date, instrument and cross-check source order, with
+	// the threshold beyond which a check is flagged. A flagged check is for
+	// the owner to look at; it changes no price or valuation.
+	ListPriceChecks(context.Context, *connect.Request[v1.ListPriceChecksRequest]) (*connect.Response[v1.ListPriceChecksResponse], error)
 	// GetAllocation returns the portfolio's value on a date in the reporting
 	// currency, split by asset class, currency, institution or sleeve (D-30).
 	// Holdings count at their stored valuation on the date and cash at the FX
@@ -533,6 +561,13 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	readServiceListPriceChecksHandler := connect.NewUnaryHandler(
+		ReadServiceListPriceChecksProcedure,
+		svc.ListPriceChecks,
+		connect.WithSchema(readServiceMethods.ByName("ListPriceChecks")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	readServiceGetAllocationHandler := connect.NewUnaryHandler(
 		ReadServiceGetAllocationProcedure,
 		svc.GetAllocation,
@@ -587,6 +622,8 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 			readServiceListValuationTotalsHandler.ServeHTTP(w, r)
 		case ReadServiceListValuationStatusesProcedure:
 			readServiceListValuationStatusesHandler.ServeHTTP(w, r)
+		case ReadServiceListPriceChecksProcedure:
+			readServiceListPriceChecksHandler.ServeHTTP(w, r)
 		case ReadServiceGetAllocationProcedure:
 			readServiceGetAllocationHandler.ServeHTTP(w, r)
 		case ReadServiceGetPerformanceProcedure:
@@ -650,6 +687,10 @@ func (UnimplementedReadServiceHandler) ListValuationTotals(context.Context, *con
 
 func (UnimplementedReadServiceHandler) ListValuationStatuses(context.Context, *connect.Request[v1.ListValuationStatusesRequest]) (*connect.Response[v1.ListValuationStatusesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListValuationStatuses is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListPriceChecks(context.Context, *connect.Request[v1.ListPriceChecksRequest]) (*connect.Response[v1.ListPriceChecksResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListPriceChecks is not implemented"))
 }
 
 func (UnimplementedReadServiceHandler) GetAllocation(context.Context, *connect.Request[v1.GetAllocationRequest]) (*connect.Response[v1.GetAllocationResponse], error) {

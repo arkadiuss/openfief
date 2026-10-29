@@ -533,36 +533,39 @@ func (f *fakeRead) status() *viewsv1.ValuationStatus {
 
 // harness is the UI under test with its fakes behind real Connect
 // servers, and the plugin token file the AuthService,
-// ModelPortfolioService and BondLotService clients read.
+// ModelPortfolioService, BondLotService and StatementService clients read.
 type harness struct {
-	auth      *fakeAuth
-	model     *fakeModel
-	bondLots  *fakeBondLots
-	read      *fakeRead
-	handler   http.Handler
-	tokenFile string
+	auth       *fakeAuth
+	model      *fakeModel
+	bondLots   *fakeBondLots
+	statements *fakeStatements
+	read       *fakeRead
+	handler    http.Handler
+	tokenFile  string
 }
 
 // newHarness starts both fakes and the UI. The UI's AuthService client is
 // the SDK's CoreHTTPClient over a token file, as the plugin wires it.
 func newHarness(t *testing.T) *harness {
 	t.Helper()
-	h := &harness{auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, read: &fakeRead{}}
+	h := &harness{auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{}}
 	mux := http.NewServeMux()
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
 	mux.Handle(portfoliov1connect.NewModelPortfolioServiceHandler(h.model))
 	mux.Handle(ingestv1connect.NewBondLotServiceHandler(h.bondLots))
+	mux.Handle(ingestv1connect.NewStatementServiceHandler(h.statements))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
 	core := httptest.NewServer(mux)
 	t.Cleanup(core.Close)
 	h.tokenFile = filepath.Join(t.TempDir(), "token")
 	h.writeToken(t, pluginToken)
 	handler, err := New(&Config{
-		Auth:     identityv1connect.NewAuthServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Model:    portfoliov1connect.NewModelPortfolioServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		BondLots: ingestv1connect.NewBondLotServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Read:     viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
-		Today:    func() kernel.Date { return mustDate(t, "2026-04-01") },
+		Auth:       identityv1connect.NewAuthServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Model:      portfoliov1connect.NewModelPortfolioServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		BondLots:   ingestv1connect.NewBondLotServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Statements: ingestv1connect.NewStatementServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Read:       viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
+		Today:      func() kernel.Date { return mustDate(t, "2026-04-01") },
 	})
 	if err != nil {
 		t.Fatalf("New: %v", err)

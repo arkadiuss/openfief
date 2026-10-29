@@ -47,6 +47,8 @@ flowchart LR
 
 In medieval Europe, a lord granted a vassal a fief: land to run as the vassal saw fit, held on conditions, and taken back when they broke. The vassal ruled the fief, never the kingdom. OpenFief makes the same deal with software agents, and writes the conditions in code.
 
+Our mascot keeps the gate. Kasztan is a żubr, the bison of Białowieża, a royal forest whose bison Polish kings put under crown protection in the 16th century: a creature living inside a guarded domain, under rules it can't argue with. His name is the *kasztelan*, the castellan who kept a castle for the crown, and *kasztan*, the chestnut of his coat.
+
 ## Help shape it
 
 The design is public, with every decision numbered and every proposal open to critique. The most useful input now is a hard look at [the security model](../../docs/DESIGN.md), and experience with the Interactive Brokers API or its linked accounts as a Polish resident. Start with the [overview](../../docs/OVERVIEW.md), then the [architecture](../../docs/architecture.md).

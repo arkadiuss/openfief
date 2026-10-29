@@ -384,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ecf0e6751a33
+  - type: executable_for
+    from: SYM-valuation-test-price-check-status-names
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:38:49.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abfebec024b6

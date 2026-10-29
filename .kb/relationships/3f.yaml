@@ -384,3 +384,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-851e6a0c714b
+  - type: implements
+    from: SYM-ingest-connectapi-receive-code
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:12:18.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4e060570cf5
+  - type: implements
+    from: SYM-ingest-connectapi-receive-code
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T05:12:18.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d39d5c354723
+  - type: covered_by
+    from: SYM-ingest-connectapi-receive-code
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:12:18.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3b44730f739
+  - type: implements
+    from: SYM-ingestv1-problem-kind-descriptor
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:17:58.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be77aee31b8b
+  - type: covered_by
+    from: SYM-ingestv1-problem-kind-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:17:58.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbe46950babb

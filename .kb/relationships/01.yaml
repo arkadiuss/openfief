@@ -412,3 +412,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-778660537eb0
+  - type: implements
+    from: SYM-ingest-app-capped-reader
+    to: REQ-ingest-statement-upload-limits
+    created_at: 2026-10-29T05:10:21.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6312260b1e11
+  - type: covered_by
+    from: SYM-ingest-app-capped-reader
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T05:10:21.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8208ecab5fab
+  - type: implements
+    from: SYM-valuation-app-cross-checks-price-checks
+    to: REQ-valuation-price-check
+    created_at: 2026-10-29T05:39:28.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7940ba2eb87
+  - type: implements
+    from: SYM-valuation-app-cross-checks-price-checks
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T05:39:28.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0cce458d732
+  - type: covered_by
+    from: SYM-valuation-app-cross-checks-price-checks
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-29T05:39:28.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b6f238548be
+  - type: executable_for
+    from: SYM-core-test-helper-mem-cross-checks-cross-checked-prices
+    to: TEST-core-cross-check
+    created_at: 2026-10-29T06:26:26.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbf0899147c9

@@ -150,3 +150,15 @@ func enumLabel(name, prefix string) string {
 func scopeLabel(s identityv1.SessionScope) string {
 	return enumLabel(s.String(), "SESSION_SCOPE_")
 }
+
+// percent writes a decimal fraction, such as the read API's relative
+// difference "0.028571" or threshold "0.01", as a percentage: "2.8571%",
+// "1%". It is exact, with the fraction's own digits; text that isn't a
+// decimal, or none, gives "".
+func percent(fraction string) string {
+	d, err := kernel.ParseDecimal(fraction)
+	if err != nil {
+		return ""
+	}
+	return d.Mul(kernel.NewDecimal(hundred, 0)).String() + "%"
+}

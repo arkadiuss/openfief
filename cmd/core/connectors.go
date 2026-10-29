@@ -90,9 +90,11 @@ type connectorDeps struct {
 	pool     *pgxpool.Pool
 	ledger   *ledgerapp.Ledger
 	recorder *valuationapp.InputRecorder
-	today    func() kernel.Date
-	now      func() time.Time
-	log      *slog.Logger
+	// crossChecks records cross-check prices (D-22).
+	crossChecks *valuationapp.CrossChecks
+	today       func() kernel.Date
+	now         func() time.Time
+	log         *slog.Logger
 	// entries is the client the owner's manual entries go through; the
 	// scheduler sets it once it has found the instances.
 	entries *entryCaller
@@ -110,8 +112,12 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 			return fmt.Errorf("valuation store: %w", err)
 		}
 		l, recorder := ingestDeps(p.pool, vstore)
+		checks, err := valuationapp.NewCrossChecks(vstore, kernel.Decimal{})
+		if err != nil {
+			return fmt.Errorf("cross checks: %w", err)
+		}
 		return fn(&connectorDeps{
-			pool: p.pool, ledger: l, recorder: recorder, now: time.Now, log: log,
+			pool: p.pool, ledger: l, recorder: recorder, crossChecks: checks, now: time.Now, log: log,
 			today: valuationpg.TodayIn(time.UTC, time.Now),
 		})
 	})
@@ -129,7 +135,8 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 	return &ingestapp.Scheduler{
 		Connectors: &ingestapp.Connectors{
 			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
-			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs, Today: d.today,
+			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
+			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Today: d.today,
 		},
 		Instances:  discovery,
 		Store:      store,
@@ -298,6 +305,20 @@ func (v valuationInputs) StoreIndexReadings(ctx context.Context, _ ingest.BatchI
 		out = append(out, r)
 	}
 	if err := v.recorder.RecordIndexReadings(ctx, out); err != nil {
+		return fmt.Errorf("valuation: %w", err)
+	}
+	return nil
+}
+
+// crossCheckInputs records a delivery's cross-check prices through
+// valuation's cross-check use cases, apart from its prices (D-22).
+type crossCheckInputs struct {
+	checks *valuationapp.CrossChecks
+}
+
+// StoreCrossCheckPrices records cross-check prices.
+func (c crossCheckInputs) StoreCrossCheckPrices(ctx context.Context, _ ingest.BatchID, prices []valuation.CrossCheckPrice) error {
+	if err := c.checks.RecordCrossCheckPrices(ctx, prices); err != nil {
 		return fmt.Errorf("valuation: %w", err)
 	}
 	return nil

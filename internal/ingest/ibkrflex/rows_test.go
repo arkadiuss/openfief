@@ -247,6 +247,42 @@ func TestMapOpenPositionRows(t *testing.T) {
 			want: "problem unsupported FlexStatement#1/OpenPositions#1: missing or unreadable attribute: symbol\n",
 		},
 		{
+			name: "the summary row's mark price is the cross-check price, dated by reportDate",
+			mode: ingest.ModeTransactions,
+			rows: `<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" symbol="TSTA" isin="PLTEST000010" levelOfDetail="SUMMARY" position="7" markPrice="101.25" reportDate="20260312" />` +
+				lot + `position="7" costBasisMoney="70" markPrice="99" openDateTime="20250101;100000" />`,
+			want: "assert acc-ibkr 2026-03-13 holding:PLTEST000010/TSTA 7\ncross-check PLTEST000010/TSTA 2026-03-12 101.25 USD\n",
+		},
+		{
+			name: "lot rows that agree give the mark price, dated by the statement",
+			mode: ingest.ModeTransactions,
+			rows: lot + `position="4" costBasisMoney="40" markPrice="101.25" openDateTime="20250101;100000" />` +
+				lot + `position="3" costBasisMoney="30" markPrice="101.250" openDateTime="20250102;100000" />`,
+			want: "assert acc-ibkr 2026-03-13 holding:PLTEST000010/TSTA 7\ncross-check PLTEST000010/TSTA 2026-03-13 101.25 USD\n",
+		},
+		{
+			name: "lot rows whose mark prices disagree give none",
+			mode: ingest.ModeTransactions,
+			rows: lot + `position="4" costBasisMoney="40" markPrice="101.25" openDateTime="20250101;100000" />` +
+				lot + `position="3" costBasisMoney="30" markPrice="101.5" openDateTime="20250102;100000" />`,
+			want: "assert acc-ibkr 2026-03-13 holding:PLTEST000010/TSTA 7\n" +
+				"problem skipped FlexStatement#1/OpenPositions[isin=PLTEST000010]: the mark prices of the instrument's LOT rows disagree; no cross-check price\n",
+		},
+		{
+			name: "an unreadable mark price is left out, the position is still asserted",
+			mode: ingest.ModeTransactions,
+			rows: lot + `position="4" costBasisMoney="40" markPrice="1e3" openDateTime="20250101;100000" />`,
+			want: "assert acc-ibkr 2026-03-13 holding:PLTEST000010/TSTA 4\n" +
+				"problem skipped FlexStatement#1/OpenPositions#1: no cross-check price: missing or unreadable attribute: markPrice\n",
+		},
+		{
+			name: "a zero mark price is left out",
+			mode: ingest.ModeTransactions,
+			rows: lot + `position="4" costBasisMoney="40" markPrice="0" openDateTime="20250101;100000" />`,
+			want: "assert acc-ibkr 2026-03-13 holding:PLTEST000010/TSTA 4\n" +
+				"problem skipped FlexStatement#1/OpenPositions#1: no cross-check price: missing or unreadable attribute: markPrice is not positive\n",
+		},
+		{
 			name: "foreign element",
 			mode: ingest.ModeTransactions,
 			rows: `<PriorPeriodPosition accountId="U0000000" />`,

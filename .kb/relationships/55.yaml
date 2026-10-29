@@ -321,3 +321,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-623ab7803bec
+  - type: implements
+    from: SYM-ingestv1-upload-statement-request_chunk-is-upload-statement-request_part
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:20:42.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b40d4860bf97
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-request_chunk-is-upload-statement-request_part
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:20:42.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bc66d511524
+  - type: implements
+    from: SYM-ingestv1-upload-statement-response-get-assertions
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:22:33.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfae3c580756
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-response-get-assertions
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:22:33.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12c74a260ab9

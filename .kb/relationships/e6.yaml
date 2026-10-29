@@ -447,3 +447,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddf88052b520
+  - type: implements
+    from: SYM-ingestv1-mode-string
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:17:05.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05d7a36eadeb
+  - type: covered_by
+    from: SYM-ingestv1-mode-string
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:17:05.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e39c3f3a413c
+  - type: constrains
+    from: REQ-valuation-price-check-threshold
+    to: FACT-SUBJECT-ECF86A4CFE17F2A3
+    created_at: 2026-10-29T05:37:34.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d2d7e92d3ec
+  - type: requires_property
+    from: REQ-valuation-price-check-threshold
+    to: FACT-PROP-2E9242C3256F6AC7
+    created_at: 2026-10-29T05:37:34.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a5ee100e52d
+  - type: specified_by
+    from: REQ-valuation-price-check-threshold
+    to: SCEN-valuation-price-check-threshold
+    created_at: 2026-10-29T05:37:34.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ec687b1f2bb

@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6117bb6a1cd
+  - type: implements
+    from: SYM-ingestv1-upload-statement-request-proto-reflect
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:19:52.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6a1720d5e21
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-request-proto-reflect
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:19:52.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36c70ee81186

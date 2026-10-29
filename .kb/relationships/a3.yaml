@@ -580,3 +580,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-293bf78a4d04
+  - type: implements
+    from: SYM-ingestv1connect-statement-service-client-impl
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:30:05.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-068a528211a6
+  - type: covered_by
+    from: SYM-ingestv1connect-statement-service-client-impl
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:30:05.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-885552f708e7
+  - type: implements
+    from: SYM-views-app-price-checks
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:03:24.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8fbd40d0d25
+  - type: covered_by
+    from: SYM-views-app-price-checks
+    to: TEST-views-app-pricechecks
+    created_at: 2026-10-29T07:03:24.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fabba96c364

@@ -294,6 +294,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e2ada8ad97a5
   - type: implements
+    from: SYM-ingestv1-upload-statement-request-string
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:19:40.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b86039341510
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-request-string
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:19:40.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4ae0332162f
+  - type: verified_by
+    from: SCEN-ui-statement-upload
+    to: TEST-ui-statements
+    created_at: 2026-10-29T05:51:55.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f76e0902fd71
+  - type: verified_by
+    from: SCEN-ui-statement-upload
+    to: TEST-ui-plugin
+    created_at: 2026-10-29T05:51:55.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac286fbddd3
+  - type: implements
     from: SYM-valuation-gus-value
     to: REQ-valuation-gus-cpi
     created_at: 2026-10-29T04:05:48.333Z
@@ -314,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-27316803d2b0
+  - type: implements
+    from: SYM-views-pb-list-price-checks-request-reset
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:09:09.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff351d01ee05
+  - type: covered_by
+    from: SYM-views-pb-list-price-checks-request-reset
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:09:09.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc25c6817594

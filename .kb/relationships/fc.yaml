@@ -287,6 +287,13 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-bad376fc6605
   - type: executable_for
+    from: SYM-core-test-helper-check-upload-refusals
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:09:18.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e0c54404170
+  - type: executable_for
     from: SYM-treasurybonds-test-helper-result
     to: TEST-treasurybonds-indices
     created_at: 2026-10-29T04:05:17.822Z

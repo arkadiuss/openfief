@@ -363,3 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af850ce0235a
+  - type: executable_for
+    from: SYM-ingest-postgres-test-helper-recorded-row
+    to: TEST-ingest-postgres
+    created_at: 2026-10-29T05:15:46.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35cd80fd2c9e

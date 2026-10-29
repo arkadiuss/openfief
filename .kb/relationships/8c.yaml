@@ -349,3 +349,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c409f8d020b1
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-file-refuser-import-file
+    to: TEST-ingest-connectrpc-files
+    created_at: 2026-10-29T05:14:59.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b2f7a9c64eb
+  - type: implements
+    from: SYM-ingestv1-statement-header-get-session-token
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:19:04.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4c3f8a4f51
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-get-session-token
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:19:04.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa41d9e76cf1
+  - type: implements
+    from: SYM-ingestv1-upload-statement-response-get-new
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:22:40.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0398e6bc7957
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-response-get-new
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:22:40.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba0ed057d82b

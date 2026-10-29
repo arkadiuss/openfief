@@ -482,3 +482,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d62dad58a3db
+  - type: implements
+    from: SYM-ingestv1-upload-statement-request-proto-message
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:19:46.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06a09086fa32
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-request-proto-message
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:19:46.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0945fb3d0fab
+  - type: implements
+    from: SYM-ibkrflex-stmt-mark
+    to: REQ-ibkrflex-cross-check-prices
+    created_at: 2026-10-29T06:25:21.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-215599d42c2c
+  - type: implements
+    from: SYM-ibkrflex-stmt-mark
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T06:25:21.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e93c398c516
+  - type: covered_by
+    from: SYM-ibkrflex-stmt-mark
+    to: TEST-ibkrflex-rows
+    created_at: 2026-10-29T06:25:21.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e191d1bcace

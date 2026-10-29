@@ -314,3 +314,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-599e91dd53ea
+  - type: implements
+    from: SYM-ingest-file-name-hint
+    to: REQ-ingest-statement-upload-limits
+    created_at: 2026-10-29T05:15:28.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed4d833608f6
+  - type: covered_by
+    from: SYM-ingest-file-name-hint
+    to: TEST-ingest-file
+    created_at: 2026-10-29T05:15:28.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40b346f5f50d
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_statements_proto_raw-desc-gzip
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:23:19.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7460dcdfae9e
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_statements_proto_raw-desc-gzip
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:23:19.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf703c783ea3

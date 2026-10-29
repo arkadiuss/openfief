@@ -293,3 +293,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba846e4cee41
+  - type: executable_for
+    from: SYM-ui-test-percent
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-29T07:06:19.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8179b66a0704
+  - type: implements
+    from: SYM-views-pb-price-check-get-relative-difference
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:08:45.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b575c2caab42
+  - type: covered_by
+    from: SYM-views-pb-price-check-get-relative-difference
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:08:45.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b027cbe6fe6e

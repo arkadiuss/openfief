@@ -32,6 +32,7 @@ type fakeCaller struct {
 	mode      ingest.Mode
 	watermark string
 	file      string
+	media     string
 	lots      []ingest.BondLot
 }
 
@@ -46,7 +47,7 @@ func (f *fakeCaller) ImportFile(_ context.Context, instance string, id ingest.Ba
 	if err != nil {
 		return app.Delivery{}, errors.Join(errCaller, err)
 	}
-	f.file = file.Name + ":" + string(b)
+	f.file, f.media = file.Name+":"+string(b), file.MediaType
 	return f.delivery, f.err
 }
 
@@ -64,6 +65,13 @@ type fakeStores struct {
 	readings []ingest.IndexReading
 	levels   []valuation.IndexLevel
 	terms    []ingest.BondTerms
+	checks   []valuation.CrossCheckPrice
+}
+
+func (f *fakeStores) StoreCrossCheckPrices(_ context.Context, _ ingest.BatchID, prices []valuation.CrossCheckPrice) error {
+	f.calls++
+	f.checks = prices
+	return f.err
 }
 
 func (f *fakeStores) StoreBondTerms(_ context.Context, _ ingest.BatchID, terms []ingest.BondTerms) error {
@@ -135,8 +143,8 @@ func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, 
 	day := march2(t)
 	return &app.Connectors{
 		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores, Terms: stores,
-		Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
-		Today:    func() kernel.Date { return day },
+		CrossChecks: stores, Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
+		Today: func() kernel.Date { return day },
 	}
 }
 
@@ -172,6 +180,37 @@ func TestConnectorsSync(t *testing.T) {
 	}
 }
 
+// TestConnectorsCrossCheckPrices checks that a delivery's cross-check
+// prices are stored apart from its prices, with the instance as their
+// source, and that a delivery with some fails without a store for them.
+func TestConnectorsCrossCheckPrices(t *testing.T) {
+	t.Parallel()
+	d := delivery(t)
+	d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels = nil, nil, nil, nil
+	mark := valuation.CrossCheckPrice{
+		Instrument: "PLTEST000010/TST", Date: march2(t), Close: kernel.NewMoney(kernel.NewDecimal(1235, -2), mustCurrency(t, "EUR")), Source: "spoofed",
+	}
+	d.CrossCheckPrices = []valuation.CrossCheckPrice{mark}
+	stores := &fakeStores{}
+	if _, err := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, stores).Sync(t.Context(), "ibkr-main", "b-1", ingest.ModeTransactions, ""); err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	mark.Source = "ibkr-main"
+	if diff := cmp.Diff([]valuation.CrossCheckPrice{mark}, stores.checks); diff != "" {
+		t.Errorf("stored cross-check prices (-want +got):\n%s", diff)
+	}
+	if len(stores.prices) != 0 || stores.calls != 1 {
+		t.Errorf("stores got prices %v in %d calls; want only the cross-check prices", stores.prices, stores.calls)
+	}
+
+	c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, &fakeStores{})
+	c.CrossChecks = nil
+	_, err := c.Sync(t.Context(), "ibkr-main", "b-2", ingest.ModeTransactions, "")
+	if diff := cmp.Diff(app.ErrNoCrossCheckStore, err, cmpopts.EquateErrors()); diff != "" {
+		t.Errorf("Sync without a cross-check store error (-want +got):\n%s", diff)
+	}
+}
+
 func TestConnectorsImportFile(t *testing.T) {
 	t.Parallel()
 	d := delivery(t)
@@ -180,14 +219,14 @@ func TestConnectorsImportFile(t *testing.T) {
 	stores := &fakeStores{}
 	file := app.NamedFile{Name: "statement.csv", Contents: strings.NewReader("synthetic")}
 	l := &fakeLedger{}
-	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeOpening, file)
+	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", "acc-1", ingest.ModeOpening, file)
 	if err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
 	if l.seeds != 1 {
 		t.Errorf("an opening batch seeded %d times, want 1", l.seeds)
 	}
-	if got.ID != "b-2" || got.Source != app.SourceFile || got.Mode != ingest.ModeOpening || got.Transactions != 1 {
+	if got.ID != "b-2" || got.Source != app.SourceUpload || got.Mode != ingest.ModeOpening || got.Transactions != 1 {
 		t.Errorf("ImportFile = %+v", got)
 	}
 	if caller.file != "statement.csv:synthetic" {
@@ -236,7 +275,7 @@ func TestConnectorsFailures(t *testing.T) {
 			if got := l.calls == 1; got != tt.wantImport {
 				t.Errorf("ledger imported = %v, want %v", got, tt.wantImport)
 			}
-			_, err = c.ImportFile(t.Context(), "xtb-main", "b-1", tt.mode, app.NamedFile{Contents: strings.NewReader("")})
+			_, err = c.ImportFile(t.Context(), "xtb-main", "b-1", "acc-1", tt.mode, app.NamedFile{Contents: strings.NewReader("")})
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("ImportFile error (-want +got):\n%s", diff)
 			}

@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2304e4453fa
+  - type: implements
+    from: SYM-views-pb-price-check-status-enum
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:06:32.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-929a4a056173
+  - type: covered_by
+    from: SYM-views-pb-price-check-status-enum
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:06:32.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46bee4978fec

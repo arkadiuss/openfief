@@ -23,7 +23,8 @@ const testBondISIN = "PLEDO0536000"
 
 // testDelivery is a synthetic delivery for batch b-1: one buy of 2 units for
 // 100.50 USD, a holding assertion, a skipped row, a price, an FX rate, an
-// index reading, an index level and the terms of a bond series.
+// index reading, an index level, the terms of a bond series and a
+// cross-check price.
 func testDelivery() *connectorv1.Delivery {
 	instrument := &connectorv1.Instrument{Isin: testISIN, Symbol: "TST"}
 	holding := &connectorv1.Book{Kind: connectorv1.BookKind_BOOK_KIND_HOLDING, Instrument: instrument}
@@ -49,6 +50,9 @@ func testDelivery() *connectorv1.Delivery {
 		BondTerms: []*connectorv1.BondTerms{{
 			Instrument:      &connectorv1.Instrument{Isin: testBondISIN, Symbol: "EDO0536"},
 			FirstPeriodRate: "0.06", Margin: "0.02", EarlyRedemptionFee: &connectorv1.Money{Amount: "2.00", Currency: "PLN"},
+		}},
+		CrossCheckPrices: []*connectorv1.Price{{
+			Instrument: instrument, Date: "2026-03-02", Close: &connectorv1.Money{Amount: "50.30", Currency: "USD"},
 		}},
 	}
 }
@@ -127,6 +131,9 @@ func TestDeliveryFrom(t *testing.T) {
 		}},
 		IndexLevels: []valuation.IndexLevel{{Index: "FAKE20", Date: day, Level: mustDecimal(t, "1522.60")}},
 		BondTerms:   []ingest.BondTerms{testBondTerms(t)},
+		CrossCheckPrices: []valuation.CrossCheckPrice{
+			{Instrument: testInstrument(t).String(), Date: day, Close: mustMoney(t, "50.30", "USD")},
+		},
 		Mapping: ingest.Mapping{
 			Transactions: []ledger.Transaction{{
 				Key: ledger.TransactionKey{Source: "acc-1", ExternalID: "T1"}, Account: "acc-1",
@@ -158,6 +165,8 @@ func TestDeliveryFromRejects(t *testing.T) {
 	}{
 		{name: "another batch", edit: func(r *connectorv1.Delivery) { r.BatchId = "b-0" }},
 		{name: "bad price", edit: func(r *connectorv1.Delivery) { r.Prices[0].Close.Amount = "0" }},
+		{name: "zero cross-check price", edit: func(r *connectorv1.Delivery) { r.CrossCheckPrices[0].Close.Amount = "0" }},
+		{name: "cross-check price with a bad ISIN", edit: func(r *connectorv1.Delivery) { r.CrossCheckPrices[0].Instrument.Isin = "XX0000000000" }},
 		{name: "bad FX rate", edit: func(r *connectorv1.Delivery) { r.FxRates[0].Rate = "-1" }},
 		{name: "bad index reading", edit: func(r *connectorv1.Delivery) { r.IndexReadings[0].Index = 0 }},
 		{name: "index level without an index", edit: func(r *connectorv1.Delivery) { r.IndexLevels[0].Index = "" }},

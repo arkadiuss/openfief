@@ -440,3 +440,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-665e4b0d9996
+  - type: executable_for
+    from: SYM-valuation-test-helper-crosscheck-price
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:38:24.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4eea598f040
+  - type: implements
+    from: SYM-views-pb-list-price-checks-response-descriptor
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:10:31.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-435b2fdbee38
+  - type: covered_by
+    from: SYM-views-pb-list-price-checks-response-descriptor
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:10:31.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a568edd32c8

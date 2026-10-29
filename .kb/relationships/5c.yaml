@@ -468,6 +468,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14bb4be7b45b
+  - type: implements
+    from: SYM-ingestv1-statement-header-proto-message
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:18:39.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92dbfaf927f7
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-proto-message
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:18:39.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-456626d0e0c2
   - type: constrains
     from: REQ-identity-demo-owner-passkey
     to: FACT-SUBJECT-C2E522A1520A4F19

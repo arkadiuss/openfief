@@ -9,7 +9,7 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Blocking real use
 
-3. **XTB import needs the export's real layout.**
+1. **XTB import needs the export's real layout.**
    - *Problem:* D-9 says XTB data arrives as uploaded xStation export files, but the export's columns, and whether it separates CFDs from stocks, are unverified (OQ-22).
    - *Today:* no XTB parser exists.
    - *Needed:* a header row and two or three rows with made-up values, copied from a real export. The parser's fixtures will be synthetic.

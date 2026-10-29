@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6864b311e122
+  - type: validates
+    from: TEST-valuation-app-crosscheck
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T05:37:05.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d80f6798001

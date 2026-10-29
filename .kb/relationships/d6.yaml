@@ -559,3 +559,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e04adab9b4e2
+  - type: implements
+    from: SYM-ingest-connectapi-statements-fail
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:12:12.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b40690b9abd
+  - type: implements
+    from: SYM-ingest-connectapi-statements-fail
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T05:12:12.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2215d42a4b2c
+  - type: covered_by
+    from: SYM-ingest-connectapi-statements-fail
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:12:12.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-527e9fd2b397
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-cross-checks-save-cross-check-prices
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-29T05:39:39.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fad000f26cb1

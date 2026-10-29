@@ -419,3 +419,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0745b11b80d
+  - type: executable_for
+    from: SYM-core-test-helper-check-upload-twice
+    to: TEST-core-statements
+    created_at: 2026-10-29T05:09:06.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f93ab07c9d4
+  - type: implements
+    from: SYM-ingestv1-upload-statement-request_header
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:20:26.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ce261fb7a09
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-request_header
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:20:26.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-954edb800a7d
+  - type: implements
+    from: SYM-views-pb-list-price-checks-request-descriptor
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:09:40.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7638a2365f2
+  - type: covered_by
+    from: SYM-views-pb-list-price-checks-request-descriptor
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:09:40.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95869842b184

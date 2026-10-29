@@ -405,3 +405,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5bfb14bced39
+  - type: implements
+    from: SYM-ingestv1connect-new-statement-service-client
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:16:09.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42f247127b6d
+  - type: covered_by
+    from: SYM-ingestv1connect-new-statement-service-client
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:16:09.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-914ef9d8eb2e
+  - type: implements
+    from: SYM-ui-server-upload-statement
+    to: REQ-ui-statement-upload
+    created_at: 2026-10-29T06:19:45.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf2dcd44bebb
+  - type: implements
+    from: SYM-ui-server-upload-statement
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-10-29T06:19:45.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a98a8e80176d
+  - type: covered_by
+    from: SYM-ui-server-upload-statement
+    to: TEST-ui-statements
+    created_at: 2026-10-29T06:19:45.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-920066b2a1c2
+  - type: implements
+    from: SYM-views-pb-price-check-status-descriptor
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:06:47.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38bc1ce14f6f
+  - type: covered_by
+    from: SYM-views-pb-price-check-status-descriptor
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:06:47.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d1976884018

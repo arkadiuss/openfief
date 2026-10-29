@@ -272,3 +272,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c84c64cbde15
+  - type: validates
+    from: TEST-ingest-connectrpc-files
+    to: REQ-ingest-core-calls-connectors
+    created_at: 2026-10-29T04:58:01.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21c926e79d2a
+  - type: verified_by
+    from: SCEN-ingest-statement-upload-limits
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-29T04:58:07.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cab834eb37c8
+  - type: verified_by
+    from: SCEN-ingest-statement-upload-limits
+    to: TEST-ingest-file
+    created_at: 2026-10-29T04:58:07.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d93e245f7db4
+  - type: verified_by
+    from: SCEN-ingest-statement-upload-limits
+    to: TEST-ingest-connectrpc-files
+    created_at: 2026-10-29T04:58:07.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-286f85c874cc
+  - type: implements
+    from: SYM-ui-server-price-checks-page
+    to: REQ-ui-price-checks
+    created_at: 2026-10-29T07:05:47.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7c3ef5a2c6b
+  - type: implements
+    from: SYM-ui-server-price-checks-page
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T07:05:47.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a72540a6cc4a
+  - type: covered_by
+    from: SYM-ui-server-price-checks-page
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-29T07:05:47.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e4cd90d50f7
