@@ -205,6 +205,7 @@ In the end-to-end suite the operator deploys the demo's `ui` instance from the U
 
 ## Not built yet
 
+- The plugin port (D-115). The core serves the `AuthService` and the owner services on its one port, where browsers and routes arrive too; they answer only a view plugin's token. D-115 moves them to a second port that only plugin pods reach, and has the `connect` Service port target it.
 - Removing a bond lot: entering the same series and day again replaces it, but nothing deletes one.
 - A way to change the reporting currency or the bond basis from the UI.
 - The number format (D-113): amounts are written `5 000.00 PLN` whatever the setting, and the charts' axes use Chart.js's own format.

@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2edf4124fcce
+  - type: constrains
+    from: REQ-plugins-one-browser-view
+    to: FACT-SUBJECT-771ACA0F2242FA3B
+    created_at: 2026-10-29T16:11:15.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-973f168e4daf
+  - type: requires_property
+    from: REQ-plugins-one-browser-view
+    to: FACT-PROP-1D1604F209947E46
+    created_at: 2026-10-29T16:11:15.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-500df321bc8a

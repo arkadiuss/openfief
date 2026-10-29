@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58ad48c25ebf
+  - type: constrains
+    from: REQ-core-browser-port-scope
+    to: FACT-SUBJECT-A141330E0368236C
+    created_at: 2026-10-29T16:12:40.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d87dc261a984
+  - type: requires_property
+    from: REQ-core-browser-port-scope
+    to: FACT-PROP-E166DE80B0D5A9C7
+    created_at: 2026-10-29T16:12:40.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7874be84024

@@ -449,6 +449,7 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 
 ## Not built yet
 
+- **One browser view (D-114).** Nothing yet refuses a second instance with a browser path: two on the same prefix both get 503 from the core, and two on different prefixes both run. D-114 has the CLI refuse the install and the operator refuse to run it.
 - **Verified plugins (D-43, D-44, D-88).** No release has run yet, so the catalog lists no plugin and every image that runs today, the first-party ones included, is unverified.
 - **More contracts and SDKs (D-11).** A plugin serves only the connector contract. View plugins serve no contract of their own (P-9 outlines one, but it is a proposal): they are clients of the read API and of the core's services for view plugins (`AuthService`, `ModelPortfolioService`, `BondLotService`, `StatementService`), whose Go code `sdk/go/gen` carries. There is no TypeScript SDK.
 - **Images built on `main` stay unverified.** CI signs every push to `main`, but only a release adds digests to the catalog, so the demo's images, deployed from `main`, show as signed by OpenFief's CI.
