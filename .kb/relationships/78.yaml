@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb1282288096
+  - type: constrains
+    from: REQ-identity-first-run-wizard-follows
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: 2026-10-29T15:08:39.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7945bab31ade
+  - type: requires_property
+    from: REQ-identity-first-run-wizard-follows
+    to: FACT-PROP-483B1AEEE25E5CE0
+    created_at: 2026-10-29T15:08:39.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90d54c5d71b0
+  - type: supersedes
+    from: REQ-identity-first-run-wizard-follows
+    to: REQ-identity-first-passkey-link
+    created_at: 2026-10-29T15:08:39.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3016ed4765e8

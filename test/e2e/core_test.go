@@ -310,14 +310,24 @@ func get(ctx context.Context, k *kube, pod, url string, headers ...string) (repl
 	return r, nil
 }
 
-// mustCall is call that fails t on an error.
+// mustCall is call that retries a failed exec stream (kind's API server can
+// drop it while busy) and fails t if it never gets curl's answer.
 func mustCall(t *testing.T, k *kube, pod, path, token string) reply {
 	t.Helper()
-	r, err := call(t.Context(), k, pod, path, token)
+	var got reply
+	// Like answerAt: only a failed exec stream is retried, never an HTTP answer.
+	err := waitFor(t.Context(), coreTimeout, func(ctx context.Context) (string, bool, error) {
+		r, callErr := call(ctx, k, pod, path, token)
+		if callErr != nil {
+			return "", false, fmt.Errorf("%w: %w", errRetry, callErr)
+		}
+		got = r
+		return "", true, nil
+	})
 	if err != nil {
-		t.Fatal(err)
+		t.Fatalf("GET %s from %s: %v", path, pod, err)
 	}
-	return r
+	return got
 }
 
 // parseReply splits curl's output into the body and the status code that

@@ -1,0 +1,11 @@
+{{- /* Resolves a list of page paths from site/hugo.toml's sidebar groups to items with their short labels. A path that names no page fails the build, so a typo can't hide a page. */ -}}
+{{- $items := slice -}}
+{{- range . -}}
+  {{- $key := lower . -}}
+  {{- with site.GetPage . -}}
+    {{- $items = $items | append (dict "page" . "label" (index site.Params.navLabels $key | default (partial "title.html" .))) -}}
+  {{- else -}}
+    {{- errorf "site/hugo.toml: the sidebar names %q, which is not a page" . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $items -}}

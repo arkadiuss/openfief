@@ -1,49 +1,53 @@
-{{- /* Sidebar groups from site/hugo.toml. Any top-level page or section left out of them goes under "More", so a new page is never hidden. */ -}}
+{{- /* Sidebar groups from site/hugo.toml (navgroups.html), each folding away unless it is marked open or holds the current page. Any top-level page or section left out of them goes under "More", so a new page is never hidden. No JavaScript: <details> does the folding. */ -}}
 {{- $current := . -}}
 {{- $docs := site.GetPage "/docs" -}}
 {{- $listed := slice -}}
 <nav aria-label="Documentation">
   <ul class="nav">
     <li><a href="{{ $docs.RelPermalink }}"{{ if eq . $docs }} aria-current="page"{{ end }}>Docs home</a></li>
-    {{- range site.Params.nav }}
-      {{- $group := . }}
-      {{- $head := false }}
-      {{- $items := slice }}
-      {{- with $group.section }}{{ with site.GetPage . }}
-        {{- $head = . }}
+    {{- range partial "navgroups.html" . }}
+      {{- $open := .open }}
+      {{- with .head }}
         {{- $listed = $listed | append .RelPermalink }}
-        {{- range partial "pages.html" . }}{{ $items = $items | append (dict "page" .page "label" .title) }}{{ end }}
+        {{- if or (eq . $current) ($current.IsDescendant .) }}{{ $open = true }}{{ end }}
+      {{- end }}
+      {{- range .parts }}{{ range .items }}
+        {{- $listed = $listed | append .page.RelPermalink }}
+        {{- if or (eq .page $current) (and .page.IsSection ($current.IsDescendant .page)) }}{{ $open = true }}{{ end }}
       {{- end }}{{ end }}
-      {{- range $group.pages }}
-        {{- $key := lower . }}
-        {{- with site.GetPage . }}
-          {{- $listed = $listed | append .RelPermalink }}
-          {{- $items = $items | append (dict "page" . "label" (index site.Params.navLabels $key | default (partial "title.html" .))) }}
-        {{- end }}
-      {{- end }}
     <li class="nav-group">
-      {{- if $head }}
-      <a class="nav-group-title" href="{{ $head.RelPermalink }}"{{ if eq $head $current }} aria-current="page"{{ end }}>{{ $group.title }}</a>
-      {{- else }}
-      <span class="nav-group-title">{{ $group.title }}</span>
-      {{- end }}
-      <ul>
-        {{- range $items }}
-        <li><a href="{{ .page.RelPermalink }}"{{ if or (eq .page $current) (and .page.IsSection ($current.IsDescendant .page)) }} aria-current="page"{{ end }}>{{ .label }}</a></li>
+      <details{{ if $open }} open{{ end }}>
+        <summary class="nav-group-title">{{ .title }}</summary>
+        {{- with .head }}
+        <ul>
+          <li><a href="{{ .RelPermalink }}"{{ if eq . $current }} aria-current="page"{{ end }}>Overview</a></li>
+        </ul>
         {{- end }}
-      </ul>
+        {{- range .parts }}
+        {{- with .title }}
+        <p class="nav-part">{{ . }}</p>
+        {{- end }}
+        <ul>
+          {{- range .items }}
+          <li><a href="{{ .page.RelPermalink }}"{{ if or (eq .page $current) (and .page.IsSection ($current.IsDescendant .page)) }} aria-current="page"{{ end }}>{{ .label }}</a></li>
+          {{- end }}
+        </ul>
+        {{- end }}
+      </details>
     </li>
     {{- end }}
     {{- $more := slice }}
     {{- range $docs.Pages }}{{ if not (in $listed .RelPermalink) }}{{ $more = $more | append . }}{{ end }}{{ end }}
     {{- with $more }}
     <li class="nav-group">
-      <span class="nav-group-title">More</span>
-      <ul>
-        {{- range . }}
-        <li><a href="{{ .RelPermalink }}"{{ if eq . $current }} aria-current="page"{{ end }}>{{ partial "title.html" . }}</a></li>
-        {{- end }}
-      </ul>
+      <details open>
+        <summary class="nav-group-title">More</summary>
+        <ul>
+          {{- range . }}
+          <li><a href="{{ .RelPermalink }}"{{ if eq . $current }} aria-current="page"{{ end }}>{{ partial "title.html" . }}</a></li>
+          {{- end }}
+        </ul>
+      </details>
     </li>
     {{- end }}
   </ul>

@@ -21,30 +21,52 @@ timeout = '120s'
   commit = 'main'
   diagramsCollect = false
 
-# Sidebar groups. A group lists pages, or a section whose pages are listed in weight-then-title order.
-# Any top-level page or section left out appears under "More", so a new page is never hidden.
+# Sidebar groups, in reading order; the docs home (docshome.html) lays out the same groups as cards. A group lists
+# pages, then a section's pages in weight-then-title order, or splits its pages under small headings (parts). A group
+# with a section links its index first. Groups fold away, except those marked open and the one holding the current
+# page. Any top-level page or section left out appears under "More", so a new page is never hidden.
 [[params.nav]]
-  title = 'Start here'
-  pages = ['/docs/OVERVIEW.md', '/docs/architecture.md', '/docs/status.md']
+  title = 'Get started'
+  open = true
+  blurb = 'What OpenFief is, a tour of it running, and how its parts fit together.'
+  pages = ['/docs/OVERVIEW.md', '/docs/quickstart.md', '/docs/architecture.md']
+[[params.nav]]
+  title = 'Guides'
+  open = true
+  blurb = 'Tasks, step by step: reach OpenFief from your network, and build a plugin of your own.'
+  section = '/docs/guides'
 [[params.nav]]
   title = 'Concepts'
+  blurb = 'Each part as built, in depth: what it does, how it works, the decisions behind it and the tests that prove it.'
   section = '/docs/concepts'
-[[params.nav]]
-  title = 'Design'
-  pages = ['/docs/DESIGN.md', '/docs/glossary.md', '/docs/proposals', '/docs/research.md']
+  [[params.nav.parts]]
+    title = 'Platform'
+    pages = ['/docs/concepts/plugins.md', '/docs/concepts/operator.md', '/docs/concepts/egress.md', '/docs/concepts/identity.md', '/docs/concepts/read-api.md', '/docs/concepts/ui.md', '/docs/concepts/ghostfolio.md']
+  [[params.nav.parts]]
+    title = 'Money and records'
+    pages = ['/docs/concepts/kernel.md', '/docs/concepts/ledger.md', '/docs/concepts/ingest.md', '/docs/concepts/valuation.md', '/docs/concepts/treasury-bonds.md', '/docs/concepts/portfolio.md']
 [[params.nav]]
   title = 'Reference'
+  blurb = 'Generated from the repository on every build: what is built and tested, the code map, resources and tasks.'
+  pages = ['/docs/status.md']
   section = '/docs/reference'
 [[params.nav]]
-  title = 'Development'
+  title = 'Design'
+  blurb = 'The decided design with its numbered decisions, the vocabulary, and the ideas still open.'
+  pages = ['/docs/DESIGN.md', '/docs/glossary.md', '/docs/proposals', '/docs/research.md', '/docs/implementation-questions.md']
+[[params.nav]]
+  title = 'Contributing'
+  blurb = 'How OpenFief is built: rules for contributors and coding agents, testing, the pipeline and the docs.'
   section = '/docs/dev'
 
 # Short sidebar labels for pages whose title (their first heading) is long.
 [params.navLabels]
-  '/docs/overview.md' = 'Overview'
-  '/docs/design.md' = 'Design'
+  '/docs/overview.md' = 'Introduction'
+  '/docs/architecture.md' = 'How it works'
+  '/docs/design.md' = 'Decisions'
   '/docs/research.md' = 'Research'
   '/docs/proposals' = 'Proposals'
+  '/docs/implementation-questions.md' = 'Open questions'
 
 [module]
   [[module.mounts]]

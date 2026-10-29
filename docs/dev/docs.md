@@ -17,11 +17,12 @@ The pages follow Diátaxis (Daniele Procida, grown out of the Divio documentatio
 
 | Kind | What it answers | Where | Kept true by |
 |---|---|---|---|
+| Tutorial | What does it look like, end to end? | [quickstart.md](../quickstart.md), a tour of the public demo | Review against the demo |
+| How-to guides | How do I do a task? | [guides/](../guides/) | The staleness gate below, through each guide's `covers` |
 | Explanation | Why is it like this, and how does it work? | [concepts/](../concepts/), [architecture.md](../architecture.md), [pipeline.md](pipeline.md) | The staleness gate below |
 | Reference | What exactly is there? | Generated at build time: code map, custom resources, tasks, [status](/status/), [requirements report](/requirements/) | Regenerated on every build; never committed |
 | Decisions | What did the author decide? | [DESIGN.md](../DESIGN.md), [proposals/](../proposals/), [research.md](../research.md) | The design-docs skill and `task docs:check` |
 | Rules | What must contributors and agents do? | [dev/](./) and [AGENTS.md](../../AGENTS.md) | Review |
-| How-to guides and tutorials | How do I do a task? | Added with the first installable release | Tested in the end-to-end suite **(P)** |
 
 ```mermaid
 flowchart LR
@@ -51,6 +52,17 @@ flowchart LR
   concepts -. "covers" .-> code
 ```
 
+## How the site reads
+
+The sidebar tells one story, in reading order, and the docs home lays out the same groups as cards. Both come from `params.nav` in [`site/hugo.toml`](../../site/hugo.toml), so they can't disagree:
+
+1. **Get started:** the [introduction](../OVERVIEW.md), the [quickstart](../quickstart.md) and [how it works](../architecture.md). A newcomer reads these three in order.
+2. **Guides:** tasks, step by step, such as [exposing OpenFief](../guides/expose.md) and [building a plugin](../guides/build-a-plugin.md).
+3. **Concepts:** each area in depth, split into **Platform** (plugins, operator, egress, identity, read API, views) and **Money and records** (kernel, ledger, ingest, valuation, treasury bonds, portfolio).
+4. **Reference**, **Design** and **Contributing**: generated pages, the decisions, and these rules.
+
+Groups other than the first two fold away until the reader opens one or is on one of its pages. A page left out of `params.nav` appears under "More", so nothing is ever hidden; a path in `params.nav` that names no page fails the build. Status belongs in the reference and at the end of a page, never at the top: say what a thing does first, and mark what isn't built where it matters, in one plain sentence.
+
 ## One fact, one place
 
 - **Decisions** live in DESIGN.md. Other pages cite their IDs, such as D-18, and never restate them.
@@ -75,6 +87,7 @@ covers:
 - The body has no H1; the title is rendered as one. The sections are **(P)**: an introduction, then `Concepts`, `How it works`, `Decisions`, `Verification` and `Not built yet`.
 - Concepts are explained for a newcomer, with where the idea comes from when that helps.
 - Every concept page has at least one diagram, and the names in it match the code.
+- Diagrams of parts and how they connect draw each part with the design system's [icons](design-system.md#icons): `core@{ icon: "fief:gate", form: "square", label: "Core", pos: "b", h: 40 }`. Every icon node keeps its text label. Diagrams of code (types, functions, states, sequences) stay plain.
 - Link source files and other docs with relative links. The build resolves each one and fails on a broken one.
 - Synthetic data only, as everywhere in the repository.
 
@@ -110,7 +123,7 @@ flowchart TD
 
 1. `tools/docgen` writes the reference pages from the Go packages, the custom-resource definitions, the Taskfile and kibi's coverage report. kibi also renders its requirements report.
 2. Hugo's first pass collects every Mermaid block on every page, DESIGN.md and proposals included.
-3. `scripts/docs-diagrams.mjs` renders each block to a light and a dark SVG in headless Chromium, in the design system's palette. Each diagram is cached by a hash of its source.
+3. `scripts/docs-diagrams.mjs` renders each block to a light and a dark SVG in headless Chromium, in the design system's palette, with `design/icons` registered as the Mermaid icon pack `fief`. Each diagram is cached by a hash of its source.
 4. Hugo's second pass builds the site with the SVGs inlined. The site runs no JavaScript and loads nothing from other hosts.
 
 The build fails on a diagram that doesn't render, a relative link that resolves to nothing, or a link to a heading that doesn't exist. `task docs:serve` previews the site locally.
@@ -129,7 +142,7 @@ flowchart LR
 - Each release attaches `openfief-docs-<version>.tar.gz`, the site as it was at that version, for self-hosters who run that release.
 - Every link and asset is relative to its page (Hugo's `relativeURLs`). So one build works at the custom domain, at the GitHub Pages fallback address, and opened straight from disk out of the tarball. Docs pages link to generated pages by docs path, such as `/status/`, which the link hook resolves under `/docs/`.
 
-The site is [Hugo](https://gohugo.io), pinned in the Taskfile like the other tools. Its small theme lives in `site/`: no theme dependency, no CDN, and a strict content security policy. Its look, Mermaid diagrams included, comes from the [design system](design-system.md): the tokens, self-hosted fonts, marks and mascot in `design/`, which Hugo mounts into the site without `design.go`, the Go package that embeds them for the built-in UI. `docs/` is mounted into the site unchanged under `/docs/`, so every page reads the same on GitHub and on the site. The landing page is `site/content/_index.md` with its own template, `site/layouts/home.html`. Its decision counts come from the generated status page, so they are as current as the build, and the build fails if it can't read them.
+The site is [Hugo](https://gohugo.io), pinned in the Taskfile like the other tools. Its small theme lives in `site/`: no theme dependency, no CDN, and a strict content security policy. Its look, Mermaid diagrams included, comes from the [design system](design-system.md): the tokens, self-hosted fonts, marks and mascot in `design/`, which Hugo mounts into the site without `design.go`, the Go package that embeds them for the built-in UI. `docs/` is mounted into the site unchanged under `/docs/`, so every page reads the same on GitHub and on the site. The landing page is `site/content/_index.md` with its own template, `site/layouts/home.html`. It reads as a story: what OpenFief is, how it works, how to build on it and where it's going, with where it stands last. Its decision counts there come from the generated status page, so they are as current as the build, and the build fails if it can't read them.
 
 ## Verifying the implementation
 

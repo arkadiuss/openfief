@@ -1,6 +1,6 @@
 ---
 title: The OpenFief installation must not create an Ingress or a tunnel.
-status: open
+status: closed
 text_ref: design-decisions:D-28#1
 tags:
   - strict-modeling

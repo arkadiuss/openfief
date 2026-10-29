@@ -23,7 +23,7 @@ The portfolio context describes the portfolio as a whole: the parts it is divide
 
 ## How it works
 
-### Built: sleeves and sleeve kinds
+### Sleeves and sleeve kinds
 
 Package `portfolio` ([sleeve.go](../../internal/portfolio/sleeve.go), [kind.go](../../internal/portfolio/kind.go)) is pure domain code:
 
@@ -75,7 +75,7 @@ flowchart LR
   core -. "never available to agents" .-x f1
 ```
 
-### Built: the model portfolio's rules
+### The model portfolio's rules
 
 The rules are pure functions in package `portfolio` ([model.go](../../internal/portfolio/model.go), [backtest.go](../../internal/portfolio/backtest.go), [history.go](../../internal/portfolio/history.go), [drawdown.go](../../internal/portfolio/drawdown.go)):
 
@@ -106,7 +106,7 @@ flowchart LR
 
 **Max drawdown.** `MaxDrawdown` walks the series once, keeping the highest value so far; each later value's fall from it is compared exactly, by cross-multiplying, and only the worst one's depth is divided, rounded half-even to 12 places. Of equal falls it keeps the earliest. A series that never falls has depth 0 with its first day as both peak and trough.
 
-### Built: storing and entering the model
+### Storing and entering the model
 
 ```mermaid
 sequenceDiagram

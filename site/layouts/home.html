@@ -1,6 +1,7 @@
 {{- /*
 The landing page at the site root, styled by the design system (docs/dev/design-system.md). Its copy is in site/content/_index.md; the docs live under /docs/.
-The decision counts come from the generated status page, so they are as current as the build.
+It reads as a story: what OpenFief is, how it works, how to build on it and where it's going. Where it stands comes last, with decision counts taken from
+the generated status page, so they are as current as the build.
 */ -}}
 {{- $docs := site.GetPage "/docs" -}}
 {{- $status := site.GetPage "/docs/status.md" -}}
@@ -22,7 +23,7 @@ The decision counts come from the generated status page, so they are as current 
     <a class="brand" href="{{ .RelPermalink }}">{{ partial "mark.html" }}OpenFief</a>
     <nav class="toplinks">
       <a href="{{ $docs.RelPermalink }}">Docs</a>
-      <a href="{{ $status.RelPermalink }}">Status</a>
+      <a href="{{ (site.GetPage "/docs/quickstart.md").RelPermalink }}">Quickstart</a>
       <a href="{{ site.Params.repoURL }}">GitHub</a>
     </nav>
   </header>
@@ -33,11 +34,10 @@ The decision counts come from the generated status page, so they are as current 
         <h1>Give your AI agents a <em>fief</em>, not the kingdom.</h1>
         <p class="hero-lede">{{ .Params.lede }}</p>
         <p class="actions">
-          <a class="button primary" href="{{ $docs.RelPermalink }}">Read the docs</a>
-          <a class="button" href="{{ (site.GetPage "/docs/architecture.md").RelPermalink }}">See the architecture</a>
+          <a class="button primary" href="{{ (site.GetPage "/docs/quickstart.md").RelPermalink }}">Take the tour</a>
+          <a class="button" href="{{ (site.GetPage "/docs/architecture.md").RelPermalink }}">How it works</a>
           <a class="button" href="{{ site.Params.repoURL }}">GitHub</a>
         </p>
-        <p class="stage">{{ .Params.stage }}</p>
       </div>
       <figure class="hero-art">
         <img src="{{ "docs/design/mascot/kasztan-on-duty.svg" | relURL }}" width="240" height="260" alt="Kasztan, OpenFief's żubr mascot, on duty with a sealed charter">
@@ -49,7 +49,9 @@ The decision counts come from the generated status page, so they are as current 
       <ul class="features">
         {{- range .Params.features }}
         <li>
-          <span class="state state-{{ .state | urlize }}">{{ .state }}</span>
+          {{- with resources.Get (printf "design/icons/%s.svg" .icon) }}
+          <span class="feature-icon" aria-hidden="true">{{ .Content | safeHTML }}</span>
+          {{- else }}{{ errorf "site/content/_index.md: feature %q names icon %q, which design/icons doesn't have" .title .icon }}{{ end }}
           <h2>{{ .title }}</h2>
           <p>{{ .text | markdownify }}</p>
         </li>
@@ -57,8 +59,22 @@ The decision counts come from the generated status page, so they are as current 
       </ul>
     </section>
 
+    <article class="story">
+      {{ .Content }}
+    </article>
+
     <section class="verified">
-      <h2>Verified as it's built</h2>
+      <h2>Where it stands</h2>
+      <p>{{ .Params.stage }}</p>
+      <ol class="milestones">
+        {{- range .Params.milestones }}
+        <li{{ if .now }} class="now"{{ end }}>
+          <span class="milestone-name">{{ .name }}</span>
+          <strong>{{ .title }}</strong>
+          <span>{{ .text }}</span>
+        </li>
+        {{- end }}
+      </ol>
       <p>Every design decision has an ID, every requirement is traced to the code and the tests behind it, and a docs page that falls behind its code fails the build. This build counts the decisions:</p>
       <ul class="counts">
         {{- range $counts }}
@@ -68,9 +84,10 @@ The decision counts come from the generated status page, so they are as current 
       <p><a href="{{ $status.RelPermalink }}">See every decision and its evidence</a></p>
     </section>
 
-    <article class="story">
-      {{ .Content }}
-    </article>
+    <section class="story">
+      <h2>Help shape it</h2>
+      {{ .RenderString (dict "display" "block") .Params.help }}
+    </section>
   </main>
   {{- partial "footer.html" . }}
 </body>

@@ -1,6 +1,6 @@
 ---
 title: Default access to OpenFief must be through kubectl port-forward.
-status: open
+status: closed
 text_ref: design-decisions:D-28#3
 tags:
   - strict-modeling

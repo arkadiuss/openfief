@@ -1,6 +1,6 @@
 ---
 title: The openfief CLI's first-passkey command must start the kubectl port-forward to the UI and print D-60's one-time link, and the first-run wizard must follow.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

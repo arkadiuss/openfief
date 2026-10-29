@@ -1,6 +1,6 @@
 ---
 title: Ingest
-description: How statements from institutions enter the ledger, through in-core mappers or connector plugins the core calls, and what the IBKR Flex connector does today.
+description: How statements from institutions enter the ledger, through in-core mappers or connector plugins the core calls, and how the IBKR Flex connector maps a statement.
 covers:
   - internal/ingest/**
   - proto/openfief/ingest/**

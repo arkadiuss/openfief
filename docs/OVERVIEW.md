@@ -31,11 +31,16 @@ A planned walkthrough for one user:
 
 ```mermaid
 flowchart LR
-  A["Thesis agent"] -- "trade proposal" --> G["OpenFief gateway<br/>lease and rules check"]
-  G -- "approval request" --> P["Your phone"]
+  A@{ icon: "fief:agent", form: "square", label: "Thesis agent", pos: "b", h: 40 }
+  G@{ icon: "fief:gate", form: "square", label: "OpenFief gateway<br/>lease and rules check", pos: "b", h: 40 }
+  P@{ icon: "fief:phone", form: "square", label: "Your phone", pos: "b", h: 40 }
+  B@{ icon: "fief:institution", form: "square", label: "Separate<br/>broker account", pos: "b", h: 40 }
+  K@{ icon: "fief:killswitch", form: "square", label: "Kill switch", pos: "b", h: 40 }
+  A -- "trade proposal" --> G
+  G -- "approval request" --> P
   P -- "approve" --> G
-  G -- "order" --> B["Separate broker account"]
-  K["Kill switch"] -. "revoke and cancel" .-> G
+  G -- "order" --> B
+  K -. "revoke and cancel" .-> G
 ```
 
 ## What makes it different
@@ -52,9 +57,15 @@ flowchart LR
 - **Not a hosted trading service.** Agents trade only your own accounts, on your own machines. A hosted version may come later; the current proposal limits it to tracking and analytics.
 - **Not investment advice.** You use it at your own risk.
 
+## Where to go next
+
+- [Quickstart](quickstart.md): a tour of the public demo, with synthetic data.
+- [How it works](architecture.md): the parts and how they fit together.
+- [Build a plugin](guides/build-a-plugin.md): write a connector or a view of your own.
+
 ## Status and how to help
 
-Milestone M0, the tracker, is in progress: the core service with its read API, the ledger, valuation and import libraries, the plugin operator and the egress proxy are built; the UI and connector plugins are not yet. The [status page](https://openfief.dev/docs/status/) tracks every decision. Useful now:
+Milestone M0, the tracker, is being built in the open: the core with its ledger, valuations and read API, the plugin operator and egress proxy, the built-in UI and connectors for Interactive Brokers, treasury bonds, end-of-day prices and NBP exchange rates already run on the [demo](https://demo.openfief.dev). The [status page](https://openfief.dev/docs/status/) tracks every decision. Useful now:
 
 - Critique of the security model, especially the lease guarantees.
 - Experience with the Interactive Brokers API or its linked accounts as a Polish resident.
