@@ -71460,3 +71460,13 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-plugins
+  - id: SYM-e2e-images-missing
+    title: missing
+    sourceFile: scripts/e2e-images.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:06:06.510Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack

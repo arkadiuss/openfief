@@ -419,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32805b196b97
+  - type: executable_for
+    from: SYM-e2e-images-missing
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-29T05:06:08.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-392ee5364688
