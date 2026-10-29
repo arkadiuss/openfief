@@ -38,6 +38,14 @@ func TestParseCatalog(t *testing.T) {
 			}}},
 		},
 		{
+			name: "a version, as a release writes it",
+			in:   `{"plugins":[{"name":"sample","version":"2026.11.0","image":"` + imageA + `","publisher":{"name":"example","issuer":"` + issuerExample + `","subject":"` + subjectCI + `"}}]}`,
+			want: plugins.Catalog{Entries: []plugins.CatalogEntry{{
+				Name: "sample", Version: "2026.11.0", Image: img,
+				Publisher: plugins.Signer{Name: "example", Kind: plugins.SignerPublisher, Identity: keyless(issuerExample, subjectCI)},
+			}}},
+		},
+		{
 			name: "key publisher",
 			in:   `{"plugins":[{"name":"sample","image":"` + imageA + `","publisher":{"name":"example","publicKey":` + string(keyJSON) + `}}]}`,
 			want: plugins.Catalog{Entries: []plugins.CatalogEntry{{

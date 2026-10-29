@@ -328,3 +328,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-913d969a7b72
+  - type: verified_by
+    from: SCEN-tooling-release-catalog-entries
+    to: TEST-tooling-release-catalog
+    created_at: 2026-10-29T18:01:58.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6441c620877

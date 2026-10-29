@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e41217f2277
+  - type: executable_for
+    from: SYM-pl-test-helper-ci-images-expect-kind
+    to: TEST-tooling-ci-images
+    created_at: 2026-10-29T18:31:11.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d55fc707999

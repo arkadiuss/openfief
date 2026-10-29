@@ -391,3 +391,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed9ae748bad2
+  - type: executable_for
+    from: SYM-pl-test-helper-release-catalog-run
+    to: TEST-tooling-release-catalog
+    created_at: 2026-10-29T18:31:17.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b03eb1b118a0

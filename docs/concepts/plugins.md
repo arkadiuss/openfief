@@ -200,7 +200,7 @@ flowchart TD
 
 - **Signers.** A `Signer` has a name, one of D-45's three kinds (`SignerOpenFiefCI`, `SignerPublisher`, `SignerOwner`) and a `SignerIdentity`. A keyless identity is an `https` OIDC issuer plus either an exact subject or an RE2 `SubjectPattern` that must match the whole subject; a key identity is one PEM public key. `SignerIdentity.Matches` compares a verified signature's identity with it, and a malformed identity matches nothing.
 - **OpenFief's CI** is always trusted: `OpenFiefCI()` is the GitHub Actions issuer with the exact subject of the `images.yml` workflow on `main`.
-- **The catalog** is [plugins.json](../../internal/plugins/catalog/plugins.json), embedded in the operator binary with `go:embed` and read by `catalog.Load` (D-43). `ParseCatalog` reads it strictly: unknown fields, trailing data or any invalid entry refuse the whole file. An entry has a name, an image whose digest it pins, and a publisher with an exact identity, never a pattern (D-44). Only the digest counts, so a mirror of the same image is verified too. The file has no entries yet.
+- **The catalog** is [plugins.json](../../internal/plugins/catalog/plugins.json), embedded in the operator binary with `go:embed` and read by `catalog.Load` (D-43). `ParseCatalog` reads it strictly: unknown fields, trailing data or any invalid entry refuse the whole file. An entry has a name, an image whose digest it pins, and a publisher with an exact identity, never a pattern (D-44). Only the digest counts, so a mirror of the same image is verified too. An entry may also carry the `version` of the release that added it, by which `plugin upgrade` names it. The release workflow adds every first-party plugin with the digest it signed (D-88): each release adds one entry per plugin, published by `openfief` with OpenFief's CI identity, on the release commit the tag points at, and the operator and CLI of that release embed it ([Delivery pipeline](../dev/pipeline.md#releases)). Until the first release the file has no entries.
 - **Owner signers** come from `ParseOwnerSigners`, with the same strictness; they may use a subject pattern or a public key. The operator reads them at start from the optional ConfigMap `openfief-trusted-signers` and refuses to start when the file is invalid.
 - **The policy.** `NewTrustPolicy(catalog, owner)` trusts OpenFief's CI, every catalog publisher and every owner signer. `Decide` returns `ErrUnsigned` without signatures and `ErrUntrustedSigner` when none is by a trusted signer. Otherwise the image is `Verified` when a catalog entry pins its digest and that entry's publisher signed it, and `Unverified` when any other trusted signer did. With a declared manifest, it then returns `ErrManifestMismatch` unless `Manifest.Equal` holds. Nothing in the policy can admit an unsigned image (D-57).
 - **The manifest label** is `io.openfief.plugin.manifest` on the image config. `ParseManifestLabel` reads the same fields as `spec.manifest`, refuses unknown fields and validates the result. `Manifest.Equal` compares capabilities, egress hosts, Secret mounts and data tiers as sets, and config schemas as JSON values with exact numbers.
@@ -367,7 +367,8 @@ Implemented, fully or in the part named:
 - **D-27** (part) Plugins get, and the SDK sends, `openfief-core` tokens; the core accepts view plugins' tokens on the `AuthService` and the read API ([Identity](identity.md#in-the-core)).
 - **D-32** (part) Plugins reach only core and proxy, no DNS.
 - **D-42** Manifest in a signed image label; `spec.manifest` must match it.
-- **D-43** (part) One catalog file, embedded in the operator; still empty.
+- **D-43** One catalog file, embedded in the operator and the CLI.
+- **D-88** (workflow built, not yet run) The release workflow adds each first-party plugin with the digest it signed, so first-party plugins show as verified from the first release on.
 - **D-44** Catalog entries pin a digest and the publisher's identity.
 - **D-45** Three signer kinds: OpenFief CI, catalog publishers, owner signers.
 - **D-46** The `openfief` CLI verifies, shows the request, and applies or prints the `Plugin` and an exactly matching grant.
@@ -448,9 +449,9 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 
 ## Not built yet
 
-- **Verified plugins (D-43, D-44).** The catalog file exists but lists no plugin, so every image that runs today is unverified.
+- **Verified plugins (D-43, D-44, D-88).** No release has run yet, so the catalog lists no plugin and every image that runs today, the first-party ones included, is unverified.
 - **More contracts and SDKs (D-11).** A plugin serves only the connector contract. View plugins serve no contract of their own (P-9 outlines one, but it is a proposal): they are clients of the read API and of the core's services for view plugins (`AuthService`, `ModelPortfolioService`, `BondLotService`, `StatementService`), whose Go code `sdk/go/gen` carries. There is no TypeScript SDK.
-- **First-party plugins in the catalog (D-43).** `nbp-fx`, `ibkr-flex`, `eodhd`, `treasury-bonds`, `ghostfolio` and `ui` are built and signed by CI but not in the catalog, so they run as signed by a trusted signer, not verified.
+- **Images built on `main` stay unverified.** CI signs every push to `main`, but only a release adds digests to the catalog, so the demo's images, deployed from `main`, show as signed by OpenFief's CI.
 - **The core naming what to price (D-22).** `eodhd` fetches the instruments its config lists; the core doesn't tell a market-data connector which instruments are held or which indices the model portfolio targets.
 - **Core side of plugin identity (D-27).** The core verifies view plugins' `openfief-core` tokens only; a connector's token is accepted nowhere, since the core calls connectors and not the other way round (D-49).
 - **Data tiers.** Carried from manifest to workload but enforced nowhere (P-33 is undecided).

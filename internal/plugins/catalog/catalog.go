@@ -2,12 +2,14 @@
 // in this repository released with the product and embedded in the operator.
 // It lists the first-party and verified plugins; each entry pins one
 // reviewed image digest and the identity of the publisher who signed it
-// (D-44), so each new version needs a new entry, added by the author.
+// (D-44), so each new version needs a new entry. The release workflow adds
+// each first-party plugin with the digest it signed and the release's
+// version (D-88, scripts/release-catalog.sh); the author adds the others.
 //
 // The format is plugins.ParseCatalog's:
 //
 //	{"plugins": [
-//	  {"name": "sample-connector",
+//	  {"name": "sample-connector", "version": "2026.11.0",
 //	   "image": "ghcr.io/example/sample-connector@sha256:<64 hex digits>",
 //	   "publisher": {"name": "example",
 //	                 "issuer": "https://token.actions.githubusercontent.com",

@@ -86041,3 +86041,33 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-cli-run
+  - id: SYM-pl-test-helper-ci-images-expect-kind
+    title: expect_kind
+    sourceFile: scripts/tests/ci-images.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:31:09.502Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images
+  - id: SYM-pl-test-helper-release-catalog-run
+    title: run
+    sourceFile: scripts/tests/release-catalog.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:31:15.294Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-catalog
+  - id: SYM-pl-test-helper-release-catalog-expect-fail
+    title: expect_fail
+    sourceFile: scripts/tests/release-catalog.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T18:31:20.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-catalog

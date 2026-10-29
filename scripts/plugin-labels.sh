@@ -4,7 +4,8 @@
 #   LABEL io.openfief.plugin.manifest='<json>'
 # and a Plugin for that image under deploy/demo/plugins must declare the same manifest in spec.manifest, since the
 # operator refuses a Plugin whose manifest differs from its image's label.
-# `write` rewrites the Dockerfile labels; `check` fails, naming each file, when a label or a demo Plugin differs.
+# `write` rewrites the Dockerfile labels, adding one at the end of a Dockerfile that has none; `check` fails,
+# naming each file, when a label or a demo Plugin differs.
 # Usage: plugin-labels.sh check|write [repository root]   (gojq on PATH)
 set -euo pipefail
 
@@ -20,17 +21,24 @@ dockerfile_label() {
   sed -n "s/^LABEL $label_key='\(.*\)'\$/\1/p" "$1"
 }
 
-# write_label replaces the manifest label line of a Dockerfile with value.
+# write_label replaces the manifest label line of a Dockerfile with value. A Dockerfile without one gets it
+# appended, so it lands in the final stage, the image that is signed.
 write_label() {
   local dockerfile="$1" value="$2" out
+  if [ ! -f "$dockerfile" ]; then
+    echo "plugin-labels: $dockerfile is missing" >&2
+    return 1
+  fi
   # The value goes through the environment: awk -v would interpret its backslashes.
   out="$(LABEL_VALUE="$value" awk -v key="$label_key" '
     index($0, "LABEL " key "=") == 1 { print "LABEL " key "=\047" ENVIRON["LABEL_VALUE"] "\047"; done = 1; next }
     { print }
-    END { if (!done) exit 1 }' "$dockerfile")" || {
-    echo "plugin-labels: $dockerfile has no LABEL $label_key line" >&2
-    return 1
-  }
+    END {
+      if (!done) {
+        print "# The plugin manifest (D-42), signed with the image: written from manifest.json by `task plugins:labels`."
+        print "LABEL " key "=\047" ENVIRON["LABEL_VALUE"] "\047"
+      }
+    }' "$dockerfile")"
   printf '%s\n' "$out" >"$dockerfile"
 }
 

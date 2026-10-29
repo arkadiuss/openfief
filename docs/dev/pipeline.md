@@ -202,9 +202,12 @@ sequenceDiagram
 [release.yml](../../.github/workflows/release.yml) only starts by hand (`workflow_dispatch`) and takes three inputs: `channel` (`beta` or `stable`), `version`, and `dry_run`, which defaults to `true`. Only one release runs at a time.
 
 1. `plan` refuses a real run unless the actor is the repository owner and the ref is `main`. It then runs three tasks on full history. `release:check` calls [release-version.sh](../../scripts/release-version.sh): stable must be `YYYY.M.N` and beta `YYYY.M.N-beta.K`, with no `v`, no leading zeros, a month from 1 to 12, `K` from 1 up, and no existing tag. `release:notes` writes the notes to the run's summary page. `release:assets` packs `deploy/` into `dist/openfief-deploy-<version>.tar.gz` and builds the docs site into `dist/openfief-docs-<version>.tar.gz`; these copies are only a trial and are discarded.
-2. `images` calls images.yml with the version as the tag, and pushes and signs only on a real run.
-3. `publish` runs only on a real run. `task release:publish` repeats the version check, rebuilds the tarball and notes, and creates the tag at the checked-out commit through the GitHub API. For `stable` it also creates a GitHub release with the notes and both tarballs. A beta gets a tag and no GitHub release.
-4. `deploy-demo` runs after every real beta. It publishes the beta's verified digests as the demo artifact, as above, with the version as the tag.
+2. `plugin-images` calls images.yml with `kind: plugins`: only `plugins/*/Dockerfile`, with the version as the tag, pushed and signed only on a real run. Each pushed image's digest becomes an artifact, `digest-<name>`.
+3. `catalog` runs only on a real run (D-88). `task release:catalog` ([release-catalog.sh](../../scripts/release-catalog.sh)) checks each digest's keyless signature by `images.yml` on `main` with `cosign verify`, then adds one entry per first-party plugin to [plugins.json](../../internal/plugins/catalog/plugins.json): its name, the release version, `ghcr.io/<repo>/<name>@<digest>` and the publisher `openfief` with OpenFief's CI identity. It refuses a plugin without a digest and a name and version already listed. The job commits the file on a new branch, `release/<version>`, and pushes it; that commit is the release commit.
+4. `images` calls images.yml with `kind: commands` and `ref` set to the release commit, so the operator and core embed the catalog that pins this release's plugins. On a dry run there is no release commit and it builds the dispatching commit.
+5. `cli` builds the `openfief` CLI from the release commit with `task release:cli` ([release-cli.sh](../../scripts/release-cli.sh)): static binaries for Linux and macOS on amd64 and arm64, `openfief-<version>-<os>-<arch>`, a CycloneDX SBOM from `cyclonedx-gomod` (pinned in the Taskfile) and `openfief-<version>-SHA256SUMS`. On a real run `task release:cli:sign` signs every file keylessly with `cosign sign-blob`, writing a Sigstore bundle, `<file>.sigstore.json`, next to it; the certificate names `release.yml` at `refs/heads/main`. The files are the run's `cli` artifact.
+6. `publish` runs only on a real run, on the release commit. `task release:publish` repeats the version check, rebuilds the tarballs and notes, and creates the tag at that commit through the GitHub API. For `stable` it creates a GitHub release with the notes, both tarballs and the CLI files; a beta gets a pre-release with the notes and the CLI files only. It then opens a pull request from `release/<version>` to `main`, so the catalog reaches `main` through review rather than a direct commit.
+7. `deploy-demo` runs after every real beta. It publishes the beta's verified digests as the demo artifact, as above, with the version as the tag.
 
 [release-notes.sh](../../scripts/release-notes.sh) finds the previous release with `git describe`, limited to tags that start with four digits. A stable release skips beta tags, so its notes cover the whole cycle; a beta starts after the newest release of either channel. Each non-merge commit goes into Breaking changes (`!` or a `BREAKING CHANGE:` footer), Features (`feat`), Fixes (`fix`), Performance (`perf`) or Other changes, which also takes anything not in Conventional Commit form.
 
@@ -214,26 +217,33 @@ sequenceDiagram
   participant P as "plan job"
   participant I as images.yml
   participant G as GHCR
+  participant C as "catalog job"
+  participant L as "cli job"
   participant U as "publish job"
   participant H as "GitHub repository"
   participant D as deploy-demo.yml
   A->>P: workflow_dispatch with channel, version, dry_run
   P->>P: owner and main guard (real runs only)
   P->>P: task release:check, release:notes, release:assets
-  P->>I: push is true only when dry_run is false
+  P->>I: plugin images, pushed only when dry_run is false
   I->>I: build amd64 and arm64 with SBOM and provenance
   alt dry_run is false
-    I->>G: push the version tag
-    I->>G: task image:sign on the digest
-    I->>U: images done
-    U->>H: create tag VERSION at the commit
+    I->>G: push the version tag, task image:sign on the digest
+    I->>C: digest-NAME artifacts
+    C->>G: cosign verify each digest
+    C->>H: push release/VERSION with the catalog commit
+    C->>I: the other images, built from that commit
+    C->>L: the CLI, built from that commit and signed
+    U->>H: create tag VERSION at the release commit
     alt channel is stable
-      U->>H: gh release create with notes, deploy and docs tarballs
+      U->>H: gh release create with notes, tarballs and the CLI
     else channel is beta
+      U->>H: gh release create --prerelease with the CLI
       U->>D: publish the beta digests as the demo artifact
     end
+    U->>H: pull request release/VERSION into main
   else dry_run is true (default)
-    Note over I,U: images built but not pushed, publish skipped
+    Note over I,U: images and CLI built but not pushed or signed, catalog and publish skipped
   end
 ```
 
@@ -264,8 +274,10 @@ The pipeline's decisions live in shell scripts, and each script that decides som
 |---|---|
 | `check-docs.test.sh` (TEST-tooling-docs-check) | Unchanged docs pass; a reference to an undefined ID, an edited ground-rule line, an ID defined twice and a base revision that isn't a commit each fail with the right message. |
 | `vulncheck.test.sh` (TEST-tooling-vuln-offline) | A high npm finding fails, an unreachable npm registry fails, and a govulncheck that can't reach `vuln.go.dev` fails. Stubs keep it offline. |
-| `ci-images.test.sh` (TEST-tooling-ci-images) | No Dockerfile gives `[]`; two Dockerfiles give the expected matrix with a lowercased prefix; a duplicate or invalid image name fails. |
-| `plugin-labels.test.sh` (TEST-tooling-plugin-labels) | The committed labels pass; a manifest changed without its label fails and names the Dockerfile; a demo `Plugin` declaring another manifest fails; `write` brings the label in step, keeps backslashes as they are, and refuses a single quote or a Dockerfile without the label line. |
+| `ci-images.test.sh` (TEST-tooling-ci-images) | No Dockerfile gives `[]`; two Dockerfiles give the expected matrix with a lowercased prefix; `plugins` and `commands` list one kind each and an unknown kind fails; a duplicate or invalid image name fails. |
+| `plugin-labels.test.sh` (TEST-tooling-plugin-labels) | The committed labels pass; a manifest changed without its label fails and names the Dockerfile; a demo `Plugin` declaring another manifest fails; `write` brings the label in step, keeps backslashes as they are, appends the label to a Dockerfile without one, and refuses a single quote or a missing Dockerfile. |
+| `release-catalog.test.sh` (TEST-tooling-release-catalog) | Each plugin enters the catalog with its digest, the version and OpenFief's CI as publisher, lowercased; a plugin without a digest, a digest that isn't one and a name and version already listed fail; a next version keeps the earlier entries. |
+| `release-cli.test.sh` (TEST-tooling-release-cli) | With stand-ins for go and cyclonedx-gomod: four static builds, Linux and macOS on amd64 and arm64, named by version, an SBOM, and a SHA256SUMS that lists and verifies them all. |
 | `dco-check.test.sh` (TEST-tooling-dco) | A commit signed off by its author passes; a sign-off by someone else and a missing sign-off both fail and name the commit. |
 | `release-version.test.sh` (TEST-tooling-release-version) | 14 table cases: valid stable and beta versions pass; a `v` prefix, leading zeros, month 13, `beta.0`, the wrong or an unknown channel, and an existing tag fail. |
 | `release-notes.test.sh` (TEST-tooling-release-notes) | Stable notes start after the previous stable, beta notes after the previous release of either channel, a first release covers all history, and both `!` and `BREAKING CHANGE:` count as breaking. |
@@ -320,7 +332,7 @@ These are the gaps between [sdlc.md](sdlc.md) or [testing.md](testing.md) and th
 - **No PR template** asks which requirements a PR implements or how it was verified (sdlc.md:26).
 - **End-to-end tests cover the demo stack only** (testing.md, sdlc.md:11 and :31). The suite runs two plugins through the operator (`nbp-fx`, configured to call nothing outside, and the UI), no real Ghostfolio and no fixture server, and goes through no bootstrap install other than the demo's manifests. The demo loader fetches NBP rates from api.nbp.pl when the runner reaches it and falls back to its committed rates otherwise, so the suite isn't hermetic. kind has no Traefik, so the route through Traefik is checked on k3d only. The local-cluster guard has no test, though REQ-tooling-e2e-local-only has a scenario.
 - **The demo serves no product yet** (sdlc.md:12 and :32). The deploy path is built, but whether it runs depends on settings outside the repository: the `demo` environment and public GHCR packages. The app layer holds the operator and the egress proxy, and `demo-routes` stays suspended until a core service exists (deploy/demo/stack.yaml:107). The demo database stays empty too: deploy/demo-data/kustomization.yaml:2 says `deploy/demo` includes the seed Job, but nothing under `deploy/demo` refers to it, and `deploy/demo/openfief` doesn't pin the `demo-seed` image.
-- **Releases don't pin their images** (sdlc.md:41, D-17). images.yml exposes no digest output. The stable tarball ships `deploy/` with bases that name images without a tag or digest (deploy/operator/deployment.yaml:28, deploy/egress-proxy/deployment.yaml:26) and expect an overlay to pin them. Only the demo has such an overlay, and CI fills it in at deploy time. "The CRDs and the bootstrap install" are one archive of `deploy/`.
+- **Releases don't pin their core images** (sdlc.md:41, D-17). images.yml records only each image's digest as an artifact, which the catalog uses for the plugins. The stable tarball ships `deploy/` with bases that name images without a tag or digest (deploy/operator/deployment.yaml:28, deploy/egress-proxy/deployment.yaml:26) and expect an overlay to pin them. Only the demo has such an overlay, and CI fills it in at deploy time. "The CRDs and the bootstrap install" are one archive of `deploy/`.
 - **The dry run is per run, not a gate** (sdlc.md:42). A run with `dry_run: false` validates in `plan`, then pushes and signs images straight away (release.yml:73-83). Nothing requires an earlier dry run of the same commit, or checks that the commit passed CI. Because image builds don't fail fast, one image can be pushed while another fails, which leaves pushed images with no tag.
 - **No SDK or contract releases** (sdlc.md:43). There's no `sdk/go/vX.Y.Z` tagging and no TypeScript SDK. `buf breaking` now has contracts to check (the connector contract and the read API) and runs on every change, not only before an SDK release.
 - **Renovate misses some pins** (sdlc.md:47). `enabledManagers` (renovate.json:5) lacks `dockerfile`, yet cmd/operator/Dockerfile:3, cmd/egress-proxy/Dockerfile:3 and cmd/demo-seed/Dockerfile:5 say Renovate updates them, so `golang:1.27.3` can drift from `go.mod`'s toolchain. No manager reads the demo's Helm chart versions. For k3s and Flux, Renovate bumps the version but not the sha256 sums beside it: a stale flux CLI sum fails the next deploy job, while stale k3s or Flux install sums show up only when a machine boots and stops at that download.

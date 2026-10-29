@@ -37,6 +37,20 @@ mkdir -p cmd/fief-operator plugins/xtb-import
 touch cmd/fief-operator/Dockerfile plugins/xtb-import/Dockerfile
 expect_output "two images" '[{"name":"fief-operator","dockerfile":"cmd/fief-operator/Dockerfile","image":"ghcr.io/example/openfief/fief-operator"},{"name":"xtb-import","dockerfile":"plugins/xtb-import/Dockerfile","image":"ghcr.io/example/openfief/xtb-import"}]'
 
+expect_kind() {
+  local kind="$1" want="$2" got
+  if ! got="$(bash "$root/scripts/ci-images.sh" ghcr.io/example/openfief "$kind" 2>&1)" || [ "$got" != "$want" ]; then
+    echo "FAIL: kind $kind: want $want, got $got" >&2
+    failures=$((failures + 1))
+  fi
+}
+expect_kind plugins '[{"name":"xtb-import","dockerfile":"plugins/xtb-import/Dockerfile","image":"ghcr.io/example/openfief/xtb-import"}]'
+expect_kind commands '[{"name":"fief-operator","dockerfile":"cmd/fief-operator/Dockerfile","image":"ghcr.io/example/openfief/fief-operator"}]'
+if out="$(bash "$root/scripts/ci-images.sh" ghcr.io/example/openfief images 2>&1)" || ! grep -q "must be all, plugins or commands" <<<"$out"; then
+  echo "FAIL: an unknown kind should fail, got: $out" >&2
+  failures=$((failures + 1))
+fi
+
 mkdir -p plugins/fief-operator
 touch plugins/fief-operator/Dockerfile
 expect_fail "a duplicate name" "'fief-operator' is used by another Dockerfile"
@@ -49,4 +63,4 @@ expect_fail "an invalid name" "image name 'Bad_Name' must be lowercase"
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "ci-images: 4 cases passed"
+echo "ci-images: 7 cases passed"

@@ -447,3 +447,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f94d221285e
+  - type: verified_by
+    from: SCEN-tooling-release-cli-signed
+    to: TEST-tooling-release-cli
+    created_at: 2026-10-29T18:02:00.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5cc29c68a42

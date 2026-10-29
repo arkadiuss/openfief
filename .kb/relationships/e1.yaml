@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-386be07161ff
+  - type: validates
+    from: TEST-tooling-release-catalog
+    to: REQ-tooling-release-catalogs-first-party
+    created_at: 2026-10-29T18:01:53.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad092cd25e11
+  - type: validates
+    from: TEST-tooling-release-catalog
+    to: REQ-plugins-first-party-verified
+    created_at: 2026-10-29T18:01:53.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f04cee48dcbd
