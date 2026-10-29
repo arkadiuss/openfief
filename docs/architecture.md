@@ -1,123 +1,154 @@
 ---
-title: Architecture
-description: How OpenFief's parts fit together in M0, what is built today, and which page explains each part.
+title: How it works
+description: How OpenFief's parts fit together in your cluster, followed through what happens when a plugin is installed, when a statement comes in and when you open the UI.
 covers:
   - cmd/**
   - deploy/**
 ---
 
-OpenFief runs in the owner's own Kubernetes cluster. A core written in Go owns the record of every holding and transaction. Everything that talks to the outside world is a plugin: its own container, with only the permissions the owner granted it. An operator turns plugin resources into running, isolated workloads, and an egress proxy is the only way out to the internet. This page shows the whole design for M0 (the first milestone, a tracker with Polish imports) and marks what is built today.
+OpenFief runs in your own Kubernetes cluster and rests on one rule: the core owns the record, and everything that talks to the outside world is a plugin. The core is written in Go and holds every holding, transaction and valuation in PostgreSQL. Plugins run in their own containers with only the permissions you granted them: connectors bring data in, and views show it. An operator turns plugin resources into running, isolated workloads, and an egress proxy is the only way out to the internet. The agents of later milestones will be plugins too, under the same rule.
 
-## The system and its neighbors
+This page shows the parts, then follows them through three moments: installing a plugin, a statement coming in, and you opening the UI.
 
-The owner reaches OpenFief through `kubectl port-forward` by default (D-28), always to the core, the only entry point for browsers, which proxies the built-in UI (D-81). `openfief enroll` starts that forward and prints the link for the first passkey (D-80); the owner installs plugins with the same `openfief` command-line tool, using their own kubeconfig (D-46). OpenFief reaches out only through the egress proxy, and only to hosts a plugin's grant allows (D-32).
+## The big picture
+
+You reach OpenFief through one Service, the core's, exposed however you choose ([Expose OpenFief](guides/expose.md)). You manage plugins with the `openfief` command line and your own kubeconfig (D-46). OpenFief reaches out only through the egress proxy, and only to hosts a plugin's [grant](glossary.md) allows (D-32). It runs only images pinned by digest and signed by a signer you trust (D-17, D-56).
 
 ```mermaid
 flowchart LR
-  owner(["Owner"])
-  subgraph cluster["Owner's Kubernetes cluster"]
-    of["OpenFief<br/>namespace openfief"]
+  owner@{ icon: "fief:owner", form: "square", label: "You: browser<br/>and openfief CLI", pos: "b", h: 40 }
+  scripts@{ icon: "fief:script", form: "square", label: "Your scripts", pos: "b", h: 40 }
+  subgraph cluster["Your Kubernetes cluster"]
+    of@{ icon: "fief:gate", form: "square", label: "OpenFief<br/>namespace openfief", pos: "b", h: 40 }
   end
-  ibkr["IBKR Flex Web Service"]
-  nbp["NBP<br/>exchange rates"]
-  gus["GUS<br/>inflation data"]
-  md["EODHD<br/>end-of-day prices"]
-  gf["Ghostfolio<br/>owner's own install"]
-  reg["Container registry<br/>signed images"]
-  owner -- "browser via port-forward to the core,<br/>openfief CLI" --> of
-  of -- "egress proxy,<br/>granted hosts only" --> ibkr
-  of --> nbp
-  of --> gus
-  of --> md
-  of --> gf
-  reg -- "digest-pinned images" --> of
+  inst@{ icon: "fief:institution", form: "square", label: "IBKR, NBP, GUS,<br/>EODHD", pos: "b", h: 40 }
+  gf@{ icon: "fief:view", form: "square", label: "Your Ghostfolio", pos: "b", h: 40 }
+  reg@{ icon: "fief:image", form: "square", label: "Container registry", pos: "b", h: 40 }
+  owner -- "your route to the core;<br/>CLI with your kubeconfig" --> of
+  scripts -- "read API, script token" --> of
+  of -- "egress proxy,<br/>granted hosts only" --> inst
+  of -- "egress proxy" --> gf
+  reg -- "signed images,<br/>pinned by digest" --> of
 ```
 
-## Parts, as designed and as built
-
-Green parts are built, amber parts are partly built, and gray parts are decided but not built yet. The table below says what exists in each.
+## The parts
 
 ```mermaid
-flowchart TB
-  classDef built fill:#d8efd9,stroke:#2f7d32,color:#1d1d1f
-  classDef partial fill:#fff1c7,stroke:#a77d00,color:#1d1d1f
-  classDef missing fill:#f3f3f3,stroke:#9a9a9a,color:#555,stroke-dasharray: 4 3
-  cli(["openfief CLI"]):::built
+flowchart LR
+  cli@{ icon: "fief:script", form: "square", label: "openfief CLI", pos: "b", h: 40 }
   subgraph ns["namespace openfief"]
-    op["Operator<br/>Plugin + PluginGrant"]:::partial
-    proxy["Egress proxy<br/>Smokescreen"]:::built
-    core["Core service<br/>ledger, valuation, read API,<br/>connector scheduler"]:::built
-    pg[("PostgreSQL")]:::partial
-    subgraph plugins["Plugins, one pod each"]
-      ui["Built-in UI view"]:::partial
-      gfv["Ghostfolio view"]:::partial
-      ibkrc["IBKR Flex connector"]:::partial
-      xtb["XTB export parser"]:::missing
-      bonds["Treasury bond connector"]:::partial
-      mdc["Market-data connector<br/>EODHD"]:::partial
-      nbpc["NBP FX"]:::partial
+    direction LR
+    op@{ icon: "fief:operator", form: "square", label: "Operator", pos: "b", h: 40 }
+    core@{ icon: "fief:gate", form: "square", label: "Core", pos: "b", h: 40 }
+    db@{ icon: "fief:database", form: "square", label: "PostgreSQL", pos: "b", h: 40 }
+    px@{ icon: "fief:egress", form: "square", label: "Egress proxy", pos: "b", h: 40 }
+    subgraph plugins["Plugins, a pod each"]
+      direction TB
+      conn@{ icon: "fief:connector", form: "square", label: "Connectors: IBKR Flex,<br/>treasury bonds, EODHD, NBP FX", pos: "b", h: 40 }
+      views@{ icon: "fief:view", form: "square", label: "Views: built-in UI,<br/>Ghostfolio", pos: "b", h: 40 }
     end
   end
-  sdk["Go SDK<br/>connector contract"]:::built
-  sdk -. "plugins build on" .-> plugins
-  cli -- "applies resources" --> op
+  cli -- "Plugin + PluginGrant" --> op
   op -- "creates and constrains" --> plugins
-  op -- "allow-lists" --> proxy
-  core --> pg
-  core -- "calls connectors,<br/>proxies browsers to views" --> plugins
-  ui -- "read API, AuthService" --> core
-  gfv -- "read API" --> core
-  plugins -- "outbound HTTPS" --> proxy
+  op -- "allow-lists" --> px
+  core --- db
+  core -- "calls, with a token<br/>per instance" --> conn
+  core -- "passes browsers on" --> views
+  views -- "read API" --> core
+  conn -- "outbound HTTPS" --> px
 ```
 
-| Part | Decided in | Built today | Explained in |
+| Part | What it does | Code | In depth |
 |---|---|---|---|
-| Operator | D-13, D-15 to D-17, D-42 to D-45, D-56, D-57 | `cmd/operator` and the reconciler in `internal/plugins/operator`, plus install manifests in `deploy/`. It deploys an image only when a trusted signer signed its digest, checked offline with sigstore-go against a bundled Sigstore trust root (`internal/plugins/cosign`; `cmd/sigstore-trusted-root` refreshes the root). The trusted signers are OpenFief's CI, the publishers pinned in the plugin catalog (`internal/plugins/catalog`, empty today) and any the owner adds in a ConfigMap | [Operator](concepts/operator.md) |
-| Egress proxy | D-32, D-63 | `cmd/egress-proxy`, embedding Smokescreen through `BuildProxy`. It checks each plugin's `openfief-egress` token with a TokenReview, caches accepted reviews, and allows only the hosts the grant names | [Egress](concepts/egress.md) |
-| Plugin model | D-11, D-16, D-42 to D-49, D-59 | Manifests, grants, effective permissions and workload compilation in `internal/plugins`. The connector contract (`openfief.connector.v1`) and the Go SDK for plugin authors in `sdk/go` | [Plugins](concepts/plugins.md) |
-| Ledger | D-18, D-19, D-23, D-33 to D-35 | Domain, use cases and the PostgreSQL store in `internal/ledger`, including the guard against seeding an account twice; the core service runs it | [Ledger](concepts/ledger.md) |
-| Valuation and FX | D-20, D-21, D-36, D-77 | Prices, FX lookups, valuation bases and the NBP client in `internal/valuation`, which the `plugins/nbp-fx` connector serves; stored valuations and the River revaluation queue (D-36) in `internal/valuation/postgres`, run by the core service | [Valuation](concepts/valuation.md) |
-| Treasury bonds | D-9, D-37, D-49, D-76, D-77 | Polish bond rules in `internal/jurisdiction/pl`. The owner's manual bond lots: the `plugins/treasury-bonds` connector on `internal/ingest/treasurybonds`, and the core's `BondLotService`, which hands each lot to the connector bound to its account | [Treasury bonds](concepts/treasury-bonds.md), [Ingest](concepts/ingest.md#treasury-bond-lots) |
-| Ingest | D-7, D-8, D-23, D-49, D-59 | Import batches and the IBKR Flex mapping and pull in `internal/ingest`, served to the core by the `plugins/ibkr-flex` connector. The core's side of connector plugins: the client in `internal/ingest/connectrpc`, the scheduler, watermarks and connector bindings in `internal/ingest/app` and `internal/ingest/postgres`, instance discovery in `internal/ingest/kube`, and the per-instance tokens (D-59) in `internal/identity/kube` | [Ingest](concepts/ingest.md) |
-| Shared kernel | (code organization) | Money, currency, quantity and dates in `internal/kernel` | [Kernel](concepts/kernel.md) |
-| Portfolio | D-52 to D-54, D-61 | Sleeves and sleeve kinds with their default roles and install defaults in `internal/portfolio`, stored by the ledger; the model portfolio, its backtest and max drawdowns, stored in the `portfolio` schema and entered through the core's `ModelPortfolioService` | [Portfolio](concepts/portfolio.md) |
-| Demo dataset | GR-12 | A synthetic dataset in `internal/demo`, loaded by `cmd/demo-seed` through the same ingest, ledger and valuation paths real data takes. It refuses any database without its own demo marker | [Demo](dev/demo.md) |
-| Read API | D-6, D-7, D-30, D-36, D-46, D-50, D-56, D-58, D-62 | The `openfief.views.v1.ReadService` protobuf service and its generated OpenAPI document; the queries, totals and allocation in `internal/views`; the Connect and REST `/v1` handler, through Vanguard, in `internal/views/connectapi`; the installed plugins with their signature trust, read from the operator's `Plugin` resources by `internal/views/kube`, and transactions marked when the instance that brought them in is removed. The core service serves it | [Read API](concepts/read-api.md) |
-| Core service | D-2, D-14, D-27, D-28, D-36, D-50 | `cmd/core`, installed by `deploy/core` (below). It migrates every context's schema, runs the River revaluation workers, and serves the read API on port 8080, accepting the owner's [sessions](concepts/identity.md) and script tokens from `internal/identity`, and view plugins' projected tokens (D-27), plus unauthenticated `/healthz` and `/readyz`. On the same port it serves view plugins the identity context's `AuthService`: passkey login and registration (D-26), sessions with a read or owner scope, read-only demo sessions behind `--demo-sessions`, script tokens and enrollment links (D-60), for the origins in `--auth-origin`. Outside a cluster there are no tokens to review, so it refuses every caller there: no build has a fixed token or any other way around authentication (D-84). In front of all of it sits the front door (D-81): every path the core doesn't serve itself goes, in a cluster, to the view plugin whose granted browser path covers it, with the core's own token for that instance, as the [Built-in UI](concepts/ui.md#the-front-door) page explains; outside a cluster such paths are 404. Next to it, admitted the same way, it serves the portfolio context's `ModelPortfolioService`, through which the built-in UI hands the owner's [model portfolio](concepts/portfolio.md) to the core (D-52), the ingest context's `BondLotService`, through which it hands the owner's [bond lots](concepts/ingest.md#treasury-bond-lots) to the core, which hands each to the connector instance bound to its account (D-9, D-49), and the ingest context's `StatementService`, a client stream through which it hands the statement files the owner uploads, up to 64 MiB, on to that instance's `ImportFile` ([Statement uploads](concepts/ingest.md#statement-uploads), D-7, D-49). The core reaches that instance through the same discovery and tokens as its syncs, so bond lots can be entered and statements uploaded only in a cluster with connectors on (`--connectors`); elsewhere both services answer `UNAVAILABLE`. Both record each completed batch in the ingest schema's batch history. `core enroll-link` prints the one-time link for the first passkey; `core token issue`, `list` and `revoke` manage script tokens as a break-glass. In a cluster it watches the `Plugin` resources for the read API's plugin list (D-46) and syncs every running connector instance on a schedule (D-49), as the ingest page explains; `core connector bind` and `core connector sync` bind an instance to an account and sync one now. On the demo only the `nbp` instance of the NBP FX connector is installed; the rest of its data enters through `cmd/demo-seed` | [Identity](concepts/identity.md), [Read API](concepts/read-api.md) |
-| Built-in UI | D-3, D-6, D-26, D-30, D-60 | The view plugin `plugins/ui` on `internal/views/ui`: server-rendered pages with htmx and Chart.js, passkey and demo sign-in through the core's AuthService, the overview with the allocation chart and the value over time as the time-weighted return, with the model portfolio while it is on, accounts, flagged balance assertions, the installed plugins with their signature trust (D-46, D-56), and the owner's settings. Against a real core it needs the core's `--auth-origin` to list its origin | [Built-in UI](concepts/ui.md) |
-| Market data | D-22, D-51 | The `plugins/eodhd` connector on `internal/valuation/eodhd`: end-of-day closes of the instruments in its config, found by ISIN, and market index levels, on the owner's EODHD key. The core stores the closes as prices and the index levels for the model portfolio. D-22's cross-check: the `ibkr-flex` connector delivers IBKR's mark prices as cross-check prices, which the core stores apart and compares with the prices of the same day, flagging a difference beyond `core --price-check-threshold` (1% by default); the read API serves them as `ListPriceChecks` and the built-in UI lists the flagged ones on `/price-checks` | [Valuation](concepts/valuation.md), [Plugins](concepts/plugins.md) |
-| openfief CLI | D-46, D-58, D-80 | `cmd/openfief` on `internal/plugins/cli` and `internal/identity/cli`: `enroll` forwards `localhost:8080` to the core and runs `core enroll-link` in its pod through exec for the first passkey's link ([Identity](concepts/identity.md#the-first-passkey)); `plugin install` verifies an image with the operator's own signature check and trust policy, shows what its signed manifest requests and, once the owner confirms, creates the `Plugin` and a `PluginGrant` approving exactly that with the owner's kubeconfig, or prints them for GitOps (`--print`); `plugin uninstall` deletes the grant, the `Plugin` and the Secrets no other instance uses; `plugin list`. Built and tested, not yet packaged for release. The read API marks a removed instance's transactions | [Plugins](concepts/plugins.md#installing-with-the-cli) |
-| Ghostfolio view | D-3, D-4, D-27, D-64 | The view plugin `plugins/ghostfolio` on `internal/views/ghostfolio`: a reconcile loop on a timer that reads the read API with the plugin's projected token and keeps the Ghostfolio accounts it owns equal to the record, checked against recordings of Ghostfolio 3.93.0. Its manifest can't name the owner's Ghostfolio host yet, so it doesn't run from the first-party image, and the demo doesn't run it | [Ghostfolio view](concepts/ghostfolio.md) |
-| XTB parser | D-9, D-24 | Not built | [Status](/status/) |
+| Core | Owns the record: the double-entry ledger, valuations of every holding on every day, and the read API. Schedules connector syncs, and is the only entry point for browsers and scripts | [`cmd/core`](../cmd/core/) | [Ledger](concepts/ledger.md), [Valuation](concepts/valuation.md), [Read API](concepts/read-api.md), [Identity](concepts/identity.md) |
+| Operator | Turns `Plugin` and `PluginGrant` resources into isolated workloads, after checking that the image's digest is signed by a signer you trust | [`cmd/operator`](../cmd/operator/) | [Operator](concepts/operator.md) |
+| Egress proxy | The only way out: each plugin reaches only the hosts its grant allows, and never a private address | [`cmd/egress-proxy`](../cmd/egress-proxy/) | [Egress](concepts/egress.md) |
+| PostgreSQL | The record, one schema per bounded context, run by CloudNativePG (D-14) | | |
+| Connectors | Bring data in: Interactive Brokers' Flex statements and mark prices, your treasury bond lots, end-of-day prices from EODHD, NBP's exchange rates | [`plugins/`](../plugins/) | [Ingest](concepts/ingest.md), [Treasury bonds](concepts/treasury-bonds.md), [Valuation](concepts/valuation.md) |
+| Views | Show the record: the [built-in UI](concepts/ui.md) and the [Ghostfolio view](concepts/ghostfolio.md), which keeps your Ghostfolio in step with OpenFief | [`plugins/ui`](../plugins/ui/), [`plugins/ghostfolio`](../plugins/ghostfolio/) | [Built-in UI](concepts/ui.md), [Ghostfolio view](concepts/ghostfolio.md) |
+| `openfief` CLI | Installs, lists and removes plugins, and prints the link for your first passkey, with your own kubeconfig | [`cmd/openfief`](../cmd/openfief/) | [Plugins](concepts/plugins.md#installing-with-the-cli), [Identity](concepts/identity.md#the-first-passkey) |
+| Go SDK | What plugins are built on: the connector contract, the core's tokens and the proxy | [`sdk/go`](../sdk/go/) | [Build a plugin](guides/build-a-plugin.md) |
 
-The [status page](/status/) gives the same picture decision by decision, from the requirements in kibi.
+The money side lives inside the core, as bounded contexts: [kernel](concepts/kernel.md) types for exact decimals and money, the [ledger](concepts/ledger.md), [valuation](concepts/valuation.md), the Polish [treasury bond](concepts/treasury-bonds.md) rules and the [portfolio](concepts/portfolio.md)'s sleeves and model.
 
-## Bounded contexts
+## Installing a plugin
 
-The code is organized by domain, following domain-driven design (Eric Evans, 2003). Each bounded context owns its terms, types and data. In this designed map from [code-organization.md](dev/code-organization.md), arrows point from a context to the contexts it reads:
+A plugin starts as a request: its image's signed manifest says what it needs. You see that request and approve exactly it.
 
 ```mermaid
 flowchart LR
-  ingest --> ledger
-  ingest --> valuation
-  valuation --> ledger
-  valuation --> pl["jurisdiction/pl"]
-  views --> ledger
-  views --> valuation
-  views --> portfolio
-  portfolio --> valuation
-  plugins
-  identity
-  kernel["kernel (shared)"]
+  you@{ icon: "fief:owner", form: "square", label: "openfief plugin install", pos: "b", h: 40 }
+  reg@{ icon: "fief:seal", form: "square", label: "Image signature<br/>and manifest", pos: "b", h: 40 }
+  op@{ icon: "fief:operator", form: "square", label: "Operator checks<br/>digest and signer", pos: "b", h: 40 }
+  pod@{ icon: "fief:connector", form: "square", label: "Plugin pod: own identity,<br/>granted Secrets only", pos: "b", h: 40 }
+  np@{ icon: "fief:wall", form: "square", label: "NetworkPolicy:<br/>only the core gets in", pos: "b", h: 40 }
+  px@{ icon: "fief:egress", form: "square", label: "Egress allow-list", pos: "b", h: 40 }
+  you -- "verifies, shows the request" --> reg
+  you -- "Plugin + PluginGrant" --> op
+  op --> pod
+  op --> np
+  op --> px
 ```
 
-The [code map](/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has four arrows the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves; `views` imports `jurisdiction/pl` to tell a treasury bond series from a listed instrument in the allocation; `ingest` imports `jurisdiction/pl` to check that a bond lot can be valued; and `portfolio` imports `ledger` to parse a model target's ISIN.
+The CLI checks the image's signature the same way the operator will, shows the capabilities, hosts, Secrets and browser paths the manifest requests, and once you confirm, creates a `Plugin` and a `PluginGrant` that approves exactly those. The operator deploys only a digest signed by a trusted signer, compiles the approved permissions into a ServiceAccount, a Deployment, a NetworkPolicy and an egress allow-list, and keeps an upgrade that asks for more on the old version until you approve it. [Plugins](concepts/plugins.md) and [Operator](concepts/operator.md) explain each check.
+
+## A statement comes in
+
+Every six hours by default, and at once for a new instance, the core syncs each running connector. Here is one sync of the Interactive Brokers connector:
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant S as Core: scheduler
+  participant P as IBKR Flex connector
+  participant X as Egress proxy
+  participant I as Interactive Brokers
+  participant L as Core: ledger
+  participant V as Core: valuation
+  S->>P: Sync(batch ID, watermark), with a token for this instance
+  P->>X: HTTPS request for the Flex statement
+  X->>I: only because the grant allows this host
+  I-->>P: statement
+  P-->>S: transactions, balance assertions, mark prices
+  S->>L: import the batch: new versions only, one transaction each
+  L->>V: queue revaluation from the earliest changed day
+  V->>V: a worker stores the new valuations
+```
+
+The import is idempotent: each transaction is keyed by its source and the institution's own ID, so the same statement twice changes nothing, and a changed row becomes a new version rather than an overwrite (D-18). The broker's own position snapshots are stored as balance assertions and checked against what the ledger derives. Revaluation runs in a queue inside PostgreSQL, so valuations catch up with every import, price and rate (D-36). [Ingest](concepts/ingest.md) and [Valuation](concepts/valuation.md) follow each step in the code.
+
+Not every source is pulled. Treasury bond lots are typed in on an account's page and statements are uploaded there, and the core hands both to the connector bound to that account ([Ingest](concepts/ingest.md#statement-uploads)).
+
+## You open the UI
+
+```mermaid
+flowchart LR
+  you@{ icon: "fief:browser", form: "square", label: "Your browser", pos: "b", h: 40 }
+  route@{ icon: "fief:route", form: "square", label: "Your route", pos: "b", h: 40 }
+  core@{ icon: "fief:gate", form: "square", label: "Core: front door", pos: "b", h: 40 }
+  ui@{ icon: "fief:view", form: "square", label: "Built-in UI", pos: "b", h: 40 }
+  api@{ icon: "fief:chart", form: "square", label: "Read API", pos: "b", h: 40 }
+  you --> route --> core
+  core -- "pages, with the core's<br/>token for the UI" --> ui
+  ui -- "your session" --> api
+```
+
+Your browser only ever talks to the core. The core serves its own paths, the read API under `/v1` and its Connect services, and passes every other path on to the view plugin whose approved browser path covers it (D-81). The UI signs you in with a passkey through the core (D-26), then renders each page from the read API, with your session, exactly as your scripts would with a script token. [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
+
+## Security boundaries
+
+Each line of defense holds even if the one before it fails:
+
+- **Who may call whom.** Every plugin's NetworkPolicy admits the core alone, and the core presents a short-lived token whose audience is that one instance (D-59). Plugins call the core with their own projected ServiceAccount tokens (D-27).
+- **Who may call out.** Plugins have no route to the internet except the egress proxy, which checks each request's token, the grant's hosts and the resolved address (D-32).
+- **What may run.** Only digests signed by a trusted signer, checked offline against Sigstore's trust root (D-56). No setting turns this off.
+- **What a plugin may read.** Only the Secrets its grant names. Connectors can't read your record at all (D-83).
+
+One rule is wider than it should be. The core talks to the Kubernetes API, for example to request plugins' tokens. Kubernetes rewrites the API Service's address to the API server's own before NetworkPolicy sees a packet, and on k3s that is the node's address on port 6443, which differs per cluster. So the core's NetworkPolicy in [`deploy/core/networkpolicy.yaml`](../deploy/core/networkpolicy.yaml) allows port 6443 to any address (D-92). A compromised core could use that port to reach other hosts. To narrow it, add a kustomize overlay that sets the rule's `ipBlock` to your API server's addresses, listed by `kubectl get endpointslices -n default -l kubernetes.io/service-name=kubernetes`. A cluster whose API server listens on 443, as managed clusters do, patches the port too.
 
 ## In the cluster
 
-Everything lives in the `openfief` namespace. A cluster admin installs the custom resource definitions once. The operator's permissions are a Role in that namespace only (D-15). The install ships no Ingress, LoadBalancer or tunnel (D-28); only the demo environment adds its own HTTPS route, below.
-
-The core talks to the Kubernetes API, for example to request plugins' tokens. Kubernetes rewrites the API Service's address to the API server's own before NetworkPolicy sees a packet, and on k3s that is the node's address on port 6443, which differs per cluster. So the core's NetworkPolicy in [`deploy/core/networkpolicy.yaml`](../deploy/core/networkpolicy.yaml) allows port 6443 to any address (D-92). A compromised core could use that port to reach other hosts. To narrow it, add a kustomize overlay that sets the rule's `ipBlock` to your API server's addresses, listed by `kubectl get endpointslices -n default -l kubernetes.io/service-name=kubernetes`. A cluster whose API server listens on 443, as managed clusters do, patches the port too.
+Everything lives in the `openfief` namespace. A cluster admin installs the custom resource definitions once. The operator's permissions are a Role in that namespace only (D-15). Every Service is a ClusterIP Service, and nothing is exposed until you add a route (D-28).
 
 ```mermaid
 flowchart LR
@@ -146,11 +177,34 @@ flowchart LR
   px -- "granted hosts only" --> internet
 ```
 
-The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/`, `egress-proxy/` and `core/` for the three workloads. The core's Service `openfief-core` is a ClusterIP with two named ports on the same container port 8080: `http` (8080), the read API and health endpoints, reached with `kubectl port-forward` by default (D-28), and `connect` (8081), the port the operator hands to plugins (D-49). Its NetworkPolicy admits plugin pods and lets the core reach only DNS, the database, plugin pods on their Connect port (8080) and the Kubernetes API server. A pod reaches the API server through Service `kubernetes`, which is translated to the API server's own address before NetworkPolicy applies, so the rule names that port: 6443, as on k3s, to any address; an overlay narrows it to the node's address or changes the port. The core's pods mount a Kubernetes API token, and its Role (`deploy/core/rbac.yaml`) allows only `create` on its own `serviceaccounts/token` (resourceNames `openfief-core`) and `get`, `list` and `watch` on Plugins and Services, all in the `openfief` namespace. A ClusterRole allows it `create` on `tokenreviews` alone, the cluster-scoped API with which it checks the projected tokens view plugins present to the `AuthService`, as the egress proxy does for its own audience. The database URL comes from CloudNativePG's Secret `openfief-db-app`, key `uri` (D-14, D-29). The [operator](concepts/operator.md) and [egress](concepts/egress.md) pages walk through them. Every workload's pod sets `runAsNonRoot`, so each image (`cmd/<name>/Dockerfile`) runs as a numeric user, `65532:65532`, distroless's nonroot: the kubelet refuses to start a container whose image names its user, because it can't tell that a name isn't root.
+The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/`, `egress-proxy/` and `core/` for the three workloads. The core's Service `openfief-core` has two named ports on the same container port 8080: `http` (8080), the one a route points at, serving browsers, the read API and the health endpoints, and `connect` (8081), the port the operator hands to plugins (D-49). Its NetworkPolicy admits plugin pods, and a route adds a policy admitting its proxy ([Expose OpenFief](guides/expose.md)). It lets the core reach only DNS, the database, plugin pods on their Connect port (8080) and the Kubernetes API server, as above.
+
+The core's pods mount a Kubernetes API token. Its Role ([`deploy/core/rbac.yaml`](../deploy/core/rbac.yaml)) allows only `create` on its own `serviceaccounts/token` (resourceNames `openfief-core`) and `get`, `list` and `watch` on Plugins and Services, all in the `openfief` namespace. A ClusterRole allows it `create` on `tokenreviews` alone, with which it checks the tokens view plugins present (D-82). The database URL comes from CloudNativePG's Secret `openfief-db-app`, key `uri` (D-14, D-29). Every workload's pod sets `runAsNonRoot`, so each image (`cmd/<name>/Dockerfile`) runs as a numeric user, `65532:65532`, distroless's nonroot: the kubelet refuses to start a container whose image names its user, because it can't tell that a name isn't root.
+
+## Bounded contexts
+
+The code is organized by domain, following domain-driven design (Eric Evans, 2003). Each bounded context owns its terms, types and data. In this designed map from [code-organization.md](dev/code-organization.md), arrows point from a context to the contexts it reads:
+
+```mermaid
+flowchart LR
+  ingest --> ledger
+  ingest --> valuation
+  valuation --> ledger
+  valuation --> pl["jurisdiction/pl"]
+  views --> ledger
+  views --> valuation
+  views --> portfolio
+  portfolio --> valuation
+  plugins
+  identity
+  kernel["kernel (shared)"]
+```
+
+The [code map](/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has four arrows the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves; `views` imports `jurisdiction/pl` to tell a treasury bond series from a listed instrument in the allocation; `ingest` imports `jurisdiction/pl` to check that a bond lot can be valued; and `portfolio` imports `ledger` to parse a model target's ISIN.
 
 ## The demo environment
 
-`deploy/demo` runs the same install on one Hetzner machine with k3s, holding synthetic data only (GR-12). Nothing pushes to it: cloud-init installs Flux, and Flux pulls each layer below, in dependency order. Five layers follow `main` in git. The `openfief` layer instead follows a signed OCI artifact that CI publishes after each push to `main`, with the images pinned to the digests whose signatures verified (D-17). The HTTPS routes are the demo's own, at demo.openfief.dev on k3s's bundled Traefik with a Let's Encrypt certificate: `/v1` and `/openfief.views.v1.ReadService` to Service `openfief-core`, port `http`, and everything else to the [built-in UI](concepts/ui.md)'s Service `plugin-ui`; demo-only NetworkPolicies let Traefik reach the core and the UI. The demo's core accepts sign-ins from `https://demo.openfief.dev` besides `http://localhost:8080` and issues read-only demo sessions (`--demo-sessions`), which the UI offers as "View demo". Creating and destroying demos is in [demo.md](dev/demo.md).
+[demo.openfief.dev](https://demo.openfief.dev), which the [Quickstart](quickstart.md) tours, runs this same install from `deploy/demo` on one Hetzner machine with k3s, holding synthetic data only (GR-12). Nothing pushes to it: cloud-init installs Flux, and Flux pulls each layer below, in dependency order. Five layers follow `main` in git. The `openfief` layer instead follows a signed OCI artifact that CI publishes after each push to `main`, with the images pinned to the digests whose signatures verified (D-17). Its route is an Ingress on k3s's bundled Traefik with a Let's Encrypt certificate, sending everything to Service `openfief-core`, which passes pages on to the [built-in UI](concepts/ui.md), and a demo-only NetworkPolicy lets Traefik reach the core. The demo's core accepts sign-ins from `https://demo.openfief.dev` and issues read-only demo sessions (`--demo-sessions`), which the UI offers as "View demo". Creating and destroying demos is in [demo.md](dev/demo.md).
 
 ```mermaid
 flowchart LR
@@ -163,7 +217,7 @@ flowchart LR
     db["demo-database<br/>one-instance cluster"]
     cm["demo-cert-manager"]
     ing["demo-ingress<br/>Let's Encrypt issuer"]
-    routes["demo-routes<br/>Traefik routes to the core,<br/>which proxies the UI"]
+    routes["demo-routes<br/>Traefik route to the core"]
     of["demo-openfief<br/>operator, egress proxy, core,<br/>demo-seed Job, nbp and ui plugins"]
   end
   git --> flux
@@ -177,18 +231,8 @@ flowchart LR
   of --> routes
 ```
 
-Arrows between layers are Flux `dependsOn` edges. The CI side, from signed images to the published artifact, is on the [delivery pipeline](dev/pipeline.md) page.
+Arrows between layers are Flux `dependsOn` edges. The CI side, from signed images to the published artifact, is on the [delivery pipeline](dev/pipeline.md) page. The synthetic data comes from `deploy/demo-data`, a Job that runs `cmd/demo-seed` against the demo database through the same ingest, ledger and valuation paths real data takes; [demo.md](dev/demo.md#demo-data) explains it.
 
-The synthetic data comes from `deploy/demo-data`, a Job that runs `cmd/demo-seed` against the demo database; `demo-openfief` applies it next to the core. The demo runs the Job without `--reset-demo` and the core without its default sleeves, so the two can start together; [demo.md](dev/demo.md#demo-data) explains why and how to refresh the data.
+## What is built
 
-## Main flows
-
-Each flow is drawn on the page that explains it:
-
-- **Importing a broker statement:** the IBKR Flex pull or a connector plugin's delivery, mapping, and one ledger transaction per import. See [Ingest](concepts/ingest.md).
-- **Revaluing after an import:** the import queues revaluation jobs in the same transaction, and a River worker stores the new valuations. See [Valuation](concepts/valuation.md).
-- **Recording and deriving holdings:** versioned transactions, FIFO lots and balance assertions. See [Ledger](concepts/ledger.md).
-- **Valuing a bond lot:** interest periods, indexation, early-redemption fee and Belka tax. See [Treasury bonds](concepts/treasury-bonds.md).
-- **Running a plugin:** from a `Plugin` and its `PluginGrant` to an isolated pod. See [Operator](concepts/operator.md).
-- **A plugin calling out:** token, allow-list and address checks in the proxy. See [Egress](concepts/egress.md).
-- **From commit to release:** hooks, CI, signed images and the demo deploy. See [Delivery pipeline](dev/pipeline.md).
+M0, the tracker, is being built in the open. Every part on this page exists in the code except the XTB statement parser (D-9, D-24). The `openfief` CLI is not packaged for release yet, and the Ghostfolio view can't name your Ghostfolio's host in its manifest yet, so it doesn't run from the first-party image. The [status page](/status/) shows every decision with the requirements, code and tests behind it, and each concept page ends with what is decided but not built in its area.

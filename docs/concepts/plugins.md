@@ -1,6 +1,6 @@
 ---
 title: Plugins
-description: How OpenFief describes, approves and runs a plugin, and how much of that the code implements today.
+description: How OpenFief describes, approves and runs a plugin, and the connector contract and Go SDK a plugin is written with.
 covers:
   - internal/plugins/*.go
   - internal/plugins/app/**

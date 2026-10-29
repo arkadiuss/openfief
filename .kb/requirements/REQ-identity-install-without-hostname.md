@@ -1,6 +1,6 @@
 ---
 title: OpenFief must install with no hostname, and the owner's first passkey must be created on localhost through a one-time link the CLI prints.
-status: open
+status: closed
 text_ref: design-decisions:D-60#1
 tags:
   - strict-modeling

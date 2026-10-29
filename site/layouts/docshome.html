@@ -1,3 +1,4 @@
+{{- /* The docs home: its introduction, then the sidebar's groups (navgroups.html) as cards, each with its blurb and pages, so the map and the sidebar always agree. */ -}}
 {{ define "main" }}
 <article class="home">
   <h1>{{ partial "title.html" . }}</h1>
@@ -5,5 +6,29 @@
   <p class="lede">{{ . }}</p>
   {{- end }}
   {{ .Content }}
+  <div class="map">
+    {{- range partial "navgroups.html" . }}
+    {{- /* A group split into parts spans the row, its parts side by side. */}}
+    <section class="map-group{{ if gt (len .parts) 1 }} wide{{ end }}">
+      <h2>{{ with .head }}<a href="{{ .RelPermalink }}">{{ end }}{{ .title }}{{ with .head }}</a>{{ end }}</h2>
+      {{- with .blurb }}<p class="map-blurb">{{ . }}</p>{{ end }}
+      <div class="map-parts">
+        {{- range .parts }}
+        <div>
+          {{- with .title }}<p class="map-part">{{ . }}</p>{{ end }}
+          <ul>
+            {{- range .items }}
+            <li><a href="{{ .page.RelPermalink }}">{{ .label }}</a>{{ with .page.Description }}<span>{{ . }}</span>{{ end }}</li>
+            {{- end }}
+          </ul>
+        </div>
+        {{- end }}
+      </div>
+    </section>
+    {{- end }}
+  </div>
+  {{- with .Params.footnote }}
+  {{ $.RenderString (dict "display" "block") . }}
+  {{- end }}
 </article>
 {{ end }}

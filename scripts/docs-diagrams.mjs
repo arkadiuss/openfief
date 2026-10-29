@@ -3,17 +3,19 @@
 // and a dark SVG, so a broken diagram fails the build and readers' browsers run no JavaScript (docs/dev/docs.md).
 // Usage: node scripts/docs-diagrams.mjs <diagrams.json> <out-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 
 const require = createRequire(import.meta.url);
 const mermaidScript = require.resolve('mermaid/dist/mermaid.min.js');
 const mermaidVersion = require('mermaid/package.json').version;
 // The design system's palette (docs/dev/design-system.md, design/tokens.css): vert nodes, gold notes, sable text.
+// On the dark ground, node borders and icons use the light vert tint, which reads where --vert-bright is too dim.
 // Pie slices are light tints so one dark label color reads on every slice in both schemes.
 const pie = { pie1: '#8ccba6', pie2: '#d9ae4a', pie3: '#cbd2c9', pie4: '#c99a6e', pieSectionTextColor: '#14171a', pieStrokeColor: '#14171a', pieOuterStrokeColor: '#9aa59e' };
 const themes = {
@@ -31,15 +33,30 @@ const themes = {
     theme: 'base',
     themeVariables: {
       ...pie, darkMode: true, background: '#18201c', fontSize: '15px',
-      primaryColor: '#22302a', primaryBorderColor: '#3f7a5a', primaryTextColor: '#e8ece8',
+      primaryColor: '#22302a', primaryBorderColor: '#8ccba6', primaryTextColor: '#e8ece8',
       secondaryColor: '#3a3016', secondaryBorderColor: '#d9ae4a', tertiaryColor: '#18201c', tertiaryBorderColor: '#4f5f56',
       lineColor: '#a9b5ad', textColor: '#e8ece8', clusterBkg: '#18201c', clusterBorder: '#4f5f56', edgeLabelBackground: '#18201c',
       noteBkgColor: '#3a3016', noteBorderColor: '#d9ae4a', noteTextColor: '#e8ece8', pieTitleTextColor: '#e8ece8', pieLegendTextColor: '#e8ece8',
     },
   },
 };
-// The cache of rendered SVGs is valid for one Mermaid version and one set of themes.
-const cacheKey = `${mermaidVersion} ${JSON.stringify(themes)}`;
+// iconPack turns the design system's icons (design/icons/*.svg) into a Mermaid icon pack named fief, so a diagram
+// draws one as fief:<file name>, such as A@{ icon: "fief:connector", label: "IBKR Flex" }. Each file's drawing is
+// used as it is: strokes in currentColor, which Mermaid sets to the node's border color, and the gold fief accent.
+function iconPack(dir) {
+  const icons = {};
+  for (const file of readdirSync(dir).filter((f) => f.endsWith('.svg')).sort()) {
+    const svg = readFileSync(path.join(dir, file), 'utf8');
+    const body = svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '').replace(/<title>[\s\S]*?<\/title>/, '');
+    icons[file.slice(0, -'.svg'.length)] = { body };
+  }
+  return { prefix: 'fief', width: 24, height: 24, icons };
+}
+const icons = iconPack(path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'design', 'icons'));
+// The icons' gold is --or; on a dark ground the design system uses --or-bright.
+const darkGold = (svg) => svg.replaceAll('#C99A2E', '#D9AE4A');
+// The cache of rendered SVGs is valid for one Mermaid version, one set of themes and one set of icons.
+const cacheKey = `${mermaidVersion} ${JSON.stringify(themes)} ${JSON.stringify(icons)}`;
 const fontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
 // browserOptions picks the Chromium to drive, without downloading one.
@@ -94,6 +111,7 @@ async function renderAll(diagrams, outDir) {
     const page = await browser.newPage();
     await page.setContent('<!doctype html><html><body></body></html>');
     await page.addScriptTag({ path: mermaidScript });
+    await page.evaluate((pack) => globalThis.mermaid.registerIconPacks([{ name: 'fief', icons: pack }]), icons);
     for (const job of todo) {
       const result = await page.evaluate(async ({ code, id, theme, font }) => {
         try {
@@ -108,7 +126,7 @@ async function renderAll(diagrams, outDir) {
         failures.push({ ...job, error: result.error ?? 'Mermaid returned an error diagram' });
         continue;
       }
-      await writeFile(path.join(outDir, `${job.hash}-${job.variant}.svg`), result.svg);
+      await writeFile(path.join(outDir, `${job.hash}-${job.variant}.svg`), job.variant === 'dark' ? darkGold(result.svg) : result.svg);
     }
   } finally {
     await browser.close();

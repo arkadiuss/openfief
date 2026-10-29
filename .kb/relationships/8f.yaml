@@ -440,3 +440,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a786363a39af
+  - type: constrains
+    from: REQ-platform-httproute-component
+    to: FACT-SUBJECT-C8D936D003BD7B6C
+    created_at: 2026-10-29T15:06:10.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-857b47cfe059
+  - type: requires_property
+    from: REQ-platform-httproute-component
+    to: FACT-PROP-ACFED73572D2113C
+    created_at: 2026-10-29T15:06:10.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5185b665b55
