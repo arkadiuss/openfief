@@ -128,9 +128,9 @@ func checkUploadTwice(t *testing.T, api statementAPI, session string, statement 
 		t.Fatalf("UploadStatement: %v", err)
 	}
 	// activity.transactions.golden: ten transactions, four assertions,
-	// twelve ingest problems.
+	// thirteen ingest problems (one is the LOT rows' disagreeing mark prices, D-22).
 	counts := []int{int(got.GetTransactions()), int(got.GetNew()), int(got.GetAssertions()), int(got.GetProblemsTotal()), len(got.GetProblems())}
-	if diff := cmp.Diff([]int{10, 10, 4, 12, 12}, counts); diff != "" || got.GetInstitution() != "ibkr" {
+	if diff := cmp.Diff([]int{10, 10, 4, 13, 13}, counts); diff != "" || got.GetInstitution() != "ibkr" {
 		t.Errorf("UploadStatement of %s: transactions, new, assertions, problems, listed (-want +got):\n%s", got.GetInstitution(), diff)
 	}
 	again, err := uploadStatement(t, api, session, string(demo.IBKRAccount), statement)
