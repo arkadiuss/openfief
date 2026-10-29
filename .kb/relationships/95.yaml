@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2bf80fca8a2
+  - type: constrains
+    from: REQ-identity-authenticators-prove-owner
+    to: FACT-SUBJECT-3AB1B991D0F6E0A2
+    created_at: 2026-10-29T05:26:19.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbc67f595b2e
+  - type: requires_property
+    from: REQ-identity-authenticators-prove-owner
+    to: FACT-PROP-853122DA06C8CC6F
+    created_at: 2026-10-29T05:26:19.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66dd3f5d8fb6

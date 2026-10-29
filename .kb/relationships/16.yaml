@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9cb8d46fe69
+  - type: constrains
+    from: REQ-identity-session-scope-read-owner
+    to: FACT-SUBJECT-825F5042E5E6F174
+    created_at: 2026-10-29T05:27:47.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d01796dcce9a
+  - type: requires_property
+    from: REQ-identity-session-scope-read-owner
+    to: FACT-PROP-73130D705C647326
+    created_at: 2026-10-29T05:27:47.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f36dd1818f5d

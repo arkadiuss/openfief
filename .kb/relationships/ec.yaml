@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6361e441e97d
+  - type: constrains
+    from: REQ-plugins-in-cluster-service-no-proxy
+    to: FACT-SUBJECT-D637ED85034E36A7
+    created_at: 2026-10-29T07:37:08.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d17f6d6ead2b
+  - type: requires_property
+    from: REQ-plugins-in-cluster-service-no-proxy
+    to: FACT-PROP-2FF98B073B1E3526
+    created_at: 2026-10-29T07:37:08.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b56870faef

@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d8712c6a0a2
+  - type: constrains
+    from: REQ-plugins-config-field-host-grant
+    to: FACT-SUBJECT-9E1AFC3BC2FA1036
+    created_at: 2026-10-29T07:39:19.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72f89aa4d38e
+  - type: requires_property
+    from: REQ-plugins-config-field-host-grant
+    to: FACT-PROP-D770209C2D467F45
+    created_at: 2026-10-29T07:39:19.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0f0007403ab

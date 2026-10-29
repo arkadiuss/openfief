@@ -328,6 +328,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76793659f1a3
+  - type: constrains
+    from: REQ-portfolio-install-sleeves
+    to: FACT-SUBJECT-20F39635C8813292
+    created_at: 2026-10-29T05:36:36.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e252d03ea43
+  - type: requires_property
+    from: REQ-portfolio-install-sleeves
+    to: FACT-PROP-7EAC1FB09C89C0EE
+    created_at: 2026-10-29T05:36:36.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90d7332e2d6a
   - type: executable_for
     from: SYM-treasury-bonds-test-helper-fake-cpi-cpi
     to: TEST-plugins-treasury-bonds

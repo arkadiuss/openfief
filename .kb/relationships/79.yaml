@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d592332cf9d6
+  - type: constrains
+    from: REQ-identity-single-owner
+    to: FACT-SUBJECT-6BDAB5D17470D2C2
+    created_at: 2026-10-29T05:25:26.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b30b7bf136d
+  - type: requires_property
+    from: REQ-identity-single-owner
+    to: FACT-PROP-E641D43A33019BEB
+    created_at: 2026-10-29T05:25:26.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a420ff84154

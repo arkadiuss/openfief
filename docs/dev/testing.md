@@ -33,6 +33,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - External institutions are fixture servers in the cluster; end-to-end tests never call a real broker.
 - `task e2e` refuses any kubeconfig context that isn't local **(P)**.
 - Each end-to-end test verifies a kibi scenario.
+- End-to-end tests log in with a real passkey ceremony: they drive the browser at `http://localhost` through a port-forward and use the browser's virtual authenticator. No flag weakens the product's origin check for tests.
 
 ## Stability
 

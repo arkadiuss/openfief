@@ -356,6 +356,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e31043305ef
+  - type: constrains
+    from: REQ-plugins-cli-in-cluster-ingress-rule
+    to: FACT-SUBJECT-D637ED85034E36A7
+    created_at: 2026-10-29T07:38:30.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c9bdd334bb8
+  - type: requires_property
+    from: REQ-plugins-cli-in-cluster-ingress-rule
+    to: FACT-PROP-D9AB1851CCE1C335
+    created_at: 2026-10-29T07:38:30.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a46ce6b3d00
   - type: executable_for
     from: SYM-valuation-gus-test-helper-stub-transport-round-trip
     to: TEST-valuation-gus-client

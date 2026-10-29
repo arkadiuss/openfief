@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b3078d331dd
+  - type: constrains
+    from: REQ-ingest-unmapped-broker-account
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-10-29T05:38:59.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cc4dfac97e4
+  - type: requires_property
+    from: REQ-ingest-unmapped-broker-account
+    to: FACT-PROP-1B4254A323EB8E51
+    created_at: 2026-10-29T05:38:59.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29adbb10df7f

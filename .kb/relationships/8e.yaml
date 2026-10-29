@@ -468,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-741a7dd0ee97
+  - type: constrains
+    from: REQ-identity-opaque-session-token
+    to: FACT-SUBJECT-825F5042E5E6F174
+    created_at: 2026-10-29T05:27:05.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-610a3a5d80b5
+  - type: requires_property
+    from: REQ-identity-opaque-session-token
+    to: FACT-PROP-08863AEDC56C7D7D
+    created_at: 2026-10-29T05:27:05.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f06083075b

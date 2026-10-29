@@ -79,7 +79,7 @@ Bond amounts are in PLN, but Polish tax converts foreign income, such as income 
 
 ### Gross accrued and net-if-redeemed
 
-A [lot value](../glossary.md) has two answers. The gross accrued value is the nominal plus interest accrued and not yet paid out. The net-if-redeemed value is what redeeming the lot on that date would pay: gross minus the fee minus Belka tax. Net is the default in totals (D-25). The issuer's worked examples count interest to the fifth business day after the redemption order; `ValueLot` counts it to the date it is given.
+A [lot value](../glossary.md) has two answers. The gross accrued value is the nominal plus interest accrued and not yet paid out. The net-if-redeemed value is what redeeming the lot on that date would pay: gross minus the fee minus Belka tax. Today net-if-redeemed is the default in totals. D-77 replaces that single choice with three values shown side by side: gross, net (taxes due at maturity, no early-redemption fee) and liquidation (everything due if redeemed today), which is what net-if-redeemed computes for a taxable account. The issuer's worked examples count interest to the fifth business day after the redemption order; `ValueLot` counts it to the date it is given.
 
 ## How it works
 
@@ -166,7 +166,8 @@ The same lot in IKE is worth 1030.20 PLN net. Bought by exchange at 99.90 PLN, i
 
 - **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date. In a revaluation the purchase date is the lot's open date and the price per bond its cost over its quantity; the series terms (per ISIN), the index readings and the account's tax wrapper are recorded separately. The owner enters a lot with its series' terms in the built-in UI, and the treasury-bonds connector delivers both ([Ingest](ingest.md#treasury-bond-lots)); the lot's rules reuse `ValueLot`: a lot is accepted only if it can be valued on its purchase date.
 - **D-20**: Polish tax uses NBP rates, from the day before (`TaxRateCutoff`).
-- **D-25**: gross accrued and net-if-redeemed values. D-25 names only IKE, and only for tax ("no tax inside IKE"). The code also withholds no tax inside IKZE, and charges no fee in either wrapper because it assumes a withdrawal. The glossary's early-redemption fee entry backs the fee part; nothing in DESIGN.md decides the IKZE tax part.
+- **D-77**: **partly built.** Lots have gross accrued and net-if-redeemed values, and one of them counts in totals (net-if-redeemed by default). Not built: net without the early-redemption fee, liquidation's early-withdrawal taxes for IKE and IKZE (the code charges no tax and no fee in either wrapper, because it assumes a withdrawal that meets the wrapper's conditions), and storing all three values.
+- **D-76**: **partly built.** The code has the taxable, IKE and IKZE wrappers; OKI isn't built.
 - **D-37**: issuer tables and examples over the letter. Implemented as decided: the TOS base isn't rounded between years, and Belka tax rounds half up.
 - **D-62**: the Polish pack may assume PLN for tax; `Nominal()` and all bond amounts are PLN.
 
@@ -186,7 +187,7 @@ The same lot in IKE is worth 1030.20 PLN net. Bought by exchange at 99.90 PLN, i
 | Belka tax 19%, half up, none in IKE or IKZE | `TestBelkaTax`, `TestBelkaRate` in [tax_test.go](../../internal/jurisdiction/pl/tax_test.go) | REQ-pl-belka-tax, REQ-decision-d37-3-belka-half-up, SCEN-pl-belka-tax, TEST-pl-tax |
 | Tax takes the rate from before the event | `TestTaxRateCutoff`; `TestTaxRateUsesTheTableBeforeTheEvent` in valuation | REQ-pl-tax-fx-rate-date, SCEN-pl-tax-fx-rate-date, TEST-pl-tax |
 
-TEST-pl-value and TEST-pl-official also validate the firm requirements imported from D-9 and D-25: REQ-AUTO-30FD669113CEFE3B (bond lots are valued) and REQ-AUTO-E10BE8CE13E67657 (net-if-redeemed by default). Most cases are synthetic lots worked out by hand in each case's comment. `official_test.go` checks against published sources instead: the issuer's daily interest tables (EDO, TOS, COI and ROR series, held in IKE so that gross equals net) and the worked examples on the offer pages (EDO, TOS, ROS, DOR, ROR and OTS). Three of the table cases (two EDO1133 days and one TOS0128 day) are days where rounding the base after each year, as the TOS letter words it, would be one grosz off. No test compares with the open-source reference valuers listed in R-5. ROD is covered only by parsing and structure tests.
+TEST-pl-value and TEST-pl-official also validate the firm requirements REQ-AUTO-30FD669113CEFE3B (bond lots are valued, from D-9) and REQ-AUTO-E10BE8CE13E67657 (net-if-redeemed by default, from the single bond basis that D-77 replaced). Most cases are synthetic lots worked out by hand in each case's comment. `official_test.go` checks against published sources instead: the issuer's daily interest tables (EDO, TOS, COI and ROR series, held in IKE so that gross equals net) and the worked examples on the offer pages (EDO, TOS, ROS, DOR, ROR and OTS). Three of the table cases (two EDO1133 days and one TOS0128 day) are days where rounding the base after each year, as the TOS letter words it, would be one grosz off. No test compares with the open-source reference valuers listed in R-5. ROD is covered only by parsing and structure tests.
 
 Run them with `task test`, or just this package with `go test ./internal/jurisdiction/pl/...`.
 
