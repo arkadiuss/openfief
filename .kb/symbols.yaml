@@ -71340,3 +71340,123 @@ symbols:
         target: TEST-views-connectapi-plugins
       - type: implements
         target: REQ-views-installed-plugins
+  - id: SYM-ui-test-helper-fake-read-list-plugins
+    title: fakeRead.ListPlugins
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:01.988Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-plugin-list
+    title: pluginList
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:08.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-ui-installed-plugins
+  - id: SYM-ui-server-load-plugins
+    title: server.loadPlugins
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:15.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-ui-installed-plugins
+  - id: SYM-ui-server-plugins-page
+    title: server.pluginsPage
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:22.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-ui-installed-plugins
+  - id: SYM-ui-trust-label
+    title: trustLabel
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:28.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-ui-installed-plugins
+  - id: SYM-ui-test-plugins-page
+    title: TestPluginsPage
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:34.354Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-test-plugins-page-unavailable
+    title: TestPluginsPageUnavailable
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:39.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-test-settings-shows-plugins
+    title: TestSettingsShowsPlugins
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:45.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-test-plugins-page-needs-a-session
+    title: TestPluginsPageNeedsASession
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:50.368Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-ui-test-transactions-mark-removed-instance
+    title: TestTransactionsMarkRemovedInstance
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:56.021Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins

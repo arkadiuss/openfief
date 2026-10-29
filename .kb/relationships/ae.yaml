@@ -377,3 +377,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d97f95a8d657
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-plugins
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:03.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6807c7c33f1
+  - type: implements
+    from: SYM-ui-plugin-list
+    to: REQ-ui-installed-plugins
+    created_at: 2026-10-29T04:08:11.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68a4e8937a17
+  - type: implements
+    from: SYM-ui-plugin-list
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T04:08:11.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f9d5b375bd7
+  - type: covered_by
+    from: SYM-ui-plugin-list
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:11.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc56b44aa8e1
+  - type: executable_for
+    from: SYM-ui-test-plugins-page-needs-a-session
+    to: TEST-ui-plugins
+    created_at: 2026-10-29T04:08:52.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68a1eb22bf67

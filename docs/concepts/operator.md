@@ -264,7 +264,7 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 - **D-45**: three kinds of trusted signer; the owner's come from a ConfigMap.
 - **D-48**: each `Plugin` name is an instance with its own ServiceAccount, config, grant and allow-list key. **Gap:** Secret names come from the manifest, and D-42 now makes `spec.manifest` equal the image's label. So two instances of one image always request the same Secrets, and can't have their own as D-48 says.
 - **D-55**: `Plugin` and `PluginGrant` are the only custom resources; no money.
-- **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`, and `status.signature` names the signer and its kind. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. No UI shows the status yet.
+- **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`, and `status.signature` names the signer and its kind. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. The read API lists it and the built-in UI shows it ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-57**: nothing deploys without a `True` verification; no flag or setting overrides it.
 - **D-58**: **partly.** Deleting a `Plugin` removes its workload (by garbage collection) and its allow-list key. The operator never deletes a `PluginGrant` or a Secret; `openfief plugin uninstall` deletes them ([Plugins](plugins.md#installing-with-the-cli)). The core marks the ledger data of a removed instance when it reads it: an instance with no `Plugin` left is removed ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-59**: the NetworkPolicy admits ingress only from the core, and the operator publishes the cluster's token-signing public keys in `openfief-sa-jwks`, with which the SDK verifies the core's per-instance TokenRequest tokens.
@@ -311,7 +311,6 @@ What the tests don't show:
 ## Not built yet
 
 - **D-43**: the catalog lists no plugin, so the `openfief` CLI's preview of the signature check (`cosign.Verifier` and the same trust policy) never shows a verified plugin yet.
-- **D-56**: the UI that shows the verification status.
 - Private registries: the operator and the CLI read registries anonymously.
 - **D-12**: end-to-end tests on kind or k3d.
 - The core's Deployment and Service, which the operator expects as `openfief-core`.

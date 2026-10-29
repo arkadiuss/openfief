@@ -350,7 +350,7 @@ Implemented, fully or in the part named:
 - **D-47** Upgrades happen only when the owner edits.
 - **D-48** (part) Every instance keyed by its own name, except Secrets.
 - **D-49** (part) Connector contract: the core calls `Sync`, `ImportFile` and `ImportBondLots`.
-- **D-56** (part) Operator verifies offline; status tells verified from only signed.
+- **D-56** Operator verifies offline; status tells verified from only signed and names the signer; the built-in UI shows it ([Built-in UI](ui.md#pages)).
 - **D-57** No setting deploys an image the policy refuses.
 - **D-58** Uninstall deletes the grant, the `Plugin` (and so the workload and allow-list entry) and unshared Secrets, and keeps the ledger data, which the read API marks as coming from a removed instance ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-59** Only the core reaches a plugin; the SDK verifies its TokenRequest token with the keys the operator publishes.
@@ -414,7 +414,6 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 ## Not built yet
 
 - **Verified plugins (D-43, D-44).** The catalog file exists but lists no plugin, so every image that runs today is unverified.
-- **Showing trust (D-56).** The `SignatureVerified` condition tells verified from only signed, but there is no UI yet to show it.
 - **Packaging the CLI.** `cmd/openfief` builds with `go build ./cmd/openfief`; no release step ships the binary yet, and `plugin install` can't upgrade an installed instance (D-47 leaves upgrades to the owner's own edit).
 - **More contracts and SDKs (D-11).** Only the connector contract exists: no view contract (P-9 outlines one, but it is a proposal) and no TypeScript SDK.
 - **First-party plugins in the catalog (D-43).** `nbp-fx`, `ibkr-flex`, `eodhd` and `treasury-bonds` are built and signed by CI but not in the catalog, so they run as signed by a trusted signer, not verified.
