@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16399eeb4825
+  - type: constrains
+    from: REQ-plugins-config-field-host-https
+    to: FACT-SUBJECT-9E1AFC3BC2FA1036
+    created_at: 2026-10-29T07:40:37.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04712e333635
+  - type: requires_property
+    from: REQ-plugins-config-field-host-https
+    to: FACT-PROP-83DD0080448C45DF
+    created_at: 2026-10-29T07:40:37.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5a245eebba2

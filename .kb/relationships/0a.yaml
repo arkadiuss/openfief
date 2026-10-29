@@ -335,3 +335,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07e76ad2b51f
+  - type: constrains
+    from: REQ-plugins-in-cluster-service-grant
+    to: FACT-SUBJECT-D637ED85034E36A7
+    created_at: 2026-10-29T07:35:38.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9a5c4b9b201
+  - type: requires_property
+    from: REQ-plugins-in-cluster-service-grant
+    to: FACT-PROP-A84C967223818C50
+    created_at: 2026-10-29T07:35:38.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a18c73aa756c
