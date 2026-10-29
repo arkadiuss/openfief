@@ -220,7 +220,7 @@ flowchart LR
     al[/"ConfigMap openfief-egress-allowlist"/]
     jwks[/"ConfigMap openfief-sa-jwks"/]
     proxy["egress-proxy<br/>Service port 4750"]
-    core["core, not built yet<br/>expected Service openfief-core, port connect"]
+    core["openfief-core<br/>Service port connect"]
     subgraph one["per Plugin NAME"]
       np{{"NetworkPolicy plugin-NAME"}}
       pod["plugin pod<br/>ServiceAccount plugin-NAME, no API token"]
@@ -242,7 +242,7 @@ flowchart LR
   pod -- "DNS, API server, other pods, direct internet" --x denied["denied"]
 ```
 
-Only plugin pods get NetworkPolicies from the operator; the install manifests give none to the operator or the proxy. The core has no binary or manifest yet. The operator's flags name its Service (`--core-service=openfief-core`, `--core-port=connect`), and until that Service exists, any plugin that would run gets `ClusterUnavailable`.
+Only plugin pods get NetworkPolicies from the operator. The core's install manifest, [deploy/core](../../deploy/core/kustomization.yaml), gives the core its own, which admits plugin pods to its port; the install manifests give none to the operator or the proxy. The operator's flags name the core's Service (`--core-service=openfief-core`, `--core-port=connect`, which `deploy/core` serves on 8081), and until that Service exists, any plugin that would run gets `ClusterUnavailable`.
 
 Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.yaml), [deploy/operator/kustomization.yaml](../../deploy/operator/kustomization.yaml)): a cluster admin runs `kubectl apply -k deploy/crds`, which creates the `openfief` namespace with `pod-security.kubernetes.io/enforce: restricted` and both CRDs. Then `kubectl apply -k deploy/operator` installs the operator, after an overlay pins its image by digest. Its [role.yaml](../../deploy/operator/role.yaml) is generated from the `+kubebuilder:rbac` markers in [reconciler.go](../../internal/plugins/operator/reconciler.go): read `plugins` and `plugingrants`; update their status; update `plugins/finalizers`, which owner references with `blockOwnerDeletion` need; full control of ServiceAccounts, ConfigMaps, Services, Deployments and NetworkPolicies; create and patch events; manage Leases for leader election. All of it is limited to `openfief`, but within the namespace it isn't limited to the operator's own objects: Kubernetes RBAC can't restrict `create` by name.
 
@@ -305,7 +305,7 @@ What the tests don't show:
 - From server-side apply's rules, not a test: a re-apply restores the fields the operator owns, but keeps fields another field manager added, such as an extra container, volume or environment variable added with `kubectl edit`. NetworkPolicy rule lists are atomic, so they are restored whole.
 - The cosign tests run against an in-process registry and sigstore-go's virtual Sigstore. No test reads a real registry such as GHCR or a bundle from the public-good instance; `TestTrustedRoot` only checks that the bundled root loads.
 - From reading the code: the signed-image cache lives in memory. If the operator restarts while a plugin's registry is down, the running version's check is `Unknown`, so the plugin is torn down and comes back on a retry after the registry does.
-- There is no end-to-end suite (`test/e2e` doesn't exist), so no test checks that a real CNI enforces the NetworkPolicies.
+- The end-to-end suite ([test/e2e](../../test/e2e/main_test.go), `task e2e` on kind or k3d) installs the operator with the demo's manifests, but deploys no plugin through it: its images are unsigned (D-57), so the UI runs from a stand-in Deployment. `TestCorePolicyRefusesOtherPods` checks that a real CNI enforces the core's NetworkPolicy; no test checks the operator's per-plugin NetworkPolicies on a real cluster.
 
 ## Not built yet
 
@@ -313,5 +313,4 @@ What the tests don't show:
 - **D-56**: the UI that shows the verification status.
 - Private registries: the operator and the CLI read registries anonymously.
 - **D-58**: marking the ledger data of a removed instance.
-- **D-12**: end-to-end tests on kind or k3d.
-- The core's Deployment and Service, which the operator expects as `openfief-core`.
+- **D-12**, partly: end-to-end tests of the operator's plugin workloads on kind or k3d. The suite covers the core, the demo dataset and the UI's stand-in; a signed test plugin, deployed by the operator, is not in it.

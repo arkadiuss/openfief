@@ -123,7 +123,7 @@ sequenceDiagram
 - D-27: plugins authenticate with projected ServiceAccount tokens (audience `openfief-core`); scripts get separate, scoped, expiring, read-only tokens.
 - D-29: no home-grown cryptography: go-webauthn, `crypto/rand`, `crypto/sha256`, `crypto/subtle`.
 - D-59: only the core may call a plugin, with a short-lived TokenRequest token whose audience is that instance.
-- D-60: no hostname at install; the CLI's one-time link for the first passkey on localhost; a session's link for a new host; passkeys per host.
+- D-60: no hostname at install; the one-time link for the first passkey on localhost; a session's link for a new host; passkeys per host. D-60 has "the CLI" print the first link; the code prints it with the core's own command, `core enroll-link`, which needs the database's DSN, and the owner's `openfief` CLI (D-46) has no such command.
 - D-6: the public API is read-only, so `read` is the only script token scope.
 - Author decisions given in chat, not yet in DESIGN.md: the auth split (authenticators, opaque sessions, script tokens from a session, the UI as backend-for-frontend), and demo read-only sessions (scopes, the demo authenticator).
 

@@ -416,8 +416,8 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 - **Verified plugins (D-43, D-44).** The catalog file exists but lists no plugin, so every image that runs today is unverified.
 - **Showing trust (D-56).** The `SignatureVerified` condition tells verified from only signed, but there is no UI yet to show it.
 - **Packaging the CLI.** `cmd/openfief` builds with `go build ./cmd/openfief`; no release step ships the binary yet, and `plugin install` can't upgrade an installed instance (D-47 leaves upgrades to the owner's own edit).
-- **More contracts and SDKs (D-11).** Only the connector contract exists: no view contract (P-9 outlines one, but it is a proposal) and no TypeScript SDK.
-- **First-party plugins in the catalog (D-43).** `nbp-fx`, `ibkr-flex`, `eodhd` and `treasury-bonds` are built and signed by CI but not in the catalog, so they run as signed by a trusted signer, not verified.
+- **More contracts and SDKs (D-11).** A plugin serves only the connector contract. View plugins serve no contract of their own (P-9 outlines one, but it is a proposal): they are clients of the read API and of the core's services for view plugins (`AuthService`, `ModelPortfolioService`, `BondLotService`), whose Go code `sdk/go/gen` carries. There is no TypeScript SDK.
+- **First-party plugins in the catalog (D-43).** `nbp-fx`, `ibkr-flex`, `eodhd`, `treasury-bonds`, `ghostfolio` and `ui` are built and signed by CI but not in the catalog, so they run as signed by a trusted signer, not verified.
 - **The core naming what to price (D-22).** `eodhd` fetches the instruments its config lists; the core doesn't tell a market-data connector which instruments are held or which indices the model portfolio targets.
 - **One Secret per IBKR instance (D-48).** `ibkr-flex`'s manifest names one Secret, `ibkr-flex-credentials`, so two instances of it, one per IBKR account, read the same credentials (see [Decisions](#decisions)).
 - **Core side of plugin identity (D-27).** The core verifies view plugins' `openfief-core` tokens only; a connector's token is accepted nowhere, since the core calls connectors and not the other way round (D-49).

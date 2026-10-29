@@ -199,11 +199,11 @@ The series stops before the first day that lacks an input and says why in `gap`:
 
 ## Decisions
 
-- **D-6**: the read-only public API under `/v1` with an OpenAPI spec. Built in this context; nothing calls it yet. MCP access is not part of it.
+- **D-6**: the read-only public API under `/v1` with an OpenAPI spec. Built in this context; the [built-in UI](ui.md) and the [Ghostfolio view](ghostfolio.md) read through it. MCP access is not part of it.
 - **D-50**: protobuf with HTTP annotations, Connect plus REST through Vanguard, OpenAPI generated from the same definitions. Built as described above.
 - **D-7**: data never enters through the public API. Enforced by the service definition and by REST answering 405 to anything but `GET`.
-- **D-30**: the allocation by asset class, currency, broker or sleeve, and value over time. The code groups by institution where D-30 says broker, since the treasury bond registry is an institution and not a broker (see the glossary). Value over time is `ListValuationTotals`; the charts themselves are the UI's.
-- **D-36**: the read API reports, per account, the valued-through date and whether a revaluation is pending or running. Built as `GetValuationStatus` and `ListValuationStatuses`; the UI part is not built.
+- **D-30**: the allocation by asset class, currency, broker or sleeve, and value over time. The code groups by institution where D-30 says broker, since the treasury bond registry is an institution and not a broker (see the glossary). The built-in UI draws value over time from `GetPerformance`, as the time-weighted return index, rather than from `ListValuationTotals`; the charts themselves are the UI's.
+- **D-36**: the read API reports, per account, the valued-through date and whether a revaluation is pending or running. Built as `GetValuationStatus` and `ListValuationStatuses`, which the built-in UI shows per account.
 - **D-61**: the portfolio's line is its time-weighted return, chained across deposits and withdrawals, with transfers between the owner's accounts not counted as cash flows. Built as `GetPerformance`. Which flows are transfers is not in the record; the matching rule above (same amount and currency, another account, at most five days apart) is this context's reading, not the author's.
 - **D-52**: while the model portfolio is off, `GetModelPortfolio` answers `NOT_FOUND` and nothing else mentions it. The method itself is in the contract and the OpenAPI document either way; that it answers 404 rather than an empty response is this context's reading.
 - **D-53**: the model's backtest as a second line, both starting at 100 on `from`. Built as `GetModelPortfolio`'s `days`.
