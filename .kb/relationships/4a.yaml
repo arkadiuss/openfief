@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cfb55670c88
+  - type: executable_for
+    from: SYM-exp-operator-test-helper-test-one-browser-view
+    to: TEST-operator-browser-view
+    created_at: 2026-10-29T22:01:46.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99c93ec09d5a

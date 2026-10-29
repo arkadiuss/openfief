@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c28b84f8b539
+  - type: validates
+    from: TEST-operator-browser-view
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T21:58:47.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d86d9e84cb9d

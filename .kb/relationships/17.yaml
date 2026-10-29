@@ -272,3 +272,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ba172033c90
+  - type: executable_for
+    from: SYM-exp-operator-test-helper-view-plugin
+    to: TEST-operator-browser-view
+    created_at: 2026-10-29T22:01:37.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c55a912c74e

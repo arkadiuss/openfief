@@ -177,6 +177,9 @@ func install(ctx context.Context, env *Env, o *options, arg string) error {
 	if o.print {
 		return printResources(env, &p)
 	}
+	if err = app.CheckBrowserView(ctx, cluster, &p.Plugin); err != nil {
+		return fmt.Errorf("install: %w", err)
+	}
 	rule, err := checkClusterService(ctx, env, cluster, &p.Plugin)
 	if err != nil {
 		return err

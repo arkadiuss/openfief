@@ -29,6 +29,7 @@ const (
 	ReasonPermissionsPending   = "PermissionsPending"
 	ReasonApproved             = "Approved"
 	ReasonInvalidImage         = "InvalidImage"
+	ReasonBrowserPathHeld      = "BrowserPathHeld"
 )
 
 // maxMessageLen keeps condition messages short; the full error is logged by
@@ -40,6 +41,9 @@ type observation struct {
 	generation int64
 	// Problems with the current version, the grant, the plan and the cluster.
 	specErr, configErr, grantErr, planErr, clusterErr error
+	// browserErr says why a version that would run doesn't: another
+	// instance holds a browser path (D-114).
+	browserErr error
 	// signature is the verification of spec.image.
 	signature Verification
 	// previousSignature is the verification of the kept previous version's
@@ -107,6 +111,7 @@ func readyCondition(o *observation) condition {
 	}{
 		{o.grantErr, ReasonInvalidGrant},
 		{o.planErr, ReasonInvalidPrevious},
+		{o.browserErr, ReasonBrowserPathHeld},
 		{o.clusterErr, ReasonClusterUnavailable},
 	} {
 		if p.err != nil {

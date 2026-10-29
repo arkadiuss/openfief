@@ -216,3 +216,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28bddb1028a9
+  - type: implements
+    from: SYM-exp-plugins-may-hold-browser-path
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T21:59:42.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-239b939f008f
+  - type: implements
+    from: SYM-exp-plugins-may-hold-browser-path
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T21:59:42.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-030ecdb24b91
+  - type: covered_by
+    from: SYM-exp-plugins-may-hold-browser-path
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T21:59:42.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f7dab62f93e

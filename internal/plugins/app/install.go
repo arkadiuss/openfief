@@ -65,6 +65,38 @@ type Instance struct {
 	// ClusterService is the in-cluster service the Plugin names (D-74);
 	// nil when it names none.
 	ClusterService *plugins.ClusterService
+	// BrowserPath is the browser path the Plugin's manifest declares
+	// (D-81); empty when it declares none.
+	BrowserPath string
+}
+
+// CheckBrowserView refuses p, about to be installed or to replace its
+// instance's version, when it declares a browser path while another
+// installed instance declares one: at most one instance holds a browser
+// path (D-114). The error wraps plugins.ErrBrowserPathHeld.
+func CheckBrowserView(ctx context.Context, store InstanceStore, p *plugins.Plugin) error {
+	if p.Manifest.BrowserPath == "" {
+		return nil
+	}
+	all, err := store.List(ctx)
+	if err != nil {
+		return fmt.Errorf("list instances: %w", err)
+	}
+	return checkBrowserView(all, p)
+}
+
+// checkBrowserView is CheckBrowserView over the installed instances all.
+func checkBrowserView(all []Instance, p *plugins.Plugin) error {
+	var held []plugins.BrowserView
+	for i := range all {
+		if all[i].BrowserPath != "" {
+			held = append(held, plugins.BrowserView{Instance: all[i].Name, Path: all[i].BrowserPath})
+		}
+	}
+	if err := plugins.RefuseSecondBrowserView(p.Name, p.Manifest.BrowserPath, held); err != nil {
+		return fmt.Errorf("%s declares browser path %s: %w", p.Name, p.Manifest.BrowserPath, err)
+	}
+	return nil
 }
 
 // ClusterServiceInfo is what the CLI reads about an in-cluster service the
@@ -207,11 +239,15 @@ func configHosts(p *plugins.Plugin) []plugins.ConfigHost {
 }
 
 // Install applies a confirmed proposal. It refuses one whose Secrets another
-// installed instance already names (D-89).
+// installed instance already names (D-89), and one that declares a browser
+// path while another instance declares one (D-114).
 func Install(ctx context.Context, store InstanceStore, p *Proposal) error {
 	all, err := store.List(ctx)
 	if err != nil {
 		return fmt.Errorf("install %q: list instances: %w", p.Plugin.Name, err)
+	}
+	if err := checkBrowserView(all, &p.Plugin); err != nil {
+		return fmt.Errorf("install %q: %w", p.Plugin.Name, err)
 	}
 	for i := range all {
 		if all[i].Name == p.Plugin.Name {

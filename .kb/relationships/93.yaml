@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8dc5a958f01
+  - type: implements
+    from: SYM-exp-plugins-browser-view
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T21:59:10.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39a0b26dbc6a
+  - type: covered_by
+    from: SYM-exp-plugins-browser-view
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T21:59:10.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-054a3e89dca2

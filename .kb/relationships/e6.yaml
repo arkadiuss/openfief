@@ -545,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d63314ad372
+  - type: implements
+    from: SYM-exp-operator-other-browser-views
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T22:00:45.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6fd464836a9
+  - type: covered_by
+    from: SYM-exp-operator-other-browser-views
+    to: TEST-operator-browser-view
+    created_at: 2026-10-29T22:00:45.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49103fe63e47

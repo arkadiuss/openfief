@@ -86167,3 +86167,198 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-deploy-gateway-component
+  - id: SYM-exp-plugins-browser-view
+    title: BrowserView
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:08.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-plugins-one-browser-view
+  - id: SYM-exp-plugins-browser-view-senior
+    title: BrowserView.senior
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:18.745Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+  - id: SYM-exp-plugins-refuse-second-browser-view
+    title: RefuseSecondBrowserView
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:29.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-plugins-cli-refuses-second-browser-view
+      - type: implements
+        target: REQ-plugins-one-browser-view
+  - id: SYM-exp-plugins-may-hold-browser-path
+    title: MayHoldBrowserPath
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:40.139Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+      - type: implements
+        target: REQ-plugins-one-browser-view
+  - id: SYM-exp-plugins-held-by
+    title: heldBy
+    sourceFile: internal/plugins/browser_view.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T21:59:50.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-plugins-one-browser-view
+  - id: SYM-exp-plugins-app-check-browser-view
+    title: CheckBrowserView
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:01.537Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-browser-view
+      - type: implements
+        target: REQ-plugins-cli-refuses-second-browser-view
+  - id: SYM-exp-plugins-app-check-browser-view-all
+    title: checkBrowserView
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:12.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-browser-view
+      - type: implements
+        target: REQ-plugins-cli-refuses-second-browser-view
+  - id: SYM-exp-operator-one-browser-view
+    title: PluginReconciler.oneBrowserView
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:23.425Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+  - id: SYM-exp-operator-held-browser-view
+    title: heldBrowserView
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:33.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+  - id: SYM-exp-operator-other-browser-views
+    title: PluginReconciler.otherBrowserViews
+    sourceFile: internal/plugins/operator/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:43.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-browser-view
+      - type: implements
+        target: REQ-operator-refuses-second-browser-view
+  - id: SYM-exp-plugins-test-refuse-second-browser-view
+    title: TestRefuseSecondBrowserView
+    sourceFile: internal/plugins/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:54.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-browser-view
+  - id: SYM-exp-plugins-test-may-hold-browser-path
+    title: TestMayHoldBrowserPath
+    sourceFile: internal/plugins/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:05.650Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-browser-view
+  - id: SYM-exp-plugins-cli-test-helper-with-ui
+    title: withUI
+    sourceFile: internal/plugins/cli/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:15.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-browser-view
+  - id: SYM-exp-plugins-cli-test-run-refuses-second-browser-view
+    title: TestRunRefusesSecondBrowserView
+    sourceFile: internal/plugins/cli/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:26.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-browser-view
+  - id: SYM-exp-operator-test-helper-view-plugin
+    title: viewPlugin
+    sourceFile: internal/plugins/operator/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:35.441Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-browser-view
+  - id: SYM-exp-operator-test-helper-test-one-browser-view
+    title: testOneBrowserView
+    sourceFile: internal/plugins/operator/browser_view_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:44.213Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-browser-view

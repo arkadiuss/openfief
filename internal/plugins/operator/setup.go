@@ -37,6 +37,7 @@ func (r *PluginReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		Watches(&v1alpha1.PluginGrant{}, handler.EnqueueRequestsFromMapFunc(samePlugin)).
 		Watches(&corev1.Service{}, handler.EnqueueRequestsFromMapFunc(r.allPluginsIfNamed(r.Settings.CoreService, r.Settings.EgressProxyService))).
 		Watches(&corev1.ConfigMap{}, handler.EnqueueRequestsFromMapFunc(r.allPluginsIfNamed(plugins.EgressAllowListConfigMap))).
+		Watches(&v1alpha1.Plugin{}, handler.EnqueueRequestsFromMapFunc(r.otherBrowserViews)).
 		Complete(r)
 	if err != nil {
 		return fmt.Errorf("set up plugin controller: %w", err)
@@ -67,6 +68,29 @@ func (r *PluginReconciler) allPluginsIfNamed(names ...string) handler.MapFunc {
 		}
 		return reqs
 	}
+}
+
+// otherBrowserViews maps a Plugin to every other Plugin in the openfief
+// namespace whose manifest declares a browser path: when one view stops
+// holding its path, or comes to hold one, the others are decided again
+// (D-114).
+func (r *PluginReconciler) otherBrowserViews(ctx context.Context, o client.Object) []reconcile.Request {
+	if o.GetNamespace() != plugins.Namespace {
+		return nil
+	}
+	var list v1alpha1.PluginList
+	if err := r.Client.List(ctx, &list, client.InNamespace(plugins.Namespace)); err != nil {
+		ctrl.LoggerFrom(ctx).Error(err, "list plugins")
+		return nil
+	}
+	var reqs []reconcile.Request
+	for i := range list.Items {
+		p := &list.Items[i]
+		if p.Name != o.GetName() && p.Spec.Manifest.BrowserPath != "" {
+			reqs = append(reqs, reconcile.Request{NamespacedName: client.ObjectKeyFromObject(p)})
+		}
+	}
+	return reqs
 }
 
 // GrantReconciler records on each PluginGrant whether it is well-formed.

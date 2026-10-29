@@ -223,20 +223,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a7a2d17fb2d
-  - type: constrains
-    from: REQ-sdk-go-plugin-environment
-    to: FACT-SUBJECT-BB036C8C97045979
-    created_at: 2026-10-28T08:02:35.054Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-06539ef274ca
-  - type: requires_property
-    from: REQ-sdk-go-plugin-environment
-    to: FACT-PROP-BDD5DBF12CAFE675
-    created_at: 2026-10-28T08:02:35.117Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a7fb9d939816
   - type: specified_by
     from: REQ-sdk-go-plugin-environment
     to: SCEN-sdk-go-plugin-environment
@@ -552,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ff71b199f94
+  - type: constrains
+    from: REQ-sdk-go-plugin-environment
+    to: FACT-SUBJECT-BB036C8C97045979
+    created_at: 2026-10-29T21:59:04.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06539ef274ca
+  - type: requires_property
+    from: REQ-sdk-go-plugin-environment
+    to: FACT-PROP-BDD5DBF12CAFE675
+    created_at: 2026-10-29T21:59:04.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7fb9d939816
