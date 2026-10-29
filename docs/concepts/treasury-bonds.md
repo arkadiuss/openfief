@@ -157,7 +157,7 @@ The same lot in IKE is worth 1030.20 PLN net. Bought by exchange at 99.90 PLN, i
 
 ## Decisions
 
-- **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date. In a revaluation the purchase date is the lot's open date and the price per bond its cost over its quantity; the series terms (per ISIN), the index readings and the account's tax wrapper are recorded separately.
+- **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date. In a revaluation the purchase date is the lot's open date and the price per bond its cost over its quantity; the series terms (per ISIN), the index readings and the account's tax wrapper are recorded separately. The owner enters a lot with its series' terms in the built-in UI, and the treasury-bonds connector delivers both ([Ingest](ingest.md#treasury-bond-lots)); the lot's rules reuse `ValueLot`: a lot is accepted only if it can be valued on its purchase date.
 - **D-20**: Polish tax uses NBP rates, from the day before (`TaxRateCutoff`).
 - **D-25**: gross accrued and net-if-redeemed values. D-25 names only IKE, and only for tax ("no tax inside IKE"). The code also withholds no tax inside IKZE, and charges no fee in either wrapper because it assumes a withdrawal. The glossary's early-redemption fee entry backs the fee part; nothing in DESIGN.md decides the IKZE tax part.
 - **D-37**: issuer tables and examples over the letter. Implemented as decided: the TOS base isn't rounded between years, and Belka tax rounds half up.
@@ -184,6 +184,6 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 
 ## Not built yet
 
-- **D-9**: anything that fetches series terms, CPI or NBP reference rates (the DESIGN.md diagram's treasury bonds connector) and records them through `valuation/app.InputRecorder`; manual lot entry in the built-in UI (D-49); and an import of the bond service's export, if one exists (OQ-22).
+- **D-9**: anything that fetches series terms, CPI or NBP reference rates (the DESIGN.md diagram's treasury bonds connector does manual lots only so far; the owner types each series' terms with its lots) and records them through `valuation/app.InputRecorder`; entering a lot bought by exchange at the [exchange price](../glossary.md), since entered lots are cash purchases at the nominal; and an import of the bond service's export, if one exists (OQ-22).
 - **D-9**: picking the NBP reference rate in force on the tenth business day before a month, which needs a business-day calendar.
 - **D-62**, **GR-13**: the jurisdiction pack (`jurisdiction.Pack` in the glossary) that would make these rules pluggable and set PLN as the default reporting currency; today `pl` is a plain package.
