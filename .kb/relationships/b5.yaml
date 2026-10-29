@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d1d732017dc
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-statements
+    to: TEST-ui-statements
+    created_at: 2026-10-29T06:20:10.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f88ebe57bf69

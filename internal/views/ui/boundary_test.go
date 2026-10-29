@@ -16,9 +16,10 @@ import (
 // imports no OpenFief package but the shared kernel and the SDK's
 // generated clients, so it can reach the record only through the public
 // read API, never the core's own contexts or adapters. The AuthService,
-// ModelPortfolioService and BondLotService clients are the core's contracts
-// for view plugins: they log the owner in and hand the model portfolio
-// (D-52) and manual bond lots (D-9, D-49) to the core.
+// ModelPortfolioService, BondLotService and StatementService clients are
+// the core's contracts for view plugins: they log the owner in and hand
+// the model portfolio (D-52), manual bond lots (D-9, D-49) and uploaded
+// statements (D-7, D-49) to the core.
 func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 	t.Parallel()
 	files, err := filepath.Glob("*.go")

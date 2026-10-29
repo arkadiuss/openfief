@@ -73392,3 +73392,233 @@ symbols:
         target: TEST-ingest-connectapi-statements
       - type: implements
         target: REQ-ingest-statement-service
+  - id: SYM-ui-upload-mode
+    title: uploadMode
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:19:38.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-statement-upload
+  - id: SYM-ui-server-upload-statement
+    title: server.uploadStatement
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:19:44.055Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-statement-upload
+  - id: SYM-ui-upload-parts
+    title: uploadParts
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:19:49.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-statement-upload
+  - id: SYM-ui-server-send-statement
+    title: server.sendStatement
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:19:54.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-statement-upload
+  - id: SYM-ui-server-upload-failed
+    title: server.uploadFailed
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:01.760Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+      - type: implements
+        target: REQ-ui-statement-upload
+  - id: SYM-ui-test-helper-fake-statements
+    title: fakeStatements
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:08.224Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-fake-statements-upload-statement
+    title: fakeStatements.UploadStatement
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:15.977Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-fake-statements-locked
+    title: fakeStatements.locked
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:23.580Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-upload-part
+    title: uploadPart
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:28.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-upload-request
+    title: uploadRequest
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:34.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-mode-part
+    title: modePart
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:40.412Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-file-part
+    title: filePart
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:46.059Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-flex-like
+    title: flexLike
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:52.597Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-zeros
+    title: zeros
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:20:58.508Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-helper-zeros-read
+    title: zeros.Read
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:21:05.721Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-account-upload-form
+    title: TestAccountUploadForm
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:21:12.841Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-upload-statement
+    title: TestUploadStatement
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:21:18.556Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-test-upload-statement-refusals
+    title: TestUploadStatementRefusals
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:21:25.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-uiplugin-upload-client
+    title: uploadClient
+    sourceFile: plugins/ui/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:21:32.664Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugin
+      - type: implements
+        target: REQ-ui-statement-upload
+  - id: SYM-uiplugin-test-upload-client
+    title: TestUploadClient
+    sourceFile: plugins/ui/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:21:39.490Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugin

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
+	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
@@ -50,6 +51,11 @@ type accountData struct {
 	// BondLot is the "Add bond lot" form, shown to the owner on a bond
 	// account's page only (D-9); nil elsewhere.
 	BondLot *bondLotForm
+	// UploadForm shows the owner the "Upload statement" form (D-49).
+	UploadForm bool
+	// Upload is the import the owner's last upload became, to show its
+	// counts and ingest problems; nil otherwise.
+	Upload *ingestv1.UploadStatementResponse
 	// Error is why the core refused what the owner posted.
 	Error string
 }
@@ -57,8 +63,9 @@ type accountData struct {
 // accountForm is what the owner posted to an account's page and why it was
 // refused, to show again; the zero value is a fresh page.
 type accountForm struct {
-	Lot   *bondLotForm
-	Error string
+	Lot    *bondLotForm
+	Upload *ingestv1.UploadStatementResponse
+	Error  string
 }
 
 // instrumentKey identifies an instrument by ISIN and venue symbol.
@@ -80,8 +87,8 @@ func joinValuations(holdings []*viewsv1.Holding, valuations []*viewsv1.Valuation
 
 // accountPage shows one account on a date: its valuation status, holdings
 // with their values, open lots, cash, balance assertion checks, and a page
-// of its transactions; to the owner, a bond account's page also offers the
-// "Add bond lot" form.
+// of its transactions; to the owner, it also offers the "Upload statement"
+// form, and a bond account's page the "Add bond lot" form.
 func (s *server) accountPage(w http.ResponseWriter, r *http.Request, sess session) {
 	s.renderAccount(w, r, sess, http.StatusOK, accountForm{})
 }
@@ -105,7 +112,10 @@ func (s *server) renderAccount(w http.ResponseWriter, r *http.Request, sess sess
 		s.errorPage(w, r, http.StatusBadRequest, err.Error())
 		return
 	}
-	data := accountData{Date: date.String(), Account: acc.Msg.GetAccount(), Status: status.Msg.GetStatus(), Error: form.Error}
+	data := accountData{
+		Date: date.String(), Account: acc.Msg.GetAccount(), Status: status.Msg.GetStatus(), Error: form.Error,
+		UploadForm: sess.Owner(), Upload: form.Upload,
+	}
 	if sess.Owner() && data.Account.GetInstitution() == bondInstitution {
 		data.BondLot = cmp.Or(form.Lot, &bondLotForm{})
 	}

@@ -33,6 +33,10 @@ import (
 const (
 	// coreTimeout bounds one call to the core.
 	coreTimeout = 30 * time.Second
+	// uploadTimeout bounds one statement upload, the file streamed to the
+	// core and the connector's import together: up to 64 MiB, on a slow
+	// link from the owner's browser.
+	uploadTimeout = 5 * time.Minute
 	// readHeaderTimeout bounds how long a browser may take to send headers.
 	readHeaderTimeout = 10 * time.Second
 	// idleTimeout closes idle keep-alive connections.
@@ -74,19 +78,21 @@ func run(ctx context.Context, log *slog.Logger) error {
 }
 
 // newHandler builds the UI's handler from the plugin's environment: the
-// core's address, and the token the AuthService, ModelPortfolioService and
-// BondLotService clients present (authClient).
+// core's address, and the token the AuthService, ModelPortfolioService,
+// BondLotService and StatementService clients present (authClient,
+// uploadClient).
 func newHandler(log *slog.Logger) (http.Handler, error) {
 	coreURL, err := openfief.CoreURL()
 	if err != nil {
 		return nil, fmt.Errorf("core address: %w", err)
 	}
 	h, err := ui.New(&ui.Config{
-		Auth:     identityv1connect.NewAuthServiceClient(authClient(os.Getenv), coreURL),
-		Model:    portfoliov1connect.NewModelPortfolioServiceClient(authClient(os.Getenv), coreURL),
-		BondLots: ingestv1connect.NewBondLotServiceClient(authClient(os.Getenv), coreURL),
-		Read:     viewsv1connect.NewReadServiceClient(readClient(), coreURL),
-		Log:      log,
+		Auth:       identityv1connect.NewAuthServiceClient(authClient(os.Getenv), coreURL),
+		Model:      portfoliov1connect.NewModelPortfolioServiceClient(authClient(os.Getenv), coreURL),
+		BondLots:   ingestv1connect.NewBondLotServiceClient(authClient(os.Getenv), coreURL),
+		Statements: ingestv1connect.NewStatementServiceClient(uploadClient(os.Getenv), coreURL),
+		Read:       viewsv1connect.NewReadServiceClient(readClient(), coreURL),
+		Log:        log,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("ui: %w", err)
@@ -117,6 +123,14 @@ func authClient(getenv func(string) string) *http.Client {
 		c = openfief.CoreHTTPClient(openfief.TokenFile{})
 	}
 	c.Timeout = coreTimeout
+	return c
+}
+
+// uploadClient is authClient for statement uploads, which may take up to
+// uploadTimeout.
+func uploadClient(getenv func(string) string) *http.Client {
+	c := authClient(getenv)
+	c.Timeout = uploadTimeout
 	return c
 }
 

@@ -25,7 +25,7 @@ const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -38,6 +38,11 @@ type Config struct {
 	// BondLots calls the core's BondLotService (D-9, D-49) like Auth: with
 	// the plugin's own token, the owner's session in each request.
 	BondLots ingestv1connect.BondLotServiceClient
+	// Statements streams the owner's statement uploads to the core's
+	// StatementService (D-7, D-49) like Auth: with the plugin's own token,
+	// the owner's session in each upload's header. Its HTTP client should
+	// give an upload of 64 MiB more time than other calls.
+	Statements ingestv1connect.StatementServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -50,27 +55,31 @@ type Config struct {
 
 // server holds the UI's handlers.
 type server struct {
-	auth     identityv1connect.AuthServiceClient
-	model    portfoliov1connect.ModelPortfolioServiceClient
-	bondLots ingestv1connect.BondLotServiceClient
-	read     viewsv1connect.ReadServiceClient
-	pages    *pages
-	today    func() kernel.Date
-	log      *slog.Logger
+	auth       identityv1connect.AuthServiceClient
+	model      portfoliov1connect.ModelPortfolioServiceClient
+	bondLots   ingestv1connect.BondLotServiceClient
+	statements ingestv1connect.StatementServiceClient
+	read       viewsv1connect.ReadServiceClient
+	pages      *pages
+	today      func() kernel.Date
+	log        *slog.Logger
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
 // security headers on every response and the same-origin check on every
 // state-changing request.
 func New(cfg *Config) (http.Handler, error) {
-	if cfg.Auth == nil || cfg.Model == nil || cfg.BondLots == nil || cfg.Read == nil {
+	if cfg.Auth == nil || cfg.Model == nil || cfg.BondLots == nil || cfg.Statements == nil || cfg.Read == nil {
 		return nil, ErrMissingDependency
 	}
 	p, err := parsePages()
 	if err != nil {
 		return nil, err
 	}
-	s := &server{auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, read: cfg.Read, pages: p, today: cfg.Today, log: cfg.Log}
+	s := &server{
+		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
+		pages: p, today: cfg.Today, log: cfg.Log,
+	}
 	if s.today == nil {
 		s.today = utcToday
 	}
@@ -102,6 +111,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /accounts/{id}", s.withSession(s.accountPage))
 	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
+	mux.HandleFunc("POST /accounts/{id}/statements", s.withOwner(s.uploadStatement))
 	mux.HandleFunc("GET /assertions", s.withSession(s.assertionsPage))
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	mux.HandleFunc("GET /settings", s.withOwner(s.settingsPage))
