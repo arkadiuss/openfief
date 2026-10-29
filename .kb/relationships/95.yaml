@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-feead8c78b66
+  - type: implements
+    from: SYM-fd-plugins-core-own-paths
+    to: REQ-plugins-view-browser-path-grant
+    created_at: 2026-10-29T12:04:41.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afecc3bacbd9
+  - type: covered_by
+    from: SYM-fd-plugins-core-own-paths
+    to: TEST-plugins-browser-path
+    created_at: 2026-10-29T12:04:41.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46eb1a0dc414

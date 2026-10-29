@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9819aa4a07fa
+  - type: implements
+    from: SYM-fd-identity-kube-core-access-forward
+    to: REQ-identity-first-passkey-link
+    created_at: 2026-10-29T12:04:34.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d84eb925a45
+  - type: covered_by
+    from: SYM-fd-identity-kube-core-access-forward
+    to: TEST-e2e-first-passkey
+    created_at: 2026-10-29T12:04:34.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01b7120ef414
+  - type: implements
+    from: SYM-fd-plugins-valid-browser-path
+    to: REQ-plugins-view-browser-path-grant
+    created_at: 2026-10-29T12:04:52.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea12df036a21
+  - type: covered_by
+    from: SYM-fd-plugins-valid-browser-path
+    to: TEST-plugins-browser-path
+    created_at: 2026-10-29T12:04:52.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9faf9ef76a45

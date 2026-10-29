@@ -18,6 +18,7 @@ type EffectivePermissions struct {
 	egress       []EgressHost
 	secrets      []SecretMount
 	dataTiers    []DataTier
+	browserPath  string
 	config       []byte
 }
 
@@ -47,6 +48,10 @@ func Effective(p *Plugin, g *Grant) (*EffectivePermissions, error) {
 	slices.SortFunc(e.secrets, func(a, b SecretMount) int { return cmp.Compare(a.Name, b.Name) })
 	if len(e.capabilities) == 0 {
 		return nil, fmt.Errorf("%w: plugin %q", ErrNoCapabilityGranted, p.Name)
+	}
+	if bp := p.Manifest.BrowserPath; bp != "" && slices.Contains(g.Permissions.BrowserPaths, bp) &&
+		slices.Contains(e.capabilities, CapabilityView) {
+		e.browserPath = bp
 	}
 	return e, nil
 }
@@ -81,6 +86,11 @@ func (e *EffectivePermissions) Secrets() []SecretMount { return slices.Clone(e.s
 // DataTiers returns the enforced data tiers, sorted.
 func (e *EffectivePermissions) DataTiers() []DataTier { return slices.Clone(e.dataTiers) }
 
+// BrowserPath returns the path prefix the core proxies to the plugin for
+// browsers (D-81): the one its manifest declares, when the grant approves it
+// and the plugin may act as a view; empty otherwise.
+func (e *EffectivePermissions) BrowserPath() string { return e.browserPath }
+
 // Config returns the plugin's config document.
 func (e *EffectivePermissions) Config() []byte { return bytes.Clone(e.config) }
 
@@ -93,5 +103,5 @@ func (e *EffectivePermissions) Equal(o *EffectivePermissions) bool {
 	return e.plugin == o.plugin && e.image.Equal(o.image) &&
 		slices.Equal(e.capabilities, o.capabilities) && slices.Equal(e.egress, o.egress) &&
 		slices.Equal(e.secrets, o.secrets) && slices.Equal(e.dataTiers, o.dataTiers) &&
-		bytes.Equal(e.config, o.config)
+		e.browserPath == o.browserPath && bytes.Equal(e.config, o.config)
 }

@@ -44,6 +44,9 @@ func RenderProposal(p *app.Proposal) string {
 		}
 	}
 	fmt.Fprintf(&b, "  Data tiers:   %s\n", joinOr(strsOf(m.DataTiers), noneText))
+	if m.BrowserPath != "" {
+		fmt.Fprintf(&b, "  Browser path: %s, which the core proxies to it for browsers (D-81)\n", m.BrowserPath)
+	}
 	b.WriteString("  Config:       ")
 	b.WriteString(strings.Join(describeSchema(m.ConfigSchema), "\n                "))
 	b.WriteString("\n")

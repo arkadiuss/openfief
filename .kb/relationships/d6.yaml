@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba080db433a9
+  - type: constrains
+    from: REQ-ui-number-format-separators-only
+    to: FACT-SUBJECT-AA3F8D49370A1850
+    created_at: 2026-10-29T11:36:01.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a79273ac8eab
+  - type: requires_property
+    from: REQ-ui-number-format-separators-only
+    to: FACT-PROP-1EF8CC83F02CB965
+    created_at: 2026-10-29T11:36:01.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d335be63ba6c

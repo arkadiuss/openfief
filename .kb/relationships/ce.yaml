@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d454d9d7f79
+  - type: executable_for
+    from: SYM-fd-identity-cli-test-enroll
+    to: TEST-identity-cli
+    created_at: 2026-10-29T12:09:30.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16d93f4f6c1b
+  - type: executable_for
+    from: SYM-fd-browserproxy-test-helper-seen
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:11:23.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37a6c91fba5b

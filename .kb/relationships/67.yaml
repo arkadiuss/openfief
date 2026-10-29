@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0eceb53f4056
+  - type: executable_for
+    from: SYM-fd-plugins-test-core-serves-path
+    to: TEST-plugins-browser-path
+    created_at: 2026-10-29T12:10:11.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c711ed02bf6

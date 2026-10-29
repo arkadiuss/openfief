@@ -468,3 +468,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-edca58b661b2
+  - type: validates
+    from: TEST-plugins-browser-path
+    to: REQ-plugins-view-browser-path-grant
+    created_at: 2026-10-29T12:01:37.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e4d172d07d8

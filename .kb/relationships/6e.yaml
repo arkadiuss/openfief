@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9090edf956c
+  - type: implements
+    from: SYM-fd-identity-cli-run
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:03:41.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-452039f9c1b4
+  - type: implements
+    from: SYM-fd-identity-cli-run
+    to: REQ-identity-first-passkey-link
+    created_at: 2026-10-29T12:03:41.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2073e9df65cd
+  - type: covered_by
+    from: SYM-fd-identity-cli-run
+    to: TEST-identity-cli
+    created_at: 2026-10-29T12:03:41.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e71a53973790

@@ -440,3 +440,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ad9febc366c
+  - type: constrains
+    from: REQ-ui-number-format-setting
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-29T11:35:06.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b2350f0937a
+  - type: requires_property
+    from: REQ-ui-number-format-setting
+    to: FACT-PROP-03CB47A86D7CF3E6
+    created_at: 2026-10-29T11:35:06.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0d9587a95fb
+  - type: implements
+    from: SYM-fd-views-browser-route-matches
+    to: REQ-views-browser-route-longest-prefix
+    created_at: 2026-10-29T12:05:49.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c5b4de6d175
+  - type: covered_by
+    from: SYM-fd-views-browser-route-matches
+    to: TEST-views-browser-routing
+    created_at: 2026-10-29T12:05:49.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd30bfe29f9e

@@ -419,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a675c33f26c
+  - type: executable_for
+    from: SYM-fd-uiplugin-test-helper-core-verifier-verify-core
+    to: TEST-ui-require-core
+    created_at: 2026-10-29T12:12:16.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cfb55670c88

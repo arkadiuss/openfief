@@ -58,7 +58,7 @@ Semantic tokens, by job: `--bg`, `--surface`, `--sunken` for grounds; `--text`, 
 | Figures: amounts, quantities, IDs, code | IBM Plex Mono | 400, 500 | `--font-mono` |
 
 - The fonts are self-hosted in [`design/fonts/`](../../design/fonts/), loaded by [`fonts.css`](../../design/fonts/fonts.css), with Latin Extended so Polish names render. All three are under the SIL Open Font License 1.1, whose text sits beside them. Nothing loads from another host.
-- Amounts are always monospace with tabular figures (`font-variant-numeric: tabular-nums`), so columns line up, and always show their currency, because every amount keeps its original currency (D-20). Format them for the reader's locale; Polish is `5 000,00 PLN`.
+- Amounts are always monospace with tabular figures (`font-variant-numeric: tabular-nums`), so columns line up, and always show their currency, because every amount keeps its original currency (D-20). Write them in the owner's number format (D-113), whose Polish default is `5 000,00 PLN`.
 - Headings are tight (`letter-spacing: -0.02em`), body text is 16 px at 1.6 line height, and lines stay under about 75 characters.
 
 ## Space and shape

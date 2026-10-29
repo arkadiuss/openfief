@@ -9,27 +9,30 @@ import (
 )
 
 // Permissions is a set of plugin permissions: capabilities, egress hosts,
-// Secret names and data tiers. It is what a plugin requests
-// (Manifest.Requested), what a Grant approves, and what NeedsApproval reports
-// as still unapproved.
+// Secret names, data tiers and browser paths (D-81). It is what a plugin
+// requests (Manifest.Requested), what a Grant approves, and what
+// NeedsApproval reports as still unapproved.
 type Permissions struct {
 	Capabilities []Capability
 	Egress       []EgressHost
 	Secrets      []string
 	DataTiers    []DataTier
+	BrowserPaths []string
 }
 
 // IsEmpty reports whether p holds no permission at all.
 func (p *Permissions) IsEmpty() bool {
-	return len(p.Capabilities) == 0 && len(p.Egress) == 0 && len(p.Secrets) == 0 && len(p.DataTiers) == 0
+	return len(p.Capabilities) == 0 && len(p.Egress) == 0 && len(p.Secrets) == 0 && len(p.DataTiers) == 0 &&
+		len(p.BrowserPaths) == 0
 }
 
 func (p *Permissions) validate() error {
-	errs := make([]error, 0, len(p.Capabilities)+len(p.Egress)+len(p.Secrets)+len(p.DataTiers))
+	errs := make([]error, 0, len(p.Capabilities)+len(p.Egress)+len(p.Secrets)+len(p.DataTiers)+len(p.BrowserPaths))
 	errs = append(errs, validateCapabilities(p.Capabilities)...)
 	errs = append(errs, validateEgress(p.Egress)...)
 	errs = append(errs, validateSecretNames("secrets", p.Secrets)...)
 	errs = append(errs, validateDataTiers(p.DataTiers)...)
+	errs = append(errs, validateBrowserPaths("browserPaths", p.BrowserPaths)...)
 	return errors.Join(errs...)
 }
 
@@ -41,6 +44,7 @@ func (p *Permissions) sorted() Permissions {
 		Egress:       sortedCopy(p.Egress, compareEgressHosts),
 		Secrets:      sortedCopy(p.Secrets, cmp.Compare[string]),
 		DataTiers:    sortedCopy(p.DataTiers, cmp.Compare[DataTier]),
+		BrowserPaths: sortedCopy(p.BrowserPaths, cmp.Compare[string]),
 	}
 }
 
@@ -158,6 +162,7 @@ func NeedsApproval(g *Grant, p *Plugin) (Permissions, error) {
 		Egress:       missing(req.Egress, granted.Egress),
 		Secrets:      missing(req.Secrets, granted.Secrets),
 		DataTiers:    missing(req.DataTiers, granted.DataTiers),
+		BrowserPaths: missing(req.BrowserPaths, granted.BrowserPaths),
 	}, nil
 }
 

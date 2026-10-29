@@ -81,6 +81,9 @@ type core struct {
 	// plugins reads the installed plugins for the read API (D-46, D-58);
 	// nil outside a cluster.
 	plugins *viewskube.Plugins
+	// browser reads the view plugins that serve browsers through the
+	// core's front door (D-81); nil outside a cluster.
+	browser *viewskube.Browser
 }
 
 // ingestDeps returns the ledger, with valuation's import hook (D-36), and

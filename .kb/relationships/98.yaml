@@ -308,20 +308,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0c68ed44b002
   - type: executable_for
-    from: SYM-e2e-test-helper-wait-uiavailable
-    to: TEST-e2e-ui
-    created_at: 2026-10-28T20:21:14.178Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ab0b39089f32
-  - type: executable_for
-    from: SYM-e2e-test-helper-wait-uiavailable
-    to: TEST-e2e-demo-stack
-    created_at: 2026-10-28T20:21:14.208Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b5b189aa2610
-  - type: executable_for
     from: SYM-portfolio-test-max-drawdown
     to: TEST-portfolio-drawdown
     created_at: 2026-10-28T22:22:46.021Z

@@ -482,3 +482,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b0cdd17dfae
+  - type: implements
+    from: SYM-fd-identity-kube-core-access-core-pod
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:04:14.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9097ef94781a
+  - type: covered_by
+    from: SYM-fd-identity-kube-core-access-core-pod
+    to: TEST-identity-kube-core-access
+    created_at: 2026-10-29T12:04:14.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f0c7a54cd2c
+  - type: implements
+    from: SYM-fd-plugins-effective-permissions-browser-path
+    to: REQ-plugins-view-browser-path-grant
+    created_at: 2026-10-29T12:05:09.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f00699d56466
+  - type: covered_by
+    from: SYM-fd-plugins-effective-permissions-browser-path
+    to: TEST-plugins-browser-path
+    created_at: 2026-10-29T12:05:09.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-192640ecf6ee

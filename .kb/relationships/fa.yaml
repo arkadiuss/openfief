@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d1eacdf867a
+  - type: implements
+    from: SYM-fd-identity-kube-core-access
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:04:08.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9d64b202eb9
+  - type: covered_by
+    from: SYM-fd-identity-kube-core-access
+    to: TEST-identity-kube-core-access
+    created_at: 2026-10-29T12:04:08.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2be7f6f4ad55

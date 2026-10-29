@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13423e61d69a
+  - type: implements
+    from: SYM-fd-views-route-browser-path
+    to: REQ-views-browser-route-longest-prefix
+    created_at: 2026-10-29T12:05:55.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28a7760cea97
+  - type: implements
+    from: SYM-fd-views-route-browser-path
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:05:55.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94dea6d5d703
+  - type: covered_by
+    from: SYM-fd-views-route-browser-path
+    to: TEST-views-browser-routing
+    created_at: 2026-10-29T12:05:55.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2edf4124fcce

@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e33078b28ba2
+  - type: implements
+    from: SYM-uiplugin-auth-client
+    to: REQ-identity-no-auth-bypass
+    created_at: 2026-10-29T10:54:51.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-880ba7c52bee
+  - type: validates
+    from: TEST-views-kube-browser
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:01:43.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a52848f6f316

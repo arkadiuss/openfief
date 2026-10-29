@@ -391,3 +391,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-310a77da78d9
+  - type: executable_for
+    from: SYM-fd-core-test-helper-wait-routed
+    to: TEST-core-front-door
+    created_at: 2026-10-29T12:08:38.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b5a0dc30668

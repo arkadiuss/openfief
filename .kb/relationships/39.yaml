@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-264b35ed4b83
+  - type: constrains
+    from: REQ-jurisdiction-pl-number-format
+    to: FACT-SUBJECT-C8AA8A27329ED635
+    created_at: 2026-10-29T11:35:35.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9da590e759bd
+  - type: requires_property
+    from: REQ-jurisdiction-pl-number-format
+    to: FACT-PROP-9B3CD451CA3AA1D2
+    created_at: 2026-10-29T11:35:35.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aa0d5dcd7da

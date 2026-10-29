@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09fad710896c
+  - type: executable_for
+    from: SYM-fd-core-test-helper-browser-get
+    to: TEST-core-front-door
+    created_at: 2026-10-29T12:08:44.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fe7966e3d6d

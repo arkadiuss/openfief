@@ -433,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f7073f72cd0
+  - type: implements
+    from: SYM-fd-views-kube-browser-start
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:07:18.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e640f7b29987
+  - type: covered_by
+    from: SYM-fd-views-kube-browser-start
+    to: TEST-views-kube-browser
+    created_at: 2026-10-29T12:07:18.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34b9074d907a
+  - type: executable_for
+    from: SYM-fd-plugins-test-browser-path-approval
+    to: TEST-plugins-browser-path
+    created_at: 2026-10-29T12:10:22.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e061cd0f29f

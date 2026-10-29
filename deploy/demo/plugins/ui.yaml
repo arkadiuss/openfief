@@ -1,8 +1,9 @@
 # The instance ui of the built-in UI (plugins/ui, D-3), with the owner's approval of exactly what it requests: the
-# view capability, no egress host and no Secret. The operator runs it as Service plugin-ui, port connect (the
-# operator's --plugin-port, 8080); ../routes sends the demo's browsers there. spec.manifest must equal the image's
-# signed label, plugins/ui/manifest.json (`task plugins:labels:check` compares them). The digest is a placeholder that
-# ../openfief's `images:` sets (scripts/demo/pin-images.sh).
+# view capability, the browser path / (D-81), no egress host and no Secret. The operator runs it as Service plugin-ui,
+# port connect (the operator's --plugin-port, 8080), which only the core may call (D-59): the core proxies every path
+# it doesn't serve itself to it, so browsers reach it through the core alone and ../routes sends everything to the
+# core. spec.manifest must equal the image's signed label, plugins/ui/manifest.json (`task plugins:labels:check`
+# compares them). The digest is a placeholder that ../openfief's `images:` sets (scripts/demo/pin-images.sh).
 apiVersion: openfief.io/v1alpha1
 kind: Plugin
 metadata:
@@ -12,6 +13,7 @@ spec:
   image: ghcr.io/arkadiuss/openfief/ui@sha256:0000000000000000000000000000000000000000000000000000000000000000
   manifest:
     capabilities: [view]
+    browserPath: /
     configSchema:
       type: object
       additionalProperties: false
@@ -23,3 +25,4 @@ metadata:
   namespace: openfief
 spec:
   capabilities: [view]
+  browserPaths: [/]

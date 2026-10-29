@@ -67,7 +67,7 @@ func TestOnboardingServices(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
 	code := enrollCode(t, enrollCmd(t, dsn))
-	_, srv, _ := startCoreWith(t, dsn, func(cfg *serveConfig) { cfg.Auth.DevCallerToken = uiCaller })
+	_, srv, _ := startCoreForUI(t, dsn, func(*serveConfig) {})
 	session := passkeyLogin(t, authClient(srv.URL, srv.Client(), uiCaller), passkeyEnroll(t, authClient(srv.URL, srv.Client(), uiCaller), code))
 	checkSleeveService(t, srv, session)
 

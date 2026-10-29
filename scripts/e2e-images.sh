@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 # Builds the images the end-to-end suite runs from this checkout, so a pull request tests its own code instead of what
 # GHCR holds, and makes them available to the local cluster in one of two ways:
-#   - core, operator, egress-proxy, demo-seed and the built-in UI (which runs from a stand-in of the operator's
-#     workload) are loaded into the nodes under the tags test/e2e/overlays/openfief names, openfief.test/<name>:e2e
-#     (.test never resolves, so nothing pulls them);
-#   - the plugin image the operator deploys, nbp-fx, goes to the suite's registry, because the operator deploys a
-#     plugin only after it has read the image's signature from its registry (D-56, D-57). The suite signs it there with
-#     a key it makes at run time (test/e2e/registry_test.go).
+#   - core, operator, egress-proxy and demo-seed are loaded into the nodes under the tags test/e2e/overlays/openfief
+#     names, openfief.test/<name>:e2e (.test never resolves, so nothing pulls them);
+#   - the plugin images the operator deploys, nbp-fx and the built-in UI, go to the suite's registry, because the
+#     operator deploys a plugin only after it has read the image's signature from its registry (D-56, D-57). The suite
+#     signs them there with a key it makes at run time (test/e2e/registry_test.go).
 # The registry is a container, openfief-e2e-registry, on the cluster's Docker network, published on 127.0.0.1:5000 for
 # the suite. The operator reaches it at its address on that network, a private IPv4 address, which the operator's
 # registry client reads over plain HTTP. The nodes reach it there too, but containerd pulls only localhost over plain
-# HTTP unless configured, so the plugin image is pulled into every node here with ctr, under the name the operator
+# HTTP unless configured, so each plugin image is pulled into every node here with ctr, under the name the operator
 # deploys; the operator asks for IfNotPresent, so the kubelet never pulls it itself.
 # It writes the two registry addresses to <env file>, which task e2e passes to the suite.
 # Usage: e2e-images.sh <k3d|kind> <cluster name> <env file>
@@ -45,7 +44,7 @@ for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/D
   echo "e2e-images: building $image from $dockerfile"
   docker build --file "$dockerfile" --tag "$image" .
   case "$dockerfile" in
-    plugins/nbp-fx/*) plugins+=("$name") ;;
+    plugins/*) plugins+=("$name") ;;
     *) images+=("$image") ;;
   esac
 done

@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c28b84f8b539
+  - type: executable_for
+    from: SYM-core-test-helper-start-core-for-ui
+    to: TEST-core-auth
+    created_at: 2026-10-29T10:55:22.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8f40048d3e8

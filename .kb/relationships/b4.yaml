@@ -370,3 +370,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6efeee98e503
+  - type: implements
+    from: SYM-fd-identity-cli-options
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:03:27.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52cbb4d10f3e
+  - type: covered_by
+    from: SYM-fd-identity-cli-options
+    to: TEST-identity-cli
+    created_at: 2026-10-29T12:03:27.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86b0fd1b0f19

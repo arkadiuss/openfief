@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c6c708f46c3
+  - type: implements
+    from: SYM-fd-views-kube-service-address
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:07:46.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59b8c387bf0a
+  - type: covered_by
+    from: SYM-fd-views-kube-service-address
+    to: TEST-views-kube-browser
+    created_at: 2026-10-29T12:07:46.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2888054730f

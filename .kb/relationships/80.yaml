@@ -300,3 +300,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b284207cd457
+  - type: implements
+    from: SYM-fd-views-app-plugin-tokens
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:05:22.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ada202eab4dd
+  - type: covered_by
+    from: SYM-fd-views-app-plugin-tokens
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:05:22.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0774e963bd8

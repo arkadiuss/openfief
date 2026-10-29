@@ -10,8 +10,9 @@
 // suite's trusted signer (a key made for this run, which signs the plugin
 // image in the suite's registry, see registry_test.go), the demo's
 // application layer (deploy/demo/openfief through overlays/openfief, which
-// only swaps the images, runs the built-in UI from a stand-in and admits the
-// suite's client pod), and two client pods (testdata/clients.yaml). Each test then waits for its own condition,
+// only swaps the images, points the demo's ui instance at the UI's signed
+// image in the suite's registry and admits the suite's client pod), and two
+// client pods (testdata/clients.yaml). Each test then waits for its own condition,
 // with a deadline, and on failure logs the cluster's pods and events, the
 // pods that aren't ready, the plugins and their allow-lists, and the logs of
 // the core, the operator, the plugins, the demo loader, the database and
@@ -113,16 +114,24 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 	if err != nil {
 		return err
 	}
-	var signers string
+	var (
+		signers string
+		ui      registryImage
+	)
 	steps := []func() error{
 		func() error { return installCNPG(ctx, k, logf) },
 		func() error { return installDatabase(ctx, k, logf) },
 		func() error {
 			hash, trustErr := trustSigner(ctx, k, reg, logf)
 			signers = hash
-			return trustErr
+			if trustErr != nil {
+				return trustErr
+			}
+			var imageErr error
+			ui, imageErr = reg.image(ctx, uiImage)
+			return imageErr
 		},
-		func() error { return installApp(ctx, k, logf, editApp(signers)) },
+		func() error { return installApp(ctx, k, logf, editApp(signers, ui.cluster)) },
 		func() error { return installClients(ctx, k, logf) },
 	}
 	for _, step := range steps {

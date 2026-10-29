@@ -496,3 +496,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-068d2207da6a
+  - type: implements
+    from: SYM-fd-core-new-front-door
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:02:49.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34875cae0252
+  - type: covered_by
+    from: SYM-fd-core-new-front-door
+    to: TEST-core-front-door
+    created_at: 2026-10-29T12:02:49.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20ab50a2100a
+  - type: executable_for
+    from: SYM-fd-e2e-test-helper-wait-http
+    to: TEST-e2e-first-passkey
+    created_at: 2026-10-29T12:12:40.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1ccdb157d55

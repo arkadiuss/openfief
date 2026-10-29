@@ -22,6 +22,7 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 			Egress:       egress,
 			DataTiers:    dataTiers(spec.Manifest.DataTiers),
 			ConfigSchema: rawJSON(spec.Manifest.ConfigSchema),
+			BrowserPath:  spec.Manifest.BrowserPath,
 		},
 		Config: rawJSON(spec.Config),
 	}
@@ -48,6 +49,7 @@ func grantFromResource(g *v1alpha1.PluginGrant) (*plugins.Grant, error) {
 			Egress:       egress,
 			Secrets:      g.Spec.Secrets,
 			DataTiers:    dataTiers(g.Spec.DataTiers),
+			BrowserPaths: g.Spec.BrowserPaths,
 		},
 	}
 	if err := grant.Validate(); err != nil {
@@ -65,7 +67,7 @@ func permissionsToAPI(p *plugins.Permissions) *v1alpha1.Permissions {
 	if p.IsEmpty() {
 		return nil
 	}
-	out := &v1alpha1.Permissions{Secrets: p.Secrets}
+	out := &v1alpha1.Permissions{Secrets: p.Secrets, BrowserPaths: p.BrowserPaths}
 	for _, c := range p.Capabilities {
 		out.Capabilities = append(out.Capabilities, string(c))
 	}
@@ -84,6 +86,9 @@ func effectiveToAPI(e *plugins.EffectivePermissions) *v1alpha1.Permissions {
 		Capabilities: e.Capabilities(),
 		Egress:       e.Egress(),
 		DataTiers:    e.DataTiers(),
+	}
+	if bp := e.BrowserPath(); bp != "" {
+		p.BrowserPaths = []string{bp}
 	}
 	for _, s := range e.Secrets() {
 		p.Secrets = append(p.Secrets, s.Name)
