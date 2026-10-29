@@ -398,3 +398,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e666470e324
+  - type: constrains
+    from: REQ-plugins-upgrade-version-resolution
+    to: FACT-SUBJECT-D49D172B3563395A
+    created_at: 2026-10-29T17:04:09.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1fdde31d314
+  - type: requires_property
+    from: REQ-plugins-upgrade-version-resolution
+    to: FACT-PROP-6B1D647157CEE9A9
+    created_at: 2026-10-29T17:04:09.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74f13e62bd46
+  - type: specified_by
+    from: REQ-plugins-upgrade-version-resolution
+    to: SCEN-plugins-upgrade-version-resolution
+    created_at: 2026-10-29T17:04:09.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b37a4c86725
+  - type: implements
+    from: SYM-pl-resolve-upgrade-source
+    to: REQ-plugins-upgrade-version-resolution
+    created_at: 2026-10-29T17:04:26.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a58833ce3ab
+  - type: implements
+    from: SYM-pl-resolve-upgrade-source
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:04:26.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b663a33501c
+  - type: covered_by
+    from: SYM-pl-resolve-upgrade-source
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:04:26.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b070535ad4d9

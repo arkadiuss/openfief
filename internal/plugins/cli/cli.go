@@ -23,6 +23,8 @@ const Usage = `usage:
   openfief plugin install <catalog-name|image@sha256:...> [--name NAME] [--config FILE]
                           [--cluster-service NAMESPACE/SERVICE:PORT]
                           [--trusted-signers FILE] [--yes] [--print]
+  openfief plugin upgrade <instance> <catalog-version|image@sha256:...> [--config FILE]
+                          [--trusted-signers FILE] [--yes]
   openfief plugin uninstall <instance> [--yes]
   openfief plugin list
   openfief enroll [--port 8080] [--ttl 15m]
@@ -92,15 +94,33 @@ func Run(ctx context.Context, args []string, env *Env) error {
 		return err
 	}
 	o.in = bufio.NewReader(env.In)
-	switch {
-	case cmd == "install" && len(pos) == 1:
-		return install(ctx, env, &o, pos[0])
-	case cmd == "uninstall" && len(pos) == 1:
-		return uninstall(ctx, env, &o, pos[0])
-	case cmd == "list" && len(pos) == 0:
-		return list(ctx, env, &o)
+	if n, ok := commandArgs()[cmd]; !ok || len(pos) != n {
+		return fmt.Errorf("%w\n%s", ErrUsage, Usage)
 	}
-	return fmt.Errorf("%w\n%s", ErrUsage, Usage)
+	switch cmd {
+	case cmdInstall:
+		return install(ctx, env, &o, pos[0])
+	case cmdUpgrade:
+		return upgrade(ctx, env, &o, pos[0], pos[1])
+	case cmdUninstall:
+		return uninstall(ctx, env, &o, pos[0])
+	}
+	return list(ctx, env, &o)
+}
+
+// The commands of `openfief plugin`.
+const (
+	cmdInstall   = "install"
+	cmdUpgrade   = "upgrade"
+	cmdUninstall = "uninstall"
+	cmdList      = "list"
+	// upgradeArgs are an instance and a version.
+	upgradeArgs = 2
+)
+
+// commandArgs is how many arguments each command takes.
+func commandArgs() map[string]int {
+	return map[string]int{cmdInstall: 1, cmdUpgrade: upgradeArgs, cmdUninstall: 1, cmdList: 0}
 }
 
 // parseFlags parses one command's flags, which may come before, between or
@@ -112,7 +132,7 @@ func parseFlags(cmd string, args []string) (options, []string, error) {
 	fs.StringVar(&o.kubeconfig, "kubeconfig", "", "kubeconfig file; default: $KUBECONFIG or ~/.kube/config")
 	fs.StringVar(&o.context, "context", "", "kubeconfig context; default: the current one")
 	switch cmd {
-	case "install":
+	case cmdInstall:
 		fs.StringVar(&o.name, "name", "", "instance name; default: the catalog name or the image's repository name")
 		fs.StringVar(&o.config, "config", "", "JSON file with the instance's config")
 		fs.StringVar(&o.clusterService, "cluster-service", "",
@@ -120,7 +140,11 @@ func parseFlags(cmd string, args []string) (options, []string, error) {
 		fs.StringVar(&o.trustedSigners, "trusted-signers", "", "the owner's signers file; default: the cluster's openfief-trusted-signers ConfigMap")
 		fs.BoolVar(&o.yes, "yes", false, "install without asking")
 		fs.BoolVar(&o.print, "print", false, "print the Plugin and PluginGrant as YAML for GitOps instead of applying them")
-	case "uninstall":
+	case cmdUpgrade:
+		fs.StringVar(&o.config, "config", "", "JSON file with the instance's new config; default: keep its config")
+		fs.StringVar(&o.trustedSigners, "trusted-signers", "", "the owner's signers file; default: the cluster's openfief-trusted-signers ConfigMap")
+		fs.BoolVar(&o.yes, "yes", false, "upgrade without asking")
+	case cmdUninstall:
 		fs.BoolVar(&o.yes, "yes", false, "uninstall without asking")
 	}
 	var pos []string

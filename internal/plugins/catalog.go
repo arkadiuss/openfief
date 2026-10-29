@@ -17,6 +17,10 @@ var ErrInvalidCatalog = errors.New("invalid catalog")
 type CatalogEntry struct {
 	// Name is the plugin's catalog name, for messages and the CLI.
 	Name string
+	// Version is the product release that added the entry, such as
+	// 2026.11.0, by which `openfief plugin upgrade` names it (D-88, D-90);
+	// empty for an entry added by hand.
+	Version string
 	// Image is the reviewed image; only its digest is pinned, so a mirror of
 	// the same image is verified too.
 	Image ImageRef
@@ -73,7 +77,7 @@ func (d *signerDoc) signer(kind SignerKind) Signer {
 
 // ParseCatalog reads the catalog's JSON form:
 //
-//	{"plugins": [{"name": "...", "image": "repo@sha256:...",
+//	{"plugins": [{"name": "...", "version": "2026.11.0", "image": "repo@sha256:...",
 //	  "publisher": {"name": "...", "issuer": "...", "subject": "..."}}]}
 //
 // where a publisher gives either an issuer and exact subject or a PEM
@@ -83,6 +87,7 @@ func ParseCatalog(data []byte) (Catalog, error) {
 	var doc struct {
 		Plugins []struct {
 			Name      string    `json:"name"`
+			Version   string    `json:"version,omitempty"`
 			Image     string    `json:"image"`
 			Publisher signerDoc `json:"publisher"`
 		} `json:"plugins"`
@@ -92,12 +97,13 @@ func ParseCatalog(data []byte) (Catalog, error) {
 	}
 	var c Catalog
 	var errs []error
-	for i, p := range doc.Plugins {
+	for i := range doc.Plugins {
+		p := &doc.Plugins[i]
 		img, err := ParseImageRef(p.Image)
 		if err != nil {
 			errs = append(errs, &FieldError{Field: indexed("plugins", i) + ".image", Err: err})
 		}
-		c.Entries = append(c.Entries, CatalogEntry{Name: p.Name, Image: img, Publisher: p.Publisher.signer(SignerPublisher)})
+		c.Entries = append(c.Entries, CatalogEntry{Name: p.Name, Version: p.Version, Image: img, Publisher: p.Publisher.signer(SignerPublisher)})
 	}
 	errs = append(errs, c.Validate())
 	if err := errors.Join(errs...); err != nil {

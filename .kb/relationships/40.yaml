@@ -419,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-caa670c5d011
+  - type: executable_for
+    from: SYM-pl-test-run-upgrade-refuses
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:08:06.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c0bd12888c5

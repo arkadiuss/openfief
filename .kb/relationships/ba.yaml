@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6530e00c73f1
+  - type: executable_for
+    from: SYM-pl-test-resolve-upgrade-source
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:05:23.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9500428b2df5

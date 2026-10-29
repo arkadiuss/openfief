@@ -85572,3 +85572,472 @@ symbols:
         target: TEST-portfolio-connectapi-sleeves
       - type: implements
         target: REQ-portfolio-sleeve-service
+  - id: SYM-pl-resolve-upgrade-source
+    title: ResolveUpgradeSource
+    sourceFile: internal/plugins/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:04:24.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-version-resolution
+  - id: SYM-pl-catalog-names-of
+    title: catalogNamesOf
+    sourceFile: internal/plugins/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:04:31.011Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-version-resolution
+  - id: SYM-pl-list-entries
+    title: listEntries
+    sourceFile: internal/plugins/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:04:37.348Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-upgrade
+      - type: implements
+        target: REQ-plugins-cli-ambiguous-catalog-name
+  - id: SYM-pl-plan-upgrade
+    title: PlanUpgrade
+    sourceFile: internal/plugins/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:04:43.573Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-plan-keeps-instance
+  - id: SYM-pl-permissions-diff
+    title: PermissionsDiff
+    sourceFile: internal/plugins/upgrade.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:04:49.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-plan-keeps-instance
+  - id: SYM-pl-permissions-diff-is-empty
+    title: PermissionsDiff.IsEmpty
+    sourceFile: internal/plugins/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:04:56.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-plan-keeps-instance
+  - id: SYM-pl-diff-permissions
+    title: DiffPermissions
+    sourceFile: internal/plugins/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:02.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-plan-keeps-instance
+  - id: SYM-pl-subtract
+    title: subtract
+    sourceFile: internal/plugins/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:08.685Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-plan-keeps-instance
+  - id: SYM-pl-test-helper-versioned-catalog
+    title: versionedCatalog
+    sourceFile: internal/plugins/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:14.933Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-upgrade
+  - id: SYM-pl-test-resolve-upgrade-source
+    title: TestResolveUpgradeSource
+    sourceFile: internal/plugins/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:21.662Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-upgrade
+  - id: SYM-pl-test-resolve-install-source-lists-versions
+    title: TestResolveInstallSourceListsVersions
+    sourceFile: internal/plugins/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:28.421Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-upgrade
+  - id: SYM-pl-test-plan-upgrade
+    title: TestPlanUpgrade
+    sourceFile: internal/plugins/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:34.516Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-upgrade
+  - id: SYM-pl-test-plan-upgrade-keeps-cluster-service
+    title: TestPlanUpgradeKeepsClusterService
+    sourceFile: internal/plugins/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:41.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-upgrade
+  - id: SYM-pl-upgrade-request
+    title: UpgradeRequest
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:47.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-upgrade-proposal
+    title: UpgradeProposal
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:05:54.436Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-plan-keeps-instance
+  - id: SYM-pl-installer-prepare-upgrade
+    title: Installer.PrepareUpgrade
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:01.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-plan-keeps-instance
+  - id: SYM-pl-app-upgrade
+    title: Upgrade
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:07.825Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-test-prepare-upgrade
+    title: TestPrepareUpgrade
+    sourceFile: internal/plugins/app/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:13.935Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-upgrade
+  - id: SYM-pl-test-prepare-upgrade-refuses
+    title: TestPrepareUpgradeRefuses
+    sourceFile: internal/plugins/app/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:19.848Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-upgrade
+  - id: SYM-pl-fake-store-get
+    title: fakeStore.Get
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:26.645Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-pl-fake-store-update
+    title: fakeStore.Update
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:33.010Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-pl-instances-get
+    title: Instances.Get
+    sourceFile: internal/plugins/kube/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:38.636Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-instances-update
+    title: Instances.Update
+    sourceFile: internal/plugins/kube/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:44.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-applies-on-confirmation
+  - id: SYM-pl-instances-get-both
+    title: Instances.getBoth
+    sourceFile: internal/plugins/kube/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:50.031Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-plugin-of
+    title: pluginOf
+    sourceFile: internal/plugins/kube/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:06:56.029Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-grant-of
+    title: grantOf
+    sourceFile: internal/plugins/kube/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:02.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-raw-of
+    title: rawOf
+    sourceFile: internal/plugins/kube/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:08.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-test-instances-get
+    title: TestInstancesGet
+    sourceFile: internal/plugins/kube/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:14.505Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-upgrade
+  - id: SYM-pl-test-instances-update
+    title: TestInstancesUpdate
+    sourceFile: internal/plugins/kube/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:21.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-upgrade
+  - id: SYM-pl-cli-upgrade
+    title: upgrade
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:26.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-upgrade-applies-on-confirmation
+  - id: SYM-pl-render-upgrade
+    title: RenderUpgrade
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:32.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-write-permissions
+    title: writePermissions
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:38.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-test-helper-run-on
+    title: runOn
+    sourceFile: internal/plugins/cli/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:44.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-upgrade
+  - id: SYM-pl-test-run-upgrade
+    title: TestRunUpgrade
+    sourceFile: internal/plugins/cli/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:51.584Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-upgrade
+  - id: SYM-pl-test-helper-check-same-version
+    title: checkSameVersion
+    sourceFile: internal/plugins/cli/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:07:58.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-upgrade
+  - id: SYM-pl-test-run-upgrade-refuses
+    title: TestRunUpgradeRefuses
+    sourceFile: internal/plugins/cli/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:08:04.743Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-upgrade
+  - id: SYM-pl-command-args
+    title: commandArgs
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:08:10.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-upgrade
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-pl-fake-cluster-get
+    title: fakeCluster.Get
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:08:17.192Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-pl-fake-cluster-update
+    title: fakeCluster.Update
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:08:23.666Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run

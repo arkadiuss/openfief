@@ -31,6 +31,9 @@ var errNoCluster = errors.New("no cluster")
 
 // fakeCluster is an in-memory Cluster; signers are the owner's.
 type fakeCluster struct {
+	// plugins and grants are what Create and Update stored.
+	plugins   map[string]plugins.Plugin
+	grants    map[string]plugins.Grant
 	instances []app.Instance
 	signers   []plugins.Signer
 	deleted   []string
@@ -43,11 +46,34 @@ func (c *fakeCluster) List(context.Context) ([]app.Instance, error) {
 }
 
 func (c *fakeCluster) Create(_ context.Context, p *plugins.Plugin, g *plugins.Grant) error {
+	if slices.ContainsFunc(c.instances, func(i app.Instance) bool { return i.Name == p.Name }) {
+		return app.ErrInstanceExists
+	}
+	if c.plugins == nil {
+		c.plugins, c.grants = map[string]plugins.Plugin{}, map[string]plugins.Grant{}
+	}
+	c.plugins[p.Name], c.grants[p.Name] = *p, *g
 	c.instances = append(c.instances, app.Instance{
 		Name: p.Name, Image: p.Image, HasPlugin: true, HasGrant: true, Secrets: g.Permissions.Secrets,
 		ClusterService: p.ClusterService,
 	})
 	c.granted = append(c.granted, g.Permissions)
+	return nil
+}
+
+func (c *fakeCluster) Get(_ context.Context, name string) (plugins.Plugin, plugins.Grant, error) {
+	p, ok := c.plugins[name]
+	if !ok {
+		return plugins.Plugin{}, plugins.Grant{}, app.ErrNotInstalled
+	}
+	return p, c.grants[name], nil
+}
+
+func (c *fakeCluster) Update(_ context.Context, p *plugins.Plugin, g *plugins.Grant) error {
+	if _, ok := c.plugins[p.Name]; !ok {
+		return app.ErrNotInstalled
+	}
+	c.plugins[p.Name], c.grants[p.Name] = *p, *g
 	return nil
 }
 
@@ -81,6 +107,13 @@ func (fakeImages) Inspect(_ context.Context, image plugins.ImageRef) (plugins.Si
 			Capabilities:     []plugins.Capability{plugins.CapabilityView},
 			EgressFromConfig: []string{"url"},
 			ClusterService:   &plugins.ClusterServiceRequest{Description: "the owner's Ghostfolio"},
+		}}, nil
+	}
+	if image.String() == sampleV2 {
+		return plugins.SignedImage{Image: image, Signatures: []plugins.SignerIdentity{id}, Manifest: plugins.Manifest{
+			Capabilities: []plugins.Capability{plugins.CapabilityView},
+			Egress:       []plugins.EgressHost{{Host: "api.example.com", Port: 443}},
+			Secrets:      []plugins.SecretMount{{Role: "key", MountPath: "/etc/openfief/view"}},
 		}}, nil
 	}
 	if image.String() == ownerImage {

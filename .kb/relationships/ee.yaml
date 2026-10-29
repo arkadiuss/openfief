@@ -419,3 +419,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e278c8aca819
+  - type: implements
+    from: SYM-pl-instances-update
+    to: REQ-plugins-upgrade-applies-on-confirmation
+    created_at: 2026-10-29T17:06:46.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9059ce28d7f9
+  - type: implements
+    from: SYM-pl-instances-update
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:06:46.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-349c0cca6f5d
+  - type: covered_by
+    from: SYM-pl-instances-update
+    to: TEST-plugins-kube-upgrade
+    created_at: 2026-10-29T17:06:46.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-418310dbfaf9

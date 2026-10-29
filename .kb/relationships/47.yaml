@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-459769784bae
+  - type: executable_for
+    from: SYM-pl-test-helper-run-on
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:46.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d20a94bc6d84

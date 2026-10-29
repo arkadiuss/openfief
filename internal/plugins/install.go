@@ -35,7 +35,8 @@ type InstallSource struct {
 // digest-pinned image reference, or the name of a catalog entry. An argument
 // with a '/', ':' or '@' is an image reference and must be pinned by digest
 // (D-17); a tag is refused. A catalog name that several entries share is
-// refused with ErrAmbiguousCatalogName, naming their images.
+// refused with ErrAmbiguousCatalogName, listing their versions and images
+// instead of picking one (D-90).
 func ResolveInstallSource(c *Catalog, arg string) (InstallSource, error) {
 	if strings.ContainsAny(arg, "/:@") {
 		img, err := ParseImageRef(arg)
@@ -64,11 +65,7 @@ func ResolveInstallSource(c *Catalog, arg string) (InstallSource, error) {
 	case 1:
 		return InstallSource{Image: found[0].Image, Entry: &found[0]}, nil
 	}
-	images := make([]string, 0, len(found))
-	for i := range found {
-		images = append(images, found[i].Image.String())
-	}
-	return InstallSource{}, fmt.Errorf("%w: %q: install one of %s by image", ErrAmbiguousCatalogName, arg, strings.Join(images, ", "))
+	return InstallSource{}, fmt.Errorf("%w: %q: install one of %s by image", ErrAmbiguousCatalogName, arg, listEntries(found))
 }
 
 // DefaultInstanceName is the instance name an install uses when the owner

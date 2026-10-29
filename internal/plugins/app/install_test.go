@@ -164,6 +164,25 @@ func TestInstallerPrepare(t *testing.T) {
 type fakeStore struct {
 	instances []app.Instance
 	deleted   map[string][]string
+	// plugins and grants are what Create and Update stored.
+	plugins map[string]plugins.Plugin
+	grants  map[string]plugins.Grant
+}
+
+func (s *fakeStore) Get(_ context.Context, name string) (plugins.Plugin, plugins.Grant, error) {
+	p, ok := s.plugins[name]
+	if !ok {
+		return plugins.Plugin{}, plugins.Grant{}, app.ErrNotInstalled
+	}
+	return p, s.grants[name], nil
+}
+
+func (s *fakeStore) Update(_ context.Context, p *plugins.Plugin, g *plugins.Grant) error {
+	if _, ok := s.plugins[p.Name]; !ok {
+		return app.ErrNotInstalled
+	}
+	s.plugins[p.Name], s.grants[p.Name] = *p, *g
+	return nil
 }
 
 func (s *fakeStore) List(context.Context) ([]app.Instance, error) {
@@ -174,6 +193,10 @@ func (s *fakeStore) Create(_ context.Context, p *plugins.Plugin, g *plugins.Gran
 	if slices.ContainsFunc(s.instances, func(i app.Instance) bool { return i.Name == p.Name }) {
 		return app.ErrInstanceExists
 	}
+	if s.plugins == nil {
+		s.plugins, s.grants = map[string]plugins.Plugin{}, map[string]plugins.Grant{}
+	}
+	s.plugins[p.Name], s.grants[p.Name] = *p, *g
 	s.instances = append(s.instances, app.Instance{
 		Name: p.Name, Image: p.Image, HasPlugin: true, HasGrant: true, Secrets: g.Permissions.Secrets,
 	})

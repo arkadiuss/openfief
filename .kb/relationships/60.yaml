@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa83803ed14d
+  - type: constrains
+    from: REQ-plugins-upgrade-plan-keeps-instance
+    to: FACT-SUBJECT-D49D172B3563395A
+    created_at: 2026-10-29T17:04:15.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-606769379bd3
+  - type: requires_property
+    from: REQ-plugins-upgrade-plan-keeps-instance
+    to: FACT-PROP-59A55460BBFBB917
+    created_at: 2026-10-29T17:04:15.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73f510a1082a
+  - type: specified_by
+    from: REQ-plugins-upgrade-plan-keeps-instance
+    to: SCEN-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:04:15.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f5d29282846

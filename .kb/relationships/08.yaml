@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-518355fb20d6
+  - type: implements
+    from: SYM-pl-instances-get-both
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:06:52.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d475fd7a9f24
+  - type: covered_by
+    from: SYM-pl-instances-get-both
+    to: TEST-plugins-kube-upgrade
+    created_at: 2026-10-29T17:06:52.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66ce382e8173

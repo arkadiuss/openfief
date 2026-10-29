@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c2169ba48a8
+  - type: executable_for
+    from: SYM-pl-test-helper-versioned-catalog
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:05:17.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b6fe3e1b8c7

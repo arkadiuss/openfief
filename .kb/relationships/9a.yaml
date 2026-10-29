@@ -517,3 +517,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48a9f8bd1435
+  - type: constrains
+    from: REQ-plugins-upgrade-applies-on-confirmation
+    to: FACT-SUBJECT-D49D172B3563395A
+    created_at: 2026-10-29T17:04:21.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b6fde2f9f83
+  - type: requires_property
+    from: REQ-plugins-upgrade-applies-on-confirmation
+    to: FACT-PROP-79E056D05DB28B90
+    created_at: 2026-10-29T17:04:21.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6f353ad0905
+  - type: specified_by
+    from: REQ-plugins-upgrade-applies-on-confirmation
+    to: SCEN-plugins-upgrade-applies-on-confirmation
+    created_at: 2026-10-29T17:04:21.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be68bb799fd8
+  - type: executable_for
+    from: SYM-pl-fake-store-get
+    to: TEST-plugins-app-install
+    created_at: 2026-10-29T17:06:28.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7315556d036

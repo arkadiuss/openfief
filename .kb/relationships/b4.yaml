@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86b0fd1b0f19
+  - type: implements
+    from: SYM-pl-write-permissions
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:40.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fabc9fa6cd74
+  - type: covered_by
+    from: SYM-pl-write-permissions
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:40.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcc964a9f9ec

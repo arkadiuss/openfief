@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6baefebb70a1
+  - type: implements
+    from: SYM-pl-permissions-diff
+    to: REQ-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:04:51.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-491acd54df20
+  - type: covered_by
+    from: SYM-pl-permissions-diff
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:04:51.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0112165afe03

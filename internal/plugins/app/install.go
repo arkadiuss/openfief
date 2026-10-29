@@ -16,7 +16,8 @@ var (
 	// none to derive from the catalog entry or the image (D-48).
 	ErrNoInstanceName = errors.New("name the instance with --name")
 	// ErrInstanceExists reports an install under a name that already has a
-	// Plugin or a PluginGrant. Upgrades are the owner's own edit (D-47).
+	// Plugin or a PluginGrant: an installed instance changes version only
+	// through `openfief plugin upgrade` (D-47, D-90).
 	ErrInstanceExists = errors.New("an instance of that name is already installed")
 	// ErrNotInstalled reports an uninstall of a name with neither a Plugin
 	// nor a PluginGrant.
@@ -86,6 +87,13 @@ type InstanceStore interface {
 	// Create applies a new instance's Plugin and grant. It fails with
 	// ErrInstanceExists when either already exists.
 	Create(ctx context.Context, p *plugins.Plugin, g *plugins.Grant) error
+	// Get reads an installed instance's Plugin and grant. It fails with
+	// ErrNotInstalled when either is missing.
+	Get(ctx context.Context, name string) (plugins.Plugin, plugins.Grant, error)
+	// Update replaces an installed instance's Plugin and grant, for a
+	// confirmed upgrade (D-90). It fails with ErrNotInstalled when either is
+	// missing.
+	Update(ctx context.Context, p *plugins.Plugin, g *plugins.Grant) error
 	// Delete removes an instance's grant, its Plugin and the named Secrets;
 	// one already gone is not an error.
 	Delete(ctx context.Context, name string, secrets []string) error

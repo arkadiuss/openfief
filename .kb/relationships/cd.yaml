@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6fa96474cf4
+  - type: validates
+    from: TEST-plugins-upgrade
+    to: REQ-plugins-cli-ambiguous-catalog-name
+    created_at: 2026-10-29T17:03:47.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0162c59e99be
+  - type: validates
+    from: TEST-plugins-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:03:48.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f66a5725b44

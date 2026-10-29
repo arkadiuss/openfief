@@ -342,3 +342,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02cba2ffd640
+  - type: implements
+    from: SYM-pl-installer-prepare-upgrade
+    to: REQ-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:06:03.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6827cedb09df
+  - type: implements
+    from: SYM-pl-installer-prepare-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:06:03.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f51dd2daf6
+  - type: covered_by
+    from: SYM-pl-installer-prepare-upgrade
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-10-29T17:06:03.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4b6a59f8316

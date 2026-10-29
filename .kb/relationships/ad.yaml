@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ff57f80dc9c
+  - type: validates
+    from: TEST-plugins-kube-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:03:52.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c953f28dc999

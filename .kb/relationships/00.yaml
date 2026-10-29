@@ -286,3 +286,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2791c2693238
+  - type: implements
+    from: SYM-pl-diff-permissions
+    to: REQ-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:05:04.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-081544415585
+  - type: implements
+    from: SYM-pl-diff-permissions
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:05:04.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b111f9f59c89
+  - type: covered_by
+    from: SYM-pl-diff-permissions
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:05:04.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b3b910234b8

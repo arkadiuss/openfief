@@ -468,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48c33a1f15e2
+  - type: validates
+    from: TEST-plugins-cli-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:03:54.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3032bcf9f48b
+  - type: validates
+    from: TEST-plugins-cli-upgrade
+    to: REQ-plugins-cli-no-install-over-instance
+    created_at: 2026-10-29T17:03:54.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbd33c9e0479
+  - type: validates
+    from: TEST-plugins-cli-upgrade
+    to: REQ-plugins-manual-upgrades
+    created_at: 2026-10-29T17:03:54.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7063f6bfc3d5
