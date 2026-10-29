@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efed2c2baac5
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-price-check-api
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:05:02.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59935e42f548

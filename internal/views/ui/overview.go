@@ -57,11 +57,13 @@ func (a *allocationView) FragmentLink(d dimension) string {
 
 // overviewData is what the overview shows.
 type overviewData struct {
-	Date       string
-	Accounts   []accountRow
-	Flagged    int
-	Allocation *allocationView
-	History    performanceView
+	Date     string
+	Accounts []accountRow
+	Flagged  int
+	// FlaggedPrices counts the flagged price checks (D-22).
+	FlaggedPrices int
+	Allocation    *allocationView
+	History       performanceView
 }
 
 // chartData is the data a chart canvas carries for app.js: amounts stay
@@ -126,8 +128,9 @@ func buildAllocation(resp *viewsv1.GetAllocationResponse, d dimension) *allocati
 	return v
 }
 
-// overview shows the whole portfolio on one date: the allocation's total,
-// every account with its valuation status, the allocation chart and the
+// overview shows the whole portfolio on one date: the allocation's total
+// with how many balance assertions and price checks are flagged, every
+// account with its valuation status, the allocation chart and the
 // value over time as the time-weighted return, with the model portfolio
 // while it is on.
 func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) {
@@ -162,6 +165,10 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 	}
 	for _, a := range data.Accounts {
 		data.Flagged += a.Flagged
+	}
+	if data.FlaggedPrices, err = s.flaggedPriceChecks(r, sess); err != nil {
+		s.coreFailed(w, r, "ListPriceChecks", err)
+		return
 	}
 	s.show(w, r, http.StatusOK, "overview", page{Title: "Overview", Session: &sess, Data: data})
 }

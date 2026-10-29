@@ -151,7 +151,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewOptions(models, installed)...)
+	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewOptions(models, checks, installed)...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
 	}
@@ -169,10 +169,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	return &core{api: served, river: client, deps: deps, plugins: installed}, nil
 }
 
-// viewOptions configures the views with the model portfolio's reports and,
-// when installed is not nil, the installed plugins (D-46, D-58).
-func viewOptions(models viewsapp.ModelReports, installed *viewskube.Plugins) []viewsapp.Option {
-	opts := []viewsapp.Option{viewsapp.WithModel(models)}
+// viewOptions configures the views with the model portfolio's reports, the
+// price checks (D-22) and, when installed is not nil, the installed plugins
+// (D-46, D-58).
+func viewOptions(models viewsapp.ModelReports, checks viewsapp.PriceChecks, installed *viewskube.Plugins) []viewsapp.Option {
+	opts := []viewsapp.Option{viewsapp.WithModel(models), viewsapp.WithPriceChecks(checks)}
 	if installed != nil {
 		opts = append(opts, viewsapp.WithPlugins(installed))
 	}

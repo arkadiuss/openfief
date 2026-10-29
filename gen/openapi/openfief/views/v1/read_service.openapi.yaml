@@ -612,6 +612,32 @@ components:
       title: ListPluginsResponse
       additionalProperties: false
       description: ListPluginsResponse lists the installed plugin instances.
+    openfief.views.v1.ListPriceChecksRequest:
+      type: object
+      properties:
+        status:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.PriceCheckStatus'
+          title: status
+          description: Only checks with this status, such as flagged; unspecified for all.
+      title: ListPriceChecksRequest
+      additionalProperties: false
+    openfief.views.v1.ListPriceChecksResponse:
+      type: object
+      properties:
+        threshold:
+          type: string
+          title: threshold
+          description: |-
+            The relative difference beyond which a check is flagged, as a decimal
+             fraction such as "0.01"; empty when this core compares no prices.
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.PriceCheck'
+          title: checks
+      title: ListPriceChecksResponse
+      additionalProperties: false
     openfief.views.v1.ListSleevesRequest:
       type: object
       title: ListSleevesRequest
@@ -967,6 +993,61 @@ components:
       title: Posting
       additionalProperties: false
       description: Posting is one leg of a transaction.
+    openfief.views.v1.PriceCheck:
+      type: object
+      properties:
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+        price:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: price
+          description: The price holdings are valued at, from the market-data connector.
+        priceSource:
+          type: string
+          title: price_source
+          description: The connector instance the price came from.
+        crossCheck:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: cross_check
+          description: The institution's own price, such as IBKR's mark price.
+        crossCheckSource:
+          type: string
+          title: cross_check_source
+          description: The connector instance the cross-check price came from.
+        relativeDifference:
+          type: string
+          title: relative_difference
+          description: |-
+            (cross_check - price) / price as a decimal string, rounded half-even
+             to six places: "0.0123" is 1.23% above the price.
+        status:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.PriceCheckStatus'
+          title: status
+      title: PriceCheck
+      additionalProperties: false
+      description: |-
+        PriceCheck is a stored end-of-day price compared with an institution's
+         own price of the same instrument on the same date, in the same currency
+         (D-22).
+    openfief.views.v1.PriceCheckStatus:
+      type: string
+      title: PriceCheckStatus
+      enum:
+        - PRICE_CHECK_STATUS_UNSPECIFIED
+        - PRICE_CHECK_STATUS_MATCHED
+        - PRICE_CHECK_STATUS_FLAGGED
+      description: |-
+        PriceCheckStatus is the result of comparing a price with a cross-check
+         price.
     openfief.views.v1.SignatureTrust:
       type: string
       title: SignatureTrust
@@ -1566,6 +1647,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListPluginsResponse'
+  /v1/price-checks:
+    get:
+      tags:
+        - ReadService
+      summary: ListPriceChecks
+      description: |-
+        ListPriceChecks returns every price compared with an institution's own
+         price of the same instrument, date and currency, such as IBKR's mark
+         price (D-22), in date, instrument and cross-check source order, with
+         the threshold beyond which a check is flagged. A flagged check is for
+         the owner to look at; it changes no price or valuation.
+      operationId: openfief.views.v1.ReadService.ListPriceChecks
+      parameters:
+        - name: status
+          in: query
+          description: Only checks with this status, such as flagged; unspecified for all.
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/openfief.views.v1.PriceCheckStatus'
+            title: status
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListPriceChecksResponse'
   /v1/sleeves:
     get:
       tags:
@@ -1631,5 +1739,5 @@ tags:
   - name: ReadService
     description: |-
       ReadService reads the record: sleeves, accounts, transactions, holdings,
-       tax lots, cash, balance assertions, valuations, the allocation and the
-       portfolio's performance.
+       tax lots, cash, balance assertions, valuations, price checks, the
+       allocation and the portfolio's performance.

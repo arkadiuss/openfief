@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a408721f12b8
+  - type: executable_for
+    from: SYM-ui-test-overview-flags-price-checks
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-29T07:06:13.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53d6ff8e3b27

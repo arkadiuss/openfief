@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-511471c609f3
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-price-checks-threshold
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:04:56.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aa5288a94b2
+  - type: implements
+    from: SYM-views-pb-list-price-checks-request-get-status
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:09:48.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87d4f671fa0f
+  - type: covered_by
+    from: SYM-views-pb-list-price-checks-request-get-status
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:09:48.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3a7b9bd3641

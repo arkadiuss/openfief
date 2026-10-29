@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98ec3443fc44
+  - type: implements
+    from: SYM-views-pb-price-check-status-string
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:06:39.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-396176580158
+  - type: covered_by
+    from: SYM-views-pb-price-check-status-string
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:06:39.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56c59217442d

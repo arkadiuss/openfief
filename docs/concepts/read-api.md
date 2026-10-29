@@ -8,7 +8,7 @@ covers:
   - gen/openapi/**
 ---
 
-The [read API](../glossary.md) is how anything outside the core reads the record: sleeves, accounts, transactions, holdings, tax lots, cash, balance assertion checks, stored valuations, the allocation, the portfolio's [time-weighted return](../glossary.md) and, while it is on, the [model portfolio](../glossary.md). The [built-in UI](ui.md) reads through it, with the owner's session as its bearer token, every other view plugin is meant to, and so can the owner's own scripts. It only reads: data enters OpenFief through connectors, never through this API. This page explains the service, the pure rules behind its totals, the allocation and the performance series, and the HTTP adapter that serves it. The core service, `cmd/core`, serves it on Service `openfief-core`, port `http` (8080).
+The [read API](../glossary.md) is how anything outside the core reads the record: sleeves, accounts, transactions, holdings, tax lots, cash, balance assertion checks, stored valuations, [price checks](../glossary.md), the allocation, the portfolio's [time-weighted return](../glossary.md) and, while it is on, the [model portfolio](../glossary.md). The [built-in UI](ui.md) reads through it, with the owner's session as its bearer token, every other view plugin is meant to, and so can the owner's own scripts. It only reads: data enters OpenFief through connectors, never through this API. This page explains the service, the pure rules behind its totals, the allocation and the performance series, and the HTTP adapter that serves it. The core service, `cmd/core`, serves it on Service `openfief-core`, port `http` (8080).
 
 ## Concepts
 
@@ -32,6 +32,7 @@ The [read API](../glossary.md) is how anything outside the core reads the record
 | `GetValuationStatus` | `GET /v1/accounts/{account_id}/valuation-status` | |
 | `ListValuationTotals` | `GET /v1/valuations` | `from`, `to` |
 | `ListValuationStatuses` | `GET /v1/valuation-status` | |
+| `ListPriceChecks` | `GET /v1/price-checks` | `status`, such as `PRICE_CHECK_STATUS_FLAGGED`; none for all |
 | `GetAllocation` | `GET /v1/allocation` | `date`, `by`, such as `ALLOCATION_DIMENSION_SLEEVE` |
 | `GetPerformance` | `GET /v1/performance` | `from`, `to`, both optional |
 | `GetModelPortfolio` | `GET /v1/model-portfolio` | `from`, `to`, both optional; `404` while the model portfolio is off |
@@ -152,6 +153,10 @@ The list comes from the `Plugins` port, set with `WithPlugins`. `internal/views/
 
 `AccountValuations(account, from, to)` and `ValuationTotals(from, to)` first check the range with `ValidateRange`: `to` may not be before `from`, nor more than `MaxRangeDays` (3700, about ten years) after it. Then they load stored holding valuations through the `Valuations` port, for one account or for every account, and pass them to `TotalsByDate`. It sums, per date, each valued holding valuation's converted value exactly in the reporting currency, and its original-currency value per currency, in currency code order. A converted value in any other currency is `ErrNotReportingCurrency`. `AccountValuations` also returns the valued holding valuations themselves, each with its basis, source, original value and reporting value.
 
+### Price checks
+
+`ListPriceChecks` serves D-22's cross-check: every stored price compared with a [cross-check price](../glossary.md) of the same instrument, date and currency, such as IBKR's mark price. The `PriceChecks` port, which `cmd/core` fills with valuation's `CrossChecks` through `WithPriceChecks`, compares them ([Valuation](valuation.md#cross-checking-prices)); `Views.PriceChecks` only filters by status. Each `PriceCheck` carries the date, the instrument, both prices with the connector instance each came from, the `relative_difference`, (cross-check - price) / price as a decimal string rounded half-even to six places, and `matched` or `flagged`. The response's `threshold` is the fraction a check is flagged beyond, such as `"0.01"`, the core's `--price-check-threshold`; without the port, outside `cmd/core`, it is empty and there are no checks. Prices aren't per account, so the method takes no account.
+
 ### The allocation
 
 ```mermaid
@@ -233,6 +238,7 @@ The series stops before the first day that lacks an input and says why in `gap`:
 - **D-46**: the core only reads the installed plugins, with the `get`, `list` and `watch` on Plugins it already has; `ListPlugins` is how the UI shows them. Read sessions may list them too: no decision restricts it.
 - **D-56**: the trust levels above. The task's split of "only signed" into OpenFief's CI, a catalog publisher and the owner needs `status.signature`, which the operator writes next to the condition; `refused` and `not checked` cover the images D-56's two levels don't.
 - **D-58**: transactions of a removed instance stay and are marked, at read time from the plugin list. Lots, holdings and balance assertions carry no mark; the transaction listing is where the read API shows a source.
+- **D-22**, **D-51**: the cross-check, served as `ListPriceChecks`, additions only to the contract (a method, `PriceCheck`, `PriceCheckStatus` and the request and response). It serves every comparison with the threshold, and filters by status like `ListAssertionChecks`; the UI asks for the flagged ones.
 - **D-27**: the bearer tokens the API accepts. The core accepts the owner's sessions and script tokens, and view plugins' projected tokens with audience `openfief-core` ([Identity](identity.md)). Connector plugins' tokens are refused: nothing decided gives a connector the read API.
 - Half-up rounding of cash in the allocation and the performance series follows `valuation.ValueRounding`, which no decision fixes (see [Valuation](valuation.md#decisions)).
 - Flows at the end of their day, 12 decimal places half-even for the factors and the five-day transfer window are this context's choices; no decision fixes them.
@@ -254,6 +260,8 @@ The series stops before the first day that lacks an input and says why in `gap`:
 | Trust levels from the operator's status, phases, digests; reading the instance back from `ingest.ConnectorKeySource`; removed marks, and none while unknown | `TestPluginOf`, `TestImageDigest`, `TestConnectorInstance`, `TestOrigins` in [plugins_test.go](../../internal/views/plugins_test.go) | REQ-views-plugin-trust-level, REQ-views-removed-instance-mark, TEST-views-plugins |
 | The plugin list in name order; unknown without the port or before the watch synced, and transactions still listed then; removed marks over the ports | `TestPlugins`, `TestPluginsUnknown`, `TestTransactionsMarkRemovedInstances` in [app/plugins_test.go](../../internal/views/app/plugins_test.go) | REQ-views-installed-plugins, REQ-views-removed-instance-mark, TEST-views-app-plugins |
 | Plugins read from the operator's own `v1alpha1.Plugin`, deleting ones included, other namespaces not, later ones once watched | `TestRecordOf`, `TestPlugins`, `TestStartGivesUp` in [kube/plugins_test.go](../../internal/views/kube/plugins_test.go) | REQ-views-installed-plugins, TEST-views-kube |
+| Price checks filtered by status, with the threshold; none without the port; a failure passed on | `TestPriceChecks` in [app/pricechecks_test.go](../../internal/views/app/pricechecks_test.go) | REQ-views-price-checks, TEST-views-app-pricechecks |
+| `ListPriceChecks` over Connect and REST, against the OpenAPI document; an unknown status refused; no token refused; enum numbers | `TestConnectListPriceChecks`, `TestRESTPriceChecks`, `TestPriceCheckEnumsMatch` in [pricechecks_test.go](../../internal/views/connectapi/pricechecks_test.go) | REQ-views-price-checks, SCEN-views-price-checks, TEST-views-connectapi-pricechecks |
 | `ListPlugins` and the transaction origins over Connect and REST, against the OpenAPI document; 503 without the list; enum numbers | `TestConnectListPlugins`, `TestConnectTransactionOrigins`, `TestRESTPlugins`, `TestRESTTransactionOrigins`, `TestRESTPluginsUnavailable`, `TestPluginEnumsMatch` in [connectapi/plugins_test.go](../../internal/views/connectapi/plugins_test.go) | REQ-views-installed-plugins, REQ-views-removed-instance-mark, TEST-views-connectapi-plugins |
 | REST responses validated against the generated OpenAPI; 405 with `Allow: GET`; tokens; headers; money as strings; a log without data | `TestREST`, `TestRESTInternalError`, `TestRESTUnauthenticated`, `TestRESTReadOnly`, `TestOpenAPIIsReadOnly`, `TestSecurityHeaders`, `TestMoneyIsADecimalString`, `TestLogNamesNoData`, `TestRESTPerformance` in [handler_test.go](../../internal/views/connectapi/handler_test.go) | REQ-views-api-contract, REQ-views-api-read-only, REQ-views-api-auth, REQ-views-api-logs, TEST-views-connectapi-rest |
 
