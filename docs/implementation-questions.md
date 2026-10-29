@@ -17,18 +17,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Identity and the UI
 
-8. **Which tokens the read API accepts (D-27).**
-   - *Today:* owner sessions, script tokens and view plugins' projected tokens, checked by the same rules as the AuthService's callers. Connector tokens are refused, since the core calls connectors and not the other way round.
-   - *Question:* is that the intended scope?
-
-9. **`OPENFIEF_AUTH_CALLER_TOKEN`.**
-   - *Today:* a development aid that lets a UI running outside a cluster call the AuthService and the read API with a fixed token. It is ignored in a cluster.
-   - *Options:* keep; or remove.
-
-10. **The UI's session cookie on `http://localhost`.**
-    - *Today:* the cookie is `__Host-openfief_session`, which must be `Secure`, so it is `Secure` on localhost too. Chrome and Firefox accept that on localhost; Safari is unverified.
-    - *Options:* keep; or drop the `__Host-` prefix on localhost only.
-
 11. **Passkey login in the end-to-end tests.**
     - *Problem:* `--auth-origin` accepts plain HTTP only on localhost, so the e2e host `http://openfief.e2e.test` isn't allowed, and the e2e suite checks only that the login page renders.
     - *Options:* a test-only flag that allows one insecure origin; or keep the e2e check as it is.
