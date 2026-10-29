@@ -17,25 +17,9 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Market data and connectors
 
-20. **Who names what a market-data connector prices (D-22).**
-    - *Today:* the owner lists ISINs and indices in the `eodhd` instance's config.
-    - *Options:* the core sends the held instruments and the model portfolio's indices in the sync request (a contract change); or keep the config list.
-
-21. **Shared market data.**
-    - *Problem:* any connector instance can write prices, FX rates and index readings, each stamped with its source, and a later write replaces an earlier one.
-    - *Options:* restrict each kind of data to some instances (for example only an FX connector writes FX rates); or rank sources; or keep the last write.
-
 22. **EODHD details.**
     - *Today:* a market index is identified by the owner's name for it (for example "WIG20"). Euronext means EODHD's PA, AS, BR, LS, IR, MI and OL markets. An ISIN listed on several supported exchanges is reported as ambiguous until the owner sets `exchange`. A series that can't be priced is reported again on every sync.
     - *Question:* keep these?
-
-23. **Real or synthetic FX rates on the demo.**
-    - *Today:* the demo runs the `nbp` instance of `nbp-fx`, which writes real NBP rates next to the demo dataset's own rates.
-    - *Options:* keep the plugin on the demo; or let the demo dataset own FX.
-
-24. **The first sync of an account seeded from opening lots.**
-    - *Today:* it fails until `core connector sync --mode transactions` is run once.
-    - *Options:* the core detects an already-seeded account and switches to transactions mode; or keep the manual step.
 
 ## Treasury bonds
 
