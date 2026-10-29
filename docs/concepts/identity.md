@@ -142,5 +142,7 @@ sequenceDiagram
 
 ## Not built yet
 
+- The first-run wizard (D-73) follows the first passkey in the built-in UI ([UI](ui.md#pages)): creating a passkey from an enrollment code opens the overview, which sends an owner with no account to the wizard. D-80's CLI command that prints the first link is not built here.
+
 - Listing and revoking other sessions than the current one.
 - Scopes for script tokens other than `read`; they wait for a write API, which M0 doesn't have.

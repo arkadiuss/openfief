@@ -237,3 +237,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-468e921d6095
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-check-connection-lists
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:10:48.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-014ab49ec676
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-response-proto-message
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:39:36.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68b8e41dbb78
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-response-proto-message
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:39:36.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88b7686b4027

@@ -545,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c283786b7e5
+  - type: implements
+    from: SYM-views-app-connections
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:08:31.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94fb0de21027
+  - type: covered_by
+    from: SYM-views-app-connections
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:08:31.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1754464834b

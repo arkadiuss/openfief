@@ -321,3 +321,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88421ae1122d
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:43:09.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f227fafaf85
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:43:09.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49f321fd674e

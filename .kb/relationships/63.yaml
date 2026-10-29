@@ -265,3 +265,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c2fe7d7d527
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-connections-all-broker-accounts
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:10:29.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150a6c35b377
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-request-get-origin
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:34:15.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8693c0252c34
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-request-get-origin
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:34:15.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-839da077c33a

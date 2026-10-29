@@ -25,10 +25,31 @@ service ReadService {
     option (google.api.http) = {get: "/v1/sleeves"};
   }
 
+  // ListSleeveKinds returns every sleeve kind, in key order (D-71).
+  rpc ListSleeveKinds(ListSleeveKindsRequest) returns (ListSleeveKindsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/sleeve-kinds"};
+  }
+
   // ListAccounts returns every account, in ID order.
   rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/accounts"};
+  }
+
+  // ListConnectorBindings returns every connector binding: which connector
+  // instance may write to which account, in instance then account order.
+  rpc ListConnectorBindings(ListConnectorBindingsRequest) returns (ListConnectorBindingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/connector-bindings"};
+  }
+
+  // ListBrokerAccounts returns the broker accounts connector instances
+  // reported (D-72), in instance then ID order, each with the account it is
+  // mapped to. Nothing of an unmapped broker account is booked.
+  rpc ListBrokerAccounts(ListBrokerAccountsRequest) returns (ListBrokerAccountsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/broker-accounts"};
   }
 
   // GetAccount returns one account.
@@ -183,6 +204,40 @@ message Sleeve {
   SleeveRole role = 3;
   // The key of the sleeve's kind, such as "core" or "agent-pool".
   string kind = 4;
+  // The owner's explicit choice of a role other than the kind's default
+  // role (D-71).
+  bool role_override = 5;
+}
+
+// SleeveKind is a named category of sleeve with the role a sleeve of it
+// gets by default, which never changes (D-71).
+message SleeveKind {
+  string key = 1;
+  string name = 2;
+  SleeveRole default_role = 3;
+}
+
+// ConnectorBinding lets one connector instance write to one account.
+message ConnectorBinding {
+  string connector_instance = 1;
+  string account_id = 2;
+}
+
+// BrokerAccount is one of the owner's accounts as the institution names it,
+// as a connector instance reported it (D-72).
+message BrokerAccount {
+  string connector_instance = 1;
+  // The institution's own ID of the account, such as an IBKR Flex account
+  // ID.
+  string id = 2;
+  string institution = 3;
+  // The OpenFief account it is mapped to; empty while it is unmapped.
+  string account_id = 4;
+  // The day a delivery last reported it, YYYY-MM-DD.
+  string last_seen = 5;
+  // Whether the instance's last delivery that reported broker accounts
+  // reported it.
+  bool in_last_delivery = 6;
 }
 
 // Account is one account at an institution. It belongs to one sleeve.
@@ -406,6 +461,27 @@ message ListSleevesRequest {}
 
 message ListSleevesResponse {
   repeated Sleeve sleeves = 1;
+}
+
+message ListSleeveKindsRequest {}
+
+message ListSleeveKindsResponse {
+  repeated SleeveKind kinds = 1;
+}
+
+message ListConnectorBindingsRequest {}
+
+message ListConnectorBindingsResponse {
+  repeated ConnectorBinding bindings = 1;
+}
+
+message ListBrokerAccountsRequest {
+  // Only the broker accounts not mapped to an OpenFief account.
+  bool unmapped = 1;
+}
+
+message ListBrokerAccountsResponse {
+  repeated BrokerAccount broker_accounts = 1;
 }
 
 message ListAccountsRequest {}

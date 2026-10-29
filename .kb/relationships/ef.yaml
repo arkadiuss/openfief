@@ -384,3 +384,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-534a885118b5
+  - type: executable_for
+    from: SYM-views-app-test-connections
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:09:24.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6447dac315d
+  - type: implements
+    from: SYM-ui-setup-data-steps
+    to: REQ-ui-first-run-wizard-steps
+    created_at: 2026-10-29T13:15:57.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a9a9b0201d
+  - type: implements
+    from: SYM-ui-setup-data-steps
+    to: REQ-ui-first-run-wizard
+    created_at: 2026-10-29T13:15:57.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea3ed43b765d
+  - type: covered_by
+    from: SYM-ui-setup-data-steps
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:15:57.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-480974e3c9e8
+  - type: implements
+    from: SYM-ingestv1-create-account-response
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:21:30.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24350bf22a55
+  - type: covered_by
+    from: SYM-ingestv1-create-account-response
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:21:30.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffa83c6f4b8a

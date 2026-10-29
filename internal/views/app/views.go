@@ -45,6 +45,7 @@ type Views struct {
 	models      ModelReports
 	plugins     Plugins
 	priceChecks PriceChecks
+	connections Connections
 }
 
 // New returns the queries over the given ports, with totals, valuations and

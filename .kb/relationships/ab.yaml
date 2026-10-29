@@ -342,3 +342,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-339c66792b99
+  - type: implements
+    from: SYM-ingestv1-bind-account-request-get-connector-instance
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:26:16.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9dfe1f185f0
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request-get-connector-instance
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:26:16.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92b0e38d6d82
+  - type: implements
+    from: SYM-ingestv1connect-account-service-client-update-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:28:00.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8441411162f6
+  - type: covered_by
+    from: SYM-ingestv1connect-account-service-client-update-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:28:00.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4439e0b4b4e5
+  - type: implements
+    from: SYM-ingestv1connect-unimplemented-account-service-handler-create-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:28:36.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58d892a39ad8
+  - type: covered_by
+    from: SYM-ingestv1connect-unimplemented-account-service-handler-create-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:28:36.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea28c01888e5
+  - type: implements
+    from: SYM-portfoliov1-sleeve-get-role-override
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:33:28.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fd748ab952f
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-get-role-override
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:33:28.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a5f13bc2419
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-response-string
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:46.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44662b44bf91
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-response-string
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:46.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd70043d1d7d

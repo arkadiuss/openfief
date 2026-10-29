@@ -140,6 +140,10 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		s.coreFailed(w, r, "ListAccounts", err)
 		return
 	}
+	if firstRun(sess, len(accounts.Msg.GetAccounts())) {
+		http.Redirect(w, r, setupSleeves, http.StatusSeeOther)
+		return
+	}
 	statuses, err := s.read.ListValuationStatuses(ctx, bearer(&viewsv1.ListValuationStatusesRequest{}, sess))
 	if err != nil {
 		s.coreFailed(w, r, "ListValuationStatuses", err)

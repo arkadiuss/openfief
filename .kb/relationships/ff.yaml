@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b1343db1d7e
+  - type: implements
+    from: SYM-viewsv1-connector-binding-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:44:22.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0f6d8004e6f
+  - type: covered_by
+    from: SYM-viewsv1-connector-binding-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:44:23.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9feb6af8e9fd

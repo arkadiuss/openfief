@@ -363,3 +363,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9198a3ce507
+  - type: implements
+    from: SYM-ingest-connectapi-account-service-fail
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:01:53.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f3e08e20b86
+  - type: covered_by
+    from: SYM-ingest-connectapi-account-service-fail
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:01:53.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f013b8ea8327
+  - type: implements
+    from: SYM-portfolio-connectapi-sleeve-service
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:06:24.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36028c1bb95b
+  - type: covered_by
+    from: SYM-portfolio-connectapi-sleeve-service
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:06:24.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e75705ab332

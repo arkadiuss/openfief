@@ -195,3 +195,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06de1f37fdb9
+  - type: implements
+    from: SYM-ingest-app-has-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:59:46.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76510c612dca
+  - type: covered_by
+    from: SYM-ingest-app-has-account
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:59:47.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-757ff58316e7

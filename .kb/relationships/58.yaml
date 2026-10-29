@@ -454,3 +454,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56f322a65fc6
+  - type: implements
+    from: SYM-viewsv1-connector-binding-proto-message
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:44:33.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3886b4764887
+  - type: covered_by
+    from: SYM-viewsv1-connector-binding-proto-message
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:44:33.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6b95d753ec2
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-response-get-bindings
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:49:48.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f898aa74da9e
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-response-get-bindings
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:49:48.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c6c708f46c3

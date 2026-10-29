@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-165d28044fe2
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-links-mark-seeded
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:03:03.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9da18be3673
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-mem-sleeves
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:07:24.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0c84753ab04

@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e05c7c807bc
+  - type: implements
+    from: SYM-ui-server-onboarding-routes
+    to: REQ-ui-first-run-wizard-steps
+    created_at: 2026-10-29T13:16:22.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d210cffd991a
+  - type: implements
+    from: SYM-ui-server-onboarding-routes
+    to: REQ-ui-first-run-wizard
+    created_at: 2026-10-29T13:16:22.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da281993b4a4
+  - type: covered_by
+    from: SYM-ui-server-onboarding-routes
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:16:22.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-752b2e9f0148

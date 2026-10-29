@@ -391,3 +391,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74dd64ae0c3f
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-fake-sleeve-store-save-kind
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:05:20.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6cb18b09a2d
+  - type: implements
+    from: SYM-ui-role-field
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:17:45.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90ea06b465c1
+  - type: covered_by
+    from: SYM-ui-role-field
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:17:45.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b208fb912a7c
+  - type: implements
+    from: SYM-ui-server-add-sleeve
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:18:11.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cde6445093c
+  - type: covered_by
+    from: SYM-ui-server-add-sleeve
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:18:11.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-500ee332d383
+  - type: implements
+    from: SYM-viewsv1-broker-account-get-id
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:46:18.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ed4c3b58fb2
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-get-id
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:46:18.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cffc069aecbd

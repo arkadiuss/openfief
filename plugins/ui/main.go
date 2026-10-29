@@ -91,6 +91,8 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		Model:      portfoliov1connect.NewModelPortfolioServiceClient(authClient(os.Getenv), coreURL),
 		BondLots:   ingestv1connect.NewBondLotServiceClient(authClient(os.Getenv), coreURL),
 		Statements: ingestv1connect.NewStatementServiceClient(uploadClient(os.Getenv), coreURL),
+		Sleeves:    portfoliov1connect.NewSleeveServiceClient(authClient(os.Getenv), coreURL),
+		Accounts:   ingestv1connect.NewAccountServiceClient(authClient(os.Getenv), coreURL),
 		Read:       viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:        log,
 	})

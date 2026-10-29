@@ -147,6 +147,52 @@ components:
         - BOOK_KIND_FX
         - BOOK_KIND_EQUITY
       description: BookKind is the kind of a ledger account inside an account.
+    openfief.views.v1.BrokerAccount:
+      type: object
+      properties:
+        connectorInstance:
+          type: string
+          title: connector_instance
+        id:
+          type: string
+          title: id
+          description: |-
+            The institution's own ID of the account, such as an IBKR Flex account
+             ID.
+        institution:
+          type: string
+          title: institution
+        accountId:
+          type: string
+          title: account_id
+          description: The OpenFief account it is mapped to; empty while it is unmapped.
+        lastSeen:
+          type: string
+          title: last_seen
+          description: The day a delivery last reported it, YYYY-MM-DD.
+        inLastDelivery:
+          type: boolean
+          title: in_last_delivery
+          description: |-
+            Whether the instance's last delivery that reported broker accounts
+             reported it.
+      title: BrokerAccount
+      additionalProperties: false
+      description: |-
+        BrokerAccount is one of the owner's accounts as the institution names it,
+         as a connector instance reported it (D-72).
+    openfief.views.v1.ConnectorBinding:
+      type: object
+      properties:
+        connectorInstance:
+          type: string
+          title: connector_instance
+        accountId:
+          type: string
+          title: account_id
+      title: ConnectorBinding
+      additionalProperties: false
+      description: ConnectorBinding lets one connector instance write to one account.
     openfief.views.v1.DateTotal:
       type: object
       properties:
@@ -512,6 +558,25 @@ components:
           title: checks
       title: ListAssertionChecksResponse
       additionalProperties: false
+    openfief.views.v1.ListBrokerAccountsRequest:
+      type: object
+      properties:
+        unmapped:
+          type: boolean
+          title: unmapped
+          description: Only the broker accounts not mapped to an OpenFief account.
+      title: ListBrokerAccountsRequest
+      additionalProperties: false
+    openfief.views.v1.ListBrokerAccountsResponse:
+      type: object
+      properties:
+        brokerAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.BrokerAccount'
+          title: broker_accounts
+      title: ListBrokerAccountsResponse
+      additionalProperties: false
     openfief.views.v1.ListCashRequest:
       type: object
       properties:
@@ -539,6 +604,20 @@ components:
             $ref: '#/components/schemas/openfief.views.v1.Money'
           title: balances
       title: ListCashResponse
+      additionalProperties: false
+    openfief.views.v1.ListConnectorBindingsRequest:
+      type: object
+      title: ListConnectorBindingsRequest
+      additionalProperties: false
+    openfief.views.v1.ListConnectorBindingsResponse:
+      type: object
+      properties:
+        bindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.ConnectorBinding'
+          title: bindings
+      title: ListConnectorBindingsResponse
       additionalProperties: false
     openfief.views.v1.ListHoldingsRequest:
       type: object
@@ -637,6 +716,20 @@ components:
             $ref: '#/components/schemas/openfief.views.v1.PriceCheck'
           title: checks
       title: ListPriceChecksResponse
+      additionalProperties: false
+    openfief.views.v1.ListSleeveKindsRequest:
+      type: object
+      title: ListSleeveKindsRequest
+      additionalProperties: false
+    openfief.views.v1.ListSleeveKindsResponse:
+      type: object
+      properties:
+        kinds:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.SleeveKind'
+          title: kinds
+      title: ListSleeveKindsResponse
       additionalProperties: false
     openfief.views.v1.ListSleevesRequest:
       type: object
@@ -1080,9 +1173,33 @@ components:
           type: string
           title: kind
           description: The key of the sleeve's kind, such as "core" or "agent-pool".
+        roleOverride:
+          type: boolean
+          title: role_override
+          description: |-
+            The owner's explicit choice of a role other than the kind's default
+             role (D-71).
       title: Sleeve
       additionalProperties: false
       description: Sleeve is a part of the portfolio with one role.
+    openfief.views.v1.SleeveKind:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        name:
+          type: string
+          title: name
+        defaultRole:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.SleeveRole'
+          title: default_role
+      title: SleeveKind
+      additionalProperties: false
+      description: |-
+        SleeveKind is a named category of sleeve with the role a sleeve of it
+         gets by default, which never changes (D-71).
     openfief.views.v1.SleeveRole:
       type: string
       title: SleeveRole
@@ -1554,6 +1671,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetAllocationResponse'
+  /v1/broker-accounts:
+    get:
+      tags:
+        - ReadService
+      summary: ListBrokerAccounts
+      description: |-
+        ListBrokerAccounts returns the broker accounts connector instances
+         reported (D-72), in instance then ID order, each with the account it is
+         mapped to. Nothing of an unmapped broker account is booked.
+      operationId: openfief.views.v1.ReadService.ListBrokerAccounts
+      parameters:
+        - name: unmapped
+          in: query
+          description: Only the broker accounts not mapped to an OpenFief account.
+          schema:
+            type: boolean
+            title: unmapped
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListBrokerAccountsResponse'
+  /v1/connector-bindings:
+    get:
+      tags:
+        - ReadService
+      summary: ListConnectorBindings
+      description: |-
+        ListConnectorBindings returns every connector binding: which connector
+         instance may write to which account, in instance then account order.
+      operationId: openfief.views.v1.ReadService.ListConnectorBindings
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListConnectorBindingsResponse'
   /v1/model-portfolio:
     get:
       tags:
@@ -1674,6 +1831,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListPriceChecksResponse'
+  /v1/sleeve-kinds:
+    get:
+      tags:
+        - ReadService
+      summary: ListSleeveKinds
+      description: ListSleeveKinds returns every sleeve kind, in key order (D-71).
+      operationId: openfief.views.v1.ReadService.ListSleeveKinds
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListSleeveKindsResponse'
   /v1/sleeves:
     get:
       tags:

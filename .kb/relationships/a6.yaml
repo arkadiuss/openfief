@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03aaf17a7644
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_accounts_proto_raw-desc-gzip
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:07.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d80e2f3fdcf
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_accounts_proto_raw-desc-gzip
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:07.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe87d2d97160

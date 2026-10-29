@@ -10,6 +10,13 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
+// Binding is a connector binding: connector instance Instance may write
+// to account Account.
+type Binding struct {
+	Instance string
+	Account  ledger.AccountID
+}
+
 // ErrAccountNotBound reports a delivery that names an account its connector
 // instance is not bound to.
 var ErrAccountNotBound = errors.New("account not bound to the connector instance")

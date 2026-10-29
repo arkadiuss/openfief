@@ -89,6 +89,22 @@ func checkMapping(t *testing.T, s *postgres.Store, id ingest.BrokerAccountID) {
 	}
 }
 
+func TestBindings(t *testing.T) {
+	t.Parallel()
+	ctx := t.Context()
+	s := postgres.New(newPool(t))
+	for _, b := range []ingest.Binding{{Instance: "xtb-main", Account: "acc-xtb"}, {Instance: "ibkr-main", Account: "acc-ibkr"}, {Instance: "ibkr-main", Account: "acc-cash"}} {
+		if err := s.Bind(ctx, b.Instance, b.Account, t0()); err != nil {
+			t.Fatalf("Bind: %v", err)
+		}
+	}
+	got, err := s.Bindings(ctx)
+	want := []ingest.Binding{{Instance: "ibkr-main", Account: "acc-cash"}, {Instance: "ibkr-main", Account: "acc-ibkr"}, {Instance: "xtb-main", Account: "acc-xtb"}}
+	if diff := cmp.Diff(want, got); err != nil || diff != "" {
+		t.Errorf("Bindings = %v (-want +got):\n%s", err, diff)
+	}
+}
+
 // TestBrokerAccountsReseedTheInstance checks that an instance counts as
 // seeded only while every broker account mapped for it was seeded: mapping
 // one after the instance's opening batch makes the next sync an opening

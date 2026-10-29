@@ -139,6 +139,19 @@ sequenceDiagram
 
 The read API serves the report as `GetModelPortfolio`, rebased to 100 on go-live, and answers 404 while the model is off ([Read API](read-api.md#the-model-portfolio)).
 
+### Built: the owner's sleeve entries
+
+The owner adds and renames kinds and adds and changes sleeves in the built-in UI, on its Sleeves page and in the first-run wizard (D-71, D-73). D-79 makes each kind of owner entry its own service, so the core serves `openfief.portfolio.v1.SleeveService` ([sleeves.proto](../../proto/openfief/portfolio/v1/sleeves.proto)) to view plugins only, with the `ModelPortfolioService`'s conventions: the caller's plugin token, the browser's origin and the owner's session in the request, owner scope only.
+
+| Method | What it does |
+|---|---|
+| `AddSleeveKind` | A kind named by the owner, its key made from the name (`KeyFromName`), with a default role that never changes. A taken key is `ALREADY_EXISTS` |
+| `RenameSleeveKind` | A new name for any kind, built-in ones too; key and default role stay |
+| `AddSleeve` | A sleeve of a stored kind, its ID made from its name; no role takes the kind's, another role needs `role_override` (D-71) |
+| `UpdateSleeve` | A new name, kind or role for a stored sleeve; its ID stays |
+
+`portfolio/app.Sleeves` ([sleeves.go](../../internal/portfolio/app/sleeves.go)) checks the owner through the `Owners` port and stores through its `SleeveStore` port, which `cmd/core` fills with the ledger's `*ledgerapp.Ledger`: the ledger keeps sleeves and kinds next to the accounts and runs `CheckKind` and `CheckSleeve` before it stores one, so the rules hold whoever calls. `portfolio/connectapi` ([sleeves.go](../../internal/portfolio/connectapi/sleeves.go)) maps a broken rule to `INVALID_ARGUMENT` with the rule, a taken key or ID to `ALREADY_EXISTS`, an unknown kind or sleeve to change to `NOT_FOUND`. The read API lists kinds as `ListSleeveKinds` and gives each sleeve its `role_override` ([Read API](read-api.md#sleeves-accounts-and-connectors)).
+
 The [built-in UI](ui.md) draws it as the second line of the value-over-time chart, from go-live, both lines at 100 (D-106 moves it to a separate performance chart, not built yet), with the drawdowns in a table, and offers the form on its settings page.
 
 ## Decisions
@@ -158,6 +171,7 @@ The [built-in UI](ui.md) draws it as the second line of the value-over-time char
 | A sleeve needs an ID, a name and one known role | `TestSleeveValidate`, `TestParseRole` in [sleeve_test.go](../../internal/portfolio/sleeve_test.go) | REQ-portfolio-sleeve-role |
 | Kind keys, the built-in kinds, fixed default roles, the override rules, the defaults and kind by sleeve | `TestKindValidate`, `TestDefaultKinds`, `TestCheckKind`, `TestCheckSleeve`, `TestDefaultSleeves`, `TestMissingDefaults`, `TestKindBySleeve` in [kind_test.go](../../internal/portfolio/kind_test.go) | REQ-portfolio-sleeve-kind, REQ-portfolio-default-kinds, REQ-portfolio-kind-role-fixed, REQ-portfolio-sleeve-role-override, REQ-portfolio-allocation-by-kind, REQ-portfolio-role-differs-explicit |
 | Keys made from names | `TestKeyFromName` in [key_test.go](../../internal/portfolio/key_test.go) | REQ-portfolio-key-from-name |
+| The owner's sleeve entries: keys from names, fixed roles, the override, taken and unknown IDs, owner only | `TestSleevesAddKind`, `TestSleevesRenameKind`, `TestSleevesAddAndUpdateSleeve`, `TestSleevesOwnerOnly`, `TestSleevesStoreFailure` in [app/sleeves_test.go](../../internal/portfolio/app/sleeves_test.go); `TestSleeveServiceRoundTrip`, `TestSleeveServiceErrors` in [connectapi/sleeves_test.go](../../internal/portfolio/connectapi/sleeves_test.go); `TestOnboardingServices` in [cmd/core](../../cmd/core/onboarding_test.go) under `task test:pg` | REQ-portfolio-sleeve-service, REQ-core-owner-entry-services, REQ-core-owner-entry-service-callers |
 | The ledger checks kinds and sleeves before storing; defaults are ensured once, the sleeves only on a fresh install | `TestSaveKind`, `TestEnsureDefaults`, `TestEnsureDefaultsOnlyOnAFreshInstall` in [kinds_test.go](../../internal/ledger/app/kinds_test.go); `TestSaveSleeve`, `TestSaveAccount` in [ledger_test.go](../../internal/ledger/app/ledger_test.go) | REQ-ledger-app-sleeve-kinds, REQ-ledger-app-registry |
 | PostgreSQL seeds the kinds, backfills old sleeves and their overrides, refuses role changes and stray or missing overrides | `TestMigrateStoresTheDefaultKinds`, `TestMigrateGivesStoredSleevesAKind`, `TestMigrateGivesDifferingSleevesARoleOverride`, `TestKindRoundTrip`, `TestSleeveKindConstraints`, `TestEnsureDefaultsOnPostgres` in [kinds_test.go](../../internal/ledger/postgres/kinds_test.go); `TestRegistryRoundTrip` | REQ-ledger-pg-sleeve-kinds, REQ-ledger-pg-store |
 | An account needs a sleeve | `TestAccountValidate` in [account_test.go](../../internal/ledger/account_test.go) | REQ-ledger-account-sleeve |
@@ -177,4 +191,4 @@ From reading the code: the override guards a role that differs from the kind's, 
 
 - **D-62**: the reporting currency setting and its default from the jurisdiction pack. The backtest also needs FX history into it, which starts no earlier than NBP's first rate on 2002-01-02.
 - An allocation grouped by sleeve kind: `KindBySleeve` is unused, and the read API's dimensions are asset class, currency, institution and sleeve.
-- Managing sleeves. Only `cmd/demo-seed` saves sleeves other than the defaults, for the demo dataset; no API or UI adds sleeves or kinds, renames them or sets the override.
+- Deleting a sleeve or a kind. The owner can add, rename and change them, but nothing removes one.

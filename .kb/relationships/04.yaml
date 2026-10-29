@@ -475,3 +475,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d13d9ca2798f
+  - type: implements
+    from: SYM-ui-server-add-kind
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:17:57.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1f85e993271
+  - type: covered_by
+    from: SYM-ui-server-add-kind
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:17:57.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27f7dc9d427

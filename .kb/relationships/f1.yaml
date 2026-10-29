@@ -363,3 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4d2dcf0a275
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-fixture
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:03:38.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe1bcc2c14ec

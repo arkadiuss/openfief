@@ -433,3 +433,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f98029791a07
+  - type: implements
+    from: SYM-ingestv1-account-string
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:18:40.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec7cac7b123
+  - type: covered_by
+    from: SYM-ingestv1-account-string
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:18:40.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-866ba8c87afc
+  - type: implements
+    from: SYM-ingestv1-account-get-name
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:19:28.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b30c71fe9409
+  - type: covered_by
+    from: SYM-ingestv1-account-get-name
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:19:28.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb89aa766db3

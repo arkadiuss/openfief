@@ -342,3 +342,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4689950df16
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-response
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:49:06.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a7ca8e14377
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-response
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:49:06.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16ddde171ab
+  - type: implements
+    from: SYM-viewsv1-list-broker-accounts-request-get-unmapped
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:50:38.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db2b5b19a6d0
+  - type: covered_by
+    from: SYM-viewsv1-list-broker-accounts-request-get-unmapped
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:50:38.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7f96b07bc0f

@@ -321,3 +321,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59935e42f548
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-ledger-kinds
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:09:42.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fbee9c464b8

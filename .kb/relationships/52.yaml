@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4877267e1bbd
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-request-reset
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:33:41.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a5c26a0bed4
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-request-reset
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:33:41.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-068d2207da6a

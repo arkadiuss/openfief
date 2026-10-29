@@ -391,3 +391,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49f9257d54a4
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-new-accounts-client
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:03:31.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3021ee19f33
+  - type: implements
+    from: SYM-ui-server-render-accounts
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:54.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6e2ba8aee52
+  - type: covered_by
+    from: SYM-ui-server-render-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:54.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01fa2b56296d
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-request-get-name
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:36:34.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ee113f07ed6
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-request-get-name
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:36:34.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09fad710896c

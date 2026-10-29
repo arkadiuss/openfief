@@ -255,6 +255,29 @@ func (s *Store) BoundAccounts(ctx context.Context, instance string) ([]ledger.Ac
 	return ids, nil
 }
 
+// Bindings returns every connector binding, in instance then account
+// order.
+func (s *Store) Bindings(ctx context.Context) ([]ingest.Binding, error) {
+	rows, err := s.pool.Query(ctx, `
+		SELECT instance, account_id FROM ingest.connector_bindings ORDER BY instance COLLATE "C", account_id COLLATE "C"`)
+	if err != nil {
+		return nil, fmt.Errorf("loading the connector bindings: %w", err)
+	}
+	out, err := pgx.CollectRows(rows, func(row pgx.CollectableRow) (ingest.Binding, error) {
+		var b ingest.Binding
+		var account string
+		if scanErr := row.Scan(&b.Instance, &account); scanErr != nil {
+			return ingest.Binding{}, fmt.Errorf("scanning: %w", scanErr)
+		}
+		b.Account = ledger.AccountID(account)
+		return b, nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("loading the connector bindings: %w", err)
+	}
+	return out, nil
+}
+
 // BoundInstances returns the connector instances bound to account, in name
 // order.
 func (s *Store) BoundInstances(ctx context.Context, account ledger.AccountID) ([]string, error) {

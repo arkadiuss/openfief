@@ -230,3 +230,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17066b0a9b16
+  - type: executable_for
+    from: SYM-core-test-onboarding-services
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T12:57:51.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c28b84f8b539

@@ -314,3 +314,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a442097d161
+  - type: implements
+    from: SYM-portfolio-connectapi-role-from
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:06:54.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-983955d0e4bb
+  - type: covered_by
+    from: SYM-portfolio-connectapi-role-from
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:06:54.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eba2724a4d9
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-connections
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:11:01.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37b2738b0929

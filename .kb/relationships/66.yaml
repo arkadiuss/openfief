@@ -223,3 +223,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea7d39f9ccfd
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-links-broker-accounts
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:02:56.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de776c1af18f
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-accounts-client
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:03:24.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8663560900c
+  - type: implements
+    from: SYM-viewsv1-broker-account-get-institution
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:46:25.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30761372565a
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-get-institution
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:46:25.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dcebd67dcb1

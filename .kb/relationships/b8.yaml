@@ -510,3 +510,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f7666e2f25d
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-response-get-kind
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:37:24.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f0d854190a3
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-response-get-kind
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:37:24.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cae37723417b
+  - type: implements
+    from: SYM-viewsv1-list-sleeve-kinds-request-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:47:10.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa402a738561
+  - type: covered_by
+    from: SYM-viewsv1-list-sleeve-kinds-request-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:47:10.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8d223b09e2d

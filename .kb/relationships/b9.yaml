@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-142b8b07e898
+  - type: implements
+    from: SYM-viewsv1-broker-account-get-in-last-delivery
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:46:48.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-354bf0766499
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-get-in-last-delivery
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:46:48.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbe5b44d7200

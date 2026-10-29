@@ -377,3 +377,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c69254299fe7
+  - type: implements
+    from: SYM-viewsv1-broker-account-get-connector-instance
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:46:09.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4000228bcd4
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-get-connector-instance
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:46:09.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-310a77da78d9

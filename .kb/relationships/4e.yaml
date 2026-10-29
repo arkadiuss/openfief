@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc9f9f2fe71a
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-new-sleeves
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:05:41.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30bea9e309cd
+  - type: implements
+    from: SYM-viewsv1-connector-binding-descriptor
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:44:54.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1110da63748a
+  - type: covered_by
+    from: SYM-viewsv1-connector-binding-descriptor
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:44:54.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66afddd2ff6e

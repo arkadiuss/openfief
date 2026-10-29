@@ -47,9 +47,18 @@ const (
 const (
 	// ReadServiceListSleevesProcedure is the fully-qualified name of the ReadService's ListSleeves RPC.
 	ReadServiceListSleevesProcedure = "/openfief.views.v1.ReadService/ListSleeves"
+	// ReadServiceListSleeveKindsProcedure is the fully-qualified name of the ReadService's
+	// ListSleeveKinds RPC.
+	ReadServiceListSleeveKindsProcedure = "/openfief.views.v1.ReadService/ListSleeveKinds"
 	// ReadServiceListAccountsProcedure is the fully-qualified name of the ReadService's ListAccounts
 	// RPC.
 	ReadServiceListAccountsProcedure = "/openfief.views.v1.ReadService/ListAccounts"
+	// ReadServiceListConnectorBindingsProcedure is the fully-qualified name of the ReadService's
+	// ListConnectorBindings RPC.
+	ReadServiceListConnectorBindingsProcedure = "/openfief.views.v1.ReadService/ListConnectorBindings"
+	// ReadServiceListBrokerAccountsProcedure is the fully-qualified name of the ReadService's
+	// ListBrokerAccounts RPC.
+	ReadServiceListBrokerAccountsProcedure = "/openfief.views.v1.ReadService/ListBrokerAccounts"
 	// ReadServiceGetAccountProcedure is the fully-qualified name of the ReadService's GetAccount RPC.
 	ReadServiceGetAccountProcedure = "/openfief.views.v1.ReadService/GetAccount"
 	// ReadServiceListTransactionsProcedure is the fully-qualified name of the ReadService's
@@ -97,8 +106,17 @@ const (
 type ReadServiceClient interface {
 	// ListSleeves returns every sleeve, in ID order.
 	ListSleeves(context.Context, *connect.Request[v1.ListSleevesRequest]) (*connect.Response[v1.ListSleevesResponse], error)
+	// ListSleeveKinds returns every sleeve kind, in key order (D-71).
+	ListSleeveKinds(context.Context, *connect.Request[v1.ListSleeveKindsRequest]) (*connect.Response[v1.ListSleeveKindsResponse], error)
 	// ListAccounts returns every account, in ID order.
 	ListAccounts(context.Context, *connect.Request[v1.ListAccountsRequest]) (*connect.Response[v1.ListAccountsResponse], error)
+	// ListConnectorBindings returns every connector binding: which connector
+	// instance may write to which account, in instance then account order.
+	ListConnectorBindings(context.Context, *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error)
+	// ListBrokerAccounts returns the broker accounts connector instances
+	// reported (D-72), in instance then ID order, each with the account it is
+	// mapped to. Nothing of an unmapped broker account is booked.
+	ListBrokerAccounts(context.Context, *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error)
 	// GetAccount returns one account.
 	GetAccount(context.Context, *connect.Request[v1.GetAccountRequest]) (*connect.Response[v1.GetAccountResponse], error)
 	// ListTransactions returns one page of the current version of each of an
@@ -180,10 +198,31 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		listSleeveKinds: connect.NewClient[v1.ListSleeveKindsRequest, v1.ListSleeveKindsResponse](
+			httpClient,
+			baseURL+ReadServiceListSleeveKindsProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListSleeveKinds")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 		listAccounts: connect.NewClient[v1.ListAccountsRequest, v1.ListAccountsResponse](
 			httpClient,
 			baseURL+ReadServiceListAccountsProcedure,
 			connect.WithSchema(readServiceMethods.ByName("ListAccounts")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		listConnectorBindings: connect.NewClient[v1.ListConnectorBindingsRequest, v1.ListConnectorBindingsResponse](
+			httpClient,
+			baseURL+ReadServiceListConnectorBindingsProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListConnectorBindings")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		listBrokerAccounts: connect.NewClient[v1.ListBrokerAccountsRequest, v1.ListBrokerAccountsResponse](
+			httpClient,
+			baseURL+ReadServiceListBrokerAccountsProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListBrokerAccounts")),
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
@@ -298,7 +337,10 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 // readServiceClient implements ReadServiceClient.
 type readServiceClient struct {
 	listSleeves           *connect.Client[v1.ListSleevesRequest, v1.ListSleevesResponse]
+	listSleeveKinds       *connect.Client[v1.ListSleeveKindsRequest, v1.ListSleeveKindsResponse]
 	listAccounts          *connect.Client[v1.ListAccountsRequest, v1.ListAccountsResponse]
+	listConnectorBindings *connect.Client[v1.ListConnectorBindingsRequest, v1.ListConnectorBindingsResponse]
+	listBrokerAccounts    *connect.Client[v1.ListBrokerAccountsRequest, v1.ListBrokerAccountsResponse]
 	getAccount            *connect.Client[v1.GetAccountRequest, v1.GetAccountResponse]
 	listTransactions      *connect.Client[v1.ListTransactionsRequest, v1.ListTransactionsResponse]
 	listHoldings          *connect.Client[v1.ListHoldingsRequest, v1.ListHoldingsResponse]
@@ -321,9 +363,24 @@ func (c *readServiceClient) ListSleeves(ctx context.Context, req *connect.Reques
 	return c.listSleeves.CallUnary(ctx, req)
 }
 
+// ListSleeveKinds calls openfief.views.v1.ReadService.ListSleeveKinds.
+func (c *readServiceClient) ListSleeveKinds(ctx context.Context, req *connect.Request[v1.ListSleeveKindsRequest]) (*connect.Response[v1.ListSleeveKindsResponse], error) {
+	return c.listSleeveKinds.CallUnary(ctx, req)
+}
+
 // ListAccounts calls openfief.views.v1.ReadService.ListAccounts.
 func (c *readServiceClient) ListAccounts(ctx context.Context, req *connect.Request[v1.ListAccountsRequest]) (*connect.Response[v1.ListAccountsResponse], error) {
 	return c.listAccounts.CallUnary(ctx, req)
+}
+
+// ListConnectorBindings calls openfief.views.v1.ReadService.ListConnectorBindings.
+func (c *readServiceClient) ListConnectorBindings(ctx context.Context, req *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error) {
+	return c.listConnectorBindings.CallUnary(ctx, req)
+}
+
+// ListBrokerAccounts calls openfief.views.v1.ReadService.ListBrokerAccounts.
+func (c *readServiceClient) ListBrokerAccounts(ctx context.Context, req *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error) {
+	return c.listBrokerAccounts.CallUnary(ctx, req)
 }
 
 // GetAccount calls openfief.views.v1.ReadService.GetAccount.
@@ -405,8 +462,17 @@ func (c *readServiceClient) ListPlugins(ctx context.Context, req *connect.Reques
 type ReadServiceHandler interface {
 	// ListSleeves returns every sleeve, in ID order.
 	ListSleeves(context.Context, *connect.Request[v1.ListSleevesRequest]) (*connect.Response[v1.ListSleevesResponse], error)
+	// ListSleeveKinds returns every sleeve kind, in key order (D-71).
+	ListSleeveKinds(context.Context, *connect.Request[v1.ListSleeveKindsRequest]) (*connect.Response[v1.ListSleeveKindsResponse], error)
 	// ListAccounts returns every account, in ID order.
 	ListAccounts(context.Context, *connect.Request[v1.ListAccountsRequest]) (*connect.Response[v1.ListAccountsResponse], error)
+	// ListConnectorBindings returns every connector binding: which connector
+	// instance may write to which account, in instance then account order.
+	ListConnectorBindings(context.Context, *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error)
+	// ListBrokerAccounts returns the broker accounts connector instances
+	// reported (D-72), in instance then ID order, each with the account it is
+	// mapped to. Nothing of an unmapped broker account is booked.
+	ListBrokerAccounts(context.Context, *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error)
 	// GetAccount returns one account.
 	GetAccount(context.Context, *connect.Request[v1.GetAccountRequest]) (*connect.Response[v1.GetAccountResponse], error)
 	// ListTransactions returns one page of the current version of each of an
@@ -484,10 +550,31 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	readServiceListSleeveKindsHandler := connect.NewUnaryHandler(
+		ReadServiceListSleeveKindsProcedure,
+		svc.ListSleeveKinds,
+		connect.WithSchema(readServiceMethods.ByName("ListSleeveKinds")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	readServiceListAccountsHandler := connect.NewUnaryHandler(
 		ReadServiceListAccountsProcedure,
 		svc.ListAccounts,
 		connect.WithSchema(readServiceMethods.ByName("ListAccounts")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	readServiceListConnectorBindingsHandler := connect.NewUnaryHandler(
+		ReadServiceListConnectorBindingsProcedure,
+		svc.ListConnectorBindings,
+		connect.WithSchema(readServiceMethods.ByName("ListConnectorBindings")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	readServiceListBrokerAccountsHandler := connect.NewUnaryHandler(
+		ReadServiceListBrokerAccountsProcedure,
+		svc.ListBrokerAccounts,
+		connect.WithSchema(readServiceMethods.ByName("ListBrokerAccounts")),
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
@@ -600,8 +687,14 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		switch r.URL.Path {
 		case ReadServiceListSleevesProcedure:
 			readServiceListSleevesHandler.ServeHTTP(w, r)
+		case ReadServiceListSleeveKindsProcedure:
+			readServiceListSleeveKindsHandler.ServeHTTP(w, r)
 		case ReadServiceListAccountsProcedure:
 			readServiceListAccountsHandler.ServeHTTP(w, r)
+		case ReadServiceListConnectorBindingsProcedure:
+			readServiceListConnectorBindingsHandler.ServeHTTP(w, r)
+		case ReadServiceListBrokerAccountsProcedure:
+			readServiceListBrokerAccountsHandler.ServeHTTP(w, r)
 		case ReadServiceGetAccountProcedure:
 			readServiceGetAccountHandler.ServeHTTP(w, r)
 		case ReadServiceListTransactionsProcedure:
@@ -645,8 +738,20 @@ func (UnimplementedReadServiceHandler) ListSleeves(context.Context, *connect.Req
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListSleeves is not implemented"))
 }
 
+func (UnimplementedReadServiceHandler) ListSleeveKinds(context.Context, *connect.Request[v1.ListSleeveKindsRequest]) (*connect.Response[v1.ListSleeveKindsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListSleeveKinds is not implemented"))
+}
+
 func (UnimplementedReadServiceHandler) ListAccounts(context.Context, *connect.Request[v1.ListAccountsRequest]) (*connect.Response[v1.ListAccountsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListAccounts is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListConnectorBindings(context.Context, *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListConnectorBindings is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListBrokerAccounts(context.Context, *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListBrokerAccounts is not implemented"))
 }
 
 func (UnimplementedReadServiceHandler) GetAccount(context.Context, *connect.Request[v1.GetAccountRequest]) (*connect.Response[v1.GetAccountResponse], error) {

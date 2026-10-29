@@ -1,0 +1,22 @@
+{{define "content"}}
+{{with .Data}}
+<ol class="steps" aria-label="Setup steps">
+  {{range .Steps}}<li><a href="/setup?step={{.Key}}"{{if .Current}} aria-current="step"{{end}}>{{.Label}}</a></li>{{end}}
+</ol>
+{{if eq .Step "sleeves"}}
+<p class="lede">Your portfolio starts with three sleeves: Bonds, Core and Satellite. Rename them, change them or add your own; every account you create next goes into one of them.</p>
+{{template "sleeve-forms" .Sleeves}}
+<div class="actions"><a class="button primary" href="/setup?step=accounts">Continue to accounts</a></div>
+{{else if eq .Step "accounts"}}
+<p class="lede">Create an account for each account you hold at an institution, and connect it to the connector plugin that feeds it. A broker connector lists the accounts it found, so you pick them instead of typing account numbers.</p>
+{{template "account-forms" .Accounts}}
+<div class="actions"><a class="button primary" href="/setup?step=done">Finish setup</a><a class="button" href="/setup?step=sleeves">Back to sleeves</a></div>
+{{else}}
+<div class="card state">{{template "kasztan" "seal"}}<div>
+  <p class="state-title">OpenFief is set up.</p>
+  <p class="muted">Each connector fills its accounts on its next sync. Install more plugins with the <code>openfief</code> command-line tool, then connect them on the <a href="/accounts">Accounts</a> page. Sleeves and kinds stay editable on the <a href="/sleeves">Sleeves</a> page.</p>
+  <div class="actions"><a class="button primary" href="/">Go to the overview</a></div>
+</div></div>
+{{end}}
+{{end}}
+{{end}}

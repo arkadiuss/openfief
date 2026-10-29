@@ -419,3 +419,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b91ae222d5b
+  - type: implements
+    from: SYM-viewsv1-broker-account-proto-reflect
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:45:48.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1eba686e1d5
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-proto-reflect
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:45:48.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75d7387d3b3b

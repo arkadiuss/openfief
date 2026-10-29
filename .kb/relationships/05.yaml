@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7cf85f0d8e4
+  - type: implements
+    from: SYM-viewsv1-list-sleeve-kinds-response-proto-message
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:47:59.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-713341ffc12f
+  - type: covered_by
+    from: SYM-viewsv1-list-sleeve-kinds-response-proto-message
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:47:59.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e9259c5032f

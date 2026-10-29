@@ -37,6 +37,10 @@ type fakeLedger struct {
 
 func (f *fakeLedger) Sleeves(context.Context) ([]portfolio.Sleeve, error) { return f.sleeves, f.fail }
 
+func (f *fakeLedger) Kinds(context.Context) ([]portfolio.Kind, error) {
+	return portfolio.DefaultKinds(), f.fail
+}
+
 func (f *fakeLedger) Accounts(context.Context) ([]ledger.Account, error) { return f.accounts, f.fail }
 
 func (f *fakeLedger) Account(_ context.Context, id ledger.AccountID) (ledger.Account, error) {
