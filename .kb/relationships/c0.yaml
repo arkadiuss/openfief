@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb89aa766db3
+  - type: implements
+    from: SYM-pl-permissions-diff-is-empty
+    to: REQ-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:04:58.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-403e5c8a2200
+  - type: covered_by
+    from: SYM-pl-permissions-diff-is-empty
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:04:58.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af694e8aacd8

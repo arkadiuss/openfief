@@ -110,7 +110,7 @@ func TestPlanInstall(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			signed := signedSample(t)
-			p, g, err := plugins.PlanInstall(tt.instance, &signed, tt.config)
+			p, g, err := plugins.PlanInstall(tt.instance, &signed, tt.config, nil)
 			if err != nil {
 				t.Fatalf("PlanInstall: %v", err)
 			}
@@ -119,7 +119,7 @@ func TestPlanInstall(t *testing.T) {
 			if diff := cmp.Diff(want, p); diff != "" {
 				t.Errorf("plugin (-want +got):\n%s", diff)
 			}
-			wantGrant := plugins.Grant{Plugin: tt.instance, Permissions: want.Manifest.Requested()}
+			wantGrant := plugins.Grant{Plugin: tt.instance, Permissions: want.Requested()}
 			if diff := cmp.Diff(wantGrant, g); diff != "" {
 				t.Errorf("grant (-want +got):\n%s", diff)
 			}
@@ -127,6 +127,38 @@ func TestPlanInstall(t *testing.T) {
 				t.Errorf("the grant leaves %+v pending (error %v); it must approve everything requested", pending, pendErr)
 			}
 		})
+	}
+}
+
+func TestPlanInstallOwnerPicks(t *testing.T) {
+	t.Parallel()
+	img, err := plugins.ParseImageRef(imageA)
+	if err != nil {
+		t.Fatalf("image: %v", err)
+	}
+	signed := plugins.SignedImage{Image: img, Manifest: plugins.Manifest{
+		Capabilities:     []plugins.Capability{plugins.CapabilityView},
+		EgressFromConfig: []string{"url"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "the owner's Ghostfolio"},
+	}}
+	gs := ghostfolioService()
+	p, g, err := plugins.PlanInstall("gf", &signed, []byte(`{"url":"https://gf.example.com"}`), &gs)
+	if err != nil {
+		t.Fatalf("PlanInstall: %v", err)
+	}
+	want := plugins.Permissions{
+		Capabilities:    []plugins.Capability{plugins.CapabilityView},
+		Egress:          []plugins.EgressHost{host("gf.example.com", 443)},
+		ClusterServices: []plugins.ClusterService{gs},
+	}
+	if diff := cmp.Diff(want, g.Permissions); diff != "" {
+		t.Errorf("grant (-want +got):\n%s", diff)
+	}
+	if p.ClusterService == nil || *p.ClusterService != gs {
+		t.Errorf("plugin's in-cluster service = %v, want %v", p.ClusterService, gs)
+	}
+	if _, _, err := plugins.PlanInstall("gf", &signed, []byte(`{"url":"https://192.0.2.7"}`), nil); !errors.Is(err, plugins.ErrConfigHost) {
+		t.Errorf("an IP address in url: error = %v, want ErrConfigHost", err)
 	}
 }
 
@@ -146,7 +178,7 @@ func TestPlanInstallRefuses(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			signed := signedSample(t)
-			_, _, err := plugins.PlanInstall(tt.instance, &signed, []byte(tt.config))
+			_, _, err := plugins.PlanInstall(tt.instance, &signed, []byte(tt.config), nil)
 			var got []string
 			for _, fe := range fieldErrors(errors.Unwrap(err)) {
 				got = append(got, fe.Field)

@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e62d05f27e0a
+  - type: implements
+    from: SYM-pl-instances-cluster-service
+    to: REQ-plugins-cli-in-cluster-service-access
+    created_at: 2026-10-29T15:20:53.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-293f8ac74764
+  - type: implements
+    from: SYM-pl-instances-cluster-service
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:20:53.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d06d954b84ed
+  - type: covered_by
+    from: SYM-pl-instances-cluster-service
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:20:53.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae50e84bcab

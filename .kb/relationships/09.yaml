@@ -412,6 +412,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61c27dfb709f
+  - type: executable_for
+    from: SYM-pl-test-helper-op-ghostfolio-selector
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:19:41.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebb1641df5da
   - type: implements
     from: SYM-portfolio-app-sleeves-rename-kind
     to: REQ-portfolio-sleeve-service

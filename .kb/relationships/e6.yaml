@@ -482,20 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ec687b1f2bb
-  - type: implements
-    from: SYM-ingestv1-bind-account-request-proto-message
-    to: REQ-ingest-account-service
-    created_at: 2026-10-29T13:25:23.036Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d8f1bb471ccb
-  - type: covered_by
-    from: SYM-ingestv1-bind-account-request-proto-message
-    to: TEST-ingest-connectapi-accounts
-    created_at: 2026-10-29T13:25:23.077Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-332540e4aa38
   - type: executable_for
     from: SYM-fd-plugins-test-manifest-browser-path
     to: TEST-plugins-browser-path
@@ -510,3 +496,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9e537900c27
+  - type: constrains
+    from: REQ-plugins-config-host-https-url
+    to: FACT-SUBJECT-408AED85B10C0271
+    created_at: 2026-10-29T15:10:55.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02519c0adc49
+  - type: requires_property
+    from: REQ-plugins-config-host-https-url
+    to: FACT-PROP-97A9374A1D3C67C2
+    created_at: 2026-10-29T15:10:55.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8728965a36ea
+  - type: specified_by
+    from: REQ-plugins-config-host-https-url
+    to: SCEN-plugins-config-host-https-url
+    created_at: 2026-10-29T15:10:55.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c95a1d5f40c
+  - type: implements
+    from: SYM-ingestv1-bind-account-request-proto-message
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:25:23.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8f1bb471ccb
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request-proto-message
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:25:23.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-332540e4aa38
+  - type: implements
+    from: SYM-pl-raw-of
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:09.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a655a2cfc946
+  - type: covered_by
+    from: SYM-pl-raw-of
+    to: TEST-plugins-kube-upgrade
+    created_at: 2026-10-29T17:07:09.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d63314ad372

@@ -1,12 +1,15 @@
 // Command openfief is the owner's command line (D-46): it installs,
-// uninstalls and lists plugin instances with the owner's own kubeconfig,
+// upgrades, uninstalls and lists plugin instances with the owner's own kubeconfig,
 // and gives the owner the link for the first passkey (D-80).
 //
 // Usage:
 //
 //	openfief enroll [--port 8080] [--ttl 15m]
 //	openfief plugin install <catalog-name|image@sha256:...> [--name NAME] [--config FILE]
+//	                        [--cluster-service NAMESPACE/SERVICE:PORT]
 //	                        [--trusted-signers FILE] [--yes] [--print]
+//	openfief plugin upgrade <instance> <catalog-version|image@sha256:...> [--config FILE]
+//	                        [--trusted-signers FILE] [--yes]
 //	openfief plugin uninstall <instance> [--yes]
 //	openfief plugin list
 //
@@ -14,8 +17,10 @@
 // signature with the operator's trust policy and signature check, shows the
 // permissions its signed manifest requests and, once the owner confirms,
 // creates the Plugin and a PluginGrant approving exactly those; --print
-// writes them as YAML for GitOps instead. uninstall deletes an instance's
-// PluginGrant, Plugin and the Secrets no other instance names (D-58).
+// writes them as YAML for GitOps instead. upgrade verifies a new version the
+// same way, shows how its requested permissions differ and, once the owner
+// confirms, replaces the Plugin and its grant (D-90). uninstall deletes an
+// instance's PluginGrant, Plugin and its Secrets (D-58, D-89).
 // enroll forwards localhost:8080 to the core, the only entry point for
 // browsers (D-81), has the core issue D-60's one-time link for it by running
 // core enroll-link in its pod, prints the link and keeps forwarding until
@@ -118,6 +123,7 @@ func newEnv() (*cli.Env, error) {
 		},
 		ValidateConfig: operator.ValidateConfig,
 		Render:         kube.ResourcesYAML,
+		IngressRule:    kube.IngressRuleYAML,
 	}, nil
 }
 

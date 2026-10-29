@@ -342,6 +342,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbf936d76a49
+  - type: implements
+    from: SYM-pl-installer-verify
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-29T15:22:55.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bab0076fe60
+  - type: covered_by
+    from: SYM-pl-installer-verify
+    to: TEST-plugins-app-install
+    created_at: 2026-10-29T15:22:55.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cab98635e984
   - type: validates
     from: TEST-ingest-connectapi-accounts
     to: REQ-core-owner-entry-service-callers

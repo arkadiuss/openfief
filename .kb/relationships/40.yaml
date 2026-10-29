@@ -329,6 +329,55 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-c2f61dd909b2
   - type: implements
+    from: SYM-fd-browserproxy-new
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:06:12.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5acc8743a78b
+  - type: covered_by
+    from: SYM-fd-browserproxy-new
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:06:12.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc8cbad900c2
+  - type: constrains
+    from: REQ-operator-in-cluster-service-reads-service
+    to: FACT-SUBJECT-C9C7F3BE6B6C8D05
+    created_at: 2026-10-29T15:11:14.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8e68aad3b9e
+  - type: requires_property
+    from: REQ-operator-in-cluster-service-reads-service
+    to: FACT-PROP-E5976C711546A4A9
+    created_at: 2026-10-29T15:11:14.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0fb84dc94c6
+  - type: specified_by
+    from: REQ-operator-in-cluster-service-reads-service
+    to: SCEN-operator-in-cluster-service-reads-service
+    created_at: 2026-10-29T15:11:14.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21ab8cd8c9b7
+  - type: implements
+    from: SYM-pl-cluster-service-request-validate
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:11.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adb886b0152b
+  - type: covered_by
+    from: SYM-pl-cluster-service-request-validate
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:11.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2aee146a35d
+  - type: implements
     from: SYM-ingest-app-connectors-admit
     to: REQ-ingest-broker-account-resolve
     created_at: 2026-10-29T11:48:37.682Z
@@ -370,17 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-caa670c5d011
-  - type: implements
-    from: SYM-fd-browserproxy-new
-    to: REQ-core-reverse-proxies-view-plugins
-    created_at: 2026-10-29T12:06:12.923Z
+  - type: executable_for
+    from: SYM-pl-test-run-upgrade-refuses
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:08:06.667Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-5acc8743a78b
-  - type: covered_by
-    from: SYM-fd-browserproxy-new
-    to: TEST-views-browser-proxy
-    created_at: 2026-10-29T12:06:12.969Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cc8cbad900c2
+    id: rel-5c0bd12888c5

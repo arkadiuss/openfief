@@ -462,6 +462,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-5bb1ba493419
   - type: implements
+    from: SYM-pl-split-authority
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:15:03.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-502a9a5a4daa
+  - type: covered_by
+    from: SYM-pl-split-authority
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:03.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-033ba1f16d79
+  - type: executable_for
+    from: SYM-pl-test-instances-create-delete-service-access
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:22:27.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9955146d3e4e
+  - type: implements
     from: SYM-ingest-connectapi-account-service-create-account
     to: REQ-ingest-account-service
     created_at: 2026-10-29T13:01:24.372Z

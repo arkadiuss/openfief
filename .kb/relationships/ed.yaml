@@ -286,6 +286,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-001f16f8315c
+  - type: executable_for
+    from: SYM-pl-test-helper-ghostfolio-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:58.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-945214d8e64f
   - type: verified_by
     from: SCEN-ingest-broker-account-resolve
     to: TEST-ingest-broker-accounts

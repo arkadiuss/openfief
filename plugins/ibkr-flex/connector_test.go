@@ -297,7 +297,7 @@ func TestManifest(t *testing.T) {
 	want := plugins.Manifest{
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       []plugins.EgressHost{{Host: "ndcdyn.interactivebrokers.com", Port: 443}},
-		Secrets:      []plugins.SecretMount{{Name: "ibkr-flex-credentials", MountPath: flexMount}},
+		Secrets:      []plugins.SecretMount{{Role: "flex-token", MountPath: flexMount}},
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)

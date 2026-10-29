@@ -321,6 +321,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a4344de95c1
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:01:50.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db1f1d7e380d
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-first-passkey-link
+    created_at: 2026-10-29T12:01:50.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24e0807f4112
+  - type: executable_for
+    from: SYM-pl-test-helper-op-get
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:20:27.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7614cfcd8d6f
   - type: executable_for
     from: SYM-ingest-connectapi-test-helper-mem-links-map-broker-account
     to: TEST-ingest-connectapi-accounts
@@ -342,17 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a497b565828e
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-first-passkey-command
-    created_at: 2026-10-29T12:01:50.408Z
+  - type: executable_for
+    from: SYM-pl-test-resolve-install-source-lists-versions
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:05:30.340Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-db1f1d7e380d
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-first-passkey-link
-    created_at: 2026-10-29T12:01:50.456Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-24e0807f4112
+    id: rel-3f04c1f438ca

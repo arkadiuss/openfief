@@ -363,13 +363,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-349db9644863
-  - type: executable_for
-    from: SYM-ingest-app-test-accounts-update
-    to: TEST-ingest-app-accounts
-    created_at: 2026-10-29T13:00:42.092Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-83c95dd45dd0
   - type: implements
     from: SYM-fd-browserproxy-rewrite
     to: REQ-views-browser-proxy-headers
@@ -398,3 +391,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2d0b2a7c482
+  - type: executable_for
+    from: SYM-pl-test-manifest-egress-from-config-fields
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:53.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5b6c3ce0f4c
+  - type: implements
+    from: SYM-pl-instances-delete-service-access
+    to: REQ-plugins-cli-in-cluster-service-access
+    created_at: 2026-10-29T15:21:41.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43480f024387
+  - type: covered_by
+    from: SYM-pl-instances-delete-service-access
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:41.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94121cbc03a8
+  - type: executable_for
+    from: SYM-ingest-app-test-accounts-update
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T13:00:42.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83c95dd45dd0

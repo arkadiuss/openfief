@@ -503,6 +503,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09476ea8408b
+  - type: validates
+    from: TEST-operator-cluster-service
+    to: REQ-operator-in-cluster-service-route
+    created_at: 2026-10-29T15:10:01.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-105e49ecbf6e
+  - type: validates
+    from: TEST-operator-cluster-service
+    to: REQ-plugins-in-cluster-service-no-proxy
+    created_at: 2026-10-29T15:10:01.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38cb7d87e812
   - type: executable_for
     from: SYM-ingest-connectapi-test-helper-mem-registry-accounts
     to: TEST-ingest-connectapi-accounts

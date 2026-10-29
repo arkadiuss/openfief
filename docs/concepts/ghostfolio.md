@@ -80,7 +80,7 @@ flowchart LR
   core@{ icon: "fief:gate", form: "square", label: "Core<br/>readTokens", pos: "b", h: 40 }
   proxy@{ icon: "fief:egress", form: "square", label: "Egress proxy", pos: "b", h: 40 }
   gf@{ icon: "fief:globe", form: "square", label: "Owner's Ghostfolio", pos: "b", h: 40 }
-  secret@{ icon: "fief:secret", form: "square", label: "Secret ghostfolio-credentials<br/>security-token", pos: "b", h: 40 }
+  secret@{ icon: "fief:secret", form: "square", label: "Secret &lt;instance&gt;-security-token<br/>file security-token", pos: "b", h: 40 }
   loop -- "read API, Bearer:<br/>projected token (openfief-core)" --> core
   loop -- "CONNECT, projected token<br/>(openfief-egress)" --> proxy
   proxy -- "granted host only" --> gf
@@ -90,11 +90,15 @@ flowchart LR
 | Manifest | Value |
 |---|---|
 | Capabilities | `view` |
-| Secrets | `ghostfolio-credentials` at `/etc/openfief/ghostfolio`, file `security-token`: the Ghostfolio user's security token, read on every login |
-| Egress | none (see [Not built yet](#not-built-yet)) |
-| Config | `url`, the owner's Ghostfolio as an https origin such as `https://ghostfolio.example.com` (required); `interval`, a Go duration of at least `5m`, `1h` by default; `listings`, each an `isin` with Ghostfolio's `dataSource` (not `MANUAL`) and `symbol` |
+| Secrets | role `security-token`, so the instance mounts `<instance>-security-token` (D-89), at `/etc/openfief/ghostfolio`, file `security-token`: the Ghostfolio user's security token, read on every login |
+| Egress | no fixed host: `egressFromConfig: ["url"]`, the host of the config's `url`, which the install shows and the grant approves (D-75) |
+| In-cluster service | `clusterService` ("a Ghostfolio running in this cluster"): the owner may pick one at install instead of a `url` (D-74) |
+| Config | `url`, the owner's Ghostfolio as an https origin such as `https://ghostfolio.example.com`, unless it runs in the cluster; `interval`, a Go duration of at least `5m`, `1h` by default; `listings`, each an `isin` with Ghostfolio's `dataSource` (not `MANUAL`) and `symbol` |
 
-The plugin reads the read API with its own projected ServiceAccount token (audience `openfief-core`, D-27), which the core accepts from view plugins ([Identity](identity.md#in-the-core)), and reaches Ghostfolio only through the egress proxy with the SDK's egress client, which refuses plain http (D-32, D-63).
+The plugin reads the read API with its own projected ServiceAccount token (audience `openfief-core`, D-27), which the core accepts from view plugins ([Identity](identity.md#in-the-core)). It reaches Ghostfolio one of two ways, and refuses to start with both or neither:
+
+- **An external Ghostfolio**, at the config's `url`: the install shows that host, the grant approves exactly it, and the plugin reaches it through the egress proxy with the SDK's egress client, which refuses plain http (D-32, D-63, D-75).
+- **A Ghostfolio in the same cluster**, picked at install as the in-cluster service: the operator passes its ClusterIP and port in `OPENFIEF_CLUSTER_SERVICE_ADDRESS`, and the plugin calls `http://<that address>` directly, without the proxy, so the security token travels unencrypted inside the cluster, as the install warns (D-74).
 
 ### The supported versions
 
@@ -105,6 +109,7 @@ The plugin reads the read API with its own projected ServiceAccount token (audie
 - **D-3, D-4**: the view's reconcile loop over the accounts it created, with the transaction's key in each comment, stale activities deleted and missing ones imported, manual edits reverted.
 - **D-64**: UUIDs for owned accounts; import first, bulk deletes always filtered; bonds as `MANUAL` assets with a UUID from the series code and the full price history every sync; edits found by comparing fields; dry runs; refusal under the restricted view; a pinned version range with contract tests.
 - **D-6, D-27**: the view reads the record only through the read API, with the plugin's projected token.
+- **D-74, D-75**: an external Ghostfolio is reached at the host of the config's `url` through the egress proxy; one in the same cluster at the in-cluster service the owner picked, directly. Calling an in-cluster Ghostfolio over plain `http` is this plugin's reading of D-74's "may be plain HTTP"; the manifest has no way to say a service speaks TLS.
 - The owned accounts' UUIDs are derived from the instance's name and the account's ID rather than generated at random and stored: a plugin has a read-only file system and no volume, and a derived UUID makes creating an account safe to repeat. D-64 says the view generates and stores them; this is this package's reading, not the author's.
 - Deleting a stale activity before the import it would block is this package's reading of D-64's "import first"; nothing else is deleted before the imports.
 - What each transaction kind becomes, the fee assets, quantity 1 for dividends and the 15-digit rounding are this package's choices; no decision fixes them.
@@ -118,7 +123,7 @@ The plugin reads the read API with its own projected ServiceAccount token (audie
 | Over 500 seeded random cases, applying a plan as Ghostfolio does and planning again gives an empty plan, and the owner's own activities stay | `TestPlanIsIdempotent` in [plan_property_test.go](../../internal/views/ghostfolio/plan_property_test.go) | REQ-views-ghostfolio-reconcile, TEST-views-ghostfolio-plan-properties |
 | A pass's calls in order over a fake Ghostfolio and a paged fake read API; refusals write nothing | `TestSync`, `TestSyncRefuses` in [sync_test.go](../../internal/views/ghostfolio/sync_test.go) | REQ-views-ghostfolio-read-record, REQ-views-ghostfolio-reconcile, TEST-views-ghostfolio-sync |
 | No unfiltered bulk delete or listing; error statuses without bodies | `TestClientNeverDeletesUnfiltered`, `TestClientErrors` in [client_test.go](../../internal/views/ghostfolio/client_test.go) | REQ-views-ghostfolio-client, TEST-views-ghostfolio-client |
-| The manifest asks for the view capability and the token Secret only; the config is checked; the plugin refuses to start without the core, its instance name or the egress proxy; the timer loop | `TestManifest`, `TestConfigParse`, `TestReadSecretFile`, `TestNewSyncer`, `TestNewSyncerWith`, `TestLoop` in [main_test.go](../../plugins/ghostfolio/main_test.go) | REQ-plugins-ghostfolio-plugin, TEST-plugins-ghostfolio-main |
+| The manifest asks for the view capability, the token Secret, the host of `url` and an in-cluster service; the config is checked; the plugin refuses to start without the core, its instance name, or a Ghostfolio, with both a `url` and an in-cluster service, or with a `url` and no egress proxy; the timer loop | `TestManifest`, `TestConfigParse`, `TestReadSecretFile`, `TestNewSyncer`, `TestNewSyncerWith`, `TestLoop` in [main_test.go](../../plugins/ghostfolio/main_test.go) | REQ-plugins-ghostfolio-plugin, TEST-plugins-ghostfolio-main |
 | The loop against a real Ghostfolio 3.93.0: first sync, an unchanged second sync, a reverted edit, a deletion, a cleared account, the restricted view, the owner's own activity untouched | `TestGhostfolioContract` in [contract_test.go](../../internal/views/ghostfolio/contract_test.go) | REQ-views-ghostfolio-version-range, REQ-views-ghostfolio-client, TEST-views-ghostfolio-contract |
 
 These requirements refine the firm ones imported from D-3, D-4 and D-64. `TestGhostfolioContract` replays hypert recordings made against a fresh local `ghostfolio/ghostfolio:3.93.0` with a new anonymous user and the synthetic record of [fakes_test.go](../../internal/views/ghostfolio/fakes_test.go); replay checks each request's method, path, query, headers and JSON body. The security and bearer tokens never reach a recording; the test's comment says how to record again. Every other test runs offline over fakes.
@@ -126,6 +131,6 @@ These requirements refine the firm ones imported from D-3, D-4 and D-64. `TestGh
 ## Not built yet
 
 - **Cash.** Deposits, withdrawals and FX conversions have no activity, and owned accounts' balances are not set, so Ghostfolio shows holdings without cash.
-- **Egress to the owner's Ghostfolio.** A manifest is the image's signed label (D-42), and the egress allow-list holds only hosts the manifest requests and the grant approves (D-16, D-32), so an image built before the owner chose a Ghostfolio host can't request it. The first-party manifest names no egress host; without one the operator sets no `HTTPS_PROXY`, and the plugin refuses to start. Until the author decides how an owner-chosen host enters the allow-list, an owner can build the image with their host in `manifest.json` and sign it as their own (D-45). The demo doesn't run the plugin.
+- **The demo doesn't run the plugin**, and no end-to-end test reaches a Ghostfolio, in the cluster or outside it.
 - **The catalog (D-43).** The plugin is built and signed by CI but not in the catalog.
 - **A version check at run time.** Ghostfolio shows its version only to administrators.

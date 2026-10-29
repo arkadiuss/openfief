@@ -384,6 +384,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba0ed057d82b
+  - type: validates
+    from: TEST-plugins-app-install
+    to: REQ-plugins-instances-never-share-secrets
+    created_at: 2026-10-29T15:11:27.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bc219b66e53
+  - type: implements
+    from: SYM-pl-instances-create-service-access
+    to: REQ-plugins-cli-in-cluster-service-access
+    created_at: 2026-10-29T15:21:13.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-164300a88f8c
+  - type: covered_by
+    from: SYM-pl-instances-create-service-access
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:13.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-508149d83299
   - type: implements
     from: SYM-ingestv1-account
     to: REQ-ingest-account-service

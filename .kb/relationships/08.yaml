@@ -315,6 +315,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-03aaa4f13955
   - type: implements
+    from: SYM-fd-browserproxy-proxy-unreachable
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:06:33.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-917f98554310
+  - type: covered_by
+    from: SYM-fd-browserproxy-proxy-unreachable
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:06:33.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4b90a65486a
+  - type: implements
+    from: SYM-pl-prepare
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:23:08.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fdb51a76a71
+  - type: covered_by
+    from: SYM-pl-prepare
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:08.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b90e314647b2
+  - type: implements
     from: SYM-ingest-connectrpc-broker-entries
     to: REQ-connector-broker-accounts
     created_at: 2026-10-29T11:50:19.466Z
@@ -336,16 +364,16 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-518355fb20d6
   - type: implements
-    from: SYM-fd-browserproxy-proxy-unreachable
-    to: REQ-core-reverse-proxies-view-plugins
-    created_at: 2026-10-29T12:06:33.097Z
+    from: SYM-pl-instances-get-both
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:06:52.006Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-917f98554310
+    id: rel-d475fd7a9f24
   - type: covered_by
-    from: SYM-fd-browserproxy-proxy-unreachable
-    to: TEST-views-browser-proxy
-    created_at: 2026-10-29T12:06:33.136Z
+    from: SYM-pl-instances-get-both
+    to: TEST-plugins-kube-upgrade
+    created_at: 2026-10-29T17:06:52.057Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-c4b90a65486a
+    id: rel-66ce382e8173

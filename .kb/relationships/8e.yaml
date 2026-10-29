@@ -503,6 +503,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6117bb6a1cd
+  - type: constrains
+    from: REQ-plugins-requested-secret-names
+    to: FACT-SUBJECT-010DD798EAB0E3D4
+    created_at: 2026-10-29T15:10:32.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-106f9a069121
+  - type: requires_property
+    from: REQ-plugins-requested-secret-names
+    to: FACT-PROP-559EE0ED4036581A
+    created_at: 2026-10-29T15:10:32.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-741ef67652be
+  - type: specified_by
+    from: REQ-plugins-requested-secret-names
+    to: SCEN-plugins-requested-secret-names
+    created_at: 2026-10-29T15:10:32.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80d19c0f1b24
   - type: implements
     from: SYM-ingest-resolve-broker-accounts
     to: REQ-ingest-broker-account-resolve

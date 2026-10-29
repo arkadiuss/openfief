@@ -461,6 +461,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a568edd32c8
+  - type: constrains
+    from: REQ-plugins-cluster-service-outside-openfief
+    to: FACT-SUBJECT-457059D043CC4DB6
+    created_at: 2026-10-29T15:11:05.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ae2049d27f4
+  - type: requires_property
+    from: REQ-plugins-cluster-service-outside-openfief
+    to: FACT-PROP-B190468D59D6ED53
+    created_at: 2026-10-29T15:11:05.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad9fe9c91323
+  - type: specified_by
+    from: REQ-plugins-cluster-service-outside-openfief
+    to: SCEN-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:11:05.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ab8ef19245d
+  - type: implements
+    from: SYM-pl-validate-cluster-services
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:45.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd5ec689299
+  - type: covered_by
+    from: SYM-pl-validate-cluster-services
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:45.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c88b42fa4ee
   - type: implements
     from: SYM-ui-server-connector-instances
     to: REQ-ui-sleeve-and-account-pages

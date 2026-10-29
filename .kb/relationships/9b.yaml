@@ -475,6 +475,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e2ff8fe2777
+  - type: executable_for
+    from: SYM-fd-views-test-route-browser-path
+    to: TEST-views-browser-routing
+    created_at: 2026-10-29T12:10:43.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-611dec0e643e
+  - type: executable_for
+    from: SYM-pl-test-run-install-owner-picks
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:51.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f142ed95ec7
   - type: implements
     from: SYM-ui-config-missing-client
     to: REQ-ui-sleeve-and-account-pages
@@ -503,13 +517,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-631f85827815
-  - type: executable_for
-    from: SYM-fd-views-test-route-browser-path
-    to: TEST-views-browser-routing
-    created_at: 2026-10-29T12:10:43.134Z
+  - type: implements
+    from: SYM-pl-catalog-names-of
+    to: REQ-plugins-upgrade-version-resolution
+    created_at: 2026-10-29T17:04:33.061Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-611dec0e643e
+    id: rel-780258576aef
+  - type: covered_by
+    from: SYM-pl-catalog-names-of
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:04:33.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58ad48c25ebf
   - type: constrains
     from: REQ-core-browser-port-scope
     to: FACT-SUBJECT-A141330E0368236C

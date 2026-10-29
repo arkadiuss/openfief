@@ -336,6 +336,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-4b2c1e876a0d
   - type: implements
+    from: SYM-fd-identity-cli-core
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:03:13.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e56b1c214f2f
+  - type: covered_by
+    from: SYM-fd-identity-cli-core
+    to: TEST-identity-cli
+    created_at: 2026-10-29T12:03:14.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb821f028191
+  - type: implements
+    from: SYM-pl-cluster-service-to-api
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:18:52.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c3ddd51576
+  - type: covered_by
+    from: SYM-pl-cluster-service-to-api
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:18:52.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f66d9a3d05
+  - type: implements
     from: SYM-ingestv1-bind-account-response-descriptor
     to: REQ-ingest-account-service
     created_at: 2026-10-29T13:27:00.208Z
@@ -350,16 +378,16 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-030cb63ebcfa
   - type: implements
-    from: SYM-fd-identity-cli-core
-    to: REQ-identity-first-passkey-command
-    created_at: 2026-10-29T12:03:13.986Z
+    from: SYM-pl-subtract
+    to: REQ-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:05:10.684Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-e56b1c214f2f
+    id: rel-2df24f3b03e1
   - type: covered_by
-    from: SYM-fd-identity-cli-core
-    to: TEST-identity-cli
-    created_at: 2026-10-29T12:03:14.020Z
+    from: SYM-pl-subtract
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:05:10.715Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-cb821f028191
+    id: rel-ec4bb7d7a6dc

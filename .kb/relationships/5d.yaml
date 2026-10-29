@@ -343,6 +343,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-cf703c783ea3
   - type: implements
+    from: SYM-pl-ingress-rule-yaml
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:21:07.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2cb30a89c7f
+  - type: covered_by
+    from: SYM-pl-ingress-rule-yaml
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:07.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d1f90d548f
+  - type: implements
     from: SYM-portfoliov1-sleeve-role-string
     to: REQ-portfolio-sleeve-service
     created_at: 2026-10-29T13:30:43.970Z

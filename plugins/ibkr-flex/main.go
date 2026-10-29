@@ -7,8 +7,8 @@
 // Flex parser and mapping are internal/ingest/ibkrflex; this binary only
 // wires them to the SDK.
 //
-// The Flex Web Service token and the Flex Query's ID come from the Secret
-// ibkr-flex-credentials (files token and query-id), which the owner
+// The Flex Web Service token and the Flex Query's ID come from the instance's
+// Secret <instance>-flex-token (role flex-token, D-89; files token and query-id), which the owner
 // creates (D-29) and the manifest mounts at /etc/openfief/ibkr-flex. They
 // are read on every sync and never logged.
 //

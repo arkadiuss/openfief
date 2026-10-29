@@ -426,6 +426,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c80a8e4dad70
+  - type: implements
+    from: SYM-pl-cluster-service-request
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:04.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b11433f454c
+  - type: implements
+    from: SYM-pl-cluster-service-request
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:16:04.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-904eb032c9d9
+  - type: covered_by
+    from: SYM-pl-cluster-service-request
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:04.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5a677107fb3
+  - type: implements
+    from: SYM-pl-cluster-service-request
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-29T15:19:14.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ceaff6e847e
+  - type: covered_by
+    from: SYM-pl-cluster-service-request
+    to: TEST-operator-api
+    created_at: 2026-10-29T15:19:14.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0988b24fe69e
   - type: validates
     from: TEST-core-onboarding
     to: REQ-ingest-owner-creates-accounts

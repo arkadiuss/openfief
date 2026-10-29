@@ -455,6 +455,48 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-015e00edd2de
   - type: implements
+    from: SYM-pl-check-cluster-service
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:23:29.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15e92ced59d4
+  - type: implements
+    from: SYM-pl-check-cluster-service
+    to: REQ-plugins-cli-in-cluster-service-access
+    created_at: 2026-10-29T15:23:29.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91bc3782b236
+  - type: covered_by
+    from: SYM-pl-check-cluster-service
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:29.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bd7f8c2c752
+  - type: implements
+    from: SYM-pl-write-cluster-service
+    to: REQ-plugins-in-cluster-service-plain-http-warning
+    created_at: 2026-10-29T15:23:58.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0659960ca1c2
+  - type: implements
+    from: SYM-pl-write-cluster-service
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:23:58.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10ea3c9dcdfe
+  - type: covered_by
+    from: SYM-pl-write-cluster-service
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:58.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d237eeda05b5
+  - type: implements
     from: SYM-portfoliov1connect-sleeve-service-client-add-sleeve-kind
     to: REQ-portfolio-sleeve-service
     created_at: 2026-10-29T13:29:19.938Z
@@ -468,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6530e00c73f1
+  - type: executable_for
+    from: SYM-pl-test-resolve-upgrade-source
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:05:23.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9500428b2df5

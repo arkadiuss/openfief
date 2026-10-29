@@ -384,20 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd22f80c8a19
-  - type: constrains
-    from: REQ-identity-no-auth-bypass
-    to: FACT-SUBJECT-5A4E6481189FE5A3
-    created_at: 2026-10-29T08:21:32.864Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-00898de9faa1
-  - type: requires_property
-    from: REQ-identity-no-auth-bypass
-    to: FACT-PROP-99CAA9B7065DB88C
-    created_at: 2026-10-29T08:21:32.872Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f733c8c0b3ab
   - type: verified_by
     from: SCEN-ingest-statement-service
     to: TEST-ingest-connectapi-statements
@@ -447,6 +433,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-873e001987a0
+  - type: specified_by
+    from: REQ-identity-no-auth-bypass
+    to: SCEN-identity-no-auth-bypass
+    created_at: 2026-10-29T10:54:23.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e134632832d
+  - type: constrains
+    from: REQ-identity-no-auth-bypass
+    to: FACT-SUBJECT-5A4E6481189FE5A3
+    created_at: 2026-10-29T08:21:32.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00898de9faa1
+  - type: requires_property
+    from: REQ-identity-no-auth-bypass
+    to: FACT-PROP-99CAA9B7065DB88C
+    created_at: 2026-10-29T08:21:32.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f733c8c0b3ab
+  - type: executable_for
+    from: SYM-fd-views-kube-test-helper-view-plugin
+    to: TEST-views-kube-browser
+    created_at: 2026-10-29T12:11:53.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e707623acdd1
+  - type: executable_for
+    from: SYM-pl-test-helper-gf-svc
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:58.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85310d9e9fd2
   - type: executable_for
     from: SYM-ingest-app-test-helper-mem-accounts-accounts
     to: TEST-ingest-app-accounts
@@ -461,17 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6baefebb70a1
-  - type: specified_by
-    from: REQ-identity-no-auth-bypass
-    to: SCEN-identity-no-auth-bypass
-    created_at: 2026-10-29T10:54:23.968Z
+  - type: implements
+    from: SYM-pl-permissions-diff
+    to: REQ-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:04:51.122Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-2e134632832d
-  - type: executable_for
-    from: SYM-fd-views-kube-test-helper-view-plugin
-    to: TEST-views-kube-browser
-    created_at: 2026-10-29T12:11:53.891Z
+    id: rel-491acd54df20
+  - type: covered_by
+    from: SYM-pl-permissions-diff
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:04:51.164Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-e707623acdd1
+    id: rel-0112165afe03

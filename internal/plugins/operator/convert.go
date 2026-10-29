@@ -3,6 +3,7 @@ package operator
 import (
 	"errors"
 	"fmt"
+	"math"
 
 	"k8s.io/apimachinery/pkg/runtime"
 
@@ -18,16 +19,28 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 		Name:  name,
 		Image: spec.Image,
 		Manifest: plugins.Manifest{
-			Capabilities: capabilities(spec.Manifest.Capabilities),
-			Egress:       egress,
-			DataTiers:    dataTiers(spec.Manifest.DataTiers),
-			ConfigSchema: rawJSON(spec.Manifest.ConfigSchema),
-			BrowserPath:  spec.Manifest.BrowserPath,
+			Capabilities:     capabilities(spec.Manifest.Capabilities),
+			Egress:           egress,
+			DataTiers:        dataTiers(spec.Manifest.DataTiers),
+			ConfigSchema:     rawJSON(spec.Manifest.ConfigSchema),
+			BrowserPath:      spec.Manifest.BrowserPath,
+			EgressFromConfig: spec.Manifest.EgressFromConfig,
 		},
 		Config: rawJSON(spec.Config),
 	}
+	if r := spec.Manifest.ClusterService; r != nil {
+		p.Manifest.ClusterService = &plugins.ClusterServiceRequest{Description: r.Description}
+	}
+	if spec.ClusterService != nil {
+		cs, err := ClusterServiceFromAPI(spec.ClusterService)
+		if err != nil {
+			errs = append(errs, &plugins.FieldError{Field: "clusterService", Err: err})
+		} else {
+			p.ClusterService = &cs
+		}
+	}
 	for _, s := range spec.Manifest.Secrets {
-		p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Name: s.Name, MountPath: s.MountPath})
+		p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Role: s.Role, MountPath: s.MountPath})
 	}
 	if err := p.Validate(); err != nil {
 		errs = append(errs, err)
@@ -51,6 +64,14 @@ func grantFromResource(g *v1alpha1.PluginGrant) (*plugins.Grant, error) {
 			DataTiers:    dataTiers(g.Spec.DataTiers),
 			BrowserPaths: g.Spec.BrowserPaths,
 		},
+	}
+	for i := range g.Spec.ClusterServices {
+		cs, err := ClusterServiceFromAPI(&g.Spec.ClusterServices[i])
+		if err != nil {
+			errs = append(errs, &plugins.FieldError{Field: fmt.Sprintf("clusterServices[%d]", i), Err: err})
+			continue
+		}
+		grant.Permissions.ClusterServices = append(grant.Permissions.ClusterServices, cs)
 	}
 	if err := grant.Validate(); err != nil {
 		errs = append(errs, err)
@@ -77,7 +98,29 @@ func permissionsToAPI(p *plugins.Permissions) *v1alpha1.Permissions {
 	for _, d := range p.DataTiers {
 		out.DataTiers = append(out.DataTiers, string(d))
 	}
+	for _, cs := range p.ClusterServices {
+		out.ClusterServices = append(out.ClusterServices, ClusterServiceToAPI(cs))
+	}
 	return out
+}
+
+// ClusterServiceFromAPI translates an in-cluster service reference into
+// the domain's, validated.
+func ClusterServiceFromAPI(r *v1alpha1.ClusterServiceRef) (plugins.ClusterService, error) {
+	if r.Port < 1 || r.Port > math.MaxUint16 {
+		return plugins.ClusterService{}, fmt.Errorf("%w: port %d", plugins.ErrInvalidClusterService, r.Port)
+	}
+	cs, err := plugins.ParseClusterService(plugins.ClusterService{Namespace: r.Namespace, Service: r.Service, Port: uint16(r.Port)}.String())
+	if err != nil {
+		return plugins.ClusterService{}, fmt.Errorf("parse: %w", err)
+	}
+	return cs, nil
+}
+
+// ClusterServiceToAPI translates an in-cluster service into the API's
+// reference.
+func ClusterServiceToAPI(cs plugins.ClusterService) v1alpha1.ClusterServiceRef {
+	return v1alpha1.ClusterServiceRef{Namespace: cs.Namespace, Service: cs.Service, Port: int32(cs.Port)}
 }
 
 // effectiveToAPI translates effective permissions into the API's shape.
@@ -90,9 +133,10 @@ func effectiveToAPI(e *plugins.EffectivePermissions) *v1alpha1.Permissions {
 	if bp := e.BrowserPath(); bp != "" {
 		p.BrowserPaths = []string{bp}
 	}
-	for _, s := range e.Secrets() {
-		p.Secrets = append(p.Secrets, s.Name)
+	if cs, ok := e.ClusterService(); ok {
+		p.ClusterServices = []plugins.ClusterService{cs}
 	}
+	p.Secrets = e.SecretNames()
 	if api := permissionsToAPI(&p); api != nil {
 		return api
 	}

@@ -307,6 +307,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd4399f35763
+  - type: executable_for
+    from: SYM-fd-plugins-test-manifest-label-browser-path
+    to: TEST-plugins-browser-path
+    created_at: 2026-10-29T12:10:37.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7f3471e34b9
+  - type: implements
+    from: SYM-pl-validate-config-fields
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:15:10.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec3c741f9bb
+  - type: covered_by
+    from: SYM-pl-validate-config-fields
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:10.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff234fd4b143
   - type: implements
     from: SYM-ingest-connectrpc-owner
     to: REQ-connector-broker-accounts
@@ -335,10 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43236d9c56bb
-  - type: executable_for
-    from: SYM-fd-plugins-test-manifest-label-browser-path
-    to: TEST-plugins-browser-path
-    created_at: 2026-10-29T12:10:37.826Z
+  - type: verified_by
+    from: SCEN-plugins-upgrade-plan-keeps-instance
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:03:59.434Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-b7f3471e34b9
+    id: rel-f33b8fe81f45
+  - type: verified_by
+    from: SCEN-plugins-upgrade-plan-keeps-instance
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-10-29T17:03:59.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55d016479c04

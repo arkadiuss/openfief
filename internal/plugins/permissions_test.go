@@ -149,7 +149,7 @@ func TestNeedsApproval(t *testing.T) {
 			name:  "new secret and data tier",
 			grant: func(*plugins.Grant) {},
 			upgrade: func(p *plugins.Plugin) {
-				p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Name: "sample-key", MountPath: "/etc/openfief/key"})
+				p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Role: "key", MountPath: "/etc/openfief/key"})
 				p.Manifest.DataTiers = append(p.Manifest.DataTiers, "T2")
 			},
 			want: plugins.Permissions{Secrets: []string{"sample-key"}, DataTiers: []plugins.DataTier{"T2"}},

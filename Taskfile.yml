@@ -15,6 +15,8 @@ vars:
   TASK_VERSION: v3.54.0
   # renovate: datasource=go depName=github.com/rhysd/actionlint
   ACTIONLINT_VERSION: v1.7.12
+  # renovate: datasource=go depName=github.com/CycloneDX/cyclonedx-gomod
+  CYCLONEDX_GOMOD_VERSION: v1.12.0
   # renovate: datasource=go depName=sigs.k8s.io/controller-tools
   CONTROLLER_GEN_VERSION: v0.23.0
   # The API server and etcd of the operator's envtest suite; scripts/envtest-assets.sh pins their checksums.
@@ -215,6 +217,13 @@ tasks:
     status:
       - '{{.BIN}}/protoc-gen-connect-openapi --version 2>&1 | grep -q "^protoc-gen-connect-openapi {{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}} "'
 
+  tool:cyclonedx-gomod:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@{{.CYCLONEDX_GOMOD_VERSION}}
+    status:
+      - '{{.BIN}}/cyclonedx-gomod version 2>&1 | grep -q "{{.CYCLONEDX_GOMOD_VERSION}}"'
+
   tool:task:
     internal: true
     cmds:
@@ -383,6 +392,8 @@ tasks:
       - bash scripts/tests/dco-check.test.sh
       - bash scripts/tests/release-version.test.sh
       - bash scripts/tests/release-notes.test.sh
+      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/release-catalog.test.sh
+      - bash scripts/tests/release-cli.test.sh
       - PATH='{{.BIN}}':"$PATH" bash scripts/tests/proto-breaking.test.sh
       - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo.test.sh
       - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo-pin-images.test.sh
@@ -449,10 +460,10 @@ tasks:
       - bash scripts/dco-check.sh '{{.BASE}}' '{{.HEAD}}'
 
   ci:images:
-    desc: 'JSON list of the images CI builds (cmd/*/Dockerfile, plugins/*/Dockerfile), e.g. task ci:images PREFIX=ghcr.io/owner/openfief'
+    desc: 'JSON list of the images CI builds (cmd/*/Dockerfile, plugins/*/Dockerfile; KIND=plugins or commands for one kind), e.g. task ci:images PREFIX=ghcr.io/owner/openfief'
     silent: true
     cmds:
-      - bash scripts/ci-images.sh '{{.PREFIX}}'
+      - bash scripts/ci-images.sh '{{.PREFIX}}' '{{.KIND | default "all"}}'
 
   image:sign:
     desc: 'Keyless cosign signature of a pushed image (CI only, D-17), e.g. task image:sign IMAGE=ghcr.io/owner/openfief/x@sha256:...'
@@ -612,6 +623,36 @@ tasks:
     cmds:
       - bash scripts/release-notes.sh '{{.VERSION}}'
 
+  release:catalog:
+    desc: 'Add each first-party plugin to the catalog with the digest the release signed (D-88; CI only), e.g. task release:catalog VERSION=2026.11.0 PREFIX=ghcr.io/owner/openfief DIGESTS=dist/digests'
+    deps: [tool:gojq]
+    requires:
+      vars: [VERSION, PREFIX, DIGESTS]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" VERIFY='{{.VERIFY | default "0"}}' bash scripts/release-catalog.sh '{{.VERSION}}' '{{.PREFIX}}' '{{.DIGESTS}}'
+
+  release:cli:
+    desc: 'Build the openfief CLI for Linux and macOS on amd64 and arm64 with an SBOM and SHA256SUMS into dist/cli, e.g. task release:cli VERSION=2026.11.0'
+    deps: [tool:cyclonedx-gomod]
+    requires:
+      vars: [VERSION]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/release-cli.sh '{{.VERSION}}' dist/cli
+
+  release:cli:sign:
+    desc: Keyless cosign signatures of every file in dist/cli, each as a Sigstore bundle next to it (CI only)
+    cmds:
+      # The certificate subject is release.yml at the ref the release ran from, refs/heads/main for a publish; verify
+      # with cosign verify-blob --bundle <file>.sigstore.json --certificate-identity
+      # https://github.com/arkadiuss/openfief/.github/workflows/release.yml@refs/heads/main
+      # --certificate-oidc-issuer https://token.actions.githubusercontent.com <file>.
+      - |
+        set -e
+        for f in dist/cli/openfief-*; do
+          case "$f" in *.sigstore.json) continue ;; esac
+          cosign sign-blob --yes --bundle "$f.sigstore.json" "$f"
+        done
+
   release:assets:
     desc: Package the CRDs and bootstrap install from deploy/, and the docs site as of this version, into dist/
     requires:
@@ -623,17 +664,26 @@ tasks:
       - tar -czf "dist/openfief-docs-{{.VERSION}}.tar.gz" -C site/public .
 
   release:publish:
-    desc: Tag the release and, for stable, publish the GitHub release (CI only, after the dry run)
+    desc: 'Tag the release commit, publish the GitHub release (a pre-release with only the signed CLI for a beta) and open the pull request that brings the catalog to main (CI only, after the dry run)'
     requires:
       vars: [CHANNEL, VERSION]
     cmds:
       - task: release:check
       - task: release:assets
       - bash scripts/release-notes.sh '{{.VERSION}}' >dist/release-notes.md
+      # HEAD is the release commit: main plus the catalog of this release's signed plugin digests (D-88).
       - gh api 'repos/{owner}/{repo}/git/refs' -f ref='refs/tags/{{.VERSION}}' -f sha="$(git rev-parse HEAD)" >/dev/null
       - |
-        if [ '{{.CHANNEL}}' != stable ]; then echo "beta {{.VERSION}}: tagged, no GitHub release"; exit 0; fi
-        gh release create '{{.VERSION}}' --verify-tag --title '{{.VERSION}}' --notes-file dist/release-notes.md $(find dist -name '*.tar.gz')
+        set -e
+        cli="$(find dist/cli -type f | sort)"
+        if [ '{{.CHANNEL}}' = stable ]; then
+          gh release create '{{.VERSION}}' --verify-tag --title '{{.VERSION}}' --notes-file dist/release-notes.md $(find dist -maxdepth 1 -name '*.tar.gz') $cli
+        else
+          gh release create '{{.VERSION}}' --verify-tag --prerelease --title '{{.VERSION}}' --notes-file dist/release-notes.md $cli
+        fi
+      - >-
+        gh pr create --base main --head 'release/{{.VERSION}}' --title 'chore(release): catalog the first-party plugins of {{.VERSION}}'
+        --body 'Adds the plugin digests release {{.VERSION}} signed to the catalog (D-88), as tagged in {{.VERSION}}.'
 
   docs:check:
     desc: ID checks for the design documents

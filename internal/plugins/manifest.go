@@ -47,11 +47,18 @@ func (d DataTier) valid() bool {
 }
 
 // SecretMount is a Kubernetes Secret, in the openfief namespace, that a plugin
-// asks to have mounted read-only at MountPath.
+// asks to have mounted read-only at MountPath. The manifest names it by its
+// Role, such as "flex-token"; each instance mounts its own Secret,
+// SecretName(instance, role), so two instances of one image never share one
+// (D-89).
 type SecretMount struct {
-	Name      string
+	Role      string
 	MountPath string
 }
+
+// SecretName is the name of the Secret an instance mounts for a role:
+// "<instance>-<role>" (D-89).
+func SecretName(instance, role string) string { return instance + "-" + role }
 
 // ReservedMountPath is where Kubernetes and OpenFief put service account
 // tokens; no Secret may be mounted at, above or below it.
@@ -71,6 +78,13 @@ type Manifest struct {
 	// BrowserPath is the path prefix the plugin serves to browsers through
 	// the core, such as "/"; empty when it serves no browser.
 	BrowserPath string
+	// EgressFromConfig names top-level config fields whose value, an https
+	// URL, gives a host the plugin reaches through the egress proxy instead
+	// of a fixed one (D-75).
+	EgressFromConfig []string
+	// ClusterService, when not nil, asks for one in-cluster service that the
+	// owner picks at install and the plugin reaches directly (D-74).
+	ClusterService *ClusterServiceRequest
 }
 
 // Validate returns every problem in m, each a *FieldError, joined; or nil.
@@ -84,28 +98,12 @@ func (m *Manifest) Validate() error {
 	errs = append(errs, validateSecretMounts(m.Secrets)...)
 	errs = append(errs, validateDataTiers(m.DataTiers)...)
 	errs = append(errs, validateManifestBrowserPath(m)...)
+	errs = append(errs, validateConfigFields(m.EgressFromConfig)...)
+	errs = append(errs, m.ClusterService.validate()...)
 	if len(m.ConfigSchema) > 0 && !json.Valid(m.ConfigSchema) {
 		errs = append(errs, &FieldError{Field: "configSchema", Err: ErrInvalidJSON})
 	}
 	return errors.Join(errs...)
-}
-
-// Requested returns the permissions m asks for, sorted.
-func (m *Manifest) Requested() Permissions {
-	names := make([]string, 0, len(m.Secrets))
-	for _, s := range m.Secrets {
-		names = append(names, s.Name)
-	}
-	p := Permissions{
-		Capabilities: m.Capabilities,
-		Egress:       m.Egress,
-		Secrets:      names,
-		DataTiers:    m.DataTiers,
-	}
-	if m.BrowserPath != "" {
-		p.BrowserPaths = []string{m.BrowserPath}
-	}
-	return p.sorted()
 }
 
 func validateCapabilities(cs []Capability) []error {
@@ -149,13 +147,19 @@ func validateSecretNames(field string, names []string) []error {
 }
 
 func validateSecretMounts(ms []SecretMount) []error {
-	names := make([]string, 0, len(ms))
+	roles := make([]string, 0, len(ms))
 	paths := make([]string, 0, len(ms))
 	for _, m := range ms {
-		names = append(names, m.Name)
+		roles = append(roles, m.Role)
 		paths = append(paths, m.MountPath)
 	}
-	errs := validateSecretNames("secrets", names)
+	var errs []error
+	for i, r := range roles {
+		if validateLabel(r) != nil {
+			errs = append(errs, fieldErr(indexed("secrets", i)+".role", ErrInvalidName, r))
+		}
+	}
+	errs = append(errs, duplicates("secrets", roles, func(s string) string { return s })...)
 	for i, p := range paths {
 		if !validMountPath(p) {
 			errs = append(errs, fieldErr(indexed("secrets", i)+".mountPath", ErrInvalidMountPath, p))

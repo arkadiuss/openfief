@@ -272,20 +272,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7f8494cb5c5
-  - type: constrains
-    from: REQ-plugins-ghostfolio-plugin
-    to: FACT-SUBJECT-D5E66895C31CDA5F
-    created_at: 2026-10-29T01:37:01.060Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-668426338728
-  - type: requires_property
-    from: REQ-plugins-ghostfolio-plugin
-    to: FACT-PROP-C36484CF5E5B360E
-    created_at: 2026-10-29T01:37:01.098Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-35866c466e9a
   - type: specified_by
     from: REQ-plugins-ghostfolio-plugin
     to: SCEN-plugins-ghostfolio-plugin
@@ -377,6 +363,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9c04641b949
+  - type: constrains
+    from: REQ-plugins-ghostfolio-plugin
+    to: FACT-SUBJECT-D5E66895C31CDA5F
+    created_at: 2026-10-29T15:13:10.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-668426338728
+  - type: requires_property
+    from: REQ-plugins-ghostfolio-plugin
+    to: FACT-PROP-1E88683EBC0B717C
+    created_at: 2026-10-29T15:13:10.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17a1612e8b01
+  - type: implements
+    from: SYM-pl-config-hosts
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:14:41.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-316a499dbc80
+  - type: implements
+    from: SYM-pl-config-hosts
+    to: REQ-plugins-config-field-host-https
+    created_at: 2026-10-29T15:14:41.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c2c87d5930e
+  - type: covered_by
+    from: SYM-pl-config-hosts
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:14:41.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837b2ce098bf
+  - type: implements
+    from: SYM-pl-config-hosts
+    to: REQ-plugins-config-field-host-grant
+    created_at: 2026-10-29T15:23:01.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b491b5d4c4ff
+  - type: covered_by
+    from: SYM-pl-config-hosts
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:01.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea8a58c73769
   - type: executable_for
     from: SYM-ingest-connectapi-test-account-service-round-trip
     to: TEST-ingest-connectapi-accounts

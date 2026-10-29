@@ -1,7 +1,7 @@
 {
   "capabilities": ["connector"],
   "egress": ["ndcdyn.interactivebrokers.com"],
-  "secrets": [{"name": "ibkr-flex-credentials", "mountPath": "/etc/openfief/ibkr-flex"}],
+  "secrets": [{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}],
   "configSchema": {
     "type": "object",
     "additionalProperties": false

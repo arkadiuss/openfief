@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-397cf98f9f1f
+  - type: implements
+    from: SYM-pl-upgrade-request
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:05:49.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dba348ab0e1e
+  - type: covered_by
+    from: SYM-pl-upgrade-request
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-10-29T17:05:49.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64e2c00ba337

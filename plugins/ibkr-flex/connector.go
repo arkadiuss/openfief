@@ -22,7 +22,7 @@ import (
 // institution names IBKR on every delivery.
 const institution = "ibkr"
 
-// The files of the Flex Web Service credentials Secret, as the manifest
+// The files of the instance's flex-token Secret (<instance>-flex-token, D-89), as the manifest
 // mounts it at flexMount.
 const (
 	flexMount   = "/etc/openfief/ibkr-flex"

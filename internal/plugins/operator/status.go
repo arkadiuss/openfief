@@ -1,6 +1,7 @@
 package operator
 
 import (
+	"fmt"
 	"slices"
 	"strings"
 
@@ -187,12 +188,22 @@ func describe(p *plugins.Permissions) string {
 		{"secrets", api.Secrets},
 		{"dataTiers", api.DataTiers},
 		{"browserPaths", api.BrowserPaths},
+		{"clusterServices", clusterServiceNames(api.ClusterServices)},
 	} {
 		if len(f.items) > 0 {
 			parts = append(parts, f.name+": "+strings.Join(f.items, ", "))
 		}
 	}
 	return strings.Join(parts, "; ")
+}
+
+// clusterServiceNames writes in-cluster services as namespace/service:port.
+func clusterServiceNames(refs []v1alpha1.ClusterServiceRef) []string {
+	out := make([]string, 0, len(refs))
+	for _, r := range refs {
+		out = append(out, fmt.Sprintf("%s/%s:%d", r.Namespace, r.Service, r.Port))
+	}
+	return out
 }
 
 func truncate(s string) string {

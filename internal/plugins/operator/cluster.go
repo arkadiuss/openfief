@@ -31,6 +31,39 @@ type Cluster struct {
 	Topology            plugins.Topology
 	CoreSelector        map[string]string
 	EgressProxySelector map[string]string
+	// ClusterServiceNamespace and ClusterServiceSelector select the pods
+	// behind the plugin's granted in-cluster service (D-74), whose address
+	// is Topology.ClusterService; empty when it has none.
+	ClusterServiceNamespace string
+	ClusterServiceSelector  map[string]string
+}
+
+// AddClusterService adds the plugin's granted in-cluster service to c: svc
+// is that Service, read from its namespace, and port the Service port the
+// grant names. The Service needs a ClusterIP, a non-empty selector and a TCP
+// port of that number with a numeric targetPort, because NetworkPolicy
+// matches pod ports (D-74). On an error c is unchanged.
+func (c *Cluster) AddClusterService(svc *corev1.Service, port uint16) error {
+	addr, err := netip.ParseAddr(svc.Spec.ClusterIP)
+	if err != nil {
+		return fmt.Errorf("%w: %s/%s: clusterIP %q is not an address", ErrServiceUnusable, svc.Namespace, svc.Name, svc.Spec.ClusterIP)
+	}
+	if len(svc.Spec.Selector) == 0 {
+		return fmt.Errorf("%w: %s/%s: no pod selector", ErrServiceUnusable, svc.Namespace, svc.Name)
+	}
+	i := slices.IndexFunc(svc.Spec.Ports, func(p corev1.ServicePort) bool { return p.Port == int32(port) })
+	if i < 0 {
+		return fmt.Errorf("%w: %s/%s: no port %d", ErrServiceUnusable, svc.Namespace, svc.Name, port)
+	}
+	target, err := servicePort(svc, svc.Spec.Ports[i].Name)
+	if err != nil {
+		return err
+	}
+	target.Address = addr.String()
+	c.Topology.ClusterService = &target
+	c.ClusterServiceNamespace = svc.Namespace
+	c.ClusterServiceSelector = maps.Clone(svc.Spec.Selector)
+	return nil
 }
 
 // ClusterFromServices reads a Cluster from the core's and the egress proxy's

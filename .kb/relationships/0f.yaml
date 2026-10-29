@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79413752e6d9
+  - type: verified_by
+    from: SCEN-plugins-upgrade-version-resolution
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:03:57.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-656339fab5c9
+  - type: verified_by
+    from: SCEN-plugins-upgrade-version-resolution
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:03:57.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cac9f419b69d

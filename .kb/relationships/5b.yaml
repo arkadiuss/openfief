@@ -307,34 +307,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f61946e3e69
-  - type: implements
-    from: SYM-portfolio-connectapi-sleeve-service-add-sleeve-kind
-    to: REQ-portfolio-sleeve-service
-    created_at: 2026-10-29T13:06:30.242Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e80d5c5b28c3
-  - type: covered_by
-    from: SYM-portfolio-connectapi-sleeve-service-add-sleeve-kind
-    to: TEST-portfolio-connectapi-sleeves
-    created_at: 2026-10-29T13:06:30.269Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-82d26f1de88c
-  - type: implements
-    from: SYM-portfoliov1-add-sleeve-kind-request-descriptor
-    to: REQ-portfolio-sleeve-service
-    created_at: 2026-10-29T13:34:08.434Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1b22571146b8
-  - type: covered_by
-    from: SYM-portfoliov1-add-sleeve-kind-request-descriptor
-    to: TEST-portfolio-connectapi-sleeves
-    created_at: 2026-10-29T13:34:08.465Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ed9ae748bad2
   - type: constrains
     from: REQ-views-browser-proxy-headers
     to: FACT-SUBJECT-058686C92437C05A
@@ -384,3 +356,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07c97e05abfc
+  - type: executable_for
+    from: SYM-pl-test-compile-cluster-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:17:35.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f68886952dc
+  - type: implements
+    from: SYM-portfolio-connectapi-sleeve-service-add-sleeve-kind
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:06:30.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e80d5c5b28c3
+  - type: covered_by
+    from: SYM-portfolio-connectapi-sleeve-service-add-sleeve-kind
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:06:30.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82d26f1de88c
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-request-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:34:08.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b22571146b8
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-request-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:34:08.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9ae748bad2
+  - type: executable_for
+    from: SYM-pl-test-helper-release-catalog-run
+    to: TEST-tooling-release-catalog
+    created_at: 2026-10-29T18:31:17.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b03eb1b118a0

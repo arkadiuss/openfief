@@ -321,6 +321,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ceddbe6713d7
+  - type: executable_for
+    from: SYM-pl-test-helper-in-cluster
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:17:04.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe66cc19229
   - type: implements
     from: SYM-ingest-book
     to: REQ-ingest-broker-account-resolve

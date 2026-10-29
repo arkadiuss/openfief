@@ -406,6 +406,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d2cc3f32c7ee
   - type: implements
+    from: SYM-pl-cluster-service
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:17.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85c53c2d5719
+  - type: implements
+    from: SYM-pl-cluster-service
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:16:17.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eca99def969
+  - type: covered_by
+    from: SYM-pl-cluster-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:17.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79ea90cc3d10
+  - type: implements
     from: SYM-ingest-app-broker-account-store
     to: REQ-ingest-broker-account-record
     created_at: 2026-10-29T11:46:57.136Z
@@ -447,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01156fdbe8bb
+  - type: implements
+    from: SYM-pl-list-entries
+    to: REQ-plugins-cli-ambiguous-catalog-name
+    created_at: 2026-10-29T17:04:39.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-824ea308a7db
+  - type: covered_by
+    from: SYM-pl-list-entries
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:04:39.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c98bc375d9

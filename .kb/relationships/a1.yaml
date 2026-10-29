@@ -371,6 +371,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-3d42e9d2a6c0
   - type: implements
+    from: SYM-pl-service-access-name
+    to: REQ-plugins-cli-in-cluster-service-access
+    created_at: 2026-10-29T15:20:39.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02cc338274e7
+  - type: covered_by
+    from: SYM-pl-service-access-name
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:20:39.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fac7795fcf1
+  - type: implements
     from: SYM-portfoliov1-rename-sleeve-kind-request
     to: REQ-portfolio-sleeve-service
     created_at: 2026-10-29T13:35:33.088Z

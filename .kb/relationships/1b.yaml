@@ -363,3 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c19a278b2b07
+  - type: executable_for
+    from: SYM-pl-test-prepare-upgrade
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-10-29T17:06:15.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6425a25c67da

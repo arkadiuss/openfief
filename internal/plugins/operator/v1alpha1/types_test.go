@@ -35,7 +35,7 @@ func samplePlugin() *v1alpha1.Plugin {
 			Manifest: v1alpha1.Manifest{
 				Capabilities: []string{"connector"},
 				Egress:       []string{"api.example.com"},
-				Secrets:      []v1alpha1.SecretMount{{Name: "sample-token", MountPath: "/etc/openfief/token"}},
+				Secrets:      []v1alpha1.SecretMount{{Role: "token", MountPath: "/etc/openfief/token"}},
 				DataTiers:    []string{"T1"},
 				ConfigSchema: &runtime.RawExtension{Raw: []byte(`{"type":"object"}`)},
 			},

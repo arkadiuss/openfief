@@ -69,6 +69,39 @@ spec:
                   type: string
                 type: array
                 x-kubernetes-list-type: set
+              clusterServices:
+                description: |-
+                  ClusterServices lists the in-cluster service a plugin reaches
+                  directly, outside the egress proxy (D-74): at most one.
+                items:
+                  description: |-
+                    ClusterServiceRef names a Service port in another namespace than
+                    openfief (D-74).
+                  properties:
+                    namespace:
+                      description: Namespace is the Service's namespace; never openfief.
+                      maxLength: 63
+                      pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                      type: string
+                    port:
+                      description: Port is the Service port the plugin dials.
+                      format: int32
+                      maximum: 65535
+                      minimum: 1
+                      type: integer
+                    service:
+                      description: Service is the Service's name.
+                      maxLength: 63
+                      pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                      type: string
+                  required:
+                  - namespace
+                  - port
+                  - service
+                  type: object
+                maxItems: 1
+                type: array
+                x-kubernetes-list-type: atomic
               dataTiers:
                 description: DataTiers lists data tier names.
                 items:
@@ -86,7 +119,9 @@ spec:
                 type: array
                 x-kubernetes-list-type: set
               secrets:
-                description: Secrets lists Secret names.
+                description: |-
+                  Secrets lists Secret names: <instance>-<role> for each role the
+                  plugin's manifest names (D-89).
                 items:
                   maxLength: 253
                   type: string
