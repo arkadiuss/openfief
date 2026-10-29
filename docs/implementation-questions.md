@@ -15,27 +15,7 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Needed:* a header row and two or three rows with made-up values, copied from a real export. The parser's fixtures will be synthetic.
    - *Known so far:* the author holds stocks and ETFs only at XTB (so D-24's CFD handling stays as written) and will send the headers from a real export. The export's language is not known yet. Public parsers disagree on the sheet names (R-19).
 
-## Market data and connectors
-
-22. **EODHD details.**
-    - *Today:* a market index is identified by the owner's name for it (for example "WIG20"). Euronext means EODHD's PA, AS, BR, LS, IR, MI and OL markets. An ISIN listed on several supported exchanges is reported as ambiguous until the owner sets `exchange`. A series that can't be priced is reported again on every sync.
-    - *Question:* keep these?
-
 ## Treasury bonds
-
-25. **Series terms are entered with each lot.**
-    - *Problem:* D-9 lists series, quantity and purchase date, but valuing a lot also needs the series' first-period rate, margin and early-redemption fee.
-    - *Today:* the owner enters them with each lot, and the latest entry for a series wins.
-    - *Options:* keep; or fetch a catalogue of series terms.
-
-26. **A bond lot is a deposit and a buy, not an opening lot.**
-    - *Problem:* the ledger refuses to seed an account twice, so lots entered one at a time can't all be opening lots.
-    - *Today:* each lot is a deposit of its cost plus a buy on its purchase date. An old lot therefore moves go-live, and the start of the time-weighted return, back to its date.
-    - *Question:* acceptable?
-
-27. **The bond's ISIN is derived from its series code.**
-    - *Today:* `PL` + series code + `00` + a check digit (for example `PLEDO0536000`), not the ISIN the registry assigns, which owners don't see. A future import of the bond service's own export must use the same derivation, or a series would be held twice.
-    - *Question:* acceptable?
 
 28. **Bond lot limits.**
     - *Today:* only cash purchases at 100 PLN (not exchanges at 99.90 PLN, whose discount is taxed). No way to delete a lot; entering the same series and day replaces it. "The right connector" (D-49) is the one instance bound to the account. The UI shows the form only for accounts of institution `treasury-bonds`. Entry works only in a cluster with connectors on.
