@@ -451,7 +451,10 @@ tasks:
       # cosign v3's default: a Sigstore bundle (DSSE, predicate https://sigstore.dev/cosign/sign/v1) stored as an
       # OCI referrer of the digest. The operator reads only this format (internal/plugins/cosign); its certificate
       # subject is images.yml at refs/heads/main (plugins.OpenFiefCISubject), so keep signing in that workflow.
-      - cosign sign --yes '{{.IMAGE}}'
+      # One retry: Rekor can answer 409 "equivalent entry already exists" when cosign's own upload retry follows a
+      # write that landed; a second run signs with fresh ephemeral keys, so it can't conflict with the first.
+      - >-
+        cosign sign --yes '{{.IMAGE}}' || { echo 'image:sign: retrying once'; sleep 10; cosign sign --yes '{{.IMAGE}}'; }
 
   trustroot:update:
     desc: Refresh the operator's bundled Sigstore trust root (D-56) through TUF; review the diff and commit it
