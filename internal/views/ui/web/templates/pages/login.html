@@ -21,7 +21,7 @@
   </div>
   {{if .Demo}}<p class="muted">The demo shows synthetic data, read-only, without signing in.</p>{{end}}
   {{if and (not .Passkey) (not .Unavailable)}}
-  <p class="muted">No passkey exists for this host yet. Create the first one with the one-time link that <code>core enroll-link</code> prints, or with an enrollment link from a session on another host.</p>
+  <p class="muted">No passkey exists for this host yet. Create the first one with the one-time link that <code>openfief enroll</code> prints, or with an enrollment link from a session on another host.</p>
   {{end}}
   <p class="alert alert-error" data-webauthn-error role="alert" hidden></p>
   </div>

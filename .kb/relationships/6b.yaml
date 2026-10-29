@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33f953b88e91
+  - type: implements
+    from: SYM-fd-views-browser-route-matches
+    to: REQ-views-browser-route-longest-prefix
+    created_at: 2026-10-29T12:05:49.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c5b4de6d175
+  - type: covered_by
+    from: SYM-fd-views-browser-route-matches
+    to: TEST-views-browser-routing
+    created_at: 2026-10-29T12:05:49.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd30bfe29f9e

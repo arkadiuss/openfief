@@ -50,6 +50,16 @@ spec:
           spec:
             description: Spec is the approved permissions.
             properties:
+              browserPaths:
+                description: |-
+                  BrowserPaths lists path prefixes a view plugin serves to browsers
+                  through the core (D-81).
+                items:
+                  maxLength: 256
+                  type: string
+                maxItems: 8
+                type: array
+                x-kubernetes-list-type: set
               capabilities:
                 description: Capabilities are what the plugin may act as.
                 items:

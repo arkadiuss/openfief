@@ -1,8 +1,10 @@
 // Command openfief is the owner's command line (D-46): it installs,
-// uninstalls and lists plugin instances with the owner's own kubeconfig.
+// uninstalls and lists plugin instances with the owner's own kubeconfig,
+// and gives the owner the link for the first passkey (D-80).
 //
 // Usage:
 //
+//	openfief enroll [--port 8080] [--ttl 15m]
 //	openfief plugin install <catalog-name|image@sha256:...> [--name NAME] [--config FILE]
 //	                        [--trusted-signers FILE] [--yes] [--print]
 //	openfief plugin uninstall <instance> [--yes]
@@ -14,7 +16,10 @@
 // creates the Plugin and a PluginGrant approving exactly those; --print
 // writes them as YAML for GitOps instead. uninstall deletes an instance's
 // PluginGrant, Plugin and the Secrets no other instance names (D-58).
-// Every command takes --kubeconfig and --context.
+// enroll forwards localhost:8080 to the core, the only entry point for
+// browsers (D-81), has the core issue D-60's one-time link for it by running
+// core enroll-link in its pod, prints the link and keeps forwarding until
+// Ctrl-C. Every command takes --kubeconfig and --context.
 package main
 
 import (
@@ -27,10 +32,14 @@ import (
 	"syscall"
 
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/kubernetes"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
+	identitycli "github.com/arkadiuss/openfief/internal/identity/cli"
+	identitykube "github.com/arkadiuss/openfief/internal/identity/kube"
 	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/internal/plugins/app"
 	"github.com/arkadiuss/openfief/internal/plugins/catalog"
@@ -50,7 +59,7 @@ func main() {
 	stop()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "openfief:", err)
-		if errors.Is(err, cli.ErrUsage) {
+		if errors.Is(err, cli.ErrUsage) || errors.Is(err, identitycli.ErrUsage) {
 			os.Exit(exitUsage)
 		}
 		os.Exit(1)
@@ -59,6 +68,19 @@ func main() {
 
 // run builds the real adapters and runs the command line.
 func run(ctx context.Context, args []string) error {
+	if len(args) > 0 && args[0] == "enroll" {
+		connectTo := func(kubeconfig, kubeContext string) (identitycli.Core, error) {
+			core, err := connectCore(kubeconfig, kubeContext)
+			if err != nil {
+				return nil, err
+			}
+			return core, nil
+		}
+		if err := identitycli.Run(ctx, args[1:], &identitycli.Env{Out: os.Stdout, Connect: connectTo}); err != nil {
+			return fmt.Errorf("enroll: %w", err)
+		}
+		return nil
+	}
 	env, err := newEnv()
 	if err != nil {
 		return err
@@ -128,16 +150,39 @@ func (c cluster) OwnerSigners(ctx context.Context) ([]plugins.Signer, error) {
 	return signers, nil
 }
 
-// connect builds a client from the owner's kubeconfig: the file given, or
-// $KUBECONFIG, or ~/.kube/config, and the context given or the current one.
-func connect(kubeconfig, kubeContext string) (cluster, error) {
+// restConfig reads the owner's kubeconfig: the file given, or $KUBECONFIG,
+// or ~/.kube/config, and the context given or the current one.
+func restConfig(kubeconfig, kubeContext string) (*rest.Config, error) {
 	rules := clientcmd.NewDefaultClientConfigLoadingRules()
 	rules.ExplicitPath = kubeconfig
 	cfg, err := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 		rules, &clientcmd.ConfigOverrides{CurrentContext: kubeContext},
 	).ClientConfig()
 	if err != nil {
-		return cluster{}, fmt.Errorf("kubeconfig: %w", err)
+		return nil, fmt.Errorf("kubeconfig: %w", err)
+	}
+	return cfg, nil
+}
+
+// connectCore reaches the core's pod in the openfief namespace with the
+// owner's kubeconfig, for exec and port-forward (D-80).
+func connectCore(kubeconfig, kubeContext string) (*identitykube.CoreAccess, error) {
+	cfg, err := restConfig(kubeconfig, kubeContext)
+	if err != nil {
+		return nil, err
+	}
+	clients, err := kubernetes.NewForConfig(cfg)
+	if err != nil {
+		return nil, fmt.Errorf("client: %w", err)
+	}
+	return &identitykube.CoreAccess{Config: cfg, Client: clients, Namespace: plugins.Namespace}, nil
+}
+
+// connect builds a client from the owner's kubeconfig (restConfig).
+func connect(kubeconfig, kubeContext string) (cluster, error) {
+	cfg, err := restConfig(kubeconfig, kubeContext)
+	if err != nil {
+		return cluster{}, err
 	}
 	scheme, err := newScheme()
 	if err != nil {

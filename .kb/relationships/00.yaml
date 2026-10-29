@@ -279,3 +279,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af0d6597cda0
+  - type: executable_for
+    from: SYM-fd-browserproxy-test-helper-plugin-server
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:11:30.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2791c2693238

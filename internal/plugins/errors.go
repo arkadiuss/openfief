@@ -23,6 +23,8 @@ var (
 	ErrDuplicate             = errors.New("duplicate entry")
 	ErrInvalidJSON           = errors.New("invalid JSON")
 	ErrInvalidTopology       = errors.New("invalid cluster topology")
+	ErrInvalidBrowserPath    = errors.New("invalid browser path: not / or a clean lower-case path the core does not serve itself")
+	ErrBrowserPathNeedsView  = errors.New("only a view plugin may serve browsers")
 )
 
 // Errors that are not about a single field.

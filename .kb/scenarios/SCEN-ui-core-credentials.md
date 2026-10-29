@@ -7,4 +7,4 @@ origin:
 id: SCEN-ui-core-credentials
 type: scenario
 ---
-Given the plugin's token file, when the UI calls the AuthService, then each call carries the token read from the file at that moment, also after it rotates, or, outside a cluster, the OPENFIEF_AUTH_CALLER_TOKEN token when that is set; when it calls the read API, each call carries the owner's session token as its bearer and never the plugin's token.
+Given the built-in UI running as a view plugin, when it calls the core's AuthService, ModelPortfolioService, BondLotService or StatementService, then each call carries the plugin's projected token read from its token file at that moment, also after it rotates, and nothing else: no build has a fixed token (D-84); when it calls the read API, each call carries the owner's session token as the bearer token and never the plugin's token.

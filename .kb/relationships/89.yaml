@@ -356,3 +356,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-399ad81046fe
+  - type: implements
+    from: SYM-fd-views-app-front-door-target
+    to: REQ-core-reverse-proxies-view-plugins
+    created_at: 2026-10-29T12:05:38.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca2aded208f7
+  - type: implements
+    from: SYM-fd-views-app-front-door-target
+    to: REQ-views-browser-route-longest-prefix
+    created_at: 2026-10-29T12:05:38.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0036a45b28b7
+  - type: covered_by
+    from: SYM-fd-views-app-front-door-target
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:05:38.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73a84a16b6c1
+  - type: executable_for
+    from: SYM-fd-e2e-test-helper-read-link
+    to: TEST-e2e-first-passkey
+    created_at: 2026-10-29T12:12:34.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1e1a1bccd83

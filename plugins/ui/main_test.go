@@ -16,7 +16,8 @@ import (
 
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), asks for exactly what the UI needs: the view
-// capability, no egress host, no Secret, and a schema that takes no config.
+// capability, the browser path "/" the core proxies to it (D-81), no egress
+// host, no Secret, and a schema that takes no config.
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -27,7 +28,7 @@ func TestManifest(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParseManifestLabel: %v", err)
 	}
-	want := plugins.Manifest{Capabilities: []plugins.Capability{plugins.CapabilityView}}
+	want := plugins.Manifest{Capabilities: []plugins.Capability{plugins.CapabilityView}, BrowserPath: "/"}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)
 	}

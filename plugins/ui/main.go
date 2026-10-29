@@ -1,5 +1,8 @@
 // Command ui is OpenFief's built-in UI (D-3), a view plugin: it serves the
-// owner's browser on the plugin port and talks to the core only. It calls
+// owner's browser on the plugin port, through the core, which proxies the
+// UI's browser path "/" to it (D-81), and talks to the core only. Every
+// request must carry the core's token for this instance (D-59), which the
+// SDK's verifier checks; only GET /healthz answers without one. It calls
 // the core's AuthService with its own projected ServiceAccount token
 // (D-27) and the public read API with the owner's session token (D-6). The
 // pages, handlers and static files are internal/views/ui; this binary only
@@ -96,7 +99,26 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 	if err != nil {
 		return nil, fmt.Errorf("ui: %w", err)
 	}
-	return h, nil
+	verifier, err := openfief.NewCoreVerifier()
+	if err != nil {
+		return nil, fmt.Errorf("core verifier: %w", err)
+	}
+	return requireCore(verifier, h), nil
+}
+
+// requireCore admits only requests that carry the core's token for this
+// instance (D-59): the core is the only entry point for browsers and sends
+// them here with that token (D-81). GET /healthz, which shows nothing,
+// stays open for probes.
+func requireCore(v openfief.CoreVerifier, h http.Handler) http.Handler {
+	guarded := openfief.RequireCore(v, h)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet && r.URL.Path == "/healthz" {
+			h.ServeHTTP(w, r)
+			return
+		}
+		guarded.ServeHTTP(w, r)
+	})
 }
 
 // authClient is the HTTP client for the AuthService and the owner's entry

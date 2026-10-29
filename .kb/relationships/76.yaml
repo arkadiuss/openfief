@@ -454,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f733c8c0b3ab
+  - type: executable_for
+    from: SYM-fd-views-kube-test-helper-view-plugin
+    to: TEST-views-kube-browser
+    created_at: 2026-10-29T12:11:53.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e707623acdd1

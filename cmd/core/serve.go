@@ -137,9 +137,11 @@ func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.
 }
 
 // start migrates the database, retrying until it is reachable or ctx ends,
-// wires the core and starts its revaluation workers. In cluster cl, and as
-// cfg asks, it starts the connector scheduler in the background, which
-// can't fail the start, so the read API serves whatever the cluster does.
+// wires the core and starts its revaluation workers. In cluster cl it puts
+// the front door before the read API, which proxies browsers to the view
+// plugins that serve them (D-81), and, as cfg asks, starts the connector
+// scheduler in the background, which can't fail the start, so the read API
+// serves whatever the cluster does.
 func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger, cl *cluster) (*core, error) {
 	for {
 		err := migrate(ctx, pool)
@@ -165,6 +167,11 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	if err != nil {
 		return nil, err
 	}
+	if cl != nil {
+		var proxy http.Handler
+		c.browser, proxy = newFrontDoor(cl, cfg.Sync.ServiceAccount, now, log)
+		c.api = withFrontDoor(c.api, proxy)
+	}
 	// The workers outlive ctx: shutdown stops them gracefully.
 	if err := c.river.Start(context.WithoutCancel(ctx)); err != nil {
 		return nil, fmt.Errorf("starting the revaluation workers: %w", err)
@@ -174,9 +181,17 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 }
 
 // startCluster starts, when the core runs in cluster cl, the watch of the
-// installed plugins the read API lists (D-46), and the connector scheduler
-// as cfg asks. Neither can fail the core.
+// installed plugins the read API lists (D-46), the watch of the view
+// plugins that serve browsers (D-81), and the connector scheduler as cfg
+// asks. None can fail the core.
 func startCluster(ctx context.Context, c *core, cfg *serveConfig, cl *cluster, log *slog.Logger) {
+	if c.browser != nil {
+		go func() {
+			if err := c.browser.Start(ctx); err != nil {
+				log.Warn("the view plugins could not be read; browsers get 503", "error", err)
+			}
+		}()
+	}
 	if cl != nil && c.plugins != nil {
 		go func() {
 			if err := c.plugins.Start(ctx); err != nil {

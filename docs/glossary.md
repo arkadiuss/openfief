@@ -84,10 +84,11 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Trusted signer | plugins | `plugins.Signer` | An identity whose image signatures the operator accepts: OpenFief's CI, a catalog publisher, or one the owner added. | |
 | Signer identity | plugins | `plugins.SignerIdentity` | Who made a signature: for a keyless signature, the OIDC issuer and subject in its Fulcio certificate (such as a GitHub Actions workflow at a ref); otherwise a public key. | key ID |
 | Trust policy | plugins | `plugins.TrustPolicy` | Every trusted signer plus the catalog. It decides whether a signed image is a verified plugin, unverified but signed by a trusted signer, or refused. Nothing overrides a refusal. | allow-list (that is egress) |
-| Manifest | plugins | `plugins.Manifest` | A plugin's declared capabilities, egress hosts, secrets, data tiers and config schema. | |
+| Manifest | plugins | `plugins.Manifest` | A plugin's declared capabilities, egress hosts, secrets, data tiers, config schema and, for a view plugin that serves browsers, its browser path. | |
 | Egress allow-list | plugins | `plugins.EgressAllowList` | The hostnames a plugin may reach through the egress proxy. | whitelist |
 | Capability | plugins | `plugins.Capability` | What a plugin may act as: `connector` or `view` in M0. Declared in its manifest and approved in its grant. | kind, role |
 | Egress host | plugins | `plugins.EgressHost` | One hostname and port in a manifest, grant or egress allow-list. Never an IP address or a wildcard. | domain, URL |
+| Browser path | plugins | `plugins.Manifest.BrowserPath` | The URL path prefix a view plugin serves to browsers, such as `/` for the built-in UI. Its manifest declares it and its grant approves it; the core, the only entry point for browsers, proxies it to the plugin (D-81). | route, mount point |
 | Egress decision | plugins | `app.EgressDecision` | The egress proxy's answer to one plugin's HTTP CONNECT: the plugin, the destination, whether its egress allow-list allows it, and why. Resolved addresses are checked separately, before dialing. | ACL verdict |
 | Data tier | plugins | `plugins.DataTier` | A named class of data a plugin asks to see. Only a name in M0; what each tier holds is undecided (P-33). | |
 | Image reference | plugins | `plugins.ImageRef` | A plugin's container image, pinned by digest (`repository@sha256:...`), never by tag. | image tag |

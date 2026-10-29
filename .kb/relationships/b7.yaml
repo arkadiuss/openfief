@@ -363,3 +363,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-349db9644863
+  - type: implements
+    from: SYM-fd-browserproxy-rewrite
+    to: REQ-views-browser-proxy-headers
+    created_at: 2026-10-29T12:06:40.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb3e29815217
+  - type: covered_by
+    from: SYM-fd-browserproxy-rewrite
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:06:40.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d6ba77b428d
+  - type: executable_for
+    from: SYM-fd-identity-kube-test-helper-core-pod
+    to: TEST-identity-kube-core-access
+    created_at: 2026-10-29T12:09:49.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1f038d3e1b9
+  - type: executable_for
+    from: SYM-fd-browserproxy-test-proxy-forwards
+    to: TEST-views-browser-proxy
+    created_at: 2026-10-29T12:11:36.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2d0b2a7c482

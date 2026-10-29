@@ -1,5 +1,5 @@
 ---
-title: The built-in UI runs on k3d and kind and answers its login page through Traefik
+title: The operator runs the built-in UI on k3d and kind, and the core proxies its login page, also through Traefik
 status: active
 sourceFile: test/e2e/ui_test.go
 origin:
@@ -8,4 +8,4 @@ origin:
 id: TEST-e2e-ui
 type: test
 ---
-Runs on a local k3d or kind cluster after the demo's stack is installed from this checkout's images, with the UI from the stand-in of the operator's workload in overlays/openfief. Waits with a deadline for Deployment plugin-ui to be available, failing at once on a stuck pod; on k3s, waits for Traefik and checks that / through the demo's Ingress answers 303 and /login answers 200 with the passkey button. A false pass would need another backend answering the login page, which nothing else serves.
+On kind and k3d the demo's stack is installed from this checkout's images; the operator deploys the demo's ui instance from the UI's image in the suite's registry, signed with the run's key. Waits with a deadline for the Plugin ui to be Ready with the effective browser path /, then from the client pod asks the core's Service for / and /login, which the core proxies to the UI (303 then 200 with the login page), and on k3d the same through Traefik. A pass with a broken proxy would need the core to render the UI's login page itself.

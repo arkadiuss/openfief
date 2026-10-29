@@ -21,7 +21,7 @@ A plugin is how OpenFief reaches the outside world: a connector brings data in, 
 
 **Capability.** What a plugin may act as: `connector` or `view` in M0. A plugin that ends up with no approved [capability](../glossary.md) has nothing it may do, so it does not run.
 
-**Manifest.** The [manifest](../glossary.md) is what a plugin declares: capabilities, [egress hosts](../glossary.md) (hostname and port), Secrets with the path to mount each at, [data tiers](../glossary.md), and a JSON Schema for its config. D-42 puts it in a label on the image config, so one signature covers both the code and the permissions it asks for, and it can be read from the container registry without running the image. The `Plugin` resource carries a copy, which must equal the signed label.
+**Manifest.** The [manifest](../glossary.md) is what a plugin declares: capabilities, [egress hosts](../glossary.md) (hostname and port), Secrets with the path to mount each at, [data tiers](../glossary.md), a JSON Schema for its config and, for a view plugin that serves browsers, its [browser path](../glossary.md) (D-81). D-42 puts it in a label on the image config, so one signature covers both the code and the permissions it asks for, and it can be read from the container registry without running the image. The `Plugin` resource carries a copy, which must equal the signed label.
 
 **Requested, granted and effective permissions.** The principle of least privilege (Saltzer and Schroeder, 1975) says every program should hold only the privileges its job needs. Capability-based security (Dennis and Van Horn, 1966) goes further: a permission is something you hold and can be shown, not something looked up from who you are. OpenFief splits a plugin's permissions in two (D-16). The `Plugin` resource carries what the vendor requests; the [grant](../glossary.md), a `PluginGrant` resource, carries what the [owner](../glossary.md) approved. Only what both hold is enforced: the plugin's [effective permissions](../glossary.md). A grant that approves more than requested adds nothing, and a request beyond the grant gets nothing.
 
@@ -59,6 +59,7 @@ Everything in [`internal/plugins`](../../internal/plugins/) is pure: no I/O, no 
 | [manifest_label.go](../../internal/plugins/manifest_label.go) | `ManifestLabel`, `ParseManifestLabel`, `Manifest.Equal` |
 | [install.go](../../internal/plugins/install.go) | What the `openfief` CLI decides: `ResolveInstallSource` and `DefaultInstanceName` read an install argument, `PlanInstall` builds the `Plugin` and its grant, `SecretsToDelete` picks the Secrets an uninstall removes; see [Installing with the CLI](#installing-with-the-cli) |
 | [signing_keys.go](../../internal/plugins/signing_keys.go) | `SigningKeys`, `ParseSigningKeys`: the cluster's token issuer and public signing keys, checked before the operator publishes them for plugins |
+| [browser_path.go](../../internal/plugins/browser_path.go) | `CoreServesPath`, the paths the core keeps for itself, and the browser path's rules |
 | [errors.go](../../internal/plugins/errors.go) | Sentinel errors and `FieldError` |
 | [app/install.go](../../internal/plugins/app/install.go) | The CLI's use cases: `Installer.Prepare`, `Install`, `PlanUninstall`, `Uninstall`, `Instances`, and the ports `ImageInspector` and `InstanceStore` they consume |
 | [app/egress.go](../../internal/plugins/app/egress.go), [app/tokencache.go](../../internal/plugins/app/tokencache.go) | The egress proxy's use case, `app.Egress`, and its token cache, `app.CachingTokenReviewer`; see [Egress](egress.md) |
@@ -103,11 +104,12 @@ flowchart TB
 - An egress host is a canonical hostname: lower-case ASCII, at least two labels, no trailing dot, other scripts in their `xn--` form, port 443 when none is written. IP literals, wildcards and single-label names such as `core` are refused, because the proxy, not the plugin, resolves names.
 - A Secret name follows Kubernetes' rule. Its mount path is absolute and clean, isn't `/`, doesn't overlap another mount, and stays clear of `/var/run/secrets`, where tokens live.
 - A data tier is 1 to 32 letters, digits, `-` or `_`. It is only a name: what a tier holds is undecided (P-33), and nothing enforces tiers yet.
+- A browser path is `/` or a clean absolute path of lower-case letters, digits, `-`, `_` and `.`, without a trailing slash, at most 256 bytes, and never one the core serves itself (`CoreServesPath`): `/healthz`, `/readyz`, `/v1` and below it, or a first segment starting with `openfief.`, the core's Connect services. Only a manifest with the `view` capability may declare one (`ErrBrowserPathNeedsView`). A grant approves browser paths in `browserPaths`, like any other permission, and an upgrade that asks for a new one waits for approval.
 - Config and config schema must be JSON. Checking the config against its schema needs a JSON Schema library, so the operator does it (`operator.ValidateConfig`, which lets `$ref` reach only the schema itself and the standard meta-schemas, never a file or URL).
 
 **Images.** `ParseImageRef` accepts only `repository@sha256:<64 lower-case hex digits>`, with an optional registry host and port, following the OCI name grammar. A tag is refused even next to a digest, since an image named both ways is ambiguous. An `ImageRef` has unexported fields, so a parsed one is always valid.
 
-**Effective permissions.** `Effective(p, g)` keeps the capabilities, egress hosts and data tiers that appear in both. Secrets match by name and keep the mount path the manifest asks for, so a vendor can move a mount without new approval. If no requested capability is granted it returns `ErrNoCapabilityGranted`. `EffectivePermissions` also has unexported fields and copying accessors: the only way to get one is through `Effective`.
+**Effective permissions.** `Effective(p, g)` keeps the capabilities, egress hosts and data tiers that appear in both, and the manifest's browser path when the grant approves it and `view` is among the effective capabilities (`EffectivePermissions.BrowserPath`); the operator writes it to the Plugin's `status.effective.browserPaths`, where the core reads it. Secrets match by name and keep the mount path the manifest asks for, so a vendor can move a mount without new approval. If no requested capability is granted it returns `ErrNoCapabilityGranted`. `EffectivePermissions` also has unexported fields and copying accessors: the only way to get one is through `Effective`.
 
 **Compiling.** `Compile(e, topology)` is deterministic: every list is sorted, so the same input always gives the same `Workload`. It produces:
 
@@ -361,6 +363,7 @@ Implemented, fully or in the part named:
 - **D-57** No setting deploys an image the policy refuses.
 - **D-58** Uninstall deletes the grant, the `Plugin` (and so the workload and allow-list entry) and unshared Secrets, and keeps the ledger data, which the read API marks as coming from a removed instance ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-59** Only the core reaches a plugin; the SDK verifies its TokenRequest token with the keys the operator publishes.
+- **D-81** (plugins' part) A view plugin's manifest declares its browser path and the grant approves it; the effective one is in the Plugin's status, where the core reads which plugin serves which browser paths ([Built-in UI](ui.md#the-front-door)). `RenderProposal` shows it as `Browser path` when there is one.
 - **D-63** (part) Separate egress token, rebuilt into the proxy URL per request.
 - **D-5** Contracts and Go SDK licensed Apache-2.0.
 

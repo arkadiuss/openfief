@@ -395,7 +395,8 @@ tasks:
 
   e2e:
     desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images; refuses non-local clusters'
-    deps: [tool:kustomize]
+    # kibi:install brings playwright-core, with which the passkey test drives Chromium (test/e2e/passkey.mjs).
+    deps: [tool:kustomize, kibi:install]
     cmds:
       - bash scripts/assert-local-cluster.sh
       - task: e2e:cnpg
@@ -412,7 +413,7 @@ tasks:
         PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}' go test -tags e2e -count=1 -v -timeout 20m ./test/e2e/...
 
   e2e:images:
-    desc: 'Build the core, operator, egress-proxy, demo-seed, nbp-fx and ui images from this checkout (Docker), load them into the local e2e cluster, pushing nbp-fx to the suite''s registry instead, e.g. task e2e:images CLUSTER=k3d'
+    desc: 'Build the core, operator, egress-proxy, demo-seed, nbp-fx and ui images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx and ui, to the suite''s registry instead, e.g. task e2e:images CLUSTER=k3d'
     requires:
       vars: [CLUSTER]
     cmds:
@@ -699,7 +700,7 @@ tasks:
         git diff --cached --name-only | go run ./tools/docgen fresh -message site/.gen/commit-msg
 
   kibi:install:
-    desc: Install the pinned kibi packages (npm ci)
+    desc: Install the pinned npm packages, kibi and playwright-core (npm ci)
     sources: [package.json, package-lock.json]
     generates: [node_modules/.package-lock.json]
     cmds:

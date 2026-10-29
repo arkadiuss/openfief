@@ -1,5 +1,6 @@
 {
   "capabilities": ["view"],
+  "browserPath": "/",
   "configSchema": {
     "type": "object",
     "additionalProperties": false

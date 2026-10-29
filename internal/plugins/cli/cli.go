@@ -24,6 +24,7 @@ const Usage = `usage:
                           [--trusted-signers FILE] [--yes] [--print]
   openfief plugin uninstall <instance> [--yes]
   openfief plugin list
+  openfief enroll [--port 8080] [--ttl 15m]
 common flags: --kubeconfig PATH, --context NAME`
 
 // Errors of the command line.
