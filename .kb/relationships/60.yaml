@@ -342,20 +342,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7910e9c58cb
-  - type: constrains
-    from: REQ-ui-plugin-trust-badges
-    to: FACT-SUBJECT-F18D5E7C9E93400E
-    created_at: 2026-10-29T09:50:01.662Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b62e9da8f21f
-  - type: requires_property
-    from: REQ-ui-plugin-trust-badges
-    to: FACT-PROP-FCDE149EA255E333
-    created_at: 2026-10-29T09:50:01.744Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-802a32f07fe0
   - type: specified_by
     from: REQ-ui-plugin-trust-badges
     to: SCEN-ui-plugin-trust-badges
