@@ -321,3 +321,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f7b6642ecfe
+  - type: constrains
+    from: REQ-ingest-broker-account-choice
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-10-29T05:38:14.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ee96848ce7e
+  - type: requires_property
+    from: REQ-ingest-broker-account-choice
+    to: FACT-PROP-0E2A75BCF9FD50CC
+    created_at: 2026-10-29T05:38:14.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa463502ab2

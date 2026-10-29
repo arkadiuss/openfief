@@ -321,3 +321,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b04508bdf541
+  - type: constrains
+    from: REQ-portfolio-role-differs-explicit
+    to: FACT-SUBJECT-20F39635C8813292
+    created_at: 2026-10-29T05:35:53.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c10f6bee3db7
+  - type: requires_property
+    from: REQ-portfolio-role-differs-explicit
+    to: FACT-PROP-5E3F2A7DF1348F12
+    created_at: 2026-10-29T05:35:53.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2732efd962e8

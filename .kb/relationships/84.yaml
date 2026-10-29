@@ -370,3 +370,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-878be048bf17
+  - type: constrains
+    from: REQ-identity-no-preinstalled-token
+    to: FACT-SUBJECT-1FFB20E6DF879F3F
+    created_at: 2026-10-29T05:28:59.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29ae5cfbdf28
+  - type: requires_property
+    from: REQ-identity-no-preinstalled-token
+    to: FACT-PROP-986EC2EE28601C39
+    created_at: 2026-10-29T05:28:59.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e28c28fec1

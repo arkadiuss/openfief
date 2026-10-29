@@ -468,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14bb4be7b45b
+  - type: constrains
+    from: REQ-identity-demo-owner-passkey
+    to: FACT-SUBJECT-C2E522A1520A4F19
+    created_at: 2026-10-29T05:29:58.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1166afe0b208
+  - type: requires_property
+    from: REQ-identity-demo-owner-passkey
+    to: FACT-PROP-9F05FC6B7658E153
+    created_at: 2026-10-29T05:29:58.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8da830afb36
