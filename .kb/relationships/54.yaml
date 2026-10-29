@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ad5b2d39cb4
+  - type: implements
+    from: SYM-ui-trust-badge
+    to: REQ-ui-plugin-trust-badges
+    created_at: 2026-10-29T09:57:50.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd569fdaa762
+  - type: covered_by
+    from: SYM-ui-trust-badge
+    to: TEST-ui-design
+    created_at: 2026-10-29T09:57:50.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab3089ff7a4e

@@ -321,3 +321,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33c0fe9100c2
+  - type: executable_for
+    from: SYM-ui-test-trust-badges
+    to: TEST-ui-design
+    created_at: 2026-10-29T09:58:48.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d1f536bdbb

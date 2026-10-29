@@ -61,14 +61,14 @@ func TestOverview(t *testing.T) {
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec,
 		"Total on 2026-03-31", "1 500.00 PLN",
-		"Synthetic brokerage", "valued through 2026-03-31; revaluation pending", "1 000.00 PLN",
+		"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`, "Revaluation pending", "1 000.00 PLN",
 		`id="allocation"`, "66.7%", "33.3%",
 		`data-chart="{&#34;kind&#34;:&#34;bar&#34;`, `&#34;values&#34;:[&#34;1000.00&#34;,&#34;500.00&#34;]`,
 		`data-chart="{&#34;kind&#34;:&#34;line&#34;`, "From go-live (2026-03-30) to 2026-03-31",
-		"time-weighted return as an index, 100 on 2026-03-30", "Its value with cash on 2026-03-31 is 1",
+		"time-weighted return as an index, 100 on 2026-03-30", `Its value with cash on 2026-03-31 is <span class="mono">1`,
 		`&#34;values&#34;:[&#34;100&#34;,&#34;101.5&#34;]`,
 		"/static/vendor/chart-4.5.1.umd.min.js", "/static/app.js",
-		`href="/assertions" class="warn">1 flagged`,
+		`<a href="/assertions">1 flagged balance assertion(s)</a>`,
 	)
 	wantNoBody(t, rec, "model portfolio", "Model", "TWR: not built", "series")
 	bearers := seen(h.read, func() []string { return h.read.bearers })
@@ -132,7 +132,7 @@ func TestAccountPage(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec,
-		"Synthetic brokerage", "valued through 2026-03-31",
+		"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`,
 		"SYN (XX0000000001)", "250.00 EUR", "1 000.00 PLN", "market",
 		"12 345.67 EUR",
 		"2026-01-02", "2 000.00 EUR", "opening lot",

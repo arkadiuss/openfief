@@ -3,24 +3,27 @@
   <h2 id="plugins-title">Installed plugins</h2>
   <p class="muted">Each plugin instance, what it may act as and who signed its image. Plugins are installed, approved and removed with the <code>openfief</code> command-line tool, never here.</p>
   {{if .Unavailable}}
-  <p>The installed plugins can't be read now: the core can't reach the cluster.</p>
-  {{else}}
-  <table>
-    <thead><tr><th scope="col">Instance</th><th scope="col">Capabilities</th><th scope="col">Signature</th><th scope="col">Status</th><th scope="col">Image digest</th></tr></thead>
+  <p class="alert alert-warn">The installed plugins can't be read now: the core can't reach the cluster.</p>
+  {{else if .Plugins}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Instance</th><th scope="col">Capabilities</th><th scope="col">Trust</th><th scope="col">Status</th><th scope="col">Image digest</th></tr></thead>
     <tbody>
     {{range .Plugins}}
     <tr>
       <td>{{.Instance}}</td>
       <td>{{range $i, $c := .Capabilities}}{{if $i}}, {{end}}{{$c}}{{else}}none{{end}}{{if .RequestedCapabilities}}<br><span class="muted">requests {{range $i, $c := .RequestedCapabilities}}{{if $i}}, {{end}}{{$c}}{{end}}</span>{{end}}</td>
-      <td>{{trust .Trust}}{{if .Signer}}: {{.Signer}}{{end}}{{if .TrustReason}}<br><span class="muted">{{.TrustReason}}</span>{{end}}</td>
+      <td>{{template "trust-badge" .Trust}}<br><span class="muted">{{trust .Trust}}{{if .Signer}}: <span class="mono">{{.Signer}}</span>{{end}}</span>{{if .TrustReason}}<br><span class="muted">{{.TrustReason}}</span>{{end}}</td>
       <td>{{.Phase}}</td>
       <td><code title="{{.Image}}">{{.ImageDigest}}</code></td>
     </tr>
-    {{else}}
-    <tr><td colspan="5">No plugins installed.</td></tr>
     {{end}}
     </tbody>
-  </table>
+  </table></div>
+  {{else}}
+  <div class="state">{{template "kasztan" "asleep"}}<div>
+    <p class="state-title">No plugins installed.</p>
+    <p class="muted">Install one with <code>openfief plugin install</code>; it appears here once the operator has checked its image.</p>
+  </div></div>
   {{end}}
 </section>
 {{end}}

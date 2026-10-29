@@ -280,11 +280,11 @@ func TestCrossOriginRefused(t *testing.T) {
 func TestSecurityHeaders(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	for _, path := range []string{"/login", "/static/app.js"} {
+	for _, path := range []string{"/login", "/static/app.js", "/static/design/tokens.css"} {
 		rec := h.serve(t, request(http.MethodGet, path, ""))
 		wantStatus(t, rec, http.StatusOK)
 		csp := rec.Header().Get("Content-Security-Policy")
-		for _, d := range []string{"default-src 'none'", "script-src 'self'", "style-src 'self'", "frame-ancestors 'none'"} {
+		for _, d := range []string{"default-src 'none'", "script-src 'self'", "style-src 'self'", "font-src 'self'", "img-src 'self'", "frame-ancestors 'none'"} {
 			if !strings.Contains(csp, d) {
 				t.Errorf("%s: CSP %q lacks %q", path, csp, d)
 			}

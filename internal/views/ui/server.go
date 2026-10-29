@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/arkadiuss/openfief/design"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
@@ -15,10 +16,10 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
-// contentSecurityPolicy lets the page load scripts, styles, images and
-// fetches from the UI itself only, nothing inline and nothing from another
-// host; no page may frame it, and forms post only to it.
-const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; " +
+// contentSecurityPolicy lets the page load scripts, styles, fonts, images
+// and fetches from the UI itself only, nothing inline and nothing from
+// another host; no page may frame it, and forms post only to it.
+const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; " +
 	"connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
 
 // hstsValue is the Strict-Transport-Security header on HTTPS origins.
@@ -96,7 +97,8 @@ func New(cfg *Config) (http.Handler, error) {
 // routes maps every path to its handler.
 func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.Handle("GET /static/", staticFiles(static))
+	mux.Handle("GET /static/", staticFiles("/static/", static))
+	mux.Handle("GET /static/design/", staticFiles("/static/design/", design.Files))
 	mux.HandleFunc("GET /healthz", healthz)
 	mux.HandleFunc("GET /login", s.loginPage)
 	mux.HandleFunc("POST /login/passkey/begin", s.loginBegin)
@@ -124,10 +126,11 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	return mux
 }
 
-// staticFiles serves the embedded scripts and styles. They change only with
-// the image, so browsers may keep them for an hour.
-func staticFiles(static fs.FS) http.Handler {
-	files := http.StripPrefix("/static/", http.FileServerFS(static))
+// staticFiles serves embedded files under prefix: the UI's scripts and
+// stylesheet, and the design system's tokens, fonts, marks and Kasztan.
+// They change only with the image, so browsers may keep them for an hour.
+func staticFiles(prefix string, static fs.FS) http.Handler {
+	files := http.StripPrefix(prefix, http.FileServerFS(static))
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "public, max-age=3600")
 		files.ServeHTTP(w, r)

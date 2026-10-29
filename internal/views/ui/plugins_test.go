@@ -19,8 +19,8 @@ func TestPluginsPage(t *testing.T) {
 			rec := h.serve(t, withSession(request(http.MethodGet, "/plugins", ""), token))
 			wantStatus(t, rec, http.StatusOK)
 			wantBody(t, rec, `href="/plugins"`, "Installed plugins",
-				"ibkr-main", "connector", "Signed by OpenFief", "openfief-ci", "Running", "sha256:a1a1",
-				"ui-local", "requests view", "Refused", "UntrustedSigner", "SignatureNotVerified")
+				"ibkr-main", "connector", "Unreviewed", "Signed by OpenFief", "openfief-ci", "Running", "sha256:a1a1",
+				"ui-local", "requests view", "Blocked", "Refused", "UntrustedSigner", "SignatureNotVerified")
 			if forms := strings.Count(rec.Body.String(), "<form"); forms != 1 {
 				t.Errorf("%d forms on the plugins page, want only sign-out", forms)
 			}
@@ -84,7 +84,7 @@ func TestTransactionsMarkRemovedInstance(t *testing.T) {
 	} {
 		rec := h.serve(t, withSession(r, readSession))
 		wantStatus(t, rec, http.StatusOK)
-		wantBody(t, rec, "synthetic", "ibkr-old", `class="removed"`, "removed instance")
+		wantBody(t, rec, "synthetic", "ibkr-old", `class="pill pill-neutral removed"`, "removed instance")
 		wantNoBody(t, rec, "plugin:ibkr-old:ibkr")
 	}
 }

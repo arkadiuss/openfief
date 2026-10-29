@@ -9,6 +9,8 @@ COPY go.mod go.sum go.work go.work.sum ./
 RUN GOWORK=off go mod download
 COPY sdk/go/ sdk/go/
 COPY internal/ internal/
+# The design system (design/design.go embeds it): the UI serves its tokens, fonts, marks and Kasztan.
+COPY design/ design/
 COPY plugins/ plugins/
 ARG TARGETOS
 ARG TARGETARCH

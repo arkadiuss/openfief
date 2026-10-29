@@ -75,7 +75,7 @@ The pattern library, as drawn. M0 needs only the first group; the rest belong to
 **M0, tracker and built-in UI ([UI](../concepts/ui.md)):**
 
 - **Buttons.** Primary: `--accent` fill, `--on-accent` text. Secondary: 1.5 px `--accent` outline. Quiet: underlined text. Destructive: `--danger` fill. One primary per view.
-- **Status pills.** A plugin's image status (D-56): *Verified* (ok, check icon), *Signed only* (warn), *Unverified* (danger, cross icon). Valuation state (D-36): *Revaluation pending* or *running* (neutral pill with a gold dot), and *valued through* a date in monospace.
+- **Status pills.** A plugin's trust badge (D-56, D-87): *Verified* (ok, check icon), *Yours* (neutral), *Unreviewed* (warn), *Blocked* (danger, cross icon), with the exact signer under it. Valuation state (D-36): *Revaluation pending* or *running* (neutral pill with a gold dot), and *valued through* a date in monospace.
 - **Tables.** Holdings and transactions: monospace, right-aligned figures; a sunken header row; no zebra stripes. Wide tables scroll inside their own box on a phone.
 - **Inputs.** A label above every field, a 1.5 px `--border-strong` border with the 2 px input radius, a currency suffix inside amount fields, and help text under the field in `--muted`.
 - **Charts.** The allocation and value-over-time charts (D-30) use vert, then or, kasztan, a grey and the vert tint, in that order, with direct labels where they fit.
@@ -122,22 +122,23 @@ flowchart LR
   end
   site["Docs site<br/>site/assets/css/site.css"]
   ui["Built-in UI<br/>internal/views/ui"]
+  embed["design/design.go<br/>go:embed"]
   tokens -- "concatenated first" --> site
   fonts -- "served under /docs/design/" --> site
   marks --> site
   mascot --> site
-  tokens -. "not wired yet" .-> ui
-  fonts -.-> ui
-  marks -.-> ui
-  mascot -.-> ui
+  design --> embed
+  embed -- "served under /static/design/" --> ui
 ```
 
 - Hugo mounts `design/` twice ([`site/hugo.toml`](../../site/hugo.toml)): into the assets, where [`head.html`](../../site/layouts/_partials/head.html) concatenates `tokens.css` before [`site.css`](../../site/assets/css/site.css), and into the static files under `/docs/design/`, which serves the fonts, the favicon and the images on this page. So this page's images work both on GitHub and on the site.
 - The site's own stylesheet uses only semantic tokens. The Gate in its top bar is inline SVG ([`mark.html`](../../site/layouts/_partials/mark.html)) in `currentColor` with a gold square, so the content security policy needs no image source for it.
+- The built-in UI serves the same files. [`design/design.go`](../../design/design.go) is a Go package with one embedded file system holding `tokens.css`, `fonts/`, `marks/` and `mascot/` at their own paths, because Go's `embed` can't reach files outside its package's directory. The UI serves it under `/static/design/`, and every page loads `fonts.css`, then `tokens.css`, then the UI's own [`style.css`](../../internal/views/ui/web/static/style.css), which uses only semantic tokens. Nothing is copied, so there is no copy to drift; the UI's image build copies `design/` next to `internal/`, and Hugo's mounts leave `design.go` out of the site. The Gate in the UI's top bar is inline SVG, as on the site; Kasztan and the favicon are images from the same files, which the UI's content security policy allows as its own (`img-src 'self'`, `font-src 'self'`).
+- The UI's charts take their colors from the tokens at runtime: `style.css` maps the five series onto semantic tokens (`--series-1` is `--accent`, then `--highlight`, `--label`, `--border-strong` and `--accent-soft`), and the chart script reads them as computed CSS custom properties, so the charts follow light, dark and `data-theme`, and redraw when the reader's scheme changes. Tests in [`design_test.go`](../../internal/views/ui/design_test.go) fail on any color written outside `tokens.css` in the UI's templates, scripts or stylesheet, on a custom property the stylesheet uses that nothing defines, and on a page that doesn't load the design system.
 - Mermaid diagrams render in the same palette: [`docs-diagrams.mjs`](../../scripts/docs-diagrams.mjs) passes a light and a dark set of tincture-based theme variables.
 
 ## Not built yet
 
-- The built-in UI doesn't use the design system yet. Go's `embed` can't reach files outside its package's directory, so the UI needs either a small Go package in `design/` that embeds the files, or a task that copies them into the UI's static files and a check that the copy is current **(P)**. Either way, its pages take every value from `tokens.css`.
+- Direct labels on the UI's charts. Chart.js draws none without a plugin, so the value-over-time chart names its two lines in a legend, and the allocation's bars are labelled on their axis.
 - The agent surfaces above wait for their milestones.
 - Kasztan's final illustration.

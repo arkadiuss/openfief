@@ -52955,21 +52955,6 @@ symbols:
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
         target: REQ-ui-overview
-  - id: SYM-ui-valuation-state
-    title: valuationState
-    sourceFile: internal/views/ui/format.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:53:25.570Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-decision-d36-7-ui-valuation-status
-      - type: implements
-        target: REQ-ui-overview
   - id: SYM-ui-book-label
     title: bookLabel
     sourceFile: internal/views/ui/format.go
@@ -76170,3 +76155,102 @@ symbols:
         target: TEST-views-connectapi-pricechecks
       - type: implements
         target: REQ-views-price-checks
+  - id: SYM-ui-trust-badge
+    title: trustBadge
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:57:48.101Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-design
+      - type: implements
+        target: REQ-ui-plugin-trust-badges
+  - id: SYM-ui-badge-of
+    title: badgeOf
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:57:55.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-design
+      - type: implements
+        target: REQ-ui-plugin-trust-badges
+  - id: SYM-ui-balance-label
+    title: balanceLabel
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:02.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+  - id: SYM-ui-test-no-colors-outside-tokens
+    title: TestNoColorsOutsideTokens
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:09.716Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-stylesheet-uses-defined-tokens
+    title: TestStylesheetUsesDefinedTokens
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:17.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-every-page-loads-the-design-system
+    title: TestEveryPageLoadsTheDesignSystem
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:24.748Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-design-files-served
+    title: TestDesignFilesServed
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:32.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-kasztan-poses
+    title: TestKasztanPoses
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:39.235Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-trust-badges
+    title: TestTrustBadges
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:46.357Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
