@@ -1,6 +1,6 @@
 ---
 title: The core must hand a statement file the owner uploads for an account to the one connector instance bound to that account through ImportFile, and import its delivery as an upload batch confined to that account.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-49
 tags:
   - strict-modeling

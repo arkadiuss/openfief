@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc03fe906051
+  - type: constrains
+    from: REQ-ingest-cross-check-prices-declared-only
+    to: FACT-SUBJECT-4022BDCF8FBBCB20
+    created_at: 2026-10-29T10:54:59.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15a039a2685f
+  - type: requires_property
+    from: REQ-ingest-cross-check-prices-declared-only
+    to: FACT-PROP-0970C3AF0387F3E2
+    created_at: 2026-10-29T10:54:59.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9198a3ce507

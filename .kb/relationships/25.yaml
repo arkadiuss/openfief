@@ -419,3 +419,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e16b465169f
+  - type: constrains
+    from: REQ-valuation-price-check-acknowledge
+    to: FACT-SUBJECT-ECF86A4CFE17F2A3
+    created_at: 2026-10-29T10:55:41.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf583c4dc8f7
+  - type: requires_property
+    from: REQ-valuation-price-check-acknowledge
+    to: FACT-PROP-0A0C9389867A5CA3
+    created_at: 2026-10-29T10:55:41.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba70eaf16a0c

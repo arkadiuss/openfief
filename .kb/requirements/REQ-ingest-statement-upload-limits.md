@@ -1,6 +1,6 @@
 ---
 title: An uploaded statement must be refused before a connector reads it when the caller is not the owner, no mode is given or the file is empty, and stopped when it passes 64 MiB; the connector gets only the cleaned last element of its name and a sniffed media type.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-49
 tags:
   - strict-modeling

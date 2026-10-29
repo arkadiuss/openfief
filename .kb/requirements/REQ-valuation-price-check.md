@@ -1,6 +1,6 @@
 ---
 title: A price check must compare a cross-check price only with the price of the same instrument, date and currency, must give the cross-check price's relative difference from that price rounded half-even to six decimal places, and must be flagged exactly when the absolute difference exceeds the threshold times the price.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-22
 tags:
   - strict-modeling

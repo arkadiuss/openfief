@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-786cda8e650c
+  - type: constrains
+    from: REQ-valuation-price-check-currency-mismatch
+    to: FACT-SUBJECT-ECF86A4CFE17F2A3
+    created_at: 2026-10-29T10:54:08.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ffb53670682
+  - type: requires_property
+    from: REQ-valuation-price-check-currency-mismatch
+    to: FACT-PROP-F40CC84A7CDBA83E
+    created_at: 2026-10-29T10:54:08.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e82db028b40c
