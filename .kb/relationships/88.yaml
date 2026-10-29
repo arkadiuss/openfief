@@ -384,3 +384,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2cca8465cd09
+  - type: implements
+    from: SYM-views-ghostfolio-read-record
+    to: REQ-views-ghostfolio-read-record
+    created_at: 2026-10-29T00:59:29.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dc03b6f776e
+  - type: covered_by
+    from: SYM-views-ghostfolio-read-record
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T00:59:29.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96daadc27f2c
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-make-plan
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T01:04:32.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd2cb14ac774
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-bond-valuation
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:08:59.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b7992bda397
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-bond-valuation
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:08:59.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2334b69c397a

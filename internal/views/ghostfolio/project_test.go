@@ -1,0 +1,233 @@
+package ghostfolio_test
+
+import (
+	"strings"
+	"testing"
+
+	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
+
+	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/ledger"
+	"github.com/arkadiuss/openfief/internal/views/ghostfolio"
+)
+
+// TestDerivedUUIDs pins the UUIDs the view derives: an owned account's from
+// the instance and the account, a bond's from its series code, a fee
+// asset's from its currency (D-64). They are UUID version 5 in OpenFief's
+// namespace, checked against Python's uuid.uuid5, and must never change: a
+// new UUID would orphan every owned account and asset.
+func TestDerivedUUIDs(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name, got, want string
+	}{
+		{"owned account", ghostfolio.AccountUUID("ghostfolio", "acct-ibkr"), "a013b834-4bd6-5aaf-9784-769143502838"},
+		{"bond series", ghostfolio.BondSymbol("EDO0536"), "0d538789-f518-5dd1-974c-225e8926cc32"},
+		{"fee asset", ghostfolio.FeeSymbol(cur(t, "PLN")), "2cfb82e0-7096-5770-a0dc-e2f2d0d6cd2c"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if tt.got != tt.want {
+				t.Errorf("got %s, want %s", tt.got, tt.want)
+			}
+		})
+	}
+	if ghostfolio.AccountUUID("other", "acct-ibkr") == ghostfolio.AccountUUID("ghostfolio", "acct-ibkr") {
+		t.Error("two instances share an owned account")
+	}
+}
+
+// TestProject checks how each transaction kind becomes activities (D-4,
+// D-64), on one account with synthetic instruments.
+func TestProject(t *testing.T) {
+	t.Parallel()
+	must := mustTx(t)
+	etf, other, bond := instrument(t, isinIE, "ETF1"), instrument(t, isinXS, "ETF2"), instrument(t, isinPL, "EDO0136")
+	zero := money(t, "0", "USD")
+	bondSym, feeEUR, feePLN := ghostfolio.BondSymbol("EDO0136"), ghostfolio.FeeSymbol(cur(t, "EUR")), ghostfolio.FeeSymbol(cur(t, "PLN"))
+	tests := []struct {
+		name         string
+		txs          []ledger.Transaction
+		vals         []ghostfolio.Valuation
+		want         []ghostfolio.Activity
+		wantAssets   []ghostfolio.AssetProfile
+		wantProblems []ghostfolio.Problem
+	}{
+		{
+			name: "a buy with a fee in its currency",
+			txs:  []ledger.Transaction{must(ledger.NewBuy(header(t, "a1", "b1", "2025-01-03"), etf, qty(t, "3"), money(t, "1261.50", "USD"), money(t, "1.25", "USD")))},
+			want: []ghostfolio.Activity{activity(t, "a1", "b1", ghostfolio.TypeBuy, "2025-01-03", "USD", yahoo, "ETF1.L", "3", "420.5", "1.25")},
+		},
+		{
+			name: "a fee in another currency becomes a FEE of its own",
+			txs:  []ledger.Transaction{must(ledger.NewBuy(header(t, "a1", "b2", "2025-01-03"), etf, qty(t, "2"), money(t, "100", "USD"), money(t, "2", "EUR")))},
+			want: []ghostfolio.Activity{
+				activity(t, "a1", "b2", ghostfolio.TypeBuy, "2025-01-03", "USD", yahoo, "ETF1.L", "2", "50", "0"),
+				func() ghostfolio.Activity {
+					a := activity(t, "a1", "b2", ghostfolio.TypeFee, "2025-01-03", "EUR", ghostfolio.DataSourceManual, feeEUR, "0", "0", "2")
+					a.Comment += "#fee:EUR"
+					return a
+				}(),
+			},
+			wantAssets: []ghostfolio.AssetProfile{{Symbol: feeEUR, Name: "OpenFief fees (EUR)", Currency: cur(t, "EUR")}},
+		},
+		{
+			name: "a sell at the proceeds' unit price",
+			txs:  []ledger.Transaction{must(ledger.NewSell(header(t, "a1", "s1", "2025-02-03"), etf, qty(t, "2"), money(t, "900", "USD"), money(t, "1", "USD")))},
+			want: []ghostfolio.Activity{activity(t, "a1", "s1", ghostfolio.TypeSell, "2025-02-03", "USD", yahoo, "ETF1.L", "2", "450", "1")},
+		},
+		{
+			name: "an opening lot is a buy dated when the lot was opened",
+			txs:  []ledger.Transaction{must(ledger.NewOpeningLot(header(t, "a1", "o1", "2025-01-02"), etf, qty(t, "10"), money(t, "1000", "USD"), date(t, "2023-05-04")))},
+			want: []ghostfolio.Activity{activity(t, "a1", "o1", ghostfolio.TypeBuy, "2023-05-04", "USD", yahoo, "ETF1.L", "10", "100", "0")},
+		},
+		{
+			name: "a dividend of quantity 1 at the gross amount, the tax withheld as its fee",
+			txs:  []ledger.Transaction{must(ledger.NewDividend(header(t, "a1", "d1", "2025-03-03"), etf, money(t, "12.50", "USD"), money(t, "1.88", "USD")))},
+			want: []ghostfolio.Activity{activity(t, "a1", "d1", ghostfolio.TypeDividend, "2025-03-03", "USD", yahoo, "ETF1.L", "1", "12.5", "1.88")},
+		},
+		{
+			name:       "a fee on its own, against the fee asset of its currency",
+			txs:        []ledger.Transaction{must(ledger.NewFee(header(t, "a1", "f1", "2025-03-04"), money(t, "5", "PLN")))},
+			want:       []ghostfolio.Activity{activity(t, "a1", "f1", ghostfolio.TypeFee, "2025-03-04", "PLN", ghostfolio.DataSourceManual, feePLN, "0", "0", "5")},
+			wantAssets: []ghostfolio.AssetProfile{{Symbol: feePLN, Name: "OpenFief fees (PLN)", Currency: cur(t, "PLN")}},
+		},
+		{
+			name: "cash movements have no activity",
+			txs: []ledger.Transaction{
+				must(ledger.NewDeposit(header(t, "a1", "c1", "2025-01-02"), money(t, "1000", "USD"))),
+				must(ledger.NewWithdrawal(header(t, "a1", "c2", "2025-01-03"), money(t, "10", "USD"))),
+				must(ledger.NewFXConversion(header(t, "a1", "c3", "2025-01-04"), money(t, "10", "USD"), money(t, "9", "EUR"), zero)),
+			},
+		},
+		{
+			name: "an instrument with no listing is a problem",
+			txs:  []ledger.Transaction{must(ledger.NewBuy(header(t, "a1", "u1", "2025-01-03"), other, qty(t, "1"), money(t, "10", "USD"), zero))},
+			wantProblems: []ghostfolio.Problem{
+				{Transaction: ledger.TransactionKey{Source: "test/a1", ExternalID: "u1"}, Reason: ghostfolio.ProblemUnlisted},
+			},
+		},
+		{
+			name: "a unit price rounded to 15 significant digits",
+			txs:  []ledger.Transaction{must(ledger.NewBuy(header(t, "a1", "r1", "2025-01-03"), etf, qty(t, "3"), money(t, "100", "USD"), zero))},
+			want: []ghostfolio.Activity{activity(t, "a1", "r1", ghostfolio.TypeBuy, "2025-01-03", "USD", yahoo, "ETF1.L", "3", "33.3333333333333", "0")},
+		},
+		{
+			name: "a bond is a MANUAL asset priced by its valuations",
+			txs: []ledger.Transaction{
+				must(ledger.NewBuy(header(t, "a1", "e1", "2025-01-02"), bond, qty(t, "10"), money(t, "1000", "PLN"), money(t, "0", "PLN"))),
+				must(ledger.NewBuy(header(t, "a1", "e2", "2025-01-04"), bond, qty(t, "10"), money(t, "1000", "PLN"), money(t, "0", "PLN"))),
+			},
+			vals: []ghostfolio.Valuation{
+				{Date: date(t, "2025-01-03"), Instrument: bond, Value: money(t, "1000.27", "PLN")},
+				{Date: date(t, "2025-01-02"), Instrument: bond, Value: money(t, "1000.00", "PLN")},
+				{Date: date(t, "2025-01-04"), Instrument: bond, Value: money(t, "2000.60", "PLN")},
+			},
+			want: []ghostfolio.Activity{
+				activity(t, "a1", "e1", ghostfolio.TypeBuy, "2025-01-02", "PLN", ghostfolio.DataSourceManual, bondSym, "10", "100", "0"),
+				activity(t, "a1", "e2", ghostfolio.TypeBuy, "2025-01-04", "PLN", ghostfolio.DataSourceManual, bondSym, "10", "100", "0"),
+			},
+			wantAssets: []ghostfolio.AssetProfile{{
+				Symbol: bondSym, Name: "EDO0136", ISIN: isinPL, Currency: cur(t, "PLN"), AssetClass: "FIXED_INCOME", AssetSubClass: "BOND",
+				MarketData: []ghostfolio.Price{
+					{Date: date(t, "2025-01-02"), Price: dec(t, "100")},
+					{Date: date(t, "2025-01-03"), Price: dec(t, "100.027")},
+					{Date: date(t, "2025-01-04"), Price: dec(t, "100.03")},
+				},
+			}},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			src := ghostfolio.Source{
+				Instance: instance, Currency: cur(t, "PLN"),
+				Accounts: []ghostfolio.SourceAccount{{ID: "a1", Name: "Synthetic broker", Transactions: tt.txs, Valuations: tt.vals}},
+				Listings: map[ledger.ISIN]ghostfolio.Listing{etf.ISIN: {DataSource: yahoo, Symbol: "ETF1.L"}},
+			}
+			got, problems := ghostfolio.Project(&src)
+			want := ghostfolio.Desired{
+				Accounts:   []ghostfolio.Account{{ID: ghostfolio.AccountUUID(instance, "a1"), Name: "Synthetic broker", Currency: cur(t, "PLN")}},
+				Activities: tt.want,
+				Assets:     tt.wantAssets,
+			}
+			if diff := cmp.Diff(want, got, cmpopts.EquateEmpty()); diff != "" {
+				t.Errorf("Project (-want +got):\n%s", diff)
+			}
+			if diff := cmp.Diff(tt.wantProblems, problems, cmpopts.EquateEmpty()); diff != "" {
+				t.Errorf("problems (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+// TestProjectAccounts checks that every account of the record gets its own
+// owned account, in ID order, even with no activity, and that activities
+// come in account, then comment order.
+func TestProjectAccounts(t *testing.T) {
+	t.Parallel()
+	must := mustTx(t)
+	etf := instrument(t, isinIE, "ETF1")
+	zero := money(t, "0", "EUR")
+	src := ghostfolio.Source{
+		Instance: instance, Currency: cur(t, "EUR"),
+		Accounts: []ghostfolio.SourceAccount{
+			{ID: "b", Name: "Second", Transactions: []ledger.Transaction{
+				must(ledger.NewBuy(header(t, "b", "2", "2025-01-02"), etf, qty(t, "1"), money(t, "1", "EUR"), zero)),
+				must(ledger.NewBuy(header(t, "b", "1", "2025-01-03"), etf, qty(t, "1"), money(t, "1", "EUR"), zero)),
+			}},
+			{ID: "a", Name: "First"},
+		},
+		Listings: map[ledger.ISIN]ghostfolio.Listing{etf.ISIN: {DataSource: yahoo, Symbol: "ETF1.L"}},
+	}
+	got, _ := ghostfolio.Project(&src)
+	wantAccounts := []ghostfolio.Account{
+		{ID: ghostfolio.AccountUUID(instance, "a"), Name: "First", Currency: cur(t, "EUR")},
+		{ID: ghostfolio.AccountUUID(instance, "b"), Name: "Second", Currency: cur(t, "EUR")},
+	}
+	if diff := cmp.Diff(wantAccounts, got.Accounts); diff != "" {
+		t.Errorf("accounts (-want +got):\n%s", diff)
+	}
+	comments := make([]string, 0, len(got.Activities))
+	for _, a := range got.Activities {
+		comments = append(comments, a.Comment)
+	}
+	if diff := cmp.Diff([]string{comment("b", "1"), comment("b", "2")}, comments); diff != "" {
+		t.Errorf("activity order (-want +got):\n%s", diff)
+	}
+}
+
+// TestProjectRejects checks the transactions Project leaves out: a number
+// too large for a double and a key too long for a comment.
+func TestProjectRejects(t *testing.T) {
+	t.Parallel()
+	must := mustTx(t)
+	etf := instrument(t, isinIE, "ETF1")
+	zero := money(t, "0", "USD")
+	huge := kernel.NewMoney(dec(t, "1234567890123456789"), cur(t, "USD"))
+	long := header(t, "a1", strings.Repeat("x", 2000), "2025-01-02")
+	tests := []struct {
+		name string
+		tx   ledger.Transaction
+		want ghostfolio.ProblemReason
+	}{
+		{"a cost of 19 digits", must(ledger.NewBuy(header(t, "a1", "h1", "2025-01-02"), etf, qty(t, "1"), huge, zero)), ghostfolio.ProblemTooLarge},
+		{"a key of 2000 characters", must(ledger.NewBuy(long, etf, qty(t, "1"), money(t, "1", "USD"), zero)), ghostfolio.ProblemCommentTooLong},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			src := ghostfolio.Source{
+				Instance: instance, Currency: cur(t, "USD"),
+				Accounts: []ghostfolio.SourceAccount{{ID: "a1", Transactions: []ledger.Transaction{tt.tx}}},
+				Listings: map[ledger.ISIN]ghostfolio.Listing{etf.ISIN: {DataSource: yahoo, Symbol: "ETF1.L"}},
+			}
+			got, problems := ghostfolio.Project(&src)
+			if len(got.Activities) != 0 || len(problems) != 1 || problems[0].Reason != tt.want {
+				t.Errorf("Project = %d activities, problems %v; want none and %s", len(got.Activities), problems, tt.want)
+			}
+		})
+	}
+}

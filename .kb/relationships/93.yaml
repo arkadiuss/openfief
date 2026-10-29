@@ -440,3 +440,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca939636bdae
+  - type: implements
+    from: SYM-views-ghostfolio-valuation-of
+    to: REQ-views-ghostfolio-read-record
+    created_at: 2026-10-29T01:00:08.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ade13c62f6d
+  - type: covered_by
+    from: SYM-views-ghostfolio-valuation-of
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:00:08.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ecd6f130133
+  - type: implements
+    from: SYM-views-ghostfolio-kind-of
+    to: REQ-views-ghostfolio-read-record
+    created_at: 2026-10-29T01:00:23.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aef477be9755
+  - type: covered_by
+    from: SYM-views-ghostfolio-kind-of
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:00:23.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de1c9a262d34

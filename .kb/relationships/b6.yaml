@@ -209,3 +209,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7515a88e4f8
+  - type: validates
+    from: TEST-core-read-tokens
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-29T01:36:13.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31aa8f0d6def

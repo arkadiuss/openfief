@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8246e9ca529
+  - type: implements
+    from: SYM-views-ghostfolio-money-of
+    to: REQ-views-ghostfolio-read-record
+    created_at: 2026-10-29T01:00:18.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2137f9af3de8
+  - type: covered_by
+    from: SYM-views-ghostfolio-money-of
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:00:18.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34f2fa788431

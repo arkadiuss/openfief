@@ -27,7 +27,7 @@ The identity context decides who may use OpenFief. An installation has exactly o
 
 **Script tokens.** D-27 gives scripts their own tokens, apart from people and plugins. A [script token](../glossary.md) is personal, scoped, expiring and read-only: the only scope is `read`, since the public API only reads (D-6). It lives at most a year; the default is 30 days. Its [secret](../glossary.md) is `ofs_`, the token's ID, `_` and 32 random bytes, of which only the SHA-256 hash is stored, so a database dump can't be replayed against the API. SHA-256 is enough without a slow password hash because the key is 256 random bits, not something a person chose. The owner creates script tokens from an owner session (author decision, auth split); `core token issue` stays as the administrator's way in when no session is at hand.
 
-**Bearer tokens on the read API.** A client sends `Authorization: Bearer <token>`, the scheme of RFC 6750: whoever holds the token may use it. The read API accepts a session of any scope or a read-scoped script token, both as the owner.
+**Bearer tokens on the read API.** A client sends `Authorization: Bearer <token>`, the scheme of RFC 6750: whoever holds the token may use it. The read API accepts a session of any scope or a read-scoped script token, both as the owner, and a view plugin's projected ServiceAccount token (audience `openfief-core`, D-27), such as the [Ghostfolio view](ghostfolio.md)'s, which reads on its own schedule with no owner at hand. The read API only reads, so a view plugin's token can only read.
 
 ## How it works
 
@@ -115,7 +115,7 @@ sequenceDiagram
 
 ### In the core
 
-`cmd/core` serves the `AuthService` at `/openfief.identity.v1.AuthService/` on the same port as the read API (8080; Service ports `http` and `connect`). In a cluster it admits a caller when a TokenReview accepts its token for audience `openfief-core`, the username is a plugin's ServiceAccount, and that Plugin resource lists `view` among its effective capabilities; accepted reviews are cached for 5 minutes, as the egress proxy does. The core's ClusterRole for TokenReviews is in `deploy/core/rbac.yaml`. Outside a cluster, where there are no ServiceAccount tokens, a local view plugin may present the token in `OPENFIEF_AUTH_CALLER_TOKEN`; without it every caller is refused. The read API's verifier is `Auth.Authenticate`. The commands are `core enroll-link [--host localhost:8080] [--ttl 15m]` and `core token issue|list|revoke`; the flags are `--auth-origin`, `--session-idle`, `--session-max` and `--demo-sessions`. See [Architecture](../architecture.md).
+`cmd/core` serves the `AuthService` at `/openfief.identity.v1.AuthService/` on the same port as the read API (8080; Service ports `http` and `connect`). In a cluster it admits a caller when a TokenReview accepts its token for audience `openfief-core`, the username is a plugin's ServiceAccount, and that Plugin resource lists `view` among its effective capabilities; accepted reviews are cached for 5 minutes, as the egress proxy does. The core's ClusterRole for TokenReviews is in `deploy/core/rbac.yaml`. Outside a cluster, where there are no ServiceAccount tokens, a local view plugin may present the token in `OPENFIEF_AUTH_CALLER_TOKEN`; without it every caller is refused. The read API's verifier, `readTokens` in [core.go](../../cmd/core/core.go), asks `Auth.Authenticate` first and, for a token it doesn't know, the same callers as the `AuthService`: a view plugin in a cluster, the `OPENFIEF_AUTH_CALLER_TOKEN` caller outside one. A token neither accepts is refused as invalid; a check that can't be made, such as a TokenReview the API server doesn't answer, fails the call as internal. The commands are `core enroll-link [--host localhost:8080] [--ttl 15m]` and `core token issue|list|revoke`; the flags are `--auth-origin`, `--session-idle`, `--session-max` and `--demo-sessions`. See [Architecture](../architecture.md).
 
 ## Decisions
 
@@ -137,10 +137,10 @@ sequenceDiagram
 - TEST-identity-auth-connectapi: callers refused, read sessions refused, and error codes over Connect.
 - TEST-identity-auth-contract: the generated client reaches the generated handler.
 - TEST-identity-kube: the core's tokens to plugins with the client-go fake clientset.
+- TEST-core-read-tokens: the read API's verifier accepts the owner's tokens and view plugins' tokens, refuses others as invalid, and fails as such when a check can't be made.
 - TEST-core-auth: under `task test:pg`, `core enroll-link`, a passkey enrollment and login over the core's HTTP server, the read API with a session and with a script token created from it, logout, and demo sessions refused without the marker or without the flag; and the caller check with a fake TokenReview.
 
 ## Not built yet
 
-- The core accepting plugins' projected ServiceAccount tokens (audience `openfief-core`) on the read API; they are accepted on the `AuthService` only.
 - Listing and revoking other sessions than the current one.
 - Scopes for script tokens other than `read`; they wait for a write API, which M0 doesn't have.

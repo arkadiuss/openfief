@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Length: 1490
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Date: Thu, 29 Oct 2026 00:38:53 GMT
+Etag: W/"5d2-wvfEgNCesffvToVkRDi7zPagRZE"
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+{"accounts":[{"comment":null,"createdAt":"2026-10-29T00:38:33.036Z","currency":"USD","id":"6f2518ca-5394-442f-9e2d-b17303fc27d7","name":"My Account","platformId":null,"updatedAt":"2026-10-29T00:38:33.036Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","platform":null,"tags":[],"balance":0,"activitiesCount":1,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":0,"allocationInPercentage":0,"balanceInBaseCurrency":0,"value":0},{"comment":null,"createdAt":"2026-10-29T00:38:53.324Z","currency":"USD","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-29T00:38:53.324Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","platform":null,"tags":[],"balance":0,"activitiesCount":3,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":0,"allocationInPercentage":0,"balanceInBaseCurrency":0,"value":0},{"comment":null,"createdAt":"2026-10-29T00:38:53.342Z","currency":"USD","id":"e9ba7ed7-cf9d-5b65-ba7e-1a064226aa56","name":"Synthetic cash","platformId":null,"updatedAt":"2026-10-29T00:38:53.342Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","platform":null,"tags":[],"balance":0,"activitiesCount":0,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":0,"allocationInPercentage":0,"balanceInBaseCurrency":0,"value":0}],"activitiesCount":4,"totalBalanceInBaseCurrency":0,"totalDividendInBaseCurrency":0,"totalInterestInBaseCurrency":0,"totalValueInBaseCurrency":0}

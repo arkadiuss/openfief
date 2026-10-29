@@ -335,3 +335,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5cfb492577e9
+  - type: implements
+    from: SYM-views-ghostfolio-plan
+    to: REQ-views-ghostfolio-reconcile
+    created_at: 2026-10-29T00:58:41.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-017072efcac4
+  - type: covered_by
+    from: SYM-views-ghostfolio-plan
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T00:58:41.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55aa1a0f6f3a
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-send
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:08:06.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-847a5e3d8623
+  - type: executable_for
+    from: SYM-plugins-ghostfolio-test-config-parse
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:38:19.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96a5e2d353c8

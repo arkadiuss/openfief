@@ -216,3 +216,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87d09c31c9a6
+  - type: implements
+    from: SYM-views-ghostfolio-projector-trade
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:57:29.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-464b163e212e
+  - type: covered_by
+    from: SYM-views-ghostfolio-projector-trade
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:57:29.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7ee2f61e8a6

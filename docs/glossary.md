@@ -63,6 +63,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Lot value | jurisdiction/pl | `pl.LotValue` | A bond lot's statutory value on a date: gross accrued value, and net-if-redeemed value after the early-redemption fee and Belka tax on interest minus the fee plus any purchase discount. | |
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
+| Owned account | views | `ghostfolio.AccountUUID` | A Ghostfolio account the Ghostfolio view created, one per account, known by the UUID derived from the view instance's name and the account's ID. The view writes only into owned accounts. Inside the Ghostfolio adapter, activity is Ghostfolio's word for what the record calls a transaction. | managed account |
 | Read API | views | `views` + `connectapi` | The public, read-only API: the `openfief.views.v1.ReadService` protobuf service, served as Connect and transcoded to REST under `/v1` (D-50). | |
 | Allocation | views | `views.Allocation` | The portfolio's value in the reporting currency on a date, split into groups by asset class, currency, institution or sleeve (D-30). | breakdown |
 | Allocation item | views | `views.AllocationItem` | One valued holding or cash balance of an account on a date: what an allocation groups. | position |

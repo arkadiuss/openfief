@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6002d2aaad47
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:05:01.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e93f232923c
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:05:01.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f33782c4432

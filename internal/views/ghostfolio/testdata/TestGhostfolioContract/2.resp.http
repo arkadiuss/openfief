@@ -1,0 +1,11 @@
+HTTP/1.1 201 Created
+Content-Length: 645
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Date: Thu, 29 Oct 2026 00:38:53 GMT
+Etag: W/"285-1sKvPKi5KRhX50Y5uN9qdMFv7TE"
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+{"activities":[{"accountId":"6f2518ca-5394-442f-9e2d-b17303fc27d7","accountUserId":"3699c05d-f0c4-489d-879a-324b3cc499d1","comment":"a fee of my own","createdAt":"2026-10-29T00:38:53.175Z","currency":"PLN","date":"2025-01-02T00:00:00.000Z","fee":3,"id":"9c6ab525-100c-4674-9519-a3bc2700997c","quantity":0,"symbolProfileId":"8d4fd1db-ceb7-4c9e-bdf6-296164c2bfcf","type":"FEE","unitPrice":0,"updatedAt":"2026-10-29T00:38:53.175Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","assetProfile":{"currency":"PLN","name":"OpenFief fees (PLN)","dataSource":"MANUAL","symbol":"2cfb82e0-7096-5770-a0dc-e2f2d0d6cd2c"},"value":0,"valueInBaseCurrency":0}]}

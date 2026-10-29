@@ -370,3 +370,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-236936f2c8d6
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-batches
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T01:04:39.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-887a1437b987

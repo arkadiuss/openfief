@@ -1,0 +1,11 @@
+HTTP/1.1 201 Created
+Content-Length: 246
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Date: Thu, 29 Oct 2026 00:38:53 GMT
+Etag: W/"f6-xVE+y0kR80eqLiVgwielPi6rX7s"
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+{"comment":null,"createdAt":"2026-10-29T00:38:53.324Z","currency":"USD","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-29T00:38:53.324Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1"}

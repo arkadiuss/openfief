@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1267434e7cde
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-add-own-activity
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:07:41.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61b278242e65

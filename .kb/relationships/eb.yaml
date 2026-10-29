@@ -230,3 +230,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7d4ccfd7496
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-check-httperror
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:10:49.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-468e921d6095

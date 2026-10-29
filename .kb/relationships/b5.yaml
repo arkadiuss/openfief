@@ -356,3 +356,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb51761cd1bd
+  - type: implements
+    from: SYM-views-ghostfolio-check-preview
+    to: REQ-views-ghostfolio-dry-run
+    created_at: 2026-10-29T00:59:10.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0757ef477c4
+  - type: covered_by
+    from: SYM-views-ghostfolio-check-preview
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T00:59:10.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9256c1b616a7
+  - type: implements
+    from: SYM-plugins-ghostfolio-new-syncer-with
+    to: REQ-plugins-ghostfolio-plugin
+    created_at: 2026-10-29T01:37:24.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f679f97867e
+  - type: covered_by
+    from: SYM-plugins-ghostfolio-new-syncer-with
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:37:24.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-099b2676f1d2

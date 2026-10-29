@@ -300,3 +300,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86747ab526b6
+  - type: constrains
+    from: REQ-views-ghostfolio-owned-accounts
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-29T00:54:43.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9e02e654de6
+  - type: requires_property
+    from: REQ-views-ghostfolio-owned-accounts
+    to: FACT-PROP-99F97A9C6365DDF8
+    created_at: 2026-10-29T00:54:43.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-675e09224091
+  - type: specified_by
+    from: REQ-views-ghostfolio-owned-accounts
+    to: SCEN-views-ghostfolio-owned-accounts
+    created_at: 2026-10-29T00:54:43.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dc715d0d541
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-remove
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:05:22.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ad329aa84f5

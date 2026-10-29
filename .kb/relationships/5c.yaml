@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-813f4bcdd919
+  - type: implements
+    from: SYM-views-ghostfolio-projector-prices
+    to: REQ-views-ghostfolio-bond-assets
+    created_at: 2026-10-29T00:57:59.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4702bb9ec4c
+  - type: covered_by
+    from: SYM-views-ghostfolio-projector-prices
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:57:59.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4739a6935260

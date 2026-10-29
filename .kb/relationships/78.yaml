@@ -419,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23bba44087be
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-add
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:05:11.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-149ab2eae455

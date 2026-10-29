@@ -377,3 +377,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f76420f04b83
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-cur
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T01:03:23.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38f3e1c173c6
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-cur
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T01:03:23.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-514cb91ccc0c
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-cur
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:03:23.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a7e02a30440
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-cur
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:03:23.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c705a0a7afd3
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-cur
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:03:23.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69a0168df65a
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-cur
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:03:23.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0c81c01302f
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-record-without-bond
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:09:04.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f90e63fe5ee4
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-record-without-bond
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:09:04.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8890936252f
+  - type: executable_for
+    from: SYM-plugins-ghostfolio-test-helper-round-trip-func-round-trip
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:38:55.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15827faed0cb

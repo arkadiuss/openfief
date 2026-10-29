@@ -286,3 +286,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45b5156b9314
+  - type: implements
+    from: SYM-views-ghostfolio-activity
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:55:31.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7d8c4f89ecb
+  - type: covered_by
+    from: SYM-views-ghostfolio-activity
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:55:31.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-760aa7771b5f
+  - type: implements
+    from: SYM-views-ghostfolio-client-import
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:01:37.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44dff1521fc1
+  - type: covered_by
+    from: SYM-views-ghostfolio-client-import
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:01:37.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef09c312f429
+  - type: implements
+    from: SYM-views-ghostfolio-client-do
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:02:20.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1eacb201ad52
+  - type: covered_by
+    from: SYM-views-ghostfolio-client-do
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:02:20.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b7ebf87b3b7

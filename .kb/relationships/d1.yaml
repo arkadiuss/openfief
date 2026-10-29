@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90266a774650
+  - type: verified_by
+    from: SCEN-views-ghostfolio-client
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T00:54:33.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-349fe7744867
+  - type: verified_by
+    from: SCEN-views-ghostfolio-client
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T00:54:33.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79425b555df2

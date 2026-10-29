@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49c28937bbf8
+  - type: verified_by
+    from: SCEN-views-ghostfolio-read-record
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T00:54:31.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd4e0e49dda6

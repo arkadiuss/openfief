@@ -307,3 +307,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4425239abb11
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-actual
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:05:31.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-431cd244dbf5

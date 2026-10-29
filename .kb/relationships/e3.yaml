@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e1922fb4af5
+  - type: implements
+    from: SYM-core-read-tokens
+    to: REQ-identity-read-api-plugins
+    created_at: 2026-10-29T01:39:39.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51f4fc9fa526
+  - type: covered_by
+    from: SYM-core-read-tokens
+    to: TEST-core-read-tokens
+    created_at: 2026-10-29T01:39:39.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-613ab98a9c29

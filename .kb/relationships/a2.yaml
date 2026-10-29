@@ -279,3 +279,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44153af56d5a
+  - type: implements
+    from: SYM-plugins-ghostfolio-new-syncer
+    to: REQ-plugins-ghostfolio-plugin
+    created_at: 2026-10-29T01:37:19.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8af635b5abd6
+  - type: implements
+    from: SYM-plugins-ghostfolio-new-syncer
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-29T01:37:19.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-846b20f9927c
+  - type: covered_by
+    from: SYM-plugins-ghostfolio-new-syncer
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:37:19.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9cabb38e6e1

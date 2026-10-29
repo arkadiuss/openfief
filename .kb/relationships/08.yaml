@@ -265,3 +265,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c5f35bc53cb
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-money
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T01:03:27.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39cf86e97085

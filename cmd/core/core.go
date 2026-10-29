@@ -89,7 +89,8 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 
 // newCore wires the core over a migrated database: the ledger with
 // valuation's import hook (D-36), the River revaluation workers, the views
-// and the read API with script tokens as its verifier (D-27). It stores
+// and the read API with sessions, script tokens and the view plugins callers
+// accepts as its verifier (readTokens, D-27). It stores
 // the built-in sleeve kinds and sleeves when cfg asks, and records the bond
 // basis, which revalues everything when it changed. Next to the read API it
 // serves the AuthService and the ModelPortfolioService (D-52) to the view
@@ -130,7 +131,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
 	}
-	api, err := connectapi.New(views, readTokens{auth: auth}, connectapi.WithLogger(log))
+	api, err := connectapi.New(views, readTokens{auth: auth, plugins: callers}, connectapi.WithLogger(log))
 	if err != nil {
 		return nil, fmt.Errorf("read API: %w", err)
 	}
@@ -142,23 +143,42 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	return &core{api: served, river: client, deps: deps}, nil
 }
 
-// readTokens is the read API's token verifier: the owner's session, of any
-// scope, or a read-scoped script token (D-27), both through
-// identityapp.Auth.Authenticate. Plugins' projected ServiceAccount tokens
-// aren't accepted yet.
-type readTokens struct {
-	auth *identityapp.Auth
+// tokenAuthenticator checks the owner's bearer tokens;
+// *identityapp.Auth implements it.
+type tokenAuthenticator interface {
+	Authenticate(ctx context.Context, token string) (identityapp.Principal, error)
 }
 
-// VerifyToken accepts a session or a read-scoped script token; an invalid
-// one fails with an error wrapping viewsapp.ErrInvalidToken.
+// readTokens is the read API's token verifier: the owner's session, of any
+// scope, or a read-scoped script token, both through
+// identityapp.Auth.Authenticate; otherwise a view plugin's projected
+// ServiceAccount token with audience openfief-core (D-27), the same callers
+// the AuthService serves. The read API only reads, so a view plugin can
+// only read.
+type readTokens struct {
+	auth    tokenAuthenticator
+	plugins identityconnect.Callers
+}
+
+// VerifyToken accepts a session, a read-scoped script token or a view
+// plugin's token; an invalid one fails with an error wrapping
+// viewsapp.ErrInvalidToken.
 func (r readTokens) VerifyToken(ctx context.Context, token string) error {
 	_, err := r.auth.Authenticate(ctx, token)
 	switch {
 	case err == nil:
 		return nil
-	case errors.Is(err, identityapp.ErrInvalidToken):
+	case !errors.Is(err, identityapp.ErrInvalidToken):
+		return fmt.Errorf("verifying a token: %w", err)
+	case r.plugins == nil:
 		return fmt.Errorf("%w: %w", viewsapp.ErrInvalidToken, err)
 	}
-	return fmt.Errorf("verifying a token: %w", err)
+	_, perr := r.plugins.VerifyCaller(ctx, token)
+	switch {
+	case perr == nil:
+		return nil
+	case errors.Is(perr, identityconnect.ErrCallerRefused):
+		return fmt.Errorf("%w: %w", viewsapp.ErrInvalidToken, err)
+	}
+	return fmt.Errorf("verifying a plugin token: %w", perr)
 }

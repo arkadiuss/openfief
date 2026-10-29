@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ebbb92e8d75
+  - type: implements
+    from: SYM-views-ghostfolio-activity-type
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:55:22.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78c9d8ee7d7b
+  - type: covered_by
+    from: SYM-views-ghostfolio-activity-type
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:55:22.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a4b9d6f0d3a

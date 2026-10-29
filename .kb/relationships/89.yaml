@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-046128878ed5
+  - type: implements
+    from: SYM-plugins-ghostfolio-raw-config
+    to: REQ-plugins-ghostfolio-plugin
+    created_at: 2026-10-29T01:37:43.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb1ff4b70434
+  - type: covered_by
+    from: SYM-plugins-ghostfolio-raw-config
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:37:43.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84f624a07ace
