@@ -3,6 +3,7 @@ package connectapi_test
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
@@ -127,7 +128,17 @@ func TestRESTModelPortfolio(t *testing.T) {
 		t.Fatalf("GET /v1/model-portfolio = %d %s", rec.Code, rec.Body)
 	}
 	loadContract(t).check(t, req, rec)
-	if !bytes.Contains(rec.Body.Bytes(), []byte(`"days":[{"date":"2026-03-03","index":"100"}]`)) {
+	// protojson varies its whitespace on purpose, so decode rather than match bytes.
+	var got struct {
+		Days []struct {
+			Date  string `json:"date"`
+			Index string `json:"index"`
+		} `json:"days"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &got); err != nil {
+		t.Fatalf("decoding %s: %v", rec.Body, err)
+	}
+	if len(got.Days) != 1 || got.Days[0].Date != "2026-03-03" || got.Days[0].Index != "100" {
 		t.Errorf("a later from restarts the line at 100: %s", rec.Body)
 	}
 }
