@@ -424,7 +424,8 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 
 ## Not built yet
 
-- **Verified plugins (D-43, D-44).** The catalog file exists but lists no plugin, so every image that runs today is unverified.
+- **One browser view (D-114).** Nothing yet refuses a second instance with a browser path: two on the same prefix both get 503 from the core, and two on different prefixes both run. D-114 has the CLI refuse the install and the operator refuse to run it.
+- **Verified plugins (D-43, D-44). The catalog file exists but lists no plugin, so every image that runs today is unverified.
 - **Packaging the CLI.** `cmd/openfief` builds with `go build ./cmd/openfief`; no release step ships the binary yet, and `plugin install` can't upgrade an installed instance (D-47 leaves upgrades to the owner's own edit).
 - **More contracts and SDKs (D-11).** A plugin serves only the connector contract. View plugins serve no contract of their own (P-9 outlines one, but it is a proposal): they are clients of the read API and of the core's services for view plugins (`AuthService`, `ModelPortfolioService`, `BondLotService`, `StatementService`), whose Go code `sdk/go/gen` carries. There is no TypeScript SDK.
 - **First-party plugins in the catalog (D-43).** `nbp-fx`, `ibkr-flex`, `eodhd`, `treasury-bonds`, `ghostfolio` and `ui` are built and signed by CI but not in the catalog, so they run as signed by a trusted signer, not verified.
