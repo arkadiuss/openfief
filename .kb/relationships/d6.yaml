@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f59528ec2310
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-cross-checks-save-cross-check-prices
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-29T05:39:39.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fad000f26cb1

@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1815abdad0a4
+  - type: implements
+    from: SYM-valuation-price-check-status-string
+    to: REQ-valuation-price-check
+    created_at: 2026-10-29T05:38:04.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-541f31b40ce3
+  - type: covered_by
+    from: SYM-valuation-price-check-status-string
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:38:04.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39d1d0c1f75d

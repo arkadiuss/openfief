@@ -72546,3 +72546,419 @@ symbols:
         target: TEST-valuation-nbp-refrate
       - type: implements
         target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-cross-check-price
+    title: CrossCheckPrice
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:38.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-cross-check-price-validate
+    title: CrossCheckPrice.Validate
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:43.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-default-price-check-threshold
+    title: DefaultPriceCheckThreshold
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:48.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-check-threshold
+    title: CheckThreshold
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:53.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-price-check-status
+    title: PriceCheckStatus
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:57.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-price-check-status-string
+    title: PriceCheckStatus.String
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:02.650Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-price-check
+    title: PriceCheck
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:07.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-check-price
+    title: CheckPrice
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:12.992Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-check-prices
+    title: CheckPrices
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:17.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-test-helper-crosscheck-price
+    title: price
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:22.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-helper-cross-check
+    title: crossCheck
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:27.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-helper-or-default
+    title: orDefault
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:32.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-cross-check-price-validate
+    title: TestCrossCheckPriceValidate
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:37.905Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-check-threshold
+    title: TestCheckThreshold
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:42.961Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-price-check-status-names
+    title: TestPriceCheckStatusNames
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:47.859Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-check-price
+    title: TestCheckPrice
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:53.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-check-prices
+    title: TestCheckPrices
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:57.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-app-cross-check-store
+    title: CrossCheckStore
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:02.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-app-cross-checks
+    title: CrossChecks
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:06.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-app-new-cross-checks
+    title: NewCrossChecks
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:12.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-app-cross-checks-threshold
+    title: CrossChecks.Threshold
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:17.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-app-cross-checks-record-cross-check-prices
+    title: CrossChecks.RecordCrossCheckPrices
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:22.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-app-cross-checks-price-checks
+    title: CrossChecks.PriceChecks
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:27.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-app-test-helper-fake-cross-checks
+    title: fakeCrossChecks
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:32.499Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-helper-fake-cross-checks-save-cross-check-prices
+    title: fakeCrossChecks.SaveCrossCheckPrices
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:37.641Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-helper-fake-cross-checks-cross-checked-prices
+    title: fakeCrossChecks.CrossCheckedPrices
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:43.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-helper-ibkr-mark
+    title: ibkrMark
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:49.433Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-new-cross-checks
+    title: TestNewCrossChecks
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:54.698Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-record-cross-check-prices
+    title: TestRecordCrossCheckPrices
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:59.566Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-price-checks
+    title: TestPriceChecks
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:04.809Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-postgres-store-save-cross-check-prices
+    title: Store.SaveCrossCheckPrices
+    sourceFile: internal/valuation/postgres/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:10.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-postgres-store-cross-checked-prices
+    title: Store.CrossCheckedPrices
+    sourceFile: internal/valuation/postgres/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:16.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-postgres-scan-cross-check-price
+    title: scanCrossCheckPrice
+    sourceFile: internal/valuation/postgres/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:21.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-postgres-test-cross-check-prices-round-trip
+    title: TestCrossCheckPricesRoundTrip
+    sourceFile: internal/valuation/postgres/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:26.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-crosscheck

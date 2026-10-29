@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bb3b49cea94
+  - type: implements
+    from: SYM-valuation-cross-check-price-validate
+    to: REQ-valuation-cross-check-prices
+    created_at: 2026-10-29T05:37:45.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a83d75d020e9
+  - type: covered_by
+    from: SYM-valuation-cross-check-price-validate
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:37:45.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3726f795d48

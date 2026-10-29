@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-778660537eb0
+  - type: implements
+    from: SYM-valuation-app-cross-checks-price-checks
+    to: REQ-valuation-price-check
+    created_at: 2026-10-29T05:39:28.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7940ba2eb87
+  - type: implements
+    from: SYM-valuation-app-cross-checks-price-checks
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T05:39:28.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0cce458d732
+  - type: covered_by
+    from: SYM-valuation-app-cross-checks-price-checks
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-29T05:39:28.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b6f238548be

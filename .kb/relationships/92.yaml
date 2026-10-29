@@ -356,3 +356,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b72403c94a4
+  - type: executable_for
+    from: SYM-valuation-test-check-prices
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:38:59.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d363d34e249

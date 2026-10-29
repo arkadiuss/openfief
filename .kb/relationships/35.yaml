@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b93ff0d68fa9
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-cross-checks-cross-checked-prices
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-29T05:39:44.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2caa435e7425

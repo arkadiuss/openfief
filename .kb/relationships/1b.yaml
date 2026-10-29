@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2b55b52448f
+  - type: implements
+    from: SYM-valuation-default-price-check-threshold
+    to: REQ-valuation-price-check-threshold
+    created_at: 2026-10-29T05:37:50.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67c9715f0e9a
+  - type: covered_by
+    from: SYM-valuation-default-price-check-threshold
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:37:50.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba9825c8f0a1
