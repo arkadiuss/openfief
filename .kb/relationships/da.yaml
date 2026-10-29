@@ -419,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3f04fb70606
+  - type: executable_for
+    from: SYM-treasurybonds-test-default-index-start
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:04:31.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa4a7f8fafdf

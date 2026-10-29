@@ -53,8 +53,8 @@ type Terms struct {
 //   - ROR and DOR take the NBP reference rate "obowiązującej w dziesiątym dniu
 //     roboczym przed pierwszym dniem miesiąca kalendarzowego, w którym
 //     rozpoczyna się okres odsetkowy" (ROR and DOR issue letters, ust. 16 and
-//     Załącznik nr 1); the caller picks that reading, since business days
-//     need the statutory holiday calendar.
+//     Załącznik nr 1); ReferenceRateDay names that day and RateInForce
+//     picks the rate in force on it.
 //
 // Sources: the issue letters linked from each series' offer page under
 // https://www.obligacjeskarbowe.pl/oferta-obligacji/ (for example list

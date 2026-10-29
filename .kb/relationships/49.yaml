@@ -230,3 +230,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6b8beecffd7
+  - type: implements
+    from: SYM-treasurybonds-month-of
+    to: REQ-treasurybonds-index-sync
+    created_at: 2026-10-29T04:03:13.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22ab7a13d94f
+  - type: implements
+    from: SYM-treasurybonds-month-of
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:03:13.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96a9fdc1f5ff
+  - type: covered_by
+    from: SYM-treasurybonds-month-of
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:03:13.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-452ecbd79eba
+  - type: implements
+    from: SYM-treasurybonds-index-sync-cpi
+    to: REQ-treasurybonds-index-sync
+    created_at: 2026-10-29T04:04:03.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16a13f2ab20
+  - type: implements
+    from: SYM-treasurybonds-index-sync-cpi
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:04:03.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baf84820019b
+  - type: covered_by
+    from: SYM-treasurybonds-index-sync-cpi
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:04:03.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ea2f7b0abdc
+  - type: implements
+    from: SYM-valuation-gus-read-response
+    to: REQ-valuation-gus-cpi
+    created_at: 2026-10-29T04:05:44.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeb75911960d
+  - type: implements
+    from: SYM-valuation-gus-read-response
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:05:44.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36556ceec62d
+  - type: covered_by
+    from: SYM-valuation-gus-read-response
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:05:44.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88408cbf2b7d

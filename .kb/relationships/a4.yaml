@@ -391,3 +391,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7124e913ee26
+  - type: executable_for
+    from: SYM-valuation-gus-test-helper-recording-client
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:06:28.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c5c9f8daae9

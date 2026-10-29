@@ -19,7 +19,8 @@ type Index int
 const (
 	// IndexCPI is CPI year on year from GUS, published for one month.
 	IndexCPI Index = iota + 1
-	// IndexReferenceRate is the NBP reference rate, in effect from a date.
+	// IndexReferenceRate is the NBP reference rate, for the month whose
+	// ROR and DOR interest periods it sets.
 	IndexReferenceRate
 )
 
@@ -42,7 +43,10 @@ func (i Index) String() string {
 type IndexReading struct {
 	Index Index
 	// Date is, for CPI, the first day of the month the reading measures and,
-	// for the reference rate, the day it takes effect.
+	// for the reference rate, the first day of the month whose interest
+	// periods it sets: the rate in force on that month's reference-rate day
+	// (pl.ReferenceRateDay). The core records each reading for the month of
+	// its date.
 	Date  kernel.Date
 	Value kernel.Decimal
 	// Source names who submitted the reading, such as a connector.

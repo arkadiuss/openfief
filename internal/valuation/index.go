@@ -23,9 +23,9 @@ const (
 	CPI IndexKind = iota + 1
 	// ReferenceRate is the NBP reference rate, keyed by the month whose
 	// interest periods it sets: the rate in force on the tenth business day
-	// before that month's first day (pl.Indices). Whoever records the
-	// reading picks that day, since business days need the statutory
-	// holiday calendar.
+	// before that month's first day (pl.Indices), which pl.ReferenceRateDay
+	// names. The treasury-bonds connector picks that rate when it records
+	// the reading.
 	ReferenceRate
 )
 

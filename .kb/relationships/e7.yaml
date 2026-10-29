@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d0864f68df7
+  - type: constrains
+    from: REQ-treasurybonds-index-sync
+    to: FACT-SUBJECT-C38DC96D03DBD013
+    created_at: 2026-10-29T03:56:51.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa59172df76b
+  - type: requires_property
+    from: REQ-treasurybonds-index-sync
+    to: FACT-PROP-53633064D96DF1D9
+    created_at: 2026-10-29T03:56:51.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c54deed8ace
+  - type: specified_by
+    from: REQ-treasurybonds-index-sync
+    to: SCEN-treasurybonds-index-sync
+    created_at: 2026-10-29T03:56:51.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a412e0f36eac

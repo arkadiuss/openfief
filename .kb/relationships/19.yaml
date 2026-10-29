@@ -293,3 +293,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd62effdf5e0
+  - type: constrains
+    from: REQ-valuation-gus-cpi
+    to: FACT-SUBJECT-C196FE4C057EB3B6
+    created_at: 2026-10-29T03:56:36.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fccd1b0cdd0
+  - type: requires_property
+    from: REQ-valuation-gus-cpi
+    to: FACT-PROP-A3D63462BE8F41FC
+    created_at: 2026-10-29T03:56:36.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91d3be46e87c
+  - type: specified_by
+    from: REQ-valuation-gus-cpi
+    to: SCEN-valuation-gus-cpi
+    created_at: 2026-10-29T03:56:36.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85210342b0d6
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-fake-cpi-cpi
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:04:51.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4676c8f0b181

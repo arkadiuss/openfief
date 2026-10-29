@@ -1,6 +1,6 @@
 // Package delivery is the connector side of the connector contract
-// (D-49): it writes a connector's mapping, prices, FX rates, index levels
-// and ingest mode as openfief.connector.v1 messages, the reverse of what the core's
+// (D-49): it writes a connector's mapping, prices, FX rates, index
+// readings, index levels and ingest mode as openfief.connector.v1 messages, the reverse of what the core's
 // internal/ingest/connectrpc reads. First-party connector plugins under
 // plugins/ use it, so their institution adapters stay in internal/ and
 // their binaries stay thin.
@@ -93,6 +93,32 @@ func Price(in ledger.Instrument, on kernel.Date, closing kernel.Money) *connecto
 // date.
 func IndexLevel(index string, on kernel.Date, level kernel.Decimal) *connectorv1.IndexLevel {
 	return &connectorv1.IndexLevel{Index: index, Date: on.String(), Level: level.String()}
+}
+
+// IndexReadings writes monthly period index readings (D-9), in order, each
+// dated on the first day of its month: for CPI the month it measures, for
+// the NBP reference rate the month whose interest periods it sets. Their
+// source is the connector's own and is not part of the contract.
+func IndexReadings(readings []valuation.IndexReading) ([]*connectorv1.IndexReading, error) {
+	out := make([]*connectorv1.IndexReading, 0, len(readings))
+	for i := range readings {
+		r := &readings[i]
+		var index connectorv1.Index
+		switch r.Kind {
+		case valuation.CPI:
+			index = connectorv1.Index_INDEX_CPI
+		case valuation.ReferenceRate:
+			index = connectorv1.Index_INDEX_REFERENCE_RATE
+		default:
+			return nil, fmt.Errorf("index_readings[%d]: %w: index %s", i, ErrUnknownValue, r.Kind)
+		}
+		first, err := kernel.NewDate(r.Year, r.Month, 1)
+		if err != nil {
+			return nil, fmt.Errorf("index_readings[%d]: %w", i, err)
+		}
+		out = append(out, &connectorv1.IndexReading{Index: index, Date: first.String(), Value: r.Value.String()})
+	}
+	return out, nil
 }
 
 // transaction writes one transaction.

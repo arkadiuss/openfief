@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3197edb9148
+  - type: implements
+    from: SYM-treasurybonds-parse-index-watermark
+    to: REQ-treasurybonds-index-sync
+    created_at: 2026-10-29T04:03:19.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb13ae7cef87
+  - type: implements
+    from: SYM-treasurybonds-parse-index-watermark
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:03:19.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de31111eab72
+  - type: covered_by
+    from: SYM-treasurybonds-parse-index-watermark
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:03:19.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a5994688c1c

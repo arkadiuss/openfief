@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"connectrpc.com/connect"
@@ -14,21 +15,35 @@ import (
 )
 
 // connector maps treasury bond lots the owner entered
-// (internal/ingest/treasurybonds) through the connector contract. It has no
-// institution to pull from, so a Sync delivers nothing and keeps its
-// watermark; it takes no files.
+// (internal/ingest/treasurybonds) through the connector contract, and its
+// Sync delivers the period index readings the bonds' later interest periods
+// need: GUS's CPI and the NBP reference rate (D-9). It takes no files.
 type connector struct {
 	connectorv1connect.UnimplementedConnectorServiceHandler
 
-	mapper treasurybonds.Mapper
-	today  func() kernel.Date
+	mapper  treasurybonds.Mapper
+	indices *treasurybonds.IndexSync
+	today   func() kernel.Date
 }
 
-// Sync delivers nothing: every lot arrives through ImportBondLots. It
-// answers so that the core's scheduled syncs of the instance succeed.
-func (c *connector) Sync(_ context.Context, req *connect.Request[connectorv1.SyncRequest]) (*connect.Response[connectorv1.SyncResponse], error) {
-	d := &connectorv1.Delivery{BatchId: req.Msg.GetBatchId(), Institution: string(treasurybonds.Institution)}
-	return connect.NewResponse(&connectorv1.SyncResponse{Delivery: d, Watermark: req.Msg.GetWatermark()}), nil
+// Sync delivers the CPI and reference-rate readings for the months after
+// the watermark, and the watermark of the last of each. A watermark this
+// connector never returned is InvalidArgument; a failed request to GUS or
+// NBP is Unavailable, so the core retries the batch.
+func (c *connector) Sync(ctx context.Context, req *connect.Request[connectorv1.SyncRequest]) (*connect.Response[connectorv1.SyncResponse], error) {
+	readings, watermark, err := c.indices.Readings(ctx, req.Msg.GetWatermark(), c.today())
+	if errors.Is(err, treasurybonds.ErrBadWatermark) {
+		return nil, status(connect.CodeInvalidArgument, err)
+	}
+	if err != nil {
+		return nil, status(connect.CodeUnavailable, fmt.Errorf("treasury-bonds: %w", err))
+	}
+	msgs, err := delivery.IndexReadings(readings)
+	if err != nil {
+		return nil, status(connect.CodeInternal, fmt.Errorf("treasury-bonds: %w", err))
+	}
+	d := &connectorv1.Delivery{BatchId: req.Msg.GetBatchId(), Institution: string(treasurybonds.Institution), IndexReadings: msgs}
+	return connect.NewResponse(&connectorv1.SyncResponse{Delivery: d, Watermark: watermark}), nil
 }
 
 // status is the Connect error with code for err.
