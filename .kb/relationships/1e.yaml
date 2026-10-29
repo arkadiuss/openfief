@@ -279,3 +279,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ad6ac668c81
+  - type: implements
+    from: SYM-views-ghostfolio-syncer-import-batch
+    to: REQ-views-ghostfolio-dry-run
+    created_at: 2026-10-29T01:03:13.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38e0dd434a68
+  - type: covered_by
+    from: SYM-views-ghostfolio-syncer-import-batch
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:03:13.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6bc7163ba9

@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55ffed4844a6
+  - type: constrains
+    from: REQ-identity-read-api-plugins
+    to: FACT-SUBJECT-3539E4EDEC067C24
+    created_at: 2026-10-29T01:36:20.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afa491ef0354
+  - type: requires_property
+    from: REQ-identity-read-api-plugins
+    to: FACT-PROP-95AA4D2FBA48DB6B
+    created_at: 2026-10-29T01:36:20.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30ef04c2f463
+  - type: specified_by
+    from: REQ-identity-read-api-plugins
+    to: SCEN-identity-read-api-plugins
+    created_at: 2026-10-29T01:36:20.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b13dd2770d05

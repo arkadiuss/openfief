@@ -209,3 +209,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65f107007d0f
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-ghostfolio-import
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:06:31.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc472792654c

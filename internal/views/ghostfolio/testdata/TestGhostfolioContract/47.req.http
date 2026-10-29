@@ -1,0 +1,6 @@
+GET http://127.0.0.1:3333/api/v1/activities?accounts=6f2518ca-5394-442f-9e2d-b17303fc27d7 HTTP/1.1
+Host: 127.0.0.1:3333
+User-Agent: Go-http-client/1.1
+Accept: application/json
+Authorization: SANITIZED
+

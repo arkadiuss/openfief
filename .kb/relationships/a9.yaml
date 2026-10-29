@@ -251,3 +251,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05885a145e23
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-edit-buy
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:07:56.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2373d9de8ea

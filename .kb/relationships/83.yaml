@@ -300,3 +300,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-875096e639e3
+  - type: constrains
+    from: REQ-views-ghostfolio-reconcile
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-29T00:54:58.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eed5eaa75e2c
+  - type: requires_property
+    from: REQ-views-ghostfolio-reconcile
+    to: FACT-PROP-04F58C874E3F4F64
+    created_at: 2026-10-29T00:54:58.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a1913a907de
+  - type: specified_by
+    from: REQ-views-ghostfolio-reconcile
+    to: SCEN-views-ghostfolio-reconcile
+    created_at: 2026-10-29T00:54:58.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b94aa7a22d40
+  - type: implements
+    from: SYM-views-ghostfolio-desired
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:56:48.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c5312341a3f
+  - type: covered_by
+    from: SYM-views-ghostfolio-desired
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:56:49.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43abd1377f02
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-pb-book
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:08:48.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efdae596b50e
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-pb-book
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:08:49.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f9ff29a81c4
+  - type: validates
+    from: TEST-plugins-ghostfolio-main
+    to: REQ-AUTO-4EF5BF0C2D799087
+    created_at: 2026-10-29T01:36:51.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcd7c0f6cb19
+  - type: validates
+    from: TEST-plugins-ghostfolio-main
+    to: REQ-AUTO-C6544ADAF8F5AE65
+    created_at: 2026-10-29T01:36:51.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e47671325df

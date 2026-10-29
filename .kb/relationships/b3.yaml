@@ -279,3 +279,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-011003eb8fbf
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-client-never-deletes-unfiltered
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:06:56.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f58bd929069

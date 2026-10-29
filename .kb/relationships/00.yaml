@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21f45c9ad826
+  - type: executable_for
+    from: SYM-plugins-ghostfolio-test-helper-empty-record-list-accounts
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:38:40.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df4c5eee8231

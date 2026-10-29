@@ -181,3 +181,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43c879546d81
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-project-accounts
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T01:04:15.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-099ddc51dbeb
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-record-list-accounts
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:08:16.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95688da03184
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-record-list-accounts
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:08:16.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d905f97700

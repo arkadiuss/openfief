@@ -398,3 +398,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c5ebd1452d1
+  - type: implements
+    from: SYM-views-ghostfolio-namespace
+    to: REQ-views-ghostfolio-owned-accounts
+    created_at: 2026-10-29T00:55:59.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec1f98cbd8e3
+  - type: covered_by
+    from: SYM-views-ghostfolio-namespace
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:55:59.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fc5e08a2189
+  - type: implements
+    from: SYM-views-ghostfolio-deref
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-29T01:02:30.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44dfd21d842c
+  - type: covered_by
+    from: SYM-views-ghostfolio-deref
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:02:30.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb1ebfe02ba3

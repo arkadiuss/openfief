@@ -237,3 +237,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3e53e714e9b
+  - type: validates
+    from: TEST-views-ghostfolio-plan-properties
+    to: REQ-AUTO-54773934AD125DF8
+    created_at: 2026-10-29T00:54:14.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b3a8b234458

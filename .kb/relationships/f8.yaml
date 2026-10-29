@@ -314,3 +314,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-909084f9a66a
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T01:03:58.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc2237e51b7d
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T01:03:58.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb44871e02c3
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:03:58.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c8fff269786
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:03:58.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7df0906663f1
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-29T01:03:58.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aadbc173762
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-comment
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:03:58.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95edcd2efdca

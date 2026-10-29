@@ -449,5 +449,41 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-a4e122dcab00
+      },
+    {
+        type: verified_by,
+        from: SCEN-views-ghostfolio-owned-accounts,
+        to: TEST-views-ghostfolio-project,
+        created_at: 2026-10-29T00:54:22.421Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-7a395467c84c
+      },
+    {
+        type: verified_by,
+        from: SCEN-views-ghostfolio-owned-accounts,
+        to: TEST-views-ghostfolio-plan,
+        created_at: 2026-10-29T00:54:22.490Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-a381e50738f1
+      },
+    {
+        type: verified_by,
+        from: SCEN-views-ghostfolio-owned-accounts,
+        to: TEST-views-ghostfolio-sync,
+        created_at: 2026-10-29T00:54:22.540Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-abb569f89fff
+      },
+    {
+        type: verified_by,
+        from: SCEN-views-ghostfolio-owned-accounts,
+        to: TEST-views-ghostfolio-contract,
+        created_at: 2026-10-29T00:54:22.576Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-3be3157de0c2
       }
   ]

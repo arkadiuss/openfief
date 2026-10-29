@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-835211033eff
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-rng-next
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:04:49.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-980d16d0c139

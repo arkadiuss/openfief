@@ -272,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d24a0151e6ca
+  - type: implements
+    from: SYM-views-ghostfolio-project
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:57:07.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-694ff6d4af02
+  - type: implements
+    from: SYM-views-ghostfolio-project
+    to: REQ-AUTO-122F6AEE20C6FF6D
+    created_at: 2026-10-29T00:57:07.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86a243ae97ea
+  - type: covered_by
+    from: SYM-views-ghostfolio-project
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:57:07.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5df6df02274a

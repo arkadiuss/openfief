@@ -370,3 +370,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3cde1ecc380
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-record-get-valuation-status
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:08:26.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f869c9f815e1
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-record-get-valuation-status
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:08:26.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-341c82915ba7

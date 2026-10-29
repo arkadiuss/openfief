@@ -258,3 +258,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c250fbf22492
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-synthetic-record
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:08:54.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e0659862aec
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-synthetic-record
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:08:54.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b467755aa8a7

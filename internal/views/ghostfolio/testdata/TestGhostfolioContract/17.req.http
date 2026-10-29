@@ -1,0 +1,9 @@
+PUT http://127.0.0.1:3333/api/v1/activities/ea757994-877b-4268-b0ea-f0f5d2e1d982 HTTP/1.1
+Host: 127.0.0.1:3333
+User-Agent: Go-http-client/1.1
+Content-Length: 305
+Accept: application/json
+Authorization: SANITIZED
+Content-Type: application/json
+
+{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","comment":"openfief:test/bonds/buy-1","currency":"PLN","dataSource":"MANUAL","date":"2025-01-03T00:00:00.000Z","fee":0,"id":"ea757994-877b-4268-b0ea-f0f5d2e1d982","quantity":6,"symbol":"4512a0f0-0f02-594a-8add-87da055fe65d","type":"BUY","unitPrice":100}

@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17c0c4e5f296
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-rng
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-29T01:04:45.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b71a0174046
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-session-swap-round-trip
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T01:07:26.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-622f2eabb189

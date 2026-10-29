@@ -244,3 +244,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aad17cf3cafc
+  - type: constrains
+    from: REQ-views-ghostfolio-dry-run
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-29T00:55:03.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34bbb1eab7e8
+  - type: requires_property
+    from: REQ-views-ghostfolio-dry-run
+    to: FACT-PROP-5982E3C51831A174
+    created_at: 2026-10-29T00:55:03.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7bcd796b276
+  - type: specified_by
+    from: REQ-views-ghostfolio-dry-run
+    to: SCEN-views-ghostfolio-dry-run
+    created_at: 2026-10-29T00:55:03.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6366ba947a6f
+  - type: implements
+    from: SYM-views-ghostfolio-abs
+    to: REQ-views-ghostfolio-projection
+    created_at: 2026-10-29T00:58:33.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75a5798ea58f
+  - type: covered_by
+    from: SYM-views-ghostfolio-abs
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T00:58:33.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-018db00a72fc
+  - type: implements
+    from: SYM-views-ghostfolio-book-kind-of
+    to: REQ-views-ghostfolio-read-record
+    created_at: 2026-10-29T01:00:28.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6888b2e03dc
+  - type: covered_by
+    from: SYM-views-ghostfolio-book-kind-of
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T01:00:28.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8783d409ec47
+  - type: implements
+    from: SYM-plugins-ghostfolio-main
+    to: REQ-plugins-ghostfolio-plugin
+    created_at: 2026-10-29T01:37:04.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fdfdc8677ad
+  - type: covered_by
+    from: SYM-plugins-ghostfolio-main
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:37:04.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19f39ef8f459

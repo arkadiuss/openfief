@@ -1,0 +1,9 @@
+POST http://127.0.0.1:3333/api/v1/import?dryRun=false HTTP/1.1
+Host: 127.0.0.1:3333
+User-Agent: Go-http-client/1.1
+Content-Length: 534
+Accept: application/json
+Authorization: SANITIZED
+Content-Type: application/json
+
+{"activities":[],"assetProfiles":[{"currency":"PLN","dataSource":"MANUAL","marketData":[],"name":"OpenFief fees (PLN)","symbol":"2cfb82e0-7096-5770-a0dc-e2f2d0d6cd2c"},{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","dataSource":"MANUAL","isin":"PLTEST000010","marketData":[{"date":"2025-01-02T00:00:00.000Z","marketPrice":100.41},{"date":"2025-01-03T00:00:00.000Z","marketPrice":100.45},{"date":"2025-01-06T00:00:00.000Z","marketPrice":100.53}],"name":"EDO0136","symbol":"4512a0f0-0f02-594a-8add-87da055fe65d"}]}

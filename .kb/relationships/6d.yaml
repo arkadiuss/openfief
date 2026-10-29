@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ed6cbe8ae74
+  - type: executable_for
+    from: SYM-plugins-ghostfolio-test-read-secret-file
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-10-29T01:38:24.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a36dd80601dc

@@ -321,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60b2d378423b
+  - type: verified_by
+    from: SCEN-views-ghostfolio-dry-run
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-29T00:54:30.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aa777905088
+  - type: verified_by
+    from: SCEN-views-ghostfolio-dry-run
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T00:54:30.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c24b9e9b527e
+  - type: verified_by
+    from: SCEN-views-ghostfolio-dry-run
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-29T00:54:30.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5583dd6dd400

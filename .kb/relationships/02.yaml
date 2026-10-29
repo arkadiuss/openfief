@@ -265,3 +265,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b854440816a
+  - type: implements
+    from: SYM-views-ghostfolio-read-bond-valuations
+    to: REQ-views-ghostfolio-read-record
+    created_at: 2026-10-29T00:59:39.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1996fc0ade7
+  - type: covered_by
+    from: SYM-views-ghostfolio-read-bond-valuations
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-29T00:59:39.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e37bbc984e7c

@@ -328,3 +328,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d38d2fe5351d
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-instrument
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-29T01:03:37.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7124e913ee26
