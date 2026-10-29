@@ -32,17 +32,16 @@ flowchart LR
 
 ## What a route exposes
 
-Everything the core serves on its `http` port, all of it behind authentication except what a sign-in needs:
+A route points at the core's `http` port, which serves browsers and scripts. Everything on it is behind authentication except what a sign-in needs:
 
 | Path | Served by | Needs |
 |---|---|---|
 | `/v1/...` | The read API, REST ([Read API](../concepts/read-api.md)) | A session or a script token |
 | `/openfief.views.v1.ReadService/...` | The read API, Connect | A session or a script token |
-| Other `/openfief.*` paths | The core's services for view plugins, such as sign-in | A view plugin's own token, which browsers never hold |
 | `/healthz`, `/readyz` | The core's probes | Nothing; they return no data |
 | Every other path | The view plugin whose granted browser path covers it, such as the built-in UI at `/` | A session, except the sign-in and enrollment pages |
 
-Plugins themselves are never reachable from a route: each plugin's NetworkPolicy admits the core alone (D-59), and the core proxies a browser only to a path the owner approved in that plugin's grant.
+The services only plugins call, sign-in and the owner's entries such as statement uploads, belong on the core's `connect` port, which only plugin pods may reach, so no route exposes them (D-115). Today the core still serves them on `http` too, where they answer only a view plugin's own token, which browsers never hold. Plugins themselves are never reachable from a route: each plugin's NetworkPolicy admits the core alone (D-59), and the core proxies a browser only to the one view whose browser path the owner approved (D-114).
 
 ## Passkeys need HTTPS and a known origin
 

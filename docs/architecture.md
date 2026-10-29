@@ -133,7 +133,7 @@ flowchart LR
   ui -- "your session" --> api
 ```
 
-Your browser only ever talks to the core. The core serves its own paths, the read API under `/v1` and its Connect services, and passes every other path on to the view plugin whose approved browser path covers it (D-81). The UI signs you in with a passkey through the core (D-26), then renders each page from the read API, with your session, exactly as your scripts would with a script token. [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
+Your browser only ever talks to the core. The core serves its own paths, the read API under `/v1` and its Connect services, and passes every other path on to the one view plugin with an approved browser path (D-81, D-114). Only that view ever sees your session cookie. The UI signs you in with a passkey through the core (D-26), then renders each page from the read API, with your session, exactly as your scripts would with a script token. [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
 
 ## Security boundaries
 
@@ -177,7 +177,7 @@ flowchart LR
   px -- "granted hosts only" --> internet
 ```
 
-The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/`, `egress-proxy/` and `core/` for the three workloads. The core's Service `openfief-core` has two named ports on the same container port 8080: `http` (8080), the one a route points at, serving browsers, the read API and the health endpoints, and `connect` (8081), the port the operator hands to plugins (D-49). Its NetworkPolicy admits plugin pods, and a route adds a policy admitting its proxy ([Expose OpenFief](guides/expose.md)). It lets the core reach only DNS, the database, plugin pods on their Connect port (8080) and the Kubernetes API server, as above.
+The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/`, `egress-proxy/` and `core/` for the three workloads. The core's Service `openfief-core` has two named ports on the same container port 8080: `http` (8080), the one a route points at, serving browsers, the read API and the health endpoints, and `connect` (8081), the port the operator hands to plugins (D-49). D-115 gives the plugin-only services, sign-in and the owner's entries, a container port of their own behind `connect`, so no route reaches them; today both Service ports still reach the one container port. Its NetworkPolicy admits plugin pods, and a route adds a policy admitting its proxy ([Expose OpenFief](guides/expose.md)). It lets the core reach only DNS, the database, plugin pods on their Connect port (8080) and the Kubernetes API server, as above.
 
 The core's pods mount a Kubernetes API token. Its Role ([`deploy/core/rbac.yaml`](../deploy/core/rbac.yaml)) allows only `create` on its own `serviceaccounts/token` (resourceNames `openfief-core`) and `get`, `list` and `watch` on Plugins and Services, all in the `openfief` namespace. A ClusterRole allows it `create` on `tokenreviews` alone, with which it checks the tokens view plugins present (D-82). The database URL comes from CloudNativePG's Secret `openfief-db-app`, key `uri` (D-14, D-29). Every workload's pod sets `runAsNonRoot`, so each image (`cmd/<name>/Dockerfile`) runs as a numeric user, `65532:65532`, distroless's nonroot: the kubelet refuses to start a container whose image names its user, because it can't tell that a name isn't root.
 

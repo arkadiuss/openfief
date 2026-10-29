@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0c84753ab04
+  - type: constrains
+    from: REQ-plugins-cli-refuses-second-browser-view
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-10-29T16:11:35.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab007828fe8d
+  - type: requires_property
+    from: REQ-plugins-cli-refuses-second-browser-view
+    to: FACT-PROP-36B034726F00DDCA
+    created_at: 2026-10-29T16:11:35.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d46c88a1b67
