@@ -69930,3 +69930,55 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-bond-lots
+  - id: SYM-operator-api-signature-status
+    title: SignatureStatus
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:06:16.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-signature-signer-status
+      - type: implements
+        target: REQ-plugins-verified-status
+  - id: SYM-operator-api-signature-status-deep-copy-into
+    title: SignatureStatus.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:06:21.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-signature-signer-status
+  - id: SYM-operator-api-signature-status-deep-copy
+    title: SignatureStatus.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:06:26.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-policy-verifier
+      - type: implements
+        target: REQ-operator-signature-signer-status
+  - id: SYM-operator-test-helper-owner-signature
+    title: ownerSignature
+    sourceFile: internal/plugins/operator/verify_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:06:32.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-policy-verifier

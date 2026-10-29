@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a923ee8390f2
+  - type: verified_by
+    from: SCEN-operator-signature-signer-status
+    to: TEST-operator-policy-verifier
+    created_at: 2026-10-29T03:01:14.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-656732877388
+  - type: verified_by
+    from: SCEN-operator-signature-signer-status
+    to: TEST-operator-reconcile
+    created_at: 2026-10-29T03:01:15.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68178a1bdb03
