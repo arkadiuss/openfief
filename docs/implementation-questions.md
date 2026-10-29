@@ -13,18 +13,7 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* D-9 says XTB data arrives as uploaded xStation export files, but the export's columns, and whether it separates CFDs from stocks, are unverified (OQ-22).
    - *Today:* no XTB parser exists.
    - *Needed:* a header row and two or three rows with made-up values, copied from a real export. The parser's fixtures will be synthetic.
-
-## Write paths for the owner
-
-4. **How the owner's entries reach the core.**
-   - *Problem:* D-52 says the model portfolio is entered in the UI and handed to the core "like manual bond lots" (D-49), but no decision gives the shape of that path.
-   - *Today:* the core serves `ModelPortfolioService` and `BondLotService` next to the AuthService. Only view plugins may call them (the AuthService's caller check), and each call carries an owner-scope session for an allowed origin. The read API stays read-only. Statement uploads are being built the same way.
-   - *Options:* keep this; or one owner write service for all such entries; or something else.
-
-5. **The first passkey from the `openfief` CLI.**
-   - *Problem:* D-60 says the CLI prints the one-time link for the first passkey. Today `core enroll-link` prints it, run inside the core's pod, and it needs the database.
-   - *Today:* the owner runs `kubectl exec ... core enroll-link`.
-   - *Options:* `openfief` wraps it by executing the command in the core's pod (two new dependencies); or it stays a `kubectl exec`, and D-60's wording changes.
+   - *Known so far:* the author holds stocks and ETFs only at XTB (so D-24's CFD handling stays as written) and will send the headers from a real export. The export's language is not known yet. Public parsers disagree on the sheet names (R-19).
 
 ## Identity and the UI
 
