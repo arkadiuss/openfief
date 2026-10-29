@@ -8227,11 +8227,14 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T06:26:32.110Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-ibkrflex-golden
       - type: implements
         target: REQ-ibkrflex-assertions
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
   - id: SYM-ibkrflex-positions
     title: positions
     sourceFile: internal/ingest/ibkrflex/positions.go
@@ -74695,3 +74698,1475 @@ symbols:
         target: TEST-valuation-nbp-refrate
       - type: implements
         target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-cross-check-price
+    title: CrossCheckPrice
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:38.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-cross-check-price-validate
+    title: CrossCheckPrice.Validate
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:43.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-default-price-check-threshold
+    title: DefaultPriceCheckThreshold
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:48.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-check-threshold
+    title: CheckThreshold
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:53.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-price-check-status
+    title: PriceCheckStatus
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:37:57.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-price-check-status-string
+    title: PriceCheckStatus.String
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:02.650Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-price-check
+    title: PriceCheck
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:07.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-check-price
+    title: CheckPrice
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:12.992Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-check-prices
+    title: CheckPrices
+    sourceFile: internal/valuation/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:17.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-test-helper-crosscheck-price
+    title: price
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:22.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-helper-cross-check
+    title: crossCheck
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:27.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-helper-or-default
+    title: orDefault
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:32.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-cross-check-price-validate
+    title: TestCrossCheckPriceValidate
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:37.905Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-check-threshold
+    title: TestCheckThreshold
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:42.961Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-price-check-status-names
+    title: TestPriceCheckStatusNames
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:47.859Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-check-price
+    title: TestCheckPrice
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:53.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-test-check-prices
+    title: TestCheckPrices
+    sourceFile: internal/valuation/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:38:57.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-crosscheck
+  - id: SYM-valuation-app-cross-check-store
+    title: CrossCheckStore
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:02.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-app-cross-checks
+    title: CrossChecks
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:06.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-app-new-cross-checks
+    title: NewCrossChecks
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:12.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-app-cross-checks-threshold
+    title: CrossChecks.Threshold
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:17.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-price-check-threshold
+  - id: SYM-valuation-app-cross-checks-record-cross-check-prices
+    title: CrossChecks.RecordCrossCheckPrices
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:22.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-app-cross-checks-price-checks
+    title: CrossChecks.PriceChecks
+    sourceFile: internal/valuation/app/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:27.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-app-test-helper-fake-cross-checks
+    title: fakeCrossChecks
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:32.499Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-helper-fake-cross-checks-save-cross-check-prices
+    title: fakeCrossChecks.SaveCrossCheckPrices
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:37.641Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-helper-fake-cross-checks-cross-checked-prices
+    title: fakeCrossChecks.CrossCheckedPrices
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:43.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-helper-ibkr-mark
+    title: ibkrMark
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:49.433Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-new-cross-checks
+    title: TestNewCrossChecks
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:54.698Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-record-cross-check-prices
+    title: TestRecordCrossCheckPrices
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:39:59.566Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-app-test-price-checks
+    title: TestPriceChecks
+    sourceFile: internal/valuation/app/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:04.809Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-crosscheck
+  - id: SYM-valuation-postgres-store-save-cross-check-prices
+    title: Store.SaveCrossCheckPrices
+    sourceFile: internal/valuation/postgres/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:10.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-crosscheck
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-postgres-store-cross-checked-prices
+    title: Store.CrossCheckedPrices
+    sourceFile: internal/valuation/postgres/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:16.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+      - type: implements
+        target: REQ-valuation-price-check
+  - id: SYM-valuation-postgres-scan-cross-check-price
+    title: scanCrossCheckPrice
+    sourceFile: internal/valuation/postgres/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:21.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-crosscheck
+      - type: implements
+        target: REQ-valuation-cross-check-prices
+  - id: SYM-valuation-postgres-test-cross-check-prices-round-trip
+    title: TestCrossCheckPricesRoundTrip
+    sourceFile: internal/valuation/postgres/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:40:26.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-crosscheck
+  - id: SYM-ingest-cross-check-price
+    title: CrossCheckPrice
+    sourceFile: internal/ingest/crosscheck.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:24:54.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-ibkrflex-held-units-mark-of
+    title: heldUnits.markOf
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:06.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
+  - id: SYM-ibkrflex-held-units-add-mark
+    title: heldUnits.addMark
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:12.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
+  - id: SYM-ibkrflex-stmt-mark
+    title: stmt.mark
+    sourceFile: internal/ingest/ibkrflex/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:19.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-rows
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-ibkrflex-cross-check-prices
+  - id: SYM-ingest-conn-rpc-cross-check-price-from
+    title: crossCheckPriceFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:26.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-ingest-app-cross-check-price-store
+    title: CrossCheckPriceStore
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:32.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-ingest-app-connectors-store-cross-checks
+    title: Connectors.storeCrossChecks
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:39.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-ingest-app-test-helper-fake-stores-store-cross-check-prices
+    title: fakeStores.StoreCrossCheckPrices
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:45.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-connectors-cross-check-prices
+    title: TestConnectorsCrossCheckPrices
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:52.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-core-conn-cross-check-inputs
+    title: crossCheckInputs
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:25:57.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cross-check
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-core-conn-cross-check-inputs-store-cross-check-prices
+    title: crossCheckInputs.StoreCrossCheckPrices
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:03.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cross-check
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-core-test-helper-mem-cross-checks
+    title: memCrossChecks
+    sourceFile: cmd/core/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:10.450Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-cross-check
+  - id: SYM-core-test-helper-mem-cross-checks-save-cross-check-prices
+    title: memCrossChecks.SaveCrossCheckPrices
+    sourceFile: cmd/core/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:17.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cross-check
+  - id: SYM-core-test-helper-mem-cross-checks-cross-checked-prices
+    title: memCrossChecks.CrossCheckedPrices
+    sourceFile: cmd/core/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:24.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cross-check
+  - id: SYM-core-test-cross-check-inputs
+    title: TestCrossCheckInputs
+    sourceFile: cmd/core/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:30.784Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cross-check
+  - id: SYM-core-parse-valuation-flags
+    title: parseValuationFlags
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:37.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-parse-threshold
+    title: parseThreshold
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:44.499Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-core-valuation-settings
+    title: valuationSettings
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:26:51.296Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-config
+  - id: SYM-connector-gen-pb-delivery-get-cross-check-prices
+    title: Delivery.GetCrossCheckPrices
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T06:33:37.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-cross-check-prices
+  - id: SYM-views-app-price-checks
+    title: PriceChecks
+    sourceFile: internal/views/app/pricechecks.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:03:22.637Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-app-with-price-checks
+    title: WithPriceChecks
+    sourceFile: internal/views/app/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:03:29.932Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-app-price-check-list
+    title: PriceCheckList
+    sourceFile: internal/views/app/pricechecks.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:03:36.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-app-views-price-checks
+    title: Views.PriceChecks
+    sourceFile: internal/views/app/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:03:42.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-pricechecks
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-app-test-helper-fake-price-checks
+    title: fakePriceChecks
+    sourceFile: internal/views/app/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:03:49.145Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-pricechecks
+  - id: SYM-views-app-test-helper-fake-price-checks-price-checks
+    title: fakePriceChecks.PriceChecks
+    sourceFile: internal/views/app/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:03:55.480Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-pricechecks
+  - id: SYM-views-app-test-helper-fake-price-checks-threshold
+    title: fakePriceChecks.Threshold
+    sourceFile: internal/views/app/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:02.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-pricechecks
+  - id: SYM-views-app-test-helper-synthetic-checks
+    title: syntheticChecks
+    sourceFile: internal/views/app/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:08.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-pricechecks
+  - id: SYM-views-app-test-price-checks
+    title: TestPriceChecks
+    sourceFile: internal/views/app/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:15.267Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-pricechecks
+  - id: SYM-views-connectapi-pb-price-check
+    title: pbPriceCheck
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:21.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-connectapi-read-service-list-price-checks
+    title: readService.ListPriceChecks
+    sourceFile: internal/views/connectapi/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:27.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-connectapi-price-check-status
+    title: priceCheckStatus
+    sourceFile: internal/views/connectapi/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:34.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-connectapi-test-helper-fake-price-checks
+    title: fakePriceChecks
+    sourceFile: internal/views/connectapi/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:41.030Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-pricechecks
+  - id: SYM-views-connectapi-test-helper-fake-price-checks-price-checks
+    title: fakePriceChecks.PriceChecks
+    sourceFile: internal/views/connectapi/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:47.151Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-pricechecks
+  - id: SYM-views-connectapi-test-helper-fake-price-checks-threshold
+    title: fakePriceChecks.Threshold
+    sourceFile: internal/views/connectapi/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:04:54.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-pricechecks
+  - id: SYM-views-connectapi-test-helper-price-check-api
+    title: priceCheckAPI
+    sourceFile: internal/views/connectapi/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:00.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-pricechecks
+  - id: SYM-views-connectapi-test-helper-synthetic-checks
+    title: syntheticChecks
+    sourceFile: internal/views/connectapi/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:07.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-pricechecks
+  - id: SYM-views-connectapi-test-connect-list-price-checks
+    title: TestConnectListPriceChecks
+    sourceFile: internal/views/connectapi/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:13.420Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-pricechecks
+  - id: SYM-views-connectapi-test-restprice-checks
+    title: TestRESTPriceChecks
+    sourceFile: internal/views/connectapi/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:19.928Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-pricechecks
+  - id: SYM-views-connectapi-test-price-check-enums-match
+    title: TestPriceCheckEnumsMatch
+    sourceFile: internal/views/connectapi/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:26.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-pricechecks
+  - id: SYM-ui-percent
+    title: percent
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:32.512Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-checks
+  - id: SYM-ui-price-checks-view
+    title: priceChecksView
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:38.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-checks
+  - id: SYM-ui-server-price-checks-page
+    title: server.priceChecksPage
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:45.410Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-AUTO-7374F67D85269872
+      - type: implements
+        target: REQ-ui-price-checks
+  - id: SYM-ui-server-flagged-price-checks
+    title: server.flaggedPriceChecks
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:52.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-checks
+  - id: SYM-ui-test-helper-fake-read-list-price-checks
+    title: fakeRead.ListPriceChecks
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:05:58.423Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-test-price-checks-page
+    title: TestPriceChecksPage
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:06:04.512Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-test-overview-flags-price-checks
+    title: TestOverviewFlagsPriceChecks
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:06:11.611Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-test-percent
+    title: TestPercent
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:06:18.016Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-views-pb-price-check-status
+    title: PriceCheckStatus
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:06:23.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-status-enum
+    title: PriceCheckStatus.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:06:30.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-status-string
+    title: PriceCheckStatus.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:06:37.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-status-descriptor
+    title: PriceCheckStatus.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:06:45.031Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-status-type
+    title: PriceCheckStatus.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:06:52.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-status-number
+    title: PriceCheckStatus.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:00.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-status-enum-descriptor
+    title: PriceCheckStatus.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:06.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check
+    title: PriceCheck
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:12.343Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-reset
+    title: PriceCheck.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:19.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-string
+    title: PriceCheck.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:26.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-proto-message
+    title: PriceCheck.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:33.665Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-proto-reflect
+    title: PriceCheck.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:41.297Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-descriptor
+    title: PriceCheck.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:48.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-get-date
+    title: PriceCheck.GetDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:07:55.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-get-instrument
+    title: PriceCheck.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:08:03.164Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-get-price
+    title: PriceCheck.GetPrice
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:08:10.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-get-price-source
+    title: PriceCheck.GetPriceSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:08:17.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-get-cross-check
+    title: PriceCheck.GetCrossCheck
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:08:25.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-get-cross-check-source
+    title: PriceCheck.GetCrossCheckSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:08:33.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-get-relative-difference
+    title: PriceCheck.GetRelativeDifference
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:08:42.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-price-check-get-status
+    title: PriceCheck.GetStatus
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:08:50.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-request
+    title: ListPriceChecksRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:08:57.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-request-reset
+    title: ListPriceChecksRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:09:06.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-request-string
+    title: ListPriceChecksRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:09:15.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-request-proto-message
+    title: ListPriceChecksRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:09:22.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-request-proto-reflect
+    title: ListPriceChecksRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:09:30.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-request-descriptor
+    title: ListPriceChecksRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:09:38.766Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-request-get-status
+    title: ListPriceChecksRequest.GetStatus
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:09:46.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-response
+    title: ListPriceChecksResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:09:52.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-response-reset
+    title: ListPriceChecksResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:01.436Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-response-string
+    title: ListPriceChecksResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:08.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-response-proto-message
+    title: ListPriceChecksResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:15.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-response-proto-reflect
+    title: ListPriceChecksResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:22.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-response-descriptor
+    title: ListPriceChecksResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:29.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-response-get-threshold
+    title: ListPriceChecksResponse.GetThreshold
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:37.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pb-list-price-checks-response-get-checks
+    title: ListPriceChecksResponse.GetChecks
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:44.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pbconnect-read-service-client-list-price-checks
+    title: readServiceClient.ListPriceChecks
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:52.116Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-list-price-checks
+    title: UnimplementedReadServiceHandler.ListPriceChecks
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T07:10:59.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-pricechecks
+      - type: implements
+        target: REQ-views-price-checks

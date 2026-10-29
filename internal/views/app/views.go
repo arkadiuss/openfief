@@ -37,13 +37,14 @@ func (e *UnsupportedReportingCurrencyError) Error() string {
 
 // Views runs the read API's queries.
 type Views struct {
-	ledger     Ledger
-	valuations Valuations
-	statuses   ValuationStatuses
-	rates      FXRates
-	reporting  kernel.Currency
-	models     ModelReports
-	plugins    Plugins
+	ledger      Ledger
+	valuations  Valuations
+	statuses    ValuationStatuses
+	rates       FXRates
+	reporting   kernel.Currency
+	models      ModelReports
+	plugins     Plugins
+	priceChecks PriceChecks
 }
 
 // New returns the queries over the given ports, with totals, valuations and

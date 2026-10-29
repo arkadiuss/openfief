@@ -279,3 +279,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ece871d5c05
+  - type: implements
+    from: SYM-valuation-cross-check-price
+    to: REQ-valuation-cross-check-prices
+    created_at: 2026-10-29T05:37:39.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9560204fac83
+  - type: implements
+    from: SYM-valuation-cross-check-price
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T05:37:39.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e868e4502a3
+  - type: covered_by
+    from: SYM-valuation-cross-check-price
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:37:39.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfcfa97181c2
+  - type: executable_for
+    from: SYM-valuation-test-helper-or-default
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:38:34.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d86600b8d415
+  - type: implements
+    from: SYM-views-pb-list-price-checks-response-get-checks
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:10:46.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89c9bf9fa622
+  - type: covered_by
+    from: SYM-views-pb-list-price-checks-response-get-checks
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:10:46.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8813ddcec9ad

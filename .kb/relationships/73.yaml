@@ -363,3 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5dd1815d2459
+  - type: executable_for
+    from: SYM-ui-test-price-checks-page
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-29T07:06:07.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98297a907d9b

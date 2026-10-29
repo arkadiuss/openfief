@@ -447,3 +447,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5de23545691f
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-price-checks
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:04:29.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5308e6a802b
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-price-checks
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T07:04:29.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee87fdd9760d
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-price-checks
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:04:30.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19361b40b36e
+  - type: implements
+    from: SYM-views-pb-list-price-checks-request-proto-reflect
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:09:32.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32ee49745a85
+  - type: covered_by
+    from: SYM-views-pb-list-price-checks-request-proto-reflect
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:09:32.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e4dee851091

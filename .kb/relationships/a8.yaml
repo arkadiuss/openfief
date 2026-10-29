@@ -475,3 +475,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3ee70c575ba
+  - type: executable_for
+    from: SYM-views-connectapi-test-connect-list-price-checks
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:05:15.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce5fa1e2f200
+  - type: implements
+    from: SYM-views-pb-price-check-get-cross-check-source
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:08:36.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dccaeabde85
+  - type: covered_by
+    from: SYM-views-pb-price-check-get-cross-check-source
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:08:36.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b49514274a2

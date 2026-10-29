@@ -4,9 +4,9 @@
 <FlexStatements count="2">
 <FlexStatement accountId="U0000000" fromDate="2026-03-09" toDate="2026-03-13" period="LastBusinessWeek" whenGenerated="2026-03-14;083000">
 <OpenPositions>
-<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="2026-03-13" position="20" costBasisMoney="2001" levelOfDetail="SUMMARY" side="Long" />
-<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="2026-03-13" position="3" costBasisMoney="300" levelOfDetail="LOT" openDateTime="2025-11-03;140000" side="Long" />
-<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="2026-03-13" position="1.5" costBasisMoney="160" levelOfDetail="LOT" openDateTime="2025-11-03;150000" side="Long" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="2026-03-13" markPrice="102.4" position="20" costBasisMoney="2001" levelOfDetail="SUMMARY" side="Long" />
+<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="2026-03-13" markPrice="107" position="3" costBasisMoney="300" levelOfDetail="LOT" openDateTime="2025-11-03;140000" side="Long" />
+<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="2026-03-13" markPrice="107.5" position="1.5" costBasisMoney="160" levelOfDetail="LOT" openDateTime="2025-11-03;150000" side="Long" />
 <OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="COMMON" symbol="TSTS" isin="XSFAKE000034" multiplier="1" reportDate="2026-03-13" position="-2" costBasisMoney="-210" levelOfDetail="SUMMARY" side="Short" />
 <OpenPosition accountId="U0000000" currency="USD" assetCategory="FUT" symbol="TSTFUT" isin="" multiplier="50" reportDate="2026-03-13" position="1" costBasisMoney="5000" levelOfDetail="SUMMARY" side="Long" />
 </OpenPositions>

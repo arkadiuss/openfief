@@ -314,10 +314,26 @@ func deliveryFrom(d *connectorv1.Delivery, id ingest.BatchID, watermark string) 
 	if err != nil {
 		return app.Delivery{}, err
 	}
+	crossChecks, err := translate("cross_check_prices", d.GetCrossCheckPrices(), crossCheckPriceFrom)
+	if err != nil {
+		return app.Delivery{}, err
+	}
 	return app.Delivery{
 		Institution: ingest.InstitutionID(d.GetInstitution()), Mapping: m,
-		Prices: prices, FXRates: rates, IndexReadings: readings, IndexLevels: levels, BondTerms: terms, Watermark: watermark,
+		Prices: prices, FXRates: rates, IndexReadings: readings, IndexLevels: levels, BondTerms: terms,
+		CrossCheckPrices: crossChecks, Watermark: watermark,
 	}, nil
+}
+
+// crossCheckPriceFrom translates one cross-check price: the same message
+// and rules as a price, kept apart as a cross-check price (D-22). Its
+// source is set by the use case.
+func crossCheckPriceFrom(field string, p *connectorv1.Price) (valuation.CrossCheckPrice, error) {
+	price, err := priceFrom(field, p)
+	if err != nil {
+		return valuation.CrossCheckPrice{}, err
+	}
+	return valuation.CrossCheckPrice{Instrument: price.Instrument, Date: price.Date, Close: price.Close}, nil
 }
 
 // bondTermsFrom translates one treasury bond series' terms: the

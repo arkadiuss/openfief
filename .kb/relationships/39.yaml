@@ -300,3 +300,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-286f85c874cc
+  - type: implements
+    from: SYM-ui-server-price-checks-page
+    to: REQ-ui-price-checks
+    created_at: 2026-10-29T07:05:47.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7c3ef5a2c6b
+  - type: implements
+    from: SYM-ui-server-price-checks-page
+    to: REQ-AUTO-7374F67D85269872
+    created_at: 2026-10-29T07:05:47.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a72540a6cc4a
+  - type: covered_by
+    from: SYM-ui-server-price-checks-page
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-29T07:05:47.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e4cd90d50f7

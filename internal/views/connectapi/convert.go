@@ -132,6 +132,18 @@ func pbCheck(c *ledgerapp.AssertionCheck) *viewsv1.AssertionCheck {
 	}
 }
 
+// pbPriceCheck converts a price check. Its instrument is written ISIN/symbol
+// in the valuation context, and an ISIN never holds a slash.
+func pbPriceCheck(c *valuation.PriceCheck) *viewsv1.PriceCheck {
+	isin, symbol, _ := strings.Cut(c.CrossCheck.Instrument, "/")
+	return &viewsv1.PriceCheck{
+		Date: pbDate(c.CrossCheck.Date), Instrument: &viewsv1.Instrument{Isin: isin, Symbol: symbol},
+		Price: pbMoney(c.Price.Close), PriceSource: c.Price.Source,
+		CrossCheck: pbMoney(c.CrossCheck.Close), CrossCheckSource: c.CrossCheck.Source,
+		RelativeDifference: c.Difference.String(), Status: viewsv1.PriceCheckStatus(enumNumber(int(c.Status))),
+	}
+}
+
 // pbValuation converts a stored valuation of a holding.
 func pbValuation(v *valuation.HoldingValuation) *viewsv1.Valuation {
 	return &viewsv1.Valuation{

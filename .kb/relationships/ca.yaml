@@ -447,3 +447,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3afe2c0f8bab
+  - type: executable_for
+    from: SYM-valuation-test-check-threshold
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:38:44.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c8d4e59f67

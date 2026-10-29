@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56adc37743f6
+  - type: implements
+    from: SYM-views-pb-price-check-descriptor
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:07:50.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98062c9d058b
+  - type: covered_by
+    from: SYM-views-pb-price-check-descriptor
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:07:50.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cf807872e5c

@@ -384,3 +384,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6e33b6b7a2b
+  - type: executable_for
+    from: SYM-valuation-postgres-test-cross-check-prices-round-trip
+    to: TEST-valuation-postgres-crosscheck
+    created_at: 2026-10-29T05:40:27.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-740feb5c660c
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-price-checks
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-29T07:06:00.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e53758c1bab
+  - type: implements
+    from: SYM-views-pb-price-check-reset
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:07:21.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c6145fa5547
+  - type: covered_by
+    from: SYM-views-pb-price-check-reset
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:07:21.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30547f774ad9

@@ -272,3 +272,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a9736dbdae2
+  - type: implements
+    from: SYM-views-pb-list-price-checks-response-get-threshold
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:10:39.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce923434f60e
+  - type: covered_by
+    from: SYM-views-pb-list-price-checks-response-get-threshold
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:10:39.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe6f1f1e35ea

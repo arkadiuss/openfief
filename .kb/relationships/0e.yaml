@@ -293,3 +293,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0a90871a51d
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-ibkr-mark
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-29T05:39:51.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d6a83f9109

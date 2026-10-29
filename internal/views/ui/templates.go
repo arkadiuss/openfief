@@ -41,6 +41,7 @@ func templateFuncs() template.FuncMap {
 		"money":      formatMoney,
 		"amount":     formatAmount,
 		"share":      share,
+		"percent":    percent,
 		"book":       bookLabel,
 		"instrument": instrumentLabel,
 		"enum":       enumLabel,

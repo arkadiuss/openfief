@@ -405,3 +405,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d471d6ad5876
+  - type: implements
+    from: SYM-valuation-check-threshold
+    to: REQ-valuation-price-check-threshold
+    created_at: 2026-10-29T05:37:55.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa28ed2cae0e
+  - type: covered_by
+    from: SYM-valuation-check-threshold
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-29T05:37:55.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e16b465169f

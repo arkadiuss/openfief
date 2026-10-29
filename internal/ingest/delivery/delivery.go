@@ -42,7 +42,10 @@ func Mode(m connectorv1.Mode) (ingest.Mode, error) {
 }
 
 // FromMapping writes a mapping as a delivery for batch from institution:
-// its transactions, balance assertions and ingest problems, in order.
+// its transactions, balance assertions, ingest problems and cross-check
+// prices, in order. Cross-check prices go in cross_check_prices, never in
+// prices, so the core keeps them apart from the market-data connector's
+// (D-22).
 func FromMapping(batch, institution string, m *ingest.Mapping) (*connectorv1.Delivery, error) {
 	d := &connectorv1.Delivery{BatchId: batch, Institution: institution}
 	for i := range m.Transactions {
@@ -65,6 +68,10 @@ func FromMapping(batch, institution string, m *ingest.Mapping) (*connectorv1.Del
 			return nil, fmt.Errorf("problems[%d]: %w", i, err)
 		}
 		d.Problems = append(d.Problems, pb)
+	}
+	for i := range m.CrossCheckPrices {
+		c := &m.CrossCheckPrices[i]
+		d.CrossCheckPrices = append(d.CrossCheckPrices, Price(c.Instrument, c.Date, c.Close))
 	}
 	return d, nil
 }

@@ -377,3 +377,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39037b6e988d
+  - type: implements
+    from: SYM-ui-percent
+    to: REQ-ui-price-checks
+    created_at: 2026-10-29T07:05:34.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bd8ef5e4754
+  - type: covered_by
+    from: SYM-ui-percent
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-29T07:05:34.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5684bf59037
+  - type: implements
+    from: SYM-views-pb-price-check-proto-reflect
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:07:43.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f92d84730cdf
+  - type: covered_by
+    from: SYM-views-pb-price-check-proto-reflect
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:07:43.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-694473da7232

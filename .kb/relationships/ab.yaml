@@ -321,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fbed92d97e0
+  - type: implements
+    from: SYM-valuation-postgres-store-cross-checked-prices
+    to: REQ-valuation-cross-check-prices
+    created_at: 2026-10-29T05:40:17.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8e5b4ca4b9c
+  - type: implements
+    from: SYM-valuation-postgres-store-cross-checked-prices
+    to: REQ-valuation-price-check
+    created_at: 2026-10-29T05:40:17.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6286f2b19029
+  - type: covered_by
+    from: SYM-valuation-postgres-store-cross-checked-prices
+    to: TEST-valuation-postgres-crosscheck
+    created_at: 2026-10-29T05:40:18.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-339c66792b99

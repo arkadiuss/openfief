@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0449f6581907
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-price-checks
+    to: REQ-views-price-checks
+    created_at: 2026-10-29T07:11:00.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ff58acd62aa
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-price-checks
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-29T07:11:00.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74dd64ae0c3f

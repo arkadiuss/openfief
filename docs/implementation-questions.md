@@ -124,67 +124,81 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
     - *Today:* it fails until `core connector sync --mode transactions` is run once.
     - *Options:* the core detects an already-seeded account and switches to transactions mode; or keep the manual step.
 
+26. **The price check threshold (D-22).**
+    - *Today:* a price check is flagged when IBKR's price differs from the stored price by more than 1% of it, in either direction; the core's `--price-check-threshold` changes it (a fraction greater than 0 and less than 1). One percent was picked as well above the few basis points that separate an aggregated close from an exchange's official close on a liquid listing (D-51), and well below the errors the cross-check exists to catch: a wrong listing or currency, pence read as pounds, a missed split, a stale day after a big move. A thinly traded Warsaw listing may flag more often.
+    - *Options:* keep 1%; another value; or a threshold per exchange or per instrument.
+
+27. **What is compared with what (D-22).**
+    - *Today:* the IBKR connector reads only each open position's `markPrice`, from the SUMMARY row or else from LOT rows that agree, dated by `reportDate`, and only for positions held. A cross-check price is compared only with the stored price of the same instrument (ISIN and symbol), on the same date, in the same currency. One in another currency, such as an ETF priced from its Xetra listing in EUR while IBKR reports the holding in GBP, is not compared and not shown, and a day without a stored price gives no check. A check is relative to the stored price.
+    - *Options:* keep; also show pairs in different currencies, as their own status, since they may mean the market-data connector prices another listing than the one held; compare with the latest price on or before the day; read other Flex prices, such as `closePrice` of prior-period positions.
+
+28. **Who sends cross-check prices, and how long checks stay.**
+    - *Today:* any connector instance may send `cross_check_prices`, not only IBKR's; each is stored under its instance, and nothing is ever pruned. `ListPriceChecks` returns every check of every day, and a flagged check stays flagged: there is no way to mark one as seen. The UI lists every flagged one, of any day, on `/price-checks`. The in-core mapping that loads the demo dataset drops cross-check prices, so the demo shows none.
+    - *Options:* keep; only connectors that declare it may send them; a date range or the latest check per instrument; an acknowledgement the owner records; synthetic cross-check prices in the demo dataset.
+
 ## Treasury bonds
 
-26. **Series terms are entered with each lot.**
+## Treasury bonds
+
+29. **Series terms are entered with each lot.**
     - *Problem:* D-9 lists series, quantity and purchase date, but valuing a lot also needs the series' first-period rate, margin and early-redemption fee.
     - *Today:* the owner enters them with each lot, and the latest entry for a series wins.
     - *Options:* keep; or fetch a catalogue of series terms.
 
-27. **A bond lot is a deposit and a buy, not an opening lot.**
+30. **A bond lot is a deposit and a buy, not an opening lot.**
     - *Problem:* the ledger refuses to seed an account twice, so lots entered one at a time can't all be opening lots.
     - *Today:* each lot is a deposit of its cost plus a buy on its purchase date. An old lot therefore moves go-live, and the start of the time-weighted return, back to its date.
     - *Question:* acceptable?
 
-28. **The bond's ISIN is derived from its series code.**
+31. **The bond's ISIN is derived from its series code.**
     - *Today:* `PL` + series code + `00` + a check digit (for example `PLEDO0536000`), not the ISIN the registry assigns, which owners don't see. A future import of the bond service's own export must use the same derivation, or a series would be held twice.
     - *Question:* acceptable?
 
-29. **Bond lot limits.**
+32. **Bond lot limits.**
     - *Today:* only cash purchases at 100 PLN (not exchanges at 99.90 PLN, whose discount is taxed). No way to delete a lot; entering the same series and day replaces it. "The right connector" (D-49) is the one instance bound to the account. The UI shows the form only for accounts of institution `treasury-bonds`. Entry works only in a cluster with connectors on.
     - *Question:* keep these?
 
-30. **COI coupons are booked as dividends.**
+33. **COI coupons are booked as dividends.**
     - *Problem:* the ledger has no interest transaction kind.
     - *Options:* add an interest kind; or keep dividends.
 
-31. **Who picks the NBP reference rate in force.**
+34. **Who picks the NBP reference rate in force.**
     - *Today:* the treasury-bonds connector applies the rule itself: the rate in force on the tenth business day before a month is that month's reading, dated on the month's first day. The comment on `IndexReading.date` in the connector contract now says so; the wire format is unchanged.
     - *Options:* keep; or the connector sends NBP's raw rate changes and the core picks.
 
-32. **The Polish business-day calendar.**
+35. **The Polish business-day calendar.**
     - *Today:* Saturdays, Sundays and the holidays in art. 1 of the act on days off work, year by year (6 January from 2011, 24 December from 2025, Easter-based days). Epidemic days off (art. 1a) are not modelled. Dates before 1991 are refused.
     - *Question:* enough for M0?
 
-33. **GUS CPI defaults.**
+36. **GUS CPI defaults.**
     - *Today:* only final monthly values are used; preliminary, estimated and flash values are skipped and arrive later. The first sync starts January 13 years back (`start` can change it), fetching at most 4 years per sync to stay within GUS's anonymous limits. GUS's indicator 1832 is used up to 2025 and 2728 from 2026, a boundary written into the code. A reference-rate month is delivered once its day has passed and is not fetched again.
     - *Question:* keep these?
 
 ## Performance and the model portfolio
 
-34. **Transfers between the owner's own accounts (D-61).**
+37. **Transfers between the owner's own accounts (D-61).**
     - *Problem:* the ledger doesn't record which withdrawal became which deposit, but the time-weighted return must not count such transfers as cash flows.
     - *Today:* a withdrawal matches a deposit into another account of the same amount and currency at most 5 calendar days apart, the nearest unmatched deposit first. The performance response lists every match.
     - *Options:* keep the rule (and its window); or record transfers explicitly in the ledger.
 
-35. **Time-weighted return conventions.**
+38. **Time-weighted return conventions.**
     - *Today:* cash flows count at the end of their day; each daily factor and the running product are rounded half-even to 12 decimal places; opening lots count as inflows at their market value on their date.
     - *Question:* keep these?
 
-36. **What the value-over-time chart draws.**
+39. **What the value-over-time chart draws.**
     - *Today:* the chart draws the time-weighted return index from 100 at go-live (D-30 and D-53 read as one chart with two lines from 100), with the value including cash shown alongside. `ListValuationTotals` still sums holdings only, without cash.
     - *Options:* keep; or include cash in `ListValuationTotals` too.
 
-37. **Model portfolio details (D-52 to D-54).**
+40. **Model portfolio details (D-52 to D-54).**
     - *Today:* the model rebalances at the end of each 31 December. A target's own drawdown is in the reporting currency (PLN) over the span where it has both closes and FX rates; P-48, not decided, would use its own currency over its whole history. Weights go in 0.01% steps, at most 50 targets. While the model is off, the read API answers 404.
     - *Question:* keep these?
 
 ## Ghostfolio
 
-38. **Where the Ghostfolio view departs from D-64.**
+41. **Where the Ghostfolio view departs from D-64.**
     - *Today:* the plugin derives its owned accounts' IDs (UUIDv5 of instance and account) instead of generating and storing them, because a plugin has no volume and no Kubernetes API. A stale activity that Ghostfolio's duplicate check would skip is deleted before the import, or the loop never converges. The plugin runs its own timer, since D-49 has the core schedule only connectors.
     - *Question:* acceptable?
 
-39. **How transactions become Ghostfolio activities.**
+42. **How transactions become Ghostfolio activities.**
     - *Today:* a dividend is quantity 1 at the gross amount, with the withheld tax as its fee. Standalone fees go against a manual "OpenFief fees" asset per currency. Cash movements produce no activity, so Ghostfolio shows holdings without cash. Listed instruments need the owner's mapping from ISIN to Ghostfolio's data source and symbol. Bond assets are keyed by the series code only, so two users of one Ghostfolio would collide.
     - *Question:* keep these?

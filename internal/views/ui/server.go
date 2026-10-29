@@ -113,6 +113,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
 	mux.HandleFunc("POST /accounts/{id}/statements", s.withOwner(s.uploadStatement))
 	mux.HandleFunc("GET /assertions", s.withSession(s.assertionsPage))
+	mux.HandleFunc("GET /price-checks", s.withSession(s.priceChecksPage))
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	mux.HandleFunc("GET /settings", s.withOwner(s.settingsPage))
 	mux.HandleFunc("POST /settings/passkeys/{id}/remove", s.withOwner(s.removePasskey))

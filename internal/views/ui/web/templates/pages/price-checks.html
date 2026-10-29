@@ -1,0 +1,31 @@
+{{define "content"}}
+{{with .Data}}
+{{if .Threshold}}
+<p class="muted">A flagged price check is a day on which an institution's own price of an instrument, such as IBKR's mark price, differs from the price its holdings are valued at by more than {{.Threshold}}. Holdings keep their valuation: look at which price is wrong, such as a wrong listing, a split or pence read as pounds.</p>
+{{else}}
+<p class="muted">This core compares no prices.</p>
+{{end}}
+<section class="card" aria-label="Flagged price checks">
+<table>
+  <thead><tr>
+    <th scope="col">Date</th><th scope="col">Instrument</th>
+    <th scope="col" class="num">Price</th><th scope="col">From</th>
+    <th scope="col" class="num">Cross-check</th><th scope="col">From</th>
+    <th scope="col" class="num">Difference</th>
+  </tr></thead>
+  <tbody>
+  {{range .Checks}}
+  <tr>
+    <td>{{.Date}}</td><td>{{instrument .Instrument}}</td>
+    <td class="num">{{money .Price}}</td><td>{{.PriceSource}}</td>
+    <td class="num">{{money .CrossCheck}}</td><td>{{.CrossCheckSource}}</td>
+    <td class="num"><strong class="warn">{{percent .RelativeDifference}}</strong></td>
+  </tr>
+  {{else}}
+  <tr><td colspan="7">No flagged price checks.</td></tr>
+  {{end}}
+  </tbody>
+</table>
+</section>
+{{end}}
+{{end}}

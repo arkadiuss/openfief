@@ -118,7 +118,8 @@ func checkValid(t *testing.T, what string, m *ingest.Mapping) {
 }
 
 // render writes a mapping as stable text: transactions with their postings,
-// then assertions, then problems, each in mapping order.
+// then assertions, then cross-check prices, then problems, each in mapping
+// order.
 func render(m *ingest.Mapping) string {
 	var b strings.Builder
 	for i := range m.Transactions {
@@ -138,6 +139,9 @@ func render(m *ingest.Mapping) string {
 	}
 	for _, a := range m.Assertions {
 		fmt.Fprintf(&b, "assert %s %s %s %s\n", a.Account, a.Date, a.Book, a.Balance)
+	}
+	for _, c := range m.CrossCheckPrices {
+		fmt.Fprintf(&b, "cross-check %s %s %s\n", c.Instrument, c.Date, c.Close)
 	}
 	for _, p := range m.Problems {
 		fmt.Fprintf(&b, "problem %s\n", p)

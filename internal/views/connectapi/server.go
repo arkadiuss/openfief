@@ -9,6 +9,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
+	"github.com/arkadiuss/openfief/internal/valuation"
 	"github.com/arkadiuss/openfief/internal/views"
 	"github.com/arkadiuss/openfief/internal/views/app"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
@@ -167,6 +168,41 @@ func assertionStatus(s viewsv1.AssertionStatus) (ledgerapp.AssertionStatus, erro
 		return ledgerapp.AssertionFlagged, nil
 	}
 	return 0, fmt.Errorf("%w: assertion status %d", errBadParameter, s)
+}
+
+// ListPriceChecks answers GET /v1/price-checks: every price compared with a
+// cross-check price (D-22), with the threshold they were flagged at.
+func (s *readService) ListPriceChecks(ctx context.Context, req *connect.Request[viewsv1.ListPriceChecksRequest]) (*connect.Response[viewsv1.ListPriceChecksResponse], error) {
+	status, err := priceCheckStatus(req.Msg.GetStatus())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	list, err := s.views.PriceChecks(ctx, status)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	out := &viewsv1.ListPriceChecksResponse{Checks: make([]*viewsv1.PriceCheck, 0, len(list.Checks))}
+	if !list.Threshold.IsZero() {
+		out.Threshold = list.Threshold.String()
+	}
+	for i := range list.Checks {
+		out.Checks = append(out.Checks, pbPriceCheck(&list.Checks[i]))
+	}
+	return connect.NewResponse(out), nil
+}
+
+// priceCheckStatus converts a requested status filter; unspecified means
+// every status.
+func priceCheckStatus(s viewsv1.PriceCheckStatus) (valuation.PriceCheckStatus, error) {
+	switch s {
+	case viewsv1.PriceCheckStatus_PRICE_CHECK_STATUS_UNSPECIFIED:
+		return 0, nil
+	case viewsv1.PriceCheckStatus_PRICE_CHECK_STATUS_MATCHED:
+		return valuation.PriceMatched, nil
+	case viewsv1.PriceCheckStatus_PRICE_CHECK_STATUS_FLAGGED:
+		return valuation.PriceFlagged, nil
+	}
+	return 0, fmt.Errorf("%w: price check status %d", errBadParameter, s)
 }
 
 // ListAccountValuations answers GET /v1/accounts/{account_id}/valuations.

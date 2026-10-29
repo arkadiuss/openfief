@@ -4,11 +4,11 @@
 <FlexStatements count="1">
 <FlexStatement accountId="U0000000" fromDate="20260302" toDate="20260306" period="LastBusinessWeek" whenGenerated="20260307;083000">
 <OpenPositions>
-<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" position="15" costBasisMoney="1500.5" levelOfDetail="SUMMARY" openDateTime="" side="Long" />
-<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" position="10" costBasisMoney="1000.25" levelOfDetail="LOT" openDateTime="20240115;093000" originatingTransactionID="6000001" side="Long" />
-<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" position="5" costBasisMoney="500.25" levelOfDetail="LOT" openDateTime="20250610;101500" originatingTransactionID="6000002" side="Long" />
-<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="20260306" position="3.5" costBasisMoney="350" levelOfDetail="LOT" openDateTime="2025-11-03;140000" side="Long" />
-<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="20260306" position="1.5" costBasisMoney="160" levelOfDetail="LOT" openDateTime="2025-11-03;150000" side="Long" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" markPrice="101.25" position="15" costBasisMoney="1500.5" levelOfDetail="SUMMARY" openDateTime="" side="Long" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" markPrice="101.25" position="10" costBasisMoney="1000.25" levelOfDetail="LOT" openDateTime="20240115;093000" originatingTransactionID="6000001" side="Long" />
+<OpenPosition accountId="U0000000" currency="USD" assetCategory="STK" subCategory="ETF" symbol="TSTA" isin="PLTEST000010" multiplier="1" reportDate="20260306" markPrice="101.25" position="5" costBasisMoney="500.25" levelOfDetail="LOT" openDateTime="20250610;101500" originatingTransactionID="6000002" side="Long" />
+<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="20260306" markPrice="106.5" position="3.5" costBasisMoney="350" levelOfDetail="LOT" openDateTime="2025-11-03;140000" side="Long" />
+<OpenPosition accountId="U0000000" currency="EUR" assetCategory="STK" subCategory="COMMON" symbol="TSTB" isin="IETEST000026" multiplier="1" reportDate="20260306" markPrice="106.5" position="1.5" costBasisMoney="160" levelOfDetail="LOT" openDateTime="2025-11-03;150000" side="Long" />
 <OpenPosition accountId="U0000000" currency="USD" assetCategory="OPT" symbol="TSTA 260619C00100000" isin="" multiplier="100" reportDate="20260306" position="1" costBasisMoney="250" levelOfDetail="LOT" openDateTime="20260105;100000" side="Long" />
 </OpenPositions>
 <CashReport>

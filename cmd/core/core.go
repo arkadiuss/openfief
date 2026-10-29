@@ -91,6 +91,20 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore)
 }
 
+// valuationSettings records the bond basis, which revalues everything when
+// it changed (D-36), and returns the cross-check use cases with the price
+// check threshold (D-22).
+func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, cfg *serveConfig) (*valuationapp.CrossChecks, error) {
+	if _, err := recorder.ApplyBondBasis(ctx, cfg.BondBasis); err != nil {
+		return nil, fmt.Errorf("bond basis: %w", err)
+	}
+	checks, err := valuationapp.NewCrossChecks(vstore, cfg.PriceCheckThreshold)
+	if err != nil {
+		return nil, fmt.Errorf("price check threshold: %w", err)
+	}
+	return checks, nil
+}
+
 // newCore wires the core over a migrated database: the ledger with
 // valuation's import hook (D-36), the River revaluation workers, the views
 // and the read API with sessions, script tokens and the view plugins callers
@@ -116,8 +130,9 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 			return nil, fmt.Errorf("storing the default sleeves: %w", defErr)
 		}
 	}
-	if _, basisErr := recorder.ApplyBondBasis(ctx, cfg.BondBasis); basisErr != nil {
-		return nil, fmt.Errorf("bond basis: %w", basisErr)
+	checks, err := valuationSettings(ctx, recorder, vstore, cfg)
+	if err != nil {
+		return nil, err
 	}
 	client, err := valuationpg.NewClient(pool, vstore, ledgerpg.New(pool), &valuationpg.Config{
 		Concurrency: cfg.Workers,
@@ -137,7 +152,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewOptions(models, installed)...)
+	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewOptions(models, checks, installed)...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
 	}
@@ -146,7 +161,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, fmt.Errorf("read API: %w", err)
 	}
 	deps := &connectorDeps{
-		pool: pool, ledger: l, recorder: recorder, now: now, log: log,
+		pool: pool, ledger: l, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		entries: &entryCaller{},
 	}
@@ -156,10 +171,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	return &core{api: served, river: client, deps: deps, plugins: installed}, nil
 }
 
-// viewOptions configures the views with the model portfolio's reports and,
-// when installed is not nil, the installed plugins (D-46, D-58).
-func viewOptions(models viewsapp.ModelReports, installed *viewskube.Plugins) []viewsapp.Option {
-	opts := []viewsapp.Option{viewsapp.WithModel(models)}
+// viewOptions configures the views with the model portfolio's reports, the
+// price checks (D-22) and, when installed is not nil, the installed plugins
+// (D-46, D-58).
+func viewOptions(models viewsapp.ModelReports, checks viewsapp.PriceChecks, installed *viewskube.Plugins) []viewsapp.Option {
+	opts := []viewsapp.Option{viewsapp.WithModel(models), viewsapp.WithPriceChecks(checks)}
 	if installed != nil {
 		opts = append(opts, viewsapp.WithPlugins(installed))
 	}
