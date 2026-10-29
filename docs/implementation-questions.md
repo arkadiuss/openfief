@@ -144,35 +144,43 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
     - *Problem:* the ledger has no interest transaction kind.
     - *Options:* add an interest kind; or keep dividends.
 
-30. **Mid-month changes of the NBP reference rate.**
-    - *Today:* valuation keeps one reading per month, so a change during the month replaces the month's reading.
-    - *Question:* acceptable for M0?
+30. **Who picks the NBP reference rate in force.**
+    - *Today:* the treasury-bonds connector applies the rule itself: the rate in force on the tenth business day before a month is that month's reading, dated on the month's first day. The comment on `IndexReading.date` in the connector contract now says so; the wire format is unchanged.
+    - *Options:* keep; or the connector sends NBP's raw rate changes and the core picks.
+
+31. **The Polish business-day calendar.**
+    - *Today:* Saturdays, Sundays and the holidays in art. 1 of the act on days off work, year by year (6 January from 2011, 24 December from 2025, Easter-based days). Epidemic days off (art. 1a) are not modelled. Dates before 1991 are refused.
+    - *Question:* enough for M0?
+
+32. **GUS CPI defaults.**
+    - *Today:* only final monthly values are used; preliminary, estimated and flash values are skipped and arrive later. The first sync starts January 13 years back (`start` can change it), fetching at most 4 years per sync to stay within GUS's anonymous limits. GUS's indicator 1832 is used up to 2025 and 2728 from 2026, a boundary written into the code. A reference-rate month is delivered once its day has passed and is not fetched again.
+    - *Question:* keep these?
 
 ## Performance and the model portfolio
 
-31. **Transfers between the owner's own accounts (D-61).**
+33. **Transfers between the owner's own accounts (D-61).**
     - *Problem:* the ledger doesn't record which withdrawal became which deposit, but the time-weighted return must not count such transfers as cash flows.
     - *Today:* a withdrawal matches a deposit into another account of the same amount and currency at most 5 calendar days apart, the nearest unmatched deposit first. The performance response lists every match.
     - *Options:* keep the rule (and its window); or record transfers explicitly in the ledger.
 
-32. **Time-weighted return conventions.**
+34. **Time-weighted return conventions.**
     - *Today:* cash flows count at the end of their day; each daily factor and the running product are rounded half-even to 12 decimal places; opening lots count as inflows at their market value on their date.
     - *Question:* keep these?
 
-33. **What the value-over-time chart draws.**
+35. **What the value-over-time chart draws.**
     - *Today:* the chart draws the time-weighted return index from 100 at go-live (D-30 and D-53 read as one chart with two lines from 100), with the value including cash shown alongside. `ListValuationTotals` still sums holdings only, without cash.
     - *Options:* keep; or include cash in `ListValuationTotals` too.
 
-34. **Model portfolio details (D-52 to D-54).**
+36. **Model portfolio details (D-52 to D-54).**
     - *Today:* the model rebalances at the end of each 31 December. A target's own drawdown is in the reporting currency (PLN) over the span where it has both closes and FX rates; P-48, not decided, would use its own currency over its whole history. Weights go in 0.01% steps, at most 50 targets. While the model is off, the read API answers 404.
     - *Question:* keep these?
 
 ## Ghostfolio
 
-35. **Where the Ghostfolio view departs from D-64.**
+37. **Where the Ghostfolio view departs from D-64.**
     - *Today:* the plugin derives its owned accounts' IDs (UUIDv5 of instance and account) instead of generating and storing them, because a plugin has no volume and no Kubernetes API. A stale activity that Ghostfolio's duplicate check would skip is deleted before the import, or the loop never converges. The plugin runs its own timer, since D-49 has the core schedule only connectors.
     - *Question:* acceptable?
 
-36. **How transactions become Ghostfolio activities.**
+38. **How transactions become Ghostfolio activities.**
     - *Today:* a dividend is quantity 1 at the gross amount, with the withheld tax as its fee. Standalone fees go against a manual "OpenFief fees" asset per currency. Cash movements produce no activity, so Ghostfolio shows holdings without cash. Listed instruments need the owner's mapping from ISIN to Ghostfolio's data source and symbol. Bond assets are keyed by the series code only, so two users of one Ghostfolio would collide.
     - *Question:* keep these?
