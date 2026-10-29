@@ -489,3 +489,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce425835e03e
+  - type: executable_for
+    from: SYM-core-test-market-data-service
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:11:50.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb28fa701029

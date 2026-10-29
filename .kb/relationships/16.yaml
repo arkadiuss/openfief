@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad70a121f8e6
+  - type: executable_for
+    from: SYM-ingest-test-plan-sync
+    to: TEST-ingest-golive
+    created_at: 2026-10-29T17:16:59.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86de9ec5edea
+  - type: implements
+    from: SYM-ledger-go-live
+    to: REQ-ledger-go-live
+    created_at: 2026-10-29T17:17:55.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9366825b97cb
+  - type: covered_by
+    from: SYM-ledger-go-live
+    to: TEST-ledger-seed
+    created_at: 2026-10-29T17:17:55.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1dcc7ad46b2

@@ -202,3 +202,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-402643946117
+  - type: implements
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-list-source-rankings
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:28:42.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2f394e94aa9
+  - type: covered_by
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-list-source-rankings
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:28:42.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5d8352567ac

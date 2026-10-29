@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7874be84024
+  - type: executable_for
+    from: SYM-valuation-test-ranked-fx-rates-and-readings
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:19:27.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf5f3f32d78e

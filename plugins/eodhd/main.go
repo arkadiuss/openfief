@@ -1,7 +1,8 @@
 // Command eodhd is OpenFief's first-party market-data connector plugin
 // (D-22, D-51, D-49): the core calls its Sync for the end-of-day closes of
-// the instruments and the levels of the market indices its config lists,
-// from EODHD on the owner's own API key. It reaches eodhd.com only, through
+// the instruments the owner holds and the model portfolio targets, which
+// each sync request names (D-93), and the levels of the model portfolio's
+// market indices, from EODHD on the owner's own API key. It reaches eodhd.com only, through
 // the egress proxy (D-32), and has no ImportFile. The EODHD adapter is
 // internal/valuation/eodhd; this binary only wires it to the SDK.
 //
@@ -15,12 +16,17 @@
 //	 "instruments": [{"isin": "XX00000SYNT3", "exchange": "XETRA", "symbol": "SYNT"}],
 //	 "indices": [{"name": "FAKE20", "ticker": "FAKE20.INDX"}]}
 //
-// Each instrument is found by its ISIN on the Warsaw Stock Exchange, the
-// LSE, Xetra or Euronext; exchange (an EODHD exchange code) picks one when
-// it is listed on several. symbol is its venue symbol as the ledger knows
-// it, by default EODHD's ticker code. Each index is named as the owner
-// calls it and fetched by its EODHD ticker. start is the first day the
-// first sync of each asks for; without it, EODHD's whole history.
+// Every part is optional. instruments adds instruments to watch beyond
+// those the core asks for (D-93), and picks the exchange of one the core
+// asks for that is listed on several. Each is found by its ISIN on the
+// Warsaw Stock Exchange, the LSE, Xetra or Euronext; exchange (an EODHD
+// exchange code) picks one when it is listed on several. symbol is its
+// venue symbol as the ledger knows it, by default EODHD's ticker code; an
+// instrument the core asks for is also delivered under the symbol it gave.
+// indices names a market index's EODHD ticker when it isn't the index's
+// own name plus .INDX; an index the core asks for by name is fetched as
+// that ticker otherwise (D-96). start is the first day the first sync of
+// each asks for; without it, EODHD's whole history.
 package main
 
 import (

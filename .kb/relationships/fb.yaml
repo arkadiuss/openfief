@@ -468,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6618d9c783c9
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-scoped-instrument
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-29T17:16:26.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a003af4ed4ba
+  - type: implements
+    from: SYM-valuation-gen-connect-new-market-data-service-handler
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:28:30.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04da8ff7735e
+  - type: covered_by
+    from: SYM-valuation-gen-connect-new-market-data-service-handler
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:28:30.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0d7c33148d4

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"slices"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -65,7 +66,7 @@ var (
 // authenticate as the core (D-59) and translate the contract into a
 // Delivery; a delivery for another batch than id is an error.
 type ConnectorCaller interface {
-	Sync(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (Delivery, error)
+	Sync(ctx context.Context, instance string, call *SyncCall) (Delivery, error)
 	// ImportFile streams a statement file to instance. A file the connector
 	// refuses wraps ErrEntryRefused with its reason, a connector that takes
 	// no files ErrNoEntries, one that can't be reached
@@ -76,6 +77,16 @@ type ConnectorCaller interface {
 	// as a transactions batch. A refusal wraps ErrEntryRefused, a connector
 	// that takes no bond lots ErrNoEntries.
 	ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (Delivery, error)
+}
+
+// SyncCall is one Sync call to a connector instance: the import batch, its
+// mode, the watermark of the previous sync, and, for a market-data
+// connector, what to price (D-93).
+type SyncCall struct {
+	ID        ingest.BatchID
+	Mode      ingest.Mode
+	Watermark string
+	Scope     ingest.MarketDataScope
 }
 
 // NamedFile is a statement file to import: its contents, the name the owner
@@ -118,6 +129,13 @@ type IndexLevelStore interface {
 	StoreIndexLevels(ctx context.Context, batch ingest.BatchID, levels []valuation.IndexLevel) error
 }
 
+// SourceStore records the market-data sources a delivery's values come
+// from: the instance, with the institution it named, for each kind it
+// delivered (D-94). The institution places a source in its default rank.
+type SourceStore interface {
+	StoreSources(ctx context.Context, batch ingest.BatchID, sources []valuation.Source) error
+}
+
 // CrossCheckPriceStore records cross-check prices (D-22) apart from
 // prices: they value nothing. Recording one again for the same instrument,
 // date and source replaces it, so a retried batch has no further effect.
@@ -130,6 +148,13 @@ type CrossCheckPriceStore interface {
 // terms again replaces them, so a retried batch has no further effect.
 type BondTermsStore interface {
 	StoreBondTerms(ctx context.Context, batch ingest.BatchID, terms []ingest.BondTerms) error
+}
+
+// AccountSeeding tells whether an account is seeded, and its go-live date
+// (D-23): the date of its opening lots and opening cash. The ledger
+// (ledger/app.Ledger.GoLive) answers it.
+type AccountSeeding interface {
+	GoLive(ctx context.Context, account ledger.AccountID) (kernel.Date, bool, error)
 }
 
 // ConnectorBindings knows which accounts each connector instance may write
@@ -175,22 +200,56 @@ type Connectors struct {
 	// accounts they are mapped to (D-72); a delivery that names broker
 	// accounts fails without it.
 	Brokers BrokerAccountStore
+	// Sources records which instances delivered prices, FX rates and index
+	// readings, for the owner's ranking of them (D-94); nil records none.
+	Sources SourceStore
+	// Seeding says which accounts are seeded and from when (D-23, D-95).
+	// A sync never books again what an account's seeding holds: its
+	// opening batch leaves out the seeding of accounts already seeded, and
+	// its transactions batch the transactions dated on or before an
+	// account's go-live (ingest.KeepFromGoLive). Without it, no account
+	// counts as seeded.
+	Seeding AccountSeeding
 	// Today returns the date a batch starts on.
 	Today func() kernel.Date
 }
 
-// Sync pulls instance's data since watermark as import batch id and
-// imports it.
-func (c *Connectors) Sync(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (SyncResult, error) {
-	d, err := c.Caller.Sync(ctx, instance, id, mode, watermark)
+// Sync pulls instance's data since the call's watermark as its import
+// batch and imports it.
+func (c *Connectors) Sync(ctx context.Context, instance string, call *SyncCall) (SyncResult, error) {
+	d, err := c.Caller.Sync(ctx, instance, call)
 	if err != nil {
-		return SyncResult{}, fmt.Errorf("sync %s batch %s: %w", instance, id, err)
+		return SyncResult{}, fmt.Errorf("sync %s batch %s: %w", instance, call.ID, err)
 	}
-	batch, err := c.deliver(ctx, instance, id, SourceSync, mode, &d, nil)
+	batch, err := c.deliver(ctx, instance, call.ID, SourceSync, call.Mode, &d, nil)
 	if err != nil {
 		return SyncResult{}, err
 	}
 	return SyncResult{Batch: batch, Watermark: d.Watermark}, nil
+}
+
+// GoLiveDates returns the go-live date of each of accounts that is seeded,
+// as Seeding answers; none without Seeding.
+func (c *Connectors) GoLiveDates(ctx context.Context, accounts []ledger.AccountID) (map[ledger.AccountID]kernel.Date, error) {
+	out := map[ledger.AccountID]kernel.Date{}
+	if c.Seeding == nil {
+		return out, nil
+	}
+	asked := map[ledger.AccountID]bool{}
+	for _, a := range accounts {
+		if asked[a] {
+			continue
+		}
+		asked[a] = true
+		day, seeded, err := c.Seeding.GoLive(ctx, a)
+		if err != nil {
+			return nil, fmt.Errorf("go-live of %s: %w", a, err)
+		}
+		if seeded {
+			out[a] = day
+		}
+	}
+	return out, nil
 }
 
 // ImportFile hands file, a statement the owner uploaded for account, to
@@ -228,10 +287,12 @@ func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ing
 }
 
 // deliver imports a delivery as one import batch: entries named by broker
-// account resolved into the accounts they are mapped to (D-72), the
-// transactions scoped to the instance into the ledger, seeded in an
+// account resolved into the accounts they are mapped to (D-72), in a sync
+// what accounts' seeding already holds left out (D-95), the transactions
+// scoped to the instance into the ledger, seeded in an
 // opening batch (D-23), then prices, FX rates, index readings, index
-// levels and cross-check prices with the instance as their source, then
+// levels and cross-check prices with the instance as their source, the
+// instance recorded as a source of each kind of market data, then
 // treasury bond series terms. Every index reading must be valid and every
 // transaction and balance assertion must be in an account the instance is
 // bound to, and with only in one of only, or nothing is imported.
@@ -248,15 +309,17 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
+	if source == SourceSync {
+		if m, err = c.keepFromGoLive(ctx, mode, &m); err != nil {
+			return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
+		}
+	}
 	m.Transactions = ingest.ScopeToConnector(instance, m.Transactions)
 	imported, err := importMapping(ctx, c.Ledger, mode, &m)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
-	if err := c.storeInputs(ctx, instance, id, d, readings); err != nil {
-		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
-	}
-	if err := c.storeTerms(ctx, id, d.BondTerms); err != nil {
+	if err := c.storeMarketData(ctx, instance, id, d, readings); err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	if err := c.markSeeded(ctx, instance, seeding); err != nil {
@@ -264,6 +327,20 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	}
 	batch.Complete(&m, imported)
 	return batch, nil
+}
+
+// keepFromGoLive returns m without what its accounts' seeding already holds
+// (ingest.KeepFromGoLive).
+func (c *Connectors) keepFromGoLive(ctx context.Context, mode ingest.Mode, m *ingest.Mapping) (ingest.Mapping, error) {
+	accounts := make([]ledger.AccountID, 0, len(m.Transactions))
+	for i := range m.Transactions {
+		accounts = append(accounts, m.Transactions[i].Account)
+	}
+	goLive, err := c.GoLiveDates(ctx, accounts)
+	if err != nil {
+		return ingest.Mapping{}, err
+	}
+	return ingest.KeepFromGoLive(m, mode, goLive), nil
 }
 
 // admit returns the mapping of d to import, with its broker accounts
@@ -301,6 +378,19 @@ func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.
 	return nil
 }
 
+// storeMarketData records the instance as a source of each kind of market
+// data d carries, then stores its valuation inputs and its treasury bond
+// series terms.
+func (c *Connectors) storeMarketData(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) error {
+	if err := c.storeSources(ctx, instance, id, d); err != nil {
+		return err
+	}
+	if err := c.storeInputs(ctx, instance, id, d, readings); err != nil {
+		return err
+	}
+	return c.storeTerms(ctx, id, d.BondTerms)
+}
+
 // storeInputs stores a delivery's prices, FX rates and the validated index
 // readings, each with the instance as its source; an empty kind is skipped.
 func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) error {
@@ -333,6 +423,31 @@ func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest
 		return err
 	}
 	return c.storeLevels(ctx, instance, id, d.IndexLevels)
+}
+
+// storeSources records instance, with the delivery's institution, as a
+// source of each kind of market data d carries (D-94). Cross-check prices
+// are no ranked source: they never win (D-22).
+func (c *Connectors) storeSources(ctx context.Context, instance string, id ingest.BatchID, d *Delivery) error {
+	if c.Sources == nil {
+		return nil
+	}
+	var sources []valuation.Source
+	for kind, n := range map[valuation.MarketDataKind]int{
+		valuation.KindPrices: len(d.Prices), valuation.KindFXRates: len(d.FXRates), valuation.KindIndexReadings: len(d.IndexReadings),
+	} {
+		if n > 0 {
+			sources = append(sources, valuation.Source{Kind: kind, Name: instance, Institution: string(d.Institution)})
+		}
+	}
+	if len(sources) == 0 {
+		return nil
+	}
+	slices.SortFunc(sources, func(a, b valuation.Source) int { return int(a.Kind) - int(b.Kind) })
+	if err := c.Sources.StoreSources(ctx, id, sources); err != nil {
+		return fmt.Errorf("store market-data sources: %w", err)
+	}
+	return nil
 }
 
 // ErrNoCrossCheckStore reports a delivery with cross-check prices to a

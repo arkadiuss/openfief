@@ -538,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff419fb788f5
+  - type: constrains
+    from: REQ-valuation-lower-ranked-cross-checks
+    to: FACT-SUBJECT-19451673BD884125
+    created_at: 2026-10-29T18:01:42.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-458faf88d406
+  - type: requires_property
+    from: REQ-valuation-lower-ranked-cross-checks
+    to: FACT-PROP-818A047B057FE3D1
+    created_at: 2026-10-29T18:01:42.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f3ed714a8bd
+  - type: specified_by
+    from: REQ-valuation-lower-ranked-cross-checks
+    to: SCEN-valuation-lower-ranked-cross-checks
+    created_at: 2026-10-29T18:01:42.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bc83a26c775

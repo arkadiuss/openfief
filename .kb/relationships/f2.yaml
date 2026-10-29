@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78f502794301
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-rankings
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:13:33.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f1d238742c9
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-request-proto-message
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:25:59.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f077bd5087a5
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-request-proto-message
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:25:59.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d44835100e6f

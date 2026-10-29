@@ -13,6 +13,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
@@ -26,7 +27,7 @@ const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService and MarketDataService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -49,6 +50,9 @@ type Config struct {
 	Sleeves portfoliov1connect.SleeveServiceClient
 	// Accounts calls the core's AccountService (D-72, D-79) like Auth.
 	Accounts ingestv1connect.AccountServiceClient
+	// MarketData calls the core's MarketDataService (D-94, D-79) like
+	// Auth: the owner's ranking of market-data sources.
+	MarketData valuationv1connect.MarketDataServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -63,7 +67,7 @@ type Config struct {
 // the core with.
 func (cfg *Config) missingClient() bool {
 	return cfg.Auth == nil || cfg.Model == nil || cfg.BondLots == nil || cfg.Statements == nil || cfg.Read == nil ||
-		cfg.Sleeves == nil || cfg.Accounts == nil
+		cfg.Sleeves == nil || cfg.Accounts == nil || cfg.MarketData == nil
 }
 
 // server holds the UI's handlers.
@@ -74,6 +78,7 @@ type server struct {
 	statements ingestv1connect.StatementServiceClient
 	sleeves    portfoliov1connect.SleeveServiceClient
 	accounts   ingestv1connect.AccountServiceClient
+	marketData valuationv1connect.MarketDataServiceClient
 	read       viewsv1connect.ReadServiceClient
 	pages      *pages
 	today      func() kernel.Date
@@ -93,7 +98,7 @@ func New(cfg *Config) (http.Handler, error) {
 	}
 	s := &server{
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
-		sleeves: cfg.Sleeves, accounts: cfg.Accounts,
+		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData,
 		pages: p, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
@@ -138,6 +143,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /settings/tokens/{id}/revoke", s.withOwner(s.revokeToken))
 	mux.HandleFunc("POST /settings/enrollment-links", s.withOwner(s.createEnrollmentLink))
 	mux.HandleFunc("POST /settings/model", s.withOwner(s.saveModel))
+	mux.HandleFunc("POST /settings/market-data", s.withOwner(s.rankSources))
 	s.onboardingRoutes(mux)
 	return mux
 }

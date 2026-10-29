@@ -468,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb18f84942e7
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-stores-store-sources
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T18:12:18.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeae77fa26cc
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-response-proto-reflect
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:08.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d26d9c783c7
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-response-proto-reflect
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:08.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f54662e4387d

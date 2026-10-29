@@ -7,4 +7,4 @@ origin:
 id: SCEN-ingest-sync-when-due
 type: scenario
 ---
-Given a six-hour interval with jitter, when an instance has never synced, then the next tick syncs it in opening mode; when it has synced, then it is not synced again before the interval plus jitter, and then it syncs in transactions mode with the watermark the last sync returned.
+Given an instance that never synced, when the scheduler ticks, then it syncs at once in the batches its bound accounts' seeding calls for; a tick six hours later, before the interval plus its ten minutes of jitter, starts nothing; a tick after it syncs in transactions mode from the stored watermark once the account is seeded, and the next sync is due after the interval plus jitter again. The policy refuses a non-positive interval or first retry, a negative jitter and a maximum retry below the first.

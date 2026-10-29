@@ -531,3 +531,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-511645b4f85d
+  - type: implements
+    from: SYM-valuation-rank-sources
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:17:40.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de9d379ca53f
+  - type: implements
+    from: SYM-valuation-rank-sources
+    to: REQ-valuation-market-data-default-ranking
+    created_at: 2026-10-29T18:17:40.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f8b1394937e
+  - type: covered_by
+    from: SYM-valuation-rank-sources
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:17:40.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75796702ba0a
+  - type: implements
+    from: SYM-valuation-rank-of
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:18:00.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b789c60ae2b4
+  - type: implements
+    from: SYM-valuation-rank-of
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:18:00.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83c77f878eef
+  - type: covered_by
+    from: SYM-valuation-rank-of
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:18:00.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44a93d4cf1b3

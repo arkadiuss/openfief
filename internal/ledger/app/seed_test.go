@@ -81,6 +81,25 @@ func TestSeed(t *testing.T) {
 	checkSummary(t, &app.ImportSummary{New: 2, EarliestAffected: affected(t, "acc-2", "2026-03-31")}, &sum)
 }
 
+func TestGoLive(t *testing.T) {
+	t.Parallel()
+	l, _ := seeded(t)
+	ctx := t.Context()
+	if _, err := l.Seed(ctx, seeding(t, acc1, "2026-03-31", "1500", "250"), nil); err != nil {
+		t.Fatalf("Seed: %v", err)
+	}
+	day, ok, err := l.GoLive(ctx, acc1)
+	if err != nil || !ok || !day.Equal(date(t, "2026-03-31")) {
+		t.Errorf("GoLive(acc-1) = %s, %v, %v; want 2026-03-31, true", day, ok, err)
+	}
+	if _, ok, err := l.GoLive(ctx, acc2); err != nil || ok {
+		t.Errorf("GoLive(acc-2) = %v, %v; want not seeded", ok, err)
+	}
+	if _, _, err := l.GoLive(ctx, "acc-9"); !errors.Is(err, app.ErrUnknownAccount) {
+		t.Errorf("GoLive(acc-9) error = %v, want ErrUnknownAccount", err)
+	}
+}
+
 func TestSeedOfAnUnknownAccount(t *testing.T) {
 	t.Parallel()
 	l, store := seeded(t)

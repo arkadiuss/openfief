@@ -349,3 +349,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c92b7a92932
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-bond-isi-ns-bond-terms
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:14:26.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bae009a55998
+  - type: executable_for
+    from: SYM-ui-test-helper-new-fake-market-data
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:20:37.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9cbdccb3f96
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-request-string
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:25:52.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30e0ad8897d7
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-request-string
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:25:52.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fc81fdb2ed6
+  - type: implements
+    from: SYM-valuation-gen-pb-file_openfief_valuation_v1_market_data_proto_raw-desc-gzip
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:27.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96af5e190268
+  - type: covered_by
+    from: SYM-valuation-gen-pb-file_openfief_valuation_v1_market_data_proto_raw-desc-gzip
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:27.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e826ce5ca7cc

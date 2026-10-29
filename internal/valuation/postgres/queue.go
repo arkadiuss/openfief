@@ -137,7 +137,7 @@ func (s *Store) SavePrices(ctx context.Context, prices []valuation.Price, revals
 		for _, p := range prices {
 			batch.Queue(`
 				INSERT INTO valuation.prices (instrument, date, close, currency, source) VALUES ($1, $2, $3, $4, $5)
-				ON CONFLICT (instrument, date) DO UPDATE SET close = EXCLUDED.close, currency = EXCLUDED.currency, source = EXCLUDED.source`,
+				ON CONFLICT (instrument, date, source) DO UPDATE SET close = EXCLUDED.close, currency = EXCLUDED.currency`,
 				p.Instrument, p.Date.String(), p.Close.Amount().String(), p.Close.Currency().String(), p.Source)
 		}
 		return tx.SendBatch(ctx, batch).Close()
@@ -155,7 +155,7 @@ func (s *Store) SaveFXRates(ctx context.Context, rates []valuation.FXRate, reval
 		for _, r := range rates {
 			batch.Queue(`
 				INSERT INTO valuation.fx_rates (currency, date, rate, source) VALUES ($1, $2, $3, $4)
-				ON CONFLICT (currency, date) DO UPDATE SET rate = EXCLUDED.rate, source = EXCLUDED.source`,
+				ON CONFLICT (currency, date, source) DO UPDATE SET rate = EXCLUDED.rate`,
 				r.Currency.String(), r.Date.String(), r.Rate.String(), r.Source)
 		}
 		return tx.SendBatch(ctx, batch).Close()
@@ -192,7 +192,7 @@ func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.Inde
 		for _, r := range readings {
 			batch.Queue(`
 				INSERT INTO valuation.index_readings (kind, year, month, value, source) VALUES ($1, $2, $3, $4, $5)
-				ON CONFLICT (kind, year, month) DO UPDATE SET value = EXCLUDED.value, source = EXCLUDED.source`,
+				ON CONFLICT (kind, year, month, source) DO UPDATE SET value = EXCLUDED.value`,
 				r.Kind.String(), r.Year, int(r.Month), r.Value.String(), r.Source)
 		}
 		return tx.SendBatch(ctx, batch).Close()

@@ -116,6 +116,20 @@ func (l *Ledger) AssertionChecks(ctx context.Context, account ledger.AccountID) 
 	return c, nil
 }
 
+// GoLive returns account's go-live date, the day it was seeded
+// (ledger.GoLive), and false when it is not seeded.
+func (l *Ledger) GoLive(ctx context.Context, account ledger.AccountID) (kernel.Date, bool, error) {
+	log, err := l.log(ctx, account)
+	if err != nil {
+		return kernel.Date{}, false, err
+	}
+	day, seeded, err := ledger.GoLive(log, account)
+	if err != nil {
+		return kernel.Date{}, false, fmt.Errorf("go-live of %s: %w", account, err)
+	}
+	return day, seeded, nil
+}
+
 // log returns the stored log of account, which must be stored.
 func (l *Ledger) log(ctx context.Context, account ledger.AccountID) ([]ledger.VersionedTransaction, error) {
 	if _, err := lookupAccount(ctx, l.store, account); err != nil {

@@ -223,13 +223,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-906d34a3d25f
-  - type: implements
-    from: SYM-ingest-sched-app-scheduler
-    to: REQ-ingest-scheduler-due
-    created_at: 2026-10-28T16:51:53.031Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-219079dbdfeb
   - type: covered_by
     from: SYM-ingest-sched-app-scheduler
     to: TEST-ingest-app-scheduler
@@ -426,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cfb55670c88
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler
+    to: REQ-ingest-scheduler-when-due
+    created_at: 2026-10-29T17:21:08.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e2a31c17018

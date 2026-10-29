@@ -343,9 +343,37 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-bf1558e89b08
   - type: executable_for
-    from: SYM-ingest-postgres-test-helper-complete-opening
-    to: TEST-ingest-postgres-brokers
-    created_at: 2026-10-29T11:53:21.672Z
+    from: SYM-ingest-app-test-helper-locked-ledger-go-live
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:15:37.282Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-5264c8f7c6f4
+    id: rel-8b3dbf6c9c5b
+  - type: implements
+    from: SYM-ui-kind-name
+    to: REQ-ui-market-data-ranking
+    created_at: 2026-10-29T18:19:34.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba6d971b71fd
+  - type: covered_by
+    from: SYM-ui-kind-name
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:19:34.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d7446988a17
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-response
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:24:55.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0e25cf07bf7
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-response
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:24:55.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7105f074990e

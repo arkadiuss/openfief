@@ -70,6 +70,29 @@ func IsSeeded(log []VersionedTransaction, account AccountID) (bool, error) {
 	return false, nil
 }
 
+// GoLive returns account's go-live date: the latest date of a current
+// seeding transaction of account in log (IsSeeding), which is the day its
+// opening lots and opening cash were taken (D-23); and false when account
+// is not seeded. Superseded versions don't count.
+func GoLive(log []VersionedTransaction, account AccountID) (kernel.Date, bool, error) {
+	current, err := CurrentTransactions(log)
+	if err != nil {
+		return kernel.Date{}, false, err
+	}
+	var day kernel.Date
+	seeded := false
+	for i := range current {
+		t := &current[i]
+		if t.Account != account || !IsSeeding(t) {
+			continue
+		}
+		if !seeded || t.Date.After(day) {
+			day, seeded = t.Date, true
+		}
+	}
+	return day, seeded, nil
+}
+
 // SeedDecision says what to do with a seeding of one account.
 type SeedDecision int
 

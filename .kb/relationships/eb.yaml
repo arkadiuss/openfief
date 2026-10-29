@@ -272,3 +272,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88b7686b4027
+  - type: implements
+    from: SYM-valuation-postgres-store-rank-of
+    to: REQ-valuation-market-data-all-sources-stored
+    created_at: 2026-10-29T18:16:00.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b4d8f602ccf
+  - type: implements
+    from: SYM-valuation-postgres-store-rank-of
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:16:00.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcbc9aab30f
+  - type: covered_by
+    from: SYM-valuation-postgres-store-rank-of
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:16:00.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96633926865d
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-request-reset
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:24:11.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13a39276bd92
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-request-reset
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:24:11.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-695ad3616f7f
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-response-string
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:26:56.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7336d5069080
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-response-string
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:26:56.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c86ffab641e

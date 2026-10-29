@@ -461,3 +461,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b12ea7bf4de3
+  - type: executable_for
+    from: SYM-valuation-test-helper-ranked-price
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:19:15.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3458821249f9

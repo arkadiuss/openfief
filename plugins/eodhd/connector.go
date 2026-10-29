@@ -40,10 +40,12 @@ type marketData interface {
 }
 
 // connector serves EODHD end-of-day closes and index levels (D-22, D-51)
-// through the connector contract. Its watermark holds the date of the
-// latest close it delivered for each instrument and index, so each sync
-// asks only for the days after it, up to today, and an instrument added to
-// the config later starts from the configured start.
+// through the connector contract, for the instruments and indices each
+// sync request names, which the owner holds or targets (D-93), and those
+// its config lists to watch. Its watermark holds the date of the latest
+// close it delivered for each instrument and index, so each sync asks only
+// for the days after it, up to today, and an instrument first asked for or
+// added to the config later starts from the configured start.
 type connector struct {
 	connectorv1connect.UnimplementedConnectorServiceHandler
 
@@ -53,14 +55,20 @@ type connector struct {
 	today   func() kernel.Date
 }
 
-// Sync returns each configured instrument's closes and each index's levels
-// since the watermark. An instrument EODHD doesn't list on a supported
-// exchange, or lists ambiguously, and an index ticker it doesn't know are
-// ingest problems in the delivery, and the rest is still delivered. A
-// missing API key is FailedPrecondition; EODHD failing otherwise is
-// Unavailable, so the core retries the batch.
+// Sync returns the closes of each instrument and the levels of each index
+// the request or the config names (config.targetsFor) since the watermark.
+// An instrument EODHD doesn't list on a supported exchange, or lists
+// ambiguously, and an index ticker it doesn't know are ingest problems in
+// the delivery, reported again on every sync, and the rest is still
+// delivered. A request naming an invalid instrument or watermark is
+// InvalidArgument; a missing API key is FailedPrecondition; EODHD failing
+// otherwise is Unavailable, so the core retries the batch.
 func (c *connector) Sync(ctx context.Context, req *connect.Request[connectorv1.SyncRequest]) (*connect.Response[connectorv1.SyncResponse], error) {
 	marks, err := parseWatermark(req.Msg.GetWatermark())
+	if err != nil {
+		return nil, status(connect.CodeInvalidArgument, err)
+	}
+	t, err := c.cfg.targetsFor(req.Msg)
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
 	}
@@ -68,13 +76,13 @@ func (c *connector) Sync(ctx context.Context, req *connect.Request[connectorv1.S
 	if err != nil {
 		return nil, status(connect.CodeFailedPrecondition, err)
 	}
-	s := syncRun{src: c.source(token), marks: marks, start: c.cfg.start, today: c.today()}
-	for _, in := range c.cfg.instruments {
+	s := syncRun{src: c.source(token), marks: marks, start: c.cfg.start, today: c.today(), problems: t.problems}
+	for _, in := range t.instruments {
 		if fetchErr := s.instrument(ctx, in); fetchErr != nil {
 			return nil, status(connect.CodeUnavailable, fmt.Errorf("eodhd: %w", fetchErr))
 		}
 	}
-	for _, ix := range c.cfg.indices {
+	for _, ix := range t.indices {
 		if fetchErr := s.index(ctx, ix); fetchErr != nil {
 			return nil, status(connect.CodeUnavailable, fmt.Errorf("eodhd: %w", fetchErr))
 		}
@@ -102,7 +110,8 @@ type syncRun struct {
 }
 
 // instrument adds in's closes since its mark: it finds the listing by ISIN,
-// fetches its closes and quotes them in the listing's currency.
+// fetches its closes and quotes them in the listing's currency, one price
+// per close and symbol.
 func (s *syncRun) instrument(ctx context.Context, in instrument) error {
 	key := in.isin.String()
 	from, due := nextFrom(s.marks.Prices, key, s.start, s.today)
@@ -122,19 +131,20 @@ func (s *syncRun) instrument(ctx context.Context, in instrument) error {
 	if err != nil || len(closes) == 0 {
 		return err
 	}
-	symbol := in.symbol
-	if symbol == "" {
-		symbol = listing.Code
+	symbols := in.symbols
+	if len(symbols) == 0 {
+		symbols = []string{listing.Code}
 	}
-	held := ledger.Instrument{ISIN: in.isin, Symbol: symbol}
-	prices := make([]*connectorv1.Price, 0, len(closes))
+	prices := make([]*connectorv1.Price, 0, len(closes)*len(symbols))
 	for _, cl := range closes {
 		m, err := listing.Quote(cl.Close)
 		if err != nil {
 			s.problems = append(s.problems, ingest.Unsupported(key, err.Error()))
 			return nil
 		}
-		prices = append(prices, delivery.Price(held, cl.Date, m))
+		for _, symbol := range symbols {
+			prices = append(prices, delivery.Price(ledger.Instrument{ISIN: in.isin, Symbol: symbol}, cl.Date, m))
+		}
 	}
 	s.prices = append(s.prices, prices...)
 	s.marks.Prices[key] = closes[len(closes)-1].Date.String()

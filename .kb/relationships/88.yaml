@@ -181,13 +181,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e30098d1d2b2
-  - type: implements
-    from: SYM-ingest-sched-app-scheduler-logger
-    to: REQ-ingest-scheduler-due
-    created_at: 2026-10-28T16:52:29.917Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ba64175aa445
   - type: covered_by
     from: SYM-ingest-sched-app-scheduler-logger
     to: TEST-ingest-app-scheduler
@@ -461,3 +454,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8442281b8159
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-logger
+    to: REQ-ingest-scheduler-when-due
+    created_at: 2026-10-29T17:21:19.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca493d4d1edd
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-response-reset
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:25:01.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1428c432a6f9
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-response-reset
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:25:01.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-171399dc2f5d

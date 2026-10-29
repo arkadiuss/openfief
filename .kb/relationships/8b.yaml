@@ -181,13 +181,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22b43c120949
-  - type: implements
-    from: SYM-ingest-sched-sync-policy-validate
-    to: REQ-ingest-scheduler-due
-    created_at: 2026-10-28T16:58:50.360Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bc4eacce89e2
   - type: covered_by
     from: SYM-ingest-sched-sync-policy-validate
     to: TEST-ingest-schedule
@@ -531,3 +524,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c13174fe7c4a
+  - type: validates
+    from: TEST-plugins-eodhd-connector
+    to: REQ-ingest-market-data-watch-list
+    created_at: 2026-10-29T16:58:28.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee09d71840a6
+  - type: validates
+    from: TEST-plugins-eodhd-connector
+    to: REQ-plugins-eodhd-unpriced-reported
+    created_at: 2026-10-29T16:58:28.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6acf6dac57f
+  - type: validates
+    from: TEST-plugins-eodhd-connector
+    to: REQ-plugins-eodhd-index-by-name
+    created_at: 2026-10-29T16:58:28.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7967b6bf9d0d
+  - type: implements
+    from: SYM-ingest-sched-sync-policy-validate
+    to: REQ-ingest-scheduler-when-due
+    created_at: 2026-10-29T17:22:24.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bfb85eb8e34

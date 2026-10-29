@@ -149,6 +149,8 @@ type syncCase struct {
 	name          string
 	instruments   []rawInstrument
 	indices       []rawIndex
+	asked         []*connectorv1.Instrument
+	askedIndices  []string
 	start         string
 	watermark     string
 	today         string
@@ -225,6 +227,35 @@ func syncCases() []syncCase {
 			name: "EODHD failing is unavailable, so the core retries", instruments: both, today: "2025-01-03", err: errEODHDDown,
 			wantAsked: []string{"search " + fakewISIN}, wantCode: connect.CodeUnavailable,
 		},
+		{
+			name: "the core's instruments and indices are priced without config (D-93)", start: "2025-01-02", today: "2025-01-02",
+			asked: []*connectorv1.Instrument{{Isin: fakewISIN, Symbol: "FAKEWH"}}, askedIndices: []string{"FAKE20"},
+			wantAsked:     []string{"search " + fakewISIN, "eod FAKEW.WAR 2025-01-02..2025-01-02", "eod FAKE20.INDX 2025-01-02..2025-01-02"},
+			wantPrices:    []*connectorv1.Price{price(fakewISIN, "FAKEWH", "2025-01-02", "42.1", "PLN")},
+			wantLevels:    []*connectorv1.IndexLevel{level("2025-01-02", "2401.17")},
+			wantWatermark: `{"prices":{"XX0000FAKEW1":"2025-01-02"},"indices":{"FAKE20":"2025-01-02"}}`,
+		},
+		{
+			name: "a watched ISIN the core asks for is delivered under both symbols", start: "2025-01-02", today: "2025-01-02",
+			instruments: []rawInstrument{{ISIN: syntISIN, Exchange: "LSE", Symbol: "SYNTL"}}, indices: fake20,
+			asked: []*connectorv1.Instrument{{Isin: syntISIN, Symbol: "SYNT2"}, {Isin: syntISIN, Symbol: "SYNTL"}}, askedIndices: []string{"FAKE20"},
+			wantAsked: []string{"search " + syntISIN, "eod SYNT.LSE 2025-01-02..2025-01-02", "eod FAKE20.INDX 2025-01-02..2025-01-02"},
+			wantPrices: []*connectorv1.Price{
+				price(syntISIN, "SYNTL", "2025-01-02", "84.125", "GBP"), price(syntISIN, "SYNT2", "2025-01-02", "84.125", "GBP"),
+			},
+			wantLevels:    []*connectorv1.IndexLevel{level("2025-01-02", "2401.17")},
+			wantWatermark: `{"prices":{"XX00000SYNT3":"2025-01-02"},"indices":{"FAKE20":"2025-01-02"}}`,
+		},
+		{
+			name: "an ambiguous ISIN and an index name that is no ticker are problems on every sync", start: "2025-01-02", today: "2025-01-02",
+			asked: []*connectorv1.Instrument{{Isin: syntISIN, Symbol: "SYNT"}}, askedIndices: []string{"WIG 20"},
+			wantAsked: []string{"search " + syntISIN},
+			wantProblems: []*connectorv1.Problem{
+				unsupported("WIG 20", "no EODHD index ticker for this name; list it in the config with its ticker"),
+				unsupported(syntISIN, "listed on more than one supported exchange: XX00000SYNT3 as SYNT.XETRA, SYNT.LSE; name one exchange"),
+			},
+		},
+		{name: "an invalid instrument in the request", asked: []*connectorv1.Instrument{{Isin: "XX0000000000", Symbol: "BAD"}}, today: "2025-01-03", wantCode: connect.CodeInvalidArgument},
 		{name: "a watermark this connector never wrote", instruments: both, watermark: "2025-01-03", today: "2025-01-03", wantCode: connect.CodeInvalidArgument},
 		{name: "a mark that is not a date", instruments: both, watermark: `{"prices":{"XX0000FAKEW1":"yesterday"}}`, today: "2025-01-03", wantCode: connect.CodeInvalidArgument},
 		{name: "no API key in the Secret", instruments: both, today: "2025-01-03", key: "-", wantCode: connect.CodeFailedPrecondition},
@@ -262,6 +293,7 @@ func syncWith(t *testing.T, tt *syncCase) (*connectorv1.SyncResponse, *fakeEODHD
 	}
 	resp, err := c.Sync(t.Context(), connect.NewRequest(&connectorv1.SyncRequest{
 		BatchId: "b-1", Mode: connectorv1.Mode_MODE_TRANSACTIONS, Watermark: tt.watermark,
+		Instruments: tt.asked, Indices: tt.askedIndices,
 	}))
 	if err != nil {
 		return nil, src, err

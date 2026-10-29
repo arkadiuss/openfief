@@ -290,7 +290,7 @@ func checkCompletion(t *testing.T, pool *pgxpool.Pool, s *postgres.Store) {
 	if err := s.CompleteSync(ctx, "xtb-main", b, "w-1", next, t0().Add(3*time.Minute)); err != nil {
 		t.Fatalf("CompleteSync: %v", err)
 	}
-	if diff := cmp.Diff(app.SyncClaim{Watermark: "w-1", Seeded: true}, claim(t, s, "xtb-main", t0().Add(4*time.Minute))); diff != "" {
+	if diff := cmp.Diff(app.SyncClaim{Watermark: "w-1"}, claim(t, s, "xtb-main", t0().Add(4*time.Minute))); diff != "" {
 		t.Errorf("claim after the success (-want +got):\n%s", diff)
 	}
 	if got := batchState(t, pool, "b-1"); got != "completed after 2" {

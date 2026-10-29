@@ -454,3 +454,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-179890d04608
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-model-targets-market-data-targets
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:14:38.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9837f8b6bda6
+  - type: implements
+    from: SYM-ingest-keep-from-go-live
+    to: REQ-ingest-sync-keeps-from-go-live
+    created_at: 2026-10-29T17:16:46.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2f7208fb1da
+  - type: covered_by
+    from: SYM-ingest-keep-from-go-live
+    to: TEST-ingest-golive
+    created_at: 2026-10-29T17:16:46.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-956665810937
+  - type: implements
+    from: SYM-valuation-gen-pb-ranked-source-proto-reflect
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:22:38.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9428ae28a68d
+  - type: covered_by
+    from: SYM-valuation-gen-pb-ranked-source-proto-reflect
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:22:38.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca0a1a2c5146

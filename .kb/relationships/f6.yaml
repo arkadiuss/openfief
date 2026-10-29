@@ -342,3 +342,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28dff60d87e7
+  - type: constrains
+    from: REQ-plugins-eodhd-requested-instruments
+    to: FACT-SUBJECT-E0600C8A951C6985
+    created_at: 2026-10-29T16:58:12.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b1d63f9d870
+  - type: requires_property
+    from: REQ-plugins-eodhd-requested-instruments
+    to: FACT-PROP-3781BDC39E2D8EEF
+    created_at: 2026-10-29T16:58:12.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65b3db06232f
+  - type: specified_by
+    from: REQ-plugins-eodhd-requested-instruments
+    to: SCEN-plugins-eodhd-requested-instruments
+    created_at: 2026-10-29T16:58:12.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a341397e58b3
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-rankings-save-source-ranking
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:13:54.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27a783596cdd
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-request-get-sources
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:26:37.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48bf5208b4ba
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-request-get-sources
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:26:37.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2a38de78e56

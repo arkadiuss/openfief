@@ -412,3 +412,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64e2c00ba337
+  - type: validates
+    from: TEST-valuation-app-ranking
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:00:41.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49066fbc4998
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-request
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:24:05.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68396112f0cd
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-request
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:24:05.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a1fd48e716a
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-response-descriptor
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:14.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ff0e8398f9a
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-response-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:14.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d1180ce1aef

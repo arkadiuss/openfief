@@ -72,6 +72,37 @@ func (m *Models) Save(ctx context.Context, origin, sessionToken string, model po
 	return model, nil
 }
 
+// MarketDataTargets returns the model portfolio's instrument targets and
+// its index targets by name, for the market-data connectors to price
+// (D-93), in the owner's order; none while the model is off (D-52). It
+// needs no session: the core asks for the connectors' syncs. A stored
+// instrument that doesn't parse is an error.
+func (m *Models) MarketDataTargets(ctx context.Context) ([]ledger.Instrument, []string, error) {
+	model, err := m.store.Model(ctx)
+	if err != nil {
+		return nil, nil, fmt.Errorf("loading the model portfolio: %w", err)
+	}
+	if !model.Enabled {
+		return nil, nil, nil
+	}
+	var instruments []ledger.Instrument
+	var indices []string
+	for i := range model.Targets {
+		t := &model.Targets[i]
+		switch t.Kind {
+		case portfolio.TargetInstrument:
+			in, err := ParseInstrument(t.Name)
+			if err != nil {
+				return nil, nil, fmt.Errorf("the model portfolio's target %d: %w", i+1, err)
+			}
+			instruments = append(instruments, in)
+		case portfolio.TargetIndex:
+			indices = append(indices, t.Name)
+		}
+	}
+	return instruments, indices, nil
+}
+
 // CheckModel checks model's rules (Model.Validate) and that each instrument
 // target names an instrument as the ledger writes one: "ISIN/symbol" with
 // a valid ISIN and a symbol.

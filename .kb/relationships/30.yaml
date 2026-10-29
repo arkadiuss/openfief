@@ -363,3 +363,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b71c8e4954f4
+  - type: constrains
+    from: REQ-ledger-go-live
+    to: FACT-SUBJECT-1FF018E868223570
+    created_at: 2026-10-29T16:57:52.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-049a44445a75
+  - type: requires_property
+    from: REQ-ledger-go-live
+    to: FACT-PROP-B32445FC2F64CD5F
+    created_at: 2026-10-29T16:57:52.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c65aa5f5f9a3
+  - type: specified_by
+    from: REQ-ledger-go-live
+    to: SCEN-ledger-go-live
+    created_at: 2026-10-29T16:57:52.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd462fb6f142

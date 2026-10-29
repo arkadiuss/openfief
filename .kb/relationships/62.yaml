@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea1360a12883
+  - type: executable_for
+    from: SYM-ingest-test-helper-scope-instrument
+    to: TEST-ingest-marketdata
+    created_at: 2026-10-29T17:17:29.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec96b196927f
+  - type: implements
+    from: SYM-valuation-gen-pb-market-data-kind-number
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:21:55.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4c079447d68
+  - type: covered_by
+    from: SYM-valuation-gen-pb-market-data-kind-number
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:21:55.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aec869b2850c

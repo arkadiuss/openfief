@@ -489,3 +489,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7063f6bfc3d5
+  - type: implements
+    from: SYM-ingest-app-connectors-keep-from-go-live
+    to: REQ-ingest-sync-keeps-from-go-live
+    created_at: 2026-10-29T17:12:44.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3ce60ecdfb8
+  - type: covered_by
+    from: SYM-ingest-app-connectors-keep-from-go-live
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T17:12:44.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cd610c7ccda
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-request-descriptor
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:24:37.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01615b1d1d48
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-request-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:24:37.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8379e6cddd11

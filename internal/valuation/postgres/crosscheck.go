@@ -1,9 +1,11 @@
 package postgres
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 
 	"github.com/jackc/pgx/v5"
 
@@ -34,20 +36,31 @@ func (s *Store) SaveCrossCheckPrices(ctx context.Context, prices []valuation.Cro
 	return nil
 }
 
-// CrossCheckedPrices returns every cross-check price, and every price of an
-// instrument and date that has one, both in instrument then date order.
+// CrossCheckedPrices returns the prices to compare and what to compare
+// them with (D-22, D-94): the winning price of every instrument and date
+// that has a cross-check price or more than one source's price, in
+// instrument then date order; and every cross-check price with every
+// lower-ranked source's price as one (valuation.LowerRankedChecks), in
+// instrument, date and source order.
 func (s *Store) CrossCheckedPrices(ctx context.Context) ([]valuation.Price, []valuation.CrossCheckPrice, error) {
+	rank, err := s.rankOf(ctx, valuation.KindPrices)
+	if err != nil {
+		return nil, nil, err
+	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT p.instrument, p.date::text, p.close::text, p.currency, p.source FROM valuation.prices p
 		WHERE EXISTS (SELECT 1 FROM valuation.cross_check_prices c WHERE c.instrument = p.instrument AND c.date = p.date)
-		ORDER BY p.instrument, p.date`)
+		   OR EXISTS (SELECT 1 FROM valuation.prices o WHERE o.instrument = p.instrument AND o.date = p.date AND o.source <> p.source)
+		ORDER BY p.instrument, p.date, p.source`)
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading cross-checked prices: %w", err)
 	}
-	prices, err := pgx.CollectRows(rows, scanPrice)
+	all, err := pgx.CollectRows(rows, scanPrice)
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading cross-checked prices: %w", err)
 	}
+	ranked := valuation.RankedPrices(all, rank)
+	prices := ranked.Winners
 	rows, err = s.pool.Query(ctx, `
 		SELECT instrument, date::text, close::text, currency, source FROM valuation.cross_check_prices
 		ORDER BY instrument, date, source`)
@@ -58,6 +71,10 @@ func (s *Store) CrossCheckedPrices(ctx context.Context) ([]valuation.Price, []va
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading cross-check prices: %w", err)
 	}
+	checks = append(checks, valuation.LowerRankedChecks(ranked.Lower)...)
+	slices.SortStableFunc(checks, func(a, b valuation.CrossCheckPrice) int {
+		return cmp.Or(cmp.Compare(a.Instrument, b.Instrument), a.Date.Compare(b.Date), cmp.Compare(a.Source, b.Source))
+	})
 	return prices, checks, nil
 }
 

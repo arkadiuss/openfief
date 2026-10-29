@@ -405,3 +405,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1e1a1bccd83
+  - type: implements
+    from: SYM-valuation-default-institution
+    to: REQ-valuation-market-data-default-ranking
+    created_at: 2026-10-29T18:17:04.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86c3589c541f
+  - type: covered_by
+    from: SYM-valuation-default-institution
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:17:04.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d012c3d4598d

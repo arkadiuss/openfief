@@ -713,3 +713,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f64c7ad9c165
+  - type: implements
+    from: SYM-ingest-app-sync-call
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-10-29T17:12:21.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-365a92f36d97
+  - type: implements
+    from: SYM-ingest-app-sync-call
+    to: REQ-ingest-sync-mode-from-ledger
+    created_at: 2026-10-29T17:12:21.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33a557e4177d
+  - type: covered_by
+    from: SYM-ingest-app-sync-call
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:12:21.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84d03c9ea75a

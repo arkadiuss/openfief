@@ -41,19 +41,13 @@ func New(pool *pgxpool.Pool) *Store {
 }
 
 // ClaimSync claims instance until until, unless an unexpired claim holds
-// it at now, and returns its state; a new instance starts with none. The
-// instance counts as seeded only while every broker account mapped for it
-// is seeded too, so a broker account the owner maps later is seeded by the
-// next sync (D-72, D-23).
+// it at now, and returns its state; a new instance starts with none.
 func (s *Store) ClaimSync(ctx context.Context, instance string, now, until time.Time) (app.SyncClaim, error) {
 	rows, err := s.pool.Query(ctx, `
 		INSERT INTO ingest.connector_instances AS i (instance, lease_until) VALUES ($1, $3)
 		ON CONFLICT (instance) DO UPDATE SET lease_until = EXCLUDED.lease_until
 			WHERE i.lease_until IS NULL OR i.lease_until <= $2
-		RETURNING watermark,
-			seeded AND NOT EXISTS (SELECT FROM ingest.broker_accounts b
-				WHERE b.instance = i.instance AND b.account_id IS NOT NULL AND NOT b.seeded),
-			failures, open_batch,
+		RETURNING watermark, failures, open_batch,
 			(SELECT b.mode FROM ingest.import_batches b WHERE b.id = i.open_batch)`,
 		instance, now, until)
 	if err != nil {
@@ -75,7 +69,7 @@ func scanClaim(row pgx.CollectableRow) (app.SyncClaim, error) {
 		c          app.SyncClaim
 		open, mode *string
 	)
-	if err := row.Scan(&c.Watermark, &c.Seeded, &c.Failures, &open, &mode); err != nil {
+	if err := row.Scan(&c.Watermark, &c.Failures, &open, &mode); err != nil {
 		return app.SyncClaim{}, fmt.Errorf("scanning: %w", err)
 	}
 	if open != nil && mode != nil {
@@ -126,7 +120,7 @@ func (s *Store) StartBatch(ctx context.Context, instance string, b app.OpenBatch
 }
 
 // CompleteSync records b as completed and stores the instance's watermark,
-// seeded flag, next sync and released claim, in one database transaction.
+// next sync and released claim, in one database transaction.
 func (s *Store) CompleteSync(ctx context.Context, instance string, b *ingest.Batch, watermark string, next, at time.Time) error {
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		tag, err := tx.Exec(ctx, `
@@ -143,10 +137,10 @@ func (s *Store) CompleteSync(ctx context.Context, instance string, b *ingest.Bat
 			return ErrBatchNotOpen
 		}
 		if _, err := tx.Exec(ctx, `
-			UPDATE ingest.connector_instances SET watermark = $2, seeded = seeded OR $3, failures = 0,
-				next_sync_at = $4, lease_until = NULL, open_batch = NULL
+			UPDATE ingest.connector_instances SET watermark = $2, failures = 0,
+				next_sync_at = $3, lease_until = NULL, open_batch = NULL
 			WHERE instance = $1`,
-			instance, watermark, b.Mode == ingest.ModeOpening, next); err != nil {
+			instance, watermark, next); err != nil {
 			return fmt.Errorf("storing the watermark: %w", err)
 		}
 		return nil

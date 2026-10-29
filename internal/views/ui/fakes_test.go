@@ -21,6 +21,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
@@ -549,6 +550,7 @@ type harness struct {
 	statements *fakeStatements
 	sleeves    *fakeSleeves
 	accounts   *fakeAccounts
+	marketData *fakeMarketData
 	read       *fakeRead
 	handler    http.Handler
 	tokenFile  string
@@ -560,7 +562,7 @@ func newHarness(t *testing.T) *harness {
 	t.Helper()
 	h := &harness{
 		auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{},
-		sleeves: &fakeSleeves{}, accounts: &fakeAccounts{},
+		sleeves: &fakeSleeves{}, accounts: &fakeAccounts{}, marketData: newFakeMarketData(),
 	}
 	mux := http.NewServeMux()
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
@@ -569,6 +571,7 @@ func newHarness(t *testing.T) *harness {
 	mux.Handle(ingestv1connect.NewStatementServiceHandler(h.statements))
 	mux.Handle(portfoliov1connect.NewSleeveServiceHandler(h.sleeves))
 	mux.Handle(ingestv1connect.NewAccountServiceHandler(h.accounts))
+	mux.Handle(valuationv1connect.NewMarketDataServiceHandler(h.marketData))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
 	core := httptest.NewServer(mux)
 	t.Cleanup(core.Close)
@@ -581,6 +584,7 @@ func newHarness(t *testing.T) *harness {
 		Statements: ingestv1connect.NewStatementServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Sleeves:    portfoliov1connect.NewSleeveServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Accounts:   ingestv1connect.NewAccountServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		MarketData: valuationv1connect.NewMarketDataServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Read:       viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:      func() kernel.Date { return mustDate(t, "2026-04-01") },
 	})

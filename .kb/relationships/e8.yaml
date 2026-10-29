@@ -225,13 +225,6 @@ relationships:
     id: rel-81c7c8c40d14
   - type: implements
     from: SYM-ingest-sched-app-scheduler-tick
-    to: REQ-ingest-scheduler-due
-    created_at: 2026-10-28T16:52:01.006Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-91eced35e2fa
-  - type: implements
-    from: SYM-ingest-sched-app-scheduler-tick
     to: REQ-ingest-scheduler-single-flight
     created_at: 2026-10-28T16:52:01.026Z
     created_by: kibi/upsert
@@ -349,3 +342,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3db889da7a1d
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-tick
+    to: REQ-ingest-scheduler-when-due
+    created_at: 2026-10-29T17:21:41.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0938a7b9f0a8
+  - type: implements
+    from: SYM-valuation-connectapi-service
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:14:35.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c2a21389989
+  - type: covered_by
+    from: SYM-valuation-connectapi-service
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:14:35.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1acfe0ef798e
+  - type: implements
+    from: SYM-valuation-market-data-kind-string
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:16:51.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57ba05fd5560
+  - type: implements
+    from: SYM-valuation-market-data-kind-string
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:16:51.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e63b43126fa
+  - type: covered_by
+    from: SYM-valuation-market-data-kind-string
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:16:51.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c06716a2d20
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-request-get-session-token
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:26:24.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b38ce6b51555
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-request-get-session-token
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:26:24.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f10aa8176ad4

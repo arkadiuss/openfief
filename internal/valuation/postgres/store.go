@@ -46,12 +46,17 @@ func NewStore(pool *pgxpool.Pool) (*Store, error) {
 	return &Store{pool: pool, insert: c}, nil
 }
 
-// Prices returns every price of instrument dated on or before through, in
-// date order.
+// Prices returns the price of instrument on each date on or before
+// through that has one, in date order: of every source's, the
+// highest-ranked source's (D-94, valuation.RankedPrices).
 func (s *Store) Prices(ctx context.Context, instrument string, through kernel.Date) ([]valuation.Price, error) {
+	rank, err := s.rankOf(ctx, valuation.KindPrices)
+	if err != nil {
+		return nil, err
+	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT instrument, date::text, close::text, currency, source FROM valuation.prices
-		WHERE instrument = $1 AND date <= $2 ORDER BY date`, instrument, through.String())
+		WHERE instrument = $1 AND date <= $2 ORDER BY date, source`, instrument, through.String())
 	if err != nil {
 		return nil, fmt.Errorf("loading prices of %s: %w", instrument, err)
 	}
@@ -59,7 +64,7 @@ func (s *Store) Prices(ctx context.Context, instrument string, through kernel.Da
 	if err != nil {
 		return nil, fmt.Errorf("loading prices of %s: %w", instrument, err)
 	}
-	return out, nil
+	return valuation.RankedPrices(out, rank).Winners, nil
 }
 
 // scanPrice reads one price row.
@@ -106,12 +111,17 @@ func scanIndexLevel(row pgx.CollectableRow) (valuation.IndexLevel, error) {
 	return valuation.IndexLevel{Index: index, Date: d, Level: v, Source: source}, nil
 }
 
-// FXRates returns every rate of currency dated on or before through, in
-// date order.
+// FXRates returns the rate of currency on each date on or before through
+// that has one, in date order: of every source's, the highest-ranked
+// source's (D-94).
 func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through kernel.Date) ([]valuation.FXRate, error) {
+	rank, err := s.rankOf(ctx, valuation.KindFXRates)
+	if err != nil {
+		return nil, err
+	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT currency, date::text, rate::text, source FROM valuation.fx_rates
-		WHERE currency = $1 AND date <= $2 ORDER BY date`, currency.String(), through.String())
+		WHERE currency = $1 AND date <= $2 ORDER BY date, source`, currency.String(), through.String())
 	if err != nil {
 		return nil, fmt.Errorf("loading FX rates of %s: %w", currency, err)
 	}
@@ -119,7 +129,7 @@ func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through k
 	if err != nil {
 		return nil, fmt.Errorf("loading FX rates of %s: %w", currency, err)
 	}
-	return out, nil
+	return valuation.RankedFXRates(out, rank), nil
 }
 
 // scanRate reads one FX rate row.
@@ -137,11 +147,16 @@ func scanRate(row pgx.CollectableRow) (valuation.FXRate, error) {
 	return valuation.FXRate{Currency: c, Date: d, Rate: r, Source: source}, nil
 }
 
-// IndexReadings returns every period index reading, in kind, year and month
-// order.
+// IndexReadings returns the reading of each index kind and month, in kind,
+// year and month order: of every source's, the highest-ranked source's
+// (D-94).
 func (s *Store) IndexReadings(ctx context.Context) ([]valuation.IndexReading, error) {
+	rank, err := s.rankOf(ctx, valuation.KindIndexReadings)
+	if err != nil {
+		return nil, err
+	}
 	rows, err := s.pool.Query(ctx, `
-		SELECT kind, year, month, value::text, source FROM valuation.index_readings ORDER BY kind, year, month`)
+		SELECT kind, year, month, value::text, source FROM valuation.index_readings ORDER BY kind, year, month, source`)
 	if err != nil {
 		return nil, fmt.Errorf("loading index readings: %w", err)
 	}
@@ -149,7 +164,7 @@ func (s *Store) IndexReadings(ctx context.Context) ([]valuation.IndexReading, er
 	if err != nil {
 		return nil, fmt.Errorf("loading index readings: %w", err)
 	}
-	return out, nil
+	return valuation.RankedIndexReadings(out, rank), nil
 }
 
 // scanReading reads one index reading row.

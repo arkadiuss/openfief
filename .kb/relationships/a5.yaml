@@ -356,3 +356,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3792b69630ad
+  - type: executable_for
+    from: SYM-valuation-test-validate-ranking
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:19:08.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-292aa66f3618

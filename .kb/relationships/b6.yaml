@@ -265,3 +265,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10e61dc7e13d
+  - type: implements
+    from: SYM-ingest-app-batches-for
+    to: REQ-ingest-sync-mode-from-ledger
+    created_at: 2026-10-29T17:15:29.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21fea8a78953
+  - type: implements
+    from: SYM-ingest-app-batches-for
+    to: REQ-ingest-seeded-account-transactions-mode
+    created_at: 2026-10-29T17:15:29.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8161f3fd819
+  - type: covered_by
+    from: SYM-ingest-app-batches-for
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:15:30.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f0a3199a8fe
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-follows-the-ledgers-seeding
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:15:51.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8e9b3e94ae2
+  - type: executable_for
+    from: SYM-ingest-test-helper-go-live-tx
+    to: TEST-ingest-golive
+    created_at: 2026-10-29T17:17:05.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f6e18dd8563

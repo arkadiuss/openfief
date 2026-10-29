@@ -45,12 +45,13 @@ type config struct {
 }
 
 // instrument is one instrument to fetch closes for: its ISIN, the EODHD
-// exchange code of its listing when the owner named one, and its venue
-// symbol in the ledger when it differs from EODHD's code.
+// exchange code of its listing when the owner named one, and the venue
+// symbols in the ledger its closes are delivered under; none means EODHD's
+// ticker code.
 type instrument struct {
 	isin     ledger.ISIN
 	exchange string
-	symbol   string
+	symbols  []string
 }
 
 // index is one market index to fetch levels for: its name in OpenFief and
@@ -104,5 +105,9 @@ func (r rawInstrument) parse(seen map[ledger.ISIN]bool) (instrument, error) {
 		return instrument{}, fmt.Errorf("%w: %s", errListedTwice, isin)
 	}
 	seen[isin] = true
-	return instrument{isin: isin, exchange: r.Exchange, symbol: r.Symbol}, nil
+	in := instrument{isin: isin, exchange: r.Exchange}
+	if r.Symbol != "" {
+		in.symbols = []string{r.Symbol}
+	}
+	return in, nil
 }

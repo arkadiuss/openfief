@@ -1421,7 +1421,20 @@ type SyncRequest struct {
 	Mode    Mode   `protobuf:"varint,2,opt,name=mode,proto3,enum=openfief.connector.v1.Mode" json:"mode,omitempty"`
 	// What the connector returned as watermark from the previous successful
 	// sync, or empty for the first one. Opaque to the core.
-	Watermark     string `protobuf:"bytes,3,opt,name=watermark,proto3" json:"watermark,omitempty"`
+	Watermark string `protobuf:"bytes,3,opt,name=watermark,proto3" json:"watermark,omitempty"`
+	// What a market-data connector is asked to price (D-93): every
+	// instrument the owner holds, other than treasury bonds, which have no
+	// market price, and the instrument targets of the model portfolio while
+	// it is on, each once, as the ledger knows it, so a newly bought
+	// instrument is priced without configuration. The connector adds the
+	// instruments its own config lists to watch, and keys each price by the
+	// instrument as given here. The core fills it only for a connector
+	// instance bound to no account: a broker connector gets it empty.
+	Instruments []*Instrument `protobuf:"bytes,4,rep,name=instruments,proto3" json:"instruments,omitempty"`
+	// The market indices that are targets of the model portfolio while it is
+	// on, each once, by the name the owner gave it, such as "WIG20" (D-96):
+	// the connector delivers their levels under that name.
+	Indices       []string `protobuf:"bytes,5,rep,name=indices,proto3" json:"indices,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1475,6 +1488,20 @@ func (x *SyncRequest) GetWatermark() string {
 		return x.Watermark
 	}
 	return ""
+}
+
+func (x *SyncRequest) GetInstruments() []*Instrument {
+	if x != nil {
+		return x.Instruments
+	}
+	return nil
+}
+
+func (x *SyncRequest) GetIndices() []string {
+	if x != nil {
+		return x.Indices
+	}
+	return nil
 }
 
 type SyncResponse struct {
@@ -2013,11 +2040,13 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"bond_terms\x18\n" +
 	" \x03(\v2 .openfief.connector.v1.BondTermsR\tbondTerms\x12J\n" +
 	"\x12cross_check_prices\x18\v \x03(\v2\x1c.openfief.connector.v1.PriceR\x10crossCheckPrices\x12M\n" +
-	"\x0fbroker_accounts\x18\f \x03(\v2$.openfief.connector.v1.BrokerAccountR\x0ebrokerAccounts\"w\n" +
+	"\x0fbroker_accounts\x18\f \x03(\v2$.openfief.connector.v1.BrokerAccountR\x0ebrokerAccounts\"\xd6\x01\n" +
 	"\vSyncRequest\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12/\n" +
 	"\x04mode\x18\x02 \x01(\x0e2\x1b.openfief.connector.v1.ModeR\x04mode\x12\x1c\n" +
-	"\twatermark\x18\x03 \x01(\tR\twatermark\"i\n" +
+	"\twatermark\x18\x03 \x01(\tR\twatermark\x12C\n" +
+	"\vinstruments\x18\x04 \x03(\v2!.openfief.connector.v1.InstrumentR\vinstruments\x12\x18\n" +
+	"\aindices\x18\x05 \x03(\tR\aindices\"i\n" +
 	"\fSyncResponse\x12;\n" +
 	"\bdelivery\x18\x01 \x01(\v2\x1f.openfief.connector.v1.DeliveryR\bdelivery\x12\x1c\n" +
 	"\twatermark\x18\x02 \x01(\tR\twatermark\"\x94\x01\n" +
@@ -2153,24 +2182,25 @@ var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	14, // 22: openfief.connector.v1.Delivery.cross_check_prices:type_name -> openfief.connector.v1.Price
 	12, // 23: openfief.connector.v1.Delivery.broker_accounts:type_name -> openfief.connector.v1.BrokerAccount
 	3,  // 24: openfief.connector.v1.SyncRequest.mode:type_name -> openfief.connector.v1.Mode
-	19, // 25: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	3,  // 26: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
-	22, // 27: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
-	19, // 28: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	5,  // 29: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
-	25, // 30: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
-	19, // 31: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	20, // 32: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
-	23, // 33: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
-	26, // 34: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
-	21, // 35: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
-	24, // 36: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
-	27, // 37: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
-	35, // [35:38] is the sub-list for method output_type
-	32, // [32:35] is the sub-list for method input_type
-	32, // [32:32] is the sub-list for extension type_name
-	32, // [32:32] is the sub-list for extension extendee
-	0,  // [0:32] is the sub-list for field type_name
+	6,  // 25: openfief.connector.v1.SyncRequest.instruments:type_name -> openfief.connector.v1.Instrument
+	19, // 26: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	3,  // 27: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
+	22, // 28: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
+	19, // 29: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	5,  // 30: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
+	25, // 31: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
+	19, // 32: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	20, // 33: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
+	23, // 34: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
+	26, // 35: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
+	21, // 36: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
+	24, // 37: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
+	27, // 38: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
+	36, // [36:39] is the sub-list for method output_type
+	33, // [33:36] is the sub-list for method input_type
+	33, // [33:33] is the sub-list for extension type_name
+	33, // [33:33] is the sub-list for extension extendee
+	0,  // [0:33] is the sub-list for field type_name
 }
 
 func init() { file_openfief_connector_v1_connector_proto_init() }

@@ -138,7 +138,7 @@ func TestConnectorsResolveBrokerAccounts(t *testing.T) {
 			brokers := &fakeBrokers{accounts: slices.Clone(tt.known)}
 			c := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{})
 			c.Brokers = brokers
-			_, err := c.Sync(t.Context(), "ibkr-main", "b-1", tt.mode, "")
+			_, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-1", Mode: tt.mode})
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Fatalf("Sync error (-want +got):\n%s", diff)
 			}
@@ -186,7 +186,7 @@ func TestConnectorsBrokerAccountsNeedAStore(t *testing.T) {
 	m := mapping(t)
 	d.Mapping = byBroker(&m, "U0000001")
 	l := &fakeLedger{}
-	_, err := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{}).Sync(t.Context(), "ibkr-main", "b-1", ingest.ModeTransactions, "")
+	_, err := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{}).Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions})
 	if diff := cmp.Diff(app.ErrNoBrokerAccountStore, err, cmpopts.EquateErrors()); diff != "" {
 		t.Errorf("Sync error (-want +got):\n%s", diff)
 	}

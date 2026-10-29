@@ -398,3 +398,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5b74c07bbcd
+  - type: constrains
+    from: REQ-ingest-market-data-scope
+    to: FACT-SUBJECT-B391A633058483FC
+    created_at: 2026-10-29T16:58:01.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e081164d16d5
+  - type: requires_property
+    from: REQ-ingest-market-data-scope
+    to: FACT-PROP-F09792EDC8A6B33A
+    created_at: 2026-10-29T16:58:01.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23639401f668
+  - type: specified_by
+    from: REQ-ingest-market-data-scope
+    to: SCEN-ingest-market-data-scope
+    created_at: 2026-10-29T16:58:01.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8c91548d515
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-new-rankings
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:14:01.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2b7ca393f09
+  - type: executable_for
+    from: SYM-valuation-app-test-rank-sources
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:14:08.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3becc77e2f5

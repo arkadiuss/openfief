@@ -433,3 +433,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-612585aefa99
+  - type: implements
+    from: SYM-valuation-postgres-placed-in
+    to: REQ-valuation-market-data-all-sources-stored
+    created_at: 2026-10-29T18:15:53.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-769b6884cede
+  - type: implements
+    from: SYM-valuation-postgres-placed-in
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:15:53.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4caea3c2d71
+  - type: covered_by
+    from: SYM-valuation-postgres-placed-in
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:15:53.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7746d0ed17e2
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-response
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:26:43.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c8b3c26a7e7
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-response
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:26:43.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa901d50506b
