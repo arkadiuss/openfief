@@ -110,7 +110,7 @@ flowchart TD
 
 1. `tools/docgen` writes the reference pages from the Go packages, the custom-resource definitions, the Taskfile and kibi's coverage report. kibi also renders its requirements report.
 2. Hugo's first pass collects every Mermaid block on every page, DESIGN.md and proposals included.
-3. `scripts/docs-diagrams.mjs` renders each block to a light and a dark SVG in headless Chromium. Each diagram is cached by a hash of its source.
+3. `scripts/docs-diagrams.mjs` renders each block to a light and a dark SVG in headless Chromium, in the design system's palette. Each diagram is cached by a hash of its source.
 4. Hugo's second pass builds the site with the SVGs inlined. The site runs no JavaScript and loads nothing from other hosts.
 
 The build fails on a diagram that doesn't render, a relative link that resolves to nothing, or a link to a heading that doesn't exist. `task docs:serve` previews the site locally.
@@ -129,7 +129,7 @@ flowchart LR
 - Each release attaches `openfief-docs-<version>.tar.gz`, the site as it was at that version, for self-hosters who run that release.
 - Every link and asset is relative to its page (Hugo's `relativeURLs`). So one build works at the custom domain, at the GitHub Pages fallback address, and opened straight from disk out of the tarball. Docs pages link to generated pages by docs path, such as `/status/`, which the link hook resolves under `/docs/`.
 
-The site is [Hugo](https://gohugo.io), pinned in the Taskfile like the other tools. Its small theme lives in `site/`: no theme dependency, no CDN, and a strict content security policy. `docs/` is mounted into the site unchanged under `/docs/`, so every page reads the same on GitHub and on the site. The landing page is `site/content/_index.md` with its own template, `site/layouts/home.html`. Its decision counts come from the generated status page, so they are as current as the build, and the build fails if it can't read them.
+The site is [Hugo](https://gohugo.io), pinned in the Taskfile like the other tools. Its small theme lives in `site/`: no theme dependency, no CDN, and a strict content security policy. Its look, Mermaid diagrams included, comes from the [design system](design-system.md): the tokens, self-hosted fonts, marks and mascot in `design/`, which Hugo mounts into the site. `docs/` is mounted into the site unchanged under `/docs/`, so every page reads the same on GitHub and on the site. The landing page is `site/content/_index.md` with its own template, `site/layouts/home.html`. Its decision counts come from the generated status page, so they are as current as the build, and the build fails if it can't read them.
 
 ## Verifying the implementation
 

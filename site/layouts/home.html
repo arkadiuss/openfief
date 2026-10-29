@@ -1,5 +1,5 @@
 {{- /*
-The landing page at the site root. Its copy is in site/content/_index.md; the docs live under /docs/.
+The landing page at the site root, styled by the design system (docs/dev/design-system.md). Its copy is in site/content/_index.md; the docs live under /docs/.
 The decision counts come from the generated status page, so they are as current as the build.
 */ -}}
 {{- $docs := site.GetPage "/docs" -}}
@@ -26,19 +26,25 @@ The decision counts come from the generated status page, so they are as current 
       <a href="{{ site.Params.repoURL }}">GitHub</a>
     </nav>
   </header>
+  <section class="hero-band">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">{{ .Params.eyebrow }}</p>
+        <h1>Give your AI agents a <em>fief</em>, not the kingdom.</h1>
+        <p class="hero-lede">{{ .Params.lede }}</p>
+        <p class="actions">
+          <a class="button primary" href="{{ $docs.RelPermalink }}">Read the docs</a>
+          <a class="button" href="{{ (site.GetPage "/docs/architecture.md").RelPermalink }}">See the architecture</a>
+          <a class="button" href="{{ site.Params.repoURL }}">GitHub</a>
+        </p>
+        <p class="stage">{{ .Params.stage }}</p>
+      </div>
+      <figure class="hero-art">
+        <img src="{{ "docs/design/mascot/kasztan-on-duty.svg" | relURL }}" width="240" height="260" alt="Kasztan, OpenFief's żubr mascot, on duty with a sealed charter">
+      </figure>
+    </div>
+  </section>
   <main>
-    <section class="hero">
-      <p class="eyebrow">{{ .Params.eyebrow }}</p>
-      <h1>Give your AI agents a <em>fief</em>, not the kingdom.</h1>
-      <p class="hero-lede">{{ .Params.lede }}</p>
-      <p class="actions">
-        <a class="button primary" href="{{ $docs.RelPermalink }}">Read the docs</a>
-        <a class="button" href="{{ (site.GetPage "/docs/architecture.md").RelPermalink }}">See the architecture</a>
-        <a class="button" href="{{ site.Params.repoURL }}">GitHub</a>
-      </p>
-      <p class="stage">{{ .Params.stage }}</p>
-    </section>
-
     <section class="band">
       <ul class="features">
         {{- range .Params.features }}

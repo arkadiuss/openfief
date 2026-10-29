@@ -68,6 +68,15 @@ timeout = '120s'
   [[module.mounts]]
     source = 'site/.gen/static'
     target = 'static/docs'
+  # The design system (docs/dev/design-system.md): tokens.css into the assets, which head.html concatenates before
+  # site.css; the whole folder into the static files at /docs/design/, so fonts, the favicon and the images that
+  # docs pages link as ../../design/... resolve on the site as they do on GitHub.
+  [[module.mounts]]
+    source = 'design'
+    target = 'assets/design'
+  [[module.mounts]]
+    source = 'design'
+    target = 'static/docs/design'
 
 [markup.goldmark.renderer]
   unsafe = false

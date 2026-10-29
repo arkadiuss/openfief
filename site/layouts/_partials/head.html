@@ -7,5 +7,8 @@
 {{- with .Description }}
 <meta name="description" content="{{ . }}">
 {{- end }}
-{{- $css := slice (resources.Get "css/site.css") (resources.Get "css/chroma.css") | resources.Concat "css/site.css" | minify | fingerprint }}
+{{- /* The design system's tokens come first, so site.css uses only its variables; chroma.css is generated (docs/dev/design-system.md). */}}
+{{- $css := slice (resources.Get "design/tokens.css") (resources.Get "css/site.css") (resources.Get "css/chroma.css") | resources.Concat "css/site.css" | minify | fingerprint }}
+<link rel="icon" href="{{ "docs/design/marks/favicon.svg" | relURL }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ "docs/design/fonts/fonts.css" | relURL }}">
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
