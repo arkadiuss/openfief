@@ -545,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-527e9fd2b397
+  - type: constrains
+    from: REQ-valuation-nbp-reference-rates
+    to: FACT-SUBJECT-352DE87C51F6D635
+    created_at: 2026-10-29T03:56:43.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cddadafeada
+  - type: requires_property
+    from: REQ-valuation-nbp-reference-rates
+    to: FACT-PROP-44E3083C161ADC26
+    created_at: 2026-10-29T03:56:43.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd1e1d30a5ec
+  - type: specified_by
+    from: REQ-valuation-nbp-reference-rates
+    to: SCEN-valuation-nbp-reference-rates
+    created_at: 2026-10-29T03:56:43.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f59528ec2310

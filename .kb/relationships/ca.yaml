@@ -440,3 +440,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c8f3f78b614
+  - type: executable_for
+    from: SYM-treasurybonds-test-index-sync-readings-fails
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:05:23.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3afe2c0f8bab

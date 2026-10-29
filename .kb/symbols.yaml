@@ -68173,6 +68173,8 @@ symbols:
         target: REQ-AUTO-FD618A602F7F9106
       - type: implements
         target: REQ-plugins-treasury-bonds-connector
+      - type: implements
+        target: REQ-treasurybonds-index-sync
   - id: SYM-treasury-bonds-status
     title: status
     sourceFile: plugins/treasury-bonds/connector.go
@@ -68284,16 +68286,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-treasury-bonds
-  - id: SYM-treasury-bonds-test-sync-delivers-nothing
-    title: TestSyncDeliversNothing
-    sourceFile: plugins/treasury-bonds/connector_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T01:25:06.254Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-treasury-bonds
   - id: SYM-treasury-bonds-config
     title: config
     sourceFile: plugins/treasury-bonds/main.go
@@ -68302,6 +68294,7 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T01:25:12.618Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-plugins-treasury-bonds
@@ -73609,3 +73602,1096 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-plugin
+  - id: SYM-e2e-images-missing
+    title: missing
+    sourceFile: scripts/e2e-images.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T05:06:06.510Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-pl-is-business-day
+    title: IsBusinessDay
+    sourceFile: internal/jurisdiction/pl/businessday.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:51:18.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-businessday
+      - type: implements
+        target: REQ-pl-reference-rate-day
+  - id: SYM-pl-is-holiday
+    title: isHoliday
+    sourceFile: internal/jurisdiction/pl/businessday.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:51:25.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-businessday
+      - type: implements
+        target: REQ-pl-reference-rate-day
+  - id: SYM-pl-easter-sunday
+    title: easterSunday
+    sourceFile: internal/jurisdiction/pl/businessday.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:51:30.853Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-businessday
+      - type: implements
+        target: REQ-pl-reference-rate-day
+  - id: SYM-pl-weekday
+    title: weekday
+    sourceFile: internal/jurisdiction/pl/businessday.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:51:37.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-businessday
+      - type: implements
+        target: REQ-pl-reference-rate-day
+  - id: SYM-pl-must-date
+    title: mustDate
+    sourceFile: internal/jurisdiction/pl/businessday.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:51:43.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-businessday
+      - type: implements
+        target: REQ-pl-reference-rate-day
+  - id: SYM-pl-reference-rate-day
+    title: ReferenceRateDay
+    sourceFile: internal/jurisdiction/pl/businessday.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:51:49.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-businessday
+      - type: implements
+        target: REQ-pl-reference-rate-day
+  - id: SYM-pl-rate-change
+    title: RateChange
+    sourceFile: internal/jurisdiction/pl/businessday.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:51:55.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-businessday
+      - type: implements
+        target: REQ-pl-reference-rate-day
+  - id: SYM-pl-rate-in-force
+    title: RateInForce
+    sourceFile: internal/jurisdiction/pl/businessday.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:52:00.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-businessday
+      - type: implements
+        target: REQ-pl-reference-rate-day
+  - id: SYM-pl-test-is-business-day
+    title: TestIsBusinessDay
+    sourceFile: internal/jurisdiction/pl/businessday_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:52:05.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-businessday
+  - id: SYM-pl-test-reference-rate-day
+    title: TestReferenceRateDay
+    sourceFile: internal/jurisdiction/pl/businessday_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:52:10.575Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-businessday
+  - id: SYM-pl-test-rate-in-force
+    title: TestRateInForce
+    sourceFile: internal/jurisdiction/pl/businessday_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T03:52:15.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-businessday
+  - id: SYM-ingest-delivery-index-readings
+    title: IndexReadings
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:02:38.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-ingest-delivery-test-index-readings
+    title: TestIndexReadings
+    sourceFile: internal/ingest/delivery/delivery_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:02:43.505Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery
+  - id: SYM-treasurybonds-cpi-source
+    title: CPISource
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:02:49.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-reference-rate-source
+    title: ReferenceRateSource
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:02:54.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-index-watermark
+    title: IndexWatermark
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:02:59.387Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-index-watermark-string
+    title: IndexWatermark.String
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:05.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-month-of
+    title: monthOf
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:11.536Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-parse-index-watermark
+    title: ParseIndexWatermark
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:17.659Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-parse-month
+    title: parseMonth
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:23.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-default-index-start
+    title: DefaultIndexStart
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:29.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-first-of-month
+    title: firstOfMonth
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:34.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-reference-readings
+    title: ReferenceReadings
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:40.145Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-index-sync
+    title: IndexSync
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:44.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-index-sync-readings
+    title: IndexSync.Readings
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:50.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-index-sync-after
+    title: IndexSync.after
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:03:56.070Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-index-sync-cpi
+    title: IndexSync.cpi
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:02.013Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-index-sync-reference-rates
+    title: IndexSync.referenceRates
+    sourceFile: internal/ingest/treasurybonds/indices.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:07.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-indices
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-treasurybonds-index-sync
+  - id: SYM-treasurybonds-test-helper-decimal
+    title: decimal
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:13.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-helper-changes
+    title: changes
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:18.700Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-index-watermark
+    title: TestIndexWatermark
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:23.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-default-index-start
+    title: TestDefaultIndexStart
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:29.305Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-helper-refs
+    title: refs
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:34.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-reference-readings
+    title: TestReferenceReadings
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:39.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-helper-fake-cpi
+    title: fakeCPI
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:44.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-helper-fake-cpi-cpi
+    title: fakeCPI.CPI
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:49.630Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-helper-fake-rates
+    title: fakeRates
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:04:54.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-helper-fake-rates-reference-rates
+    title: fakeRates.ReferenceRates
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:00.173Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-helper-span
+    title: span
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:05.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-index-sync-readings
+    title: TestIndexSyncReadings
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:11.215Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-helper-result
+    title: result
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:16.284Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-treasurybonds-test-index-sync-readings-fails
+    title: TestIndexSyncReadingsFails
+    sourceFile: internal/ingest/treasurybonds/indices_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:21.414Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-indices
+  - id: SYM-valuation-gus-client
+    title: Client
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:25.885Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-new
+    title: New
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:31.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-client-cpi
+    title: Client.CPI
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:37.015Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-read-response
+    title: readResponse
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:42.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-value
+    title: value
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:46.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-decode-value
+    title: decodeValue
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:52.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-parse-values
+    title: parseValues
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:05:58.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-monthly
+    title: monthly
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:03.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-value-final
+    title: value.final
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:08.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-reading
+    title: reading
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:14.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-indicator
+    title: indicator
+    sourceFile: internal/valuation/gus/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:20.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-gus-client
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-gus-cpi
+  - id: SYM-valuation-gus-test-helper-recording-client
+    title: recordingClient
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:26.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-helper-user-agent-and-headers-validator
+    title: userAgentAndHeadersValidator
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:32.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-helper-cpi
+    title: cpi
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:38.842Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-cpi-full-year
+    title: TestCPIFullYear
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:44.867Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-cpi-year-so-far
+    title: TestCPIYearSoFar
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:50.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-cpi-nothing-published
+    title: TestCPINothingPublished
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:06:56.806Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-helper-row
+    title: row
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:02.894Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-cpi-stops-at-the-first-month-not-final
+    title: TestCPIStopsAtTheFirstMonthNotFinal
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:09.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-cpi-rejects
+    title: TestCPIRejects
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:14.760Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-helper-stub-transport
+    title: stubTransport
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:19.417Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-helper-stub-transport-round-trip
+    title: stubTransport.RoundTrip
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:25.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-gus-test-helper-stub-client
+    title: stubClient
+    sourceFile: internal/valuation/gus/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:31.233Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-gus-client
+  - id: SYM-valuation-nbp-archive
+    title: archive
+    sourceFile: internal/valuation/nbp/refrate.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:35.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-refrate
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-nbp-new-archive
+    title: NewArchive
+    sourceFile: internal/valuation/nbp/refrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:41.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-refrate
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-nbp-archive-reference-rates
+    title: Archive.ReferenceRates
+    sourceFile: internal/valuation/nbp/refrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:47.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-refrate
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-nbp-read-archive
+    title: readArchive
+    sourceFile: internal/valuation/nbp/refrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:07:53.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-refrate
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-nbp-archive-change
+    title: archiveChange
+    sourceFile: internal/valuation/nbp/refrate.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:04.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-refrate
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-nbp-parse-archive
+    title: parseArchive
+    sourceFile: internal/valuation/nbp/refrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:11.143Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-refrate
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-nbp-archive-change-reference-rate
+    title: archiveChange.referenceRate
+    sourceFile: internal/valuation/nbp/refrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:17.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-refrate
+      - type: implements
+        target: REQ-AUTO-30FD669113CEFE3B
+      - type: implements
+        target: REQ-valuation-nbp-reference-rates
+  - id: SYM-valuation-nbp-test-helper-change
+    title: change
+    sourceFile: internal/valuation/nbp/refrate_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:23.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-refrate
+  - id: SYM-valuation-nbp-test-reference-rates-archive
+    title: TestReferenceRatesArchive
+    sourceFile: internal/valuation/nbp/refrate_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:29.260Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-refrate
+  - id: SYM-valuation-nbp-test-reference-rates-parses-the-archive
+    title: TestReferenceRatesParsesTheArchive
+    sourceFile: internal/valuation/nbp/refrate_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:34.727Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-refrate
+  - id: SYM-valuation-nbp-test-reference-rates-rejects
+    title: TestReferenceRatesRejects
+    sourceFile: internal/valuation/nbp/refrate_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:40.021Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-nbp-refrate
+  - id: SYM-treasury-bonds-test-helper-fake-cpi
+    title: fakeCPI
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:44.861Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-fake-cpi-cpi
+    title: fakeCPI.CPI
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:51.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-fake-rates
+    title: fakeRates
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:08:56.301Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-fake-rates-reference-rates
+    title: fakeRates.ReferenceRates
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:09:02.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-must-date
+    title: mustDate
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:09:07.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-sync-delivers-index-readings
+    title: TestSyncDeliversIndexReadings
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:09:13.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-sync-refuses
+    title: TestSyncRefuses
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:09:19.203Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-new-connector
+    title: newConnector
+    sourceFile: plugins/treasury-bonds/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:09:24.797Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-config-start-date
+    title: config.startDate
+    sourceFile: plugins/treasury-bonds/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:09:30.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-plugins-treasury-bonds-connector
+  - id: SYM-treasury-bonds-test-start-date
+    title: TestStartDate
+    sourceFile: plugins/treasury-bonds/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:09:34.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-valuation-nbp-archive-reader
+    title: Archive
+    sourceFile: internal/valuation/nbp/refrate.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T04:19:23.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-refrate
+      - type: implements
+        target: REQ-valuation-nbp-reference-rates

@@ -1,0 +1,5 @@
+GET https://api-sdp.stat.gov.pl/api/indicators/indicator-data-indicator?id-rok=2025&id-wskaznik=1832&lang=en HTTP/1.1
+Host: api-sdp.stat.gov.pl
+User-Agent: openfief
+Accept: application/json
+

@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7955dc313b50
+  - type: implements
+    from: SYM-pl-weekday
+    to: REQ-pl-reference-rate-day
+    created_at: 2026-10-29T03:51:39.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35970cee7231
+  - type: covered_by
+    from: SYM-pl-weekday
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:51:39.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53463076025a

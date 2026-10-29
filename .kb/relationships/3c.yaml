@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea10d0318dbc
+  - type: implements
+    from: SYM-pl-easter-sunday
+    to: REQ-pl-reference-rate-day
+    created_at: 2026-10-29T03:51:32.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66f6815c1b0f
+  - type: covered_by
+    from: SYM-pl-easter-sunday
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:51:32.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9b6b7fd385c

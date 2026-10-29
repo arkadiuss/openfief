@@ -244,3 +244,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-230f9f6dcd71
+  - type: implements
+    from: SYM-pl-is-holiday
+    to: REQ-pl-reference-rate-day
+    created_at: 2026-10-29T03:51:27.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b50f554cdf1f
+  - type: covered_by
+    from: SYM-pl-is-holiday
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:51:27.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2eb79717b1e8
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-must-date
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T04:09:09.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10e61dc7e13d

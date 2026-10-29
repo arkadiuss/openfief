@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f88ebe57bf69
+  - type: executable_for
+    from: SYM-pl-test-rate-in-force
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:52:16.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-906c2a80b1dd

@@ -1,6 +1,7 @@
 // Package pl holds Polish jurisdiction rules as pure functions: retail
 // treasury bond series and their statutory valuation, tax wrappers (IKE,
-// IKZE), Belka tax on bond interest, and which NBP rate tax uses.
+// IKZE), Belka tax on bond interest, which NBP rate tax uses, and the
+// business days that pick the NBP reference rate for ROR and DOR.
 //
 // Valuation uses these rules; nothing here depends on valuation or ledger.
 // Series terms that change with every issue (first-period rate, margin,
@@ -22,6 +23,9 @@
 //     before the day of income), art. 30a ust. 1 pkt 2 (19% on interest and
 //     discount of securities), art. 21 ust. 1 pkt 58 (IKE exemption):
 //     https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19910800350
+//   - Act on days off work (ustawa o dniach wolnych od pracy), art. 1, for
+//     the business days that place the reference rate's day (IsBusinessDay):
+//     https://api.sejm.gov.pl/eli/acts/DU/1951/28
 //   - Tax ordinance (Ordynacja podatkowa) art. 63 § 1a (rounding of the tax
 //     on interest; see BelkaTax for how it differs from the issuer's examples):
 //     https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19971370926

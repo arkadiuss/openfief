@@ -279,3 +279,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bf68a75f000
+  - type: validates
+    from: TEST-valuation-gus-client
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T03:56:13.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25db65107b9e

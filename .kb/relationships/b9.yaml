@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23bf88b25055
+  - type: executable_for
+    from: SYM-pl-test-is-business-day
+    to: TEST-pl-businessday
+    created_at: 2026-10-29T03:52:07.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c9cae7f3005

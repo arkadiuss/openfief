@@ -356,3 +356,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31905a281992
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-fake-rates-reference-rates
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T04:09:03.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e1f6b3a5e9f

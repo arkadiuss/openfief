@@ -370,3 +370,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30349bdd8446
+  - type: implements
+    from: SYM-treasurybonds-cpi-source
+    to: REQ-treasurybonds-index-sync
+    created_at: 2026-10-29T04:02:50.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb50c73d3275
+  - type: implements
+    from: SYM-treasurybonds-cpi-source
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:02:50.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-747ecd2ec0cb
+  - type: covered_by
+    from: SYM-treasurybonds-cpi-source
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T04:02:50.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-065b12862cec

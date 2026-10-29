@@ -286,3 +286,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e770c6fb13f2
+  - type: verified_by
+    from: SCEN-treasurybonds-index-sync
+    to: TEST-treasurybonds-indices
+    created_at: 2026-10-29T03:56:27.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-207548a16c3c
+  - type: verified_by
+    from: SCEN-treasurybonds-index-sync
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T03:56:27.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf70322c1293
+  - type: verified_by
+    from: SCEN-treasurybonds-index-sync
+    to: TEST-ingest-delivery
+    created_at: 2026-10-29T03:56:27.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd4399f35763

@@ -377,3 +377,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b881c4eb1f4c
+  - type: validates
+    from: TEST-treasurybonds-indices
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T03:56:17.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9619f13e264
+  - type: implements
+    from: SYM-valuation-nbp-archive-reference-rates
+    to: REQ-valuation-nbp-reference-rates
+    created_at: 2026-10-29T04:07:49.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a80b81e10d69
+  - type: implements
+    from: SYM-valuation-nbp-archive-reference-rates
+    to: REQ-AUTO-30FD669113CEFE3B
+    created_at: 2026-10-29T04:07:49.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45b29e6f5350
+  - type: covered_by
+    from: SYM-valuation-nbp-archive-reference-rates
+    to: TEST-valuation-nbp-refrate
+    created_at: 2026-10-29T04:07:49.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d471d6ad5876

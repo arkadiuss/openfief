@@ -251,13 +251,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c76f893de55d
-  - type: requires_property
-    from: REQ-plugins-treasury-bonds-connector
-    to: FACT-PROP-96251B7455563E3F
-    created_at: 2026-10-29T01:14:49.136Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4aeb75ef3253
   - type: specified_by
     from: REQ-plugins-treasury-bonds-connector
     to: SCEN-plugins-treasury-bonds-connector
@@ -279,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab9b3c588584
+  - type: requires_property
+    from: REQ-plugins-treasury-bonds-connector
+    to: FACT-PROP-495B97CE1B5014CF
+    created_at: 2026-10-29T03:57:09.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db217e51c184
+  - type: executable_for
+    from: SYM-valuation-nbp-test-reference-rates-parses-the-archive
+    to: TEST-valuation-nbp-refrate
+    created_at: 2026-10-29T04:08:36.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea2bc2dc37b7
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-fake-rates
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-29T04:08:57.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0a90871a51d

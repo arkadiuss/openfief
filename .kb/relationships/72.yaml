@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4cca90558997
+  - type: implements
+    from: SYM-valuation-nbp-archive-reader
+    to: REQ-valuation-nbp-reference-rates
+    created_at: 2026-10-29T04:19:24.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a01964ad068
+  - type: covered_by
+    from: SYM-valuation-nbp-archive-reader
+    to: TEST-valuation-nbp-refrate
+    created_at: 2026-10-29T04:19:25.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9090ae09f998
