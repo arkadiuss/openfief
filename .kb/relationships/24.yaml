@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-338ddeb95015
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-installed
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:36:36.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-425d7d4109f9
+  - type: executable_for
+    from: SYM-views-connectapi-test-connect-transaction-origins
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:36:51.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00247158bce3

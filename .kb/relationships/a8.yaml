@@ -398,3 +398,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebe8de98bb6b
+  - type: implements
+    from: SYM-views-trust-of
+    to: REQ-views-plugin-trust-level
+    created_at: 2026-10-29T03:39:44.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5e3ec67ad19
+  - type: implements
+    from: SYM-views-trust-of
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:39:44.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-130142469109
+  - type: covered_by
+    from: SYM-views-trust-of
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:39:44.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0147a962a68c

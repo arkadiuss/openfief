@@ -461,3 +461,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37f64e5508fb
+  - type: executable_for
+    from: SYM-views-kube-test-plugins
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:38:27.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26a0c34292b5

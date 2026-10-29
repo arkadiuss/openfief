@@ -342,3 +342,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa2293ab0792
+  - type: implements
+    from: SYM-views-pb-list-plugins-request-reset
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:41:25.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f37c15758c8
+  - type: implements
+    from: SYM-views-pb-list-plugins-request-reset
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:41:25.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40d840d89c1c
+  - type: covered_by
+    from: SYM-views-pb-list-plugins-request-reset
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:41:25.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98ec3443fc44

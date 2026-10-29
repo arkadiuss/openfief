@@ -21,6 +21,7 @@ var errBadParameter = errors.New("invalid parameter")
 var (
 	errNoSuchAccount = errors.New("no such account")
 	errModelOff      = errors.New("no model portfolio")
+	errNoPlugins     = errors.New("the installed plugins can't be read now")
 	errBadRange      = errors.New("the date range ends before it starts or is too long")
 	errBadPageToken  = errors.New("the page token is not one this API returned")
 	errBadPageSize   = errors.New("the page size is out of range")
@@ -50,7 +51,8 @@ func invalidMessage(err error) error {
 }
 
 // toConnectError returns the Connect error err stands for: not found for an
-// unknown account, invalid argument for an invalid request, and internal,
+// unknown account, invalid argument for an invalid request, unavailable
+// while the installed plugins can't be read, and internal,
 // logged under the request ID only, for anything else. Vanguard maps these
 // codes to HTTP statuses for REST (404, 400, 500).
 func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.Error {
@@ -59,6 +61,9 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 	}
 	if errors.Is(err, app.ErrModelOff) {
 		return connect.NewError(connect.CodeNotFound, errModelOff)
+	}
+	if errors.Is(err, app.ErrPluginsUnknown) {
+		return connect.NewError(connect.CodeUnavailable, errNoPlugins)
 	}
 	if msg := invalidMessage(err); msg != nil {
 		return connect.NewError(connect.CodeInvalidArgument, msg)

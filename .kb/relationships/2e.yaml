@@ -349,3 +349,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a69f11c54ed4
+  - type: implements
+    from: SYM-views-kube-plugin-resource
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:37:24.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fc88ace20c6
+  - type: implements
+    from: SYM-views-kube-plugin-resource
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:37:24.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-875eca32e0bc
+  - type: covered_by
+    from: SYM-views-kube-plugin-resource
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:37:24.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-984752339e0c
+  - type: implements
+    from: SYM-views-image-digest
+    to: REQ-views-plugin-trust-level
+    created_at: 2026-10-29T03:39:59.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-618e430f156d
+  - type: implements
+    from: SYM-views-image-digest
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:39:59.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d731480a699e
+  - type: covered_by
+    from: SYM-views-image-digest
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:39:59.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed5b38cb9d2d

@@ -76,6 +76,9 @@ func ParseTransactionCursor(s string) (TransactionCursor, error) {
 type TransactionPage struct {
 	Transactions []ledger.Transaction
 	Next         *TransactionCursor
+	// Origins holds each transaction's origin, in the same order, once
+	// Installed.Origins set it (D-58); nil before.
+	Origins []Origin
 }
 
 // PageTransactions returns at most size of txs in date then key order,

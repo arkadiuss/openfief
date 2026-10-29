@@ -468,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fef5a16994b0
+  - type: constrains
+    from: REQ-views-plugin-trust-level
+    to: FACT-SUBJECT-7EE8EF73A681CA87
+    created_at: 2026-10-29T03:29:39.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54ebcd1ba011
+  - type: requires_property
+    from: REQ-views-plugin-trust-level
+    to: FACT-PROP-E5E25E10852A17DC
+    created_at: 2026-10-29T03:29:39.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d27ac749df82
+  - type: specified_by
+    from: REQ-views-plugin-trust-level
+    to: SCEN-views-plugin-trust-level
+    created_at: 2026-10-29T03:29:39.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bb80bfc707c

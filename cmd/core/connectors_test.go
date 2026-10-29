@@ -266,6 +266,7 @@ func TestServeSchedulesConnectors(t *testing.T) {
 	if c.deps.entries.client.Load() == nil {
 		t.Error("the scheduler runs, but the owner's manual entries have no connector client")
 	}
+	waitForInstalled(ctx, t, c, "ibkr-main")
 	cancel()
 	if err := shutdown(context.WithoutCancel(ctx), &server{pool: pool}, &http.Server{ReadHeaderTimeout: time.Second}, c, 10*time.Second); err != nil {
 		t.Errorf("shutdown: %v", err)
@@ -274,6 +275,19 @@ func TestServeSchedulesConnectors(t *testing.T) {
 	case <-c.connectors:
 	default:
 		t.Error("shutdown returned before the scheduler stopped")
+	}
+}
+
+// waitForInstalled waits until c, which runs in a cluster, has read that
+// instance is the one plugin installed there, for the read API (D-46).
+func waitForInstalled(ctx context.Context, t *testing.T, c *core, instance string) {
+	t.Helper()
+	err := wait.PollUntilContextTimeout(ctx, 10*time.Millisecond, 30*time.Second, true, func(ctx context.Context) (bool, error) {
+		records, listErr := c.plugins.InstalledPlugins(ctx)
+		return listErr == nil && len(records) == 1 && records[0].Instance == instance, nil
+	})
+	if err != nil {
+		t.Errorf("the installed plugins were never read from the cluster: %v", err)
 	}
 }
 

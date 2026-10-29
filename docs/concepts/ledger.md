@@ -279,5 +279,4 @@ Behaviors the tests don't pin down, worth knowing when reviewing:
 ## Not built yet
 
 - **D-6, D-50**: the read API that would serve these queries.
-- **D-58**: marking data that came from a removed plugin instance.
 - **D-49, D-36**: no core binary serves the ledger yet. Only `cmd/demo-seed`, which loads demo databases, wires `app.Ledger` to `postgres.Store` with valuation's `ImportHook`. Its `importer` ([load.go](../../cmd/demo-seed/load.go)) adapts `app.ImportSummary` to the `ingest.ImportSummary` that ingest's `LedgerImporter` returns; that adapter lives in the demo command, not in a shared package. Nothing calls `EnsureDefaults` yet; the demo saves its own sleeves.

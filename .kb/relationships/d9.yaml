@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c42b6dcf464
+  - type: implements
+    from: SYM-views-signature-trust-string
+    to: REQ-views-plugin-trust-level
+    created_at: 2026-10-29T03:39:49.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af8c798c9c08
+  - type: implements
+    from: SYM-views-signature-trust-string
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:39:49.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b650a333026f
+  - type: covered_by
+    from: SYM-views-signature-trust-string
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:39:49.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baed8be478d1

@@ -335,3 +335,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f024e346d685
+  - type: implements
+    from: SYM-views-pb-transaction-get-connector-instance
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:41:09.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a26cb5528cdc
+  - type: implements
+    from: SYM-views-pb-transaction-get-connector-instance
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:41:09.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-952d19e75407
+  - type: covered_by
+    from: SYM-views-pb-transaction-get-connector-instance
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:41:09.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f25a4a379428

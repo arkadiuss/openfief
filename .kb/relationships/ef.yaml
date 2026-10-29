@@ -321,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2fbe0a0a19d
+  - type: implements
+    from: SYM-views-plugin-record
+    to: REQ-views-plugin-trust-level
+    created_at: 2026-10-29T03:39:28.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-834073e39d6b
+  - type: implements
+    from: SYM-views-plugin-record
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:39:29.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-061084ccd705
+  - type: covered_by
+    from: SYM-views-plugin-record
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:39:29.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ea3f48cf93c

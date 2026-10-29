@@ -314,3 +314,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98b783e8dd68
+  - type: implements
+    from: SYM-views-kube-string-field
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:38:05.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86a3c757d633
+  - type: implements
+    from: SYM-views-kube-string-field
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:38:05.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-827537b5e4a8
+  - type: covered_by
+    from: SYM-views-kube-string-field
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:38:05.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cce0ad429b4b
+  - type: executable_for
+    from: SYM-views-kube-test-record-of
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:38:21.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e474c994f98

@@ -43,6 +43,7 @@ type Views struct {
 	rates      FXRates
 	reporting  kernel.Currency
 	models     ModelReports
+	plugins    Plugins
 }
 
 // New returns the queries over the given ports, with totals, valuations and
@@ -93,7 +94,8 @@ func (v *Views) Account(ctx context.Context, id ledger.AccountID) (ledger.Accoun
 
 // Transactions returns one page of the current versions of account's
 // transactions, in date then key order, starting after the cursor after, or
-// from the first when after is nil.
+// from the first when after is nil, each with its origin: the connector
+// instance that brought it in and whether that instance is removed (D-58).
 func (v *Views) Transactions(ctx context.Context, account ledger.AccountID, after *views.TransactionCursor, size int) (views.TransactionPage, error) {
 	txs, err := v.ledger.CurrentTransactions(ctx, account)
 	if err != nil {
@@ -103,6 +105,7 @@ func (v *Views) Transactions(ctx context.Context, account ledger.AccountID, afte
 	if err != nil {
 		return views.TransactionPage{}, fmt.Errorf("paging transactions: %w", err)
 	}
+	page.Origins = v.installed(ctx).Origins(page.Transactions)
 	return page, nil
 }
 

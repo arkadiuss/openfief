@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f07213ff13c
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-plugins-installed-plugins
+    to: TEST-views-app-plugins
+    created_at: 2026-10-29T03:35:49.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4eba3314eb58
+  - type: executable_for
+    from: SYM-views-app-test-plugins-unknown
+    to: TEST-views-app-plugins
+    created_at: 2026-10-29T03:36:10.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-502e203a5b28
+  - type: executable_for
+    from: SYM-views-connectapi-test-plugin-enums-match
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:37:13.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-924b7ba47acb

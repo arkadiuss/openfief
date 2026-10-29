@@ -454,3 +454,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95777f147b21
+  - type: implements
+    from: SYM-views-kube-plugins
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:37:28.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ca98eef03b8
+  - type: implements
+    from: SYM-views-kube-plugins
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:37:28.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25923275d4de
+  - type: covered_by
+    from: SYM-views-kube-plugins
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:37:28.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d0425573363
+  - type: implements
+    from: SYM-views-pb-plugin-get-signer
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:43:43.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a043de1201
+  - type: implements
+    from: SYM-views-pb-plugin-get-signer
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:43:43.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15d58f8f6ea6
+  - type: covered_by
+    from: SYM-views-pb-plugin-get-signer
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:43:43.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc9ade6e998b

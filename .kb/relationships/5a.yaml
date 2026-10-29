@@ -454,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72a0995ab1ca
+  - type: executable_for
+    from: SYM-views-kube-test-helper-signed-record
+    to: TEST-views-kube
+    created_at: 2026-10-29T03:38:16.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-567037cba0eb

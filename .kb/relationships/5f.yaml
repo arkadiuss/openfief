@@ -433,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7dc5c6559ee
+  - type: implements
+    from: SYM-views-pb-plugin-get-requested-capabilities
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:43:31.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04dff9985cd1
+  - type: implements
+    from: SYM-views-pb-plugin-get-requested-capabilities
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:43:32.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1ecc857ef7d
+  - type: covered_by
+    from: SYM-views-pb-plugin-get-requested-capabilities
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:43:32.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a19855206a2

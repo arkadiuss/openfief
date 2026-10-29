@@ -352,7 +352,7 @@ Implemented, fully or in the part named:
 - **D-49** (part) Connector contract: the core calls `Sync`, `ImportFile` and `ImportBondLots`.
 - **D-56** (part) Operator verifies offline; status tells verified from only signed.
 - **D-57** No setting deploys an image the policy refuses.
-- **D-58** (part) Uninstall deletes the grant, the `Plugin` (and so the workload and allow-list entry) and unshared Secrets, and keeps the ledger data; the data isn't marked yet.
+- **D-58** Uninstall deletes the grant, the `Plugin` (and so the workload and allow-list entry) and unshared Secrets, and keeps the ledger data, which the read API marks as coming from a removed instance ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-59** Only the core reaches a plugin; the SDK verifies its TokenRequest token with the keys the operator publishes.
 - **D-63** (part) Separate egress token, rebuilt into the proxy URL per request.
 - **D-5** Contracts and Go SDK licensed Apache-2.0.
@@ -422,6 +422,5 @@ The cosign adapter's bundle checks (REQ-plugins-cosign-bundle-verification) and 
 - **One Secret per IBKR instance (D-48).** `ibkr-flex`'s manifest names one Secret, `ibkr-flex-credentials`, so two instances of it, one per IBKR account, read the same credentials (see [Decisions](#decisions)).
 - **Core side of plugin identity (D-27).** The core verifies view plugins' `openfief-core` tokens only; a connector's token is accepted nowhere, since the core calls connectors and not the other way round (D-49).
 - **An owner-chosen egress host.** A manifest is the signed image label (D-42), so it can't request a host the owner picks at install, such as the [Ghostfolio view](ghostfolio.md#not-built-yet)'s Ghostfolio; how such a host enters the grant and the allow-list is not decided.
-- **Marking a removed instance's data (D-58).** `openfief plugin uninstall` deletes the workload, grant, Secrets and allow-list entry and leaves the ledger alone, but the core doesn't mark the data as coming from a removed instance: an uninstalled instance is only no longer listed, so it is no longer synced (see [Ingest](ingest.md)).
 - **One Secret per instance on uninstall (D-48, D-58).** A Secret another installed instance names is kept, because instances of one image share Secret names.
 - **Data tiers.** Carried from manifest to workload but enforced nowhere (P-33 is undecided).

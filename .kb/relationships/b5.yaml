@@ -384,3 +384,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-099b2676f1d2
+  - type: implements
+    from: SYM-views-pb-plugin-get-image-digest
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:43:20.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1c89c3fe1f
+  - type: implements
+    from: SYM-views-pb-plugin-get-image-digest
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:43:20.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae6a8c8a8a32
+  - type: covered_by
+    from: SYM-views-pb-plugin-get-image-digest
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:43:20.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d1d732017dc

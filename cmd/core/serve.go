@@ -11,6 +11,8 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+
+	viewskube "github.com/arkadiuss/openfief/internal/views/kube"
 )
 
 const (
@@ -155,7 +157,11 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	if err != nil {
 		return nil, err
 	}
-	c, err := newCore(ctx, pool, cfg, now, log, callers)
+	var installed *viewskube.Plugins
+	if cl != nil {
+		installed = viewskube.NewPlugins(cl.dynamic, cl.namespace, discoveryResync)
+	}
+	c, err := newCore(ctx, pool, cfg, now, log, callers, installed)
 	if err != nil {
 		return nil, err
 	}
@@ -167,9 +173,17 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	return c, nil
 }
 
-// startCluster starts the connector scheduler, as cfg asks, when the core
-// runs in cluster cl.
+// startCluster starts, when the core runs in cluster cl, the watch of the
+// installed plugins the read API lists (D-46), and the connector scheduler
+// as cfg asks. Neither can fail the core.
 func startCluster(ctx context.Context, c *core, cfg *serveConfig, cl *cluster, log *slog.Logger) {
+	if cl != nil && c.plugins != nil {
+		go func() {
+			if err := c.plugins.Start(ctx); err != nil {
+				log.Warn("the installed plugins could not be read; the read API can't list them", "error", err)
+			}
+		}()
+	}
 	if cl == nil {
 		if cfg.Connectors {
 			log.Info("not in a Kubernetes cluster: no connector syncs")

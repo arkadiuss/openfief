@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d5367dbab1f
+  - type: validates
+    from: TEST-views-app-plugins
+    to: REQ-plugins-verified-status
+    created_at: 2026-10-29T03:29:22.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc54cecf9a92
+  - type: validates
+    from: TEST-views-app-plugins
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-29T03:29:22.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a053ad47a405

@@ -251,3 +251,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db274e545bd3
+  - type: implements
+    from: SYM-views-connector-instance
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:38:46.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3c763bce8e1
+  - type: implements
+    from: SYM-views-connector-instance
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-10-29T03:38:46.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf066c7a11d9
+  - type: covered_by
+    from: SYM-views-connector-instance
+    to: TEST-views-plugins
+    created_at: 2026-10-29T03:38:46.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4463afc0b066
+  - type: implements
+    from: SYM-views-pb-transaction-get-connector-instance-removed
+    to: REQ-views-installed-plugins
+    created_at: 2026-10-29T03:41:15.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aa7ba936793
+  - type: implements
+    from: SYM-views-pb-transaction-get-connector-instance-removed
+    to: REQ-views-removed-instance-mark
+    created_at: 2026-10-29T03:41:15.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baac077e608a
+  - type: covered_by
+    from: SYM-views-pb-transaction-get-connector-instance-removed
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-10-29T03:41:15.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75c5c0ba4d9a
