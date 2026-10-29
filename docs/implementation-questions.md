@@ -9,11 +9,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Blocking real use
 
-1. **Nothing can create an account or sleeve outside the demo.**
-   - *Problem:* only `cmd/demo-seed` calls `SaveAccount` and `SaveSleeve`, and `core connector bind` needs an account that already exists. A real installation therefore has no account for any connector to write into, so it can't hold data. No decision says who creates accounts.
-   - *Today:* nothing is built.
-   - *Options:* the owner creates accounts and sleeves in the built-in UI, through the owner-only write path of item 4; the `openfief` CLI does it; or a connector creates its account on its first sync (and the owner assigns the sleeve).
-
 2. **The Ghostfolio view can't reach the owner's Ghostfolio.**
    - *Problem:* a plugin's manifest is its signed image label (D-42), and its egress allow-list holds only the hosts the manifest requests and the grant approves (D-16). An image built and signed in CI can't name a host the owner picks at install time.
    - *Today:* the Ghostfolio manifest requests no host, so the plugin refuses to start without one. The owner would have to rebuild the image with their host and sign it themselves (D-45).
