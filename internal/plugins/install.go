@@ -98,12 +98,14 @@ func validInstanceName(n string) bool {
 
 // PlanInstall builds the Plugin and the Grant that installing a signed image
 // as the instance name applies (D-46, D-48). The Plugin requests exactly the
-// image's signed manifest label (D-42) with config; the Grant approves
-// exactly what it requests, which is what the owner confirmed. Both are
-// validated; every problem is returned, joined.
-func PlanInstall(name string, img *SignedImage, config []byte) (Plugin, Grant, error) {
-	p := Plugin{Name: name, Image: img.Image.String(), Manifest: img.Manifest, Config: config}
-	g := Grant{Plugin: name, Permissions: img.Manifest.Requested()}
+// image's signed manifest label (D-42) with config and, when the manifest
+// asks for one, the in-cluster service cs the owner picked (D-74); the Grant
+// approves exactly what it requests, which is what the owner confirmed: the
+// hosts of the config fields the manifest names (D-75) and that one service
+// included. Both are validated; every problem is returned, joined.
+func PlanInstall(name string, img *SignedImage, config []byte, cs *ClusterService) (Plugin, Grant, error) {
+	p := Plugin{Name: name, Image: img.Image.String(), Manifest: img.Manifest, Config: config, ClusterService: cs}
+	g := Grant{Plugin: name, Permissions: p.Requested()}
 	var errs []error
 	if len(name) > maxInstanceNameLen {
 		errs = append(errs, fieldErr("name", ErrInvalidName, name))
@@ -125,8 +127,10 @@ type UninstallSecrets struct {
 
 // SecretsToDelete splits the Secrets an uninstalled instance named, in its
 // manifest or its grant, into those the uninstall deletes (D-58) and those it
-// keeps because another installed instance still names them: Secret names
-// come from the manifest, so instances of one image share them (D-48).
+// keeps because another installed instance still names them. Each instance
+// mounts its own <instance>-<role> Secrets (D-89), so this keeps only a
+// Secret another instance's grant names, or one two instance-role pairs
+// spell alike, such as instance "a-b" with role "c" and "a" with "b-c".
 func SecretsToDelete(instance, others []string) UninstallSecrets {
 	var out UninstallSecrets
 	for _, s := range uniqueSorted(instance) {

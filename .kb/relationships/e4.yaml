@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f797d5c4bef
-  - type: executable_for
-    from: SYM-plugins-test-manifest-requested
-    to: TEST-plugins-manifest
-    created_at: 2026-10-28T05:25:39.735Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-af6b7bad3d34
   - type: implements
     from: SYM-ledger-app-has-sleeve
     to: REQ-ledger-app-registry

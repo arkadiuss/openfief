@@ -447,3 +447,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d5a791f3f8d
+  - type: implements
+    from: SYM-pl-plugin-requested
+    to: REQ-plugins-requested-secret-names
+    created_at: 2026-10-29T15:14:11.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43520bd20518
+  - type: covered_by
+    from: SYM-pl-plugin-requested
+    to: TEST-plugins-manifest
+    created_at: 2026-10-29T15:14:11.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0d598054d81
+  - type: executable_for
+    from: SYM-pl-test-resources-with-cluster-service
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:22:04.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ca2caa796eb

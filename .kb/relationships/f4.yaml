@@ -321,3 +321,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8813ddcec9ad
+  - type: validates
+    from: TEST-plugins-cluster-service
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:09:58.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d690f6a732f6
+  - type: validates
+    from: TEST-plugins-cluster-service
+    to: REQ-plugins-in-cluster-service-no-proxy
+    created_at: 2026-10-29T15:09:58.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35dd225dd8a6
+  - type: validates
+    from: TEST-plugins-cluster-service
+    to: REQ-plugins-egress-through-proxy
+    created_at: 2026-10-29T15:09:58.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcc1ceebc41
+  - type: validates
+    from: TEST-plugins-cluster-service
+    to: REQ-plugins-network-access-core-proxy-service
+    created_at: 2026-10-29T15:09:58.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76fb467fc837
+  - type: implements
+    from: SYM-pl-workload-add-egress-proxy
+    to: REQ-plugins-proxy-env-and-allow-list
+    created_at: 2026-10-29T15:17:49.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e65f9f3c0e2
+  - type: covered_by
+    from: SYM-pl-workload-add-egress-proxy
+    to: TEST-plugins-compile
+    created_at: 2026-10-29T15:17:49.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59f9a96b8af4

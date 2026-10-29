@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e4d172d07d8
+  - type: implements
+    from: SYM-pl-cluster-service-request-deep-copy-into
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-29T15:19:30.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a05572bff9b
+  - type: covered_by
+    from: SYM-pl-cluster-service-request-deep-copy-into
+    to: TEST-operator-api
+    created_at: 2026-10-29T15:19:30.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33e6821d0e04

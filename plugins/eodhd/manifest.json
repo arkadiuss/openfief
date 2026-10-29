@@ -1,7 +1,7 @@
 {
   "capabilities": ["connector"],
   "egress": ["eodhd.com"],
-  "secrets": [{"name": "eodhd-credentials", "mountPath": "/etc/openfief/eodhd"}],
+  "secrets": [{"role": "api-token", "mountPath": "/etc/openfief/eodhd"}],
   "configSchema": {
     "type": "object",
     "properties": {

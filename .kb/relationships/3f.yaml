@@ -433,3 +433,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a52848f6f316
+  - type: implements
+    from: SYM-pl-cluster-add-cluster-service
+    to: REQ-operator-in-cluster-service-reads-service
+    created_at: 2026-10-29T15:18:31.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d4a1d920638
+  - type: implements
+    from: SYM-pl-cluster-add-cluster-service
+    to: REQ-operator-in-cluster-service-route
+    created_at: 2026-10-29T15:18:32.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8c4da6cfb91
+  - type: covered_by
+    from: SYM-pl-cluster-add-cluster-service
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:18:32.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b6715eec6ac
+  - type: implements
+    from: SYM-pl-proposal-pick-cluster-service
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:22:47.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cbeb6ab903b
+  - type: covered_by
+    from: SYM-pl-proposal-pick-cluster-service
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:22:47.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fb1cb7f15ac

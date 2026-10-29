@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e35f8c5f57d
+  - type: executable_for
+    from: SYM-pl-test-helper-check-cluster-service-env
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:17:42.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-172aa607c99c

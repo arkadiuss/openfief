@@ -3085,21 +3085,6 @@ symbols:
         target: REQ-AUTO-761F6500ECFC0316
       - type: implements
         target: REQ-plugins-manifest-validation
-  - id: SYM-plugins-manifest-requested
-    title: Manifest.Requested
-    sourceFile: internal/plugins/manifest.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:24:59.630Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-manifest
-      - type: implements
-        target: REQ-AUTO-761F6500ECFC0316
-      - type: implements
-        target: REQ-plugins-manifest-validation
   - id: SYM-plugins-validate-capabilities
     title: validateCapabilities
     sourceFile: internal/plugins/manifest.go
@@ -3272,16 +3257,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T05:25:37.388Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-manifest
-  - id: SYM-plugins-test-manifest-requested
-    title: TestManifestRequested
-    sourceFile: internal/plugins/manifest_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:25:39.555Z
     relationships:
       - type: executable_for
         target: TEST-plugins-manifest
@@ -3691,6 +3666,7 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T05:29:43.907Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-plugins-compile
@@ -12063,6 +12039,7 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T06:51:22.919Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-operator-cluster
@@ -58359,10 +58336,11 @@ symbols:
     title: Proposal
     sourceFile: internal/plugins/app/install.go
     status: active
-    symbol_role: behavioral
+    symbol_role: type-shape
     origin:
       kind: agent
       recorded_at: 2026-10-28T22:44:01.022Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-plugins-app-install
@@ -58410,6 +58388,8 @@ symbols:
         target: TEST-plugins-app-install
       - type: implements
         target: REQ-plugins-cli-install
+      - type: implements
+        target: REQ-plugins-cli-install-secret-in-use
       - type: implements
         target: REQ-plugins-cli-install-verifies
   - id: SYM-plugins-app-uninstall-plan
@@ -77804,3 +77784,1140 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-ui
+  - id: SYM-pl-secret-name
+    title: SecretName
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:14:00.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-operator-instance-secret-names
+      - type: implements
+        target: REQ-plugins-requested-secret-names
+  - id: SYM-pl-plugin-requested
+    title: Plugin.Requested
+    sourceFile: internal/plugins/permissions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:14:09.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-requested-secret-names
+  - id: SYM-pl-effective-permissions-secret-names
+    title: EffectivePermissions.SecretNames
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:14:16.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-plugins-requested-secret-names
+  - id: SYM-pl-test-plugin-requested
+    title: TestPluginRequested
+    sourceFile: internal/plugins/manifest_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:14:22.962Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest
+  - id: SYM-pl-config-host
+    title: configHost
+    sourceFile: internal/plugins/config_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:14:30.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-field-host-grant
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-config-hosts
+    title: configHosts
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:14:38.706Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-field-host-grant
+      - type: implements
+        target: REQ-plugins-config-field-host-https
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-host-of-url
+    title: hostOfURL
+    sourceFile: internal/plugins/config_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:14:53.662Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-field-host-https
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-split-authority
+    title: splitAuthority
+    sourceFile: internal/plugins/config_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:01.296Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-validate-config-fields
+    title: validateConfigFields
+    sourceFile: internal/plugins/config_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:08.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-valid-config-field
+    title: validConfigField
+    sourceFile: internal/plugins/config_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:16.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-config-field-rune
+    title: configFieldRune
+    sourceFile: internal/plugins/config_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:24.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-test-helper-view-with-url
+    title: viewWithURL
+    sourceFile: internal/plugins/config_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:31.336Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-config-host
+  - id: SYM-pl-test-config-hosts
+    title: TestConfigHosts
+    sourceFile: internal/plugins/config_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:37.356Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-config-host
+  - id: SYM-pl-test-config-host-permissions
+    title: TestConfigHostPermissions
+    sourceFile: internal/plugins/config_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:43.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-config-host
+  - id: SYM-pl-test-manifest-egress-from-config-fields
+    title: TestManifestEgressFromConfigFields
+    sourceFile: internal/plugins/config_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:50.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-config-host
+  - id: SYM-pl-test-helper-has-rule
+    title: hasRule
+    sourceFile: internal/plugins/config_host_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:15:57.406Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-config-host
+  - id: SYM-pl-cluster-service-request
+    title: ClusterServiceRequest
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:02.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-cluster-service-request-validate
+    title: ClusterServiceRequest.validate
+    sourceFile: internal/plugins/cluster_service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:09.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+  - id: SYM-pl-cluster-service
+    title: ClusterService
+    sourceFile: internal/plugins/cluster_service.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:14.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-parse-cluster-service
+    title: ParseClusterService
+    sourceFile: internal/plugins/cluster_service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:21.872Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+  - id: SYM-pl-cluster-service-string
+    title: ClusterService.String
+    sourceFile: internal/plugins/cluster_service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:29.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+  - id: SYM-pl-cluster-service-validate
+    title: ClusterService.validate
+    sourceFile: internal/plugins/cluster_service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:35.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+  - id: SYM-pl-validate-cluster-services
+    title: validateClusterServices
+    sourceFile: internal/plugins/cluster_service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:42.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+  - id: SYM-pl-plugin-validate-cluster-service
+    title: Plugin.validateClusterService
+    sourceFile: internal/plugins/cluster_service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:50.256Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+  - id: SYM-pl-test-helper-ghostfolio-service
+    title: ghostfolioService
+    sourceFile: internal/plugins/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:16:56.449Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cluster-service
+  - id: SYM-pl-test-helper-in-cluster
+    title: inCluster
+    sourceFile: internal/plugins/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:02.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cluster-service
+  - id: SYM-pl-test-parse-cluster-service
+    title: TestParseClusterService
+    sourceFile: internal/plugins/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:08.162Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cluster-service
+  - id: SYM-pl-test-plugin-cluster-service-validate
+    title: TestPluginClusterServiceValidate
+    sourceFile: internal/plugins/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:14.805Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cluster-service
+  - id: SYM-pl-test-cluster-service-permissions
+    title: TestClusterServicePermissions
+    sourceFile: internal/plugins/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:21.118Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cluster-service
+  - id: SYM-pl-test-helper-check-effective-cluster-service
+    title: checkEffectiveClusterService
+    sourceFile: internal/plugins/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:27.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cluster-service
+  - id: SYM-pl-test-compile-cluster-service
+    title: TestCompileClusterService
+    sourceFile: internal/plugins/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:33.559Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cluster-service
+  - id: SYM-pl-test-helper-check-cluster-service-env
+    title: checkClusterServiceEnv
+    sourceFile: internal/plugins/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:40.079Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cluster-service
+  - id: SYM-pl-workload-add-egress-proxy
+    title: Workload.addEgressProxy
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:47.213Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-compile
+      - type: implements
+        target: REQ-plugins-proxy-env-and-allow-list
+  - id: SYM-pl-workload-add-cluster-service
+    title: Workload.addClusterService
+    sourceFile: internal/plugins/compile.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:17:54.359Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-in-cluster-service-no-proxy
+      - type: implements
+        target: REQ-plugins-network-access-core-proxy-service
+  - id: SYM-pl-effective-permissions-cluster-service
+    title: EffectivePermissions.ClusterService
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:02.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-effective-permissions-same-permissions
+    title: EffectivePermissions.samePermissions
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:10.200Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-pl-equal-ptr
+    title: equalPtr
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:16.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-pl-test-plan-install-owner-picks
+    title: TestPlanInstallOwnerPicks
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:23.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-pl-cluster-add-cluster-service
+    title: Cluster.AddClusterService
+    sourceFile: internal/plugins/operator/cluster.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:29.622Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster-service
+      - type: implements
+        target: REQ-operator-in-cluster-service-reads-service
+      - type: implements
+        target: REQ-operator-in-cluster-service-route
+  - id: SYM-pl-plugin-reconciler-add-cluster-service
+    title: PluginReconciler.addClusterService
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:37.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster-service
+      - type: implements
+        target: REQ-operator-in-cluster-service-reads-service
+      - type: implements
+        target: REQ-operator-in-cluster-service-route
+  - id: SYM-pl-cluster-service-from-api
+    title: ClusterServiceFromAPI
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:43.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+  - id: SYM-pl-cluster-service-to-api
+    title: ClusterServiceToAPI
+    sourceFile: internal/plugins/operator/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:49.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+  - id: SYM-pl-cluster-service-names
+    title: clusterServiceNames
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:18:57.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-upgrade-status
+  - id: SYM-pl-cluster-service-ref
+    title: clusterServiceRef
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:04.970Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-cluster-service-ref-deep-copy-into
+    title: ClusterServiceRef.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:17.908Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-pl-cluster-service-ref-deep-copy
+    title: ClusterServiceRef.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:23.433Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-pl-cluster-service-request-deep-copy-into
+    title: ClusterServiceRequest.DeepCopyInto
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:28.866Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-pl-cluster-service-request-deep-copy
+    title: ClusterServiceRequest.DeepCopy
+    sourceFile: internal/plugins/operator/v1alpha1/zz_generated.deepcopy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:34.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+  - id: SYM-pl-test-helper-op-ghostfolio-selector
+    title: ghostfolioSelector
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:39.249Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-helper-op-ghostfolio-svc
+    title: ghostfolioSvc
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:44.762Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-cluster-with-cluster-service
+    title: TestClusterWithClusterService
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:50.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-helper-in-cluster-plugin
+    title: inClusterPlugin
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:19:55.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-helper-in-cluster-grant
+    title: inClusterGrant
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:02.110Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-reconcile-cluster-service
+    title: TestReconcileClusterService
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:08.336Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-helper-test-cluster-service-granted
+    title: testClusterServiceGranted
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:14.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-helper-pod-env
+    title: podEnv
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:20.409Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-helper-op-get
+    title: get
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:26.064Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-test-helper-reconcile-result
+    title: reconcileResult
+    sourceFile: internal/plugins/operator/cluster_service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:31.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cluster-service
+  - id: SYM-pl-service-access-name
+    title: ServiceAccessName
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:37.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-service-access
+    title: ServiceAccess
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:44.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-instances-cluster-service
+    title: Instances.ClusterService
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:51.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-ingress-rule
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-ingress-rule
+    title: IngressRule
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:20:58.113Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-ingress-rule
+  - id: SYM-pl-ingress-rule-yaml
+    title: IngressRuleYAML
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:21:04.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-ingress-rule
+  - id: SYM-pl-instances-create-service-access
+    title: Instances.createServiceAccess
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:21:11.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-instances-cluster-service-of-plugin
+    title: Instances.clusterServiceOfPlugin
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:21:18.463Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-cluster-service-of
+    title: clusterServiceOf
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:21:25.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-instances-delete-service-access
+    title: Instances.deleteServiceAccess
+    sourceFile: internal/plugins/kube/clusterservice.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:21:39.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-cluster-service
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-test-helper-gf-service
+    title: gfService
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:21:45.515Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-test-helper-gf-plan
+    title: gfPlan
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:21:51.133Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-test-helper-gf-svc
+    title: gfSvc
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:21:56.641Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-test-resources-with-cluster-service
+    title: TestResourcesWithClusterService
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:02.142Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-test-service-access
+    title: TestServiceAccess
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:07.898Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-test-instances-cluster-service
+    title: TestInstancesClusterService
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:14.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-test-ingress-rule
+    title: TestIngressRule
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:20.009Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-test-instances-create-delete-service-access
+    title: TestInstancesCreateDeleteServiceAccess
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:25.682Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-test-helper-check-service-access
+    title: checkServiceAccess
+    sourceFile: internal/plugins/kube/clusterservice_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:31.830Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-cluster-service
+  - id: SYM-pl-cluster-service-info
+    title: ClusterServiceInfo
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:38.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-ingress-rule
+  - id: SYM-pl-proposal-pick-cluster-service
+    title: Proposal.PickClusterService
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:45.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-installer-verify
+    title: Installer.verify
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:22:52.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-pl-prepare
+    title: prepare
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:23:06.750Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-ask-cluster-service
+    title: askClusterService
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:23:13.371Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-ask-service
+    title: askService
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:23:20.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-check-cluster-service
+    title: checkClusterService
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:23:27.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-ingress-rule
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-service-access
+  - id: SYM-pl-ask
+    title: ask
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:23:34.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-confirmation
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-fake-cluster-cluster-service
+    title: fakeCluster.ClusterService
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:23:41.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-pl-test-run-install-owner-picks
+    title: TestRunInstallOwnerPicks
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:23:48.742Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-pl-write-cluster-service
+    title: writeClusterService
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:23:56.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+      - type: implements
+        target: REQ-plugins-in-cluster-service-plain-http-warning
+  - id: SYM-pl-render-ingress-rule
+    title: RenderIngressRule
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:24:03.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-run
+      - type: implements
+        target: REQ-plugins-cli-in-cluster-ingress-rule
+  - id: SYM-pl-plugins-cluster-service-request
+    title: ClusterServiceRequest
+    sourceFile: internal/plugins/cluster_service.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:34:37.103Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cluster-service
+      - type: implements
+        target: REQ-plugins-cluster-service-outside-openfief
+      - type: implements
+        target: REQ-plugins-in-cluster-service-grant
+  - id: SYM-pl-plugins-config-host-type
+    title: ConfigHost
+    sourceFile: internal/plugins/config_host.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:34:47.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-field-host-grant
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-plugins-config-hosts
+    title: ConfigHosts
+    sourceFile: internal/plugins/config_host.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:34:56.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-config-host
+      - type: implements
+        target: REQ-plugins-config-field-host-https
+      - type: implements
+        target: REQ-plugins-config-host-https-url
+  - id: SYM-pl-api-cluster-service-ref
+    title: ClusterServiceRef
+    sourceFile: internal/plugins/operator/v1alpha1/types.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T15:35:05.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-api
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807

@@ -30,8 +30,9 @@ var (
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), asks for exactly what the view needs: the view
 // capability, the Secret with the Ghostfolio security token, and a config
-// schema; no egress host, since the owner's Ghostfolio host is not known
-// when the image is built.
+// schema; no fixed egress host, since the owner's Ghostfolio host is not
+// known when the image is built, but the host of the config's url (D-75)
+// and an in-cluster service for a Ghostfolio in the same cluster (D-74).
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -43,8 +44,10 @@ func TestManifest(t *testing.T) {
 		t.Fatalf("ParseManifestLabel: %v", err)
 	}
 	want := plugins.Manifest{
-		Capabilities: []plugins.Capability{plugins.CapabilityView},
-		Secrets:      []plugins.SecretMount{{Name: "ghostfolio-credentials", MountPath: mountDir}},
+		Capabilities:     []plugins.Capability{plugins.CapabilityView},
+		Secrets:          []plugins.SecretMount{{Role: "security-token", MountPath: mountDir}},
+		EgressFromConfig: []string{"url"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "a Ghostfolio running in this cluster"},
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)
@@ -78,6 +81,9 @@ func TestConfigParse(t *testing.T) {
 		}, want: config{
 			url: "https://ghostfolio.example.com:3443", interval: 15 * time.Minute,
 			listings: map[ledger.ISIN]ghostfolio.Listing{isin: {DataSource: "YAHOO", Symbol: "TEST.L"}},
+		}},
+		{name: "no URL, for an in-cluster Ghostfolio", raw: rawConfig{}, want: config{
+			interval: time.Hour, listings: map[ledger.ISIN]ghostfolio.Listing{},
 		}},
 		{name: "plain http", raw: rawConfig{URL: "http://ghostfolio.example.com"}, wantErr: true},
 		{name: "a path", raw: rawConfig{URL: "https://example.com/ghostfolio"}, wantErr: true},
@@ -146,6 +152,28 @@ func TestNewSyncer(t *testing.T) {
 	t.Setenv(openfief.EnvHTTPSProxy, "")
 	if _, err := newSyncer(&cfg, func(string) string { return "ghostfolio" }); err == nil {
 		t.Error("newSyncer without the egress proxy succeeded")
+	}
+	inCluster := func(k string) string {
+		if k == plugins.EnvClusterServiceAddress {
+			return "192.0.2.30:3333"
+		}
+		return "ghostfolio"
+	}
+	if _, err := newSyncer(&cfg, inCluster); !errors.Is(err, errTwoGhostfolios) {
+		t.Errorf("newSyncer with a url and an in-cluster service = %v, want errTwoGhostfolios", err)
+	}
+	// An in-cluster Ghostfolio needs no egress proxy (D-74).
+	if _, err := newSyncer(&config{interval: time.Hour}, inCluster); err != nil {
+		t.Errorf("newSyncer for an in-cluster Ghostfolio: %v", err)
+	}
+	onlyInstance := func(k string) string {
+		if k == openfief.EnvInstance {
+			return "ghostfolio"
+		}
+		return ""
+	}
+	if _, err := newSyncer(&config{interval: time.Hour}, onlyInstance); !errors.Is(err, errNoGhostfolio) {
+		t.Errorf("newSyncer with neither = %v, want errNoGhostfolio", err)
 	}
 }
 

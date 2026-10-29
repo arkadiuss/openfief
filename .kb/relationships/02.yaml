@@ -356,3 +356,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-290a4d293a54
+  - type: implements
+    from: SYM-pl-plugin-reconciler-add-cluster-service
+    to: REQ-operator-in-cluster-service-reads-service
+    created_at: 2026-10-29T15:18:39.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73c0213547ee
+  - type: implements
+    from: SYM-pl-plugin-reconciler-add-cluster-service
+    to: REQ-operator-in-cluster-service-route
+    created_at: 2026-10-29T15:18:39.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f2b1d2c8789
+  - type: covered_by
+    from: SYM-pl-plugin-reconciler-add-cluster-service
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:18:39.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8093ccd3aa4e
+  - type: executable_for
+    from: SYM-pl-test-helper-pod-env
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:20:22.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2400d1e2345

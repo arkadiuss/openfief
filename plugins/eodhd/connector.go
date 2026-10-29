@@ -22,7 +22,7 @@ import (
 // institution names EODHD on every delivery.
 const institution = "eodhd"
 
-// The API key's file in the eodhd-credentials Secret, as the manifest
+// The API key's file in the instance's api-token Secret (<instance>-api-token, D-89), as the manifest
 // mounts it at keyMount.
 const (
 	keyMount     = "/etc/openfief/eodhd"

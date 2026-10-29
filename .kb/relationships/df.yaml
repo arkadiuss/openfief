@@ -433,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d0e82e69bf8
+  - type: executable_for
+    from: SYM-pl-test-config-host-permissions
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:46.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b416a33d0e6
+  - type: implements
+    from: SYM-pl-parse-cluster-service
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:23.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5da4b63dd3a6
+  - type: covered_by
+    from: SYM-pl-parse-cluster-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:23.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-467856c386de

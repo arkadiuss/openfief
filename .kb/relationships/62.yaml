@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c354612e293
+  - type: verified_by
+    from: SCEN-plugins-cli-in-cluster-service-access
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:10:21.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d0b7270519e
+  - type: verified_by
+    from: SCEN-plugins-cli-in-cluster-service-access
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:10:21.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03689ea620a7

@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd63e27a700c
+  - type: implements
+    from: SYM-pl-secret-name
+    to: REQ-plugins-requested-secret-names
+    created_at: 2026-10-29T15:14:03.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe7d3b3cbffd
+  - type: implements
+    from: SYM-pl-secret-name
+    to: REQ-operator-instance-secret-names
+    created_at: 2026-10-29T15:14:03.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-768000d1b386
+  - type: covered_by
+    from: SYM-pl-secret-name
+    to: TEST-plugins-compile
+    created_at: 2026-10-29T15:14:03.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1af4fe75b51

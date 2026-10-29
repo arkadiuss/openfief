@@ -314,3 +314,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7f3471e34b9
+  - type: implements
+    from: SYM-pl-validate-config-fields
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:15:10.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec3c741f9bb
+  - type: covered_by
+    from: SYM-pl-validate-config-fields
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:10.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff234fd4b143

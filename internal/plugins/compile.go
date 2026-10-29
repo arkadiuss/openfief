@@ -47,6 +47,9 @@ const (
 	EnvCoreSubject = "OPENFIEF_CORE_SUBJECT"
 	// EnvSigningKeysDir is the directory of the mounted signing keys.
 	EnvSigningKeysDir = "OPENFIEF_SA_JWKS_DIR"
+	// EnvClusterServiceAddress is the "ClusterIP:port" of the plugin's
+	// granted in-cluster service (D-74); set only when it has one.
+	EnvClusterServiceAddress = "OPENFIEF_CLUSTER_SERVICE_ADDRESS"
 )
 
 // Service is a cluster Service a plugin talks to. Address is the Service's
@@ -61,21 +64,27 @@ type Service struct {
 
 // Topology is where the core and the egress proxy are, the port every
 // plugin serves Connect RPC on, and the core's ServiceAccount, whose tokens
-// plugins accept (D-59).
+// plugins accept (D-59). ClusterService is where the plugin's granted
+// in-cluster service is (D-74): its ClusterIP, the port the plugin dials
+// and the pod port behind it; nil when the plugin has none.
 type Topology struct {
 	Core               Service
 	EgressProxy        Service
 	PluginPort         uint16
 	CoreServiceAccount string
+	ClusterService     *Service
 }
 
 // Peer is a party in a plugin's NetworkPolicy.
 type Peer string
 
-// The only peers a plugin may talk to (D-32).
+// The only peers a plugin may talk to (D-32, D-74).
 const (
 	PeerCore        Peer = "core"
 	PeerEgressProxy Peer = "egress-proxy"
+	// PeerClusterService is the pods behind the plugin's granted in-cluster
+	// service, in that service's namespace (D-74).
+	PeerClusterService Peer = "cluster-service"
 )
 
 // NetworkRule allows TCP traffic between a plugin and Peer on Port, a pod
@@ -149,6 +158,9 @@ type Workload struct {
 	NetworkPolicy   NetworkPolicy
 	EgressAllowList EgressAllowList
 	Config          []byte
+	// ClusterService is the granted in-cluster service whose pods the
+	// PeerClusterService rule reaches (D-74); nil when there is none.
+	ClusterService *ClusterService
 }
 
 // Compile turns effective permissions into a Workload:
@@ -157,7 +169,8 @@ type Workload struct {
 //     granted; never DNS (D-32);
 //   - HTTPS_PROXY set to the proxy only when some egress host is granted, with
 //     NO_PROXY set to the core;
-//   - the granted Secrets, mounted read-only;
+//   - the granted Secrets, each the instance's own <instance>-<role>
+//     (D-89), mounted read-only;
 //   - a ServiceAccount without Kubernetes API access, and a projected token
 //     with audience CoreAudience (D-27), in the openfief namespace (D-15);
 //   - only when some egress host is granted, a second projected token with
@@ -165,9 +178,13 @@ type Workload struct {
 //     sees a token the core would accept;
 //   - the cluster's ServiceAccount signing keys, mounted read-only, with the
 //     instance's name and the core's username in the environment, so the
-//     plugin can verify the core's token (D-59).
-func Compile(e *EffectivePermissions, t Topology) (Workload, error) {
-	if e == nil || e.plugin == "" {
+//     plugin can verify the core's token (D-59);
+//   - only with a granted in-cluster service, an egress rule to that
+//     service's pods on its pod port and its ClusterIP and port in
+//     OPENFIEF_CLUSTER_SERVICE_ADDRESS, also kept off the egress proxy by
+//     NO_PROXY (D-74).
+func Compile(e *EffectivePermissions, t *Topology) (Workload, error) {
+	if e == nil || e.plugin == "" || t == nil {
 		return Workload{}, fmt.Errorf("%w: empty effective permissions", ErrNoCapabilityGranted)
 	}
 	if err := t.validate(); err != nil {
@@ -193,18 +210,16 @@ func Compile(e *EffectivePermissions, t Topology) (Workload, error) {
 		SigningKeys:     ConfigMapVolume{ConfigMapName: SigningKeysConfigMap, MountPath: SigningKeysMountPath},
 	}
 	for _, s := range e.secrets {
-		w.Secrets = append(w.Secrets, SecretVolume{SecretName: s.Name, MountPath: s.MountPath, ReadOnly: true})
+		w.Secrets = append(w.Secrets, SecretVolume{SecretName: SecretName(e.plugin, s.Role), MountPath: s.MountPath, ReadOnly: true})
 	}
 	if len(e.egress) > 0 {
-		w.NetworkPolicy.Egress = append(w.NetworkPolicy.Egress, NetworkRule{Peer: PeerEgressProxy, Port: t.EgressProxy.TargetPort})
-		w.EgressToken = &ProjectedToken{
-			Audience: EgressAudience, ExpirationSeconds: TokenExpirationSeconds,
-			MountPath: EgressTokenMountPath, Path: TokenPath,
+		w.addEgressProxy(e, t)
+	}
+	if cs := e.clusterService; cs != nil {
+		if t.ClusterService == nil {
+			return Workload{}, fieldErr("clusterService", ErrInvalidTopology, cs.String())
 		}
-		w.Env = []EnvVar{
-			{Name: EnvHTTPSProxy, Value: "http://" + t.EgressProxy.hostPort()},
-			{Name: EnvNoProxy, Value: t.Core.Address},
-		}
+		w.addClusterService(*cs, t.ClusterService)
 	}
 	w.Env = append(w.Env,
 		EnvVar{Name: EnvCoreSubject, Value: serviceAccountUserFmt + t.CoreServiceAccount},
@@ -214,7 +229,35 @@ func Compile(e *EffectivePermissions, t Topology) (Workload, error) {
 	return w, nil
 }
 
-func (t Topology) validate() error {
+// addEgressProxy routes w's egress through the proxy (D-32, D-63): a rule to
+// the proxy's pods, the egress token, HTTPS_PROXY, and NO_PROXY for the
+// core and any in-cluster service (D-74).
+func (w *Workload) addEgressProxy(e *EffectivePermissions, t *Topology) {
+	w.NetworkPolicy.Egress = append(w.NetworkPolicy.Egress, NetworkRule{Peer: PeerEgressProxy, Port: t.EgressProxy.TargetPort})
+	w.EgressToken = &ProjectedToken{
+		Audience: EgressAudience, ExpirationSeconds: TokenExpirationSeconds,
+		MountPath: EgressTokenMountPath, Path: TokenPath,
+	}
+	noProxy := t.Core.Address
+	if e.clusterService != nil && t.ClusterService != nil {
+		noProxy += "," + t.ClusterService.Address
+	}
+	w.Env = []EnvVar{
+		{Name: EnvHTTPSProxy, Value: "http://" + t.EgressProxy.hostPort()},
+		{Name: EnvNoProxy, Value: noProxy},
+	}
+}
+
+// addClusterService lets w reach the granted in-cluster service cs, which
+// is where at says (D-74): a rule to its pods' port and its ClusterIP and port in
+// the environment.
+func (w *Workload) addClusterService(cs ClusterService, at *Service) {
+	w.ClusterService = &cs
+	w.NetworkPolicy.Egress = append(w.NetworkPolicy.Egress, NetworkRule{Peer: PeerClusterService, Port: at.TargetPort})
+	w.Env = append(w.Env, EnvVar{Name: EnvClusterServiceAddress, Value: at.hostPort()})
+}
+
+func (t *Topology) validate() error {
 	var errs []error
 	if t.PluginPort == 0 {
 		errs = append(errs, fieldErr("pluginPort", ErrInvalidTopology, "0"))
@@ -224,6 +267,9 @@ func (t Topology) validate() error {
 	}
 	errs = append(errs, t.Core.validate("core")...)
 	errs = append(errs, t.EgressProxy.validate("egressProxy")...)
+	if t.ClusterService != nil {
+		errs = append(errs, t.ClusterService.validate("clusterService")...)
+	}
 	return errors.Join(errs...)
 }
 

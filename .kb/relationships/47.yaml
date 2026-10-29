@@ -384,3 +384,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c298dc6eead
+  - type: implements
+    from: SYM-plugins-app-install
+    to: REQ-plugins-cli-install-secret-in-use
+    created_at: 2026-10-29T15:13:55.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9324b331dccf
+  - type: implements
+    from: SYM-pl-config-host
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:14:33.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18510ffed7e0
+  - type: implements
+    from: SYM-pl-config-host
+    to: REQ-plugins-config-field-host-grant
+    created_at: 2026-10-29T15:14:33.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3acd5af340a2
+  - type: covered_by
+    from: SYM-pl-config-host
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:14:33.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31816f78c201
+  - type: implements
+    from: SYM-pl-effective-permissions-cluster-service
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:18:05.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93617c4885ed
+  - type: implements
+    from: SYM-pl-effective-permissions-cluster-service
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:18:05.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47a96024dc6b
+  - type: covered_by
+    from: SYM-pl-effective-permissions-cluster-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:18:05.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e04afb5f23b7

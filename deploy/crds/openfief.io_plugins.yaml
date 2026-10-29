@@ -57,6 +57,33 @@ spec:
           spec:
             description: PluginSpec is one version of a plugin.
             properties:
+              clusterService:
+                description: |-
+                  ClusterService is the in-cluster service the owner picked at install
+                  for a manifest that asks for one (D-74). The plugin reaches it
+                  directly at its ClusterIP, not through the egress proxy.
+                properties:
+                  namespace:
+                    description: Namespace is the Service's namespace; never openfief.
+                    maxLength: 63
+                    pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                    type: string
+                  port:
+                    description: Port is the Service port the plugin dials.
+                    format: int32
+                    maximum: 65535
+                    minimum: 1
+                    type: integer
+                  service:
+                    description: Service is the Service's name.
+                    maxLength: 63
+                    pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                    type: string
+                required:
+                - namespace
+                - port
+                - service
+                type: object
               config:
                 description: |-
                   Config is the plugin's configuration, a JSON object checked against
@@ -92,6 +119,18 @@ spec:
                     minItems: 1
                     type: array
                     x-kubernetes-list-type: set
+                  clusterService:
+                    description: |-
+                      ClusterService, when set, asks for one in-cluster service that the
+                      owner picks at install (D-74).
+                    properties:
+                      description:
+                        description: |-
+                          Description says what the service is for, such as "the owner's
+                          Ghostfolio"; the CLI shows it when it asks for the service.
+                        maxLength: 200
+                        type: string
+                    type: object
                   configSchema:
                     description: ConfigSchema is the JSON Schema that spec.config
                       must satisfy.
@@ -116,32 +155,49 @@ spec:
                     maxItems: 64
                     type: array
                     x-kubernetes-list-type: set
+                  egressFromConfig:
+                    description: |-
+                      EgressFromConfig names top-level config fields whose https URL's host
+                      the plugin reaches through the egress proxy, instead of a fixed host
+                      (D-75).
+                    items:
+                      maxLength: 64
+                      type: string
+                    maxItems: 8
+                    type: array
+                    x-kubernetes-list-type: set
                   secrets:
                     description: |-
-                      Secrets lists the Kubernetes Secrets, in the openfief namespace, that
-                      the plugin needs mounted read-only. The owner creates them (D-29).
+                      Secrets lists, by role, the Kubernetes Secrets the plugin needs
+                      mounted read-only. Each instance mounts the Secret named
+                      <instance>-<role> in the openfief namespace, so two instances never
+                      share one (D-89). The owner creates them (D-29).
                     items:
-                      description: SecretMount asks for one Secret to be mounted read-only
-                        at MountPath.
+                      description: |-
+                        SecretMount asks for the instance's Secret of one role to be mounted
+                        read-only at MountPath.
                       properties:
                         mountPath:
                           description: MountPath is an absolute path outside /var/run/secrets.
                           maxLength: 1024
                           minLength: 2
                           type: string
-                        name:
-                          description: Name is the Secret's name.
-                          maxLength: 253
+                        role:
+                          description: |-
+                            Role names the Secret's purpose, such as flex-token; the instance's
+                            Secret is <instance>-<role>.
+                          maxLength: 63
                           minLength: 1
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                       required:
                       - mountPath
-                      - name
+                      - role
                       type: object
                     maxItems: 32
                     type: array
                     x-kubernetes-list-map-keys:
-                    - name
+                    - role
                     x-kubernetes-list-type: map
                 required:
                 - capabilities
@@ -218,6 +274,33 @@ spec:
                   Deployed is the plugin version that runs now; absent when nothing runs.
                   It is the version kept while an upgrade waits for approval.
                 properties:
+                  clusterService:
+                    description: |-
+                      ClusterService is the in-cluster service the owner picked at install
+                      for a manifest that asks for one (D-74). The plugin reaches it
+                      directly at its ClusterIP, not through the egress proxy.
+                    properties:
+                      namespace:
+                        description: Namespace is the Service's namespace; never openfief.
+                        maxLength: 63
+                        pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                        type: string
+                      port:
+                        description: Port is the Service port the plugin dials.
+                        format: int32
+                        maximum: 65535
+                        minimum: 1
+                        type: integer
+                      service:
+                        description: Service is the Service's name.
+                        maxLength: 63
+                        pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                        type: string
+                    required:
+                    - namespace
+                    - port
+                    - service
+                    type: object
                   config:
                     description: |-
                       Config is the plugin's configuration, a JSON object checked against
@@ -253,6 +336,18 @@ spec:
                         minItems: 1
                         type: array
                         x-kubernetes-list-type: set
+                      clusterService:
+                        description: |-
+                          ClusterService, when set, asks for one in-cluster service that the
+                          owner picks at install (D-74).
+                        properties:
+                          description:
+                            description: |-
+                              Description says what the service is for, such as "the owner's
+                              Ghostfolio"; the CLI shows it when it asks for the service.
+                            maxLength: 200
+                            type: string
+                        type: object
                       configSchema:
                         description: ConfigSchema is the JSON Schema that spec.config
                           must satisfy.
@@ -277,12 +372,26 @@ spec:
                         maxItems: 64
                         type: array
                         x-kubernetes-list-type: set
+                      egressFromConfig:
+                        description: |-
+                          EgressFromConfig names top-level config fields whose https URL's host
+                          the plugin reaches through the egress proxy, instead of a fixed host
+                          (D-75).
+                        items:
+                          maxLength: 64
+                          type: string
+                        maxItems: 8
+                        type: array
+                        x-kubernetes-list-type: set
                       secrets:
                         description: |-
-                          Secrets lists the Kubernetes Secrets, in the openfief namespace, that
-                          the plugin needs mounted read-only. The owner creates them (D-29).
+                          Secrets lists, by role, the Kubernetes Secrets the plugin needs
+                          mounted read-only. Each instance mounts the Secret named
+                          <instance>-<role> in the openfief namespace, so two instances never
+                          share one (D-89). The owner creates them (D-29).
                         items:
-                          description: SecretMount asks for one Secret to be mounted
+                          description: |-
+                            SecretMount asks for the instance's Secret of one role to be mounted
                             read-only at MountPath.
                           properties:
                             mountPath:
@@ -290,19 +399,22 @@ spec:
                               maxLength: 1024
                               minLength: 2
                               type: string
-                            name:
-                              description: Name is the Secret's name.
-                              maxLength: 253
+                            role:
+                              description: |-
+                                Role names the Secret's purpose, such as flex-token; the instance's
+                                Secret is <instance>-<role>.
+                              maxLength: 63
                               minLength: 1
+                              pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                               type: string
                           required:
                           - mountPath
-                          - name
+                          - role
                           type: object
                         maxItems: 32
                         type: array
                         x-kubernetes-list-map-keys:
-                        - name
+                        - role
                         x-kubernetes-list-type: map
                     required:
                     - capabilities
@@ -336,6 +448,40 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  clusterServices:
+                    description: |-
+                      ClusterServices lists the in-cluster service a plugin reaches
+                      directly, outside the egress proxy (D-74): at most one.
+                    items:
+                      description: |-
+                        ClusterServiceRef names a Service port in another namespace than
+                        openfief (D-74).
+                      properties:
+                        namespace:
+                          description: Namespace is the Service's namespace; never
+                            openfief.
+                          maxLength: 63
+                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                          type: string
+                        port:
+                          description: Port is the Service port the plugin dials.
+                          format: int32
+                          maximum: 65535
+                          minimum: 1
+                          type: integer
+                        service:
+                          description: Service is the Service's name.
+                          maxLength: 63
+                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                          type: string
+                      required:
+                      - namespace
+                      - port
+                      - service
+                      type: object
+                    maxItems: 1
+                    type: array
+                    x-kubernetes-list-type: atomic
                   dataTiers:
                     description: DataTiers lists data tier names.
                     items:
@@ -353,7 +499,9 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   secrets:
-                    description: Secrets lists Secret names.
+                    description: |-
+                      Secrets lists Secret names: <instance>-<role> for each role the
+                      plugin's manifest names (D-89).
                     items:
                       maxLength: 253
                       type: string
@@ -390,6 +538,40 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  clusterServices:
+                    description: |-
+                      ClusterServices lists the in-cluster service a plugin reaches
+                      directly, outside the egress proxy (D-74): at most one.
+                    items:
+                      description: |-
+                        ClusterServiceRef names a Service port in another namespace than
+                        openfief (D-74).
+                      properties:
+                        namespace:
+                          description: Namespace is the Service's namespace; never
+                            openfief.
+                          maxLength: 63
+                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                          type: string
+                        port:
+                          description: Port is the Service port the plugin dials.
+                          format: int32
+                          maximum: 65535
+                          minimum: 1
+                          type: integer
+                        service:
+                          description: Service is the Service's name.
+                          maxLength: 63
+                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                          type: string
+                      required:
+                      - namespace
+                      - port
+                      - service
+                      type: object
+                    maxItems: 1
+                    type: array
+                    x-kubernetes-list-type: atomic
                   dataTiers:
                     description: DataTiers lists data tier names.
                     items:
@@ -407,7 +589,9 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   secrets:
-                    description: Secrets lists Secret names.
+                    description: |-
+                      Secrets lists Secret names: <instance>-<role> for each role the
+                      plugin's manifest names (D-89).
                     items:
                       maxLength: 253
                       type: string

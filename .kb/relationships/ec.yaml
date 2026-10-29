@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7b56870faef
+  - type: executable_for
+    from: SYM-pl-test-helper-test-cluster-service-granted
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:20:16.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e657204ea03e

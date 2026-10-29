@@ -25,7 +25,7 @@ func proposal(name, schema string, trust plugins.Trust) *app.Proposal {
 		Plugin: plugins.Plugin{Name: name, Image: sampleImage, Manifest: plugins.Manifest{
 			Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 			Egress:       []plugins.EgressHost{{Host: "api.example.com", Port: 443}, {Host: "data.example.org", Port: 8443}},
-			Secrets:      []plugins.SecretMount{{Name: "sample-credentials", MountPath: "/etc/openfief/sample"}},
+			Secrets:      []plugins.SecretMount{{Role: "credentials", MountPath: "/etc/openfief/sample"}},
 			DataTiers:    []plugins.DataTier{"T1"},
 		}},
 		Decision: plugins.TrustDecision{Trust: trust, Signer: plugins.OpenFiefCI()},
@@ -63,8 +63,8 @@ Trust:        verified plugin "sample": the catalog pins this image, signed by i
 It requests, and the PluginGrant will approve, exactly:
   Capabilities: connector
   Egress hosts: api.example.com:443, data.example.org:8443
-  Secrets:      mounted read-only; create each in namespace openfief yourself
-                sample-credentials at /etc/openfief/sample
+  Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself
+                sample-credentials (role credentials) at /etc/openfief/sample
   Data tiers:   T1
   Config:       accounts: array, required
                 limit: integer or null
@@ -85,8 +85,8 @@ Trust:        unverified: signed by trusted signer openfief-ci (OpenFiefCI, ` + 
 It requests, and the PluginGrant will approve, exactly:
   Capabilities: connector
   Egress hosts: api.example.com:443, data.example.org:8443
-  Secrets:      mounted read-only; create each in namespace openfief yourself
-                sample-credentials at /etc/openfief/sample
+  Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself
+                second-credentials (role credentials) at /etc/openfief/sample
   Data tiers:   T1
   Config:       no config schema: any config
 

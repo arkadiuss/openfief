@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4b90a65486a
+  - type: implements
+    from: SYM-pl-prepare
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:23:08.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fdb51a76a71
+  - type: covered_by
+    from: SYM-pl-prepare
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:08.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b90e314647b2

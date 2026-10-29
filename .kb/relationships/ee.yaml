@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a3377e50de7
+  - type: implements
+    from: SYM-pl-cluster-service-info
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:22:40.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c6f70054381
+  - type: covered_by
+    from: SYM-pl-cluster-service-info
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:22:40.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd7cdf2ee624

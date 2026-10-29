@@ -244,3 +244,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea4370ed99f9
+  - type: executable_for
+    from: SYM-pl-test-helper-op-ghostfolio-svc
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:19:46.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a91cf46329ad

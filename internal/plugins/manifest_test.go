@@ -53,17 +53,19 @@ func TestManifestValidate(t *testing.T) {
 			name: "bad secrets",
 			change: func(m *plugins.Manifest) {
 				m.Secrets = []plugins.SecretMount{
-					{Name: "Bad_Name", MountPath: "/etc/a"},
-					{Name: "b", MountPath: "etc/b"},
-					{Name: "c", MountPath: "/etc/c/../d"},
-					{Name: "d", MountPath: "/var/run/secrets/kubernetes.io"},
-					{Name: "e", MountPath: "/var"},
-					{Name: "b", MountPath: "/etc/a/nested"},
-					{Name: "g", MountPath: "/"},
+					{Role: "Bad_Role", MountPath: "/etc/a"},
+					{Role: "b", MountPath: "etc/b"},
+					{Role: "c", MountPath: "/etc/c/../d"},
+					{Role: "d", MountPath: "/var/run/secrets/kubernetes.io"},
+					{Role: "e", MountPath: "/var"},
+					{Role: "b", MountPath: "/etc/a/nested"},
+					{Role: "g", MountPath: "/"},
+					{Role: "dotted.role", MountPath: "/etc/h"},
 				}
 			},
 			want: []fieldError{
-				{"secrets[0]", plugins.ErrInvalidName},
+				{"secrets[0].role", plugins.ErrInvalidName},
+				{"secrets[7].role", plugins.ErrInvalidName},
 				{"secrets[5]", plugins.ErrDuplicate},
 				{"secrets[1].mountPath", plugins.ErrInvalidMountPath},
 				{"secrets[2].mountPath", plugins.ErrInvalidMountPath},
@@ -101,16 +103,16 @@ func TestManifestValidate(t *testing.T) {
 	}
 }
 
-func TestManifestRequested(t *testing.T) {
+func TestPluginRequested(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
-		name     string
-		manifest plugins.Manifest
-		want     plugins.Permissions
+		name   string
+		plugin plugins.Plugin
+		want   plugins.Permissions
 	}{
 		{
-			name:     "sorted, secrets by name",
-			manifest: samplePlugin().Manifest,
+			name:   "sorted, each secret role named for the instance",
+			plugin: samplePlugin(),
 			want: plugins.Permissions{
 				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 				Egress:       []plugins.EgressHost{host("api.example.com", 443), host("data.example.org", 8443)},
@@ -119,15 +121,26 @@ func TestManifestRequested(t *testing.T) {
 			},
 		},
 		{
-			name:     "view with nothing else",
-			manifest: plugins.Manifest{Capabilities: []plugins.Capability{plugins.CapabilityView}},
-			want:     plugins.Permissions{Capabilities: []plugins.Capability{plugins.CapabilityView}},
+			name: "two instances of one image ask for different Secrets",
+			plugin: plugins.Plugin{Name: "ibkr-joint", Manifest: plugins.Manifest{
+				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
+				Secrets:      []plugins.SecretMount{{Role: "flex-token", MountPath: "/etc/openfief/ibkr-flex"}},
+			}},
+			want: plugins.Permissions{
+				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
+				Secrets:      []string{"ibkr-joint-flex-token"},
+			},
+		},
+		{
+			name:   "view with nothing else",
+			plugin: plugins.Plugin{Name: "ui", Manifest: plugins.Manifest{Capabilities: []plugins.Capability{plugins.CapabilityView}}},
+			want:   plugins.Permissions{Capabilities: []plugins.Capability{plugins.CapabilityView}},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if diff := cmp.Diff(tt.want, tt.manifest.Requested()); diff != "" {
+			if diff := cmp.Diff(tt.want, tt.plugin.Requested()); diff != "" {
 				t.Errorf("Requested() (-want +got):\n%s", diff)
 			}
 		})

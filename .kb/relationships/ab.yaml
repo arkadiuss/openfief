@@ -342,3 +342,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-339c66792b99
+  - type: implements
+    from: SYM-pl-cluster-service-ref
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-29T15:19:07.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cbcfe8876cd
+  - type: covered_by
+    from: SYM-pl-cluster-service-ref
+    to: TEST-operator-api
+    created_at: 2026-10-29T15:19:07.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbf955498dc5
+  - type: implements
+    from: SYM-pl-cluster-service-ref
+    to: REQ-plugins-cli-in-cluster-service-access
+    created_at: 2026-10-29T15:21:34.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ca0a92b3458
+  - type: covered_by
+    from: SYM-pl-cluster-service-ref
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:34.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90632a793e3b

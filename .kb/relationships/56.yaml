@@ -279,3 +279,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d17c8fd2030a
+  - type: executable_for
+    from: SYM-pl-test-helper-gf-plan
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:53.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8cb2ec70818

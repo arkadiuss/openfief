@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71e5e37ab1d9
+  - type: validates
+    from: TEST-plugins-kube-cluster-service
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:10:03.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bee5a0b81e69
+  - type: validates
+    from: TEST-plugins-kube-cluster-service
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:10:03.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2c6f8fc1bb7

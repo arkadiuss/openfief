@@ -272,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c91f40c61d7
+  - type: executable_for
+    from: SYM-pl-test-helper-in-cluster-plugin
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:19:57.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6f602e9f866
+  - type: implements
+    from: SYM-pl-ask-service
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:23:22.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-667bf844403e
+  - type: covered_by
+    from: SYM-pl-ask-service
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:22.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47ef320cfb69

@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53463076025a
+  - type: executable_for
+    from: SYM-pl-test-cluster-service-permissions
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:17:23.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9c1617f5b92

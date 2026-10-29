@@ -56,8 +56,9 @@ classDiagram
   class Plugin {
     metadata.name : the instance name
     spec.image : repository@sha256 digest
-    spec.manifest : capabilities, egress, secrets, dataTiers, configSchema, browserPath
+    spec.manifest : capabilities, egress, secrets, dataTiers, configSchema, browserPath, egressFromConfig, clusterService
     spec.config : JSON object
+    spec.clusterService : namespace, service, port
     status.conditions : Ready, ApprovalRequired, SignatureVerified
     status.deployed : the PluginSpec that runs now
     status.effective : Permissions
@@ -66,7 +67,7 @@ classDiagram
   }
   class PluginGrant {
     metadata.name : same as its Plugin
-    spec : capabilities, egress, secrets, dataTiers, browserPaths
+    spec : capabilities, egress, secrets, dataTiers, browserPaths, clusterServices
     status.conditions : Valid
   }
   class ServiceAccount {
@@ -112,16 +113,18 @@ classDiagram
 
 The CRD schema rejects bad input before the operator sees it. Names must be lower-case DNS labels of at most 56 characters starting with a letter, so `plugin-<name>` fits a 63-character Service name. `spec.image` must match `^[^@]+@sha256:[0-9a-f]{64}$`. Capabilities are `connector` or `view`; egress lists hold at most 64 [egress hosts](../glossary.md). A manifest's `browserPath` and a grant's `browserPaths` (at most 8) are paths starting with `/` of at most 256 bytes; the domain checks the rest, such as never claiming a path the core serves itself. The effective one appears in `status.effective.browserPaths`, which is what the core reads to proxy browsers to a view plugin (D-81). The operator then validates everything again in the domain, where rules such as "no wildcard hosts" live, because a CRD schema can't express them all.
 
-The operator never creates a Secret (D-29) and its Role can't even read one: it only names the owner's Secrets in the pod spec. The allow-list ConfigMap has no owner reference; each plugin's key is applied by its own field manager, `openfief-operator/allowlist/<name>`.
+The operator never creates a Secret (D-29) and its Role can't even read one: it only names the owner's Secrets in the pod spec, each `<instance>-<role>` (D-89). The allow-list ConfigMap has no owner reference; each plugin's key is applied by its own field manager, `openfief-operator/allowlist/<name>`.
+
+**An in-cluster service (D-74).** A manifest may carry `clusterService` (with a `description`), asking for one service in the cluster that the owner picks at install, such as a Ghostfolio running next to OpenFief. The owner's pick is the `Plugin`'s `spec.clusterService` (`namespace`, `service`, `port`, never the `openfief` namespace), and the grant approves exactly it in `clusterServices` (at most one). When both hold it, the operator reads that Service in its own namespace, uncached through the manager's API reader, since its cache sees only `openfief` (D-15). It can, because the owner's install created a Role and RoleBinding there, `openfief-plugin-<instance>`, letting the operator's ServiceAccount `get` that one Service and nothing else. `Cluster.AddClusterService` takes the Service's ClusterIP, its pod selector and the numeric `targetPort` behind the granted port; a headless Service, one without a selector, without that port, or with a named `targetPort` is unusable. The compiled workload then gets an egress rule to that Service's pods (a namespace selector on `kubernetes.io/metadata.name` plus the Service's selector) on that pod port, and `OPENFIEF_CLUSTER_SERVICE_ADDRESS=<ClusterIP>:<port>`, so no DNS is needed. That traffic doesn't go through the egress proxy and gets no allow-list entry; with egress hosts too, the ClusterIP is added to `NO_PROXY`. When the Service can't be read, nothing runs: `Ready` is `False` with `ClusterUnavailable`, and the reconcile is retried every minute, since the operator doesn't watch Services outside `openfief`.
 
 What `BuildObjects` puts in the pod ([objects.go](../../internal/plugins/operator/objects.go)):
 
 - **Identity.** The ServiceAccount mounts no API token. Every pod gets a projected token with audience `openfief-core` at `/var/run/secrets/openfief/token` (D-27), named by `OPENFIEF_TOKEN_FILE`. Only when an egress host is granted, it gets a second one with audience `openfief-egress` at `/var/run/secrets/openfief-egress/token` (D-63), named by `OPENFIEF_EGRESS_TOKEN_FILE`. Both last 3600 seconds and the kubelet renews them. With separate audiences, the proxy never sees a token the core would accept. That ServiceAccount is the [plugin identity](../glossary.md).
-- **Addresses.** `OPENFIEF_CORE_ADDRESS` is the core Service's ClusterIP and port, because plugins have no DNS (D-32). `OPENFIEF_LISTEN_PORT` is the plugin port (8080 by default). Only when an egress host is granted, `HTTPS_PROXY` points at the egress proxy's ClusterIP and `NO_PROXY` at the core.
+- **Addresses.** `OPENFIEF_CORE_ADDRESS` is the core Service's ClusterIP and port, because plugins have no DNS (D-32). `OPENFIEF_LISTEN_PORT` is the plugin port (8080 by default). Only when an egress host is granted, `HTTPS_PROXY` points at the egress proxy's ClusterIP and `NO_PROXY` at the core. Only with a granted in-cluster service, `OPENFIEF_CLUSTER_SERVICE_ADDRESS` is that Service's ClusterIP and port (D-74).
 - **Hardening.** Non-root, read-only root filesystem, every Linux capability dropped, no privilege escalation, seccomp `RuntimeDefault`, no service links. These settings meet the `restricted` Pod Security Standard the namespace enforces.
 - **Rollouts.** One replica with the `Recreate` strategy, so an old pod never runs beside a new one with other permissions. A SHA-256 of the config in a pod annotation makes a config change replace the pod.
 
-The NetworkPolicy denies both directions by default. It admits ingress only from the core's pods on the plugin port, allows egress to the core's pods, and allows egress to the proxy's pods only when an egress host is granted. It never allows DNS. The peers are selected by the core's and the proxy's Service selectors. `ClusterFromServices` refuses a Service with no selector, a selector that would also match plugin pods (`ErrSelectorOverlap`, which would let a plugin pass for the core), or a named `targetPort`, because NetworkPolicy matches pod port numbers.
+The NetworkPolicy denies both directions by default. It admits ingress only from the core's pods on the plugin port, allows egress to the core's pods, allows egress to the proxy's pods only when an egress host is granted, and to the pods of the plugin's in-cluster service only when the grant approves it (D-74). It never allows DNS. The peers are selected by the core's and the proxy's Service selectors. `ClusterFromServices` refuses a Service with no selector, a selector that would also match plugin pods (`ErrSelectorOverlap`, which would let a plugin pass for the core), or a named `targetPort`, because NetworkPolicy matches pod port numbers.
 
 ### One reconcile pass
 
@@ -258,11 +261,12 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 - **D-27**: projected token with audience `openfief-core` mounted in every plugin.
 - **D-28**: no Ingress; plugins get ClusterIP Services only.
 - **D-29**: Secrets are the owner's; the operator only mounts them.
-- **D-32**: allow-list, NetworkPolicy to the core and proxy only, no DNS, `HTTPS_PROXY` by ClusterIP. **Difference:** D-32 says the operator compiles each grant's hostnames; the code publishes the effective hosts, the intersection of manifest and grant. That's narrower and matches D-16.
+- **D-32**: allow-list, NetworkPolicy to the core and proxy only (and the one in-cluster service D-74 allows), no DNS, `HTTPS_PROXY` by ClusterIP. **Difference:** D-32 says the operator compiles each grant's hostnames; the code publishes the effective hosts, the intersection of manifest and grant. That's narrower and matches D-16.
 - **D-42**: manifest in a signed image label, matched against `spec.manifest`.
 - **D-43, D-44**: embedded catalog; a pinned digest signed by its publisher is `Verified`. The catalog is empty today.
 - **D-45**: three kinds of trusted signer; the owner's come from a ConfigMap.
-- **D-48**: each `Plugin` name is an instance with its own ServiceAccount, config, grant and allow-list key. **Gap:** Secret names come from the manifest, and D-42 now makes `spec.manifest` equal the image's label. So two instances of one image always request the same Secrets, and can't have their own as D-48 says.
+- **D-74**: an in-cluster service the manifest asks for, the owner picks and the grant approves: an egress rule to its pods on its pod port and its ClusterIP in `OPENFIEF_CLUSTER_SERVICE_ADDRESS`, outside the proxy. The operator reads the Service through a Role the owner's install creates in that namespace, so its own Role stays in `openfief` (see [Implementation questions](../implementation-questions.md)).
+- **D-48, D-89**: each `Plugin` name is an instance with its own ServiceAccount, config, grant, allow-list key and Secrets. `spec.manifest.secrets` names each Secret by `role`; the pod mounts the Secret `<instance>-<role>`, and the grant's `secrets` names it in full.
 - **D-55**: `Plugin` and `PluginGrant` are the only custom resources; no money.
 - **D-56**: the operator verifies every image itself against a bundled trust root, and the status says `Verified` or `SignedByTrustedSigner`, and `status.signature` names the signer and its kind. "Offline" means no Sigstore service; the image's registry must still be reachable, at least once per digest while the operator runs. The read API lists it and the built-in UI shows it ([Read API](read-api.md#installed-plugins-and-removed-instances)).
 - **D-57**: nothing deploys without a `True` verification; no flag or setting overrides it.
@@ -289,6 +293,8 @@ Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.
 | Allow-list key set while running, removed after deletion | the upgrade subtest; `TestDeletedPluginLeavesTheAllowList`; `TestAllowListConfigMap` | REQ-operator-allow-list-publish |
 | Exact objects for a workload | `TestBuildObjects`, `TestDenyAllNetworkPolicy` in [objects_test.go](../../internal/plugins/operator/objects_test.go) | REQ-operator-workload-objects |
 | Peers only from usable Services | `TestClusterFromServices` in [cluster_test.go](../../internal/plugins/operator/cluster_test.go), `TestBuildObjectsRefuses` | REQ-operator-cluster-peers |
+| A granted in-cluster service: an egress rule to its pods on its pod port, its ClusterIP in the environment, nothing through the proxy; not approved, it waits; a Service that can't be read runs nothing and is retried | `TestClusterWithClusterService`, `TestReconcileClusterService` in [cluster_service_test.go](../../internal/plugins/operator/cluster_service_test.go) | REQ-operator-in-cluster-service-route, REQ-operator-in-cluster-service-reads-service |
+| The CLI's Role and RoleBinding let the operator get that one Service; install creates and uninstall deletes them; the ingress rule admits the instance's pods | `TestServiceAccess`, `TestInstancesClusterService`, `TestIngressRule`, `TestInstancesCreateDeleteServiceAccess` in [clusterservice_test.go](../../internal/plugins/kube/clusterservice_test.go) | REQ-plugins-cli-in-cluster-service-access, REQ-plugins-cli-in-cluster-ingress-rule |
 | Image references by digest only | `TestParseImageRef` in [image_test.go](../../internal/plugins/image_test.go) | REQ-plugins-image-digest-only |
 | No ClusterRole for the operator; no Ingress in the install bases `crds`, `operator`, `egress-proxy`, `core` (`deploy/demo` is excluded) | `TestManifests` in [manifests_test.go](../../internal/plugins/operator/manifests_test.go) | TEST-operator-manifests (D-15, D-28) |
 | Egress token only with granted egress; core token always | `TestBuildObjects`; `TestReconcile/granted_plugin_without_egress_gets_only_the_core_token` and the upgrade subtest, which read both tokens from the Deployment | REQ-plugins-egress-token-projected |

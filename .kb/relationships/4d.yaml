@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7de5cda4675
+  - type: executable_for
+    from: SYM-pl-test-ingress-rule
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:22:22.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1c9fae15ef2

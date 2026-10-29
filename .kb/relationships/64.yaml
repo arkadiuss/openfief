@@ -454,3 +454,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-760c025f9f48
+  - type: executable_for
+    from: SYM-pl-test-plugin-cluster-service-validate
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:17:17.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-103980209020
+  - type: implements
+    from: SYM-pl-plugins-cluster-service-request
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:34:40.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e597dabcfec
+  - type: implements
+    from: SYM-pl-plugins-cluster-service-request
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:34:40.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a0d849c682c
+  - type: covered_by
+    from: SYM-pl-plugins-cluster-service-request
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:34:40.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49197a66af88

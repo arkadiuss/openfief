@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb821f028191
+  - type: implements
+    from: SYM-pl-cluster-service-to-api
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:18:52.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c3ddd51576
+  - type: covered_by
+    from: SYM-pl-cluster-service-to-api
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:18:52.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f66d9a3d05

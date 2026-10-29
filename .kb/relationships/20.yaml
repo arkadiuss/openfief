@@ -321,3 +321,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88421ae1122d
+  - type: implements
+    from: SYM-pl-host-of-url
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:14:56.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11c26ccbaf57
+  - type: implements
+    from: SYM-pl-host-of-url
+    to: REQ-plugins-config-field-host-https
+    created_at: 2026-10-29T15:14:56.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f39765ea92d6
+  - type: covered_by
+    from: SYM-pl-host-of-url
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:14:56.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-244df5f7be88

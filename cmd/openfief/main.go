@@ -118,6 +118,7 @@ func newEnv() (*cli.Env, error) {
 		},
 		ValidateConfig: operator.ValidateConfig,
 		Render:         kube.ResourcesYAML,
+		IngressRule:    kube.IngressRuleYAML,
 	}, nil
 }
 

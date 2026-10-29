@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2011417a80d7
+  - type: executable_for
+    from: SYM-pl-test-cluster-with-cluster-service
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:19:52.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3858c040f94

@@ -447,3 +447,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51019fc92e7f
+  - type: executable_for
+    from: SYM-pl-fake-cluster-cluster-service
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:43.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ee274d0584e

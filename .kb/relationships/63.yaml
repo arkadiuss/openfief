@@ -272,3 +272,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7423197c495c
+  - type: implements
+    from: SYM-pl-cluster-service-validate
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:37.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eecffda7e67
+  - type: covered_by
+    from: SYM-pl-cluster-service-validate
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:37.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-080ee5edac93
+  - type: executable_for
+    from: SYM-pl-test-reconcile-cluster-service
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:20:10.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ef8bbd41b2f

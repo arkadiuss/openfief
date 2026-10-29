@@ -356,3 +356,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07c97e05abfc
+  - type: executable_for
+    from: SYM-pl-test-compile-cluster-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:17:35.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f68886952dc

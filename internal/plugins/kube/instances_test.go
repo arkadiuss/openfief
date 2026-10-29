@@ -43,7 +43,7 @@ spec:
     - api.example.com:443
     secrets:
     - mountPath: /etc/openfief/sample
-      name: sample-credentials
+      role: credentials
 ---
 apiVersion: openfief.io/v1alpha1
 kind: PluginGrant
@@ -70,10 +70,10 @@ func samplePlan(t *testing.T, name string) (plugins.Plugin, plugins.Grant) {
 	signed := plugins.SignedImage{Image: img, Manifest: plugins.Manifest{
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       []plugins.EgressHost{{Host: "api.example.com", Port: 443}},
-		Secrets:      []plugins.SecretMount{{Name: "sample-credentials", MountPath: "/etc/openfief/sample"}},
+		Secrets:      []plugins.SecretMount{{Role: "credentials", MountPath: "/etc/openfief/sample"}},
 		ConfigSchema: []byte(`{"type":"object"}`),
 	}}
-	p, g, err := plugins.PlanInstall(name, &signed, []byte(`{"interval":"24h"}`))
+	p, g, err := plugins.PlanInstall(name, &signed, []byte(`{"interval":"24h"}`), nil)
 	if err != nil {
 		t.Fatalf("plan: %v", err)
 	}

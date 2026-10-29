@@ -237,3 +237,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8f40048d3e8
+  - type: implements
+    from: SYM-pl-config-field-rune
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:15:27.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2407b76174cf
+  - type: covered_by
+    from: SYM-pl-config-field-rune
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:27.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6721f646fa88
+  - type: executable_for
+    from: SYM-pl-test-plan-install-owner-picks
+    to: TEST-plugins-install
+    created_at: 2026-10-29T15:18:25.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f6b7dacb4cf

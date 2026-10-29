@@ -71,7 +71,7 @@ func PlanRollout(in RolloutInput) (Rollout, error) {
 	if in.Grant == nil {
 		r := Rollout{Outcome: RolloutNoGrant}
 		if in.Current != nil {
-			r.Pending = in.Current.Manifest.Requested()
+			r.Pending = in.Current.Requested()
 		}
 		return r, nil
 	}
