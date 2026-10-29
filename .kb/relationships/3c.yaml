@@ -370,3 +370,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9b6b7fd385c
+  - type: constrains
+    from: REQ-core-reverse-proxies-view-plugins
+    to: FACT-SUBJECT-269A4F8E67B9ACD2
+    created_at: 2026-10-29T08:12:07.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64e781651b16
+  - type: requires_property
+    from: REQ-core-reverse-proxies-view-plugins
+    to: FACT-PROP-4A180B31061D3FFA
+    created_at: 2026-10-29T08:12:07.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fde64e012d1b
+  - type: constrains
+    from: REQ-core-network-policy-kubernetes-api
+    to: FACT-SUBJECT-882842AE33F484A5
+    created_at: 2026-10-29T08:37:51.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ed62d576090
+  - type: requires_property
+    from: REQ-core-network-policy-kubernetes-api
+    to: FACT-PROP-3920369E187D649D
+    created_at: 2026-10-29T08:37:51.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bbf1deed38c

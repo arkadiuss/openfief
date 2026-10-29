@@ -1,6 +1,6 @@
 ---
 title: Plugin egress must go through the egress proxy.
-status: open
+status: closed
 text_ref: design-decisions:D-32#1
 tags:
   - strict-modeling

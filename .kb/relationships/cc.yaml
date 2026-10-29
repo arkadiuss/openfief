@@ -321,3 +321,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24586b4aa955
+  - type: constrains
+    from: REQ-plugins-instances-never-share-secrets
+    to: FACT-SUBJECT-1E18CEDFA498F8FA
+    created_at: 2026-10-29T08:33:37.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e2568e3354
+  - type: requires_property
+    from: REQ-plugins-instances-never-share-secrets
+    to: FACT-PROP-A74FA8C1B8E1C1DF
+    created_at: 2026-10-29T08:33:37.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30b1ee996c74

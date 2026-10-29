@@ -363,3 +363,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5dd1815d2459
+  - type: constrains
+    from: REQ-ingest-bond-terms-latest-entry-wins
+    to: FACT-SUBJECT-BDB16DBA9CB82400
+    created_at: 2026-10-29T09:46:27.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bb607ff8bf0
+  - type: requires_property
+    from: REQ-ingest-bond-terms-latest-entry-wins
+    to: FACT-PROP-85E90FE3CC21449C
+    created_at: 2026-10-29T09:46:27.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd63e27a700c

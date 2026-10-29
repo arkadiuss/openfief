@@ -251,3 +251,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e60ee241e7d
+  - type: constrains
+    from: REQ-portfolio-model-max-targets
+    to: FACT-SUBJECT-1FEA6AF758EE9559
+    created_at: 2026-10-29T10:20:06.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f037eb1d61e
+  - type: requires_property
+    from: REQ-portfolio-model-max-targets
+    to: FACT-PROP-0B5F0322C7E0B898
+    created_at: 2026-10-29T10:20:06.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14f7befd792d

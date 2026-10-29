@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38386fb880df
+  - type: constrains
+    from: REQ-tooling-release-catalogs-first-party
+    to: FACT-SUBJECT-7921D23F5EC1B3F5
+    created_at: 2026-10-29T08:30:24.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0beaef0a88b
+  - type: requires_property
+    from: REQ-tooling-release-catalogs-first-party
+    to: FACT-PROP-43C2D7F9F674F10E
+    created_at: 2026-10-29T08:30:24.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5af6b3c564d8

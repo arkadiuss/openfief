@@ -391,3 +391,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-220890749df8
+  - type: constrains
+    from: REQ-valuation-three-values
+    to: FACT-SUBJECT-F283C8B3298BC0D2
+    created_at: 2026-10-29T07:57:10.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a317f8ee90e2
+  - type: requires_property
+    from: REQ-valuation-three-values
+    to: FACT-PROP-3F75FE5E2CCF9446
+    created_at: 2026-10-29T07:57:10.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5042f30daee4
+  - type: supersedes
+    from: REQ-valuation-three-values
+    to: REQ-AUTO-0C90AD924924F4F6
+    created_at: 2026-10-29T07:57:10.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e60ab939a70
+  - type: constrains
+    from: REQ-ui-value-performance-separate-charts
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-29T10:12:20.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7634ce4f3576
+  - type: requires_property
+    from: REQ-ui-value-performance-separate-charts
+    to: FACT-PROP-39DAB406DF2201A2
+    created_at: 2026-10-29T10:12:20.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bd1a536ed67

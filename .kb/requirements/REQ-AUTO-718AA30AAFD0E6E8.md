@@ -35,8 +35,12 @@ type: req
 ---
 The built-in UI must show a value-over-time chart that starts at go-live.
 
+## Context
+
+D-30 names the charts the built-in UI draws in M0. It first named two, allocation and value over time; with D-106 the author separated value and performance, and D-30 now names three. The value-over-time chart shows money, cash included, with D-77's switch (D-106).
+
 ## Source
 
-> The built-in UI draws two charts in M0: allocation (by asset class, currency, broker or sleeve) and value over time (which starts at go-live, because of D-23).
+> The built-in UI draws three charts in M0: allocation (by asset class, currency, broker or sleeve), value over time, and performance (D-106). The time charts start at go-live (D-23).
 
-Source: OpenFief author decisions (DESIGN.md section 10) - D-30#2
+OpenFief author decisions (docs/DESIGN.md, section 3.1), design-decisions:D-30#2

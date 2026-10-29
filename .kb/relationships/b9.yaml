@@ -580,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c9cae7f3005
+  - type: constrains
+    from: REQ-decision-d36-8-concurrency-and-schedule
+    to: FACT-SUBJECT-201BF18D8A3B745A
+    created_at: 2026-10-29T08:05:23.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de613b942e30
+  - type: requires_property
+    from: REQ-decision-d36-8-concurrency-and-schedule
+    to: FACT-PROP-73DB0C29E26D9ED5
+    created_at: 2026-10-29T08:05:23.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1d7a2092c2c
+  - type: supersedes
+    from: REQ-decision-d36-8-concurrency-and-schedule
+    to: REQ-decision-d36-8-revaluation-settings
+    created_at: 2026-10-29T08:05:23.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f761d92c1e07

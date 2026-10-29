@@ -286,3 +286,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a396c010ebe6
+  - type: constrains
+    from: REQ-plugins-manifest-secret-roles
+    to: FACT-SUBJECT-777F1580F1EE5686
+    created_at: 2026-10-29T08:32:20.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac9b3b199a59
+  - type: requires_property
+    from: REQ-plugins-manifest-secret-roles
+    to: FACT-PROP-6426F9786AAFC17E
+    created_at: 2026-10-29T08:32:20.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dccfeec70aa8

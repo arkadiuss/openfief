@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17378d5e27ab
+  - type: constrains
+    from: REQ-valuation-market-data-source-ranking
+    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
+    created_at: 2026-10-29T08:48:52.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c48125103460
+  - type: requires_property
+    from: REQ-valuation-market-data-source-ranking
+    to: FACT-PROP-E9B166B02146F3DF
+    created_at: 2026-10-29T08:48:52.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2edff2be1a4d

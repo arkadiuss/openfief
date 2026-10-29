@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3d620e985e3
+  - type: constrains
+    from: REQ-pl-business-day-calendar
+    to: FACT-SUBJECT-FE4A9F4E007DAFCA
+    created_at: 2026-10-29T09:59:35.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b273e5cf4104
+  - type: requires_property
+    from: REQ-pl-business-day-calendar
+    to: FACT-PROP-D4AC1BDFE559EA39
+    created_at: 2026-10-29T09:59:35.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddf88052b520

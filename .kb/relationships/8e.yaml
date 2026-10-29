@@ -468,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-741a7dd0ee97
+  - type: constrains
+    from: REQ-views-ghostfolio-own-sync-timer
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-29T10:24:10.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49c3214aa5db
+  - type: requires_property
+    from: REQ-views-ghostfolio-own-sync-timer
+    to: FACT-PROP-1AF57E5D373744FD
+    created_at: 2026-10-29T10:24:10.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6117bb6a1cd

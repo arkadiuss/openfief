@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-485efeb01935
+  - type: constrains
+    from: REQ-views-ghostfolio-dividend-booking
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-29T10:25:11.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44dda5eb4d5a
+  - type: requires_property
+    from: REQ-views-ghostfolio-dividend-booking
+    to: FACT-PROP-F731E3AC11F3833C
+    created_at: 2026-10-29T10:25:11.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bfb14bced39

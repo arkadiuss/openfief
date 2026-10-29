@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-673931ef0948
+  - type: constrains
+    from: REQ-valuation-sale-fee-rule-zero
+    to: FACT-SUBJECT-4424A5AD6FE3AB29
+    created_at: 2026-10-29T08:03:06.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50019cc6fd67
+  - type: requires_property
+    from: REQ-valuation-sale-fee-rule-zero
+    to: FACT-PROP-64E344B38B4507AA
+    created_at: 2026-10-29T08:03:06.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d42e9d2a6c0

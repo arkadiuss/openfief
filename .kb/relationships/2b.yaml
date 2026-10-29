@@ -370,3 +370,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ef0b6088b97
+  - type: constrains
+    from: REQ-docs-core-kubernetes-api-rule
+    to: FACT-SUBJECT-486D4C5AA66570AA
+    created_at: 2026-10-29T08:38:32.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-329166352ac0
+  - type: requires_property
+    from: REQ-docs-core-kubernetes-api-rule
+    to: FACT-PROP-31C987185CFD3470
+    created_at: 2026-10-29T08:38:32.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecf0e6751a33

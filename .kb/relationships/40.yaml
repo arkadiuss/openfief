@@ -300,3 +300,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1224387a3b5
+  - type: constrains
+    from: REQ-ui-value-switch
+    to: FACT-SUBJECT-50ABCC5968A1366A
+    created_at: 2026-10-29T08:01:29.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6730dbc4ae8
+  - type: requires_property
+    from: REQ-ui-value-switch
+    to: FACT-PROP-2D69549340AFAB66
+    created_at: 2026-10-29T08:01:29.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-862fea9a75a0
+  - type: supersedes
+    from: REQ-ui-value-switch
+    to: REQ-AUTO-E10BE8CE13E67657
+    created_at: 2026-10-29T08:01:29.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b871c15ea939

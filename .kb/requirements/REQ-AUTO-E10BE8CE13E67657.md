@@ -1,6 +1,6 @@
 ---
 title: Bonds must count in totals at their net-if-redeemed-today value by default, after the early-redemption fee and Belka tax, with no tax inside IKE.
-status: open
+status: closed
 text_ref: design-decisions:D-25#2
 tags:
   - strict-modeling

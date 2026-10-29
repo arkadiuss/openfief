@@ -412,3 +412,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe2d6eee24df
+  - type: constrains
+    from: REQ-identity-first-passkey-command
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: 2026-10-29T08:09:53.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-672d7f01a95b
+  - type: requires_property
+    from: REQ-identity-first-passkey-command
+    to: FACT-PROP-D2C4269644DB050E
+    created_at: 2026-10-29T08:09:53.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69a17a58a1ee
+  - type: constrains
+    from: REQ-views-ghostfolio-standalone-fee
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-29T10:25:52.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f06b3c94ca9c
+  - type: requires_property
+    from: REQ-views-ghostfolio-standalone-fee
+    to: FACT-PROP-3B04E4758AD5BA5E
+    created_at: 2026-10-29T10:25:52.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-352ca1eb7cae

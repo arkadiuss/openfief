@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-564f968d88d8
+  - type: constrains
+    from: REQ-operator-instance-secret-names
+    to: FACT-SUBJECT-040695DC2B45EBE0
+    created_at: 2026-10-29T08:32:58.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee7e31e8bc92
+  - type: requires_property
+    from: REQ-operator-instance-secret-names
+    to: FACT-PROP-9F1E4CCDC47D6D40
+    created_at: 2026-10-29T08:32:58.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7969b22a833e

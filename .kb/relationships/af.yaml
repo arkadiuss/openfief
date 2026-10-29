@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a956e772271
+  - type: constrains
+    from: REQ-identity-read-api-refuses-connector-tokens
+    to: FACT-SUBJECT-3539E4EDEC067C24
+    created_at: 2026-10-29T08:20:51.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2b85df29099
+  - type: requires_property
+    from: REQ-identity-read-api-refuses-connector-tokens
+    to: FACT-PROP-CE0C1B4A87D0D392
+    created_at: 2026-10-29T08:20:51.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c744aad9ef49

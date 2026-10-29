@@ -461,3 +461,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-afb848fd5976
+  - type: constrains
+    from: REQ-decision-d36-9-three-values-stored
+    to: FACT-SUBJECT-633AD5BF26E03B1C
+    created_at: 2026-10-29T08:06:09.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-478c597e20f9
+  - type: requires_property
+    from: REQ-decision-d36-9-three-values-stored
+    to: FACT-PROP-CF22BDF57C5EE088
+    created_at: 2026-10-29T08:06:09.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c153f8f564e4
+  - type: supersedes
+    from: REQ-decision-d36-9-three-values-stored
+    to: REQ-decision-d36-9-basis-change-revalues-all
+    created_at: 2026-10-29T08:06:09.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-845e3562839c
+  - type: constrains
+    from: REQ-ledger-transfer-suggestion
+    to: FACT-SUBJECT-2ED66112542A7725
+    created_at: 2026-10-29T10:09:26.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7df49050b68
+  - type: requires_property
+    from: REQ-ledger-transfer-suggestion
+    to: FACT-PROP-A9BDB1FE750E2953
+    created_at: 2026-10-29T10:09:26.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-793aacd95feb

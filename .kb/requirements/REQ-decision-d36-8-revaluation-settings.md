@@ -1,6 +1,6 @@
 ---
 title: Worker concurrency, the end-of-day schedule and the bond valuation basis must be configurable.
-status: open
+status: closed
 text_ref: design-decisions:D-36#8
 tags:
   - strict-modeling

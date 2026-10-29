@@ -370,3 +370,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-043d8e25d17d
+  - type: constrains
+    from: REQ-pl-oki-no-belka-tax
+    to: FACT-SUBJECT-D76C92870F5380B6
+    created_at: 2026-10-29T07:55:22.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5de3c1d72b4
+  - type: requires_property
+    from: REQ-pl-oki-no-belka-tax
+    to: FACT-PROP-C4F63AD587664804
+    created_at: 2026-10-29T07:55:22.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-851e6a0c714b

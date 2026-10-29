@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4ee27b89f37
+  - type: constrains
+    from: REQ-ui-plugin-trust-badges
+    to: FACT-SUBJECT-B80F5A6D78E147AA
+    created_at: 2026-10-29T08:28:05.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef005fa03cd8
+  - type: requires_property
+    from: REQ-ui-plugin-trust-badges
+    to: FACT-PROP-16DC66CEC2B058CF
+    created_at: 2026-10-29T08:28:05.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5909b3f50f6d

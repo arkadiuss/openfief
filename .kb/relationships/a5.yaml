@@ -272,3 +272,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcc40954224b
+  - type: constrains
+    from: REQ-ui-three-values-tables
+    to: FACT-SUBJECT-50ABCC5968A1366A
+    created_at: 2026-10-29T08:00:44.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec5b87f964fa
+  - type: requires_property
+    from: REQ-ui-three-values-tables
+    to: FACT-PROP-44296D8032D165A0
+    created_at: 2026-10-29T08:00:44.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-280820d289a4
+  - type: constrains
+    from: REQ-core-token-review-cluster-role
+    to: FACT-SUBJECT-C7DBFBB3D6DCE8B7
+    created_at: 2026-10-29T08:16:42.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97d8a6c553e6
+  - type: requires_property
+    from: REQ-core-token-review-cluster-role
+    to: FACT-PROP-9C3355F873A3520D
+    created_at: 2026-10-29T08:16:42.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3792b69630ad

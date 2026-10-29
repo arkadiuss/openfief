@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd22f80c8a19
+  - type: constrains
+    from: REQ-identity-no-auth-bypass
+    to: FACT-SUBJECT-5A4E6481189FE5A3
+    created_at: 2026-10-29T08:21:32.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00898de9faa1
+  - type: requires_property
+    from: REQ-identity-no-auth-bypass
+    to: FACT-PROP-99CAA9B7065DB88C
+    created_at: 2026-10-29T08:21:32.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f733c8c0b3ab

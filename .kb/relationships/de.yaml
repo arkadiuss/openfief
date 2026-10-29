@@ -244,3 +244,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ada269c4a172
+  - type: constrains
+    from: REQ-core-browser-entry-point
+    to: FACT-SUBJECT-269A4F8E67B9ACD2
+    created_at: 2026-10-29T08:11:24.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1649944cbf5a
+  - type: requires_property
+    from: REQ-core-browser-entry-point
+    to: FACT-PROP-A5C42159D9E3E94D
+    created_at: 2026-10-29T08:11:24.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4069e98a56e5

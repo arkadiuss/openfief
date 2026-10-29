@@ -293,3 +293,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88408cbf2b7d
+  - type: constrains
+    from: REQ-treasurybonds-pre-go-live-opening-lot
+    to: FACT-SUBJECT-8422AA93FAB9FA88
+    created_at: 2026-10-29T09:47:09.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-112a2bf5409d
+  - type: requires_property
+    from: REQ-treasurybonds-pre-go-live-opening-lot
+    to: FACT-PROP-7A5405FC4EC7C2CE
+    created_at: 2026-10-29T09:47:09.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39965b5c3c01
