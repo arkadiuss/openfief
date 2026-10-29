@@ -15,28 +15,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Needed:* a header row and two or three rows with made-up values, copied from a real export. The parser's fixtures will be synthetic.
    - *Known so far:* the author holds stocks and ETFs only at XTB (so D-24's CFD handling stays as written) and will send the headers from a real export. The export's language is not known yet. Public parsers disagree on the sheet names (R-19).
 
-## Treasury bonds
-
-28. **Bond lot limits.**
-    - *Today:* only cash purchases at 100 PLN (not exchanges at 99.90 PLN, whose discount is taxed). No way to delete a lot; entering the same series and day replaces it. "The right connector" (D-49) is the one instance bound to the account. The UI shows the form only for accounts of institution `treasury-bonds`. Entry works only in a cluster with connectors on.
-    - *Question:* keep these?
-
-29. **COI coupons are booked as dividends.**
-    - *Problem:* the ledger has no interest transaction kind.
-    - *Options:* add an interest kind; or keep dividends.
-
-30. **Who picks the NBP reference rate in force.**
-    - *Today:* the treasury-bonds connector applies the rule itself: the rate in force on the tenth business day before a month is that month's reading, dated on the month's first day. The comment on `IndexReading.date` in the connector contract now says so; the wire format is unchanged.
-    - *Options:* keep; or the connector sends NBP's raw rate changes and the core picks.
-
-31. **The Polish business-day calendar.**
-    - *Today:* Saturdays, Sundays and the holidays in art. 1 of the act on days off work, year by year (6 January from 2011, 24 December from 2025, Easter-based days). Epidemic days off (art. 1a) are not modelled. Dates before 1991 are refused.
-    - *Question:* enough for M0?
-
-32. **GUS CPI defaults.**
-    - *Today:* only final monthly values are used; preliminary, estimated and flash values are skipped and arrive later. The first sync starts January 13 years back (`start` can change it), fetching at most 4 years per sync to stay within GUS's anonymous limits. GUS's indicator 1832 is used up to 2025 and 2728 from 2026, a boundary written into the code. A reference-rate month is delivered once its day has passed and is not fetched again.
-    - *Question:* keep these?
-
 ## Performance and the model portfolio
 
 33. **Transfers between the owner's own accounts (D-61).**
