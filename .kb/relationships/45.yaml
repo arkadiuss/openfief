@@ -413,20 +413,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a89e1af0aced
   - type: implements
-    from: SYM-ingest-connectrpc-ignore-canceled
-    to: REQ-ingest-statement-upload-limits
-    created_at: 2026-10-29T05:14:48.671Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d09ba1c58245
-  - type: covered_by
-    from: SYM-ingest-connectrpc-ignore-canceled
-    to: TEST-ingest-connectrpc-files
-    created_at: 2026-10-29T05:14:48.705Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-058c711bcfcd
-  - type: implements
     from: SYM-ingestv1-is-upload-statement-request_part
     to: REQ-ingest-statement-service
     created_at: 2026-10-29T05:20:21.967Z

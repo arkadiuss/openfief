@@ -90,9 +90,10 @@ func (c *Client) ImportFile(ctx context.Context, instance string, id ingest.Batc
 	if sendErr == nil {
 		sendErr = sendChunks(stream, file.Contents)
 		if readErr, unread := errors.AsType[*readError](sendErr); unread {
+			// Cancel without closing the stream: closing it would end the
+			// file cleanly, and the connector could map the truncated file.
 			cancel()
-			_, closeErr := stream.CloseAndReceive()
-			return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, errors.Join(readErr.err, ignoreCanceled(closeErr)))
+			return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, readErr.err)
 		}
 	}
 	resp, err := stream.CloseAndReceive()
@@ -176,14 +177,6 @@ func (r *readError) Error() string { return r.err.Error() }
 
 // Unwrap returns the read's error.
 func (r *readError) Unwrap() error { return r.err }
-
-// ignoreCanceled drops the error of a call the client cancelled itself.
-func ignoreCanceled(err error) error {
-	if connect.CodeOf(err) == connect.CodeCanceled {
-		return nil
-	}
-	return err
-}
 
 // ignoreEOF drops a send error that only says the stream was closed.
 func ignoreEOF(err error) error {

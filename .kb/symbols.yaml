@@ -72262,19 +72262,6 @@ symbols:
         target: TEST-ingest-connectrpc-files
       - type: implements
         target: REQ-ingest-statement-upload-limits
-  - id: SYM-ingest-connectrpc-ignore-canceled
-    title: ignoreCanceled
-    sourceFile: internal/ingest/connectrpc/client.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T05:14:46.915Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-connectrpc-files
-      - type: implements
-        target: REQ-ingest-statement-upload-limits
   - id: SYM-ingest-connectrpc-test-helper-file-refuser
     title: fileRefuser
     sourceFile: internal/ingest/connectrpc/files_test.go

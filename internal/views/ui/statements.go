@@ -100,9 +100,9 @@ func uploadParts(mr *multipart.Reader) (ingestv1.Mode, *multipart.Part, error) {
 }
 
 // sendStatement streams header and then file to the core, and returns the
-// core's answer or its error. A file that can't be read to its end stops
-// the call, so the core imports nothing of it, and is errUploadTooLarge
-// over the body's limit, else errUploadBroke.
+// core's answer or its error. A file that can't be read to its end cancels
+// the call without ending the stream, so the core imports nothing of it,
+// and is errUploadTooLarge over the body's limit, else errUploadBroke.
 func (s *server) sendStatement(ctx context.Context, header *ingestv1.StatementHeader, file io.Reader) (*ingestv1.UploadStatementResponse, error) {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
@@ -119,10 +119,10 @@ func (s *server) sendStatement(ctx context.Context, header *ingestv1.StatementHe
 			break
 		}
 		if err != nil {
+			// Cancel without closing the stream: closing it would end the
+			// request body cleanly, and the core could take the truncated
+			// file for the whole one.
 			cancel()
-			if _, closeErr := stream.CloseAndReceive(); connect.CodeOf(closeErr) != connect.CodeCanceled {
-				s.log.WarnContext(ctx, "stopping an upload", "code", connect.CodeOf(closeErr).String())
-			}
 			if _, tooLarge := errors.AsType[*http.MaxBytesError](err); tooLarge {
 				return nil, errUploadTooLarge
 			}
