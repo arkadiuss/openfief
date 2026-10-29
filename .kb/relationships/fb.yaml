@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0bd1a536ed67
+  - type: implements
+    from: SYM-fd-uiplugin-require-core
+    to: REQ-plugins-core-only-caller
+    created_at: 2026-10-29T12:08:00.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ded1408103d
+  - type: implements
+    from: SYM-fd-uiplugin-require-core
+    to: REQ-core-browser-entry-point
+    created_at: 2026-10-29T12:08:01.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-010cbbef39f6
+  - type: covered_by
+    from: SYM-fd-uiplugin-require-core
+    to: TEST-ui-require-core
+    created_at: 2026-10-29T12:08:01.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51019fc92e7f

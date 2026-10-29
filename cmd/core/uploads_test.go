@@ -97,7 +97,7 @@ func TestStatementService(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
 	code := enrollCode(t, enrollCmd(t, dsn))
-	c, srv, pool := startCoreWith(t, dsn, func(cfg *serveConfig) { cfg.Auth.DevCallerToken = uiCaller })
+	c, srv, pool := startCoreForUI(t, dsn, func(*serveConfig) {})
 	ac := authClient(srv.URL, srv.Client(), uiCaller)
 	session := passkeyLogin(t, ac, passkeyEnroll(t, ac, code))
 	saveDemoRegistry(t, dsn)

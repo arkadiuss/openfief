@@ -4,13 +4,19 @@ description: The built-in UI, a view plugin that serves the owner's browser as i
 covers:
   - internal/views/ui/**
   - plugins/ui/**
+  - internal/views/browser.go
+  - internal/views/app/browser.go
+  - internal/views/kube/browser.go
+  - internal/views/browserproxy/**
 ---
 
 The built-in UI is OpenFief's default [view](../glossary.md) (D-3): a small website for the [owner](../glossary.md) that shows the record. It is a [plugin](../glossary.md) like any other, in its own pod, with the `view` capability and no egress host. It renders HTML on the server and reads the record only through the public [read API](../glossary.md) (D-6), the same API the owner's scripts use. This page explains how the browser, the UI and the core talk, how the owner signs in, what each page shows, and what is still missing.
 
 ## Concepts
 
-**Backend for frontend.** The browser talks only to the UI, and the UI talks to the core. This split, called backend for frontend (Sam Newman, 2015), keeps every credential out of the browser's reach: the UI holds the plugin's own token, and the owner's session token sits in a cookie that no script can read. The browser never calls the core, so the core's API needs no browser-facing CORS rules, and the core's authentication service is never routed to the outside.
+**Backend for frontend.** The browser's application is the UI, and the UI talks to the core. This split, called backend for frontend (Sam Newman, 2015), keeps every credential out of the browser's reach: the UI holds the plugin's own token, and the owner's session token sits in a cookie that no script can read. The browser never calls the core's services itself, so the core's API needs no browser-facing CORS rules.
+
+**The core is the front door.** Browsers reach the UI only through the core (D-81): the core is the only entry point for browsers, and it reverse-proxies every path the UI serves to the UI's pod, presenting its own token for that instance as it does to any plugin (D-59). So `kubectl port-forward` and the owner's own Ingress (D-28) reach the core alone, and the UI, like every plugin, admits the core and nothing else. A reverse proxy is a server that forwards a client's request to another server and passes the answer back, so the client sees one origin. The UI's manifest declares the path prefix it serves, its [browser path](../glossary.md) `/`, and its grant approves it; `/` means every path the core doesn't serve itself.
 
 **Two tokens, two jobs.** The UI presents two different tokens to the core:
 
@@ -27,19 +33,31 @@ Projected tokens rotate, so the UI reads its token from the file the operator mo
 
 ## How it works
 
-The code is in [`internal/views/ui`](../../internal/views/ui/doc.go); [`plugins/ui`](../../plugins/ui/main.go) only wires it to the plugin's environment: the core's address (`OPENFIEF_CORE_ADDRESS`), the listen port (`OPENFIEF_LISTEN_PORT`) and the token file. Outside a cluster, against a core run locally, there is no projected token: the UI then presents `OPENFIEF_AUTH_CALLER_TOKEN`, the token the core was started with in the same variable, which the core accepts only outside a cluster.
+The code is in [`internal/views/ui`](../../internal/views/ui/doc.go); [`plugins/ui`](../../plugins/ui/main.go) only wires it to the plugin's environment: the core's address (`OPENFIEF_CORE_ADDRESS`), the listen port (`OPENFIEF_LISTEN_PORT`) and the token file. There is no way to run it without a projected token, and no fixed token the core would accept instead (D-84): the UI is developed against a local cluster such as kind or k3d.
 
 ```mermaid
 flowchart LR
   browser(["Owner's browser"])
   subgraph ns["namespace openfief"]
+    door["openfief-core front door<br/>http 8080"]
     ui["plugin-ui pod<br/>internal/views/ui"]
-    core["openfief-core<br/>connect 8081 → 8080"]
+    core["openfief-core services<br/>connect 8081 → 8080"]
   end
-  browser -- "HTML, forms, htmx,<br/>session cookie" --> ui
+  browser -- "HTML, forms, htmx,<br/>session cookie<br/>(port-forward or Ingress)" --> door
+  door -- "browser path /<br/>Bearer: core token for ui (D-59)<br/>Host, X-Forwarded-Proto" --> ui
   ui -- "AuthService<br/>Bearer: plugin token (D-27)<br/>session token + origin in the message" --> core
   ui -- "ReadService (Connect)<br/>Bearer: session token" --> core
 ```
+
+### The front door
+
+`cmd/core` puts its front door, `withFrontDoor`, before every service it serves. A path the core serves itself goes to the core (`plugins.CoreServesPath`: `/healthz`, `/readyz`, `/v1` and below it, and every path whose first segment starts with `openfief.`, its Connect services). Every other path goes to [`browserproxy`](../../internal/views/browserproxy/proxy.go), which asks [`app.FrontDoor`](../../internal/views/app/browser.go) where it goes:
+
+- **Routes.** [`kube.Browser`](../../internal/views/kube/browser.go) watches the `Plugin` resources and the plugins' Services. A plugin serves browsers when it is not being deleted, its `Ready` condition is `True`, `view` is among its effective capabilities and its status holds an effective browser path, the one its manifest declares and its grant approves. `views.RouteBrowserPath` ([browser.go](../../internal/views/browser.go)) picks the route with the longest prefix that covers the path, whole segments only; two instances on that same prefix get neither, rather than one picked at random.
+- **The call.** The proxy sends the request to the instance's Service ClusterIP and `connect` port with the core's TokenRequest token for that instance (`identity/kube.CoreTokens`, the same as for connectors) in `Authorization`, replacing whatever the browser sent there. It keeps the browser's `Host`, sets `X-Forwarded-Proto` to the scheme the browser used (`https` on TLS or when the owner's Ingress in front says so, otherwise `http`) and `X-Forwarded-Host` to the `Host`, and drops every other `X-Forwarded-*` and `Forwarded` header a client sent. Bodies, uploads included, stream through.
+- **Answers.** A path no plugin serves is 404. While the core hasn't read its cluster yet, or two plugins claim the path, 503. A plugin without an address, a token or an answer, 502. Outside a cluster there is nothing to proxy, and the read API answers such paths with 404.
+
+The UI checks every request with the SDK's `RequireCore` and `NewCoreVerifier` (`requireCore` in [plugins/ui](../../plugins/ui/main.go)): a request without the core's token for the instance `ui` gets 401 before any page runs, so the `Host` and `X-Forwarded-Proto` it reads come from the core, which sets them. Only `GET /healthz` answers without the token, for probes; it shows nothing.
 
 | File | What it holds |
 |---|---|
@@ -79,8 +97,8 @@ sequenceDiagram
   U-->>B: Set-Cookie __Host-openfief_session, go to /
 ```
 
-- **The origin.** The UI tells the core the origin the browser uses: `https` when the proxy in front reports it in `X-Forwarded-Proto` (Traefik does), `http` otherwise, then the `Host`. The core checks it against its allow-list (`--auth-origin`), and its host is the relying party ID.
-- **The cookie.** `__Host-openfief_session`: `HttpOnly`, `Secure`, `SameSite=Strict`, `Path=/`, expiring when the session does. The `__Host-` prefix makes the browser refuse it from any other host and with any `Domain`. Browsers treat `http://localhost` as a secure context and keep `Secure` cookies there, so the same cookie works through `kubectl port-forward`. On plain HTTP to any other host the browser drops it, and the login page says sign-in needs HTTPS.
+- **The origin.** The UI tells the core the origin the browser uses: the scheme the core's front door reports in `X-Forwarded-Proto`, then the `Host` the core passed on. The core checks it against its allow-list (`--auth-origin`), and its host is the relying party ID.
+- **The cookie.** `__Host-openfief_session`: `HttpOnly`, `Secure`, `SameSite=Strict`, `Path=/`, expiring when the session does. The `__Host-` prefix makes the browser refuse it from any other host and with any `Domain`. Browsers treat `http://localhost` as a secure context and keep `Secure` cookies there, so the same cookie works through `kubectl port-forward`, and D-85 keeps the prefix everywhere, `localhost` included. Chromium keeps it there, which the end-to-end suite checks; Safari's acceptance of it on `http://localhost` is still to verify, by hand, since no Safari runs in the suite. Only if Safari refuses it does D-85 allow a cookie without the prefix, on `localhost` alone, and that fallback is not built. On plain HTTP to any other host the browser drops the cookie, and the login page says sign-in needs HTTPS.
 - **"View demo"** posts to `/login/demo`, which calls `CreateDemoSession` and stores the `read` session the same way.
 - **Enrollment.** An enrollment link is `<origin>/enroll#code=<code>`. The code is in the fragment, which the browser never sends, so it never reaches a request line, a log or a `Referer`. The page's script, [webauthn.js](../../internal/views/ui/web/static/webauthn.js), reads it, removes it from the address bar and history, and posts it to `/enroll/begin`; the UI hands it to `BeginRegistration`. Registering from an enrollment code also signs the owner in. "Add a passkey on this host" on the settings page runs the same ceremony with the owner's session instead of a code.
 - **Every page** first asks the core `WhoAmI` with the cookie's session. No cookie, or a session the core no longer knows (`UNAUTHENTICATED`), drops the cookie and sends the browser to `/login`; an htmx request gets `HX-Redirect` instead. A read-scoped session gets 403 on the owner's pages before the UI calls the core.
@@ -131,13 +149,15 @@ The pages follow the [design system](../dev/design-system.md) and take every col
 
 ### The demo
 
-[`deploy/demo/plugins/ui.yaml`](../../deploy/demo/plugins/ui.yaml) installs the instance `ui` with a grant for exactly the `view` capability. The operator runs it as Service `plugin-ui`, port `connect` (8080). The demo's Ingress, [`deploy/demo/routes/openfief.yaml`](../../deploy/demo/routes/openfief.yaml), sends `/v1` and `/openfief.views.v1.ReadService` to the core and everything else to `plugin-ui`; nothing routes to the AuthService. The operator's NetworkPolicy for a plugin admits only the core (D-59), so a demo-only policy, [`ui-from-traefik.yaml`](../../deploy/demo/openfief/ui-from-traefik.yaml), also admits k3s's Traefik, like `core-from-traefik`. The demo's core runs with `--auth-origin=https://demo.openfief.dev` next to the base's `http://localhost:8080`, and with `--demo-sessions`, so "View demo" works on the demo database.
+[`deploy/demo/plugins/ui.yaml`](../../deploy/demo/plugins/ui.yaml) installs the instance `ui` with a grant for exactly the `view` capability and the browser path `/`. The operator runs it as Service `plugin-ui`, port `connect` (8080), which only the core may reach. The demo's Ingress, [`deploy/demo/routes/openfief.yaml`](../../deploy/demo/routes/openfief.yaml), sends every path to the core, Service `openfief-core`, port `http`, which serves the read API itself and proxies the rest to the UI; the demo-only `core-from-traefik` policy admits k3s's Traefik to the core, and nothing admits it to the UI. The core's other Connect services, the AuthService and the owner's entry services, are on the same port, as they are through `kubectl port-forward`, and answer only a view plugin's token. The demo's core runs with `--auth-origin=https://demo.openfief.dev` next to the base's `http://localhost:8080`, and with `--demo-sessions`, so "View demo" works on the demo database.
 
 ## Decisions
 
 - **D-3** makes the UI the default view; **D-6** says it reads through the public API like any view. `TestReadsOnlyThroughPublicAPI` keeps the package from importing anything of OpenFief's but the kernel and the SDK.
 - **D-26** and **D-60**: passkeys only, per host, the first through a one-time link. **D-27**: the UI authenticates as a plugin with its projected token.
-- **D-28**: the UI is a ClusterIP Service; only the demo routes to it.
+- **D-28**, **D-81**: the UI is a ClusterIP Service that only the core calls; port-forward and the demo's Ingress reach the core, which proxies the UI's browser path. Which browser path the UI takes is the narrowest that works with the core's own paths: `/`, so the UI's pages keep their paths and enrollment links stay `<origin>/enroll#code=...`.
+- **D-84**: no fixed token: the UI only ever presents its projected token, and is developed against kind or k3d.
+- **D-85**: the `__Host-` cookie everywhere, `localhost` included; Safari on `http://localhost` is still to verify (above).
 - **D-30**, **D-36**, **D-62**: two of the three charts, the valuation status per account, the reporting currency. **D-106** is not built: value and performance are still one chart (below).
 - **D-22**: the flagged price checks, on their own page linked from the overview, as the flagged balance assertions are. Where they show is the UI's reading; no decision places them.
 - **D-9**, **D-49**: the owner enters bond lots on a bond account's page, and the UI hands each to the core's `BondLotService`, a contract for view plugins shaped like the `ModelPortfolioService`, which the core hands to the right connector. Which accounts get the form is the UI's narrow reading: the institution `treasury-bonds`, the one the treasury-bonds connector delivers under.
@@ -146,9 +166,8 @@ The pages follow the [design system](../dev/design-system.md) and take every col
 - **D-52**: while the model portfolio is off, the UI shows none of it; the owner turns it on and enters it on the settings page, which hands it to the core through the `ModelPortfolioService`, a contract for view plugins next to the AuthService. **D-53**, **D-54**: its backtest as the second line from go-live and its drawdowns. **D-61**: the value-over-time line is the time-weighted return.
 - **Where Kasztan stands** is the UI's reading of the design system: the error page and the flagged balance assertions get the drawbridge, as things that need the owner; a finished statement import gets the seal. *Unreviewed* covers OpenFief's CI and catalog publishers too when the version is not in the catalog, as D-87's wording reads.
 - **The value-over-time chart shows the index, not money.** D-30's value over time and D-53's two lines from 100 are one chart here: the time-weighted return index, with the value in money as a sentence under it. `ListValuationTotals`, which leaves out cash, is no longer drawn. D-106 splits this into a value chart in money, cash included, and a performance chart with the index and the model; that split, and totals with cash, are not built yet.
-- **Browsers reach the UI around D-59 today; D-81 decides otherwise.** D-59 says only the core may call a plugin, and the operator's NetworkPolicy admits the core alone. A view plugin that serves browsers needs a second way in: on the demo, Traefik through `ui-from-traefik`; on an owner's installation, `kubectl port-forward`, which enters through the kubelet and needs no rule. The UI also doesn't check a core token on its pages, since browsers have none. D-81 settles it: the core becomes the only entry point for browsers and reverse-proxies the UI's declared paths, so no exception to D-59 is needed. That isn't built yet; the operator's enforcement is unchanged.
-- **The cookie is `Secure` on `http://localhost` too.** The AuthService contract says the cookie is Secure except on `http://localhost`. A `__Host-` cookie must be `Secure`, `gosec` (G124) refuses an insecure cookie, and current Chrome and Firefox keep `Secure` cookies on `localhost` as a secure context, so the UI sets one cookie everywhere. Safari's support for that is unverified here; D-85 keeps the `__Host-` cookie everywhere and falls back on `localhost` alone only if Safari refuses it.
-- **The origin comes from `X-Forwarded-Proto` and `Host`.** Only Traefik and `kubectl port-forward` reach the pod, and the core checks the origin against its allow-list; a forged origin can't use a passkey or session made for another host.
+- **The cookie is `Secure` on `http://localhost` too.** The AuthService contract says the cookie is Secure except on `http://localhost`. A `__Host-` cookie must be `Secure`, `gosec` (G124) refuses an insecure cookie, and current Chrome and Firefox keep `Secure` cookies on `localhost` as a secure context, so the UI sets one cookie everywhere. Safari's support for that is still to verify; D-85 keeps the `__Host-` cookie everywhere and falls back on `localhost` alone only if Safari refuses it.
+- **The origin comes from `X-Forwarded-Proto` and `Host`, as the core sets them.** Only the core reaches the pod, with its token. The core takes the scheme from TLS or from the owner's Ingress in front of it, and checks every origin against its allow-list, so a forged value can't use a passkey or session made for another host.
 
 ## Verification
 
@@ -165,15 +184,20 @@ The pages follow the [design system](../dev/design-system.md) and take every col
 | Amounts, shares, labels, the date, chart data, origin and cookie | [format_test.go](../../internal/views/ui/format_test.go) | REQ-ui-formatting, REQ-ui-overview |
 | No color outside the design system's tokens in templates, scripts or the stylesheet; every token the stylesheet uses defined; every page loads the fonts, tokens and stylesheet in order; the design files served with their types; only the four Kasztan poses; D-87's badges | [design_test.go](../../internal/views/ui/design_test.go) | REQ-ui-design-system, REQ-ui-installed-plugins |
 | Imports only the design system's files, the kernel and the SDK; vendored libraries pinned | [boundary_test.go](../../internal/views/ui/boundary_test.go) | REQ-ui-read-boundary, REQ-ui-browser-security, REQ-AUTO-A04740EC43D6F6BA |
-| The manifest asks for `view` only | [main_test.go](../../plugins/ui/main_test.go) | REQ-ui-plugin-packaging, REQ-AUTO-902181B0129A6321 |
-| The UI's pod becomes ready on k3d and kind; `/login` answers through Traefik | [ui_test.go](../../test/e2e/ui_test.go) | REQ-ui-plugin-packaging |
+| The manifest asks for `view` and the browser path `/` only | [main_test.go](../../plugins/ui/main_test.go) | REQ-ui-plugin-packaging, REQ-AUTO-902181B0129A6321 |
+| Only the core's token reaches a page; probes reach `/healthz` | `TestRequireCore` in [core_test.go](../../plugins/ui/core_test.go) | REQ-plugins-core-only-caller |
+| The front door: routing by the longest browser path, ambiguity refused; the plugin gets the core's token, the browser's `Host` and scheme and no client-set forwarding header; 404, 503 and 502 | [browser_test.go](../../internal/views/browser_test.go), [proxy_test.go](../../internal/views/browserproxy/proxy_test.go), [browser_test.go](../../internal/views/kube/browser_test.go) | REQ-core-reverse-proxies-view-plugins |
+| Over the core's own server, `/login` reaches a fake UI with the core's token while `/v1`, the AuthService and `/healthz` stay the core's; outside a cluster 404 | `TestFrontDoor`, `TestFrontDoorOutsideACluster` in [frontdoor_test.go](../../cmd/core/frontdoor_test.go) (`task test:pg`) | REQ-core-browser-entry-point, REQ-core-reverse-proxies-view-plugins |
+| The operator deploys the UI from its signed image with the browser path `/`; the core proxies `/login` to it, from a pod and through Traefik | [ui_test.go](../../test/e2e/ui_test.go) | REQ-ui-plugin-packaging, REQ-core-browser-entry-point |
+| `openfief enroll` runs `core enroll-link` in the core's pod and forwards `localhost:8080` to the core; Chromium, with its virtual authenticator, creates the first passkey from the link, keeps the `__Host-` cookie on `http://localhost`, signs out and in again | [passkey_test.go](../../test/e2e/passkey_test.go), [passkey.mjs](../../test/e2e/passkey.mjs) | REQ-identity-first-passkey-command, REQ-identity-first-passkey-link, REQ-ui-session-cookie-host-prefix |
 
 The handler tests run the UI against both services as in-memory Connect servers, a fake AuthService and a fake read API over a synthetic record, with the AuthService client the plugin uses: the SDK's `CoreHTTPClient` over a token file the test rotates.
 
-In the end-to-end suite the UI runs from a stand-in Deployment ([ui-standin.yaml](../../test/e2e/overlays/openfief/ui-standin.yaml)). The suite can sign plugin images for the operator (it deploys `nbp-fx` that way, see [Operator](operator.md#verification)), but how browsers reach a view plugin is being redesigned (the core is to proxy view plugins), so the UI keeps its stand-in for now. WebAuthn needs a browser with an authenticator and is not exercised end to end.
+In the end-to-end suite the operator deploys the demo's `ui` instance from the UI's image in the suite's registry, signed with the suite's key like `nbp-fx` (see [Operator](operator.md#verification)), and every browser check goes through the core.
 
 ## Not built yet
 
 - Removing a bond lot: entering the same series and day again replaces it, but nothing deletes one.
 - A way to change the reporting currency or the bond basis from the UI.
 - The number format (D-113): amounts are written `5 000.00 PLN` whatever the setting, and the charts' axes use Chart.js's own format.
+- Safari's acceptance of the `__Host-` cookie on `http://localhost` is not verified yet (D-85), and the `localhost` fallback D-85 allows if it refuses is not built.

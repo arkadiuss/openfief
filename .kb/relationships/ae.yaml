@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a18ea2d9af56
+  - type: implements
+    from: SYM-fd-openfief-connect-core
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-10-29T12:03:07.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ecba768be9e
+  - type: covered_by
+    from: SYM-fd-openfief-connect-core
+    to: TEST-e2e-first-passkey
+    created_at: 2026-10-29T12:03:07.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d5a791f3f8d

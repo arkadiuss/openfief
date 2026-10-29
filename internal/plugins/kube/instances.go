@@ -179,6 +179,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 				Egress:       hosts(m.Egress),
 				DataTiers:    strs(m.DataTiers),
 				ConfigSchema: raw(m.ConfigSchema),
+				BrowserPath:  m.BrowserPath,
 			},
 			Config: raw(p.Config),
 		},
@@ -194,6 +195,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 			Egress:       hosts(g.Permissions.Egress),
 			Secrets:      slices.Clone(g.Permissions.Secrets),
 			DataTiers:    strs(g.Permissions.DataTiers),
+			BrowserPaths: slices.Clone(g.Permissions.BrowserPaths),
 		},
 	}
 	return plugin, grant

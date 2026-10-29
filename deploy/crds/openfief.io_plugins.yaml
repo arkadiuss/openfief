@@ -74,6 +74,14 @@ spec:
               manifest:
                 description: Manifest is what the plugin requests.
                 properties:
+                  browserPath:
+                    description: |-
+                      BrowserPath is the path prefix a view plugin serves to browsers: the
+                      core, the only entry point for browsers, proxies it to the plugin
+                      (D-81). "/" means every path the core doesn't serve itself.
+                    maxLength: 256
+                    pattern: ^/[-a-z0-9_./]*$
+                    type: string
                   capabilities:
                     description: Capabilities are what the plugin acts as.
                     items:
@@ -227,6 +235,14 @@ spec:
                   manifest:
                     description: Manifest is what the plugin requests.
                     properties:
+                      browserPath:
+                        description: |-
+                          BrowserPath is the path prefix a view plugin serves to browsers: the
+                          core, the only entry point for browsers, proxies it to the plugin
+                          (D-81). "/" means every path the core doesn't serve itself.
+                        maxLength: 256
+                        pattern: ^/[-a-z0-9_./]*$
+                        type: string
                       capabilities:
                         description: Capabilities are what the plugin acts as.
                         items:
@@ -301,6 +317,16 @@ spec:
                   requests and the PluginGrant approves (D-16). Its egress hosts are the
                   plugin's egress allow-list. Absent when nothing runs.
                 properties:
+                  browserPaths:
+                    description: |-
+                      BrowserPaths lists path prefixes a view plugin serves to browsers
+                      through the core (D-81).
+                    items:
+                      maxLength: 256
+                      type: string
+                    maxItems: 8
+                    type: array
+                    x-kubernetes-list-type: set
                   capabilities:
                     description: Capabilities are what the plugin may act as.
                     items:
@@ -345,6 +371,16 @@ spec:
                   PendingApproval is what spec requests and the PluginGrant does not
                   approve. The owner approves it by adding it to the PluginGrant.
                 properties:
+                  browserPaths:
+                    description: |-
+                      BrowserPaths lists path prefixes a view plugin serves to browsers
+                      through the core (D-81).
+                    items:
+                      maxLength: 256
+                      type: string
+                    maxItems: 8
+                    type: array
+                    x-kubernetes-list-type: set
                   capabilities:
                     description: Capabilities are what the plugin may act as.
                     items:

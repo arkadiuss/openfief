@@ -60,9 +60,9 @@ var (
 )
 
 // pluginImages are the plugin images task e2e:images pushes to the
-// registry, which the suite signs. The built-in UI is not among them: it
-// runs from a stand-in (overlays/openfief/ui-standin.yaml).
-func pluginImages() []string { return []string{"nbp-fx"} }
+// registry, which the suite signs: the NBP FX connector and the built-in UI,
+// which the operator deploys for the demo's ui instance (editApp).
+func pluginImages() []string { return []string{"nbp-fx", uiImage} }
 
 // pluginResource is the operator's Plugin resource.
 func pluginResource() schema.GroupVersionResource {
@@ -170,16 +170,22 @@ func trustSigner(ctx context.Context, k *kube, reg suiteRegistry, logf func(stri
 	return hex.EncodeToString(sum[:]), nil
 }
 
-// editApp returns the change the suite makes to the demo's application
-// layer: the operator's pod template gets the trusted signers' hash.
-func editApp(signersHash string) func(*unstructured.Unstructured) error {
+// editApp returns the changes the suite makes to the demo's application
+// layer: the operator's pod template gets the trusted signers' hash, and the
+// demo's Plugin ui the built-in UI's image in the suite's registry, which
+// the suite signed, as the cluster names it.
+func editApp(signersHash string, ui plugins.ImageRef) func(*unstructured.Unstructured) error {
 	return func(obj *unstructured.Unstructured) error {
-		if obj.GetKind() != "Deployment" || obj.GetName() != operatorDeployment {
-			return nil
-		}
-		err := unstructured.SetNestedField(obj.Object, signersHash, "spec", "template", "metadata", "annotations", signersAnnotation)
-		if err != nil {
-			return fmt.Errorf("operator: %w", err)
+		switch {
+		case obj.GetKind() == "Deployment" && obj.GetName() == operatorDeployment:
+			err := unstructured.SetNestedField(obj.Object, signersHash, "spec", "template", "metadata", "annotations", signersAnnotation)
+			if err != nil {
+				return fmt.Errorf("operator: %w", err)
+			}
+		case obj.GetKind() == "Plugin" && obj.GetName() == uiPlugin:
+			if err := unstructured.SetNestedField(obj.Object, ui.String(), "spec", "image"); err != nil {
+				return fmt.Errorf("plugin %s: %w", uiPlugin, err)
+			}
 		}
 		return nil
 	}

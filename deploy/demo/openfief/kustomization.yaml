@@ -24,7 +24,6 @@ resources:
   - ../../demo-data
   - ../plugins
   - core-from-traefik.yaml
-  - ui-from-traefik.yaml
 configurations:
   - image-fields.yaml
 patches:

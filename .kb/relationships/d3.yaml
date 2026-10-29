@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef2933a00628
+  - type: executable_for
+    from: SYM-fd-plugins-test-helper-view-grant
+    to: TEST-plugins-browser-path
+    created_at: 2026-10-29T12:10:06.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e35f8c5f57d

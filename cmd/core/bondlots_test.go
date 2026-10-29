@@ -90,7 +90,7 @@ func TestBondLotService(t *testing.T) {
 	dsn := emptyDatabase(t)
 	out := enrollCmd(t, dsn)
 	code := enrollCode(t, out)
-	c, srv, _ := startCoreWith(t, dsn, func(cfg *serveConfig) { cfg.Auth.DevCallerToken = uiCaller })
+	c, srv, _ := startCoreForUI(t, dsn, func(*serveConfig) {})
 	ac := authClient(srv.URL, srv.Client(), uiCaller)
 	session := passkeyLogin(t, ac, passkeyEnroll(t, ac, code))
 	saveDemoRegistry(t, dsn)

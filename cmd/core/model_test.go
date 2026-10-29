@@ -46,7 +46,7 @@ func ownerSession(t *testing.T) ownerCore {
 	if !ok {
 		t.Fatalf("enroll-link printed %q", out)
 	}
-	_, srv, _ := startCoreWith(t, dsn, func(cfg *serveConfig) { cfg.Auth.DevCallerToken = uiCaller })
+	_, srv, _ := startCoreForUI(t, dsn, func(*serveConfig) {})
 	c := authClient(srv.URL, srv.Client(), uiCaller)
 	return ownerCore{srv: srv, session: passkeyLogin(t, c, passkeyEnroll(t, c, code))}
 }

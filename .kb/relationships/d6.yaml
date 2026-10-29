@@ -524,41 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a758acf57cc
-  - type: constrains
-    from: REQ-valuation-nbp-reference-rates
-    to: FACT-SUBJECT-352DE87C51F6D635
-    created_at: 2026-10-29T03:56:43.818Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5cddadafeada
-  - type: requires_property
-    from: REQ-valuation-nbp-reference-rates
-    to: FACT-PROP-44E3083C161ADC26
-    created_at: 2026-10-29T03:56:43.888Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dd1e1d30a5ec
-  - type: specified_by
-    from: REQ-valuation-nbp-reference-rates
-    to: SCEN-valuation-nbp-reference-rates
-    created_at: 2026-10-29T03:56:43.941Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f59528ec2310
-  - type: constrains
-    from: REQ-pl-calendar-from-1991
-    to: FACT-SUBJECT-FE4A9F4E007DAFCA
-    created_at: 2026-10-29T10:00:48.434Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-029d226eb768
-  - type: requires_property
-    from: REQ-pl-calendar-from-1991
-    to: FACT-PROP-2663E9FD8D8B5FC5
-    created_at: 2026-10-29T10:00:48.447Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e04adab9b4e2
   - type: implements
     from: SYM-ingest-connectapi-statements-fail
     to: REQ-ingest-statement-service
@@ -580,6 +545,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-527e9fd2b397
+  - type: constrains
+    from: REQ-valuation-nbp-reference-rates
+    to: FACT-SUBJECT-352DE87C51F6D635
+    created_at: 2026-10-29T03:56:43.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cddadafeada
+  - type: requires_property
+    from: REQ-valuation-nbp-reference-rates
+    to: FACT-PROP-44E3083C161ADC26
+    created_at: 2026-10-29T03:56:43.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd1e1d30a5ec
+  - type: specified_by
+    from: REQ-valuation-nbp-reference-rates
+    to: SCEN-valuation-nbp-reference-rates
+    created_at: 2026-10-29T03:56:43.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f59528ec2310
   - type: executable_for
     from: SYM-valuation-app-test-helper-fake-cross-checks-save-cross-check-prices
     to: TEST-valuation-app-crosscheck
@@ -587,20 +573,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fad000f26cb1
-  - type: constrains
-    from: REQ-ingest-opening-upload-seeds-syncs
-    to: FACT-SUBJECT-6E456E81146115C7
-    created_at: 2026-10-29T10:49:06.091Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-62b4c15a4b8f
-  - type: requires_property
-    from: REQ-ingest-opening-upload-seeds-syncs
-    to: FACT-PROP-198C9B5A14CD54FA
-    created_at: 2026-10-29T10:49:06.105Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-64a33b50189b
   - type: implements
     from: SYM-ui-badge-of
     to: REQ-ui-plugin-trust-badges
@@ -615,6 +587,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccaf7230cb12
+  - type: constrains
+    from: REQ-pl-calendar-from-1991
+    to: FACT-SUBJECT-FE4A9F4E007DAFCA
+    created_at: 2026-10-29T10:00:48.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-029d226eb768
+  - type: requires_property
+    from: REQ-pl-calendar-from-1991
+    to: FACT-PROP-2663E9FD8D8B5FC5
+    created_at: 2026-10-29T10:00:48.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e04adab9b4e2
+  - type: constrains
+    from: REQ-ingest-opening-upload-seeds-syncs
+    to: FACT-SUBJECT-6E456E81146115C7
+    created_at: 2026-10-29T10:49:06.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62b4c15a4b8f
+  - type: requires_property
+    from: REQ-ingest-opening-upload-seeds-syncs
+    to: FACT-PROP-198C9B5A14CD54FA
+    created_at: 2026-10-29T10:49:06.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64a33b50189b
   - type: constrains
     from: REQ-ui-number-format-separators-only
     to: FACT-SUBJECT-AA3F8D49370A1850

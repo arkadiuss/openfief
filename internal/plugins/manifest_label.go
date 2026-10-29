@@ -25,18 +25,19 @@ type manifestDoc struct {
 	} `json:"secrets,omitempty"`
 	DataTiers    []DataTier      `json:"dataTiers,omitempty"`
 	ConfigSchema json.RawMessage `json:"configSchema,omitempty"`
+	BrowserPath  string          `json:"browserPath,omitempty"`
 }
 
 // ParseManifestLabel reads a manifest from the value of an image's
 // ManifestLabel: a JSON object with the fields of spec.manifest
-// (capabilities, egress, secrets, dataTiers, configSchema). Unknown fields
+// (capabilities, egress, secrets, dataTiers, configSchema, browserPath). Unknown fields
 // are refused, so a manifest is never half-read. The manifest is validated.
 func ParseManifestLabel(value string) (Manifest, error) {
 	var doc manifestDoc
 	if err := decodeStrict([]byte(value), &doc); err != nil {
 		return Manifest{}, fmt.Errorf("manifest label: %w", err)
 	}
-	m := Manifest{Capabilities: doc.Capabilities, DataTiers: doc.DataTiers}
+	m := Manifest{Capabilities: doc.Capabilities, DataTiers: doc.DataTiers, BrowserPath: doc.BrowserPath}
 	if len(doc.ConfigSchema) > 0 && !bytes.Equal(doc.ConfigSchema, []byte("null")) {
 		m.ConfigSchema = doc.ConfigSchema
 	}
@@ -62,14 +63,15 @@ func ParseManifestLabel(value string) (Manifest, error) {
 }
 
 // Equal reports whether m and o declare the same thing: the same sets of
-// capabilities, egress hosts, secret mounts and data tiers, in any order, and
-// config schemas that are the same JSON value.
+// capabilities, egress hosts, secret mounts and data tiers, in any order, the
+// same browser path, and config schemas that are the same JSON value.
 func (m *Manifest) Equal(o *Manifest) bool {
 	a, b := m.Requested(), o.Requested()
 	return slices.Equal(a.Capabilities, b.Capabilities) &&
 		slices.Equal(a.Egress, b.Egress) &&
 		slices.Equal(a.DataTiers, b.DataTiers) &&
 		slices.Equal(sortedMounts(m.Secrets), sortedMounts(o.Secrets)) &&
+		m.BrowserPath == o.BrowserPath &&
 		sameJSON(m.ConfigSchema, o.ConfigSchema)
 }
 

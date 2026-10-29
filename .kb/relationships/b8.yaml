@@ -294,20 +294,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7efce2326d30
   - type: implements
-    from: SYM-core-auth-cmd-core-auth-dev-callers
-    to: REQ-identity-auth-callers
-    created_at: 2026-10-28T19:29:15.390Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1d0a9031e65c
-  - type: covered_by
-    from: SYM-core-auth-cmd-core-auth-dev-callers
-    to: TEST-core-auth
-    created_at: 2026-10-28T19:29:15.425Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6ea2a12a196e
-  - type: implements
     from: SYM-ui-allocation-view-link
     to: REQ-ui-overview
     created_at: 2026-10-28T19:54:03.738Z
@@ -427,20 +413,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0cd96367a6cd
   - type: constrains
-    from: REQ-treasurybonds-reference-rate-rule
-    to: FACT-SUBJECT-C38DC96D03DBD013
-    created_at: 2026-10-29T09:58:42.900Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1bf2b1db24c2
-  - type: requires_property
-    from: REQ-treasurybonds-reference-rate-rule
-    to: FACT-PROP-F7451F3E447401EB
-    created_at: 2026-10-29T09:58:42.911Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3db9962e48cc
-  - type: constrains
     from: REQ-ingest-statement-service
     to: FACT-SUBJECT-8F3AFA5A57F4B4E0
     created_at: 2026-10-29T04:58:43.120Z
@@ -496,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e4dee851091
+  - type: constrains
+    from: REQ-treasurybonds-reference-rate-rule
+    to: FACT-SUBJECT-C38DC96D03DBD013
+    created_at: 2026-10-29T09:58:42.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bf2b1db24c2
+  - type: requires_property
+    from: REQ-treasurybonds-reference-rate-rule
+    to: FACT-PROP-F7451F3E447401EB
+    created_at: 2026-10-29T09:58:42.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3db9962e48cc

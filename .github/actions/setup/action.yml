@@ -7,6 +7,10 @@ inputs:
     description: Also install Node, the pinned tools and kibi through `task setup:ci`
     required: false
     default: 'true'
+  node:
+    description: Also install Node when `tools` is false, for a job that needs only the npm packages
+    required: false
+    default: 'false'
 runs:
   using: composite
   steps:
@@ -45,7 +49,7 @@ runs:
       run: echo "KIBI_BRANCH=$BRANCH" >>"$GITHUB_ENV"
 
     - name: Set up Node
-      if: inputs.tools == 'true'
+      if: inputs.tools == 'true' || inputs.node == 'true'
       uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
         # renovate: datasource=node-version depName=node
