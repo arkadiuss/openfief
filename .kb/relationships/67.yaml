@@ -13,13 +13,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-baa7883df4f8
-  - type: implements
-    from: SYM-valuation-parse-basis
-    to: REQ-valuation-bond-basis
-    created_at: 2026-10-28T05:30:56.859Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a0a9d3324856
   - type: covered_by
     from: SYM-valuation-parse-basis
     to: TEST-valuation-valuation
@@ -545,3 +538,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c711ed02bf6
+  - type: implements
+    from: SYM-valuation-parse-basis
+    to: REQ-valuation-bond-holding-values
+    created_at: 2026-10-29T21:56:10.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ad99088d445
+  - type: executable_for
+    from: SYM-jurisdiction-test-sale-cost-properties
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:30.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96065de48677
+  - type: implements
+    from: SYM-jurisdiction-cash
+    to: REQ-jurisdiction-in-process
+    created_at: 2026-10-29T22:04:03.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fa1e33a123d
+  - type: implements
+    from: SYM-jurisdiction-cash
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:04:03.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef8784aa5793
+  - type: covered_by
+    from: SYM-jurisdiction-cash
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:04:03.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f8456fc48e3
+  - type: executable_for
+    from: SYM-pl-test-value-cash
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:08:17.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccd05b29ab73

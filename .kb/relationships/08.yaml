@@ -300,13 +300,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb74cbe8f283
-  - type: implements
-    from: SYM-core-parse-threshold
-    to: REQ-core-config
-    created_at: 2026-10-29T06:26:46.608Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-00f6caa50381
   - type: covered_by
     from: SYM-core-parse-threshold
     to: TEST-core-unit
@@ -384,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82ac2e794c27
+  - type: implements
+    from: SYM-core-parse-threshold
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:54:21.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d41b59c576c

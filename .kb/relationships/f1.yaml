@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-019d6ab410cf
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-next
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:02:00.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b4a8601340f
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-next
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:00.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b442ff3ec5b
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-next
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:02:00.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-679d972a14f2

@@ -440,3 +440,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-418310dbfaf9
+  - type: constrains
+    from: REQ-valuation-bond-holding-values
+    to: FACT-SUBJECT-FDA8A1C642277888
+    created_at: 2026-10-29T21:49:01.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f23f6067041f
+  - type: requires_property
+    from: REQ-valuation-bond-holding-values
+    to: FACT-PROP-D0A08ACC4AD65944
+    created_at: 2026-10-29T21:49:01.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c4391b573a0
+  - type: specified_by
+    from: REQ-valuation-bond-holding-values
+    to: SCEN-valuation-bond-holding-values
+    created_at: 2026-10-29T21:49:01.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-308a1507acea
+  - type: supersedes
+    from: REQ-valuation-bond-holding-values
+    to: REQ-valuation-bond-holding
+    created_at: 2026-10-29T21:49:01.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fe6eab56197
+  - type: supersedes
+    from: REQ-valuation-bond-holding-values
+    to: REQ-valuation-bond-basis
+    created_at: 2026-10-29T21:49:01.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16ec2c48265f

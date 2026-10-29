@@ -1,6 +1,6 @@
 ---
 title: Worker concurrency, the daily end-of-day time with its time zone and the bond basis must be configurable, and invalid settings must be rejected.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-36
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ Worker concurrency, the daily end-of-day time with its time zone and the bond ba
 
 ## Context
 
-D-36 lists these three as configurable. The end-of-day schedule is a daily time in a time zone, run as a River periodic job; River has no cron parser of its own and a daily time needs no extra dependency. Refines REQ-decision-d36-8-revaluation-settings. Modeled by Claude Code for the M0 revaluation task (D-36); the author has not reviewed it yet.
-
-## Source
-
-> Configurable: worker concurrency, the end-of-day schedule and the bond basis (D-25); changing the basis revalues everything.
-
-docs/DESIGN.md D-36
+Closed: superseded by REQ-valuation-revaluation-config. D-77 removed the bond basis from the settings. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

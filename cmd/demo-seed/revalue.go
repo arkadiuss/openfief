@@ -11,6 +11,7 @@ import (
 	"github.com/riverqueue/river/rivertype"
 
 	"github.com/arkadiuss/openfief/internal/demo"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
@@ -44,6 +45,7 @@ func revalue(ctx context.Context, pool *pgxpool.Pool, l *loader, cfg *config) er
 		EndOfDay:    valuationpg.DailyAt{Hour: eodHour, Minute: eodMinute, Location: time.UTC},
 		Today:       func() kernel.Date { return l.ds.Today },
 		Logger:      l.log,
+		Pack:        pl.NewPack(),
 	})
 	if err != nil {
 		return fmt.Errorf("revaluation client: %w", err)

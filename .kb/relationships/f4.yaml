@@ -92,13 +92,6 @@ relationships:
     id: rel-688ed105e55e
   - type: implements
     from: SYM-valuation-value-bond-holding
-    to: REQ-valuation-bond-holding
-    created_at: 2026-10-28T07:32:24.132Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b23ad0882bfd
-  - type: implements
-    from: SYM-valuation-value-bond-holding
     to: REQ-AUTO-E10BE8CE13E67657
     created_at: 2026-10-28T07:32:24.152Z
     created_by: kibi/upsert
@@ -377,3 +370,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b22900c3f32f
+  - type: implements
+    from: SYM-valuation-value-bond-holding
+    to: REQ-valuation-bond-holding-values
+    created_at: 2026-10-29T21:57:32.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35c8470c72de
+  - type: executable_for
+    from: SYM-pl-test-helper-check-liquidation
+    to: TEST-pl-value
+    created_at: 2026-10-29T22:32:34.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d621d13de424

@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e2a31c17018
+  - type: implements
+    from: SYM-pl-tax-at
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:09:01.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37d7d7e22cb9
+  - type: covered_by
+    from: SYM-pl-tax-at
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:09:01.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ff3c9694690

@@ -1,6 +1,6 @@
 ---
 title: The net-if-redeemed value of a taxable bond lot must deduct Belka tax of 19% of accrued interest minus the early-redemption fee plus the discount of a purchase below the nominal, rounded half up to whole grosze, and no tax when that is not positive.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-25
 tags:
   - strict-modeling
@@ -34,14 +34,4 @@ The net-if-redeemed value of a taxable bond lot must deduct Belka tax of 19% of 
 
 ## Context
 
-D-25 makes the default bond value net of Belka tax. Art. 30a ust. 1 pkt 2 of the PIT act taxes 'odsetek i dyskonta od papierów wartościowych' at 19%, and the issuer's FAQ says the discount of a purchase by exchange (99.90 PLN) is taxed. The worked examples deduct the fee before tax (EDO0524: tax on 2.16 = 4.16 - 2). Rounding is open: art. 63 par. 1a of the tax ordinance rounds 'do pełnych groszy w górę' (up), but the issuer's examples round half up (EDO0524 0.41 on 2.16, ROR0623 0.08 on 0.44, COI0423 1.85 on 9.75); the code follows the examples until the author decides. Refines REQ-AUTO-E10BE8CE13E67657. Modeled by Claude Code; the author has not reviewed it yet. Checked on 2026-10-28 against the October 2026 issue letters (listy emisyjne nr 94/2026 to 101/2026: OTS0127, ROR1027, DOR1028, TOS1029, COI1030, EDO1036, ROS1032, ROD1038), older letters (TOS0128, TOS0227, COI0128, EDO1133, ROD0236, ROS0228), the interest tables and the worked examples on obligacjeskarbowe.pl.
-
-## Source
-
-> W przypadku, gdy obligacje były zakupione z dyskontem (np. w drodze zamiany) - opodatkowaniu 19-proc. podatkiem podlega również wartość dyskonta.
-
-https://www.obligacjeskarbowe.pl/faq/
-
-> the default is net-if-redeemed-today (after the early-redemption fee and Belka tax, no tax inside IKE)
-
-docs/DESIGN.md D-25
+Closed: superseded by REQ-pl-values-per-wrapper. D-77 replaced the net-if-redeemed value with net and liquidation values per wrapper. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

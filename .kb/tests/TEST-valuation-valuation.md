@@ -1,5 +1,5 @@
 ---
-title: Valuation bases, market valuations and the bond basis for totals
+title: Valuation bases and market valuations
 status: active
 sourceFile: internal/valuation/valuation_test.go
 origin:
@@ -8,4 +8,4 @@ origin:
 id: TEST-valuation-valuation
 type: test
 ---
-Table tests parse and print the three basis names and reject other spellings; value 12.5 units at a synthetic end-of-day close of 101.37 USD as exactly 1267.125 USD on the market basis and reject a price of another instrument; resolve the bond basis (unset gives net_if_redeemed, gross_accrued and net_if_redeemed are kept, market and unknown values fail); and pick the value of a synthetic EDO lot computed by pl.ValueLot: 1008.26 PLN net by default, 1030.20 PLN gross when configured.
+Basis names parse back (market, gross_accrued; net_if_redeemed is no basis since D-77) and a market valuation is quantity times close, exact and in the price's currency; a price of another instrument is refused.

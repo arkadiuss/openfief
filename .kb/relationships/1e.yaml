@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5f6ea20d49a
-  - type: executable_for
-    from: SYM-valuation-postgres-test-save-bond-basis-revalues-only-on-achange
-    to: TEST-valuation-postgres-queue
-    created_at: 2026-10-28T08:09:58.733Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fa0bba2a39e8
   - type: implements
     from: SYM-connector-gen-pb-index-reading
     to: REQ-connector-contract-messages

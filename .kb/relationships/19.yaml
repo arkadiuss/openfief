@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-500df321bc8a
+  - type: executable_for
+    from: SYM-jurisdiction-test-fee-rule-sale-cost
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:24.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce00ab4f1735
+  - type: executable_for
+    from: SYM-valuation-postgres-test-owner-settings-round-trip
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:32:27.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c859fcbc633

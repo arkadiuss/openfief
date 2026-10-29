@@ -23,6 +23,7 @@ import (
 	"google.golang.org/protobuf/proto"
 
 	"github.com/arkadiuss/openfief/internal/demo"
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
@@ -185,7 +186,7 @@ func loadDemo(t *testing.T, pool *pgxpool.Pool) *demo.Dataset {
 			t.Fatalf("Import: %v", err)
 		}
 	}
-	recordInputs(t, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore), &ds)
+	recordInputs(t, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore, jurisdictionPack()), &ds)
 	return &ds
 }
 
@@ -209,7 +210,7 @@ func saveRegistry(t *testing.T, l *ledgerapp.Ledger, ds *demo.Dataset) {
 func recordInputs(t *testing.T, r *valuationapp.InputRecorder, ds *demo.Dataset) {
 	t.Helper()
 	ctx := t.Context()
-	if err := r.RecordTaxWrapper(ctx, demo.BondsAccount, ds.TaxWrapper); err != nil {
+	if err := r.RecordTaxWrapper(ctx, demo.BondsAccount, jurisdiction.Wrapper(ds.TaxWrapper.String())); err != nil {
 		t.Fatalf("RecordTaxWrapper: %v", err)
 	}
 	for i := range ds.Bonds {

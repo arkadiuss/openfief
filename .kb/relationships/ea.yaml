@@ -265,3 +265,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c28b84f8b539
+  - type: implements
+    from: SYM-jurisdiction-number-format-validate
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:36.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbd71e609d4c
+  - type: implements
+    from: SYM-jurisdiction-number-format-validate
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:36.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f7e7050591c
+  - type: covered_by
+    from: SYM-jurisdiction-number-format-validate
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:36.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90036b86baad

@@ -356,13 +356,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc7834343557
-  - type: implements
-    from: SYM-core-new-flags
-    to: REQ-core-config
-    created_at: 2026-10-28T14:33:53.827Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fa138e8c69fa
   - type: covered_by
     from: SYM-core-new-flags
     to: TEST-core-unit
@@ -678,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04597e3e4e12
+  - type: implements
+    from: SYM-core-new-flags
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:53:22.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57318a1c1805
+  - type: executable_for
+    from: SYM-jurisdiction-test-number-format-validate
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:03:09.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aefe94dc088d

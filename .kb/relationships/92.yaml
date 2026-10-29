@@ -13,13 +13,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f67dc455010d
-  - type: implements
-    from: SYM-pl-capped-fee
-    to: REQ-pl-early-redemption-fee-cap
-    created_at: 2026-10-28T05:24:12.082Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7e43d71df84
   - type: covered_by
     from: SYM-pl-capped-fee
     to: TEST-pl-value
@@ -426,3 +419,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff4981a68887
+  - type: implements
+    from: SYM-pl-capped-fee
+    to: REQ-pl-early-redemption-fee-by-wrapper
+    created_at: 2026-10-29T21:55:13.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ed88ab62732
+  - type: implements
+    from: SYM-pl-pack-number-format
+    to: REQ-jurisdiction-pl-number-format
+    created_at: 2026-10-29T22:05:52.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a92a06a4451
+  - type: covered_by
+    from: SYM-pl-pack-number-format
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:05:52.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cc1184c5c7d
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-check-bond-row
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:32:16.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a97ae8208682

@@ -321,3 +321,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac2096609ae5
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-intn
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:02:07.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8df6c6977b2a
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-intn
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:07.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-539d6f0fb6fe
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-intn
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:02:07.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21ebf534198e
+  - type: implements
+    from: SYM-pl-parse-tax-wrapper
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:08:55.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8af3b7fa099e
+  - type: implements
+    from: SYM-pl-parse-tax-wrapper
+    to: REQ-pl-oki-no-belka-tax
+    created_at: 2026-10-29T22:08:55.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b5cc51d98b8
+  - type: covered_by
+    from: SYM-pl-parse-tax-wrapper
+    to: TEST-pl-tax
+    created_at: 2026-10-29T22:08:55.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-118bf180c656

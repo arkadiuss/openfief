@@ -216,13 +216,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36826db9471f
-  - type: implements
-    from: SYM-core-parse-none
-    to: REQ-core-config
-    created_at: 2026-10-28T14:34:19.635Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cc12a4e7b8b6
   - type: covered_by
     from: SYM-core-parse-none
     to: TEST-core-unit
@@ -489,3 +482,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0d7c33148d4
+  - type: implements
+    from: SYM-core-parse-none
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:54:01.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b84b848a9b10
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:53.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce36bb5d2697
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:01:53.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc746b0cd65f
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:01:53.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b3d0e593b1d

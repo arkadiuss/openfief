@@ -1,6 +1,6 @@
 ---
 title: The core must read its database connection string from OPENFIEF_DSN and its listen address, reporting currency, time zone, end-of-day time, revaluation concurrency, bond basis and shutdown timeout from flags with documented defaults, and refuse to start on a missing or invalid value.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-36
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ The core must read its database connection string from OPENFIEF_DSN and its list
 
 ## Context
 
-D-36 makes concurrency, the end-of-day schedule and the bond basis configurable; D-62 makes the reporting currency a setting; D-29 keeps credentials in Secrets, so the connection string comes from the environment fed by CloudNativePG's Secret, never a flag. Modeled by Claude Code for the core task: the author asked to see OpenFief's core running on the demo; the author has not reviewed this requirement yet.
-
-## Source
-
-> Configurable: worker concurrency, the end-of-day schedule and the bond basis (D-25); changing the basis revalues everything.
-
-docs/DESIGN.md D-36
+Closed: superseded by REQ-core-serve-flags. The bond basis flag is gone with D-77. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

@@ -510,3 +510,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5be11e4d1a5
+  - type: implements
+    from: SYM-valuation-postgres-store-fee-rule
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:14:27.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e883289eb5cc
+  - type: implements
+    from: SYM-valuation-postgres-store-fee-rule
+    to: REQ-valuation-sale-fee-rule-zero
+    created_at: 2026-10-29T22:14:27.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4108eff0ba8f
+  - type: covered_by
+    from: SYM-valuation-postgres-store-fee-rule
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:14:27.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e9d9e3a7f93

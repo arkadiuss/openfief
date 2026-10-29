@@ -132,13 +132,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f801b722977
-  - type: implements
-    from: SYM-core-command
-    to: REQ-core-config
-    created_at: 2026-10-28T14:33:33.952Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9adb726ee628
   - type: covered_by
     from: SYM-core-command
     to: TEST-core-unit
@@ -356,3 +349,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5deb44fde4d
+  - type: constrains
+    from: REQ-valuation-account-terms-inputs
+    to: FACT-SUBJECT-CC4B465E3F9D6625
+    created_at: 2026-10-29T21:49:10.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4406e927a711
+  - type: requires_property
+    from: REQ-valuation-account-terms-inputs
+    to: FACT-PROP-A1207CFAC2288C44
+    created_at: 2026-10-29T21:49:10.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dfa2d2dbc5b
+  - type: specified_by
+    from: REQ-valuation-account-terms-inputs
+    to: SCEN-valuation-account-terms-inputs
+    created_at: 2026-10-29T21:49:10.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4a67d0cfbd2
+  - type: implements
+    from: SYM-core-command
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:53:09.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2225ad380d7

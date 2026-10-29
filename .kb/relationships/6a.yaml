@@ -307,3 +307,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1cc9e4af713
+  - type: implements
+    from: SYM-jurisdiction-number-format-string
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:43.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42a5c78d252f
+  - type: implements
+    from: SYM-jurisdiction-number-format-string
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:43.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c18a5a3eefe7
+  - type: covered_by
+    from: SYM-jurisdiction-number-format-string
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:43.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43dcaf182e33
+  - type: implements
+    from: SYM-pl-oki-act-in-force-in
+    to: REQ-pl-oki-act-as-data
+    created_at: 2026-10-29T22:07:24.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a2dd3af5afe
+  - type: implements
+    from: SYM-pl-oki-act-in-force-in
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:07:24.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-222254684d4b
+  - type: covered_by
+    from: SYM-pl-oki-act-in-force-in
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:24.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-914f934b6844

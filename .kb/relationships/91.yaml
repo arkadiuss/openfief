@@ -482,3 +482,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e96ab0261496
+  - type: executable_for
+    from: SYM-jurisdiction-test-fee-rule-is-zero
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:35.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f538dc1cb8a

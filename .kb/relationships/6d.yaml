@@ -489,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-646151bc9972
+  - type: implements
+    from: SYM-jurisdiction-accrued
+    to: REQ-jurisdiction-in-process
+    created_at: 2026-10-29T22:03:56.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcd408d24e7a
+  - type: implements
+    from: SYM-jurisdiction-accrued
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:03:56.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd9ca331a3e8
+  - type: covered_by
+    from: SYM-jurisdiction-accrued
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:03:56.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1a6d5e7b0ee

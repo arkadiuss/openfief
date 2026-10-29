@@ -16,6 +16,7 @@ import (
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
 	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
@@ -91,15 +92,19 @@ type core struct {
 func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledger, *valuationapp.InputRecorder) {
 	store := ledgerpg.New(pool)
 	l := ledgerapp.New(store, vstore.ImportHook())
-	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore)
+	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore, jurisdictionPack())
 }
 
-// valuationSettings records the bond basis, which revalues everything when
-// it changed (D-36), and returns the cross-check use cases with the price
-// check threshold (D-22).
+// jurisdictionPack returns the jurisdiction pack (D-70): the Polish one,
+// the only pack there is.
+func jurisdictionPack() *pl.Pack { return pl.NewPack() }
+
+// valuationSettings records the version of the jurisdiction pack's rules,
+// which revalues everything when it changed (D-36), and returns the
+// cross-check use cases with the price check threshold (D-22).
 func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, cfg *serveConfig) (*valuationapp.CrossChecks, error) {
-	if _, err := recorder.ApplyBondBasis(ctx, cfg.BondBasis); err != nil {
-		return nil, fmt.Errorf("bond basis: %w", err)
+	if _, err := recorder.ApplyRules(ctx); err != nil {
+		return nil, fmt.Errorf("rules version: %w", err)
 	}
 	checks, err := valuationapp.NewCrossChecks(vstore, cfg.PriceCheckThreshold)
 	if err != nil {
@@ -112,8 +117,9 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // valuation's import hook (D-36), the River revaluation workers, the views
 // and the read API with sessions, script tokens and the view plugins callers
 // accepts as its verifier (readTokens, D-27). It stores
-// the built-in sleeve kinds and sleeves when cfg asks, and records the bond
-// basis, which revalues everything when it changed. Next to the read API it
+// the built-in sleeve kinds and sleeves when cfg asks, and records the
+// jurisdiction pack's rules version, which revalues everything when it
+// changed. Next to the read API it
 // serves the AuthService, the ModelPortfolioService (D-52), the
 // BondLotService (D-9, D-49) and the StatementService (D-7, D-49) to the
 // view plugins callers accepts (author decision, auth split). The read API
@@ -140,7 +146,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	client, err := valuationpg.NewClient(pool, vstore, ledgerpg.New(pool), &valuationpg.Config{
 		Concurrency: cfg.Workers,
 		EndOfDay:    cfg.EndOfDay,
-		BondBasis:   cfg.BondBasis,
+		Pack:        jurisdictionPack(),
 		Today:       valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		Logger:      log,
 	})

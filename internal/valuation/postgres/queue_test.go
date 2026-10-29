@@ -156,28 +156,28 @@ func TestImportHookNeedsTheLedgersTransaction(t *testing.T) {
 	}
 }
 
-func TestSaveBondBasisRevaluesOnlyOnAChange(t *testing.T) {
+func TestSaveRulesVersionRevaluesOnlyOnAChange(t *testing.T) {
 	t.Parallel()
 	store, pool := newStore(t)
 	revals := []valuation.Revaluation{reval(t, acc1, "2026-03-02")}
 	steps := []struct {
-		basis       valuation.Basis
+		version     string
 		wantChanged bool
 	}{
-		{basis: valuation.NetIfRedeemed, wantChanged: true},
-		{basis: valuation.NetIfRedeemed},
-		{basis: valuation.GrossAccrued, wantChanged: true},
+		{version: "pl/1", wantChanged: true},
+		{version: "pl/1"},
+		{version: "pl/2", wantChanged: true},
 	}
 	for i, st := range steps {
 		if _, err := pool.Exec(t.Context(), "DELETE FROM valuation.dirty; DELETE FROM river.river_job"); err != nil {
 			t.Fatal(err)
 		}
-		changed, err := store.SaveBondBasis(t.Context(), st.basis, revals)
+		changed, err := store.SaveRulesVersion(t.Context(), st.version, revals)
 		if err != nil {
-			t.Fatalf("step %d: SaveBondBasis: %v", i, err)
+			t.Fatalf("step %d: SaveRulesVersion: %v", i, err)
 		}
 		if jobs := liveJobs(t, pool); changed != st.wantChanged || (len(jobs) == 1) != st.wantChanged {
-			t.Errorf("step %d (%s): changed = %v with jobs %v, want %v", i, st.basis, changed, jobs, st.wantChanged)
+			t.Errorf("step %d (%s): changed = %v with jobs %v, want %v", i, st.version, changed, jobs, st.wantChanged)
 		}
 	}
 }

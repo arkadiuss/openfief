@@ -28,7 +28,8 @@ type Purchase struct {
 	Price kernel.Money
 }
 
-// LotValue is the statutory value of a lot of one bond series on a date.
+// LotValue is the statutory value of a lot of one bond series on a date,
+// the parts its three values (D-77) are computed from with BondValues.
 // Every amount is in PLN and covers the whole lot.
 type LotValue struct {
 	// Gross is the gross accrued value: nominal plus interest accrued and not
@@ -36,22 +37,22 @@ type LotValue struct {
 	Gross kernel.Money
 	// Interest is the accrued interest inside Gross.
 	Interest kernel.Money
-	// Fee is the early-redemption fee after its cap; zero at maturity and
-	// inside IKE and IKZE.
+	// Discount is what the lot was bought below its nominal, by exchange;
+	// it is taxed with the interest.
+	Discount kernel.Money
+	// Fee is the early-redemption fee redeeming the lot on the date would
+	// charge, after its cap: zero at maturity and inside IKE and IKZE.
 	Fee kernel.Money
-	// Tax is the Belka tax on Interest minus Fee plus the purchase discount;
-	// zero inside IKE and IKZE.
-	Tax kernel.Money
-	// Net is what redeeming the lot on the date would pay: Gross - Fee - Tax.
-	Net kernel.Money
 	// Matured reports a date on or after maturity; the value is then the
 	// redemption value at maturity.
 	Matured bool
 }
 
-// ValueLot returns the gross accrued value and the net-if-redeemed value on
-// date on of quantity bonds of t.Series bought as p and held in wrapper. idx
-// supplies the index readings of every period up to the one the date falls in.
+// ValueLot returns the statutory value on date on of quantity bonds of
+// t.Series bought as p and held in wrapper: the gross accrued value, its
+// interest, the purchase discount and the early-redemption fee redeeming it
+// on that date would charge. idx supplies the index readings of every
+// period up to the one the date falls in.
 //
 // The value of one bond follows the issue letters' early-redemption formula
 // (Załącznik nr 3 of the EDO1036 letter, list emisyjny nr 99/2026, linked from
@@ -85,7 +86,8 @@ type LotValue struct {
 // drugiego okresu odsetkowego [...] pomniejszana o kwotę"; ROR, DOR and COI
 // letters). It is not charged inside IKE or IKZE, assuming a withdrawal
 // ("potrącenia nie dokonuje się wobec posiadaczy obligacji dokonujących
-// wypłaty lub wypłaty transferowej z IKE lub IKZE"). The value on a date d is
+// wypłaty lub wypłaty transferowej z IKE lub IKZE"); it is charged in a
+// taxable account and in OKI, which the letters don't name. The value on a date d is
 // what an early redemption with interest counted to d pays; the issuer's
 // worked examples take d as the fifth business day after the redemption
 // order.
@@ -111,12 +113,35 @@ func ValueLot(t *Terms, idx Indices, quantity kernel.Quantity, p Purchase, wrapp
 	if err != nil {
 		return LotValue{}, err
 	}
+	charged, err := chargesEarlyFee(wrapper)
+	if err != nil {
+		return LotValue{}, err
+	}
 	var fee kernel.Decimal
-	if !matured && wrapper == Taxable {
+	if !matured && charged {
 		fee = cappedFee(t, acc)
 	}
-	discount := Nominal().Amount().Sub(p.Price.Amount())
-	return lotValue(acc, fee, discount, quantity.Decimal(), wrapper, matured)
+	q, c := quantity.Decimal(), pln()
+	return LotValue{
+		Gross:    kernel.NewMoney(acc.value.Mul(q), c),
+		Interest: kernel.NewMoney(acc.interest.Mul(q), c),
+		Discount: kernel.NewMoney(Nominal().Amount().Sub(p.Price.Amount()).Mul(q), c),
+		Fee:      kernel.NewMoney(fee.Mul(q), c),
+		Matured:  matured,
+	}, nil
+}
+
+// chargesEarlyFee reports whether redeeming a bond early in wrapper pays
+// the early-redemption fee: in a taxable account and in OKI, not on a
+// withdrawal from IKE or IKZE.
+func chargesEarlyFee(wrapper TaxWrapper) (bool, error) {
+	switch wrapper {
+	case Taxable, OKI:
+		return true, nil
+	case IKE, IKZE:
+		return false, nil
+	}
+	return false, fmt.Errorf("%w: %d", ErrUnknownTaxWrapper, wrapper)
 }
 
 // validateLot checks that quantity is a positive whole number of bonds and
@@ -151,25 +176,6 @@ func cappedFee(t *Terms, acc accrual) kernel.Decimal {
 		return acc.interest
 	}
 	return fee
-}
-
-// lotValue multiplies the per-bond accrual, fee and purchase discount by the
-// lot's quantity q and deducts Belka tax on interest minus fee plus discount.
-func lotValue(acc accrual, fee, discount, q kernel.Decimal, wrapper TaxWrapper, matured bool) (LotValue, error) {
-	gross, interest, fees := acc.value.Mul(q), acc.interest.Mul(q), fee.Mul(q)
-	tax, err := belkaTax(interest.Sub(fees).Add(discount.Mul(q)), wrapper)
-	if err != nil {
-		return LotValue{}, err
-	}
-	c := pln()
-	return LotValue{
-		Gross:    kernel.NewMoney(gross, c),
-		Interest: kernel.NewMoney(interest, c),
-		Fee:      kernel.NewMoney(fees, c),
-		Tax:      kernel.NewMoney(tax, c),
-		Net:      kernel.NewMoney(gross.Sub(fees).Sub(tax), c),
-		Matured:  matured,
-	}, nil
 }
 
 // period is one interest period of a bond: its number, first day, day count

@@ -13,13 +13,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e79868a2d877
-  - type: executable_for
-    from: SYM-valuation-test-bond-valuation
-    to: TEST-valuation-valuation
-    created_at: 2026-10-28T05:31:30.823Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8e17590ae528
   - type: verified_by
     from: SCEN-plugins-egress-host-canonical
     to: TEST-plugins-egress-host
@@ -573,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f82a0bb503a
+  - type: implements
+    from: SYM-pl-ikze-exit-rate
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:06:06.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a12f4c9b809b
+  - type: implements
+    from: SYM-pl-ikze-exit-rate
+    to: REQ-valuation-net-value
+    created_at: 2026-10-29T22:06:06.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6d38f398b54
+  - type: covered_by
+    from: SYM-pl-ikze-exit-rate
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:06.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61e85c5ffab6

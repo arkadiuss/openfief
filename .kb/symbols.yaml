@@ -1661,11 +1661,14 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T05:23:45.679Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-pl-tax
       - type: implements
-        target: REQ-pl-tax-wrapper-exempt
+        target: REQ-pl-tax-wrappers
+      - type: implements
+        target: REQ-pl-values-per-wrapper
   - id: SYM-pl-belka-rate
     title: BelkaRate
     sourceFile: internal/jurisdiction/pl/tax.go
@@ -1678,7 +1681,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-tax
       - type: implements
-        target: REQ-pl-belka-tax
+        target: REQ-pl-values-per-wrapper
   - id: SYM-pl-belka-tax
     title: BelkaTax
     sourceFile: internal/jurisdiction/pl/tax.go
@@ -1691,9 +1694,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-tax
       - type: implements
-        target: REQ-pl-belka-tax
-      - type: implements
-        target: REQ-pl-tax-wrapper-exempt
+        target: REQ-pl-values-per-wrapper
   - id: SYM-pl-tax-rate-cutoff
     title: TaxRateCutoff
     sourceFile: internal/jurisdiction/pl/tax.go
@@ -1751,7 +1752,7 @@ symbols:
       - type: implements
         target: REQ-pl-bond-accrual
       - type: implements
-        target: REQ-pl-early-redemption-fee-cap
+        target: REQ-pl-early-redemption-fee-by-wrapper
   - id: SYM-pl-capped-fee
     title: cappedFee
     sourceFile: internal/jurisdiction/pl/value.go
@@ -1764,7 +1765,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-value
       - type: implements
-        target: REQ-pl-early-redemption-fee-cap
+        target: REQ-pl-early-redemption-fee-by-wrapper
   - id: SYM-pl-period
     title: period
     sourceFile: internal/jurisdiction/pl/value.go
@@ -2083,24 +2084,7 @@ symbols:
       - type: implements
         target: REQ-decision-d37-3-belka-half-up
       - type: implements
-        target: REQ-pl-belka-tax
-      - type: implements
-        target: REQ-pl-tax-wrapper-exempt
-  - id: SYM-pl-lot-value-of-accrual
-    title: lotValue
-    sourceFile: internal/jurisdiction/pl/value.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:26:36.775Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-value
-      - type: implements
-        target: REQ-pl-belka-tax
-      - type: implements
-        target: REQ-pl-early-redemption-fee-cap
+        target: REQ-pl-values-per-wrapper
   - id: SYM-valuation-pln
     title: PLN
     sourceFile: internal/valuation/fx.go
@@ -2207,7 +2191,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-valuation
       - type: implements
-        target: REQ-valuation-bond-basis
+        target: REQ-valuation-bond-holding-values
   - id: SYM-valuation-basis-string
     title: Basis.String
     sourceFile: internal/valuation/valuation.go
@@ -2220,7 +2204,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-valuation
       - type: implements
-        target: REQ-valuation-bond-basis
+        target: REQ-valuation-bond-holding-values
   - id: SYM-valuation-parse-basis
     title: ParseBasis
     sourceFile: internal/valuation/valuation.go
@@ -2233,7 +2217,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-valuation
       - type: implements
-        target: REQ-valuation-bond-basis
+        target: REQ-valuation-bond-holding-values
   - id: SYM-valuation-valuation
     title: Valuation
     sourceFile: internal/valuation/valuation.go
@@ -2246,7 +2230,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-valuation
       - type: implements
-        target: REQ-valuation-bond-basis
+        target: REQ-valuation-bond-holding-values
       - type: implements
         target: REQ-valuation-market-value
   - id: SYM-valuation-market-valuation
@@ -2262,32 +2246,6 @@ symbols:
         target: TEST-valuation-valuation
       - type: implements
         target: REQ-valuation-market-value
-  - id: SYM-valuation-bond-basis
-    title: BondBasis
-    sourceFile: internal/valuation/valuation.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:31:04.829Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-valuation
-      - type: implements
-        target: REQ-valuation-bond-basis
-  - id: SYM-valuation-bond-valuation
-    title: BondValuation
-    sourceFile: internal/valuation/valuation.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:31:08.401Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-valuation
-      - type: implements
-        target: REQ-valuation-bond-basis
   - id: SYM-valuation-test-helper-table
     title: table
     sourceFile: internal/valuation/fx_test.go
@@ -2375,26 +2333,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T05:31:26.429Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-valuation
-  - id: SYM-valuation-test-bond-basis
-    title: TestBondBasis
-    sourceFile: internal/valuation/valuation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:31:28.622Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-valuation
-  - id: SYM-valuation-test-bond-valuation
-    title: TestBondValuation
-    sourceFile: internal/valuation/valuation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:31:30.639Z
     relationships:
       - type: executable_for
         target: TEST-valuation-valuation
@@ -6485,9 +6423,9 @@ symbols:
       - type: covered_by
         target: TEST-pl-value
       - type: implements
-        target: REQ-pl-belka-tax
-      - type: implements
         target: REQ-pl-bond-accrual
+      - type: implements
+        target: REQ-pl-values-per-wrapper
   - id: SYM-pl-validate-lot
     title: validateLot
     sourceFile: internal/jurisdiction/pl/value.go
@@ -13804,7 +13742,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-revaluation
       - type: implements
-        target: REQ-valuation-bond-holding
+        target: REQ-valuation-bond-holding-values
   - id: SYM-valuation-value-bond-holding
     title: ValueBondHolding
     sourceFile: internal/valuation/revaluation.go
@@ -13819,7 +13757,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-E10BE8CE13E67657
       - type: implements
-        target: REQ-valuation-bond-holding
+        target: REQ-valuation-bond-holding-values
   - id: SYM-valuation-value-bond-lot
     title: valueBondLot
     sourceFile: internal/valuation/revaluation.go
@@ -13832,7 +13770,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-revaluation
       - type: implements
-        target: REQ-valuation-bond-holding
+        target: REQ-valuation-bond-holding-values
   - id: SYM-valuation-missing
     title: missing
     sourceFile: internal/valuation/revaluation.go
@@ -14197,7 +14135,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-revalue
       - type: implements
-        target: REQ-valuation-bond-holding
+        target: REQ-valuation-bond-holding-values
       - type: implements
         target: REQ-valuation-market-holding
   - id: SYM-valuation-app-first-date
@@ -14252,33 +14190,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-revalue
       - type: implements
-        target: REQ-valuation-bond-holding
-  - id: SYM-valuation-app-input-cache-market
-    title: inputCache.market
-    sourceFile: internal/valuation/app/revalue.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:34:44.444Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-app-revalue
-      - type: implements
-        target: REQ-valuation-market-holding
-  - id: SYM-valuation-app-input-cache-bond-inputs
-    title: inputCache.bondInputs
-    sourceFile: internal/valuation/app/revalue.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:34:49.677Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-app-revalue
-      - type: implements
-        target: REQ-valuation-bond-holding
+        target: REQ-valuation-bond-holding-values
   - id: SYM-valuation-app-planner
     title: Planner
     sourceFile: internal/valuation/app/plan.go
@@ -14529,21 +14441,6 @@ symbols:
         target: REQ-valuation-input-validation
       - type: implements
         target: REQ-valuation-revaluation-triggers
-  - id: SYM-valuation-app-input-recorder-apply-bond-basis
-    title: InputRecorder.ApplyBondBasis
-    sourceFile: internal/valuation/app/record.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:36:16.864Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-app-plan
-      - type: implements
-        target: REQ-decision-d36-9-basis-change-revalues-all
-      - type: implements
-        target: REQ-valuation-basis-change
   - id: SYM-valuation-app-input-recorder-end-of-day
     title: InputRecorder.EndOfDay
     sourceFile: internal/valuation/app/record.go
@@ -14730,18 +14627,6 @@ symbols:
         target: TEST-valuation-app-plan
       - type: executable_for
         target: TEST-valuation-app-revalue
-  - id: SYM-valuation-app-test-helper-fake-store-tax-wrapper
-    title: fakeStore.TaxWrapper
-    sourceFile: internal/valuation/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:37:57.069Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
-      - type: executable_for
-        target: TEST-valuation-app-revalue
   - id: SYM-valuation-app-test-helper-fake-store-valued-through
     title: fakeStore.ValuedThrough
     sourceFile: internal/valuation/app/fakes_test.go
@@ -14840,30 +14725,6 @@ symbols:
         target: TEST-valuation-app-plan
       - type: executable_for
         target: TEST-valuation-app-revalue
-  - id: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
-    title: fakeRecorder.SaveTaxWrapper
-    sourceFile: internal/valuation/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:38:43.369Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
-      - type: executable_for
-        target: TEST-valuation-app-revalue
-  - id: SYM-valuation-app-test-helper-fake-recorder-save-bond-basis
-    title: fakeRecorder.SaveBondBasis
-    sourceFile: internal/valuation/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:38:50.278Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
-      - type: executable_for
-        target: TEST-valuation-app-revalue
   - id: SYM-valuation-app-test-helper-fake-recorder-enqueue
     title: fakeRecorder.Enqueue
     sourceFile: internal/valuation/app/fakes_test.go
@@ -14948,16 +14809,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-app-plan
-  - id: SYM-valuation-app-test-apply-bond-basis
-    title: TestApplyBondBasis
-    sourceFile: internal/valuation/app/plan_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:39:42.752Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
   - id: SYM-valuation-app-test-record-passes-store-failures-on
     title: TestRecordPassesStoreFailuresOn
     sourceFile: internal/valuation/app/plan_test.go
@@ -15019,16 +14870,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T07:40:05.117Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-revalue
-  - id: SYM-valuation-app-test-helper-bond-lot-value
-    title: bondLotValue
-    sourceFile: internal/valuation/app/revalue_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:40:08.584Z
     relationships:
       - type: executable_for
         target: TEST-valuation-app-revalue
@@ -15123,45 +14964,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T07:59:14.524Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-postgres-store
-      - type: implements
-        target: REQ-valuation-schema
-  - id: SYM-valuation-postgres-wrapper-names
-    title: wrapperNames
-    sourceFile: internal/valuation/postgres/codec.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:59:21.570Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-postgres-store
-      - type: implements
-        target: REQ-valuation-schema
-  - id: SYM-valuation-postgres-wrapper-name
-    title: wrapperName
-    sourceFile: internal/valuation/postgres/codec.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:59:28.849Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-postgres-store
-      - type: implements
-        target: REQ-valuation-schema
-  - id: SYM-valuation-postgres-parse-wrapper
-    title: parseWrapper
-    sourceFile: internal/valuation/postgres/codec.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:59:36.470Z
     relationships:
       - type: covered_by
         target: TEST-valuation-postgres-store
@@ -15455,34 +15257,6 @@ symbols:
         target: TEST-valuation-postgres-queue
       - type: implements
         target: REQ-valuation-enqueue-same-transaction
-  - id: SYM-valuation-postgres-store-save-tax-wrapper
-    title: Store.SaveTaxWrapper
-    sourceFile: internal/valuation/postgres/queue.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T08:02:02.277Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-postgres-queue
-      - type: implements
-        target: REQ-valuation-enqueue-same-transaction
-  - id: SYM-valuation-postgres-store-save-bond-basis
-    title: Store.SaveBondBasis
-    sourceFile: internal/valuation/postgres/queue.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T08:02:09.079Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-postgres-queue
-      - type: implements
-        target: REQ-decision-d36-9-basis-change-revalues-all
-      - type: implements
-        target: REQ-valuation-enqueue-same-transaction
   - id: SYM-valuation-postgres-store-statuses
     title: Store.Statuses
     sourceFile: internal/valuation/postgres/status.go
@@ -15644,7 +15418,7 @@ symbols:
         target: REQ-valuation-schema
   - id: SYM-valuation-postgres-store-tax-wrapper
     title: Store.TaxWrapper
-    sourceFile: internal/valuation/postgres/store.go
+    sourceFile: internal/valuation/postgres/terms.go
     status: active
     symbol_role: behavioral
     origin:
@@ -15653,6 +15427,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
       - type: implements
         target: REQ-valuation-schema
   - id: SYM-valuation-postgres-store-valued-through
@@ -15670,7 +15448,7 @@ symbols:
         target: REQ-valuation-schema
   - id: SYM-valuation-postgres-valuation-args
     title: valuationArgs
-    sourceFile: internal/valuation/postgres/store.go
+    sourceFile: internal/valuation/postgres/rows.go
     status: active
     symbol_role: behavioral
     origin:
@@ -15680,10 +15458,14 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-store
       - type: implements
+        target: REQ-decision-d36-9-three-values-stored
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
         target: REQ-valuation-schema
   - id: SYM-valuation-postgres-store-valuations
     title: Store.Valuations
-    sourceFile: internal/valuation/postgres/store.go
+    sourceFile: internal/valuation/postgres/rows.go
     status: active
     symbol_role: behavioral
     origin:
@@ -15693,10 +15475,14 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-store
       - type: implements
+        target: REQ-decision-d36-9-three-values-stored
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
         target: REQ-valuation-schema
   - id: SYM-valuation-postgres-scan-valuation
     title: scanValuation
-    sourceFile: internal/valuation/postgres/store.go
+    sourceFile: internal/valuation/postgres/rows.go
     status: active
     symbol_role: behavioral
     origin:
@@ -15705,6 +15491,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-decision-d36-9-three-values-stored
+      - type: implements
+        target: REQ-valuation-holding-three-values
       - type: implements
         target: REQ-valuation-schema
   - id: SYM-valuation-postgres-store-replace-valuations
@@ -15737,7 +15527,7 @@ symbols:
       - type: implements
         target: REQ-decision-d36-8-revaluation-settings
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-daily-at
     title: DailyAt
     sourceFile: internal/valuation/postgres/worker.go
@@ -15751,7 +15541,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-daily-at-next
     title: DailyAt.Next
     sourceFile: internal/valuation/postgres/worker.go
@@ -15764,7 +15554,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-config-validate
     title: Config.validate
     sourceFile: internal/valuation/postgres/worker.go
@@ -15777,7 +15567,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-today-in
     title: TodayIn
     sourceFile: internal/valuation/postgres/worker.go
@@ -15790,7 +15580,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-ledger
     title: Ledger
     sourceFile: internal/valuation/postgres/worker.go
@@ -15816,9 +15606,9 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-river-jobs
+        target: REQ-valuation-revaluation-config
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-river-jobs
   - id: SYM-valuation-postgres-revalue-worker
     title: RevalueWorker
     sourceFile: internal/valuation/postgres/worker.go
@@ -15887,7 +15677,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-end-of-day-kind
     title: EndOfDay.Kind
     sourceFile: internal/valuation/postgres/worker.go
@@ -15900,7 +15690,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-end-of-day-insert-opts
     title: EndOfDay.InsertOpts
     sourceFile: internal/valuation/postgres/worker.go
@@ -15913,7 +15703,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-end-of-day-worker
     title: EndOfDayWorker
     sourceFile: internal/valuation/postgres/worker.go
@@ -15927,7 +15717,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-end-of-day-worker-work
     title: EndOfDayWorker.Work
     sourceFile: internal/valuation/postgres/worker.go
@@ -15940,7 +15730,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-worker
       - type: implements
-        target: REQ-valuation-settings
+        target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-test-helper-new-pool
     title: newPool
     sourceFile: internal/valuation/postgres/db_test.go
@@ -16200,16 +15990,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T08:09:52.890Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-postgres-queue
-  - id: SYM-valuation-postgres-test-save-bond-basis-revalues-only-on-achange
-    title: TestSaveBondBasisRevaluesOnlyOnAChange
-    sourceFile: internal/valuation/postgres/queue_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T08:09:57.845Z
     relationships:
       - type: executable_for
         target: TEST-valuation-postgres-queue
@@ -38153,7 +37933,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-serve-config
     title: serveConfig
     sourceFile: cmd/core/config.go
@@ -38166,7 +37946,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
       - type: implements
         target: REQ-decision-d36-8-revaluation-settings
   - id: SYM-core-parse-args
@@ -38181,7 +37961,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-command-line
     title: commandLine
     sourceFile: cmd/core/config.go
@@ -38194,7 +37974,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-split-command
     title: splitCommand
     sourceFile: cmd/core/config.go
@@ -38207,7 +37987,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-new-flags
     title: newFlags
     sourceFile: cmd/core/config.go
@@ -38220,7 +38000,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-parse-serve
     title: parseServe
     sourceFile: cmd/core/config.go
@@ -38233,22 +38013,9 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
       - type: implements
         target: REQ-decision-d36-8-revaluation-settings
-  - id: SYM-core-parse-bond-basis
-    title: parseBondBasis
-    sourceFile: cmd/core/config.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T14:34:01.231Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-unit
-      - type: implements
-        target: REQ-core-config
   - id: SYM-core-parse-end-of-day
     title: parseEndOfDay
     sourceFile: cmd/core/config.go
@@ -38261,7 +38028,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-parse-issue
     title: parseIssue
     sourceFile: cmd/core/config.go
@@ -38274,7 +38041,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
       - type: implements
         target: REQ-core-token-commands
   - id: SYM-core-parse-revoke
@@ -38289,7 +38056,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
       - type: implements
         target: REQ-core-token-commands
   - id: SYM-core-parse-none
@@ -38304,7 +38071,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-deps
     title: deps
     sourceFile: cmd/core/core.go
@@ -75150,7 +74917,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-parse-threshold
     title: parseThreshold
     sourceFile: cmd/core/config.go
@@ -75163,7 +74930,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-core-valuation-settings
     title: valuationSettings
     sourceFile: cmd/core/core.go
@@ -75176,7 +74943,7 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
-        target: REQ-core-config
+        target: REQ-core-serve-flags
   - id: SYM-connector-gen-pb-delivery-get-cross-check-prices
     title: Delivery.GetCrossCheckPrices
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -88793,3 +88560,1911 @@ symbols:
         target: TEST-core-market-data
       - type: implements
         target: REQ-valuation-market-data-service
+  - id: SYM-core-jurisdiction-pack
+    title: jurisdictionPack
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:44.873Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-jurisdiction-in-process
+      - type: implements
+        target: REQ-valuation-reporting-currency
+  - id: SYM-jurisdiction-fee-rule
+    title: FeeRule
+    sourceFile: internal/jurisdiction/fee.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:50.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-fee
+      - type: implements
+        target: REQ-jurisdiction-fee-rule-sale-cost
+      - type: implements
+        target: REQ-valuation-sale-fee-rule
+  - id: SYM-jurisdiction-fee-rule-is-zero
+    title: FeeRule.IsZero
+    sourceFile: internal/jurisdiction/fee.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:00:57.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-fee
+      - type: implements
+        target: REQ-valuation-sale-fee-rule-zero
+  - id: SYM-jurisdiction-fee-rule-validate
+    title: FeeRule.Validate
+    sourceFile: internal/jurisdiction/fee.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:04.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-fee
+      - type: implements
+        target: REQ-jurisdiction-fee-rule-sale-cost
+      - type: implements
+        target: REQ-valuation-sale-fee-rule
+  - id: SYM-jurisdiction-fee-rule-sale-cost
+    title: FeeRule.SaleCost
+    sourceFile: internal/jurisdiction/fee.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:10.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-fee
+      - type: implements
+        target: REQ-jurisdiction-fee-rule-sale-cost
+      - type: implements
+        target: REQ-valuation-sale-fee-rule
+  - id: SYM-jurisdiction-test-fee-rule-validate
+    title: TestFeeRuleValidate
+    sourceFile: internal/jurisdiction/fee_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:16.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+  - id: SYM-jurisdiction-test-fee-rule-sale-cost
+    title: TestFeeRuleSaleCost
+    sourceFile: internal/jurisdiction/fee_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:22.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+  - id: SYM-jurisdiction-test-sale-cost-properties
+    title: TestSaleCostProperties
+    sourceFile: internal/jurisdiction/fee_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:27.976Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+  - id: SYM-jurisdiction-test-fee-rule-is-zero
+    title: TestFeeRuleIsZero
+    sourceFile: internal/jurisdiction/fee_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:33.646Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+  - id: SYM-jurisdiction-test-helper-dec
+    title: dec
+    sourceFile: internal/jurisdiction/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:40.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+      - type: executable_for
+        target: TEST-jurisdiction-number-format
+      - type: executable_for
+        target: TEST-jurisdiction-pack
+  - id: SYM-jurisdiction-test-helper-money
+    title: money
+    sourceFile: internal/jurisdiction/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:46.696Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+      - type: executable_for
+        target: TEST-jurisdiction-number-format
+      - type: executable_for
+        target: TEST-jurisdiction-pack
+  - id: SYM-jurisdiction-test-helper-rng
+    title: rng
+    sourceFile: internal/jurisdiction/helpers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:51.650Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+      - type: executable_for
+        target: TEST-jurisdiction-number-format
+      - type: executable_for
+        target: TEST-jurisdiction-pack
+  - id: SYM-jurisdiction-test-helper-rng-next
+    title: rng.next
+    sourceFile: internal/jurisdiction/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:01:57.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+      - type: executable_for
+        target: TEST-jurisdiction-number-format
+      - type: executable_for
+        target: TEST-jurisdiction-pack
+  - id: SYM-jurisdiction-test-helper-rng-intn
+    title: rng.intn
+    sourceFile: internal/jurisdiction/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:02:04.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-fee
+      - type: executable_for
+        target: TEST-jurisdiction-number-format
+      - type: executable_for
+        target: TEST-jurisdiction-pack
+  - id: SYM-jurisdiction-separator
+    title: Separator
+    sourceFile: internal/jurisdiction/numberformat.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:02:12.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-number-format
+      - type: implements
+        target: REQ-jurisdiction-number-format-choices
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-jurisdiction-separator-names
+    title: separatorNames
+    sourceFile: internal/jurisdiction/numberformat.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:02:19.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-number-format
+      - type: implements
+        target: REQ-jurisdiction-number-format-choices
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-jurisdiction-number-format
+    title: NumberFormat
+    sourceFile: internal/jurisdiction/numberformat.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:02:25.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-number-format
+      - type: implements
+        target: REQ-jurisdiction-number-format-choices
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-jurisdiction-number-format-validate
+    title: NumberFormat.Validate
+    sourceFile: internal/jurisdiction/numberformat.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:02:33.564Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-number-format
+      - type: implements
+        target: REQ-jurisdiction-number-format-choices
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-jurisdiction-number-format-string
+    title: NumberFormat.String
+    sourceFile: internal/jurisdiction/numberformat.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:02:41.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-number-format
+      - type: implements
+        target: REQ-jurisdiction-number-format-choices
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-jurisdiction-parse-number-format
+    title: ParseNumberFormat
+    sourceFile: internal/jurisdiction/numberformat.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:02:48.242Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-number-format
+      - type: implements
+        target: REQ-jurisdiction-number-format-choices
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-jurisdiction-number-formats
+    title: NumberFormats
+    sourceFile: internal/jurisdiction/numberformat.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:02:55.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-number-format
+      - type: implements
+        target: REQ-jurisdiction-number-format-choices
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-jurisdiction-test-number-format-keys
+    title: TestNumberFormatKeys
+    sourceFile: internal/jurisdiction/numberformat_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:01.103Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-number-format
+  - id: SYM-jurisdiction-test-number-format-validate
+    title: TestNumberFormatValidate
+    sourceFile: internal/jurisdiction/numberformat_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:07.133Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-number-format
+  - id: SYM-jurisdiction-test-parse-number-format-rejects
+    title: TestParseNumberFormatRejects
+    sourceFile: internal/jurisdiction/numberformat_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:12.964Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-number-format
+  - id: SYM-jurisdiction-wrapper
+    title: Wrapper
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:19.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-pack
+      - type: implements
+        target: REQ-pl-tax-wrappers
+  - id: SYM-jurisdiction-values
+    title: Values
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:26.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-ikze-liquidation-missing
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-jurisdiction-settings
+    title: Settings
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:33.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-ikze-early-withdrawal-tax
+  - id: SYM-jurisdiction-validate-marginal-rate
+    title: ValidateMarginalRate
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:40.871Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-pack
+      - type: implements
+        target: REQ-pl-ikze-early-withdrawal-tax
+  - id: SYM-jurisdiction-listed
+    title: Listed
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:47.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-jurisdiction-in-process
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-jurisdiction-accrued
+    title: Accrued
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:03:54.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-jurisdiction-in-process
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-jurisdiction-cash
+    title: Cash
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:00.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-jurisdiction-in-process
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-jurisdiction-day-balance
+    title: DayBalance
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:07.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-oki-yearly-tax
+  - id: SYM-jurisdiction-yearly-tax
+    title: YearlyTax
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:14.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-oki-yearly-tax
+  - id: SYM-jurisdiction-pack
+    title: Pack
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:20.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-jurisdiction-in-process
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-jurisdiction-has-wrapper
+    title: HasWrapper
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:26.991Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-pack
+      - type: implements
+        target: REQ-pl-tax-wrappers
+  - id: SYM-jurisdiction-default-wrapper
+    title: DefaultWrapper
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:33.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-jurisdiction-pack
+      - type: implements
+        target: REQ-pl-tax-wrappers
+  - id: SYM-jurisdiction-test-pack-wrappers
+    title: TestPackWrappers
+    sourceFile: internal/jurisdiction/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:39.695Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-pack
+  - id: SYM-jurisdiction-test-validate-marginal-rate
+    title: TestValidateMarginalRate
+    sourceFile: internal/jurisdiction/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:45.582Z
+    relationships:
+      - type: executable_for
+        target: TEST-jurisdiction-pack
+  - id: SYM-pl-test-helper-rng
+    title: rng
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:51.564Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-rng-next
+    title: rng.next
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:04:58.538Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-test-helper-rng-intn
+    title: rng.intn
+    sourceFile: internal/jurisdiction/pl/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:05:05.123Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-pack
+    title: Pack
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:05:10.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-new-pack
+    title: NewPack
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:05:17.041Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-pack-version
+    title: Pack.Version
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:05:30.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-pack-tax-rate-date
+    title: Pack.TaxRateDate
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:05:37.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-AUTO-C17116F5350E97D6
+  - id: SYM-pl-pack-reporting-currency
+    title: Pack.ReportingCurrency
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:05:43.611Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-valuation-reporting-currency
+  - id: SYM-pl-pack-number-format
+    title: Pack.NumberFormat
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:05:50.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-jurisdiction-pl-number-format
+  - id: SYM-pl-pack-wrappers
+    title: Pack.Wrappers
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:05:56.852Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-tax-wrappers
+  - id: SYM-pl-ikze-exit-rate
+    title: IKZEExitRate
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:03.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-net-value
+  - id: SYM-pl-pack-value-listed
+    title: Pack.ValueListed
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:10.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-pack-value-accrued
+    title: Pack.ValueAccrued
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:17.701Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-pack-value-cash
+    title: Pack.ValueCash
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:24.511Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-ikze-values
+    title: ikzeValues
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:31.070Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-ikze-early-withdrawal-tax
+      - type: implements
+        target: REQ-pl-ikze-liquidation-missing
+  - id: SYM-pl-after-tax
+    title: afterTax
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:37.622Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-values
+    title: values
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:44.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-all-pln
+    title: allPLN
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:50.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-pl-oki-act
+    title: OKIAct
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:06:56.725Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-oki-act-as-data
+      - type: implements
+        target: REQ-pl-oki-yearly-tax
+  - id: SYM-pl-current-oki-act
+    title: CurrentOKIAct
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:07:03.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-oki-act-as-data
+      - type: implements
+        target: REQ-pl-oki-yearly-tax
+  - id: SYM-pl-pack-yearly-tax
+    title: Pack.YearlyTax
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:07:16.371Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-oki-act-as-data
+      - type: implements
+        target: REQ-pl-oki-yearly-tax
+  - id: SYM-pl-oki-act-in-force-in
+    title: OKIAct.inForceIn
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:07:22.531Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-oki-act-as-data
+      - type: implements
+        target: REQ-pl-oki-yearly-tax
+  - id: SYM-pl-test-pack-defaults
+    title: TestPackDefaults
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:07:28.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-helper-values-case
+    title: valuesCase
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:07:35.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-helper-settings
+    title: settings
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:07:41.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-helper-want-values
+    title: wantValues
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:07:48.190Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-helper-check-values
+    title: checkValues
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:07:54.757Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-value-listed
+    title: TestValueListed
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:01.782Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-value-accrued
+    title: TestValueAccrued
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:08.627Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-value-cash
+    title: TestValueCash
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:15.533Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-values-properties
+    title: TestValuesProperties
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:22.452Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-helper-min-money
+    title: minMoney
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:28.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-test-yearly-tax
+    title: TestYearlyTax
+    sourceFile: internal/jurisdiction/pl/pack_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:35.069Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-pack
+  - id: SYM-pl-tax-wrappers
+    title: TaxWrappers
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:41.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-oki-no-belka-tax
+      - type: implements
+        target: REQ-pl-tax-wrappers
+  - id: SYM-pl-tax-wrapper-string
+    title: TaxWrapper.String
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:47.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-oki-no-belka-tax
+      - type: implements
+        target: REQ-pl-tax-wrappers
+  - id: SYM-pl-parse-tax-wrapper
+    title: ParseTaxWrapper
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:53.235Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-tax
+      - type: implements
+        target: REQ-pl-oki-no-belka-tax
+      - type: implements
+        target: REQ-pl-tax-wrappers
+  - id: SYM-pl-tax-at
+    title: taxAt
+    sourceFile: internal/jurisdiction/pl/tax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:08:59.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-values-per-wrapper
+  - id: SYM-pl-test-tax-wrapper-names
+    title: TestTaxWrapperNames
+    sourceFile: internal/jurisdiction/pl/tax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:09:04.934Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-tax
+  - id: SYM-pl-charges-early-fee
+    title: chargesEarlyFee
+    sourceFile: internal/jurisdiction/pl/value.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:09:11.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-value
+      - type: implements
+        target: REQ-pl-early-redemption-fee-by-wrapper
+  - id: SYM-valuation-app-test-apply-rules
+    title: TestApplyRules
+    sourceFile: internal/valuation/app/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:09:23.642Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-account-terms-reader
+    title: AccountTermsReader
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:09:30.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-app-settings-reader
+    title: SettingsReader
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:09:36.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-app-input-recorder-record-fee-rule
+    title: InputRecorder.RecordFeeRule
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:09:42.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+      - type: implements
+        target: REQ-valuation-sale-fee-rule
+  - id: SYM-valuation-app-input-recorder-record-marginal-rate
+    title: InputRecorder.RecordMarginalRate
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:09:49.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-pl-ikze-early-withdrawal-tax
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-app-input-recorder-record-number-format
+    title: InputRecorder.RecordNumberFormat
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:09:55.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-app-input-recorder-rules-version
+    title: InputRecorder.RulesVersion
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:01.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-rules-version-revalues
+  - id: SYM-valuation-app-input-recorder-apply-rules
+    title: InputRecorder.ApplyRules
+    sourceFile: internal/valuation/app/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:08.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-rules-version-revalues
+  - id: SYM-valuation-app-revaluer-value-market
+    title: Revaluer.valueMarket
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:15.002Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-app-input-cache-account-terms
+    title: inputCache.accountTerms
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:21.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-pl-ikze-early-withdrawal-tax
+      - type: implements
+        target: REQ-valuation-holding-three-values
+  - id: SYM-valuation-app-input-cache-prices
+    title: inputCache.prices
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:28.608Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-app-input-cache-rates
+    title: inputCache.rates
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:35.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-app-input-cache-index-readings
+    title: inputCache.indexReadings
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:41.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-app-test-helper-bond-lot-values
+    title: bondLotValues
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:47.207Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-revalue-fee-rule-and-short-holdings
+    title: TestRevalueFeeRuleAndShortHoldings
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:52.903Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-display-settings
+    title: DisplaySettings
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:10:59.203Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-valuation-owner-settings
+      - type: implements
+        target: REQ-valuation-reporting-currency
+  - id: SYM-valuation-app-owner-settings
+    title: OwnerSettings
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:11:05.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-owner-settings
+  - id: SYM-valuation-app-settings
+    title: Settings
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:11:10.493Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-owner-settings
+  - id: SYM-valuation-app-new-settings
+    title: NewSettings
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:11:17.724Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-owner-settings
+  - id: SYM-valuation-app-settings-display
+    title: Settings.Display
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:11:24.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-valuation-owner-settings
+      - type: implements
+        target: REQ-valuation-reporting-currency
+  - id: SYM-valuation-app-settings-owner
+    title: Settings.Owner
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:11:32.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-owner-settings
+  - id: SYM-valuation-app-settings-set-number-format
+    title: Settings.SetNumberFormat
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:11:40.269Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-owner-settings
+  - id: SYM-valuation-app-settings-set-marginal-rate
+    title: Settings.SetMarginalRate
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:11:47.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-pl-ikze-early-withdrawal-tax
+      - type: implements
+        target: REQ-valuation-owner-settings
+  - id: SYM-valuation-app-settings-check-owner
+    title: Settings.checkOwner
+    sourceFile: internal/valuation/app/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:11:54.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-owner-settings
+  - id: SYM-valuation-app-test-helper-new-settings
+    title: newSettings
+    sourceFile: internal/valuation/app/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:00.802Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-settings-display
+    title: TestSettingsDisplay
+    sourceFile: internal/valuation/app/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:07.471Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-owner-settings
+    title: TestOwnerSettings
+    sourceFile: internal/valuation/app/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:14.243Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-change-settings
+    title: TestChangeSettings
+    sourceFile: internal/valuation/app/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:20.443Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-terms
+    title: fakeTerms
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:27.234Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-store-tax-wrapper
+    title: fakeStore.TaxWrapper
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:33.481Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-store-fee-rule
+    title: fakeStore.FeeRule
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:39.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-store-value-settings
+    title: fakeStore.ValueSettings
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:47.244Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-store-number-format
+    title: fakeStore.NumberFormat
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:12:54.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
+    title: fakeRecorder.SaveTaxWrapper
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:13:02.549Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-fee-rule
+    title: fakeRecorder.SaveFeeRule
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:13:09.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-marginal-rate
+    title: fakeRecorder.SaveMarginalRate
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:13:17.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-number-format
+    title: fakeRecorder.SaveNumberFormat
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:13:24.094Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-rules-version
+    title: fakeRecorder.SaveRulesVersion
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:13:31.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-postgres-optional-value
+    title: optionalValue
+    sourceFile: internal/valuation/postgres/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:13:39.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-decision-d36-9-three-values-stored
+  - id: SYM-valuation-postgres-test-save-rules-version-revalues-only-on-a-change
+    title: TestSaveRulesVersionRevaluesOnlyOnAChange
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:13:45.665Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-store-save-tax-wrapper
+    title: Store.SaveTaxWrapper
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:14:18.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-postgres-store-fee-rule
+    title: Store.FeeRule
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:14:24.930Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-terms
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+      - type: implements
+        target: REQ-valuation-sale-fee-rule-zero
+  - id: SYM-valuation-postgres-store-save-fee-rule
+    title: Store.SaveFeeRule
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:14:31.447Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-terms
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-postgres-store-value-settings
+    title: Store.ValueSettings
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:14:38.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-terms
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-postgres-store-save-marginal-rate
+    title: Store.SaveMarginalRate
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:14:45.330Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-terms
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-postgres-store-number-format
+    title: Store.NumberFormat
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:14:51.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-terms
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-postgres-store-save-number-format
+    title: Store.SaveNumberFormat
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:14:58.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-terms
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-postgres-store-save-rules-version
+    title: Store.SaveRulesVersion
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:15:05.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-valuation-rules-version-revalues
+  - id: SYM-valuation-postgres-store-setting
+    title: Store.setting
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:15:11.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-terms
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-postgres-put-setting
+    title: putSetting
+    sourceFile: internal/valuation/postgres/terms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:15:17.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-terms
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-holding-valuation-net-valued
+    title: HoldingValuation.NetValued
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:15:29.726Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-holding-valuation-liquidation-valued
+    title: HoldingValuation.LiquidationValued
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:15:36.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-market-holding
+    title: MarketHolding
+    sourceFile: internal/valuation/revaluation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:15:42.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-test-helper-taxable-terms
+    title: taxableTerms
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:15:49.184Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-helper-market-lot
+    title: marketLot
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:15:55.856Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-test-value-market-holding-values
+    title: TestValueMarketHoldingValues
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:16:02.281Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-account-terms
+    title: AccountTerms
+    sourceFile: internal/valuation/values.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:16:07.771Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-account-terms-listed
+    title: AccountTerms.listed
+    sourceFile: internal/valuation/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:16:14.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-account-terms-tax-cost
+    title: AccountTerms.TaxCost
+    sourceFile: internal/valuation/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:16:20.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-AUTO-C17116F5350E97D6
+      - type: implements
+        target: REQ-valuation-holding-three-values
+  - id: SYM-valuation-account-terms-minimum
+    title: AccountTerms.minimum
+    sourceFile: internal/valuation/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:16:27.296Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-sale-fee-rule
+  - id: SYM-valuation-add-values
+    title: addValues
+    sourceFile: internal/valuation/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:16:33.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-revaluation
+      - type: implements
+        target: REQ-valuation-holding-three-values
+      - type: implements
+        target: REQ-valuation-three-values
+  - id: SYM-valuation-app-terms-recorder
+    title: TermsRecorder
+    sourceFile: internal/valuation/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:32:08.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-valuation-account-terms-inputs
+  - id: SYM-valuation-app-test-helper-check-bond-row
+    title: checkBondRow
+    sourceFile: internal/valuation/app/revalue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:32:14.276Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-postgres-test-fee-rules-round-trip
+    title: TestFeeRulesRoundTrip
+    sourceFile: internal/valuation/postgres/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:32:20.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-terms
+  - id: SYM-valuation-postgres-test-owner-settings-round-trip
+    title: TestOwnerSettingsRoundTrip
+    sourceFile: internal/valuation/postgres/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:32:25.848Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-terms
+  - id: SYM-pl-test-helper-check-liquidation
+    title: checkLiquidation
+    sourceFile: internal/jurisdiction/pl/value_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:32:32.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-value
+  - id: SYM-pl-average-balance
+    title: averageBalance
+    sourceFile: internal/jurisdiction/pl/pack.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T22:32:39.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-pack
+      - type: implements
+        target: REQ-pl-oki-act-as-data
+      - type: implements
+        target: REQ-pl-oki-yearly-tax

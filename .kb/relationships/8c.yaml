@@ -461,3 +461,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b93dec79c35b
+  - type: executable_for
+    from: SYM-jurisdiction-test-parse-number-format-rejects
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:03:15.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16f7b8e25e7a

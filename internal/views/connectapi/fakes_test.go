@@ -215,7 +215,7 @@ func newViews(t *testing.T, l *fakeLedger, opts ...app.Option) *app.Views {
 	t.Helper()
 	on := date(t, "2026-03-02")
 	vals := fakeValuations{
-		{Account: "acc-1", Instrument: instrument(t, isinPL, "EDO0334"), Date: on, Basis: valuation.NetIfRedeemed, Source: "statutory", Quantity: kernel.NewQuantity(dec(t, "10")), Value: money(t, "1043.21", "PLN"), PLN: money(t, "1043.21", "PLN")},
+		{Account: "acc-1", Instrument: instrument(t, isinPL, "EDO0334"), Date: on, Basis: valuation.GrossAccrued, Source: "statutory", Quantity: kernel.NewQuantity(dec(t, "10")), Value: money(t, "1043.21", "PLN"), PLN: money(t, "1043.21", "PLN")},
 		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Quantity: kernel.NewQuantity(dec(t, "3")), Value: money(t, "31.5", "USD"), PLN: money(t, "126.00", "PLN")},
 	}
 	rates := fakeRates{{Currency: cur(t, "USD"), Date: on, Rate: dec(t, "4.00"), Source: "test"}}

@@ -531,3 +531,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d55fc707999
+  - type: constrains
+    from: REQ-core-serve-flags
+    to: FACT-SUBJECT-7E17A76D18A4DAA6
+    created_at: 2026-10-29T21:49:41.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec3f4bd4dc14
+  - type: requires_property
+    from: REQ-core-serve-flags
+    to: FACT-PROP-D65D009609F8BE0C
+    created_at: 2026-10-29T21:49:41.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac91ea89b46
+  - type: specified_by
+    from: REQ-core-serve-flags
+    to: SCEN-core-serve-flags
+    created_at: 2026-10-29T21:49:41.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1ac780af46f
+  - type: supersedes
+    from: REQ-core-serve-flags
+    to: REQ-core-config
+    created_at: 2026-10-29T21:49:41.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a25fff43d226

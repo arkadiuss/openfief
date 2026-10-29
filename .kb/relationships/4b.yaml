@@ -419,3 +419,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34ea5c91bf19
+  - type: executable_for
+    from: SYM-pl-test-values-properties
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:08:24.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f4413e1bde2
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-marginal-rate
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:13:19.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6274a28620d6
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-marginal-rate
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:13:19.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d971d5625ace
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-marginal-rate
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:13:19.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06e80b2b7108

@@ -412,3 +412,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fdf43120c523
+  - type: constrains
+    from: REQ-valuation-revaluation-config
+    to: FACT-SUBJECT-0A0004497D00C0DD
+    created_at: 2026-10-29T21:49:32.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c22f86e6f710
+  - type: requires_property
+    from: REQ-valuation-revaluation-config
+    to: FACT-PROP-A3BE1B578AF43C3D
+    created_at: 2026-10-29T21:49:32.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04ff64d78407
+  - type: specified_by
+    from: REQ-valuation-revaluation-config
+    to: SCEN-valuation-revaluation-config
+    created_at: 2026-10-29T21:49:32.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1901cc28ae1f
+  - type: supersedes
+    from: REQ-valuation-revaluation-config
+    to: REQ-valuation-settings
+    created_at: 2026-10-29T21:49:32.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9324a8a5e851
+  - type: implements
+    from: SYM-valuation-postgres-store-value-settings
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:14:40.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11f705816fc5
+  - type: covered_by
+    from: SYM-valuation-postgres-store-value-settings
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:14:40.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eafff0a4378

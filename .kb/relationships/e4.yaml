@@ -377,3 +377,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5102807f7875
+  - type: constrains
+    from: REQ-jurisdiction-fee-rule-sale-cost
+    to: FACT-SUBJECT-005E002D2AEB1A5D
+    created_at: 2026-10-29T21:48:37.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057c88b6bd08
+  - type: requires_property
+    from: REQ-jurisdiction-fee-rule-sale-cost
+    to: FACT-PROP-998F9C8492458919
+    created_at: 2026-10-29T21:48:37.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf1b85fff752
+  - type: specified_by
+    from: REQ-jurisdiction-fee-rule-sale-cost
+    to: SCEN-jurisdiction-fee-rule-sale-cost
+    created_at: 2026-10-29T21:48:37.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-009dfb2f8edd
+  - type: implements
+    from: SYM-valuation-postgres-store-save-marginal-rate
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:14:47.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34b1f1ed1ab1
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-marginal-rate
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:14:47.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c806cd66e49

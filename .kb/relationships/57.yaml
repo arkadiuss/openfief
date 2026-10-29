@@ -342,3 +342,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-246c920c5153
+  - type: validates
+    from: TEST-jurisdiction-number-format
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T21:47:10.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a02ceba6393c
+  - type: implements
+    from: SYM-jurisdiction-yearly-tax
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:04:16.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cef49a57cfe
+  - type: covered_by
+    from: SYM-jurisdiction-yearly-tax
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:04:16.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9b4ccce90ce

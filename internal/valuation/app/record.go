@@ -5,14 +5,15 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
-// ErrInvalidInput reports a price, FX rate, index reading or tax wrapper
-// that cannot be stored.
+// ErrInvalidInput reports a price, FX rate, index reading, tax wrapper, fee
+// rule or setting that cannot be stored.
 var ErrInvalidInput = errors.New("invalid valuation input")
 
 // InputRecorder records the inputs of revaluations, each with the revaluations it
@@ -21,11 +22,13 @@ var ErrInvalidInput = errors.New("invalid valuation input")
 type InputRecorder struct {
 	planner  *Planner
 	recorder Recorder
+	pack     jurisdiction.Pack
 }
 
-// NewInputRecorder returns the input use cases over planner and recorder.
-func NewInputRecorder(planner *Planner, recorder Recorder) *InputRecorder {
-	return &InputRecorder{planner: planner, recorder: recorder}
+// NewInputRecorder returns the input use cases over planner and recorder,
+// with the tax wrappers and rules of pack (D-70).
+func NewInputRecorder(planner *Planner, recorder Recorder, pack jurisdiction.Pack) *InputRecorder {
+	return &InputRecorder{planner: planner, recorder: recorder, pack: pack}
 }
 
 // RecordPrices stores end-of-day prices (D-21) and enqueues a revaluation of
@@ -142,14 +145,12 @@ func (r *InputRecorder) RecordBondTerms(ctx context.Context, isin ledger.ISIN, t
 	return nil
 }
 
-// RecordTaxWrapper records account's tax wrapper, which sets the fee and
-// Belka tax of its bonds, and enqueues a revaluation of the account from its
-// first transaction.
-func (r *InputRecorder) RecordTaxWrapper(ctx context.Context, account ledger.AccountID, wrapper pl.TaxWrapper) error {
-	switch wrapper {
-	case pl.Taxable, pl.IKE, pl.IKZE:
-	default:
-		return fmt.Errorf("%w: %w: %d", ErrInvalidInput, pl.ErrUnknownTaxWrapper, wrapper)
+// RecordTaxWrapper records account's tax wrapper (D-76), one of the pack's,
+// which sets the taxes and fees of its net and liquidation values, and
+// enqueues a revaluation of the account from its first transaction.
+func (r *InputRecorder) RecordTaxWrapper(ctx context.Context, account ledger.AccountID, wrapper jurisdiction.Wrapper) error {
+	if !jurisdiction.HasWrapper(r.pack, wrapper) {
+		return fmt.Errorf("%w: %w: %q", ErrInvalidInput, jurisdiction.ErrUnknownWrapper, wrapper)
 	}
 	revals, err := r.planner.FromStart(ctx, account)
 	if err != nil {
@@ -161,21 +162,71 @@ func (r *InputRecorder) RecordTaxWrapper(ctx context.Context, account ledger.Acc
 	return nil
 }
 
-// ApplyBondBasis records the configured bond basis (D-25; zero means the
-// default) and, when it differs from the recorded one, revalues every
-// account from its first transaction (D-36). It reports whether it did.
-func (r *InputRecorder) ApplyBondBasis(ctx context.Context, configured valuation.Basis) (bool, error) {
-	basis, err := valuation.BondBasis(configured)
+// RecordFeeRule records account's fee rule (D-78), which sets the sale
+// cost in its liquidation value, and enqueues a revaluation of the account
+// from its first transaction. A rule breaking FeeRule.Validate is an error
+// wrapping ErrInvalidInput.
+func (r *InputRecorder) RecordFeeRule(ctx context.Context, account ledger.AccountID, rule *jurisdiction.FeeRule) error {
+	if err := rule.Validate(); err != nil {
+		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
+	}
+	revals, err := r.planner.FromStart(ctx, account)
 	if err != nil {
-		return false, fmt.Errorf("applying the bond basis: %w", err)
+		return fmt.Errorf("recording the fee rule of %s: %w", account, err)
+	}
+	if err := r.recorder.SaveFeeRule(ctx, account, rule, revals); err != nil {
+		return fmt.Errorf("recording the fee rule of %s: %w", account, err)
+	}
+	return nil
+}
+
+// RecordMarginalRate records the owner's marginal income tax rate (D-78),
+// which an IKZE's liquidation value needs, and enqueues a revaluation of
+// every account from its first transaction. A rate that is not above 0 and
+// below 1 is an error wrapping ErrInvalidInput.
+func (r *InputRecorder) RecordMarginalRate(ctx context.Context, rate kernel.Decimal) error {
+	if err := jurisdiction.ValidateMarginalRate(rate); err != nil {
+		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
 	}
 	revals, err := r.planner.FromStart(ctx, "")
 	if err != nil {
-		return false, fmt.Errorf("applying the bond basis: %w", err)
+		return fmt.Errorf("recording the marginal rate: %w", err)
 	}
-	changed, err := r.recorder.SaveBondBasis(ctx, basis, revals)
+	if err := r.recorder.SaveMarginalRate(ctx, rate, revals); err != nil {
+		return fmt.Errorf("recording the marginal rate: %w", err)
+	}
+	return nil
+}
+
+// RecordNumberFormat records the owner's number format (D-113). No value
+// depends on it, so nothing is revalued. A format breaking
+// NumberFormat.Validate is an error wrapping ErrInvalidInput.
+func (r *InputRecorder) RecordNumberFormat(ctx context.Context, format jurisdiction.NumberFormat) error {
+	if err := format.Validate(); err != nil {
+		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
+	}
+	if err := r.recorder.SaveNumberFormat(ctx, format); err != nil {
+		return fmt.Errorf("recording the number format: %w", err)
+	}
+	return nil
+}
+
+// RulesVersion returns the version of the rules the values are computed
+// under: the pack's, such as "pl/1".
+func (r *InputRecorder) RulesVersion() string { return r.pack.Version() }
+
+// ApplyRules records the version of the jurisdiction pack's rules
+// (RulesVersion) and, when it differs from the recorded one, revalues every
+// account from its first transaction, since a change of rules can change
+// any stored value (D-36). It reports whether it did. Run it at start-up.
+func (r *InputRecorder) ApplyRules(ctx context.Context) (bool, error) {
+	revals, err := r.planner.FromStart(ctx, "")
 	if err != nil {
-		return false, fmt.Errorf("applying the bond basis %s: %w", basis, err)
+		return false, fmt.Errorf("applying the rules: %w", err)
+	}
+	changed, err := r.recorder.SaveRulesVersion(ctx, r.RulesVersion(), revals)
+	if err != nil {
+		return false, fmt.Errorf("applying the rules %s: %w", r.RulesVersion(), err)
 	}
 	return changed, nil
 }

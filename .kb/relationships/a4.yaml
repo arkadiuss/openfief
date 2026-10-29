@@ -482,3 +482,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6500a9d22bf8
+  - type: implements
+    from: SYM-valuation-app-input-cache-rates
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:10:37.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eb099f6f44a
+  - type: implements
+    from: SYM-valuation-app-input-cache-rates
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:10:37.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d3e1856417
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-rates
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:37.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-317e9bd5f0b4

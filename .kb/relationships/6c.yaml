@@ -496,3 +496,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb28fa701029
+  - type: implements
+    from: SYM-pl-pack-value-accrued
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:06:19.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a32c1e8ee95
+  - type: implements
+    from: SYM-pl-pack-value-accrued
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:06:19.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c06ab7ab88f9
+  - type: covered_by
+    from: SYM-pl-pack-value-accrued
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:19.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82b2a19dcd4b

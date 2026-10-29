@@ -7,6 +7,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -178,8 +179,27 @@ func TestRecordInputs(t *testing.T) {
 		},
 		{
 			name:   "a tax wrapper revalues its account from the start",
-			record: func(r *app.InputRecorder) error { return r.RecordTaxWrapper(t.Context(), acc1, pl.IKE) },
-			want:   recorded{what: "wrapper", revals: revals(t, "acc-1", "2026-03-02")},
+			record: func(r *app.InputRecorder) error { return r.RecordTaxWrapper(t.Context(), acc1, "oki") },
+			want:   recorded{what: "wrapper oki", revals: revals(t, "acc-1", "2026-03-02")},
+		},
+		{
+			name: "a fee rule revalues its account from the start",
+			record: func(r *app.InputRecorder) error {
+				return r.RecordFeeRule(t.Context(), acc2, &jurisdiction.FeeRule{Rate: dec(t, "0.0029"), Minimum: money(t, "14", "PLN")})
+			},
+			want: recorded{what: "fee 0.0029", revals: revals(t, "acc-2", "2026-03-05")},
+		},
+		{
+			name:   "the marginal rate revalues every account from the start",
+			record: func(r *app.InputRecorder) error { return r.RecordMarginalRate(t.Context(), dec(t, "0.32")) },
+			want:   recorded{what: "marginal rate 0.32", revals: revals(t, "acc-1", "2026-03-02", "acc-2", "2026-03-05")},
+		},
+		{
+			name: "the number format revalues nothing",
+			record: func(r *app.InputRecorder) error {
+				return r.RecordNumberFormat(t.Context(), jurisdiction.NumberFormat{Group: jurisdiction.SeparatorComma, Decimal: jurisdiction.SeparatorDot})
+			},
+			want: recorded{what: "number format comma-dot"},
 		},
 		{
 			name:   "end of day enqueues from the valued-through dates",
@@ -192,7 +212,7 @@ func TestRecordInputs(t *testing.T) {
 			t.Parallel()
 			rec := &fakeRecorder{}
 			l := twoAccounts(t)
-			if err := tt.record(app.NewInputRecorder(app.NewPlanner(l, l), rec)); err != nil {
+			if err := tt.record(app.NewInputRecorder(app.NewPlanner(l, l), rec, pl.NewPack())); err != nil {
 				t.Fatalf("record: %v", err)
 			}
 			if diff := cmp.Diff([]recorded{tt.want}, rec.calls, cmp.AllowUnexported(recorded{})); diff != "" {
@@ -243,7 +263,16 @@ func TestRecordRejectsInvalidInputs(t *testing.T) {
 			return r.RecordBondTerms(t.Context(), bond, &pl.Terms{})
 		}},
 		{name: "an unknown tax wrapper", record: func(r *app.InputRecorder) error {
-			return r.RecordTaxWrapper(t.Context(), acc1, pl.TaxWrapper(9))
+			return r.RecordTaxWrapper(t.Context(), acc1, "ppk")
+		}},
+		{name: "a fee rate of 100%", record: func(r *app.InputRecorder) error {
+			return r.RecordFeeRule(t.Context(), acc1, &jurisdiction.FeeRule{Rate: dec(t, "1")})
+		}},
+		{name: "a marginal rate of 32 rather than 0.32", record: func(r *app.InputRecorder) error {
+			return r.RecordMarginalRate(t.Context(), dec(t, "32"))
+		}},
+		{name: "a number format with a comma for both", record: func(r *app.InputRecorder) error {
+			return r.RecordNumberFormat(t.Context(), jurisdiction.NumberFormat{Group: jurisdiction.SeparatorComma, Decimal: jurisdiction.SeparatorComma})
 		}},
 	}
 	for _, tt := range tests {
@@ -251,7 +280,7 @@ func TestRecordRejectsInvalidInputs(t *testing.T) {
 			t.Parallel()
 			rec := &fakeRecorder{}
 			l := twoAccounts(t)
-			err := tt.record(app.NewInputRecorder(app.NewPlanner(l, l), rec))
+			err := tt.record(app.NewInputRecorder(app.NewPlanner(l, l), rec, pl.NewPack()))
 			if !cmp.Equal(app.ErrInvalidInput, err, cmpopts.EquateErrors()) {
 				t.Errorf("error = %v, want ErrInvalidInput", err)
 			}
@@ -262,41 +291,23 @@ func TestRecordRejectsInvalidInputs(t *testing.T) {
 	}
 }
 
-func TestApplyBondBasis(t *testing.T) {
+func TestApplyRules(t *testing.T) {
 	t.Parallel()
-	tests := []struct {
-		name       string
-		configured valuation.Basis
-		changed    bool
-		want       []recorded
-		wantErr    error
-	}{
-		{
-			name: "unset is net if redeemed; a change revalues everything from the start", changed: true,
-			want: []recorded{{what: "basis net_if_redeemed", revals: revals(t, "acc-1", "2026-03-02", "acc-2", "2026-03-05")}},
-		},
-		{
-			name: "gross accrued, unchanged", configured: valuation.GrossAccrued,
-			want: []recorded{{what: "basis gross_accrued", revals: revals(t, "acc-1", "2026-03-02", "acc-2", "2026-03-05")}},
-		},
-		{name: "market is not a bond basis", configured: valuation.Market, wantErr: valuation.ErrBasisNotForBonds},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			rec := &fakeRecorder{changed: tt.changed}
-			l := twoAccounts(t)
-			changed, err := app.NewInputRecorder(app.NewPlanner(l, l), rec).ApplyBondBasis(t.Context(), tt.configured)
-			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
-				t.Fatalf("error (-want +got):\n%s", diff)
-			}
-			if changed != tt.changed {
-				t.Errorf("changed = %v, want %v", changed, tt.changed)
-			}
-			if diff := cmp.Diff(tt.want, rec.calls, cmp.AllowUnexported(recorded{})); diff != "" {
-				t.Errorf("(-want +got):\n%s", diff)
-			}
-		})
+	for _, changed := range []bool{true, false} {
+		rec := &fakeRecorder{changed: changed}
+		l := twoAccounts(t)
+		r := app.NewInputRecorder(app.NewPlanner(l, l), rec, pl.NewPack())
+		got, err := r.ApplyRules(t.Context())
+		if err != nil {
+			t.Fatalf("ApplyRules: %v", err)
+		}
+		if got != changed {
+			t.Errorf("changed = %v, want %v", got, changed)
+		}
+		want := []recorded{{what: "rules pl/" + pl.RulesVersion, revals: revals(t, "acc-1", "2026-03-02", "acc-2", "2026-03-05")}}
+		if diff := cmp.Diff(want, rec.calls, cmp.AllowUnexported(recorded{})); diff != "" {
+			t.Errorf("(-want +got):\n%s", diff)
+		}
 	}
 }
 
@@ -304,7 +315,7 @@ func TestRecordPassesStoreFailuresOn(t *testing.T) {
 	t.Parallel()
 	rec := &fakeRecorder{err: errStoreDown}
 	l := twoAccounts(t)
-	r := app.NewInputRecorder(app.NewPlanner(l, l), rec)
+	r := app.NewInputRecorder(app.NewPlanner(l, l), rec, pl.NewPack())
 	if err := r.RecordFXRates(t.Context(), []valuation.FXRate{rate(t, "USD", "2026-03-02", "4")}); !cmp.Equal(errStoreDown, err, cmpopts.EquateErrors()) {
 		t.Errorf("error = %v", err)
 	}

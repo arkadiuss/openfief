@@ -398,3 +398,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30f5ac615da9
+  - type: verified_by
+    from: SCEN-valuation-holding-three-values
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T21:47:55.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07d9c3907b6c
+  - type: verified_by
+    from: SCEN-valuation-holding-three-values
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T21:47:55.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d829d30c626
+  - type: verified_by
+    from: SCEN-valuation-holding-three-values
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-29T21:47:55.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f613866dd1a

@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51cef8a51d7b
+  - type: implements
+    from: SYM-valuation-postgres-store-setting
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:15:13.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74403f027dae
+  - type: covered_by
+    from: SYM-valuation-postgres-store-setting
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:15:13.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5db1e62a685d

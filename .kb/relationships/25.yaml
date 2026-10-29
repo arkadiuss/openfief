@@ -27,13 +27,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cfa3c924effa
-  - type: implements
-    from: SYM-pl-tax-wrapper
-    to: REQ-pl-tax-wrapper-exempt
-    created_at: 2026-10-28T05:23:45.965Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-91aec2fc2856
   - type: covered_by
     from: SYM-pl-tax-wrapper
     to: TEST-pl-tax
@@ -475,3 +468,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24f46990b240
+  - type: implements
+    from: SYM-pl-tax-wrapper
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T21:55:26.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a921d791f77
+  - type: implements
+    from: SYM-valuation-account-terms-tax-cost
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:16:23.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab3b1290e5d8
+  - type: implements
+    from: SYM-valuation-account-terms-tax-cost
+    to: REQ-AUTO-C17116F5350E97D6
+    created_at: 2026-10-29T22:16:23.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eb2a81c1e41
+  - type: covered_by
+    from: SYM-valuation-account-terms-tax-cost
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:16:23.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44365b2da05d
+  - type: implements
+    from: SYM-pl-tax-wrapper
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:16:59.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-824eda1f5c74

@@ -489,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe8b4c20960c
+  - type: constrains
+    from: REQ-valuation-holding-three-values
+    to: FACT-SUBJECT-6A2F87E606504707
+    created_at: 2026-10-29T21:48:54.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecacfb891329
+  - type: requires_property
+    from: REQ-valuation-holding-three-values
+    to: FACT-PROP-3CB61F89A6EDC32D
+    created_at: 2026-10-29T21:48:54.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93caee72cfc9
+  - type: specified_by
+    from: REQ-valuation-holding-three-values
+    to: SCEN-valuation-holding-three-values
+    created_at: 2026-10-29T21:48:54.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb6609f52318

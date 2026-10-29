@@ -440,3 +440,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d46c88a1b67
+  - type: implements
+    from: SYM-valuation-postgres-store-save-number-format
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:15:01.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0850073e459
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-number-format
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:15:01.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34c2e2e48941

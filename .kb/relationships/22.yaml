@@ -370,3 +370,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f04c1f438ca
+  - type: implements
+    from: SYM-pl-average-balance
+    to: REQ-pl-oki-act-as-data
+    created_at: 2026-10-29T22:32:41.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27fe57bf539f
+  - type: implements
+    from: SYM-pl-average-balance
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:32:41.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa32245d8746
+  - type: covered_by
+    from: SYM-pl-average-balance
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:32:41.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0638b1ea250

@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68334d4abb6e
+  - type: implements
+    from: SYM-jurisdiction-number-formats
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:57.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be1aa763a89a
+  - type: implements
+    from: SYM-jurisdiction-number-formats
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:57.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-478ca897201f
+  - type: covered_by
+    from: SYM-jurisdiction-number-formats
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:57.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42cec3e766ad

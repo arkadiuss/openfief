@@ -363,13 +363,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc8c4e3ad596
-  - type: implements
-    from: SYM-core-parse-valuation-flags
-    to: REQ-core-config
-    created_at: 2026-10-29T06:26:39.327Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fdb2a067f531
   - type: covered_by
     from: SYM-core-parse-valuation-flags
     to: TEST-core-unit
@@ -433,3 +426,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6b51a32f90a
+  - type: implements
+    from: SYM-core-parse-valuation-flags
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:54:28.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c03f3e1270c0
+  - type: implements
+    from: SYM-jurisdiction-fee-rule
+    to: REQ-jurisdiction-fee-rule-sale-cost
+    created_at: 2026-10-29T22:00:53.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0ab6efebbac
+  - type: implements
+    from: SYM-jurisdiction-fee-rule
+    to: REQ-valuation-sale-fee-rule
+    created_at: 2026-10-29T22:00:53.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee970ae8a2ee
+  - type: covered_by
+    from: SYM-jurisdiction-fee-rule
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:00:53.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6846373e902c
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-dec
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:42.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-342020ded117
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-dec
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:01:42.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b78100d9826
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-dec
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:01:42.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6b398846011

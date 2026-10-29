@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00ace910cd74
+  - type: implements
+    from: SYM-pl-after-tax
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:06:39.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09c51e4d347d
+  - type: implements
+    from: SYM-pl-after-tax
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:06:39.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f94ac3891124
+  - type: covered_by
+    from: SYM-pl-after-tax
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:39.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac545b4781d
+  - type: executable_for
+    from: SYM-valuation-postgres-test-fee-rules-round-trip
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:32:22.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a699c335b30

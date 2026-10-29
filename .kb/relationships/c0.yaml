@@ -148,13 +148,6 @@ relationships:
     id: rel-da01f5e5545f
   - type: implements
     from: SYM-core-parse-serve
-    to: REQ-core-config
-    created_at: 2026-10-28T14:33:57.830Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5cca9b07db34
-  - type: implements
-    from: SYM-core-parse-serve
     to: REQ-decision-d36-8-revaluation-settings
     created_at: 2026-10-28T14:33:57.851Z
     created_by: kibi/upsert
@@ -475,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af694e8aacd8
+  - type: verified_by
+    from: SCEN-jurisdiction-fee-rule-sale-cost
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T21:47:51.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a0403fff34a
+  - type: implements
+    from: SYM-core-parse-serve
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:54:14.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00c5f934eb3d
+  - type: executable_for
+    from: SYM-valuation-test-helper-taxable-terms
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:15:51.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee8192cda68e

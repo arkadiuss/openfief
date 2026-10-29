@@ -447,3 +447,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d1180ce1aef
+  - type: executable_for
+    from: SYM-pl-test-helper-values-case
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:37.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6155b8d26520

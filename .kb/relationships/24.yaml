@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1947fa2f4d96
+  - type: implements
+    from: SYM-pl-current-oki-act
+    to: REQ-pl-oki-act-as-data
+    created_at: 2026-10-29T22:07:05.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bacec5ef32a4
+  - type: implements
+    from: SYM-pl-current-oki-act
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:07:05.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18569fdd2367
+  - type: covered_by
+    from: SYM-pl-current-oki-act
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:05.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5a75fe5f7d2
