@@ -185,6 +185,8 @@ A demo holds only the [demo dataset](../glossary.md#m0): a synthetic portfolio w
 
 Exchange rates are the exception: the demo's rate source is its real `nbp-fx` connector instance, which writes NBP's published rates, and the dataset writes none. NBP rates are public, so GR-12 holds, and the demo shows a connector working live (D-94).
 
+The dataset also carries synthetic cross-check prices, one of them beyond the threshold, so the demo shows a flagged price check (D-110).
+
 **The dataset.** `demo.Generate(seed, today)` is a pure function: the same seed and date always give the same dataset, and prices come from integer arithmetic, so every value is exact. It contains:
 
 - two [sleeves](../glossary.md#m0), `demo-offensive` and `demo-defensive`, and three accounts: `demo-ibkr` and `demo-xtb` in the offensive sleeve, and `demo-bonds-ike`, treasury bonds in an [IKE](../glossary.md#other-terms-and-abbreviations), in the defensive one;
