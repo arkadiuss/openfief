@@ -76170,3 +76170,56 @@ symbols:
         target: TEST-views-connectapi-pricechecks
       - type: implements
         target: REQ-views-price-checks
+  - id: SYM-plugins-cosign-key
+    title: Key
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T08:49:15.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-new-key
+    title: NewKey
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T08:49:21.677Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-key-public-key-pem
+    title: Key.PublicKeyPEM
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T08:49:28.103Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-key-sign
+    title: Key.Sign
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T08:49:34.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies

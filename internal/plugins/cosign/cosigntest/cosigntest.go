@@ -2,7 +2,8 @@
 // checks them with package cosign: an in-memory OCI registry served over
 // HTTP, images carrying a manifest label, and cosign bundles signed with a
 // fresh key and attached as OCI referrers, the way `cosign sign --key`
-// stores them. Everything it makes is synthetic.
+// stores them. Everything it makes is synthetic. Key also signs images in a
+// real registry, such as the end-to-end suite's (test/e2e).
 package cosigntest
 
 import (
@@ -89,27 +90,69 @@ func (r *Registry) Push(t *testing.T, repo, label string) plugins.ImageRef {
 	return ref
 }
 
-// SignWithKey signs image with a fresh ECDSA P-256 key, as `cosign sign
-// --key` does without a transparency log: a v0.3 bundle holding a DSSE
-// envelope around the in-toto statement. It attaches the bundle as a
-// referrer and returns the public key in PEM form. It signs with the
-// standard library rather than sigstore-go's sign package, which would put
-// golang.org/x/crypto/openpgp into every binary that links this package.
+// SignWithKey signs image with a fresh Key, attaching the bundle as a
+// referrer, and returns the key's public half in PEM form.
 func (r *Registry) SignWithKey(t *testing.T, image plugins.ImageRef) string {
 	t.Helper()
-	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	key, err := NewKey()
 	if err != nil {
-		t.Fatalf("keypair: %v", err)
+		t.Fatal(err)
 	}
-	der, err := x509.MarshalPKIXPublicKey(&key.PublicKey)
+	if signErr := key.Sign(image); signErr != nil {
+		t.Fatal(signErr)
+	}
+	pub, err := key.PublicKeyPEM()
 	if err != nil {
-		t.Fatalf("public key: %v", err)
+		t.Fatal(err)
 	}
-	payload := statement(t, image)
+	return pub
+}
+
+// Key is a fresh ECDSA P-256 signing key, like one `cosign
+// generate-key-pair` makes, that exists only in memory: nothing writes it
+// anywhere, so it signs only during the run that made it. It signs with the
+// standard library rather than sigstore-go's sign package, which would put
+// golang.org/x/crypto/openpgp into every binary that links this package.
+type Key struct {
+	private *ecdsa.PrivateKey
+}
+
+// NewKey generates a Key.
+func NewKey() (*Key, error) {
+	private, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		return nil, fmt.Errorf("keypair: %w", err)
+	}
+	return &Key{private: private}, nil
+}
+
+// PublicKeyPEM returns the key's public half as one PEM PUBLIC KEY block,
+// the form a trusted signer's publicKey takes (plugins.ParseOwnerSigners).
+func (k *Key) PublicKeyPEM() (string, error) {
+	der, err := x509.MarshalPKIXPublicKey(&k.private.PublicKey)
+	if err != nil {
+		return "", fmt.Errorf("public key: %w", err)
+	}
+	return string(pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: der})), nil
+}
+
+// Sign signs image as `cosign sign --key` does without a transparency log,
+// a v0.3 bundle holding a DSSE envelope around the in-toto statement, and
+// attaches the bundle as a referrer of image in its registry. The options
+// set how the registry is reached.
+func (k *Key) Sign(image plugins.ImageRef, opts ...remote.Option) error {
+	der, err := x509.MarshalPKIXPublicKey(&k.private.PublicKey)
+	if err != nil {
+		return fmt.Errorf("public key: %w", err)
+	}
+	payload, err := statement(image)
+	if err != nil {
+		return err
+	}
 	sum := sha256.Sum256(pae(inTotoPayloadType, payload))
-	sig, err := ecdsa.SignASN1(rand.Reader, key, sum[:])
+	sig, err := ecdsa.SignASN1(rand.Reader, k.private, sum[:])
 	if err != nil {
-		t.Fatalf("sign: %v", err)
+		return fmt.Errorf("sign: %w", err)
 	}
 	keyHash := sha256.Sum256(der)
 	hint := base64.StdEncoding.EncodeToString(keyHash[:])
@@ -124,10 +167,9 @@ func (r *Registry) SignWithKey(t *testing.T, image plugins.ImageRef) string {
 		}},
 	})
 	if err != nil {
-		t.Fatalf("marshal bundle: %v", err)
+		return fmt.Errorf("marshal bundle: %w", err)
 	}
-	attach(t, image, data)
-	return string(pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: der}))
+	return attach(image, data, opts)
 }
 
 // pae is DSSE's pre-authentication encoding of a payload, what a DSSE
@@ -137,8 +179,7 @@ func pae(payloadType string, payload []byte) []byte {
 }
 
 // statement is the in-toto statement `cosign sign` signs for an image.
-func statement(t *testing.T, image plugins.ImageRef) []byte {
-	t.Helper()
+func statement(image plugins.ImageRef) ([]byte, error) {
 	b, err := json.Marshal(map[string]any{
 		"_type":         "https://in-toto.io/Statement/v1",
 		"subject":       []any{map[string]any{"digest": map[string]string{"sha256": strings.TrimPrefix(image.Digest(), "sha256:")}}},
@@ -146,9 +187,9 @@ func statement(t *testing.T, image plugins.ImageRef) []byte {
 		"predicate":     map[string]any{},
 	})
 	if err != nil {
-		t.Fatalf("statement: %v", err)
+		return nil, fmt.Errorf("statement: %w", err)
 	}
-	return b
+	return b, nil
 }
 
 // rawManifest is a manifest pushed exactly as written.
@@ -159,55 +200,66 @@ func (m rawManifest) MediaType() (types.MediaType, error) { return types.OCIMani
 
 // attach stores a bundle as a referrer of image, as cosign v3 does: an OCI
 // manifest with an empty config, the bundle as its one layer and the image
-// as its subject.
-func attach(t *testing.T, image plugins.ImageRef, bundleJSON []byte) {
-	t.Helper()
-	d := digest(t, image.String())
-	subject, err := remote.Head(d)
+// as its subject. A registry without the Referrers API gets the referrers
+// tag instead.
+func attach(image plugins.ImageRef, bundleJSON []byte, opts []remote.Option) error {
+	d, err := name.NewDigest(image.String())
 	if err != nil {
-		t.Fatalf("head subject: %v", err)
+		return fmt.Errorf("digest reference %q: %w", image, err)
+	}
+	subject, err := remote.Head(d, opts...)
+	if err != nil {
+		return fmt.Errorf("head subject: %w", err)
 	}
 	cfg := static.NewLayer([]byte("{}"), emptyConfigMediaType)
 	layer := static.NewLayer(bundleJSON, bundleMediaType)
 	for _, l := range []v1.Layer{cfg, layer} {
-		if writeErr := remote.WriteLayer(d.Context(), l); writeErr != nil {
-			t.Fatalf("push blob: %v", writeErr)
+		if writeErr := remote.WriteLayer(d.Context(), l, opts...); writeErr != nil {
+			return fmt.Errorf("push blob: %w", writeErr)
 		}
+	}
+	cfgDesc, err := descriptor(cfg)
+	if err != nil {
+		return err
+	}
+	layerDesc, err := descriptor(layer)
+	if err != nil {
+		return err
 	}
 	raw, err := json.Marshal(v1.Manifest{
 		SchemaVersion: ociSchemaVersion, MediaType: types.OCIManifestSchema1, ArtifactType: bundleMediaType,
-		Config:  descriptor(t, cfg),
-		Layers:  []v1.Descriptor{descriptor(t, layer)},
+		Config:  cfgDesc,
+		Layers:  []v1.Descriptor{layerDesc},
 		Subject: &v1.Descriptor{MediaType: subject.MediaType, Digest: subject.Digest, Size: subject.Size},
 	})
 	if err != nil {
-		t.Fatalf("marshal referrer: %v", err)
+		return fmt.Errorf("marshal referrer: %w", err)
 	}
 	h, _, err := v1.SHA256(bytes.NewReader(raw))
 	if err != nil {
-		t.Fatalf("referrer digest: %v", err)
+		return fmt.Errorf("referrer digest: %w", err)
 	}
-	if err := remote.Put(d.Context().Digest(h.String()), rawManifest{raw}); err != nil {
-		t.Fatalf("push referrer: %v", err)
+	if err := remote.Put(d.Context().Digest(h.String()), rawManifest{raw}, opts...); err != nil {
+		return fmt.Errorf("push referrer: %w", err)
 	}
+	return nil
 }
 
 // descriptor describes a layer.
-func descriptor(t *testing.T, l v1.Layer) v1.Descriptor {
-	t.Helper()
+func descriptor(l v1.Layer) (v1.Descriptor, error) {
 	d, err := l.Digest()
 	if err != nil {
-		t.Fatalf("layer digest: %v", err)
+		return v1.Descriptor{}, fmt.Errorf("layer digest: %w", err)
 	}
 	size, err := l.Size()
 	if err != nil {
-		t.Fatalf("layer size: %v", err)
+		return v1.Descriptor{}, fmt.Errorf("layer size: %w", err)
 	}
 	mt, err := l.MediaType()
 	if err != nil {
-		t.Fatalf("layer media type: %v", err)
+		return v1.Descriptor{}, fmt.Errorf("layer media type: %w", err)
 	}
-	return v1.Descriptor{MediaType: mt, Digest: d, Size: size}
+	return v1.Descriptor{MediaType: mt, Digest: d, Size: size}, nil
 }
 
 func digest(t *testing.T, ref string) name.Digest {
