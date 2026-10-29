@@ -90468,3 +90468,1712 @@ symbols:
         target: REQ-pl-oki-act-as-data
       - type: implements
         target: REQ-pl-oki-yearly-tax
+  - id: SYM-core-account-terms
+    title: accountTerms
+    sourceFile: cmd/core/settings.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:08:18.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-onboarding
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+  - id: SYM-core-new-settings
+    title: newSettings
+    sourceFile: cmd/core/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:08:25.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-core-with-settings-service
+    title: withSettingsService
+    sourceFile: cmd/core/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:08:31.703Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-core-test-helper-settings-api
+    title: settingsAPI
+    sourceFile: cmd/core/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:08:38.149Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-settings
+  - id: SYM-core-test-helper-settings-client
+    title: settingsClient
+    sourceFile: cmd/core/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:08:44.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-settings
+  - id: SYM-core-test-settings-service
+    title: TestSettingsService
+    sourceFile: cmd/core/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:08:51.596Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-settings
+  - id: SYM-core-test-helper-check-settings-refusals
+    title: checkSettingsRefusals
+    sourceFile: cmd/core/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:08:57.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-settings
+  - id: SYM-ingest-app-account-terms
+    title: AccountTerms
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:09:03.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+  - id: SYM-ingest-app-account-entry
+    title: AccountEntry
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:09:09.948Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+  - id: SYM-ingest-app-account-change
+    title: AccountChange
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:09:16.671Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+  - id: SYM-ingest-app-accounts-store-new
+    title: Accounts.storeNew
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:09:25.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+  - id: SYM-ingest-app-accounts-entry
+    title: Accounts.entry
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:09:33.611Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+  - id: SYM-ingest-app-accounts-new-entry
+    title: Accounts.newEntry
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:09:41.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+  - id: SYM-ingest-app-accounts-check-terms
+    title: Accounts.checkTerms
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:09:49.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-valuation-sale-fee-rule-zero
+  - id: SYM-ingest-app-accounts-record-terms
+    title: Accounts.recordTerms
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:09:55.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+  - id: SYM-ingest-app-test-helper-mem-terms
+    title: memTerms
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:01.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-terms-record-tax-wrapper
+    title: memTerms.RecordTaxWrapper
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:07.114Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-terms-record-fee-rule
+    title: memTerms.RecordFeeRule
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:13.023Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-terms-tax-wrapper
+    title: memTerms.TaxWrapper
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:19.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-terms-fee-rule
+    title: memTerms.FeeRule
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:25.434Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-broker-fee
+    title: brokerFee
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:32.171Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-entry
+    title: entry
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:38.770Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-check-terms
+    title: checkTerms
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:45.588Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-connectapi-pb-fee-rule
+    title: pbFeeRule
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:52.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-valuation-sale-fee-rule
+  - id: SYM-ingest-connectapi-fee-rule-from
+    title: feeRuleFrom
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:10:59.065Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-valuation-sale-fee-rule
+  - id: SYM-ingest-connectapi-decimal-or-zero
+    title: decimalOrZero
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:05.537Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-valuation-sale-fee-rule
+  - id: SYM-ingest-connectapi-test-helper-mem-terms
+    title: memTerms
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:12.117Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-terms-record-tax-wrapper
+    title: memTerms.RecordTaxWrapper
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:19.002Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-terms-record-fee-rule
+    title: memTerms.RecordFeeRule
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:25.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-terms-tax-wrapper
+    title: memTerms.TaxWrapper
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:33.016Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-terms-fee-rule
+    title: memTerms.FeeRule
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:39.420Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-valuation-connectapi-new-settings
+    title: NewSettings
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:45.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuation-connectapi-settings-service
+    title: settingsService
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:52.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuation-connectapi-settings-service-get-owner-settings
+    title: settingsService.GetOwnerSettings
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:11:59.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuation-connectapi-settings-service-set-number-format
+    title: settingsService.SetNumberFormat
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:12:08.282Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuation-connectapi-settings-service-set-marginal-rate
+    title: settingsService.SetMarginalRate
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:12:15.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuation-connectapi-settings-service-fail
+    title: settingsService.fail
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:12:23.068Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuation-connectapi-offered-format
+    title: offeredFormat
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:12:29.984Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuation-connectapi-pb-number-format
+    title: pbNumberFormat
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:12:36.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-ingestv1-account-get-tax-wrapper
+    title: Account.GetTaxWrapper
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:12:42.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-account-get-fee-rule
+    title: Account.GetFeeRule
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:12:49.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule
+    title: FeeRule
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:12:54.561Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-reset
+    title: FeeRule.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:00.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-string
+    title: FeeRule.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:06.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-proto-message
+    title: FeeRule.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:13.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-proto-reflect
+    title: FeeRule.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:19.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-descriptor
+    title: FeeRule.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:26.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-get-rate
+    title: FeeRule.GetRate
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:32.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-get-minimum
+    title: FeeRule.GetMinimum
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:38.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-get-minimum-currency
+    title: FeeRule.GetMinimumCurrency
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:45.319Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-fee-rule-get-conversion-rate
+    title: FeeRule.GetConversionRate
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:51.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-create-account-request-get-tax-wrapper
+    title: CreateAccountRequest.GetTaxWrapper
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:13:58.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-create-account-request-get-fee-rule
+    title: CreateAccountRequest.GetFeeRule
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:06.101Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-update-account-request-get-tax-wrapper
+    title: UpdateAccountRequest.GetTaxWrapper
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:12.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-ingestv1-update-account-request-get-fee-rule
+    title: UpdateAccountRequest.GetFeeRule
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:18.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-terms
+  - id: SYM-valuationv1-number-format
+    title: NumberFormat
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:23.997Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-number-format-reset
+    title: NumberFormat.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:30.348Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-number-format-string
+    title: NumberFormat.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:36.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-number-format-proto-message
+    title: NumberFormat.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:42.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-number-format-proto-reflect
+    title: NumberFormat.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:49.200Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-number-format-descriptor
+    title: NumberFormat.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:14:55.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-number-format-get-key
+    title: NumberFormat.GetKey
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:02.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-number-format-get-group-separator
+    title: NumberFormat.GetGroupSeparator
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:08.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-number-format-get-decimal-separator
+    title: NumberFormat.GetDecimalSeparator
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:14.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-request
+    title: GetOwnerSettingsRequest
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:20.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-request-reset
+    title: GetOwnerSettingsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:26.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-request-string
+    title: GetOwnerSettingsRequest.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:33.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-request-proto-message
+    title: GetOwnerSettingsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:40.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-request-proto-reflect
+    title: GetOwnerSettingsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:46.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-request-descriptor
+    title: GetOwnerSettingsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:15:53.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-request-get-origin
+    title: GetOwnerSettingsRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:00.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-request-get-session-token
+    title: GetOwnerSettingsRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:07.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response
+    title: GetOwnerSettingsResponse
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:13.552Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-reset
+    title: GetOwnerSettingsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:20.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-string
+    title: GetOwnerSettingsResponse.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:26.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-proto-message
+    title: GetOwnerSettingsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:33.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-proto-reflect
+    title: GetOwnerSettingsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:40.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-descriptor
+    title: GetOwnerSettingsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:46.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-get-reporting-currency
+    title: GetOwnerSettingsResponse.GetReportingCurrency
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:16:53.503Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-get-number-format
+    title: GetOwnerSettingsResponse.GetNumberFormat
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:00.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-get-number-format-default
+    title: GetOwnerSettingsResponse.GetNumberFormatDefault
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:07.231Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-get-number-formats
+    title: GetOwnerSettingsResponse.GetNumberFormats
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:14.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-get-tax-wrappers
+    title: GetOwnerSettingsResponse.GetTaxWrappers
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:21.074Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-get-owner-settings-response-get-marginal-rate
+    title: GetOwnerSettingsResponse.GetMarginalRate
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:27.433Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request
+    title: SetNumberFormatRequest
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:32.744Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request-reset
+    title: SetNumberFormatRequest.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:39.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request-string
+    title: SetNumberFormatRequest.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:45.544Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request-proto-message
+    title: SetNumberFormatRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:52.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request-proto-reflect
+    title: SetNumberFormatRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:17:59.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request-descriptor
+    title: SetNumberFormatRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:05.539Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request-get-origin
+    title: SetNumberFormatRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:12.126Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request-get-session-token
+    title: SetNumberFormatRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:18.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-request-get-key
+    title: SetNumberFormatRequest.GetKey
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:25.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-response
+    title: SetNumberFormatResponse
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:31.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-response-reset
+    title: SetNumberFormatResponse.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:37.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-response-string
+    title: SetNumberFormatResponse.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:44.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-response-proto-message
+    title: SetNumberFormatResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:51.700Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-response-proto-reflect
+    title: SetNumberFormatResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:18:58.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-response-descriptor
+    title: SetNumberFormatResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:05.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-number-format-response-get-number-format
+    title: SetNumberFormatResponse.GetNumberFormat
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:12.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request
+    title: SetMarginalRateRequest
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:18.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request-reset
+    title: SetMarginalRateRequest.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:25.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request-string
+    title: SetMarginalRateRequest.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:32.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request-proto-message
+    title: SetMarginalRateRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:39.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request-proto-reflect
+    title: SetMarginalRateRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:45.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request-descriptor
+    title: SetMarginalRateRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:52.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request-get-origin
+    title: SetMarginalRateRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:19:58.889Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request-get-session-token
+    title: SetMarginalRateRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:20:05.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-request-get-rate
+    title: SetMarginalRateRequest.GetRate
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:20:11.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-response
+    title: SetMarginalRateResponse
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:20:17.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-response-reset
+    title: SetMarginalRateResponse.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:20:25.342Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-response-string
+    title: SetMarginalRateResponse.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:20:32.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-response-proto-message
+    title: SetMarginalRateResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:20:40.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-response-proto-reflect
+    title: SetMarginalRateResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:20:48.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-set-marginal-rate-response-descriptor
+    title: SetMarginalRateResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:20:56.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-file_openfief_valuation_v1_settings_proto_raw-desc-gzip
+    title: file_openfief_valuation_v1_settings_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:21:03.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:21:11.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-file_openfief_valuation_v1_settings_proto_init
+    title: file_openfief_valuation_v1_settings_proto_init
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:21:18.156Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:21:26.038Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-settings-service-client
+    title: settingsServiceClient
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:21:33.451Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-new-settings-service-client
+    title: NewSettingsServiceClient
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:21:40.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-settings-service-client-get-owner-settings
+    title: settingsServiceClient.GetOwnerSettings
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:21:54.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-settings-service-client-set-number-format
+    title: settingsServiceClient.SetNumberFormat
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:22:00.908Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-settings-service-client-set-marginal-rate
+    title: settingsServiceClient.SetMarginalRate
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:22:07.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-settings-service-handler
+    title: SettingsServiceHandler
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:22:14.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-new-settings-service-handler
+    title: NewSettingsServiceHandler
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:22:20.702Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-unimplemented-settings-service-handler
+    title: UnimplementedSettingsServiceHandler
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:22:26.003Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-unimplemented-settings-service-handler-get-owner-settings
+    title: UnimplementedSettingsServiceHandler.GetOwnerSettings
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:22:32.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-unimplemented-settings-service-handler-set-number-format
+    title: UnimplementedSettingsServiceHandler.SetNumberFormat
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:22:38.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-unimplemented-settings-service-handler-set-marginal-rate
+    title: UnimplementedSettingsServiceHandler.SetMarginalRate
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:22:44.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service
+  - id: SYM-valuationv1connect-settings-service-client-interface
+    title: SettingsServiceClient
+    status: active
+    symbol_role: behavioral
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T23:37:08.182Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-settings-service

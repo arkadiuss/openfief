@@ -3,6 +3,7 @@ package connectapi
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log/slog"
 	"net/http"
 
@@ -10,6 +11,8 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
@@ -32,9 +35,14 @@ type accountService struct {
 // CreateAccount creates the owner's account and connects its connector.
 func (s *accountService) CreateAccount(ctx context.Context, req *connect.Request[ingestv1.CreateAccountRequest]) (*connect.Response[ingestv1.CreateAccountResponse], error) {
 	m := req.Msg
+	fee, err := feeRuleFrom(m.GetFeeRule())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
 	acc, err := s.accounts.Create(ctx, m.GetOrigin(), m.GetSessionToken(), &app.NewAccount{
 		Name: m.GetName(), Institution: ingest.InstitutionID(m.GetInstitution()), Sleeve: portfolio.SleeveID(m.GetSleeve()),
 		Instance: m.GetConnectorInstance(), BrokerAccount: ingest.BrokerAccountID(m.GetBrokerAccount()),
+		Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee,
 	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -42,10 +50,17 @@ func (s *accountService) CreateAccount(ctx context.Context, req *connect.Request
 	return connect.NewResponse(&ingestv1.CreateAccountResponse{Account: pbAccount(&acc)}), nil
 }
 
-// UpdateAccount renames an account or moves it to another sleeve.
+// UpdateAccount renames an account, moves it to another sleeve or changes
+// its tax wrapper or fee rule.
 func (s *accountService) UpdateAccount(ctx context.Context, req *connect.Request[ingestv1.UpdateAccountRequest]) (*connect.Response[ingestv1.UpdateAccountResponse], error) {
 	m := req.Msg
-	acc, err := s.accounts.Update(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId()), m.GetName(), portfolio.SleeveID(m.GetSleeve()))
+	fee, err := feeRuleFrom(m.GetFeeRule())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	acc, err := s.accounts.Update(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId()), &app.AccountChange{
+		Name: m.GetName(), Sleeve: portfolio.SleeveID(m.GetSleeve()), Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee,
+	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
@@ -64,9 +79,56 @@ func (s *accountService) BindAccount(ctx context.Context, req *connect.Request[i
 	return connect.NewResponse(&ingestv1.BindAccountResponse{}), nil
 }
 
-// pbAccount converts an account.
-func pbAccount(a *ledger.Account) *ingestv1.Account {
-	return &ingestv1.Account{Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve)}
+// pbAccount converts an account with its terms.
+func pbAccount(a *app.AccountEntry) *ingestv1.Account {
+	return &ingestv1.Account{
+		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve),
+		TaxWrapper: string(a.Wrapper), FeeRule: pbFeeRule(&a.Fee),
+	}
+}
+
+// pbFeeRule converts a fee rule; a minimum of zero has no currency.
+func pbFeeRule(r *jurisdiction.FeeRule) *ingestv1.FeeRule {
+	out := &ingestv1.FeeRule{Rate: r.Rate.String(), Minimum: r.Minimum.Amount().String(), ConversionRate: r.ConversionRate.String()}
+	if !r.Minimum.Currency().IsZero() {
+		out.MinimumCurrency = r.Minimum.Currency().String()
+	}
+	return out
+}
+
+// feeRuleFrom parses a fee rule, nil when unset; an empty field is zero.
+// Text that is not a decimal or a currency code is an invalid account.
+func feeRuleFrom(r *ingestv1.FeeRule) (*jurisdiction.FeeRule, error) {
+	out := &jurisdiction.FeeRule{}
+	if r == nil {
+		out = nil
+		return out, nil
+	}
+	rate, err1 := decimalOrZero(r.GetRate())
+	minimum, err2 := decimalOrZero(r.GetMinimum())
+	conversion, err3 := decimalOrZero(r.GetConversionRate())
+	var currency kernel.Currency
+	var err4 error
+	if r.GetMinimumCurrency() != "" {
+		currency, err4 = kernel.ParseCurrency(r.GetMinimumCurrency())
+	}
+	if err := errors.Join(err1, err2, err3, err4); err != nil {
+		return nil, fmt.Errorf("%w: fee rule: %w", ledger.ErrInvalidAccount, err)
+	}
+	out.Rate, out.Minimum, out.ConversionRate = rate, kernel.NewMoney(minimum, currency), conversion
+	return out, nil
+}
+
+// decimalOrZero parses s, and zero when it is empty.
+func decimalOrZero(s string) (kernel.Decimal, error) {
+	if s == "" {
+		return kernel.Decimal{}, nil
+	}
+	d, err := kernel.ParseDecimal(s)
+	if err != nil {
+		return kernel.Decimal{}, fmt.Errorf("parsing %q: %w", s, err)
+	}
+	return d, nil
 }
 
 // fail maps err to its Connect error. A refusal carries its text, which

@@ -440,3 +440,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e91f7f542ce1
+  - type: implements
+    from: SYM-ingest-connectapi-decimal-or-zero
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:11:07.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6c4e60aa4f1
+  - type: implements
+    from: SYM-ingest-connectapi-decimal-or-zero
+    to: REQ-valuation-sale-fee-rule
+    created_at: 2026-10-29T23:11:07.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdc276e3242a
+  - type: covered_by
+    from: SYM-ingest-connectapi-decimal-or-zero
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:11:08.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c023e3014e13
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-response-string
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:20:35.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4c2c0265f1d
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-response-string
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:20:35.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a8394a5bf50

@@ -419,3 +419,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83c95dd45dd0
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-get-number-format-default
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:17:09.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c707e52212c
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-get-number-format-default
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:17:09.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d8dae14b9df

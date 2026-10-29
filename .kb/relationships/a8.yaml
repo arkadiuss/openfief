@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5db1e62a685d
+  - type: implements
+    from: SYM-core-new-settings
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:08:27.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-031028536a02
+  - type: implements
+    from: SYM-core-new-settings
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:08:27.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac9aef4ed14c
+  - type: covered_by
+    from: SYM-core-new-settings
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:08:27.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79f18671c494

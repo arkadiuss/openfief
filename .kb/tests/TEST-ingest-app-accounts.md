@@ -1,5 +1,5 @@
 ---
-title: The owner creates accounts with their connector and broker account; nobody else can
+title: The owner creates accounts with their connector, broker account, tax wrapper and fee rule; nobody else can
 status: active
 sourceFile: internal/ingest/app/accounts_test.go
 origin:
@@ -8,4 +8,4 @@ origin:
 id: TEST-ingest-app-accounts
 type: test
 ---
-Use-case tests of ingest app Accounts over in-memory fakes with one stored account and two synthetic broker accounts: creating an account from a reported broker account takes its institution, binds the instance and maps it; a connector that names its own accounts is only bound; no connector binds nothing; a taken ID, no ID, no institution, an unknown sleeve, a malformed instance, a broker account without its instance, never reported or mapped elsewhere are refused before anything is stored; update and bind work and refuse unknown accounts; refused sessions store nothing.
+Use-case tests over in-memory fakes and the Polish pack: accounts get IDs from names, the pack's default wrapper taxable or the one given, such as an IKZE with a 0.29% at least 14 PLN fee rule, recorded through the terms port; a wrapper the pack lacks and a 100% fee rate are invalid accounts and store nothing; updates keep or change the terms; sleeve, instance and broker account checks; owner only.

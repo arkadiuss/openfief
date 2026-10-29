@@ -342,3 +342,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa19430582d0
+  - type: implements
+    from: SYM-valuation-connectapi-new-settings
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:11:48.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e29976904178
+  - type: implements
+    from: SYM-valuation-connectapi-new-settings
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T23:11:48.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1648308a66cc
+  - type: covered_by
+    from: SYM-valuation-connectapi-new-settings
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:11:48.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5ca606240c8

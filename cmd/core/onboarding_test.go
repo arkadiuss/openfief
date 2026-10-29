@@ -91,17 +91,20 @@ func TestOnboardingServices(t *testing.T) {
 }
 
 // createIBKRAccount creates the account IBKR main for the broker account
-// U0000001 through the AccountService, and checks it can't be mapped to
+// U0000001 through the AccountService, an IKZE with a fee rule (D-76,
+// D-78) that the core stores with it, and checks it can't be mapped to
 // another account.
 func createIBKRAccount(t *testing.T, srv *httptest.Server, session string) {
 	t.Helper()
 	accounts := ingestv1connect.NewAccountServiceClient(srv.Client(), srv.URL, connect.WithInterceptors(viewBearer(uiCaller)))
 	created, err := accounts.CreateAccount(t.Context(), connect.NewRequest(&ingestv1.CreateAccountRequest{
 		Origin: localUI, SessionToken: session, Name: "IBKR main", Sleeve: "satellite",
-		ConnectorInstance: "ibkr-main", BrokerAccount: "U0000001",
+		ConnectorInstance: "ibkr-main", BrokerAccount: "U0000001", TaxWrapper: "ikze",
+		FeeRule: &ingestv1.FeeRule{Rate: "0.0005", Minimum: "1", MinimumCurrency: "USD"},
 	}))
-	if err != nil || created.Msg.GetAccount().GetId() != "ibkr-main" || created.Msg.GetAccount().GetInstitution() != "ibkr" {
-		t.Fatalf("CreateAccount = %v, %v; want ibkr-main at ibkr", created, err)
+	acc := created.Msg.GetAccount()
+	if err != nil || acc.GetId() != "ibkr-main" || acc.GetInstitution() != "ibkr" || acc.GetTaxWrapper() != "ikze" || acc.GetFeeRule().GetMinimumCurrency() != "USD" {
+		t.Fatalf("CreateAccount = %v, %v; want ibkr-main at ibkr, an IKZE with a USD minimum", created, err)
 	}
 	_, err = accounts.CreateAccount(t.Context(), connect.NewRequest(&ingestv1.CreateAccountRequest{
 		Origin: localUI, SessionToken: session, Name: "Other", Sleeve: "core", ConnectorInstance: "ibkr-main", BrokerAccount: "U0000001",

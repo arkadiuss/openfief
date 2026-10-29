@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb2eae1d791a
+  - type: implements
+    from: SYM-ingestv1-fee-rule-get-conversion-rate
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:54.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e93b50e79c1
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-get-conversion-rate
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:54.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b10661890a1b

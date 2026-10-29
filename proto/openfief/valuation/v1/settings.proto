@@ -1,0 +1,97 @@
+// OpenFief's owner settings contract (docs/DESIGN.md D-62, D-78, D-79,
+// D-113).
+//
+// The owner's settings that are not an account's: the number format the
+// built-in UI writes amounts in (D-113), shown next to the reporting
+// currency (D-62), and the owner's marginal personal income tax rate,
+// which taxes an early withdrawal from IKZE (D-78). The read API serves
+// the reporting currency and the number format to any reader
+// (ReadService.GetSettings); this service is the owner's entry service
+// for changing them (D-79).
+//
+// The core serves SettingsService to VIEW plugins only, next to the
+// AuthService. Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - A number format key that is not one of number_formats, or a marginal rate that is not
+//   a decimal above 0 and below 1, fails with INVALID_ARGUMENT and nothing
+//   changes.
+syntax = "proto3";
+
+package openfief.valuation.v1;
+
+// SettingsService reads and changes the owner's settings.
+service SettingsService {
+  // GetOwnerSettings returns every setting to the owner.
+  rpc GetOwnerSettings(GetOwnerSettingsRequest) returns (GetOwnerSettingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // SetNumberFormat makes a number format the owner's. It revalues
+  // nothing.
+  rpc SetNumberFormat(SetNumberFormatRequest) returns (SetNumberFormatResponse);
+
+  // SetMarginalRate sets the owner's marginal income tax rate. Every
+  // account is revalued (D-36), since an IKZE's liquidation value depends
+  // on it.
+  rpc SetMarginalRate(SetMarginalRateRequest) returns (SetMarginalRateResponse);
+}
+
+// NumberFormat is how amounts are written (D-113): only the separators.
+message NumberFormat {
+  // The format's key, such as "space-comma".
+  string key = 1;
+  // The separator between groups of three integer digits: " ", ",", ".",
+  // "'" or "" for none.
+  string group_separator = 2;
+  // The decimal separator: "," or ".".
+  string decimal_separator = 3;
+}
+
+message GetOwnerSettingsRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message GetOwnerSettingsResponse {
+  // The reporting currency (D-62), an ISO 4217 code such as "PLN".
+  string reporting_currency = 1;
+  // The owner's number format, or the jurisdiction pack's default.
+  NumberFormat number_format = 2;
+  // Whether number_format is the pack's default, not the owner's choice.
+  bool number_format_default = 3;
+  // The number formats the owner can choose from.
+  repeated NumberFormat number_formats = 4;
+  // The tax wrappers an account can have, the default first (D-76).
+  repeated string tax_wrappers = 5;
+  // The owner's marginal income tax rate as a decimal fraction, such as
+  // "0.32"; empty until the owner sets it.
+  string marginal_rate = 6;
+}
+
+message SetNumberFormatRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The key of one of GetOwnerSettingsResponse.number_formats.
+  string key = 3;
+}
+
+message SetNumberFormatResponse {
+  NumberFormat number_format = 1;
+}
+
+message SetMarginalRateRequest {
+  string origin = 1;
+  string session_token = 2;
+  // A decimal fraction above 0 and below 1, such as "0.32".
+  string rate = 3;
+}
+
+message SetMarginalRateResponse {}

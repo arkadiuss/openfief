@@ -180,7 +180,9 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	served = withBondLotService(served, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	served = withStatementService(served, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	served = withMarketDataService(served, deps.rankings, callers, log)
-	served = withOnboardingServices(served, newSleeves(l, auth, cfg.Auth.Origins), newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	served = withOnboardingServices(served, newSleeves(l, auth, cfg.Auth.Origins),
+		newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins), accountTerms{recorder, vstore}), callers, log)
+	served = withSettingsService(served, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
 	return &core{api: served, river: client, deps: deps, plugins: installed}, nil
 }
 

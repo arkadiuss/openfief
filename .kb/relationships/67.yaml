@@ -580,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccd05b29ab73
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:11:54.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-778cda800eaa
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T23:11:55.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d304e3932e3d
+  - type: covered_by
+    from: SYM-valuation-connectapi-settings-service
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:11:55.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abdce2e61dd8

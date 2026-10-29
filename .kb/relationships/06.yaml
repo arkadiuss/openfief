@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1260c13de99
+  - type: implements
+    from: SYM-valuationv1-set-number-format-response-string
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:18:47.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d6e971d6a69
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-response-string
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:18:47.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a59fd7dc5fa

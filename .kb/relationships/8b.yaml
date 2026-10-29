@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0816f90a7f29
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-check-terms
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:10:48.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac1c4fad09b8
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-proto-reflect
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:16:42.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84c3c75b4139
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-proto-reflect
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:16:42.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b3bebe64f03

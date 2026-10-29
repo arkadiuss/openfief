@@ -510,3 +510,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb6609f52318
+  - type: implements
+    from: SYM-valuation-connectapi-offered-format
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:12:31.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2169bac16ac
+  - type: implements
+    from: SYM-valuation-connectapi-offered-format
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T23:12:31.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b76c2fabd1bd
+  - type: covered_by
+    from: SYM-valuation-connectapi-offered-format
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:12:31.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e671b5a84db
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-string
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:16:28.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b74cec760470
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-string
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:16:28.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa7a3cf51c6f
+  - type: implements
+    from: SYM-valuationv1connect-settings-service-client-set-marginal-rate
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:22:09.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9da5cf8786f3
+  - type: covered_by
+    from: SYM-valuationv1connect-settings-service-client-set-marginal-rate
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:22:09.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae1469fa9f54

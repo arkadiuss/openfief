@@ -447,3 +447,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20e49b79c715
+  - type: constrains
+    from: REQ-ingest-account-terms
+    to: FACT-SUBJECT-519AF1985404F856
+    created_at: 2026-10-29T22:59:09.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-101a9ae37d91
+  - type: requires_property
+    from: REQ-ingest-account-terms
+    to: FACT-PROP-19EBE27430F73B35
+    created_at: 2026-10-29T22:59:10.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02507337b3e7
+  - type: specified_by
+    from: REQ-ingest-account-terms
+    to: SCEN-ingest-account-terms
+    created_at: 2026-10-29T22:59:10.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e4b52ef3ba3

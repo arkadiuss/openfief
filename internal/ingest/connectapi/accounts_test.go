@@ -16,6 +16,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
 	"github.com/arkadiuss/openfief/internal/ingest/connectapi"
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
@@ -76,6 +78,31 @@ func (m *memLinks) MapBrokerAccount(_ context.Context, _ string, id ingest.Broke
 	return nil
 }
 
+// memTerms keeps the accounts' tax wrappers and fee rules in memory.
+type memTerms struct {
+	wrappers map[ledger.AccountID]jurisdiction.Wrapper
+	fees     map[ledger.AccountID]jurisdiction.FeeRule
+}
+
+func (m *memTerms) RecordTaxWrapper(_ context.Context, account ledger.AccountID, w jurisdiction.Wrapper) error {
+	m.wrappers[account] = w
+	return nil
+}
+
+func (m *memTerms) RecordFeeRule(_ context.Context, account ledger.AccountID, r *jurisdiction.FeeRule) error {
+	m.fees[account] = *r
+	return nil
+}
+
+func (m *memTerms) TaxWrapper(_ context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error) {
+	w, ok := m.wrappers[account]
+	return w, ok, nil
+}
+
+func (m *memTerms) FeeRule(_ context.Context, account ledger.AccountID) (jurisdiction.FeeRule, error) {
+	return m.fees[account], nil
+}
+
 // accountsClient is the generated AccountService client.
 type accountsClient struct {
 	ingestv1connect.AccountServiceClient
@@ -86,8 +113,9 @@ type accountsClient struct {
 func newAccountsClient(t *testing.T, reg *memRegistry, links *memLinks, caller string) accountsClient {
 	t.Helper()
 	accounts := &app.Accounts{
-		Owners: owners{}, Ledger: reg, Bindings: links, Brokers: links,
-		Now: func() time.Time { return time.Date(2026, time.March, 2, 6, 0, 0, 0, time.UTC) },
+		Owners: owners{}, Ledger: reg, Bindings: links, Brokers: links, Pack: pl.NewPack(),
+		Terms: &memTerms{wrappers: map[ledger.AccountID]jurisdiction.Wrapper{}, fees: map[ledger.AccountID]jurisdiction.FeeRule{}},
+		Now:   func() time.Time { return time.Date(2026, time.March, 2, 6, 0, 0, 0, time.UTC) },
 	}
 	_, handler := connectapi.NewAccounts(accounts, viewOnly(), slog.New(slog.DiscardHandler))
 	srv := httptest.NewServer(handler)
@@ -113,15 +141,21 @@ func TestAccountServiceRoundTrip(t *testing.T) {
 		Origin: local, SessionToken: ownerSession, Name: "IBKR main", Sleeve: "satellite",
 		ConnectorInstance: "ibkr-main", BrokerAccount: "U0000001",
 	}))
-	want := &ingestv1.Account{Id: "ibkr-main", Institution: "ibkr", Name: "IBKR main", Sleeve: "satellite"}
+	want := &ingestv1.Account{
+		Id: "ibkr-main", Institution: "ibkr", Name: "IBKR main", Sleeve: "satellite", TaxWrapper: "taxable",
+		FeeRule: &ingestv1.FeeRule{Rate: "0", Minimum: "0", ConversionRate: "0"},
+	}
 	if err != nil || !gocmp.Equal(want, created.Msg.GetAccount(), protocmp.Transform()) {
 		t.Fatalf("CreateAccount = %v, %v; want %v", created, err, want)
 	}
+	fee := &ingestv1.FeeRule{Rate: "0.0005", Minimum: "1", MinimumCurrency: "USD", ConversionRate: "0.002"}
 	updated, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
 		Origin: local, SessionToken: ownerSession, AccountId: "ibkr-main", Name: "IBKR", Sleeve: "core",
+		TaxWrapper: "ikze", FeeRule: fee,
 	}))
-	if err != nil || updated.Msg.GetAccount().GetSleeve() != "core" || updated.Msg.GetAccount().GetName() != "IBKR" {
-		t.Errorf("UpdateAccount = %v, %v; want IBKR in core", updated, err)
+	want = &ingestv1.Account{Id: "ibkr-main", Institution: "ibkr", Name: "IBKR", Sleeve: "core", TaxWrapper: "ikze", FeeRule: fee}
+	if err != nil || !gocmp.Equal(want, updated.Msg.GetAccount(), protocmp.Transform()) {
+		t.Errorf("UpdateAccount = %v, %v; want %v", updated, err, want)
 	}
 	if _, err := c.BindAccount(ctx, connect.NewRequest(&ingestv1.BindAccountRequest{
 		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, ConnectorInstance: "bonds-main",
@@ -181,6 +215,19 @@ func TestAccountServiceErrors(t *testing.T) {
 		}},
 		{name: "a broker account never reported", want: connect.CodeFailedPrecondition, call: func(c accountsClient) connect.Code {
 			_, err := c.CreateAccount(ctx, create(ownerSession, "Cash", "core", "ibkr-main", "U0000009"))
+			return connect.CodeOf(err)
+		}},
+		{name: "a wrapper the pack doesn't have", want: connect.CodeInvalidArgument, call: func(c accountsClient) connect.Code {
+			req := create(ownerSession, "Cash", "core", "", "")
+			req.Msg.TaxWrapper = "ppk"
+			_, err := c.CreateAccount(ctx, req)
+			return connect.CodeOf(err)
+		}},
+		{name: "a fee rate that is no decimal", want: connect.CodeInvalidArgument, call: func(c accountsClient) connect.Code {
+			_, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
+				Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Name: "X", Sleeve: "core",
+				FeeRule: &ingestv1.FeeRule{Rate: "0,29%"},
+			}))
 			return connect.CodeOf(err)
 		}},
 		{name: "an unknown account", want: connect.CodeNotFound, call: func(c accountsClient) connect.Code {

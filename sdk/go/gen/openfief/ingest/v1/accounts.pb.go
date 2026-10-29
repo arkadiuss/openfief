@@ -1,10 +1,13 @@
-// OpenFief's account entry contract (docs/DESIGN.md D-72, D-73, D-79).
+// OpenFief's account entry contract (docs/DESIGN.md D-72, D-73, D-76,
+// D-78, D-79).
 //
 // The owner creates accounts in the built-in UI, in the first-run wizard
 // (D-73) and later: each account's institution, name and sleeve, the
 // connector instance that feeds it, and, for a broker connector, the broker
 // account it is, picked from those the connector reported, so the owner
-// never types an account number (D-72). The UI hands them to the core
+// never types an account number (D-72), with the account's tax wrapper
+// (D-76) and the fee rule its broker charges a sale (D-78). The UI hands
+// them to the core
 // through AccountService, one owner-only service for this kind of entry
 // (D-79). The read API (D-6) stays read-only: it lists accounts, connector
 // bindings and broker accounts.
@@ -21,7 +24,10 @@
 //   PERMISSION_DENIED.
 // - The core makes an account's ID from its name, as lowercase hyphenated
 //   words. A name it can make no ID from, an empty institution, an unknown
-//   sleeve or a malformed instance name fails with INVALID_ARGUMENT; a name
+//   sleeve, a tax wrapper the jurisdiction pack doesn't have, a fee rule
+//   whose rates aren't decimal fractions from 0 up to 1 or whose minimum
+//   is negative or has no currency, or a malformed instance name fails
+//   with INVALID_ARGUMENT; a name
 //   whose ID is taken with ALREADY_EXISTS; an unknown account with
 //   NOT_FOUND; a broker account the instance never reported, or one mapped
 //   to another account, with FAILED_PRECONDITION. Nothing is stored then.
@@ -56,7 +62,12 @@ type Account struct {
 	Institution string                 `protobuf:"bytes,2,opt,name=institution,proto3" json:"institution,omitempty"`
 	Name        string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	// The ID of the account's sleeve.
-	Sleeve        string `protobuf:"bytes,4,opt,name=sleeve,proto3" json:"sleeve,omitempty"`
+	Sleeve string `protobuf:"bytes,4,opt,name=sleeve,proto3" json:"sleeve,omitempty"`
+	// The account's tax wrapper, a key of the jurisdiction pack, such as
+	// "taxable", "ike", "ikze" or "oki" (D-76).
+	TaxWrapper string `protobuf:"bytes,5,opt,name=tax_wrapper,json=taxWrapper,proto3" json:"tax_wrapper,omitempty"`
+	// The fee rule its broker charges a sale (D-78); all zero until set.
+	FeeRule       *FeeRule `protobuf:"bytes,6,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -119,6 +130,94 @@ func (x *Account) GetSleeve() string {
 	return ""
 }
 
+func (x *Account) GetTaxWrapper() string {
+	if x != nil {
+		return x.TaxWrapper
+	}
+	return ""
+}
+
+func (x *Account) GetFeeRule() *FeeRule {
+	if x != nil {
+		return x.FeeRule
+	}
+	return nil
+}
+
+// FeeRule is how an account's broker charges a sale (D-78): rate of the
+// value sold, at least minimum, plus conversion_rate of the value for an
+// instrument in a foreign currency. Rates are decimal fractions as
+// strings: "0.0029" is 0.29%.
+type FeeRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Rate  string                 `protobuf:"bytes,1,opt,name=rate,proto3" json:"rate,omitempty"`
+	// The minimum as a decimal string; "0" or empty for none.
+	Minimum string `protobuf:"bytes,2,opt,name=minimum,proto3" json:"minimum,omitempty"`
+	// The minimum's ISO 4217 currency; empty when there is no minimum.
+	MinimumCurrency string `protobuf:"bytes,3,opt,name=minimum_currency,json=minimumCurrency,proto3" json:"minimum_currency,omitempty"`
+	ConversionRate  string `protobuf:"bytes,4,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *FeeRule) Reset() {
+	*x = FeeRule{}
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeeRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeeRule) ProtoMessage() {}
+
+func (x *FeeRule) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeeRule.ProtoReflect.Descriptor instead.
+func (*FeeRule) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *FeeRule) GetRate() string {
+	if x != nil {
+		return x.Rate
+	}
+	return ""
+}
+
+func (x *FeeRule) GetMinimum() string {
+	if x != nil {
+		return x.Minimum
+	}
+	return ""
+}
+
+func (x *FeeRule) GetMinimumCurrency() string {
+	if x != nil {
+		return x.MinimumCurrency
+	}
+	return ""
+}
+
+func (x *FeeRule) GetConversionRate() string {
+	if x != nil {
+		return x.ConversionRate
+	}
+	return ""
+}
+
 type CreateAccountRequest struct {
 	state        protoimpl.MessageState `protogen:"open.v1"`
 	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
@@ -135,13 +234,18 @@ type CreateAccountRequest struct {
 	// A broker account connector_instance reported, mapped to the new
 	// account; empty for a connector that names OpenFief accounts itself.
 	BrokerAccount string `protobuf:"bytes,7,opt,name=broker_account,json=brokerAccount,proto3" json:"broker_account,omitempty"`
+	// The account's tax wrapper (D-76); empty takes the pack's default,
+	// "taxable" for Poland.
+	TaxWrapper string `protobuf:"bytes,8,opt,name=tax_wrapper,json=taxWrapper,proto3" json:"tax_wrapper,omitempty"`
+	// The fee rule (D-78); unset for the zero rule.
+	FeeRule       *FeeRule `protobuf:"bytes,9,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateAccountRequest) Reset() {
 	*x = CreateAccountRequest{}
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[1]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -153,7 +257,7 @@ func (x *CreateAccountRequest) String() string {
 func (*CreateAccountRequest) ProtoMessage() {}
 
 func (x *CreateAccountRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[1]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -166,7 +270,7 @@ func (x *CreateAccountRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAccountRequest.ProtoReflect.Descriptor instead.
 func (*CreateAccountRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{1}
+	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *CreateAccountRequest) GetOrigin() string {
@@ -218,6 +322,20 @@ func (x *CreateAccountRequest) GetBrokerAccount() string {
 	return ""
 }
 
+func (x *CreateAccountRequest) GetTaxWrapper() string {
+	if x != nil {
+		return x.TaxWrapper
+	}
+	return ""
+}
+
+func (x *CreateAccountRequest) GetFeeRule() *FeeRule {
+	if x != nil {
+		return x.FeeRule
+	}
+	return nil
+}
+
 type CreateAccountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Account       *Account               `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
@@ -227,7 +345,7 @@ type CreateAccountResponse struct {
 
 func (x *CreateAccountResponse) Reset() {
 	*x = CreateAccountResponse{}
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[2]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -239,7 +357,7 @@ func (x *CreateAccountResponse) String() string {
 func (*CreateAccountResponse) ProtoMessage() {}
 
 func (x *CreateAccountResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[2]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -252,7 +370,7 @@ func (x *CreateAccountResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAccountResponse.ProtoReflect.Descriptor instead.
 func (*CreateAccountResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{2}
+	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *CreateAccountResponse) GetAccount() *Account {
@@ -263,19 +381,23 @@ func (x *CreateAccountResponse) GetAccount() *Account {
 }
 
 type UpdateAccountRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
-	SessionToken  string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
-	AccountId     string                 `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	Sleeve        string                 `protobuf:"bytes,5,opt,name=sleeve,proto3" json:"sleeve,omitempty"`
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	AccountId    string                 `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	Name         string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	Sleeve       string                 `protobuf:"bytes,5,opt,name=sleeve,proto3" json:"sleeve,omitempty"`
+	// The new tax wrapper; empty keeps the account's.
+	TaxWrapper string `protobuf:"bytes,6,opt,name=tax_wrapper,json=taxWrapper,proto3" json:"tax_wrapper,omitempty"`
+	// The new fee rule; unset keeps the account's.
+	FeeRule       *FeeRule `protobuf:"bytes,7,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateAccountRequest) Reset() {
 	*x = UpdateAccountRequest{}
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[3]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -287,7 +409,7 @@ func (x *UpdateAccountRequest) String() string {
 func (*UpdateAccountRequest) ProtoMessage() {}
 
 func (x *UpdateAccountRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[3]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -300,7 +422,7 @@ func (x *UpdateAccountRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAccountRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAccountRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{3}
+	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *UpdateAccountRequest) GetOrigin() string {
@@ -338,6 +460,20 @@ func (x *UpdateAccountRequest) GetSleeve() string {
 	return ""
 }
 
+func (x *UpdateAccountRequest) GetTaxWrapper() string {
+	if x != nil {
+		return x.TaxWrapper
+	}
+	return ""
+}
+
+func (x *UpdateAccountRequest) GetFeeRule() *FeeRule {
+	if x != nil {
+		return x.FeeRule
+	}
+	return nil
+}
+
 type UpdateAccountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Account       *Account               `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
@@ -347,7 +483,7 @@ type UpdateAccountResponse struct {
 
 func (x *UpdateAccountResponse) Reset() {
 	*x = UpdateAccountResponse{}
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[4]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -359,7 +495,7 @@ func (x *UpdateAccountResponse) String() string {
 func (*UpdateAccountResponse) ProtoMessage() {}
 
 func (x *UpdateAccountResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[4]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -372,7 +508,7 @@ func (x *UpdateAccountResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAccountResponse.ProtoReflect.Descriptor instead.
 func (*UpdateAccountResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{4}
+	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateAccountResponse) GetAccount() *Account {
@@ -396,7 +532,7 @@ type BindAccountRequest struct {
 
 func (x *BindAccountRequest) Reset() {
 	*x = BindAccountRequest{}
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[5]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -408,7 +544,7 @@ func (x *BindAccountRequest) String() string {
 func (*BindAccountRequest) ProtoMessage() {}
 
 func (x *BindAccountRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[5]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -421,7 +557,7 @@ func (x *BindAccountRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BindAccountRequest.ProtoReflect.Descriptor instead.
 func (*BindAccountRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{5}
+	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *BindAccountRequest) GetOrigin() string {
@@ -467,7 +603,7 @@ type BindAccountResponse struct {
 
 func (x *BindAccountResponse) Reset() {
 	*x = BindAccountResponse{}
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[6]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -479,7 +615,7 @@ func (x *BindAccountResponse) String() string {
 func (*BindAccountResponse) ProtoMessage() {}
 
 func (x *BindAccountResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[6]
+	mi := &file_openfief_ingest_v1_accounts_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -492,19 +628,27 @@ func (x *BindAccountResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BindAccountResponse.ProtoReflect.Descriptor instead.
 func (*BindAccountResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{6}
+	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{7}
 }
 
 var File_openfief_ingest_v1_accounts_proto protoreflect.FileDescriptor
 
 const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\n" +
-	"!openfief/ingest/v1/accounts.proto\x12\x12openfief.ingest.v1\"g\n" +
+	"!openfief/ingest/v1/accounts.proto\x12\x12openfief.ingest.v1\"\xc0\x01\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12\x16\n" +
-	"\x06sleeve\x18\x04 \x01(\tR\x06sleeve\"\xf7\x01\n" +
+	"\x06sleeve\x18\x04 \x01(\tR\x06sleeve\x12\x1f\n" +
+	"\vtax_wrapper\x18\x05 \x01(\tR\n" +
+	"taxWrapper\x126\n" +
+	"\bfee_rule\x18\x06 \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\"\x8b\x01\n" +
+	"\aFeeRule\x12\x12\n" +
+	"\x04rate\x18\x01 \x01(\tR\x04rate\x12\x18\n" +
+	"\aminimum\x18\x02 \x01(\tR\aminimum\x12)\n" +
+	"\x10minimum_currency\x18\x03 \x01(\tR\x0fminimumCurrency\x12'\n" +
+	"\x0fconversion_rate\x18\x04 \x01(\tR\x0econversionRate\"\xd0\x02\n" +
 	"\x14CreateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
@@ -512,16 +656,22 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\vinstitution\x18\x04 \x01(\tR\vinstitution\x12\x16\n" +
 	"\x06sleeve\x18\x05 \x01(\tR\x06sleeve\x12-\n" +
 	"\x12connector_instance\x18\x06 \x01(\tR\x11connectorInstance\x12%\n" +
-	"\x0ebroker_account\x18\a \x01(\tR\rbrokerAccount\"N\n" +
+	"\x0ebroker_account\x18\a \x01(\tR\rbrokerAccount\x12\x1f\n" +
+	"\vtax_wrapper\x18\b \x01(\tR\n" +
+	"taxWrapper\x126\n" +
+	"\bfee_rule\x18\t \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\"N\n" +
 	"\x15CreateAccountResponse\x125\n" +
-	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\x9e\x01\n" +
+	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xf7\x01\n" +
 	"\x14UpdateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x03 \x01(\tR\taccountId\x12\x12\n" +
 	"\x04name\x18\x04 \x01(\tR\x04name\x12\x16\n" +
-	"\x06sleeve\x18\x05 \x01(\tR\x06sleeve\"N\n" +
+	"\x06sleeve\x18\x05 \x01(\tR\x06sleeve\x12\x1f\n" +
+	"\vtax_wrapper\x18\x06 \x01(\tR\n" +
+	"taxWrapper\x126\n" +
+	"\bfee_rule\x18\a \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\"N\n" +
 	"\x15UpdateAccountResponse\x125\n" +
 	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xc6\x01\n" +
 	"\x12BindAccountRequest\x12\x16\n" +
@@ -550,30 +700,34 @@ func file_openfief_ingest_v1_accounts_proto_rawDescGZIP() []byte {
 	return file_openfief_ingest_v1_accounts_proto_rawDescData
 }
 
-var file_openfief_ingest_v1_accounts_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_openfief_ingest_v1_accounts_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_openfief_ingest_v1_accounts_proto_goTypes = []any{
 	(*Account)(nil),               // 0: openfief.ingest.v1.Account
-	(*CreateAccountRequest)(nil),  // 1: openfief.ingest.v1.CreateAccountRequest
-	(*CreateAccountResponse)(nil), // 2: openfief.ingest.v1.CreateAccountResponse
-	(*UpdateAccountRequest)(nil),  // 3: openfief.ingest.v1.UpdateAccountRequest
-	(*UpdateAccountResponse)(nil), // 4: openfief.ingest.v1.UpdateAccountResponse
-	(*BindAccountRequest)(nil),    // 5: openfief.ingest.v1.BindAccountRequest
-	(*BindAccountResponse)(nil),   // 6: openfief.ingest.v1.BindAccountResponse
+	(*FeeRule)(nil),               // 1: openfief.ingest.v1.FeeRule
+	(*CreateAccountRequest)(nil),  // 2: openfief.ingest.v1.CreateAccountRequest
+	(*CreateAccountResponse)(nil), // 3: openfief.ingest.v1.CreateAccountResponse
+	(*UpdateAccountRequest)(nil),  // 4: openfief.ingest.v1.UpdateAccountRequest
+	(*UpdateAccountResponse)(nil), // 5: openfief.ingest.v1.UpdateAccountResponse
+	(*BindAccountRequest)(nil),    // 6: openfief.ingest.v1.BindAccountRequest
+	(*BindAccountResponse)(nil),   // 7: openfief.ingest.v1.BindAccountResponse
 }
 var file_openfief_ingest_v1_accounts_proto_depIdxs = []int32{
-	0, // 0: openfief.ingest.v1.CreateAccountResponse.account:type_name -> openfief.ingest.v1.Account
-	0, // 1: openfief.ingest.v1.UpdateAccountResponse.account:type_name -> openfief.ingest.v1.Account
-	1, // 2: openfief.ingest.v1.AccountService.CreateAccount:input_type -> openfief.ingest.v1.CreateAccountRequest
-	3, // 3: openfief.ingest.v1.AccountService.UpdateAccount:input_type -> openfief.ingest.v1.UpdateAccountRequest
-	5, // 4: openfief.ingest.v1.AccountService.BindAccount:input_type -> openfief.ingest.v1.BindAccountRequest
-	2, // 5: openfief.ingest.v1.AccountService.CreateAccount:output_type -> openfief.ingest.v1.CreateAccountResponse
-	4, // 6: openfief.ingest.v1.AccountService.UpdateAccount:output_type -> openfief.ingest.v1.UpdateAccountResponse
-	6, // 7: openfief.ingest.v1.AccountService.BindAccount:output_type -> openfief.ingest.v1.BindAccountResponse
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	1, // 0: openfief.ingest.v1.Account.fee_rule:type_name -> openfief.ingest.v1.FeeRule
+	1, // 1: openfief.ingest.v1.CreateAccountRequest.fee_rule:type_name -> openfief.ingest.v1.FeeRule
+	0, // 2: openfief.ingest.v1.CreateAccountResponse.account:type_name -> openfief.ingest.v1.Account
+	1, // 3: openfief.ingest.v1.UpdateAccountRequest.fee_rule:type_name -> openfief.ingest.v1.FeeRule
+	0, // 4: openfief.ingest.v1.UpdateAccountResponse.account:type_name -> openfief.ingest.v1.Account
+	2, // 5: openfief.ingest.v1.AccountService.CreateAccount:input_type -> openfief.ingest.v1.CreateAccountRequest
+	4, // 6: openfief.ingest.v1.AccountService.UpdateAccount:input_type -> openfief.ingest.v1.UpdateAccountRequest
+	6, // 7: openfief.ingest.v1.AccountService.BindAccount:input_type -> openfief.ingest.v1.BindAccountRequest
+	3, // 8: openfief.ingest.v1.AccountService.CreateAccount:output_type -> openfief.ingest.v1.CreateAccountResponse
+	5, // 9: openfief.ingest.v1.AccountService.UpdateAccount:output_type -> openfief.ingest.v1.UpdateAccountResponse
+	7, // 10: openfief.ingest.v1.AccountService.BindAccount:output_type -> openfief.ingest.v1.BindAccountResponse
+	8, // [8:11] is the sub-list for method output_type
+	5, // [5:8] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_openfief_ingest_v1_accounts_proto_init() }
@@ -587,7 +741,7 @@ func file_openfief_ingest_v1_accounts_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_ingest_v1_accounts_proto_rawDesc), len(file_openfief_ingest_v1_accounts_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

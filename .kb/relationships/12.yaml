@@ -573,3 +573,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa5479d38d1a
+  - type: implements
+    from: SYM-ingest-app-accounts-record-terms
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:09:57.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9c47ea9a6c2
+  - type: implements
+    from: SYM-ingest-app-accounts-record-terms
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:09:57.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ed26a28271e
+  - type: covered_by
+    from: SYM-ingest-app-accounts-record-terms
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:09:57.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25833b299e6e
+  - type: implements
+    from: SYM-valuationv1connect-new-settings-service-handler
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:22:22.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fd57860c52c
+  - type: covered_by
+    from: SYM-valuationv1connect-new-settings-service-handler
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:22:22.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c53971b0fdd

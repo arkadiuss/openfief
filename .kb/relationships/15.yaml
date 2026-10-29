@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-388a497da44a
+  - type: validates
+    from: TEST-ingest-app-accounts
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T22:58:51.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ad2abc0efbb
+  - type: validates
+    from: TEST-ingest-app-accounts
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:58:51.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9ed970284a0

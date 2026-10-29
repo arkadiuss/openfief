@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 )
@@ -37,9 +38,45 @@ type AccountLedger interface {
 	SaveAccount(ctx context.Context, a ledger.Account) error
 }
 
+// AccountTerms keep an account's tax wrapper and fee rule (D-76, D-78),
+// which the valuation context values it with: recording either revalues
+// the account. cmd/core joins valuation's InputRecorder and store into it.
+type AccountTerms interface {
+	// RecordTaxWrapper records account's tax wrapper.
+	RecordTaxWrapper(ctx context.Context, account ledger.AccountID, wrapper jurisdiction.Wrapper) error
+	// RecordFeeRule records account's fee rule.
+	RecordFeeRule(ctx context.Context, account ledger.AccountID, rule *jurisdiction.FeeRule) error
+	// TaxWrapper returns account's recorded tax wrapper, and false when
+	// none was recorded.
+	TaxWrapper(ctx context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error)
+	// FeeRule returns account's fee rule, the zero rule unless recorded.
+	FeeRule(ctx context.Context, account ledger.AccountID) (jurisdiction.FeeRule, error)
+}
+
+// AccountEntry is an account with the terms it is valued under: its tax
+// wrapper and fee rule.
+type AccountEntry struct {
+	ledger.Account
+
+	Wrapper jurisdiction.Wrapper
+	Fee     jurisdiction.FeeRule
+}
+
+// AccountChange is what the owner changes in an account: its name and
+// sleeve, and its tax wrapper and fee rule when they are given.
+type AccountChange struct {
+	Name   string
+	Sleeve portfolio.SleeveID
+	// Wrapper is the new tax wrapper; empty keeps the account's.
+	Wrapper jurisdiction.Wrapper
+	// Fee is the new fee rule; nil keeps the account's.
+	Fee *jurisdiction.FeeRule
+}
+
 // NewAccount is an account the owner creates (D-72): its name,
-// institution and sleeve, and the connector instance that feeds it with,
-// for a broker connector, the broker account it is.
+// institution and sleeve, its tax wrapper and fee rule (D-76, D-78), and
+// the connector instance that feeds it with, for a broker connector, the
+// broker account it is.
 type NewAccount struct {
 	Name        string
 	Institution ingest.InstitutionID
@@ -50,11 +87,17 @@ type NewAccount struct {
 	// BrokerAccount is one of the broker accounts Instance reported;
 	// empty for a connector that names OpenFief accounts itself.
 	BrokerAccount ingest.BrokerAccountID
+	// Wrapper is the account's tax wrapper; empty takes the pack's
+	// default.
+	Wrapper jurisdiction.Wrapper
+	// Fee is the account's fee rule; nil for the zero rule.
+	Fee *jurisdiction.FeeRule
 }
 
 // Accounts are the owner's account entries (D-72, D-73): creating and
-// changing accounts and binding the connector instances that feed them,
-// each for an owner-scoped session only (D-79). An account's ID is made
+// changing accounts, with their tax wrapper and fee rule (D-76, D-78), and
+// binding the connector instances that feed them, each for an
+// owner-scoped session only (D-79). The wrappers are Pack's. An account's ID is made
 // from its name (portfolio.KeyFromName) and never changes. Each step is
 // checked before anything is stored, and each store is idempotent, so a
 // failure between them leaves nothing a retry can't finish.
@@ -63,62 +106,82 @@ type Accounts struct {
 	Ledger   AccountLedger
 	Bindings BindingStore
 	Brokers  BrokerAccountStore
+	Terms    AccountTerms
+	Pack     jurisdiction.Pack
 	Now      func() time.Time
 }
 
-// Create creates the account n names, binds its instance to it and maps its
-// broker account to it. An empty institution takes the broker account's.
-// It returns the account as stored.
-func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *NewAccount) (ledger.Account, error) {
+// Create creates the account n names, records its tax wrapper, the pack's
+// default when n gives none, and its fee rule, the zero rule when n gives
+// none, binds its instance to it and maps its broker account to it. An
+// empty institution takes the broker account's. It returns the account as
+// stored.
+func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *NewAccount) (AccountEntry, error) {
 	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
-		return ledger.Account{}, fmt.Errorf("creating an account: %w", err)
+		return AccountEntry{}, fmt.Errorf("creating an account: %w", err)
 	}
 	id, err := portfolio.KeyFromName(n.Name)
 	if err != nil {
-		return ledger.Account{}, fmt.Errorf("creating an account: %w: %w", ledger.ErrInvalidAccount, err)
+		return AccountEntry{}, fmt.Errorf("creating an account: %w: %w", ledger.ErrInvalidAccount, err)
+	}
+	entry, err := a.newEntry(n)
+	if err != nil {
+		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
 	accounts, err := a.Ledger.Accounts(ctx)
 	if err != nil {
-		return ledger.Account{}, fmt.Errorf("creating an account: %w", err)
+		return AccountEntry{}, fmt.Errorf("creating an account: %w", err)
 	}
 	if hasAccount(accounts, ledger.AccountID(id)) {
-		return ledger.Account{}, fmt.Errorf("creating account %s: %w", id, ErrAccountExists)
+		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, ErrAccountExists)
 	}
 	broker, err := a.brokerAccount(ctx, n.Instance, n.BrokerAccount, ledger.AccountID(id))
 	if err != nil {
-		return ledger.Account{}, fmt.Errorf("creating account %s: %w", id, err)
+		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
 	institution := n.Institution
 	if institution == "" {
 		institution = broker.Institution
 	}
-	acc := ledger.Account{ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name, Sleeve: n.Sleeve}
-	if err := a.save(ctx, acc); err != nil {
-		return ledger.Account{}, fmt.Errorf("creating account %s: %w", id, err)
+	entry.Account = ledger.Account{ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name, Sleeve: n.Sleeve}
+	if err := a.storeNew(ctx, &entry, n); err != nil {
+		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
-	if n.Instance != "" {
-		if err := a.connect(ctx, acc.ID, n.Instance, n.BrokerAccount); err != nil {
-			return ledger.Account{}, fmt.Errorf("creating account %s: %w", id, err)
-		}
-	}
-	return acc, nil
+	return entry, nil
 }
 
-// Update renames the stored account id and moves it to sleeve; its ID and
+// Update renames the stored account id and moves it to a sleeve, and
+// records its tax wrapper and fee rule when c changes them; its ID and
 // institution stay. It returns the account as stored.
-func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id ledger.AccountID, name string, sleeve portfolio.SleeveID) (ledger.Account, error) {
+func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id ledger.AccountID, c *AccountChange) (AccountEntry, error) {
 	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
-		return ledger.Account{}, fmt.Errorf("changing an account: %w", err)
+		return AccountEntry{}, fmt.Errorf("changing an account: %w", err)
 	}
 	acc, err := a.stored(ctx, id)
 	if err != nil {
-		return ledger.Account{}, err
+		return AccountEntry{}, err
 	}
-	acc.Name, acc.Sleeve = name, sleeve
-	if err := a.save(ctx, acc); err != nil {
-		return ledger.Account{}, fmt.Errorf("changing account %s: %w", id, err)
+	entry, err := a.entry(ctx, acc)
+	if err != nil {
+		return AccountEntry{}, err
 	}
-	return acc, nil
+	if c.Wrapper != "" {
+		entry.Wrapper = c.Wrapper
+	}
+	if c.Fee != nil {
+		entry.Fee = *c.Fee
+	}
+	if err := a.checkTerms(entry.Wrapper, &entry.Fee); err != nil {
+		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
+	}
+	entry.Name, entry.Sleeve = c.Name, c.Sleeve
+	if err := a.save(ctx, entry.Account); err != nil {
+		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
+	}
+	if err := a.recordTerms(ctx, id, c.Wrapper, c.Fee); err != nil {
+		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
+	}
+	return entry, nil
 }
 
 // Bind binds instance to the stored account id, as `core connector bind`
@@ -139,6 +202,82 @@ func (a *Accounts) Bind(ctx context.Context, origin, sessionToken string, id led
 	}
 	if err := a.connect(ctx, id, instance, broker); err != nil {
 		return fmt.Errorf("binding account %s: %w", id, err)
+	}
+	return nil
+}
+
+// storeNew saves the new account entry, records its terms, and binds n's
+// instance to it with its broker account.
+func (a *Accounts) storeNew(ctx context.Context, entry *AccountEntry, n *NewAccount) error {
+	if err := a.save(ctx, entry.Account); err != nil {
+		return err
+	}
+	if err := a.recordTerms(ctx, entry.ID, entry.Wrapper, n.Fee); err != nil {
+		return err
+	}
+	if n.Instance == "" {
+		return nil
+	}
+	return a.connect(ctx, entry.ID, n.Instance, n.BrokerAccount)
+}
+
+// entry returns account acc with its tax wrapper, the pack's
+// default unless one was recorded, and its fee rule.
+func (a *Accounts) entry(ctx context.Context, acc ledger.Account) (AccountEntry, error) {
+	w, recorded, err := a.Terms.TaxWrapper(ctx, acc.ID)
+	if err != nil {
+		return AccountEntry{}, fmt.Errorf("loading the tax wrapper of %s: %w", acc.ID, err)
+	}
+	if !recorded {
+		w = jurisdiction.DefaultWrapper(a.Pack)
+	}
+	fee, err := a.Terms.FeeRule(ctx, acc.ID)
+	if err != nil {
+		return AccountEntry{}, fmt.Errorf("loading the fee rule of %s: %w", acc.ID, err)
+	}
+	return AccountEntry{Account: acc, Wrapper: w, Fee: fee}, nil
+}
+
+// newEntry returns the terms n gives a new account, checked: its wrapper,
+// the pack's default when n gives none, and its fee rule.
+func (a *Accounts) newEntry(n *NewAccount) (AccountEntry, error) {
+	entry := AccountEntry{Wrapper: n.Wrapper}
+	if entry.Wrapper == "" {
+		entry.Wrapper = jurisdiction.DefaultWrapper(a.Pack)
+	}
+	if n.Fee != nil {
+		entry.Fee = *n.Fee
+	}
+	if err := a.checkTerms(entry.Wrapper, &entry.Fee); err != nil {
+		return AccountEntry{}, err
+	}
+	return entry, nil
+}
+
+// checkTerms checks that w is one of the pack's wrappers and fee a valid
+// rule, as invalid accounts otherwise.
+func (a *Accounts) checkTerms(w jurisdiction.Wrapper, fee *jurisdiction.FeeRule) error {
+	if !jurisdiction.HasWrapper(a.Pack, w) {
+		return fmt.Errorf("%w: %w: %q", ledger.ErrInvalidAccount, jurisdiction.ErrUnknownWrapper, w)
+	}
+	if err := fee.Validate(); err != nil {
+		return fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
+	}
+	return nil
+}
+
+// recordTerms records account's wrapper unless it is empty and its fee
+// rule unless it is nil, each revaluing the account.
+func (a *Accounts) recordTerms(ctx context.Context, account ledger.AccountID, w jurisdiction.Wrapper, fee *jurisdiction.FeeRule) error {
+	if w != "" {
+		if err := a.Terms.RecordTaxWrapper(ctx, account, w); err != nil {
+			return fmt.Errorf("recording the tax wrapper: %w", err)
+		}
+	}
+	if fee != nil {
+		if err := a.Terms.RecordFeeRule(ctx, account, fee); err != nil {
+			return fmt.Errorf("recording the fee rule: %w", err)
+		}
 	}
 	return nil
 }

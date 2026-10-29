@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36e8e558c374
+  - type: implements
+    from: SYM-ingest-app-account-change
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:09:19.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54faf52cc9a3
+  - type: implements
+    from: SYM-ingest-app-account-change
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:09:19.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05049c8c57bf
+  - type: covered_by
+    from: SYM-ingest-app-account-change
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:09:19.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14008063f167

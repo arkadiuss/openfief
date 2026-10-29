@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7be677ebc0f
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms-tax-wrapper
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:11:35.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65ac609e689c

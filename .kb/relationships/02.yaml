@@ -454,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ff6d901198b
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-fee-rule
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:14:20.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62d1a73b5fcd
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-fee-rule
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:14:21.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88e7e2328af5

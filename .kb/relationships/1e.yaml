@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c8353b99b05
+  - type: implements
+    from: SYM-valuationv1connect-unimplemented-settings-service-handler-set-marginal-rate
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:22:47.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7240d9f9e89
+  - type: covered_by
+    from: SYM-valuationv1connect-unimplemented-settings-service-handler-set-marginal-rate
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:22:47.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8b5f9d8962f
