@@ -272,6 +272,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c30b3d05c05
+  - type: implements
+    from: SYM-plugins-cosign-key-public-key-pem
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-29T08:49:30.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e1eb11f746f
+  - type: covered_by
+    from: SYM-plugins-cosign-key-public-key-pem
+    to: TEST-cmd-openfief
+    created_at: 2026-10-29T08:49:30.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5c5fc94ab14
   - type: constrains
     from: REQ-ingest-new-instrument-priced
     to: FACT-SUBJECT-33539288FED00E7B

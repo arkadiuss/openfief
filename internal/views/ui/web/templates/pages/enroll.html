@@ -2,11 +2,17 @@
 <script src="/static/webauthn.js" defer></script>
 {{end}}
 {{define "content"}}
-<section class="card narrow">
-  <p>Create a passkey for this host with this one-time link. The passkey will work here only, on this host name.</p>
-  <label for="passkey-name">Name for the passkey</label>
-  <input id="passkey-name" name="name" maxlength="64" placeholder="laptop" autocomplete="off">
-  <button type="button" class="primary" data-webauthn="register">Create passkey</button>
-  <p class="error" data-webauthn-error role="alert" hidden></p>
+<section class="card signin">
+  <div>
+    <p>Create a passkey for this host with this one-time link. The passkey will work here only, on this host name.</p>
+    <div class="field">
+      <label for="passkey-name">Name for the passkey</label>
+      <input id="passkey-name" name="name" maxlength="64" placeholder="laptop" autocomplete="off" aria-describedby="passkey-name-help">
+      <p class="help" id="passkey-name-help">So you can tell your passkeys apart in the settings.</p>
+    </div>
+    <div class="actions"><button type="button" class="primary" data-webauthn="register">Create passkey</button></div>
+    <p class="alert alert-error" data-webauthn-error role="alert" hidden></p>
+  </div>
+  {{template "kasztan" "on-duty"}}
 </section>
 {{end}}

@@ -433,3 +433,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c262b92d93d
+  - type: executable_for
+    from: SYM-e2e-test-helper-plugin-images
+    to: TEST-e2e-plugins
+    created_at: 2026-10-29T10:12:19.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-264a974d50ea
+  - type: executable_for
+    from: SYM-e2e-test-helper-plugin-images
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-29T10:12:19.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b4207b753e4
+  - type: executable_for
+    from: SYM-e2e-images-cluster-network
+    to: TEST-e2e-plugins
+    created_at: 2026-10-29T10:13:41.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c99203b8d9f
+  - type: executable_for
+    from: SYM-e2e-images-cluster-network
+    to: TEST-e2e-demo-stack
+    created_at: 2026-10-29T10:13:41.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bb1ba493419

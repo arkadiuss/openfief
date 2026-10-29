@@ -6,13 +6,16 @@
 //
 // TestMain installs, in order: CloudNativePG from its release manifest at the
 // version deploy/demo/cnpg pins, the namespace and CRDs (deploy/crds), the
-// demo's one-instance cluster openfief-db (deploy/demo/database), the demo's
+// demo's one-instance cluster openfief-db (deploy/demo/database), the
+// suite's trusted signer (a key made for this run, which signs the plugin
+// image in the suite's registry, see registry_test.go), the demo's
 // application layer (deploy/demo/openfief through overlays/openfief, which
-// only swaps the images and admits the suite's client pod), and two client
-// pods (testdata/clients.yaml). Each test then waits for its own condition,
+// only swaps the images, runs the built-in UI from a stand-in and admits the
+// suite's client pod), and two client pods (testdata/clients.yaml). Each test then waits for its own condition,
 // with a deadline, and on failure logs the cluster's pods and events, the
-// pods that aren't ready, and the logs of the core, the demo loader, the
-// database and CloudNativePG.
+// pods that aren't ready, the plugins and their allow-lists, and the logs of
+// the core, the operator, the plugins, the demo loader, the database and
+// CloudNativePG.
 package e2e
 
 import (
@@ -31,6 +34,7 @@ import (
 	storagev1 "k8s.io/api/storage/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
@@ -101,14 +105,29 @@ func logStderrf(format string, args ...any) {
 }
 
 // install puts the demo's stack on the cluster in the order of the demo's
-// Flux layers, waiting where a later step needs an earlier one running.
+// Flux layers, waiting where a later step needs an earlier one running. The
+// trusted signer goes in before the application layer, since the operator
+// reads it when it starts.
 func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
-	steps := []func(context.Context, *kube, func(string, ...any)) error{
-		installCNPG, installDatabase, installApp, installClients,
+	reg, err := registryFromEnv()
+	if err != nil {
+		return err
+	}
+	var signers string
+	steps := []func() error{
+		func() error { return installCNPG(ctx, k, logf) },
+		func() error { return installDatabase(ctx, k, logf) },
+		func() error {
+			hash, trustErr := trustSigner(ctx, k, reg, logf)
+			signers = hash
+			return trustErr
+		},
+		func() error { return installApp(ctx, k, logf, editApp(signers)) },
+		func() error { return installClients(ctx, k, logf) },
 	}
 	for _, step := range steps {
-		if err := step(ctx, k, logf); err != nil {
-			return err
+		if stepErr := step(); stepErr != nil {
+			return stepErr
 		}
 	}
 	return nil
@@ -167,12 +186,16 @@ func installDatabase(ctx context.Context, k *kube, logf func(string, ...any)) er
 	return nil
 }
 
-// installApp applies the demo's application layer and, on k3s, the demo's
-// route through Traefik.
-func installApp(ctx context.Context, k *kube, logf func(string, ...any)) error {
+// installApp applies the demo's application layer, each object changed by
+// edit first, and, on k3s, the demo's route through Traefik.
+func installApp(ctx context.Context, k *kube, logf func(string, ...any), edit func(*unstructured.Unstructured) error) error {
 	logf("e2e: applying the demo's application layer")
-	if err := k.applyBuild(ctx, exec.CommandContext(ctx, "kustomize", "build", openfiefDir)); err != nil {
+	app, err := build(exec.CommandContext(ctx, "kustomize", "build", openfiefDir))
+	if err != nil {
 		return err
+	}
+	if applyErr := k.applyEdited(ctx, app, edit); applyErr != nil {
+		return applyErr
 	}
 	isK3s, err := k.isK3s(ctx)
 	if err != nil || !isK3s {

@@ -58,6 +58,8 @@ vars:
   E2E_CNPG_MANIFEST: '{{.ROOT_DIR}}/.bin/e2e/cnpg-{{.CNPG_VERSION}}.yaml'
   # The cluster the CI e2e job creates (.github/workflows/ci.yml); task e2e:images loads the images into it.
   E2E_CLUSTER_NAME: openfief-e2e
+  # Where task e2e:images writes the addresses of the suite's registry, which task e2e passes to the suite.
+  E2E_REGISTRY_ENV: '{{.ROOT_DIR}}/.bin/e2e/registry.env'
   # Generates the read API's OpenAPI document from its protobuf definitions (D-50).
   # renovate: datasource=go depName=github.com/sudorandom/protoc-gen-connect-openapi
   PROTOC_GEN_CONNECT_OPENAPI_VERSION: v0.28.0
@@ -399,15 +401,23 @@ tasks:
       - task: e2e:cnpg
       # -v streams each step and wait as it happens, so a CI log shows where a run stopped.
       # The suite runs kustomize by name, so the pinned one goes first on PATH.
-      - PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}' go test -tags e2e -count=1 -v -timeout 20m ./test/e2e/...
+      # The registry addresses task e2e:images wrote (OPENFIEF_E2E_REGISTRY, OPENFIEF_E2E_CLUSTER_REGISTRY).
+      - |
+        set -e
+        if [ ! -f '{{.E2E_REGISTRY_ENV}}' ]; then
+          echo 'e2e: {{.E2E_REGISTRY_ENV}} is missing; run task e2e:images CLUSTER=<k3d|kind> first' >&2
+          exit 1
+        fi
+        . '{{.E2E_REGISTRY_ENV}}'
+        PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}' go test -tags e2e -count=1 -v -timeout 20m ./test/e2e/...
 
   e2e:images:
-    desc: 'Build the core, operator, egress-proxy, demo-seed and ui images from this checkout (Docker) and load them into the local e2e cluster, e.g. task e2e:images CLUSTER=k3d'
+    desc: 'Build the core, operator, egress-proxy, demo-seed, nbp-fx and ui images from this checkout (Docker), load them into the local e2e cluster, pushing nbp-fx to the suite''s registry instead, e.g. task e2e:images CLUSTER=k3d'
     requires:
       vars: [CLUSTER]
     cmds:
       - bash scripts/assert-local-cluster.sh
-      - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}'
+      - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}' '{{.E2E_REGISTRY_ENV}}'
 
   e2e:k3s-image:
     desc: 'The k3s image the k3d e2e cluster runs: the demo machine''s pinned K3S_VERSION (CI passes it to k3d)'

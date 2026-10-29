@@ -191,9 +191,9 @@ Run `task test` from the repository root. The egress packages need no cluster or
 
 `TestProxyDialsOnlyCheckedAddresses` is a good one to read first: it sends four CONNECTs (private, mixed, unlisted, allowed) and asserts that exactly one address was dialed, the public one.
 
-Not covered by tests: `cmd/egress-proxy` and the deploy manifests, and anything that needs a real cluster, such as NetworkPolicy actually blocking a plugin's direct connection or DNS query, or the kubelet rotating a real token. The end-to-end suite ([test/e2e](../../test/e2e/main_test.go)) installs the proxy with the demo's manifests on kind or k3d, but none of its tests goes through it.
+Not covered by tests: `cmd/egress-proxy` and the deploy manifests, and anything that needs a real cluster, such as NetworkPolicy actually blocking a plugin's direct connection or DNS query, or the kubelet rotating a real token. The end-to-end suite ([test/e2e](../../test/e2e/main_test.go)) installs the proxy with the demo's manifests on kind or k3d. `TestOperatorDeploysSignedPlugin` checks that the operator publishes exactly the granted host as an operator-deployed plugin's allow-list entry, and removes it when the `Plugin` is deleted, but no test sends a CONNECT through the proxy.
 
 ## Not built yet
 
 - **A TypeScript SDK (D-11).** Only Go plugins get the token handling for free; R-14 notes Node's built-in client reads `HTTPS_PROXY` only with `NODE_USE_ENV_PROXY=1`.
-- **End-to-end checks of egress.** `test/e2e` runs the proxy but checks only the core's NetworkPolicy and read API (D-12). P-10's acceptance items 10 and 16 (a refused host, failed bypass attempts, destinations checked in the proxy's logs) are proposals, not decisions.
+- **End-to-end checks of the proxy itself.** `test/e2e` checks a plugin's allow-list entry, but no CONNECT goes through the proxy (D-12), since the suite calls no external host. P-10's acceptance items 10 and 16 (a refused host, failed bypass attempts, destinations checked in the proxy's logs) are proposals, not decisions.

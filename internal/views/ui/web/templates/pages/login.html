@@ -3,24 +3,29 @@
 {{end}}
 {{define "content"}}
 {{with .Data}}
-<section class="card narrow">
+<section class="card signin">
+  <div>
   {{if .NeedsHTTPS}}
-  <p class="warn">Signing in needs HTTPS, or http://localhost through kubectl port-forward: the browser won't keep the session cookie here.</p>
+  <p class="alert alert-warn">Signing in needs HTTPS, or http://localhost through kubectl port-forward: the browser won't keep the session cookie here.</p>
   {{end}}
   {{if .Unavailable}}
-  <p class="warn">The OpenFief core could not say how you can sign in. Try again in a moment.</p>
+  <p class="alert alert-warn">The OpenFief core could not say how you can sign in. Try again in a moment.</p>
   {{end}}
-  <button type="button" class="primary" data-webauthn="login">Sign in with passkey</button>
+  <p class="lede">Sign in with the passkey you made for this host.</p>
+  <div class="actions"><button type="button" class="primary" data-webauthn="login">Sign in with passkey</button>
+  {{if .Demo}}
+  <form method="post" action="/login/demo" class="inline">
+    <button type="submit">View demo</button>
+  </form>
+  {{end}}
+  </div>
+  {{if .Demo}}<p class="muted">The demo shows synthetic data, read-only, without signing in.</p>{{end}}
   {{if and (not .Passkey) (not .Unavailable)}}
   <p class="muted">No passkey exists for this host yet. Create the first one with the one-time link that <code>core enroll-link</code> prints, or with an enrollment link from a session on another host.</p>
   {{end}}
-  <p class="error" data-webauthn-error role="alert" hidden></p>
-  {{if .Demo}}
-  <form method="post" action="/login/demo">
-    <button type="submit">View demo</button>
-  </form>
-  <p class="muted">The demo shows synthetic data, read-only, without signing in.</p>
-  {{end}}
+  <p class="alert alert-error" data-webauthn-error role="alert" hidden></p>
+  </div>
+  {{template "kasztan" "on-duty"}}
 </section>
 {{end}}
 {{end}}

@@ -56,7 +56,7 @@ func TestOverviewFlagsPriceChecks(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, `href="/price-checks" class="warn">1 flagged price check(s)`, `<a href="/price-checks">Price checks</a>`)
+	wantBody(t, rec, `<a href="/price-checks">1 flagged price check(s)</a>`, `<a href="/price-checks">Price checks</a>`)
 }
 
 func TestPercent(t *testing.T) {

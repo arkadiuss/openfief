@@ -258,6 +258,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04a325aea5ef
+  - type: implements
+    from: SYM-ingestv1-problem-kind-enum-descriptor
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:18:16.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bc8a80cb837
+  - type: covered_by
+    from: SYM-ingestv1-problem-kind-enum-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:18:16.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab9b3c588584
   - type: requires_property
     from: REQ-plugins-treasury-bonds-connector
     to: FACT-PROP-495B97CE1B5014CF
@@ -279,6 +293,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0a90871a51d
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-ibkr-mark
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-29T05:39:51.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d6a83f9109
+  - type: implements
+    from: SYM-plugins-cosign-key
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-29T08:49:17.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df787be176b7
+  - type: covered_by
+    from: SYM-plugins-cosign-key
+    to: TEST-cmd-openfief
+    created_at: 2026-10-29T08:49:17.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87850083fc0b
   - type: constrains
     from: REQ-treasurybonds-cpi-years-per-sync
     to: FACT-SUBJECT-C38DC96D03DBD013
@@ -293,24 +328,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac645fa55386
-  - type: implements
-    from: SYM-ingestv1-problem-kind-enum-descriptor
-    to: REQ-ingest-statement-service
-    created_at: 2026-10-29T05:18:16.315Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4bc8a80cb837
-  - type: covered_by
-    from: SYM-ingestv1-problem-kind-enum-descriptor
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-29T05:18:16.350Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ab9b3c588584
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-ibkr-mark
-    to: TEST-valuation-app-crosscheck
-    created_at: 2026-10-29T05:39:51.059Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b1d6a83f9109

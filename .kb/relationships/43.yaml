@@ -377,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e345616c9726
+  - type: executable_for
+    from: SYM-ui-test-every-page-loads-the-design-system
+    to: TEST-ui-design
+    created_at: 2026-10-29T09:58:27.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be182a28a984

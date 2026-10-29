@@ -3,8 +3,10 @@
 #   - the images are the ones `task e2e:images` built from this checkout and loaded into the cluster, so a pull
 #     request tests its own code; the tag replaces the demo's placeholder digest;
 #   - core-from-e2e-client.yaml admits the suite's client pod the way core-from-traefik admits Traefik;
-#   - the built-in UI runs from ui-standin.yaml instead of its Plugin and PluginGrant, which the operator would never
-#     deploy from an unsigned image (D-57); see that file.
+#   - the built-in UI runs from ui-standin.yaml instead of its Plugin and PluginGrant; see that file.
+# While it applies this layer, the suite makes the operator trust the key it signs plugin images with
+# (../../registry_test.go). The demo's nbp instance keeps its placeholder digest and never runs: it would call NBP's
+# real API, and the suite calls no external institution; ../../plugins_test.go runs nbp-fx as an instance that doesn't.
 # Everything else, args and policies included, is the demo's, so a failure here is a failure on the demo.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

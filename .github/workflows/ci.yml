@@ -104,7 +104,9 @@ jobs:
     # kube-router NetworkPolicy controller, the bundled Traefik and servicelb, and secrets encryption, as
     # deploy/demo/cloud-init.yaml configures it. kind's default CNI, kindnet, enforces NetworkPolicy too.
     # The suite (test/e2e) installs the demo's stack from this checkout's images and logs pods, events, specs,
-    # policies, endpoints and logs on any failure: read the "diagnostics:" lines of the failing test.
+    # policies, endpoints, plugins and logs on any failure: read the "diagnostics:" lines of the failing test.
+    # task e2e:images also starts a registry container on the cluster's Docker network for the plugin images, which
+    # the suite signs with a key made for the run, so the operator deploys them as it would an owner's (D-57).
     name: e2e (${{ matrix.cluster }})
     runs-on: ubuntu-24.04
     timeout-minutes: 30

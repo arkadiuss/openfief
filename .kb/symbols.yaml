@@ -52955,21 +52955,6 @@ symbols:
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
         target: REQ-ui-overview
-  - id: SYM-ui-valuation-state
-    title: valuationState
-    sourceFile: internal/views/ui/format.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:53:25.570Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-decision-d36-7-ui-valuation-status
-      - type: implements
-        target: REQ-ui-overview
   - id: SYM-ui-book-label
     title: bookLabel
     sourceFile: internal/views/ui/format.go
@@ -76170,3 +76155,527 @@ symbols:
         target: TEST-views-connectapi-pricechecks
       - type: implements
         target: REQ-views-price-checks
+  - id: SYM-ui-trust-badge
+    title: trustBadge
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:57:48.101Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-design
+      - type: implements
+        target: REQ-ui-plugin-trust-badges
+  - id: SYM-ui-badge-of
+    title: badgeOf
+    sourceFile: internal/views/ui/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:57:55.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-design
+      - type: implements
+        target: REQ-ui-plugin-trust-badges
+  - id: SYM-ui-balance-label
+    title: balanceLabel
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:02.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting
+  - id: SYM-ui-test-no-colors-outside-tokens
+    title: TestNoColorsOutsideTokens
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:09.716Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-stylesheet-uses-defined-tokens
+    title: TestStylesheetUsesDefinedTokens
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:17.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-every-page-loads-the-design-system
+    title: TestEveryPageLoadsTheDesignSystem
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:24.748Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-design-files-served
+    title: TestDesignFilesServed
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:32.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-kasztan-poses
+    title: TestKasztanPoses
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:39.235Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-ui-test-trust-badges
+    title: TestTrustBadges
+    sourceFile: internal/views/ui/design_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T09:58:46.357Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-design
+  - id: SYM-plugins-cosign-key
+    title: Key
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T08:49:15.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-new-key
+    title: NewKey
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T08:49:21.677Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-key-public-key-pem
+    title: Key.PublicKeyPEM
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T08:49:28.103Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-plugins-cosign-key-sign
+    title: Key.Sign
+    sourceFile: internal/plugins/cosign/cosigntest/cosigntest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T08:49:34.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-plugins-cli-install-verifies
+  - id: SYM-e2e-test-operator-deploys-signed-plugin
+    title: TestOperatorDeploysSignedPlugin
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:10:08.540Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-install-fx
+    title: installFX
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:10:15.701Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-kube-get-plugin
+    title: kube.getPlugin
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:10:22.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-wait-plugin-ready
+    title: waitPluginReady
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:10:29.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-conditions-state
+    title: conditionsState
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:10:36.602Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-kube-plugin-pods-state
+    title: kube.pluginPodsState
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:10:43.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-check-signature
+    title: checkSignature
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:10:50.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-workload
+    title: workload
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:10:55.976Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-bool-field
+    title: boolField
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:03.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-workload-of
+    title: workloadOf
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:10.854Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-workload-add-container
+    title: workload.addContainer
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:18.406Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-workload-add-volumes
+    title: workload.addVolumes
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:24.561Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-check-workload
+    title: checkWorkload
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:30.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-kube-running-plugin-pod
+    title: kube.runningPluginPod
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:36.676Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-check-core-syncs
+    title: checkCoreSyncs
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:43.001Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-check-others-refused
+    title: checkOthersRefused
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:49.275Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-check-allow-list
+    title: checkAllowList
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:11:55.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-uninstall-fx
+    title: uninstallFX
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:03.133Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-append-if-present
+    title: appendIfPresent
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:10.390Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-plugin-images
+    title: pluginImages
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:17.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-plugin-resource
+    title: pluginResource
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:25.251Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-grant-resource
+    title: grantResource
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:32.144Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-suite-registry
+    title: suiteRegistry
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:37.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-registry-from-env
+    title: registryFromEnv
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:43.993Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-registry-image
+    title: registryImage
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:50.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-suite-registry-image
+    title: suiteRegistry.image
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:12:57.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-trust-signer
+    title: trustSigner
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:13:04.439Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-edit-app
+    title: editApp
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:13:11.185Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-kube-apply-edited
+    title: kube.applyEdited
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:13:18.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-kube-dump-plugins
+    title: kube.dumpPlugins
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:13:25.731Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-answer-at
+    title: answerAt
+    sourceFile: test/e2e/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:13:33.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-images-cluster-network
+    title: cluster_network
+    sourceFile: scripts/e2e-images.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:13:39.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-images-start-registry
+    title: start_registry
+    sourceFile: scripts/e2e-images.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:13:45.933Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-images-manifest-digest
+    title: manifest_digest
+    sourceFile: scripts/e2e-images.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:13:52.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins

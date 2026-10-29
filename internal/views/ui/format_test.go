@@ -84,12 +84,10 @@ func TestParseDimension(t *testing.T) {
 func TestLabels(t *testing.T) {
 	t.Parallel()
 	tests := []struct{ name, got, want string }{
-		{name: "never valued", got: valuationState(&viewsv1.ValuationStatus{}), want: "not valued yet"},
-		{name: "valued", got: valuationState(&viewsv1.ValuationStatus{ValuedThrough: "2026-03-31"}), want: "valued through 2026-03-31"},
-		{name: "pending", got: valuationState(&viewsv1.ValuationStatus{ValuedThrough: "2026-03-31", Pending: true}), want: "valued through 2026-03-31; revaluation pending"},
-		{name: "running wins over pending", got: valuationState(&viewsv1.ValuationStatus{Pending: true, Running: true}), want: "not valued yet; revaluation running"},
 		{name: "cash book", got: bookLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_WITHHOLDING_TAX, Currency: "USD"}), want: "withholding tax USD"},
 		{name: "holding book", got: bookLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}), want: "SYN (XX0000000001)"},
+		{name: "cash balance", got: balanceLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "USD"}, "1234.50"), want: "1\u202f234.50 USD"},
+		{name: "holding balance is a quantity", got: balanceLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}, "12"), want: "12"},
 		{name: "enum", got: enumLabel(viewsv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT.String(), "TRANSACTION_KIND_"), want: "opening lot"},
 		{name: "scope", got: scopeLabel(identityv1.SessionScope_SESSION_SCOPE_OWNER), want: "owner"},
 	}

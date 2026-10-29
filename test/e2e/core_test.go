@@ -118,16 +118,22 @@ func TestCorePolicyRefusesOtherPods(t *testing.T) {
 	}
 }
 
-// answerFrom calls path on the core from pod until curl reports a result,
-// retrying only when the exec stream itself fails (as it can on kind while
-// the API server is busy), and returns that result: an HTTP status, or 0
-// when curl got no connection. It never retries on an HTTP answer, so a
-// refusal or a wrong status still fails the test.
+// answerFrom calls path on the core from pod with answerAt.
 func answerFrom(t *testing.T, k *kube, pod, path string) reply {
+	t.Helper()
+	return answerAt(t, k, pod, coreURL+path)
+}
+
+// answerAt sends GET url from pod until curl reports a result, retrying
+// only when the exec stream itself fails (as it can on kind while the API
+// server is busy), and returns that result: an HTTP status, or 0 when curl
+// got no connection. It never retries on an HTTP answer, so a refusal or a
+// wrong status still fails the test.
+func answerAt(t *testing.T, k *kube, pod, url string) reply {
 	t.Helper()
 	var got reply
 	err := waitFor(t.Context(), coreTimeout, func(ctx context.Context) (string, bool, error) {
-		r, callErr := call(ctx, k, pod, path, "")
+		r, callErr := get(ctx, k, pod, url)
 		if callErr != nil {
 			return "", false, fmt.Errorf("%w: %w", errRetry, callErr)
 		}
@@ -135,7 +141,7 @@ func answerFrom(t *testing.T, k *kube, pod, path string) reply {
 		return "", true, nil
 	})
 	if err != nil {
-		t.Fatalf("GET %s from %s: %v", path, pod, err)
+		t.Fatalf("GET %s from %s: %v", url, pod, err)
 	}
 	return got
 }

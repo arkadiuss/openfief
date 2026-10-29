@@ -496,41 +496,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc9ade6e998b
-  - type: constrains
-    from: REQ-plugins-network-access-core-proxy-service
-    to: FACT-SUBJECT-06ECCA57C5868E48
-    created_at: 2026-10-29T07:51:49.538Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e73073823486
-  - type: requires_property
-    from: REQ-plugins-network-access-core-proxy-service
-    to: FACT-PROP-23476032D9282E84
-    created_at: 2026-10-29T07:51:49.571Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-68c392817246
-  - type: supersedes
-    from: REQ-plugins-network-access-core-proxy-service
-    to: REQ-AUTO-3C8B1ED0D820F0C9
-    created_at: 2026-10-29T07:51:49.594Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cceb36d60817
-  - type: constrains
-    from: REQ-operator-plugin-trust-status
-    to: FACT-SUBJECT-D4980B15C47DCF8A
-    created_at: 2026-10-29T08:27:27.608Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ddcb46ad435c
-  - type: requires_property
-    from: REQ-operator-plugin-trust-status
-    to: FACT-PROP-DD74EC2102737DA1
-    created_at: 2026-10-29T08:27:27.619Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f47e35b4fc03
   - type: implements
     from: SYM-valuation-app-cross-checks
     to: REQ-valuation-cross-check-prices
@@ -580,3 +545,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2bafe2bee21
+  - type: validates
+    from: TEST-e2e-plugins
+    to: REQ-e2e-operator-deploys-signed-plugin
+    created_at: 2026-10-29T10:10:01.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e2e9b02c19
+  - type: constrains
+    from: REQ-plugins-network-access-core-proxy-service
+    to: FACT-SUBJECT-06ECCA57C5868E48
+    created_at: 2026-10-29T07:51:49.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e73073823486
+  - type: requires_property
+    from: REQ-plugins-network-access-core-proxy-service
+    to: FACT-PROP-23476032D9282E84
+    created_at: 2026-10-29T07:51:49.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68c392817246
+  - type: supersedes
+    from: REQ-plugins-network-access-core-proxy-service
+    to: REQ-AUTO-3C8B1ED0D820F0C9
+    created_at: 2026-10-29T07:51:49.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cceb36d60817
+  - type: constrains
+    from: REQ-operator-plugin-trust-status
+    to: FACT-SUBJECT-D4980B15C47DCF8A
+    created_at: 2026-10-29T08:27:27.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddcb46ad435c
+  - type: requires_property
+    from: REQ-operator-plugin-trust-status
+    to: FACT-PROP-DD74EC2102737DA1
+    created_at: 2026-10-29T08:27:27.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f47e35b4fc03

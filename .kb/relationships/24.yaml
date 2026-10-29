@@ -454,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6ff987c59fe
+  - type: executable_for
+    from: SYM-ui-test-no-colors-outside-tokens
+    to: TEST-ui-design
+    created_at: 2026-10-29T09:58:12.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1edf5be44d6c

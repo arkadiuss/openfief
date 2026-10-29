@@ -447,6 +447,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc07314ec1c5
+  - type: implements
+    from: SYM-ingestv1-upload-statement-request-proto-reflect
+    to: REQ-ingest-statement-service
+    created_at: 2026-10-29T05:19:52.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6a1720d5e21
+  - type: covered_by
+    from: SYM-ingestv1-upload-statement-request-proto-reflect
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-29T05:19:52.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36c70ee81186
+  - type: executable_for
+    from: SYM-valuation-gus-test-cpi-nothing-published
+    to: TEST-valuation-gus-client
+    created_at: 2026-10-29T04:06:58.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-741a7dd0ee97
   - type: constrains
     from: REQ-identity-opaque-session-token
     to: FACT-SUBJECT-825F5042E5E6F174
@@ -462,12 +483,12 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-81f06083075b
   - type: executable_for
-    from: SYM-valuation-gus-test-cpi-nothing-published
-    to: TEST-valuation-gus-client
-    created_at: 2026-10-29T04:06:58.538Z
+    from: SYM-ui-test-design-files-served
+    to: TEST-ui-design
+    created_at: 2026-10-29T09:58:34.370Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-741a7dd0ee97
+    id: rel-a4ca2e76e677
   - type: constrains
     from: REQ-views-ghostfolio-own-sync-timer
     to: FACT-SUBJECT-2A49400A8B1F4128
@@ -482,17 +503,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6117bb6a1cd
-  - type: implements
-    from: SYM-ingestv1-upload-statement-request-proto-reflect
-    to: REQ-ingest-statement-service
-    created_at: 2026-10-29T05:19:52.762Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b6a1720d5e21
-  - type: covered_by
-    from: SYM-ingestv1-upload-statement-request-proto-reflect
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-29T05:19:52.798Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-36c70ee81186

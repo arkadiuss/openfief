@@ -349,3 +349,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5bf0892542d
+  - type: constrains
+    from: REQ-e2e-operator-deploys-signed-plugin
+    to: FACT-SUBJECT-BAE0D6129986CC49
+    created_at: 2026-10-29T10:09:58.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-547aeed0a1e1
+  - type: requires_property
+    from: REQ-e2e-operator-deploys-signed-plugin
+    to: FACT-PROP-061003078E0F8690
+    created_at: 2026-10-29T10:09:58.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5ceea849837
+  - type: specified_by
+    from: REQ-e2e-operator-deploys-signed-plugin
+    to: SCEN-e2e-plugin-signature-verified
+    created_at: 2026-10-29T10:09:58.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cebca044a1e3
+  - type: specified_by
+    from: REQ-e2e-operator-deploys-signed-plugin
+    to: SCEN-e2e-plugin-workload-hardened
+    created_at: 2026-10-29T10:09:58.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-892c976825de
+  - type: specified_by
+    from: REQ-e2e-operator-deploys-signed-plugin
+    to: SCEN-e2e-plugin-only-core-calls
+    created_at: 2026-10-29T10:09:58.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-199811898e08
+  - type: specified_by
+    from: REQ-e2e-operator-deploys-signed-plugin
+    to: SCEN-e2e-plugin-egress-allow-list
+    created_at: 2026-10-29T10:09:59.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea20a3574870
+  - type: specified_by
+    from: REQ-e2e-operator-deploys-signed-plugin
+    to: SCEN-e2e-plugin-uninstalled
+    created_at: 2026-10-29T10:09:59.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d48f2e80ad2
+  - type: executable_for
+    from: SYM-e2e-test-helper-workload-of
+    to: TEST-e2e-plugins
+    created_at: 2026-10-29T10:11:13.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f315699fffde

@@ -3,7 +3,7 @@
 {{end}}
 {{define "content"}}
 {{with .Data}}
-{{if .Error}}<p class="error" role="alert">{{.Error}}</p>{{end}}
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
 
 {{if .NewSecret}}
 <section class="card notice" aria-labelledby="secret-title">
@@ -17,7 +17,7 @@
 {{with .Enrollment}}
 <section class="card notice" aria-labelledby="link-title">
   <h2 id="link-title">Enrollment link created</h2>
-  <p>Open this link on the host it names to create a passkey there. It works once, until {{.ExpiresAt.AsTime.Format "2006-01-02 15:04 MST"}}.</p>
+  <p>Open this link on the host it names to create a passkey there. It works once, until <span class="mono">{{.ExpiresAt.AsTime.Format "2006-01-02 15:04 MST"}}</span>.</p>
   <p><code class="secret">{{.Url}}</code></p>
 </section>
 {{end}}
@@ -25,81 +25,91 @@
 <section class="card" aria-labelledby="passkeys-title">
   <h2 id="passkeys-title">Passkeys</h2>
   <p class="muted">A passkey works only on the host it was created on.</p>
-  <table>
-    <thead><tr><th scope="col">Name</th><th scope="col">Host</th><th scope="col">Created</th><th scope="col">Last used</th><th scope="col">Synced</th><th scope="col"></th></tr></thead>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Name</th><th scope="col">Host</th><th scope="col">Created</th><th scope="col">Last used</th><th scope="col">Synced</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
     <tbody>
     {{range .Passkeys}}
     <tr>
-      <td>{{.Name}}</td><td>{{.RpId}}</td><td>{{.CreatedAt.AsTime.Format "2006-01-02"}}</td>
-      <td>{{if .LastUsedAt}}{{.LastUsedAt.AsTime.Format "2006-01-02"}}{{else}}never{{end}}</td>
+      <td>{{.Name}}</td><td class="mono">{{.RpId}}</td><td class="mono">{{.CreatedAt.AsTime.Format "2006-01-02"}}</td>
+      <td>{{if .LastUsedAt}}<span class="mono">{{.LastUsedAt.AsTime.Format "2006-01-02"}}</span>{{else}}never{{end}}</td>
       <td>{{if .BackedUp}}yes{{else}}no{{end}}</td>
-      <td><form method="post" action="/settings/passkeys/{{.Id}}/remove" class="inline"><button type="submit">Remove</button></form></td>
+      <td><form method="post" action="/settings/passkeys/{{.Id}}/remove" class="inline"><button type="submit" class="danger">Remove</button></form></td>
     </tr>
     {{else}}
-    <tr><td colspan="6">No passkeys.</td></tr>
+    <tr><td colspan="6" class="empty">No passkeys.</td></tr>
     {{end}}
     </tbody>
-  </table>
-  <button type="button" data-webauthn="register">Add a passkey on this host</button>
-  <p class="error" data-webauthn-error role="alert" hidden></p>
+  </table></div>
+  <div class="actions"><button type="button" data-webauthn="register">Add a passkey on this host</button></div>
+  <p class="alert alert-error" data-webauthn-error role="alert" hidden></p>
 </section>
 
 <section class="card" aria-labelledby="enroll-title">
   <h2 id="enroll-title">Passkey on another host</h2>
-  <p class="muted">For a host you added, such as your own Ingress: create a one-time link, then open it there.</p>
   <form method="post" action="/settings/enrollment-links">
-    <label for="target-origin">Origin</label>
-    <input id="target-origin" name="target_origin" placeholder="{{.Origin}}" autocomplete="off">
-    <button type="submit">Create enrollment link</button>
+    <div class="field narrow">
+      <label for="target-origin">Origin</label>
+      <input id="target-origin" name="target_origin" placeholder="{{.Origin}}" autocomplete="off" aria-describedby="target-origin-help">
+      <p class="help" id="target-origin-help">For a host you added, such as your own Ingress: create a one-time link, then open it there.</p>
+    </div>
+    <div class="actions"><button type="submit">Create enrollment link</button></div>
   </form>
 </section>
 
 <section class="card" aria-labelledby="tokens-title">
   <h2 id="tokens-title">Script tokens</h2>
   <p class="muted">Read-only tokens for your own scripts.</p>
-  <table>
-    <thead><tr><th scope="col">Name</th><th scope="col">ID</th><th scope="col">Status</th><th scope="col">Created</th><th scope="col">Expires</th><th scope="col"></th></tr></thead>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Name</th><th scope="col">ID</th><th scope="col">Status</th><th scope="col">Created</th><th scope="col">Expires</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
     <tbody>
     {{range .Tokens}}
     <tr>
-      <td>{{.Name}}</td><td><code>{{.Id}}</code></td><td>{{enum .Status.String "SCRIPT_TOKEN_STATUS_"}}</td>
-      <td>{{.CreatedAt.AsTime.Format "2006-01-02"}}</td><td>{{.ExpiresAt.AsTime.Format "2006-01-02"}}</td>
-      <td>{{if eq .Status.String "SCRIPT_TOKEN_STATUS_ACTIVE"}}<form method="post" action="/settings/tokens/{{.Id}}/revoke" class="inline"><button type="submit">Revoke</button></form>{{end}}</td>
+      <td>{{.Name}}</td><td><code>{{.Id}}</code></td>
+      <td>{{if eq .Status.String "SCRIPT_TOKEN_STATUS_ACTIVE"}}<span class="pill pill-ok">{{enum .Status.String "SCRIPT_TOKEN_STATUS_"}}</span>{{else}}<span class="pill pill-neutral">{{enum .Status.String "SCRIPT_TOKEN_STATUS_"}}</span>{{end}}</td>
+      <td class="mono">{{.CreatedAt.AsTime.Format "2006-01-02"}}</td><td class="mono">{{.ExpiresAt.AsTime.Format "2006-01-02"}}</td>
+      <td>{{if eq .Status.String "SCRIPT_TOKEN_STATUS_ACTIVE"}}<form method="post" action="/settings/tokens/{{.Id}}/revoke" class="inline"><button type="submit" class="danger">Revoke</button></form>{{end}}</td>
     </tr>
     {{else}}
-    <tr><td colspan="6">No script tokens.</td></tr>
+    <tr><td colspan="6" class="empty">No script tokens.</td></tr>
     {{end}}
     </tbody>
-  </table>
-  <form method="post" action="/settings/tokens" class="row">
-    <label for="token-name">Name</label>
-    <input id="token-name" name="name" required maxlength="64" pattern="[A-Za-z0-9._\-]+" autocomplete="off">
-    <label for="token-days">Days valid</label>
-    <input id="token-days" name="days" type="number" min="1" max="365" value="{{.DefaultDays}}">
-    <button type="submit">Create script token</button>
+  </table></div>
+  <form method="post" action="/settings/tokens">
+    <div class="fields">
+      <div class="field">
+        <label for="token-name">Name</label>
+        <input id="token-name" name="name" required maxlength="64" pattern="[A-Za-z0-9._\-]+" autocomplete="off" aria-describedby="token-name-help">
+        <p class="help" id="token-name-help">Letters, digits, dots, dashes and underscores.</p>
+      </div>
+      <div class="field">
+        <label for="token-days">Days valid</label>
+        <input id="token-days" name="days" type="number" min="1" max="365" value="{{.DefaultDays}}">
+      </div>
+    </div>
+    <div class="actions"><button type="submit">Create script token</button></div>
   </form>
 </section>
 {{template "plugin-list" .Plugins}}
 {{with .Model}}
 <section class="card" aria-labelledby="model-title">
   <h2 id="model-title">Model portfolio</h2>
-  <p class="muted">An optional basket for the whole portfolio to compare with (D-52). While it is off, it appears nowhere else. Each target is an instrument, written <code>ISIN/symbol</code> as your broker's prices know it, or a market index by the name your market-data connector gives it, with the currency of its levels. Weights are in percent, in steps of 0.01, and sum to 100. Leave a row empty to drop it.</p>
+  <p class="muted">An optional basket for the whole portfolio to compare with (D-52). While it is off, it appears nowhere else. Each target is an instrument, written <code>ISIN/symbol</code> as your institution's prices know it, or a market index by the name your market-data connector gives it, with the currency of its levels. Weights are in percent, in steps of 0.01, and sum to 100. Leave a row empty to drop it.</p>
   <form method="post" action="/settings/model">
     <label class="check"><input type="checkbox" name="enabled"{{if .Enabled}} checked{{end}}> Show the model portfolio</label>
-    <table class="targets">
-      <thead><tr><th scope="col">Kind</th><th scope="col">Instrument or index</th><th scope="col">Index currency</th><th scope="col" class="num">Weight %</th></tr></thead>
+    <div class="table"><table class="targets">
+      <thead><tr><th scope="col">Kind</th><th scope="col">Instrument or index</th><th scope="col">Index currency</th><th scope="col" class="num">Weight</th></tr></thead>
       <tbody>
       {{range $i, $row := .Rows}}
       <tr>
         <td><select name="kind" aria-label="Kind of target {{$i}}"><option value="instrument"{{if eq $row.Kind "instrument"}} selected{{end}}>Instrument</option><option value="index"{{if eq $row.Kind "index"}} selected{{end}}>Index</option></select></td>
         <td><input name="id" value="{{$row.ID}}" aria-label="Instrument or index of target {{$i}}" autocomplete="off" maxlength="64"></td>
         <td><input name="currency" value="{{$row.Currency}}" aria-label="Currency of target {{$i}}" autocomplete="off" maxlength="3" size="4"></td>
-        <td><input name="weight" value="{{$row.Weight}}" aria-label="Weight of target {{$i}} in percent" inputmode="decimal" autocomplete="off" size="7"></td>
+        <td><div class="unit"><input name="weight" value="{{$row.Weight}}" aria-label="Weight of target {{$i}} in percent" inputmode="decimal" autocomplete="off" size="7"><span>%</span></div></td>
       </tr>
       {{end}}
       </tbody>
-    </table>
-    <button type="submit" class="primary">Save model portfolio</button>
+    </table></div>
+    <div class="actions"><button type="submit" class="primary">Save model portfolio</button></div>
   </form>
 </section>
 {{end}}

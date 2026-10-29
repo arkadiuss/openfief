@@ -434,27 +434,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7c4813c68015
   - type: implements
-    from: SYM-ui-valuation-state
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:53:26.807Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-194f2fefe85a
-  - type: implements
-    from: SYM-ui-valuation-state
-    to: REQ-decision-d36-7-ui-valuation-status
-    created_at: 2026-10-28T19:53:26.844Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ad788e06c2c8
-  - type: covered_by
-    from: SYM-ui-valuation-state
-    to: TEST-ui-pages
-    created_at: 2026-10-28T19:53:26.868Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d4c30120980a
-  - type: implements
     from: SYM-ui-token-days
     to: REQ-ui-owner-actions
     created_at: 2026-10-28T19:57:42.508Z
@@ -573,20 +552,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-834cdd74c800
-  - type: constrains
-    from: REQ-ingest-market-data-watch-list
-    to: FACT-SUBJECT-33539288FED00E7B
-    created_at: 2026-10-29T08:48:02.752Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d8a8c33b8149
-  - type: requires_property
-    from: REQ-ingest-market-data-watch-list
-    to: FACT-PROP-E5FCDC7A6938122E
-    created_at: 2026-10-29T08:48:02.766Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c2304e4453fa
   - type: implements
     from: SYM-views-pb-price-check-status-enum
     to: REQ-views-price-checks
@@ -601,3 +566,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46bee4978fec
+  - type: constrains
+    from: REQ-ingest-market-data-watch-list
+    to: FACT-SUBJECT-33539288FED00E7B
+    created_at: 2026-10-29T08:48:02.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8a8c33b8149
+  - type: requires_property
+    from: REQ-ingest-market-data-watch-list
+    to: FACT-PROP-E5FCDC7A6938122E
+    created_at: 2026-10-29T08:48:02.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2304e4453fa

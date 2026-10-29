@@ -328,20 +328,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4ee27b89f37
-  - type: constrains
-    from: REQ-ui-plugin-trust-badges
-    to: FACT-SUBJECT-B80F5A6D78E147AA
-    created_at: 2026-10-29T08:28:05.213Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ef005fa03cd8
-  - type: requires_property
-    from: REQ-ui-plugin-trust-badges
-    to: FACT-PROP-16DC66CEC2B058CF
-    created_at: 2026-10-29T08:28:05.220Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5909b3f50f6d
   - type: implements
     from: SYM-valuation-app-new-cross-checks
     to: REQ-valuation-price-check-threshold
@@ -356,3 +342,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7910e9c58cb
+  - type: specified_by
+    from: REQ-ui-plugin-trust-badges
+    to: SCEN-ui-plugin-trust-badges
+    created_at: 2026-10-29T09:50:01.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5e9ae5df056
+  - type: executable_for
+    from: SYM-e2e-test-operator-deploys-signed-plugin
+    to: TEST-e2e-plugins
+    created_at: 2026-10-29T10:10:10.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5967ecb87662
+  - type: constrains
+    from: REQ-ui-plugin-trust-badges
+    to: FACT-SUBJECT-B80F5A6D78E147AA
+    created_at: 2026-10-29T08:28:05.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef005fa03cd8
+  - type: requires_property
+    from: REQ-ui-plugin-trust-badges
+    to: FACT-PROP-16DC66CEC2B058CF
+    created_at: 2026-10-29T08:28:05.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5909b3f50f6d
