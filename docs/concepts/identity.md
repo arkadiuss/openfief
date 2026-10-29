@@ -115,7 +115,7 @@ sequenceDiagram
 
 ### In the core
 
-`cmd/core` serves the `AuthService` at `/openfief.identity.v1.AuthService/` on the same port as the read API (8080; Service ports `http` and `connect`). In a cluster it admits a caller when a TokenReview accepts its token for audience `openfief-core`, the username is a plugin's ServiceAccount, and that Plugin resource lists `view` among its effective capabilities; accepted reviews are cached for 5 minutes, as the egress proxy does. The core's ClusterRole for TokenReviews is in `deploy/core/rbac.yaml`. Outside a cluster, where there are no ServiceAccount tokens, a local view plugin may present the token in `OPENFIEF_AUTH_CALLER_TOKEN`; without it every caller is refused. The read API's verifier, `readTokens` in [core.go](../../cmd/core/core.go), asks `Auth.Authenticate` first and, for a token it doesn't know, the same callers as the `AuthService`: a view plugin in a cluster, the `OPENFIEF_AUTH_CALLER_TOKEN` caller outside one. A token neither accepts is refused as invalid; a check that can't be made, such as a TokenReview the API server doesn't answer, fails the call as internal. The commands are `core enroll-link [--host localhost:8080] [--ttl 15m]` and `core token issue|list|revoke`; the flags are `--auth-origin`, `--session-idle`, `--session-max` and `--demo-sessions`. See [Architecture](../architecture.md).
+`cmd/core` serves the `AuthService` at `/openfief.identity.v1.AuthService/` on the same port as the read API (8080; Service ports `http` and `connect`). In a cluster it admits a caller when a TokenReview accepts its token for audience `openfief-core`, the username is a plugin's ServiceAccount, and that Plugin resource lists `view` among its effective capabilities; accepted reviews are cached for 5 minutes, as the egress proxy does. The core's ClusterRole for TokenReviews is in `deploy/core/rbac.yaml`. Outside a cluster, where there are no ServiceAccount tokens to review, every caller is refused: no build has a fixed token or any other way around authentication, not even for development (D-84), so the UI is developed against a local cluster such as kind or k3d. The tests of `cmd/core` run the same check against a fake cluster whose TokenReview accepts a synthetic token. The read API's verifier, `readTokens` in [core.go](../../cmd/core/core.go), asks `Auth.Authenticate` first and, for a token it doesn't know, the same callers as the `AuthService`: a view plugin in a cluster, no one outside one. A token neither accepts is refused as invalid; a check that can't be made, such as a TokenReview the API server doesn't answer, fails the call as internal. The commands are `core enroll-link [--host localhost:8080] [--ttl 15m]` and `core token issue|list|revoke`; the flags are `--auth-origin`, `--session-idle`, `--session-max` and `--demo-sessions`. See [Architecture](../architecture.md).
 
 ## Decisions
 
@@ -125,6 +125,7 @@ sequenceDiagram
 - D-59: only the core may call a plugin, with a short-lived TokenRequest token whose audience is that instance.
 - D-60: no hostname at install; the one-time link for the first passkey on localhost; a session's link for a new host; passkeys per host. D-60 has "the CLI" print the first link; the code prints it with the core's own command, `core enroll-link`, which needs the database's DSN, and the owner's `openfief` CLI (D-46) has no such command.
 - D-6: the public API is read-only, so `read` is the only script token scope.
+- D-84: no fixed token and no bypass in any build. The core once accepted a token from `OPENFIEF_AUTH_CALLER_TOKEN` outside a cluster; that path is gone, and so is the UI's matching variable.
 - Author decisions given in chat, not yet in DESIGN.md: the auth split (authenticators, opaque sessions, script tokens from a session, the UI as backend-for-frontend), and demo read-only sessions (scopes, the demo authenticator).
 
 ## Verification
@@ -138,7 +139,7 @@ sequenceDiagram
 - TEST-identity-auth-contract: the generated client reaches the generated handler.
 - TEST-identity-kube: the core's tokens to plugins with the client-go fake clientset.
 - TEST-core-read-tokens: the read API's verifier accepts the owner's tokens and view plugins' tokens, refuses others as invalid, and fails as such when a check can't be made.
-- TEST-core-auth: under `task test:pg`, `core enroll-link`, a passkey enrollment and login over the core's HTTP server, the read API with a session and with a script token created from it, logout, and demo sessions refused without the marker or without the flag; and the caller check with a fake TokenReview.
+- TEST-core-auth: under `task test:pg`, `core enroll-link`, a passkey enrollment and login over the core's HTTP server, the read API with a session and with a script token created from it, logout, and demo sessions refused without the marker or without the flag; and the caller check with a fake TokenReview; outside a cluster every caller is refused (`TestCallersOutsideACluster`).
 
 ## Not built yet
 

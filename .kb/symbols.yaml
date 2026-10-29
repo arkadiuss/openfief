@@ -48349,7 +48349,7 @@ symbols:
     title: callers
     sourceFile: cmd/core/auth.go
     status: active
-    symbol_role: type-shape
+    symbol_role: behavioral
     granularity_reason: module-level-behavior
     origin:
       kind: agent
@@ -48359,6 +48359,8 @@ symbols:
         target: TEST-core-auth
       - type: implements
         target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-no-auth-bypass
   - id: SYM-core-auth-cmd-core-auth-callers-verify-caller
     title: callers.VerifyCaller
     sourceFile: cmd/core/auth.go
@@ -48372,6 +48374,8 @@ symbols:
         target: TEST-core-auth
       - type: implements
         target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-no-auth-bypass
   - id: SYM-core-auth-cmd-core-auth-new-callers
     title: newCallers
     sourceFile: cmd/core/auth.go
@@ -48385,6 +48389,8 @@ symbols:
         target: TEST-core-auth
       - type: implements
         target: REQ-identity-auth-callers
+      - type: implements
+        target: REQ-identity-no-auth-bypass
   - id: SYM-core-auth-cmd-core-auth-kube-callers
     title: kubeCallers
     sourceFile: cmd/core/auth.go
@@ -48447,33 +48453,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T19:29:08.513Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-auth
-      - type: implements
-        target: REQ-identity-auth-callers
-  - id: SYM-core-auth-cmd-core-auth-dev-callers
-    title: devCallers
-    sourceFile: cmd/core/auth.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:29:13.814Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-auth
-      - type: implements
-        target: REQ-identity-auth-callers
-  - id: SYM-core-auth-cmd-core-auth-dev-callers-verify-caller
-    title: devCallers.VerifyCaller
-    sourceFile: cmd/core/auth.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:29:20.331Z
     relationships:
       - type: covered_by
         target: TEST-core-auth
@@ -48613,16 +48592,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T19:30:22.090Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-auth
-  - id: SYM-core-auth-cmd-core-auth-test-test-dev-callers
-    title: TestDevCallers
-    sourceFile: cmd/core/auth_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:30:28.222Z
     relationships:
       - type: executable_for
         target: TEST-core-auth
@@ -55203,33 +55172,6 @@ symbols:
         target: TEST-e2e-demo-stack
       - type: executable_for
         target: TEST-e2e-ui
-  - id: SYM-uiplugin-caller-token
-    title: callerToken
-    sourceFile: plugins/ui/main.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T20:42:24.896Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-plugin
-      - type: implements
-        target: REQ-ui-core-credentials
-  - id: SYM-uiplugin-caller-token-token
-    title: callerToken.Token
-    sourceFile: plugins/ui/main.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T20:42:29.425Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-plugin
-      - type: implements
-        target: REQ-ui-core-credentials
   - id: SYM-uiplugin-auth-client
     title: authClient
     sourceFile: plugins/ui/main.go
@@ -55241,6 +55183,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-plugin
+      - type: implements
+        target: REQ-identity-no-auth-bypass
       - type: implements
         target: REQ-ui-core-credentials
   - id: SYM-uiplugin-test-auth-client
@@ -76254,3 +76198,63 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-design
+  - id: SYM-core-test-helper-view-cluster
+    title: viewCluster
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:54:58.872Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-test-helper-review-tokens
+    title: reviewTokens
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:55:11.772Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-test-helper-start-core-for-ui
+    title: startCoreForUI
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:55:20.515Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-test-callers-outside-acluster
+    title: TestCallersOutsideACluster
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:55:28.387Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-test-helper-start-core-in
+    title: startCoreIn
+    sourceFile: cmd/core/core_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:55:37.543Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-read-api
+  - id: SYM-uiplugin-test-helper-token-file
+    title: tokenFile
+    sourceFile: plugins/ui/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T10:55:45.571Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugin

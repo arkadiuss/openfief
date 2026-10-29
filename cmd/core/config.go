@@ -197,8 +197,7 @@ func newFlags(name string) *flag.FlagSet {
 }
 
 // parseServe parses serve's flags, reading the environment through getenv:
-// in a cluster --connectors is on by default, and the dev caller token
-// comes from OPENFIEF_AUTH_CALLER_TOKEN.
+// in a cluster --connectors is on by default.
 func parseServe(args []string, getenv func(string) string) (serveConfig, error) {
 	inCluster := getenv(inClusterEnv) != ""
 	fs := newFlags(cmdServe)
@@ -224,7 +223,6 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	if err := fs.Parse(args); err != nil {
 		return serveConfig{}, fmt.Errorf("serve: %w", err)
 	}
-	c.Auth.DevCallerToken = getenv(devCallerEnv)
 	if err := parseAuth(&c.Auth, *origins); err != nil {
 		return serveConfig{}, err
 	}

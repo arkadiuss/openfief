@@ -153,7 +153,7 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 		case <-time.After(retryEvery):
 		}
 	}
-	callers, err := newCallers(cl, &cfg.Auth, now, log)
+	callers, err := newCallers(cl, now, log)
 	if err != nil {
 		return nil, err
 	}

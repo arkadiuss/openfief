@@ -293,3 +293,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-205270427c22
+  - type: executable_for
+    from: SYM-uiplugin-test-helper-token-file
+    to: TEST-ui-plugin
+    created_at: 2026-10-29T10:55:47.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9472298d0d0

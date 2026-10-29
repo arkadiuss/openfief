@@ -6,9 +6,8 @@
 // wires them to the plugin's environment.
 //
 // The manifest asks for the view capability and no egress hosts, and takes
-// no config. Outside a cluster, against a core run locally, the UI presents
-// OPENFIEF_AUTH_CALLER_TOKEN to the AuthService instead of a projected
-// token.
+// no config. There is no way to run it without a projected token: local
+// development runs it in a local cluster such as kind or k3d (D-84).
 package main
 
 import (
@@ -87,10 +86,10 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		return nil, fmt.Errorf("core address: %w", err)
 	}
 	h, err := ui.New(&ui.Config{
-		Auth:       identityv1connect.NewAuthServiceClient(authClient(os.Getenv), coreURL),
-		Model:      portfoliov1connect.NewModelPortfolioServiceClient(authClient(os.Getenv), coreURL),
-		BondLots:   ingestv1connect.NewBondLotServiceClient(authClient(os.Getenv), coreURL),
-		Statements: ingestv1connect.NewStatementServiceClient(uploadClient(os.Getenv), coreURL),
+		Auth:       identityv1connect.NewAuthServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Model:      portfoliov1connect.NewModelPortfolioServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		BondLots:   ingestv1connect.NewBondLotServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Statements: ingestv1connect.NewStatementServiceClient(uploadClient(openfief.TokenFile{}), coreURL),
 		Read:       viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:        log,
 	})
@@ -100,36 +99,19 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 	return h, nil
 }
 
-// authCallerEnv names the token a UI running outside a cluster presents to
-// the AuthService instead of a projected token: the core started with the
-// same OPENFIEF_AUTH_CALLER_TOKEN accepts it, and only outside a cluster.
-const authCallerEnv = "OPENFIEF_AUTH_CALLER_TOKEN"
-
-// callerToken is a fixed AuthService caller token.
-type callerToken string
-
-// Token returns the fixed token.
-func (c callerToken) Token() (string, error) { return string(c), nil }
-
-// authClient is the HTTP client for the AuthService. It presents the token
-// in OPENFIEF_AUTH_CALLER_TOKEN when that is set (outside a cluster), and
-// otherwise the projected token, read from its file on every call since it
-// rotates.
-func authClient(getenv func(string) string) *http.Client {
-	var c *http.Client
-	if token := getenv(authCallerEnv); token != "" {
-		c = openfief.CoreHTTPClient(callerToken(token))
-	} else {
-		c = openfief.CoreHTTPClient(openfief.TokenFile{})
-	}
+// authClient is the HTTP client for the AuthService and the owner's entry
+// services. It presents the plugin's projected token from tokens, read on
+// every call since it rotates.
+func authClient(tokens openfief.TokenSource) *http.Client {
+	c := openfief.CoreHTTPClient(tokens)
 	c.Timeout = coreTimeout
 	return c
 }
 
 // uploadClient is authClient for statement uploads, which may take up to
 // uploadTimeout.
-func uploadClient(getenv func(string) string) *http.Client {
-	c := authClient(getenv)
+func uploadClient(tokens openfief.TokenSource) *http.Client {
+	c := authClient(tokens)
 	c.Timeout = uploadTimeout
 	return c
 }

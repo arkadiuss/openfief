@@ -27,7 +27,7 @@ Projected tokens rotate, so the UI reads its token from the file the operator mo
 
 ## How it works
 
-The code is in [`internal/views/ui`](../../internal/views/ui/doc.go); [`plugins/ui`](../../plugins/ui/main.go) only wires it to the plugin's environment: the core's address (`OPENFIEF_CORE_ADDRESS`), the listen port (`OPENFIEF_LISTEN_PORT`) and the token file. Outside a cluster, against a core run locally, there is no projected token: the UI then presents `OPENFIEF_AUTH_CALLER_TOKEN`, the token the core was started with in the same variable, which the core accepts only outside a cluster.
+The code is in [`internal/views/ui`](../../internal/views/ui/doc.go); [`plugins/ui`](../../plugins/ui/main.go) only wires it to the plugin's environment: the core's address (`OPENFIEF_CORE_ADDRESS`), the listen port (`OPENFIEF_LISTEN_PORT`) and the token file. There is no way to run it without a projected token, and no fixed token the core would accept instead (D-84): the UI is developed against a local cluster such as kind or k3d.
 
 ```mermaid
 flowchart LR
