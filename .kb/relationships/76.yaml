@@ -475,3 +475,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e707623acdd1
+  - type: implements
+    from: SYM-connector-gen-pb-sync-request-get-instruments
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-10-29T17:18:45.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-344092605fbb
+  - type: covered_by
+    from: SYM-connector-gen-pb-sync-request-get-instruments
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-29T17:18:45.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a34dea9eaf15

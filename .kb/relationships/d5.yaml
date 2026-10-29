@@ -286,3 +286,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46dfcd3efa6a
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-book-accounts
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:14:07.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e78d9db6ec77

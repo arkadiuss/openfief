@@ -1,6 +1,6 @@
 ---
 title: The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, in an opening batch until one completes and in transactions batches after it, and must not sync an instance that no longer runs while keeping its state.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-49
 tags:
   - strict-modeling
@@ -34,14 +34,4 @@ The core must sync every running connector instance when its sync policy says it
 
 ## Context
 
-D-49 makes the core own connector schedules; the default interval is six hours with up to 30 minutes of jitter so instances don't all call out at once (orchestrator's suggestion). D-23 seeds before importing transactions. D-58 keeps an uninstalled instance's data, and the kept watermark lets a reinstall continue. Modeled by Claude Code for the core-connectors task (orchestrator brief: the core scheduler, watermarks, connector bindings); the author has not reviewed this requirement yet.
-
-## Source
-
-> The core calls connectors: a connector serves a Connect service for syncing and for importing files, and the core owns the schedules, retries and import batches.
-
-docs/DESIGN.md D-49
-
-> The data it brought in stays in the ledger (D-18), marked as coming from a removed instance; reinstalling under the same name continues from it.
-
-docs/DESIGN.md D-58
+Closed: superseded by REQ-ingest-scheduler-when-due. D-95 makes a seeded account sync in transactions mode on its own, so the mode follows the ledger. Modeled by Claude Code for the market-data work package (impl/market-data); the author has not reviewed it yet.

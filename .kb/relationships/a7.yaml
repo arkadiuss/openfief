@@ -293,3 +293,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-965f5e526a08
+  - type: implements
+    from: SYM-ingest-new-market-data-scope
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-10-29T17:17:23.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb0db9ce1761
+  - type: implements
+    from: SYM-ingest-new-market-data-scope
+    to: REQ-ingest-market-data-sync-instruments
+    created_at: 2026-10-29T17:17:23.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19f6cc04e7d9
+  - type: covered_by
+    from: SYM-ingest-new-market-data-scope
+    to: TEST-ingest-marketdata
+    created_at: 2026-10-29T17:17:23.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37a336aa93e8

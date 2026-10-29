@@ -17,22 +17,24 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Onboarding
 
-2. **Seeding a broker account the owner maps after its connector synced.**
-   - *Problem:* D-23 seeds an account from its broker's positions at go-live, and D-72 books nothing for an unmapped broker account. A connector usually syncs before the owner maps its accounts in the first-run wizard (D-73), so its first opening batch seeds nothing, and the ledger refuses to seed an account again with changed content.
-   - *Today:* an instance counts as seeded only while every broker account mapped for it is seeded, so mapping one makes the next sync an opening batch again; that batch seeds it and leaves out the opening lots and cash of broker accounts already seeded, keeping their balance assertions ([Ingest](concepts/ingest.md#broker-accounts)). For IBKR, whose Flex Query sets its own period, nothing is lost; a connector whose watermark moves on an opening batch could skip the transactions of other accounts between the two syncs.
-   - *Options:* keep; or have the connector contract seed one account at a time; or seed a newly mapped account only from an uploaded opening statement (D-109).
-
-3. **The treasury-bonds connector still names its OpenFief account in its config.**
+2. **The treasury-bonds connector still names its OpenFief account in its config.**
    - *Problem:* D-72's broker accounts cover broker connectors. The treasury-bonds plugin books every lot into the account its config's `account` names, so the owner types an OpenFief account ID at install, before the wizard creates the account.
    - *Today:* unchanged: the account must exist and carry that ID, and the wizard binds the instance to it.
    - *Options:* the core sends the lot's account with `ImportBondLots`, as it knows it; or the plugin reports one broker account per registry account like a broker connector.
 
-4. **Removing or remapping sleeves, kinds, accounts and broker accounts.**
+3. **Removing or remapping sleeves, kinds, accounts and broker accounts.**
    - *Problem:* D-71 and D-72 let the owner add and rename; they don't say whether the owner can delete a sleeve, kind or account, or map a broker account to another account once mapped.
    - *Today:* nothing is deleted, and a mapped broker account stays mapped (`FAILED_PRECONDITION` when mapped again elsewhere). An unwanted default sleeve can only be renamed or left empty.
    - *Options:* allow deleting an empty sleeve, an unused kind and an account without transactions, and remapping a broker account whose account has no transactions from it; or keep everything append-only.
 
-5. **Who may list broker account numbers.**
+4. **Who may list broker account numbers.**
    - *Problem:* D-72 has the UI show unmapped broker accounts, which the read API lists (`ListBrokerAccounts`). Every read caller reads it: owner and read sessions, script tokens and view plugins such as Ghostfolio's.
    - *Today:* any read caller may list them, as it may read the rest of the record. The demo has none.
    - *Options:* keep; or list them only through the owner's `AccountService`, so read sessions and plugins never see an account number.
+
+## Market data
+
+5. **Which connector instances are asked what to price.**
+   - *Problem:* D-93 has each sync request to a market-data connector carry the instruments the owner holds and the model portfolio's targets. No manifest field says that a connector is a market-data connector, and the list tells a connector what the owner holds at every institution.
+   - *Today:* the core sends the list to every connector instance bound to no account, since such an instance can deliver only market data; a broker connector, which is bound to the accounts it feeds, gets it empty. A market-data connector the owner bound to an account would get nothing. Held means a non-zero holding today, treasury bonds with series terms left out; the model's targets count only while it is on (D-52).
+   - *Options:* keep; or a manifest field declaring a market-data connector, approved with the grant like the cross-check prices of D-112; or send it to every connector.

@@ -24,12 +24,12 @@ type entryCaller struct {
 }
 
 // Sync syncs instance through the client.
-func (e *entryCaller) Sync(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (ingestapp.Delivery, error) {
+func (e *entryCaller) Sync(ctx context.Context, instance string, call *ingestapp.SyncCall) (ingestapp.Delivery, error) {
 	c, err := e.get()
 	if err != nil {
 		return ingestapp.Delivery{}, err
 	}
-	d, err := c.Sync(ctx, instance, id, mode, watermark)
+	d, err := c.Sync(ctx, instance, call)
 	if err != nil {
 		return ingestapp.Delivery{}, fmt.Errorf("sync: %w", err)
 	}

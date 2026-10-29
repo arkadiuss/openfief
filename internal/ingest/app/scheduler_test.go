@@ -14,6 +14,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
@@ -73,7 +74,6 @@ func (m *memStore) CompleteSync(_ context.Context, instance string, b *ingest.Ba
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	in := m.get(instance)
-	in.claim.Seeded = in.claim.Seeded || b.Mode == ingest.ModeOpening
 	in.claim.Watermark, in.claim.Failures, in.claim.Open = watermark, 0, nil
 	in.next, in.leaseUntil = next, time.Time{}
 	m.outcomes = append(m.outcomes, string(b.ID)+":completed")
@@ -153,9 +153,10 @@ type scriptedCaller struct {
 	base    app.Delivery
 }
 
-func (f *scriptedCaller) Sync(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (app.Delivery, error) {
+func (f *scriptedCaller) Sync(ctx context.Context, instance string, call *app.SyncCall) (app.Delivery, error) {
+	id := call.ID
 	f.mu.Lock()
-	f.calls = append(f.calls, syncCall{instance, id, mode, watermark})
+	f.calls = append(f.calls, syncCall{instance, id, call.Mode, call.Watermark})
 	var err error
 	if len(f.errs) > 0 {
 		err, f.errs = f.errs[0], f.errs[1:]
@@ -221,8 +222,11 @@ func scheduler(t *testing.T, caller *scriptedCaller, store *memStore, names ...s
 	caller.base = app.Delivery{Institution: "xtb"}
 	var ids int
 	var idMu sync.Mutex
+	l := &lockedLedger{seeds: []ledger.AccountID{"acc-1"}}
+	conns := connectors(t, caller, l, &fakeStores{})
+	conns.Seeding = l
 	return &app.Scheduler{
-		Connectors: connectors(t, caller, &lockedLedger{}, &fakeStores{}),
+		Connectors: conns,
 		Instances:  listed{names: names},
 		Store:      store,
 		Policy:     ingest.SyncPolicy{Interval: 6 * time.Hour, Jitter: 30 * time.Minute, RetryFirst: 5 * time.Minute, RetryMax: time.Hour},
@@ -266,8 +270,8 @@ func TestSchedulerSyncsWhenDue(t *testing.T) {
 		t.Errorf("Sync calls (-want +got):\n%s", diff)
 	}
 	claim, next := store.xtbState()
-	if !claim.Seeded || claim.Watermark != "after-b-2" || claim.Open != nil {
-		t.Errorf("state = %+v, want seeded, watermark after-b-2, no open batch", claim)
+	if claim.Watermark != "after-b-2" || claim.Open != nil {
+		t.Errorf("state = %+v, want watermark after-b-2, no open batch", claim)
 	}
 	if want := t0().Add(12*time.Hour + 20*time.Minute); !next.Equal(want) {
 		t.Errorf("next sync = %s, want %s", next, want)
@@ -363,9 +367,6 @@ func TestSchedulerSyncNow(t *testing.T) {
 	}
 	if diff := cmp.Diff([]string{"b-1:failed 1", "b-1:abandoned", "b-2:completed"}, store.recorded()); diff != "" {
 		t.Errorf("outcomes (-want +got):\n%s", diff)
-	}
-	if claim, _ := store.xtbState(); claim.Seeded {
-		t.Error("a transactions batch marked the instance seeded")
 	}
 }
 
@@ -491,10 +492,21 @@ func (m *memBindings) BoundAccounts(context.Context, string) ([]ledger.AccountID
 	return m.accounts, nil
 }
 
-// lockedLedger is a fakeLedger that concurrent syncs may share.
+// lockedLedger is a fakeLedger that concurrent syncs may share. Any
+// seeding seeds the accounts listed in seeds, on 2026-03-02; goLive holds
+// the accounts seeded so far.
 type lockedLedger struct {
-	mu sync.Mutex
-	l  fakeLedger
+	mu     sync.Mutex
+	l      fakeLedger
+	seeds  []ledger.AccountID
+	goLive map[ledger.AccountID]kernel.Date
+}
+
+func (f *lockedLedger) GoLive(_ context.Context, account ledger.AccountID) (kernel.Date, bool, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	day, ok := f.goLive[account]
+	return day, ok, nil
 }
 
 func (f *lockedLedger) Import(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
@@ -506,5 +518,141 @@ func (f *lockedLedger) Import(ctx context.Context, txs []ledger.Transaction, ass
 func (f *lockedLedger) Seed(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	if f.goLive == nil {
+		f.goLive = map[ledger.AccountID]kernel.Date{}
+	}
+	for _, a := range f.seeds {
+		if _, ok := f.goLive[a]; !ok {
+			f.goLive[a] = t0Date()
+		}
+	}
 	return f.l.Seed(ctx, txs, assertions)
+}
+
+// t0Date is t0's date.
+func t0Date() kernel.Date {
+	y, m, d := t0().Date()
+	day, err := kernel.NewDate(y, m, d)
+	if err != nil {
+		return kernel.Date{}
+	}
+	return day
+}
+
+// TestSchedulerFollowsTheLedgersSeeding checks that the mode of a scheduled
+// sync follows the bound accounts' seeding (D-95): an instance with one
+// account seeded and one newly bound runs an opening batch, then a
+// transactions batch, both from the watermark it had, and the next sync is
+// a transactions batch on its own.
+func TestSchedulerFollowsTheLedgersSeeding(t *testing.T) {
+	t.Parallel()
+	caller, store := &scriptedCaller{}, newMemStore()
+	s, c := scheduler(t, caller, store, "xtb-main")
+	l, ok := s.Connectors.Seeding.(*lockedLedger)
+	if !ok {
+		t.Fatal("the scheduler's seeding is not the test ledger")
+	}
+	l.seeds = []ledger.AccountID{"acc-1", "acc-2"}
+	l.goLive = map[ledger.AccountID]kernel.Date{"acc-1": t0Date()}
+	s.Connectors.Bindings = &fakeBindings{accounts: []ledger.AccountID{"acc-1", "acc-2"}}
+	store.get("xtb-main").claim.Watermark = "w-0"
+
+	tick(t, s) // acc-2 is not seeded: opening, then transactions from w-0
+	c.advance(7 * time.Hour)
+	tick(t, s) // both seeded: transactions alone
+
+	want := []syncCall{
+		{Instance: "xtb-main", ID: "b-1", Mode: ingest.ModeOpening, Watermark: "w-0"},
+		{Instance: "xtb-main", ID: "b-2", Mode: ingest.ModeTransactions, Watermark: "w-0"},
+		{Instance: "xtb-main", ID: "b-3", Mode: ingest.ModeTransactions, Watermark: "after-b-2"},
+	}
+	if diff := cmp.Diff(want, caller.seen()); diff != "" {
+		t.Errorf("Sync calls (-want +got):\n%s", diff)
+	}
+	if diff := cmp.Diff([]string{"b-1:completed", "b-2:completed", "b-3:completed"}, store.recorded()); diff != "" {
+		t.Errorf("outcomes (-want +got):\n%s", diff)
+	}
+}
+
+// TestSchedulerRetriesAnOpeningBatchThenSyncsTransactions checks that an
+// opening batch left open by a failure is retried first and still followed
+// by the transactions batch the plan calls for.
+func TestSchedulerRetriesAnOpeningBatchThenSyncsTransactions(t *testing.T) {
+	t.Parallel()
+	caller, store := &scriptedCaller{errs: []error{nil, errCaller}}, newMemStore()
+	s, c := scheduler(t, caller, store, "xtb-main")
+	l, ok := s.Connectors.Seeding.(*lockedLedger)
+	if !ok {
+		t.Fatal("the scheduler's seeding is not the test ledger")
+	}
+	l.seeds = []ledger.AccountID{"acc-2"}
+	l.goLive = map[ledger.AccountID]kernel.Date{"acc-1": t0Date()}
+	s.Connectors.Bindings = &fakeBindings{accounts: []ledger.AccountID{"acc-1", "acc-2"}}
+
+	tick(t, s) // the opening batch completes, its transactions batch fails
+	c.advance(5 * time.Minute)
+	tick(t, s) // the open transactions batch is retried alone
+
+	want := []syncCall{
+		{Instance: "xtb-main", ID: "b-1", Mode: ingest.ModeOpening},
+		{Instance: "xtb-main", ID: "b-2", Mode: ingest.ModeTransactions},
+		{Instance: "xtb-main", ID: "b-2", Mode: ingest.ModeTransactions},
+	}
+	if diff := cmp.Diff(want, caller.seen()); diff != "" {
+		t.Errorf("Sync calls (-want +got):\n%s", diff)
+	}
+	if diff := cmp.Diff([]string{"b-1:completed", "b-2:failed 1", "b-2:completed"}, store.recorded()); diff != "" {
+		t.Errorf("outcomes (-want +got):\n%s", diff)
+	}
+}
+
+// fixedScope is a ScopeSource with a fixed scope.
+type fixedScope struct {
+	scope ingest.MarketDataScope
+	calls int
+}
+
+func (f *fixedScope) MarketDataScope(context.Context) (ingest.MarketDataScope, error) {
+	f.calls++
+	return f.scope, nil
+}
+
+// TestSchedulerAsksMarketDataConnectorsForTheScope checks that an instance
+// bound to no account, a market-data connector, syncs in transactions mode
+// and is asked to price the scope (D-93), and a bound one is not.
+func TestSchedulerAsksMarketDataConnectorsForTheScope(t *testing.T) {
+	t.Parallel()
+	scope := ingest.MarketDataScope{Indices: []string{"FAKE20"}}
+	for _, tt := range []struct {
+		name      string
+		bound     []ledger.AccountID
+		wantMode  ingest.Mode
+		wantScope ingest.MarketDataScope
+	}{
+		{name: "a market-data connector", wantMode: ingest.ModeTransactions, wantScope: scope},
+		{name: "a broker connector", bound: []ledger.AccountID{"acc-1"}, wantMode: ingest.ModeOpening},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			caller := &fakeCaller{delivery: app.Delivery{Institution: "eodhd"}}
+			store := newMemStore()
+			conns := connectors(t, caller, &fakeLedger{}, &fakeStores{})
+			conns.Bindings = &fakeBindings{accounts: tt.bound}
+			s := &app.Scheduler{
+				Connectors: conns, Instances: listed{names: []string{"eodhd"}}, Store: store,
+				Scope: &fixedScope{scope: scope}, Policy: ingest.SyncPolicy{Interval: time.Hour, RetryFirst: time.Minute, RetryMax: time.Hour},
+				Timeout: time.Minute, Now: t0, NewBatchID: func() ingest.BatchID { return "b-1" },
+				Jitter: func(time.Duration) time.Duration { return 0 },
+			}
+			if _, err := s.SyncNow(t.Context(), "eodhd", 0); err != nil {
+				t.Fatalf("SyncNow: %v", err)
+			}
+			if caller.mode != tt.wantMode {
+				t.Errorf("mode = %s, want %s", caller.mode, tt.wantMode)
+			}
+			if diff := cmp.Diff(tt.wantScope, caller.scope); diff != "" {
+				t.Errorf("scope (-want +got):\n%s", diff)
+			}
+		})
+	}
 }

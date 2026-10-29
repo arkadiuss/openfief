@@ -92,13 +92,6 @@ relationships:
     id: rel-efb901f46180
   - type: implements
     from: SYM-ingest-sched-sync-policy-next-sync
-    to: REQ-ingest-scheduler-due
-    created_at: 2026-10-28T16:58:54.581Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7c48bd5d8f41
-  - type: implements
-    from: SYM-ingest-sched-sync-policy-next-sync
     to: REQ-ingest-scheduler-retry
     created_at: 2026-10-28T16:58:54.595Z
     created_by: kibi/upsert
@@ -517,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1ccdb157d55
+  - type: implements
+    from: SYM-ingest-sched-sync-policy-next-sync
+    to: REQ-ingest-scheduler-when-due
+    created_at: 2026-10-29T17:22:13.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63a8f4cdebc0

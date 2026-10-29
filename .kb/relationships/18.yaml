@@ -342,3 +342,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7f3471e34b9
+  - type: implements
+    from: SYM-ledger-app-ledger-go-live
+    to: REQ-ledger-go-live
+    created_at: 2026-10-29T17:17:40.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90bf5c40feb4
+  - type: covered_by
+    from: SYM-ledger-app-ledger-go-live
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-29T17:17:40.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2fe4f3027ae

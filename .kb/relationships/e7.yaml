@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb3fefb7ab39
+  - type: verified_by
+    from: SCEN-plugins-eodhd-requested-instruments
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-29T16:57:22.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-debc29e073cd
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fixed-seeding
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T17:12:49.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b14e07b1e18

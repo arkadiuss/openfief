@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa4582c71327
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-asks-market-data-connectors-for-the-scope
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:16:19.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06f1114b5bf6

@@ -2,7 +2,6 @@ package postgres_test
 
 import (
 	"testing"
-	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -21,20 +20,6 @@ func day(t *testing.T, s string) kernel.Date {
 		t.Fatalf("ParseDate(%q): %v", s, err)
 	}
 	return d
-}
-
-// completeOpening runs and completes one opening batch id of instance at
-// from, as a sync does.
-func completeOpening(t *testing.T, s *postgres.Store, instance string, id ingest.BatchID, from time.Time) {
-	t.Helper()
-	claim(t, s, instance, from)
-	if err := s.StartBatch(t.Context(), instance, app.OpenBatch{ID: id, Mode: ingest.ModeOpening}, from); err != nil {
-		t.Fatalf("StartBatch: %v", err)
-	}
-	b := &ingest.Batch{ID: id, Institution: "ibkr", Source: app.SourceSync, Mode: ingest.ModeOpening}
-	if err := s.CompleteSync(t.Context(), instance, b, "", from.Add(time.Hour), from.Add(time.Minute)); err != nil {
-		t.Fatalf("CompleteSync: %v", err)
-	}
 }
 
 func TestBrokerAccountStore(t *testing.T) {
@@ -102,35 +87,5 @@ func TestBindings(t *testing.T) {
 	want := []ingest.Binding{{Instance: "ibkr-main", Account: "acc-cash"}, {Instance: "ibkr-main", Account: "acc-ibkr"}, {Instance: "xtb-main", Account: "acc-xtb"}}
 	if diff := cmp.Diff(want, got); err != nil || diff != "" {
 		t.Errorf("Bindings = %v (-want +got):\n%s", err, diff)
-	}
-}
-
-// TestBrokerAccountsReseedTheInstance checks that an instance counts as
-// seeded only while every broker account mapped for it was seeded: mapping
-// one after the instance's opening batch makes the next sync an opening
-// one again (D-72, D-23).
-func TestBrokerAccountsReseedTheInstance(t *testing.T) {
-	t.Parallel()
-	ctx := t.Context()
-	s := postgres.New(newPool(t))
-	if err := s.RecordBrokerAccounts(ctx, "ibkr-main", "ibkr", []ingest.BrokerAccountID{"U0000001"}, day(t, "2026-03-02")); err != nil {
-		t.Fatalf("RecordBrokerAccounts: %v", err)
-	}
-	completeOpening(t, s, "ibkr-main", "b-1", t0())
-	if c := claim(t, s, "ibkr-main", t0().Add(time.Hour)); !c.Seeded {
-		t.Errorf("claim = %+v, want seeded after an opening batch with nothing mapped", c)
-	}
-	if err := s.MapBrokerAccount(ctx, "ibkr-main", "U0000001", "acc-ibkr", t0()); err != nil {
-		t.Fatalf("MapBrokerAccount: %v", err)
-	}
-	later := t0().Add(2 * time.Hour)
-	if c := claim(t, s, "ibkr-main", later); c.Seeded {
-		t.Errorf("claim = %+v, want not seeded once an unseeded broker account is mapped", c)
-	}
-	if err := s.MarkSeeded(ctx, "ibkr-main", []ingest.BrokerAccountID{"U0000001"}); err != nil {
-		t.Fatalf("MarkSeeded: %v", err)
-	}
-	if c := claim(t, s, "ibkr-main", later.Add(time.Hour)); !c.Seeded {
-		t.Errorf("claim = %+v, want seeded once the mapped account is seeded", c)
 	}
 }

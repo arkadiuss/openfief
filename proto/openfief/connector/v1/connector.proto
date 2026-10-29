@@ -289,6 +289,19 @@ message SyncRequest {
   // What the connector returned as watermark from the previous successful
   // sync, or empty for the first one. Opaque to the core.
   string watermark = 3;
+  // What a market-data connector is asked to price (D-93): every
+  // instrument the owner holds, other than treasury bonds, which have no
+  // market price, and the instrument targets of the model portfolio while
+  // it is on, each once, as the ledger knows it, so a newly bought
+  // instrument is priced without configuration. The connector adds the
+  // instruments its own config lists to watch, and keys each price by the
+  // instrument as given here. The core fills it only for a connector
+  // instance bound to no account: a broker connector gets it empty.
+  repeated Instrument instruments = 4;
+  // The market indices that are targets of the model portfolio while it is
+  // on, each once, by the name the owner gave it, such as "WIG20" (D-96):
+  // the connector delivers their levels under that name.
+  repeated string indices = 5;
 }
 
 message SyncResponse {

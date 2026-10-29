@@ -349,3 +349,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4b90a65486a
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-retries-an-opening-batch-then-syncs-transactions
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:15:59.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82ac2e794c27

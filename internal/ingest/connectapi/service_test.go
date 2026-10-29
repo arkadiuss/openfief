@@ -69,7 +69,7 @@ type caller struct {
 	lots []ingest.BondLot
 }
 
-func (c *caller) Sync(context.Context, string, ingest.BatchID, ingest.Mode, string) (app.Delivery, error) {
+func (c *caller) Sync(context.Context, string, *app.SyncCall) (app.Delivery, error) {
 	return app.Delivery{}, c.err
 }
 

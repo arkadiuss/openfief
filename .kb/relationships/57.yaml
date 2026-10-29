@@ -314,3 +314,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-207ba5ceaeca
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fixed-scope-market-data-scope
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:16:12.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-246c920c5153

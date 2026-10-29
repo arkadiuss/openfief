@@ -39058,7 +39058,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-scheduler-due
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-app-open-batch
     title: OpenBatch
     sourceFile: internal/ingest/app/scheduler.go
@@ -39099,7 +39099,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-scheduler-due
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-app-sync-store
     title: SyncStore
     sourceFile: internal/ingest/app/scheduler.go
@@ -39130,7 +39130,7 @@ symbols:
       - type: implements
         target: REQ-ingest-core-owns-schedules
       - type: implements
-        target: REQ-ingest-scheduler-due
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-app-scheduler-run
     title: Scheduler.Run
     sourceFile: internal/ingest/app/scheduler.go
@@ -39143,7 +39143,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-scheduler-due
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-app-scheduler-tick
     title: Scheduler.Tick
     sourceFile: internal/ingest/app/scheduler.go
@@ -39156,9 +39156,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-scheduler-due
-      - type: implements
         target: REQ-ingest-scheduler-single-flight
+      - type: implements
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-app-scheduler-wait
     title: Scheduler.Wait
     sourceFile: internal/ingest/app/scheduler.go
@@ -39228,21 +39228,6 @@ symbols:
         target: REQ-ingest-core-owns-schedules
       - type: implements
         target: REQ-ingest-scheduler-retry
-  - id: SYM-ingest-sched-app-batch-for
-    title: batchFor
-    sourceFile: internal/ingest/app/scheduler.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T16:52:24.982Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-scheduler
-      - type: implements
-        target: REQ-ingest-scheduler-due
-      - type: implements
-        target: REQ-ingest-scheduler-retry
   - id: SYM-ingest-sched-app-scheduler-logger
     title: Scheduler.logger
     sourceFile: internal/ingest/app/scheduler.go
@@ -39255,7 +39240,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-scheduler-due
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-app-test-helper-mem-instance
     title: memInstance
     sourceFile: internal/ingest/app/scheduler_test.go
@@ -40103,9 +40088,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-schedule
       - type: implements
-        target: REQ-ingest-scheduler-due
-      - type: implements
         target: REQ-ingest-scheduler-retry
+      - type: implements
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-sync-policy-validate
     title: SyncPolicy.Validate
     sourceFile: internal/ingest/schedule.go
@@ -40118,7 +40103,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-schedule
       - type: implements
-        target: REQ-ingest-scheduler-due
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-sync-policy-next-sync
     title: SyncPolicy.NextSync
     sourceFile: internal/ingest/schedule.go
@@ -40131,9 +40116,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-schedule
       - type: implements
-        target: REQ-ingest-scheduler-due
-      - type: implements
         target: REQ-ingest-scheduler-retry
+      - type: implements
+        target: REQ-ingest-scheduler-when-due
   - id: SYM-ingest-sched-test-helper-policy
     title: policy
     sourceFile: internal/ingest/schedule_test.go
@@ -77223,16 +77208,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-postgres-brokers
-  - id: SYM-ingest-postgres-test-helper-complete-opening
-    title: completeOpening
-    sourceFile: internal/ingest/postgres/brokers_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T11:53:19.403Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-postgres-brokers
   - id: SYM-ingest-postgres-test-broker-account-store
     title: TestBrokerAccountStore
     sourceFile: internal/ingest/postgres/brokers_test.go
@@ -77250,16 +77225,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T11:53:32.257Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-postgres-brokers
-  - id: SYM-ingest-postgres-test-broker-accounts-reseed-the-instance
-    title: TestBrokerAccountsReseedTheInstance
-    sourceFile: internal/ingest/postgres/brokers_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T11:53:38.877Z
     relationships:
       - type: executable_for
         target: TEST-ingest-postgres-brokers
@@ -84455,3 +84420,703 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-ui
+  - id: SYM-ingest-app-sync-call
+    title: SyncCall
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:12:18.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-sync-mode-from-ledger
+  - id: SYM-ingest-app-account-seeding
+    title: AccountSeeding
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:12:26.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-sync-keeps-from-go-live
+      - type: implements
+        target: REQ-ingest-sync-mode-from-ledger
+  - id: SYM-ingest-app-connectors-go-live-dates
+    title: Connectors.GoLiveDates
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:12:34.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-sync-keeps-from-go-live
+      - type: implements
+        target: REQ-ingest-sync-mode-from-ledger
+  - id: SYM-ingest-app-connectors-keep-from-go-live
+    title: Connectors.keepFromGoLive
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:12:41.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-sync-keeps-from-go-live
+  - id: SYM-ingest-app-test-helper-fixed-seeding
+    title: fixedSeeding
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:12:47.827Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-helper-fixed-seeding-go-live
+    title: fixedSeeding.GoLive
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:12:54.720Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-connectors-sync-keeps-from-go-live
+    title: TestConnectorsSyncKeepsFromGoLive
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:01.950Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-holdings
+    title: Holdings
+    sourceFile: internal/ingest/app/pricing.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:09.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-pricing
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-new-instrument-priced
+  - id: SYM-ingest-app-bond-series
+    title: BondSeries
+    sourceFile: internal/ingest/app/pricing.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:16.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-pricing
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-new-instrument-priced
+  - id: SYM-ingest-app-model-targets
+    title: ModelTargets
+    sourceFile: internal/ingest/app/pricing.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:23.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-pricing
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-new-instrument-priced
+  - id: SYM-ingest-app-pricing-scope
+    title: PricingScope
+    sourceFile: internal/ingest/app/pricing.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:29.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-pricing
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-new-instrument-priced
+  - id: SYM-ingest-app-pricing-scope-market-data-scope
+    title: PricingScope.MarketDataScope
+    sourceFile: internal/ingest/app/pricing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:36.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-pricing
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-new-instrument-priced
+  - id: SYM-ingest-app-pricing-scope-held
+    title: PricingScope.held
+    sourceFile: internal/ingest/app/pricing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:43.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-pricing
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-new-instrument-priced
+  - id: SYM-ingest-app-pricing-scope-is-bond
+    title: PricingScope.isBond
+    sourceFile: internal/ingest/app/pricing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:51.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-pricing
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-new-instrument-priced
+  - id: SYM-ingest-app-test-helper-held-book
+    title: heldBook
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:13:57.558Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-test-helper-held-book-accounts
+    title: heldBook.Accounts
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:05.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-test-helper-held-book-holdings-on
+    title: heldBook.HoldingsOn
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:12.098Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-test-helper-bond-isi-ns
+    title: bondISINs
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:17.468Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-test-helper-bond-isi-ns-bond-terms
+    title: bondISINs.BondTerms
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:24.436Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-test-helper-model-targets
+    title: modelTargets
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:29.695Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-test-helper-model-targets-market-data-targets
+    title: modelTargets.MarketDataTargets
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:36.474Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-test-helper-pricing-instrument
+    title: pricingInstrument
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:43.117Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-test-pricing-scope
+    title: TestPricingScope
+    sourceFile: internal/ingest/app/pricing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:50.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-pricing
+  - id: SYM-ingest-app-scope-source
+    title: ScopeSource
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:14:57.614Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-market-data-sync-instruments
+  - id: SYM-ingest-app-sync-plan
+    title: syncPlan
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:15:04.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-sync-mode-from-ledger
+  - id: SYM-ingest-app-scheduler-plan
+    title: Scheduler.plan
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:15:12.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-seeded-account-transactions-mode
+      - type: implements
+        target: REQ-ingest-sync-mode-from-ledger
+  - id: SYM-ingest-app-scheduler-run
+    title: Scheduler.run
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:15:20.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-seeded-account-transactions-mode
+      - type: implements
+        target: REQ-ingest-sync-mode-from-ledger
+  - id: SYM-ingest-app-batches-for
+    title: batchesFor
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:15:27.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-seeded-account-transactions-mode
+      - type: implements
+        target: REQ-ingest-sync-mode-from-ledger
+  - id: SYM-ingest-app-test-helper-locked-ledger-go-live
+    title: lockedLedger.GoLive
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:15:35.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-app-test-helper-t0-date
+    title: t0Date
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:15:42.511Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-app-test-scheduler-follows-the-ledgers-seeding
+    title: TestSchedulerFollowsTheLedgersSeeding
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:15:49.499Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-app-test-scheduler-retries-an-opening-batch-then-syncs-transactions
+    title: TestSchedulerRetriesAnOpeningBatchThenSyncsTransactions
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:15:57.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-app-test-helper-fixed-scope
+    title: fixedScope
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:02.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-app-test-helper-fixed-scope-market-data-scope
+    title: fixedScope.MarketDataScope
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:10.190Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-app-test-scheduler-asks-market-data-connectors-for-the-scope
+    title: TestSchedulerAsksMarketDataConnectorsForTheScope
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:17.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-conn-rpc-test-helper-scoped-instrument
+    title: scopedInstrument
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:24.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-instruments-to
+    title: instrumentsTo
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:31.610Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-market-data-scope
+  - id: SYM-ingest-plan-sync
+    title: PlanSync
+    sourceFile: internal/ingest/golive.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:38.113Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-golive
+      - type: implements
+        target: REQ-ingest-seeded-account-transactions-mode
+      - type: implements
+        target: REQ-ingest-sync-mode-from-ledger
+  - id: SYM-ingest-keep-from-go-live
+    title: KeepFromGoLive
+    sourceFile: internal/ingest/golive.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:44.369Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-golive
+      - type: implements
+        target: REQ-ingest-sync-keeps-from-go-live
+  - id: SYM-ingest-test-helper-go-live-date
+    title: goLiveDate
+    sourceFile: internal/ingest/golive_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:50.498Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-golive
+  - id: SYM-ingest-test-plan-sync
+    title: TestPlanSync
+    sourceFile: internal/ingest/golive_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:16:56.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-golive
+  - id: SYM-ingest-test-helper-go-live-tx
+    title: goLiveTx
+    sourceFile: internal/ingest/golive_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:03.030Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-golive
+  - id: SYM-ingest-test-keep-from-go-live
+    title: TestKeepFromGoLive
+    sourceFile: internal/ingest/golive_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:09.328Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-golive
+  - id: SYM-ingest-market-data-scope
+    title: MarketDataScope
+    sourceFile: internal/ingest/marketdata.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:15.660Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-marketdata
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-market-data-sync-instruments
+  - id: SYM-ingest-new-market-data-scope
+    title: NewMarketDataScope
+    sourceFile: internal/ingest/marketdata.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:21.887Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-marketdata
+      - type: implements
+        target: REQ-ingest-market-data-scope
+      - type: implements
+        target: REQ-ingest-market-data-sync-instruments
+  - id: SYM-ingest-test-helper-scope-instrument
+    title: scopeInstrument
+    sourceFile: internal/ingest/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:27.321Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-marketdata
+  - id: SYM-ingest-test-new-market-data-scope
+    title: TestNewMarketDataScope
+    sourceFile: internal/ingest/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:32.559Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-marketdata
+  - id: SYM-ledger-app-ledger-go-live
+    title: Ledger.GoLive
+    sourceFile: internal/ledger/app/query.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:38.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-go-live
+  - id: SYM-ledger-app-test-go-live
+    title: TestGoLive
+    sourceFile: internal/ledger/app/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:45.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-go-live
+    title: GoLive
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:17:52.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-go-live
+  - id: SYM-ledger-test-go-live
+    title: TestGoLive
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:18:01.398Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-portfolio-app-models-market-data-targets
+    title: Models.MarketDataTargets
+    sourceFile: internal/portfolio/app/models.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:18:10.232Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-models
+      - type: implements
+        target: REQ-ingest-market-data-scope
+  - id: SYM-portfolio-app-test-market-data-targets
+    title: TestMarketDataTargets
+    sourceFile: internal/portfolio/app/models_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:18:18.052Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-models
+  - id: SYM-plugins-eodhd-targets
+    title: targets
+    sourceFile: plugins/eodhd/targets.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:18:26.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-ingest-market-data-watch-list
+      - type: implements
+        target: REQ-plugins-eodhd-requested-instruments
+  - id: SYM-plugins-eodhd-config-targets-for
+    title: config.targetsFor
+    sourceFile: plugins/eodhd/targets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:18:34.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-connector
+      - type: implements
+        target: REQ-ingest-market-data-watch-list
+      - type: implements
+        target: REQ-plugins-eodhd-requested-instruments
+  - id: SYM-connector-gen-pb-sync-request-get-instruments
+    title: SyncRequest.GetInstruments
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:18:42.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-market-data-scope
+  - id: SYM-connector-gen-pb-sync-request-get-indices
+    title: SyncRequest.GetIndices
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-29T17:18:49.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-market-data-scope

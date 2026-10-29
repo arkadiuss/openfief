@@ -314,3 +314,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9594d604fb8b
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-bond-isi-ns-bond-terms
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:14:26.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bae009a55998

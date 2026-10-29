@@ -53,6 +53,47 @@ func TestSettingsAndSave(t *testing.T) {
 	}
 }
 
+func TestMarketDataTargets(t *testing.T) {
+	t.Parallel()
+	withIndex := sixtyForty(t)
+	withIndex.Targets[1] = portfolio.Target{Kind: portfolio.TargetIndex, Name: "FAKE20", Currency: mustCurrency(t, "PLN"), Weight: mustDec(t, "40")}
+	broken := sixtyForty(t)
+	broken.Targets[0].Name = "XX0000000000/BAD"
+	ie, err := app.ParseInstrument(etfIE)
+	if err != nil {
+		t.Fatal(err)
+	}
+	tests := []struct {
+		name        string
+		model       portfolio.Model
+		storeErr    error
+		wantIndices []string
+		wantCount   int
+		wantErr     bool
+	}{
+		{name: "off: nothing", model: portfolio.Model{Targets: sixtyForty(t).Targets}},
+		{name: "on: instruments and indices", model: withIndex, wantIndices: []string{"FAKE20"}, wantCount: 1},
+		{name: "a stored instrument that doesn't parse", model: broken, wantErr: true},
+		{name: "the store fails", storeErr: errStoreDown, wantErr: true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			m := newModels(t, &fakeStore{model: tt.model, err: tt.storeErr}, &fakeMarket{})
+			instruments, indices, err := m.MarketDataTargets(t.Context())
+			if (err != nil) != tt.wantErr {
+				t.Fatalf("MarketDataTargets error = %v, want an error: %v", err, tt.wantErr)
+			}
+			if len(instruments) != tt.wantCount || (tt.wantCount == 1 && instruments[0] != ie) {
+				t.Errorf("instruments = %v, want %d of %s", instruments, tt.wantCount, etfIE)
+			}
+			if diff := cmp.Diff(tt.wantIndices, indices); diff != "" {
+				t.Errorf("indices (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
 func TestOwnerOnly(t *testing.T) {
 	t.Parallel()
 	for _, refusal := range []error{app.ErrNoSession, app.ErrNotOwner, errStoreDown} {

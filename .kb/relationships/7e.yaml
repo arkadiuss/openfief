@@ -377,3 +377,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1eedbbd1f87
+  - type: implements
+    from: SYM-plugins-eodhd-targets
+    to: REQ-plugins-eodhd-requested-instruments
+    created_at: 2026-10-29T17:18:28.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e55d103f10ce
+  - type: implements
+    from: SYM-plugins-eodhd-targets
+    to: REQ-ingest-market-data-watch-list
+    created_at: 2026-10-29T17:18:28.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f44a59b84cb6
+  - type: covered_by
+    from: SYM-plugins-eodhd-targets
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-29T17:18:28.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b140f049e2a3

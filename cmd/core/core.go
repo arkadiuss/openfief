@@ -167,7 +167,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	deps := &connectorDeps{
 		pool: pool, ledger: l, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
-		entries: &entryCaller{},
+		entries: &entryCaller{}, bonds: vstore, model: models,
 	}
 	served := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
 	served = withBondLotService(served, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)

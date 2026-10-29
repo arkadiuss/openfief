@@ -461,3 +461,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51019fc92e7f
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-scoped-instrument
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-10-29T17:16:26.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a003af4ed4ba

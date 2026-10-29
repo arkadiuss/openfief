@@ -225,13 +225,6 @@ relationships:
     id: rel-81c7c8c40d14
   - type: implements
     from: SYM-ingest-sched-app-scheduler-tick
-    to: REQ-ingest-scheduler-due
-    created_at: 2026-10-28T16:52:01.006Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-91eced35e2fa
-  - type: implements
-    from: SYM-ingest-sched-app-scheduler-tick
     to: REQ-ingest-scheduler-single-flight
     created_at: 2026-10-28T16:52:01.026Z
     created_by: kibi/upsert
@@ -349,3 +342,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3db889da7a1d
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-tick
+    to: REQ-ingest-scheduler-when-due
+    created_at: 2026-10-29T17:21:41.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0938a7b9f0a8

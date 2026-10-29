@@ -47,23 +47,27 @@ func H2CClient() *http.Client {
 	return &http.Client{Transport: &http.Transport{Protocols: &p}}
 }
 
-// Sync asks instance for its data since watermark as batch id.
-func (c *Client) Sync(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (app.Delivery, error) {
+// Sync asks instance for its data since the call's watermark as the call's
+// batch, with what a market-data connector is to price (D-93).
+func (c *Client) Sync(ctx context.Context, instance string, sc *app.SyncCall) (app.Delivery, error) {
 	call, err := c.service(ctx, instance)
 	if err != nil {
 		return app.Delivery{}, err
 	}
-	m, err := modeTo(mode)
+	m, err := modeTo(sc.Mode)
 	if err != nil {
 		return app.Delivery{}, err
 	}
-	req := connect.NewRequest(&connectorv1.SyncRequest{BatchId: string(id), Mode: m, Watermark: watermark})
+	req := connect.NewRequest(&connectorv1.SyncRequest{
+		BatchId: string(sc.ID), Mode: m, Watermark: sc.Watermark,
+		Instruments: instrumentsTo(sc.Scope.Instruments), Indices: sc.Scope.Indices,
+	})
 	req.Header().Set("Authorization", call.auth)
 	resp, err := call.svc.Sync(ctx, req)
 	if err != nil {
 		return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, err)
 	}
-	return deliveryFrom(resp.Msg.GetDelivery(), id, resp.Msg.GetWatermark())
+	return deliveryFrom(resp.Msg.GetDelivery(), sc.ID, resp.Msg.GetWatermark())
 }
 
 // ImportFile streams file to instance as batch id: a header, then the

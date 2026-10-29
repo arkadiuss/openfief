@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60b6820fd44b
+  - type: verified_by
+    from: SCEN-ledger-go-live
+    to: TEST-ledger-seed
+    created_at: 2026-10-29T16:57:16.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cf3083869c1
+  - type: verified_by
+    from: SCEN-ledger-go-live
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-29T16:57:16.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe8b4c20960c

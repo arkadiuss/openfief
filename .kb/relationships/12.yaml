@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17dd5b5db7c8
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-book
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:14:00.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa5479d38d1a
