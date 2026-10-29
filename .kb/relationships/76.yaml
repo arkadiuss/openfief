@@ -384,6 +384,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd22f80c8a19
+  - type: constrains
+    from: REQ-identity-no-auth-bypass
+    to: FACT-SUBJECT-5A4E6481189FE5A3
+    created_at: 2026-10-29T08:21:32.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00898de9faa1
+  - type: requires_property
+    from: REQ-identity-no-auth-bypass
+    to: FACT-PROP-99CAA9B7065DB88C
+    created_at: 2026-10-29T08:21:32.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f733c8c0b3ab
   - type: verified_by
     from: SCEN-ingest-statement-service
     to: TEST-ingest-connectapi-statements
@@ -433,6 +447,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-873e001987a0
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-accounts-accounts
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:59:59.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02b4a8ea19f4
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-accounts-locked
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:14:23.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6baefebb70a1
   - type: specified_by
     from: REQ-identity-no-auth-bypass
     to: SCEN-identity-no-auth-bypass
@@ -440,20 +468,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e134632832d
-  - type: constrains
-    from: REQ-identity-no-auth-bypass
-    to: FACT-SUBJECT-5A4E6481189FE5A3
-    created_at: 2026-10-29T08:21:32.864Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-00898de9faa1
-  - type: requires_property
-    from: REQ-identity-no-auth-bypass
-    to: FACT-PROP-99CAA9B7065DB88C
-    created_at: 2026-10-29T08:21:32.872Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f733c8c0b3ab
   - type: executable_for
     from: SYM-fd-views-kube-test-helper-view-plugin
     to: TEST-views-kube-browser

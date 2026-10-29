@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"slices"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -17,12 +18,25 @@ var ErrUnknownMode = errors.New("unknown ingest mode")
 // writes; the ledger account ID follows it, never the IBKR account number.
 const SourcePrefix = "ibkr-flex:"
 
-// Mapper translates Flex Query statements into the ledger. It knows which
-// ledger account each IBKR account feeds.
+// BrokerSource is the source of every transaction key the mapper writes by
+// broker account; the core appends ":" and the ledger account ID, so the
+// keys are those SourcePrefix gives (D-72).
+const BrokerSource = "ibkr-flex"
+
+// Mapper translates Flex Query statements into the ledger. Either it knows
+// which ledger account each IBKR account feeds, or it names every
+// statement's entries by its IBKR account for the core to map (D-72).
 type Mapper struct {
 	// Accounts maps an IBKR account ID, such as U0000000, to the ledger
 	// account it feeds. A statement for any other account is skipped.
+	// Unused with ByBrokerAccount.
 	Accounts map[string]ledger.AccountID
+	// ByBrokerAccount names the entries of every statement by its IBKR
+	// account in the mapping's ByBrokerAccount, with keys whose source is
+	// BrokerSource, and reports every IBKR account in BrokerAccounts, so the
+	// core maps them to the OpenFief accounts the owner chose (D-72). The
+	// plugin never learns an OpenFief account ID.
+	ByBrokerAccount bool
 	// Limits caps what a statement may contain; zero fields take defaults.
 	Limits Limits
 }
@@ -139,11 +153,62 @@ func (m Mapper) Map(src io.Reader, mode ingest.Mode) (ingest.Mapping, error) {
 // mapStatement translates one FlexStatement into out.
 func (m Mapper) mapStatement(st *statement, index int, mode ingest.Mode, out *ingest.Mapping) error {
 	ref := fmt.Sprintf("FlexStatement#%d", index)
+	if m.ByBrokerAccount {
+		return mapByBrokerAccount(st, index, mode, out)
+	}
 	account, ok := m.Accounts[st.attrs["accountId"]]
 	if !ok {
 		out.Problems = append(out.Problems, ingest.Skipped(ref, "statement of an IBKR account that feeds no ledger account"))
 		return nil
 	}
+	return mapSections(st, index, account, mode, out)
+}
+
+// mapByBrokerAccount translates one FlexStatement into out by its IBKR
+// account (D-72): its entries go to out.ByBrokerAccount in no account and
+// keyed by BrokerSource, and the account to out.BrokerAccounts. The
+// statement is mapped with the IBKR account ID standing in for the ledger
+// account, which the ledger's rules need, and that stand-in is removed
+// before anything leaves the mapper. A statement without a valid account
+// ID is skipped.
+func mapByBrokerAccount(st *statement, index int, mode ingest.Mode, out *ingest.Mapping) error {
+	id, ok := statementAccount(st)
+	if !ok {
+		out.Problems = append(out.Problems, ingest.Skipped(fmt.Sprintf("FlexStatement#%d", index), "statement without a valid IBKR account ID"))
+		return nil
+	}
+	var part ingest.Mapping
+	if err := mapSections(st, index, ledger.AccountID(id), mode, &part); err != nil {
+		return err
+	}
+	for i := range part.Transactions {
+		part.Transactions[i].Account, part.Transactions[i].Key.Source = "", BrokerSource
+	}
+	for i := range part.Assertions {
+		part.Assertions[i].Account = ""
+	}
+	out.Problems = append(out.Problems, part.Problems...)
+	out.CrossCheckPrices = append(out.CrossCheckPrices, part.CrossCheckPrices...)
+	if !slices.Contains(out.BrokerAccounts, id) {
+		out.BrokerAccounts = append(out.BrokerAccounts, id)
+	}
+	out.ByBrokerAccount = append(out.ByBrokerAccount, ingest.BrokerEntries{
+		Account: id, Transactions: part.Transactions, Assertions: part.Assertions,
+	})
+	return nil
+}
+
+// statementAccount returns the IBKR account a FlexStatement is of, and
+// false when it has no valid one.
+func statementAccount(st *statement) (ingest.BrokerAccountID, bool) {
+	id := ingest.BrokerAccountID(st.attrs["accountId"])
+	return id, id.Validate() == nil
+}
+
+// mapSections translates the sections of one FlexStatement of account into
+// out.
+func mapSections(st *statement, index int, account ledger.AccountID, mode ingest.Mode, out *ingest.Mapping) error {
+	ref := fmt.Sprintf("FlexStatement#%d", index)
 	to, err := (&row{attrs: st.attrs}).date("toDate")
 	if err != nil {
 		return fmt.Errorf("%w: %s: %w", ErrMalformed, ref, err)

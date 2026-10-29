@@ -37,7 +37,8 @@ type OpenBatch struct {
 type SyncClaim struct {
 	// Watermark is what the last successful sync returned, empty before it.
 	Watermark string
-	// Seeded reports whether an opening batch of the instance completed.
+	// Seeded reports whether an opening batch of the instance completed,
+	// and none of its broker accounts was mapped since (D-72).
 	Seeded bool
 	// Failures counts the attempts that failed since the last success.
 	Failures int

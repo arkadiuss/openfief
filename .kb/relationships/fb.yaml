@@ -427,6 +427,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0bd1a536ed67
   - type: implements
+    from: SYM-portfoliov1-update-sleeve-response-proto-message
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:53.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eb53643e7fc
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-response-proto-message
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:53.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6618d9c783c9
+  - type: implements
     from: SYM-fd-uiplugin-require-core
     to: REQ-plugins-core-only-caller
     created_at: 2026-10-29T12:08:00.995Z

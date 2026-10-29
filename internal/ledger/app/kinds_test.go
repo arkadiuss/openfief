@@ -94,3 +94,26 @@ func TestEnsureDefaults(t *testing.T) {
 	sleeves, err := l.Sleeves(ctx)
 	checkResult(t, "Sleeves after changes", wantSleeves, sleeves, err)
 }
+
+func TestEnsureDefaultsOnlyOnAFreshInstall(t *testing.T) {
+	t.Parallel()
+	ctx := t.Context()
+	// The demo dataset, or the owner, stored sleeves of their own before
+	// the defaults were ensured: the install has started, so only the
+	// built-in kinds are added (D-71: an install starts with the defaults).
+	own := portfolio.Sleeve{ID: "long-term", Name: "Long term", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive}
+	fresh := app.New(newMemStore())
+	if err := fresh.SaveKind(ctx, portfolio.DefaultKinds()[2]); err != nil {
+		t.Fatalf("SaveKind: %v", err)
+	}
+	if err := fresh.SaveSleeve(ctx, own); err != nil {
+		t.Fatalf("SaveSleeve: %v", err)
+	}
+	if err := fresh.EnsureDefaults(ctx); err != nil {
+		t.Fatalf("EnsureDefaults: %v", err)
+	}
+	kinds, err := fresh.Kinds(ctx)
+	checkResult(t, "Kinds", portfolio.DefaultKinds(), kinds, err)
+	sleeves, err := fresh.Sleeves(ctx)
+	checkResult(t, "Sleeves", []portfolio.Sleeve{own}, sleeves, err)
+}

@@ -132,10 +132,15 @@ func (b *Batch) Complete(m *Mapping, imported ImportSummary) {
 // Mapping is what a connector makes of one source: ledger transactions,
 // balance assertions, the rows it left out as ingest problems, and the
 // institution's own prices as cross-check prices, which the ledger never
-// sees.
+// sees. A broker connector that doesn't know the OpenFief accounts names
+// its entries by broker account instead, in ByBrokerAccount, and reports
+// the broker accounts it saw in BrokerAccounts (D-72); the core resolves
+// them with ResolveBrokerAccounts before anything is imported.
 type Mapping struct {
 	Transactions     []ledger.Transaction
 	Assertions       []ledger.BalanceAssertion
 	Problems         []Problem
 	CrossCheckPrices []CrossCheckPrice
+	BrokerAccounts   []BrokerAccountID
+	ByBrokerAccount  []BrokerEntries
 }

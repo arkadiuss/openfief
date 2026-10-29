@@ -16,7 +16,6 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/arkadiuss/openfief/internal/ingest/ibkrflex"
-	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/plugins"
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
@@ -78,7 +77,7 @@ func (f *flexService) fetch(_ context.Context, token, queryID string) ([]byte, e
 func newConnector(t *testing.T, f *flexService, secrets string) *connector {
 	t.Helper()
 	return &connector{
-		mapper:  ibkrflex.Mapper{Accounts: map[string]ledger.AccountID{"U0000000": "acc-ibkr"}},
+		mapper:  ibkrflex.Mapper{ByBrokerAccount: true},
 		fetch:   f.fetch,
 		secrets: secrets,
 	}
@@ -157,6 +156,22 @@ func checkDelivery(t *testing.T, f *flexService, resp *connect.Response[connecto
 	if d.GetBatchId() != "b-1" || d.GetInstitution() != "ibkr" || len(d.GetTransactions()) == 0 || resp.Msg.GetWatermark() != "w-1" {
 		t.Errorf("Sync = batch %q, institution %q, %d transactions, watermark %q; want b-1, ibkr, some, w-1",
 			d.GetBatchId(), d.GetInstitution(), len(d.GetTransactions()), resp.Msg.GetWatermark())
+	}
+	checkBrokerAccounts(t, d)
+}
+
+// checkBrokerAccounts fails t unless every entry of d names its IBKR
+// account for the core to map (D-72), and the account the synthetic
+// statement is of is reported.
+func checkBrokerAccounts(t *testing.T, d *connectorv1.Delivery) {
+	t.Helper()
+	if accounts := d.GetBrokerAccounts(); len(accounts) == 0 || accounts[0].GetId() != "U0000000" {
+		t.Errorf("broker_accounts = %v, want the synthetic U0000000 first", accounts)
+	}
+	for _, tx := range d.GetTransactions() {
+		if tx.GetAccountId() != "" || tx.GetBrokerAccount() == "" {
+			t.Fatalf("transaction %v: account_id %q, broker_account %q; want only a broker account", tx.GetKey(), tx.GetAccountId(), tx.GetBrokerAccount())
+		}
 	}
 }
 
@@ -289,14 +304,5 @@ func TestManifest(t *testing.T) {
 	}
 	if len(got.ConfigSchema) == 0 {
 		t.Error("the manifest has no config schema")
-	}
-}
-
-func TestLedgerAccounts(t *testing.T) {
-	t.Parallel()
-	got := config{Accounts: map[string]string{"U0000000": "acc-ibkr", "U0000001": "acc-ibkr-2"}}.ledgerAccounts()
-	want := map[string]ledger.AccountID{"U0000000": "acc-ibkr", "U0000001": "acc-ibkr-2"}
-	if diff := cmp.Diff(want, got); diff != "" {
-		t.Errorf("ledgerAccounts (-want +got):\n%s", diff)
 	}
 }

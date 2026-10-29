@@ -412,6 +412,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-558b6c473ee1
+  - type: executable_for
+    from: SYM-core-test-helper-create-ibkr-account
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T12:58:17.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8b98a29dd69
+  - type: implements
+    from: SYM-viewsv1connect-read-service-client-list-sleeve-kinds
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:51:36.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9961d258c535
+  - type: covered_by
+    from: SYM-viewsv1connect-read-service-client-list-sleeve-kinds
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:51:36.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-517bdf1ddced
   - type: implements
     from: SYM-fd-openfief-rest-config
     to: REQ-identity-first-passkey-command

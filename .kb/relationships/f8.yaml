@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41e3dabdf080
+  - type: implements
+    from: SYM-ibkrflex-map-by-broker-account
+    to: REQ-ingest-ibkrflex-by-broker-account
+    created_at: 2026-10-29T11:52:05.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9801624477a4
+  - type: covered_by
+    from: SYM-ibkrflex-map-by-broker-account
+    to: TEST-ingest-ibkrflex-brokers
+    created_at: 2026-10-29T11:52:05.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-966c80bcbad3

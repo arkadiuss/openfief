@@ -307,6 +307,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-856d57e2248d
+  - type: executable_for
+    from: SYM-portfolio-app-test-sleeves-add-and-update-sleeve
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:06:01.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1f229f47850
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-request-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:48:39.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2b397295fb7
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-request-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:48:39.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9da87195200b
   - type: validates
     from: TEST-views-browser-proxy
     to: REQ-core-reverse-proxies-view-plugins

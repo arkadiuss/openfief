@@ -377,6 +377,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22fc1c1e4294
+  - type: constrains
+    from: REQ-ingest-broker-account-resolve
+    to: FACT-SUBJECT-ADDCB97B909F7AE1
+    created_at: 2026-10-29T11:36:53.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a9372a49152
+  - type: requires_property
+    from: REQ-ingest-broker-account-resolve
+    to: FACT-PROP-F8310DB9A517427A
+    created_at: 2026-10-29T11:36:53.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78d2a0e27bf8
+  - type: specified_by
+    from: REQ-ingest-broker-account-resolve
+    to: SCEN-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:36:53.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9d722b9fd04
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-connections-bindings
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:09:12.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67935d7aaee8
   - type: verified_by
     from: SCEN-views-browser-proxy-headers
     to: TEST-views-browser-proxy

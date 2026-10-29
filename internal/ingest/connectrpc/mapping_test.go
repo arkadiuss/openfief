@@ -201,6 +201,14 @@ func TestDeliveryFromRejects(t *testing.T) {
 		{name: "bond terms without a fee", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].EarlyRedemptionFee = nil }},
 		{name: "bond terms with a fee in EUR", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].EarlyRedemptionFee.Currency = "EUR" }},
 		{name: "bond terms with a negative fee", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].EarlyRedemptionFee.Amount = "-2" }},
+		{name: "transaction naming both accounts", edit: func(r *connectorv1.Delivery) { r.Transactions[0].BrokerAccount = "U0000001" }},
+		{name: "assertion naming both accounts", edit: func(r *connectorv1.Delivery) { r.BalanceAssertions[0].BrokerAccount = "U0000001" }},
+		{name: "broker account with a space", edit: func(r *connectorv1.Delivery) {
+			r.Transactions[0].AccountId, r.Transactions[0].BrokerAccount = "", "U000 0001"
+		}},
+		{name: "listed broker account empty", edit: func(r *connectorv1.Delivery) {
+			r.BrokerAccounts = []*connectorv1.BrokerAccount{{Id: ""}}
+		}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

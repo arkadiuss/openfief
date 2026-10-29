@@ -329,6 +329,48 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-c2f61dd909b2
   - type: implements
+    from: SYM-ingest-app-connectors-admit
+    to: REQ-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:48:37.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0110a66f3759
+  - type: covered_by
+    from: SYM-ingest-app-connectors-admit
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:48:37.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef97fc11f8b3
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-request-get-key
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:36:27.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa7f64497b9d
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-request-get-key
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:36:27.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8dbbcc6e5e9
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-proto-message
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:40:24.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-039b69251d02
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-proto-message
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:40:24.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa670c5d011
+  - type: implements
     from: SYM-fd-browserproxy-new
     to: REQ-core-reverse-proxies-view-plugins
     created_at: 2026-10-29T12:06:12.923Z

@@ -55,6 +55,10 @@ type fakeLedger struct {
 	fail     error
 }
 
+func (f *fakeLedger) Kinds(context.Context) ([]portfolio.Kind, error) {
+	return portfolio.DefaultKinds(), f.fail
+}
+
 func (f *fakeLedger) Sleeves(context.Context) ([]portfolio.Sleeve, error) {
 	return []portfolio.Sleeve{{ID: "core", Name: "Core", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive}}, f.fail
 }

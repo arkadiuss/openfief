@@ -426,6 +426,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e7c41457820
+  - type: implements
+    from: SYM-ingest-app-new-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:58:46.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-766bdc1570b4
+  - type: covered_by
+    from: SYM-ingest-app-new-account
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:58:46.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d84ead14a5b
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-broker-accounts
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:09:59.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48a58cc59e3b
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-broker-accounts
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:09:59.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82da7ea148f4
+  - type: implements
+    from: SYM-viewsv1-list-sleeve-kinds-request-descriptor
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:47:32.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef0fe75faaee
+  - type: covered_by
+    from: SYM-viewsv1-list-sleeve-kinds-request-descriptor
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:47:32.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edca58b661b2
   - type: validates
     from: TEST-plugins-browser-path
     to: REQ-plugins-view-browser-path-grant

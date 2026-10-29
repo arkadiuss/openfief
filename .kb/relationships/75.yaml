@@ -377,3 +377,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9c04641b949
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-account-service-round-trip
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:03:44.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91e17bfc36ba
+  - type: implements
+    from: SYM-ingestv1-update-account-response-reset
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:24:09.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82ffda5bd7df
+  - type: covered_by
+    from: SYM-ingestv1-update-account-response-reset
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:24:09.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-539c31cb777d
+  - type: implements
+    from: SYM-ingestv1-bind-account-request
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:24:58.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e857fdb5beff
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:24:58.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d99acaed532

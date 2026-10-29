@@ -26,7 +26,7 @@ const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -44,6 +44,11 @@ type Config struct {
 	// the owner's session in each upload's header. Its HTTP client should
 	// give an upload of 64 MiB more time than other calls.
 	Statements ingestv1connect.StatementServiceClient
+	// Sleeves calls the core's SleeveService (D-71, D-79) like Auth: with
+	// the plugin's own token, the owner's session in each request.
+	Sleeves portfoliov1connect.SleeveServiceClient
+	// Accounts calls the core's AccountService (D-72, D-79) like Auth.
+	Accounts ingestv1connect.AccountServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -54,12 +59,21 @@ type Config struct {
 	Log *slog.Logger
 }
 
+// missingClient reports whether cfg lacks any of the clients the UI calls
+// the core with.
+func (cfg *Config) missingClient() bool {
+	return cfg.Auth == nil || cfg.Model == nil || cfg.BondLots == nil || cfg.Statements == nil || cfg.Read == nil ||
+		cfg.Sleeves == nil || cfg.Accounts == nil
+}
+
 // server holds the UI's handlers.
 type server struct {
 	auth       identityv1connect.AuthServiceClient
 	model      portfoliov1connect.ModelPortfolioServiceClient
 	bondLots   ingestv1connect.BondLotServiceClient
 	statements ingestv1connect.StatementServiceClient
+	sleeves    portfoliov1connect.SleeveServiceClient
+	accounts   ingestv1connect.AccountServiceClient
 	read       viewsv1connect.ReadServiceClient
 	pages      *pages
 	today      func() kernel.Date
@@ -70,7 +84,7 @@ type server struct {
 // security headers on every response and the same-origin check on every
 // state-changing request.
 func New(cfg *Config) (http.Handler, error) {
-	if cfg.Auth == nil || cfg.Model == nil || cfg.BondLots == nil || cfg.Statements == nil || cfg.Read == nil {
+	if cfg.missingClient() {
 		return nil, ErrMissingDependency
 	}
 	p, err := parsePages()
@@ -79,6 +93,7 @@ func New(cfg *Config) (http.Handler, error) {
 	}
 	s := &server{
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
+		sleeves: cfg.Sleeves, accounts: cfg.Accounts,
 		pages: p, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
@@ -123,6 +138,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /settings/tokens/{id}/revoke", s.withOwner(s.revokeToken))
 	mux.HandleFunc("POST /settings/enrollment-links", s.withOwner(s.createEnrollmentLink))
 	mux.HandleFunc("POST /settings/model", s.withOwner(s.saveModel))
+	s.onboardingRoutes(mux)
 	return mux
 }
 

@@ -307,6 +307,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd4399f35763
+  - type: implements
+    from: SYM-ingest-connectrpc-owner
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:50:47.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11b1eaf5f930
+  - type: covered_by
+    from: SYM-ingest-connectrpc-owner
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:50:47.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48dfee725dce
+  - type: implements
+    from: SYM-ingestv1-update-account-request-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:23:14.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd9b61d7a165
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:23:14.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43236d9c56bb
   - type: executable_for
     from: SYM-fd-plugins-test-manifest-label-browser-path
     to: TEST-plugins-browser-path

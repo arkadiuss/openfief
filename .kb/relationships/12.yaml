@@ -496,3 +496,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1fc30428f4da
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-resolve-broker-accounts
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:48:02.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-808bea259137
+  - type: implements
+    from: SYM-connectorv1-delivery-get-broker-accounts
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:55:57.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02082ac9f5d1
+  - type: covered_by
+    from: SYM-connectorv1-delivery-get-broker-accounts
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:55:57.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4c536fba53c
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-response
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:34:46.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d03348d6e2a2
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-response
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:34:47.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17dd5b5db7c8

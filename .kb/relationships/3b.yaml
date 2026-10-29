@@ -322,6 +322,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-29adbb10df7f
   - type: executable_for
+    from: SYM-ui-test-account-forms
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:15:22.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee1017a6b770
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-get-origin
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:40:45.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1182e75da4ab
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-get-origin
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:40:45.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8170882e640e
+  - type: executable_for
     from: SYM-fd-browserproxy-test-helper-fake-views-browser-routes
     to: TEST-views-browser-proxy
     created_at: 2026-10-29T12:10:56.605Z

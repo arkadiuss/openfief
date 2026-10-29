@@ -327,7 +327,7 @@ func TestNoInlineScriptsOrStyles(t *testing.T) {
 		}
 	}
 	slices.Sort(names)
-	want := []string{"account", "assertions", "enroll", "error", "login", "overview", "plugins", "price-checks", "settings"}
+	want := []string{"account", "accounts", "assertions", "enroll", "error", "login", "overview", "plugins", "price-checks", "settings", "setup", "sleeves"}
 	if diff := cmp.Diff(want, names); diff != "" {
 		t.Errorf("pages (-want +got):\n%s", diff)
 	}

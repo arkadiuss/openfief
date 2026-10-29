@@ -433,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87ef18f1bafc
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-mem-sleeves-sleeves
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:07:44.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1313ac550ec6
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-response-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:35:20.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9de729b9dee
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-response-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:35:20.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-430e537998b4

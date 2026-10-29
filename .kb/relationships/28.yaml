@@ -503,3 +503,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09476ea8408b
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry-accounts
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:02:07.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0986f72eb53d
+  - type: implements
+    from: SYM-ingestv1-create-account-response-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:22:17.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72d1665b8a55
+  - type: covered_by
+    from: SYM-ingestv1-create-account-response-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:22:17.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-095a790581b2
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-request-get-session-token
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:38:36.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8b298e5438e
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-request-get-session-token
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:38:36.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ed3b9aba6f3
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:40:31.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729228a36db5
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:40:31.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6d0ca01b2b7
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-client-interface
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T15:09:05.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a624ce4ae059
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-client-interface
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T15:09:05.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1629c9649b4

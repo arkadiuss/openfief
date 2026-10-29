@@ -356,3 +356,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b2462115811
+  - type: executable_for
+    from: SYM-ibkrflex-test-map-by-broker-account
+    to: TEST-ingest-ibkrflex-brokers
+    created_at: 2026-10-29T11:51:45.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-785998b43921
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-sleeve
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:23:54.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-313df9f0d2db
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-sleeve
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:23:54.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98c1f73d080f
+  - type: implements
+    from: SYM-viewsv1-list-sleeve-kinds-response-get-kinds
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:48:20.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fa957830574
+  - type: covered_by
+    from: SYM-viewsv1-list-sleeve-kinds-response-get-kinds
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:48:20.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-322ff66fbea5

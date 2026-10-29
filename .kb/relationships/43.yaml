@@ -384,6 +384,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be182a28a984
+  - type: constrains
+    from: REQ-portfolio-key-from-name
+    to: FACT-SUBJECT-B2A255EBC62E11E7
+    created_at: 2026-10-29T11:36:37.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d50b5dc61975
+  - type: requires_property
+    from: REQ-portfolio-key-from-name
+    to: FACT-PROP-62339DCFB90B291A
+    created_at: 2026-10-29T11:36:37.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b05a1be647b3
+  - type: specified_by
+    from: REQ-portfolio-key-from-name
+    to: SCEN-portfolio-key-from-name
+    created_at: 2026-10-29T11:36:37.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-568061d401b9
+  - type: implements
+    from: SYM-connectorv1-broker-account-string
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:55:18.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c16e4ea37d59
+  - type: covered_by
+    from: SYM-connectorv1-broker-account-string
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:55:18.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b91ae222d5b
+  - type: implements
+    from: SYM-viewsv1-broker-account-proto-reflect
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:45:48.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1eba686e1d5
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-proto-reflect
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:45:48.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75d7387d3b3b
   - type: executable_for
     from: SYM-core-test-helper-start-core-in
     to: TEST-core-read-api

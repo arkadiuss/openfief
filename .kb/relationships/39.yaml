@@ -321,6 +321,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e4cd90d50f7
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-fresh-install
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:08:10.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-264b35ed4b83
   - type: constrains
     from: REQ-jurisdiction-pl-number-format
     to: FACT-SUBJECT-C8AA8A27329ED635

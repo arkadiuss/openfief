@@ -462,6 +462,55 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-35737612a30c
   - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-sleeve-client
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:07:58.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d58b0cb0ba87
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-client
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:28:59.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d63abeb1f152
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-client
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:28:59.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afc411dabc85
+  - type: implements
+    from: SYM-viewsv1-list-broker-accounts-response-get-broker-accounts
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:51:29.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c182ff0562fa
+  - type: covered_by
+    from: SYM-viewsv1-list-broker-accounts-response-get-broker-accounts
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:51:29.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-535f7f81b5f2
+  - type: implements
+    from: SYM-viewsv1connect-read-service-client-list-broker-accounts
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:51:50.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f7804e76701
+  - type: covered_by
+    from: SYM-viewsv1connect-read-service-client-list-broker-accounts
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:51:50.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27dafc92786c
+  - type: executable_for
     from: SYM-fd-plugins-test-helper-view-plugin
     to: TEST-plugins-browser-path
     created_at: 2026-10-29T12:10:00.320Z

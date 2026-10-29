@@ -127,16 +127,11 @@ func findKind(kinds []Kind, key KindKey) (Kind, bool) {
 // CheckSleeve validates s against kinds, the stored kinds, and returns it
 // as it is stored: with its kind's default role when s has no role. The
 // sleeve's kind must be among kinds. Its role may differ from the kind's
-// default role only in two ways:
-//
-//   - defensive in an offensive kind, always: it only takes capital out of
-//     agents' reach;
-//   - offensive in a defensive kind, only with OffensiveOverride set, so that
-//     no capital becomes available to agents (GR-6) without the owner
-//     asking for exactly that.
-//
-// OffensiveOverride on any other sleeve is an error, so it always means the
-// one thing.
+// default role only with RoleOverride set: the owner's explicit choice
+// (D-71), whichever way it goes, so that no capital moves into or out of
+// agents' reach (GR-6) without the owner asking for exactly that.
+// RoleOverride on a sleeve whose role is its kind's is an error, so it
+// always means the one thing.
 func CheckSleeve(kinds []Kind, s Sleeve) (Sleeve, error) {
 	k, ok := findKind(kinds, s.Kind)
 	if s.Kind == "" || !ok {
@@ -148,14 +143,13 @@ func CheckSleeve(kinds []Kind, s Sleeve) (Sleeve, error) {
 	if err := s.Validate(); err != nil {
 		return Sleeve{}, err
 	}
-	overridden := s.Role == RoleOffensive && k.DefaultRole == RoleDefensive
+	differs := s.Role != k.DefaultRole
 	switch {
-	case overridden && !s.OffensiveOverride:
-		return Sleeve{}, fmt.Errorf("%w: sleeve %s is offensive but kind %s is defensive; making it offensive needs an explicit override",
-			ErrRoleOverride, s.ID, s.Kind)
-	case !overridden && s.OffensiveOverride:
-		return Sleeve{}, fmt.Errorf("%w: sleeve %s has an offensive override but is not an offensive sleeve of a defensive kind",
-			ErrRoleOverride, s.ID)
+	case differs && !s.RoleOverride:
+		return Sleeve{}, fmt.Errorf("%w: sleeve %s is %s but kind %s is %s; a role other than the kind's needs the owner's explicit choice",
+			ErrRoleOverride, s.ID, s.Role, s.Kind, k.DefaultRole)
+	case !differs && s.RoleOverride:
+		return Sleeve{}, fmt.Errorf("%w: sleeve %s has a role override but its role is its kind's", ErrRoleOverride, s.ID)
 	}
 	return s, nil
 }
@@ -170,10 +164,13 @@ func DefaultSleeves() []Sleeve {
 	}
 }
 
-// MissingDefaults returns the default kinds and default sleeves that are not
-// stored yet, by key and by ID, in that order. Saving them makes an install
-// hold every default once; a default the owner renamed, or a sleeve the
-// owner moved to another kind, is stored and so is left alone.
+// MissingDefaults returns the default kinds that are not stored yet, by
+// key, and, when no sleeve is stored at all, the default sleeves. Saving
+// them gives a new install every built-in kind and its three starting
+// sleeves (D-71). A default kind the owner renamed is stored and so is
+// left alone; once any sleeve is stored the install has started, so a
+// default sleeve the owner changed, or one the demo dataset replaced with
+// its own, is never added again.
 func MissingDefaults(kinds []Kind, sleeves []Sleeve) ([]Kind, []Sleeve) {
 	var missingKinds []Kind
 	for _, k := range DefaultKinds() {
@@ -181,23 +178,10 @@ func MissingDefaults(kinds []Kind, sleeves []Sleeve) ([]Kind, []Sleeve) {
 			missingKinds = append(missingKinds, k)
 		}
 	}
-	var missingSleeves []Sleeve
-	for _, s := range DefaultSleeves() {
-		if !hasSleeve(sleeves, s.ID) {
-			missingSleeves = append(missingSleeves, s)
-		}
+	if len(sleeves) > 0 {
+		return missingKinds, nil
 	}
-	return missingKinds, missingSleeves
-}
-
-// hasSleeve reports whether sleeves include id.
-func hasSleeve(sleeves []Sleeve, id SleeveID) bool {
-	for i := range sleeves {
-		if sleeves[i].ID == id {
-			return true
-		}
-	}
-	return false
+	return missingKinds, DefaultSleeves()
 }
 
 // KindBySleeve maps each sleeve's ID to its kind, so that an allocation

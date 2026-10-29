@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53463076025a
+  - type: implements
+    from: SYM-ingestv1-create-account-response-reset
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:21:39.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34e18be4e81f
+  - type: covered_by
+    from: SYM-ingestv1-create-account-response-reset
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:21:40.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2e3d8f76b1b

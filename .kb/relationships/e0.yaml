@@ -461,3 +461,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7537c1a3871a
+  - type: implements
+    from: SYM-portfolio-key-rune
+    to: REQ-portfolio-key-from-name
+    created_at: 2026-10-29T11:54:04.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81139b8f03a2
+  - type: covered_by
+    from: SYM-portfolio-key-rune
+    to: TEST-portfolio-key
+    created_at: 2026-10-29T11:54:04.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee68b288a080
+  - type: executable_for
+    from: SYM-ingest-app-test-accounts-owner-only
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T13:00:56.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceea748fa0f0
+  - type: executable_for
+    from: SYM-portfolio-app-test-sleeves-rename-kind
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:05:54.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e2ea39738ea
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-broker-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:14:53.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3237ccc70d0a
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-request-reset
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:48:32.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a49c32bdda96
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-request-reset
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:48:32.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30be261af4e2

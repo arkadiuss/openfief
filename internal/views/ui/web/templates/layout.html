@@ -22,6 +22,8 @@
     <a href="/"{{if eq $.Title "Overview"}} aria-current="page"{{end}}>Overview</a>
     <a href="/assertions"{{if eq $.Title "Flagged balance assertions"}} aria-current="page"{{end}}>Balance assertions</a>
     <a href="/price-checks"{{if eq $.Title "Flagged price checks"}} aria-current="page"{{end}}>Price checks</a>
+    <a href="/accounts"{{if eq $.Title "Accounts"}} aria-current="page"{{end}}>Accounts</a>
+    <a href="/sleeves"{{if eq $.Title "Sleeves"}} aria-current="page"{{end}}>Sleeves</a>
     <a href="/plugins"{{if eq $.Title "Plugins"}} aria-current="page"{{end}}>Plugins</a>
     {{if .Owner}}<a href="/settings"{{if eq $.Title "Settings"}} aria-current="page"{{end}}>Settings</a>{{end}}
   </nav>

@@ -125,7 +125,7 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 
 // newScheduler wires the connector scheduler (D-49) over d: the instances
 // and their addresses come from discovery, the core's tokens for them from
-// the TokenRequest API (D-59), and the sync state and bindings from the
+// the TokenRequest API (D-59), and the sync state, bindings and broker accounts (D-72) from the
 // ingest schema.
 func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery, cfg *syncConfig) *ingestapp.Scheduler {
 	tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
@@ -136,7 +136,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 		Connectors: &ingestapp.Connectors{
 			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
 			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
-			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Today: d.today,
+			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
 		},
 		Instances:  discovery,
 		Store:      store,

@@ -342,3 +342,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbf936d76a49
+  - type: validates
+    from: TEST-ingest-connectapi-accounts
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-29T12:45:22.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93949fbffe36

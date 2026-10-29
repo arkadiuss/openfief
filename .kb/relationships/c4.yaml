@@ -447,3 +447,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-464f79b0c524
+  - type: executable_for
+    from: SYM-ingest-postgres-test-bindings
+    to: TEST-ingest-postgres-brokers
+    created_at: 2026-10-29T13:03:56.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8f7486437a7
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_accounts_proto_init
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:20.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81b72626de4d
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_accounts_proto_init
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:20.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f8053955b6
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-get-name
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:07.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95a7fcf88819
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-get-name
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:07.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aa082928ed5
