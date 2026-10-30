@@ -441,6 +441,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-307f8a1261d2
   - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-descriptor
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:34:15.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6640b86702d8
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:34:15.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-062689813aa3
+  - type: implements
     from: SYM-jurisdiction-fee-rule-sale-cost
     to: REQ-jurisdiction-fee-rule-sale-cost
     created_at: 2026-10-29T22:01:12.738Z

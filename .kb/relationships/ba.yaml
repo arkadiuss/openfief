@@ -497,6 +497,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-9500428b2df5
   - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:11:02.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b15990cb9ec
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:11:02.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed8ebfda91ea
+  - type: implements
     from: SYM-pl-pack
     to: REQ-pl-values-per-wrapper
     created_at: 2026-10-29T22:05:12.685Z

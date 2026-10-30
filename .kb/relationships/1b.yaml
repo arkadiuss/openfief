@@ -342,13 +342,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2b55b52448f
-  - type: implements
-    from: SYM-valuation-default-price-check-threshold
-    to: REQ-valuation-price-check-threshold
-    created_at: 2026-10-29T05:37:50.004Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-67c9715f0e9a
   - type: covered_by
     from: SYM-valuation-default-price-check-threshold
     to: TEST-valuation-crosscheck
@@ -370,6 +363,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6425a25c67da
+  - type: validates
+    from: TEST-views-browser-routing
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T20:58:04.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7532e55b5373
+  - type: implements
+    from: SYM-valuation-default-price-check-threshold
+    to: REQ-valuation-price-check-one-percent
+    created_at: 2026-10-30T03:27:28.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddd58e20e6f8
   - type: implements
     from: SYM-views-app-views-cash-values
     to: REQ-views-three-values
@@ -391,10 +398,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4f8cc76b14e
-  - type: validates
-    from: TEST-views-browser-routing
-    to: REQ-plugins-one-browser-view
-    created_at: 2026-10-29T20:58:04.063Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7532e55b5373

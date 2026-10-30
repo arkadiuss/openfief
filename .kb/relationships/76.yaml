@@ -511,6 +511,13 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a34dea9eaf15
   - type: executable_for
+    from: SYM-ingest-kube-test-test-deployed-declarations
+    to: TEST-ingest-kube
+    created_at: 2026-10-30T04:31:39.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80fecaa1276e
+  - type: executable_for
     from: SYM-pl-test-helper-settings
     to: TEST-pl-pack
     created_at: 2026-10-29T22:07:43.970Z

@@ -342,6 +342,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f04c1f438ca
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:34:18.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc8780801b5f
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-enroll-localhost-forward
+    created_at: 2026-10-29T22:34:18.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48f2fdf1294a
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-first-run-wizard-follows
+    created_at: 2026-10-29T22:34:18.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82f378bf5e72
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-price-check-service-client
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:20:59.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53bc316968d4
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-price-check-service-client
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:20:59.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-970c5934bf7d
   - type: implements
     from: SYM-pl-average-balance
     to: REQ-pl-oki-act-as-data
@@ -391,27 +426,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d97c665ed16a
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-enroll-origin
-    created_at: 2026-10-29T22:34:18.605Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cc8780801b5f
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-enroll-localhost-forward
-    created_at: 2026-10-29T22:34:18.648Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-48f2fdf1294a
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-first-run-wizard-follows
-    created_at: 2026-10-29T22:34:18.692Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-82f378bf5e72
   - type: implements
     from: SYM-views-add-in
     to: REQ-views-totals-with-cash

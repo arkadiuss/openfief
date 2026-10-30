@@ -1,51 +1,47 @@
 ---
-title: The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, and must not sync an instance that no longer runs while keeping its state.
+title: The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, counting an account seeded by an opening statement upload as seeded, and must not sync an instance that no longer runs while keeping its state.
 status: open
-text_ref: docs/DESIGN.md#D-49
+text_ref: docs/DESIGN.md#D-109
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-49
+  - provenance:docs-design-md-d-109
   - lane:strict
-semantic_text: The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, and must not sync an instance that no longer runs while keeping its state.
+semantic_text: The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, counting an account seeded by an opening statement upload as seeded, and must not sync an instance that no longer runs while keeping its state.
 logic_claims:
-  - CLAIM-7239C60159E2987E
+  - CLAIM-B4EB1779F051106D
 semantic_clauses:
-  - The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, and must not sync an instance that no longer runs while keeping its state.
+  - The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, counting an account seeded by an opening statement upload as seeded, and must not sync an instance that no longer runs while keeping its state.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: d66cf6a3005b795e95f244c838a64c3c15e73824500d691f2c14b167dcb6f153
+semantic_source_hash: 1a53d3f6de6a5b45e6c1a60dad3f3fb40cc636ab8e9da276d7387a40ddda8b9e
 semantic_inventory:
-  - claim_key: CLAIM-7239C60159E2987E
-    claim_text: The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, and must not sync an instance that no longer runs while keeping its state
+  - claim_key: CLAIM-B4EB1779F051106D
+    claim_text: The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, counting an account seeded by an opening statement upload as seeded, and must not sync an instance that no longer runs while keeping its state
     role: normative
     status: modeled
     span:
       start: 0
-      end: 253
+      end: 322
 origin:
   kind: agent
   recorded_at: '2026-10-29T17:20:16.524Z'
 id: REQ-ingest-scheduler-when-due
 type: req
 ---
-The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, and must not sync an instance that no longer runs while keeping its state.
+The core must sync every running connector instance when its sync policy says it is due, at once when it never synced and then every interval plus a random jitter after a success, counting an account seeded by an opening statement upload as seeded, and must not sync an instance that no longer runs while keeping its state.
 
 ## Context
 
-D-49 makes the core own connectors' schedules. Modeled by Claude Code for the market-data work package (impl/market-data); the author has not reviewed it yet.
+D-49 has the core own the schedules; D-95 picks the mode from the ledger's seeding, and D-109 makes an opening upload seed the account for scheduled syncs too.
 
 ## Why this changed
 
-It replaces REQ-ingest-scheduler-due without that requirement's mode clause, opening until one opening batch completes and transactions after it, because D-95 makes a seeded account sync in transactions mode on its own: the mode now follows the ledger's seeding of the bound accounts, as REQ-ingest-sync-mode-from-ledger states.
+It supersedes REQ-ingest-scheduler-due because D-95 makes each sync's mode follow which bound accounts the ledger says are seeded, not whether an opening batch once completed; D-109 then adds that an account seeded by an opening statement upload counts as seeded for its syncs.
 
 ## Source
 
-> **[D-49]** The core calls connectors: a connector serves a Connect service for syncing and for importing files, and the core owns the schedules, retries and import batches.
+> An opening upload seeds the account for scheduled syncs too.
 
-docs/DESIGN.md#D-49
-
-> **[D-95]** When an account has already been seeded from opening lots, the core syncs it in transactions mode on its own; no manual step switches it.
-
-docs/DESIGN.md#D-95
+docs/DESIGN.md#D-109

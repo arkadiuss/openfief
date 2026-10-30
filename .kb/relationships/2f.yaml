@@ -363,13 +363,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e3783e63156
-  - type: implements
-    from: SYM-ui-server-flagged-price-checks
-    to: REQ-ui-price-checks
-    created_at: 2026-10-29T07:05:54.141Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-acd36efedc53
   - type: covered_by
     from: SYM-ui-server-flagged-price-checks
     to: TEST-ui-pricechecks
@@ -419,6 +412,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57149d629c73
+  - type: implements
+    from: SYM-valuation-price-check-acknowledgement-acknowledges
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T03:08:15.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28e790d90951
+  - type: implements
+    from: SYM-valuation-price-check-acknowledgement-acknowledges
+    to: REQ-valuation-price-check-acknowledgement-lapses
+    created_at: 2026-10-30T03:08:15.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77a878044d47
+  - type: covered_by
+    from: SYM-valuation-price-check-acknowledgement-acknowledges
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-30T03:08:15.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3e46816d9c9
+  - type: implements
+    from: SYM-core-entry-caller-set-discovery
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:24:14.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2a3b94e5c06
+  - type: covered_by
+    from: SYM-core-entry-caller-set-discovery
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:24:14.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bf0a1f66291
+  - type: implements
+    from: SYM-ui-server-flagged-price-checks
+    to: REQ-ui-price-checks-page
+    created_at: 2026-10-30T05:19:58.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9970135151c
+  - type: implements
+    from: SYM-demo-close-on-or-before
+    to: REQ-demo-dataset-flagged-price-check
+    created_at: 2026-10-30T06:16:54.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f4590d45c7e
+  - type: covered_by
+    from: SYM-demo-close-on-or-before
+    to: TEST-demo-cross-checks
+    created_at: 2026-10-30T06:16:54.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f074d6ad2eb
   - type: executable_for
     from: SYM-pl-test-tax-wrapper-names
     to: TEST-pl-tax

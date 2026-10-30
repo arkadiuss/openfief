@@ -20,7 +20,43 @@ import (
 // instances, and then the client over them. Until then, and outside a
 // cluster, every call fails with ingestapp.ErrConnectorUnavailable.
 type entryCaller struct {
-	client atomic.Pointer[connectrpc.Client]
+	client    atomic.Pointer[connectrpc.Client]
+	discovery atomic.Pointer[connectorDiscovery]
+}
+
+// connectorDiscovery lists the running connector instances and what their
+// manifests declare; *ingestkube.Discovery implements it.
+type connectorDiscovery interface {
+	ingestapp.InstanceLister
+	ingestapp.ConnectorDeclarations
+}
+
+// Declarations returns what instance's manifest declares, from discovery
+// once the core has found the instances; until then nothing.
+func (e *entryCaller) Declarations(ctx context.Context, instance string) (ingest.Declarations, error) {
+	d := e.discovery.Load()
+	if d == nil {
+		return ingest.Declarations{}, nil
+	}
+	got, err := (*d).Declarations(ctx, instance)
+	if err != nil {
+		return ingest.Declarations{}, fmt.Errorf("declarations: %w", err)
+	}
+	return got, nil
+}
+
+// ConnectorInstances returns the running connector instances, from
+// discovery once the core has found them; until then none.
+func (e *entryCaller) ConnectorInstances(ctx context.Context) ([]string, error) {
+	d := e.discovery.Load()
+	if d == nil {
+		return nil, nil
+	}
+	got, err := (*d).ConnectorInstances(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("connector instances: %w", err)
+	}
+	return got, nil
 }
 
 // Sync syncs instance through the client.
@@ -62,6 +98,10 @@ func (e *entryCaller) ImportBondLots(ctx context.Context, instance string, id in
 	return d, nil
 }
 
+// setDiscovery makes d the source of every later Declarations and
+// ConnectorInstances.
+func (e *entryCaller) setDiscovery(d connectorDiscovery) { e.discovery.Store(&d) }
+
 // set makes c the client every later call goes through.
 func (e *entryCaller) set(c *connectrpc.Client) { e.client.Store(c) }
 
@@ -100,7 +140,7 @@ func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connect
 		Caller: d.entries, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
 		Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
 		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
-		Sources: sourceInputs{rankings: d.rankings},
+		Sources: sourceInputs{rankings: d.rankings}, Declarations: d.entries,
 	}
 }
 

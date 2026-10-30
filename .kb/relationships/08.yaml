@@ -272,13 +272,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39cf86e97085
-  - type: implements
-    from: SYM-ingest-app-bound-instance
-    to: REQ-ingest-statement-upload-handoff
-    created_at: 2026-10-29T05:09:41.915Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-558310b97bee
   - type: covered_by
     from: SYM-ingest-app-bound-instance
     to: TEST-ingest-app-uploads
@@ -300,13 +293,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb74cbe8f283
-  - type: covered_by
-    from: SYM-core-parse-threshold
-    to: TEST-core-unit
-    created_at: 2026-10-29T06:26:46.644Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-03aaa4f13955
   - type: implements
     from: SYM-fd-browserproxy-proxy-unreachable
     to: REQ-core-reverse-proxies-view-plugins
@@ -419,13 +405,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6eb7217bcc0
-  - type: implements
-    from: SYM-core-parse-threshold
-    to: REQ-core-serve-flags
-    created_at: 2026-10-29T21:54:21.557Z
+  - type: constrains
+    from: REQ-plugins-manifest-declarations
+    to: FACT-SUBJECT-71CF9B7EC72DD12C
+    created_at: 2026-10-30T04:11:05.512Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-4d41b59c576c
+    id: rel-afc5b43c884b
+  - type: requires_property
+    from: REQ-plugins-manifest-declarations
+    to: FACT-PROP-F3468976967F47E8
+    created_at: 2026-10-30T04:11:05.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6de27d932920
+  - type: specified_by
+    from: REQ-plugins-manifest-declarations
+    to: SCEN-plugins-manifest-declarations
+    created_at: 2026-10-30T04:11:05.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d34f017ea9da
+  - type: implements
+    from: SYM-ingest-app-bound-instance
+    to: REQ-ingest-statement-upload-bound-instance
+    created_at: 2026-10-30T04:11:52.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48a5d5597665
   - type: executable_for
     from: SYM-core-test-settings-service
     to: TEST-core-settings

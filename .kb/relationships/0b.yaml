@@ -398,6 +398,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f42f837dd0bd
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-proto-reflect
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:14:48.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1c63fa2a81
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-proto-reflect
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:14:48.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e95ac80cdbc
   - type: executable_for
     from: SYM-views-app-test-helper-fake-terms-tax-wrapper
     to: TEST-views-app-values

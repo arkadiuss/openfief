@@ -517,6 +517,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4585e18423e
+  - type: validates
+    from: TEST-ingest-app-brokers
+    to: REQ-ingest-statement-multi-account
+    created_at: 2026-10-30T04:10:42.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b09ec8eb9ac4
   - type: implements
     from: SYM-core-parse-revoke
     to: REQ-core-serve-flags

@@ -426,6 +426,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74bf724fcfe4
+  - type: validates
+    from: TEST-plugins-cli-render
+    to: REQ-plugins-manifest-declarations
+    created_at: 2026-10-30T04:49:28.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3f56afcf9f7
   - type: executable_for
     from: SYM-jurisdiction-test-pack-wrappers
     to: TEST-jurisdiction-pack

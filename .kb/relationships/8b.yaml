@@ -433,13 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f7d80c57834
-  - type: implements
-    from: SYM-ingest-app-uploads-prepare
-    to: REQ-ingest-statement-upload-limits
-    created_at: 2026-10-29T05:10:10.474Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2a55783d5e1c
   - type: covered_by
     from: SYM-ingest-app-uploads-prepare
     to: TEST-ingest-app-uploads
@@ -545,6 +538,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0bfb85eb8e34
+  - type: implements
+    from: SYM-ingest-app-uploads-prepare
+    to: REQ-ingest-statement-upload-checks
+    created_at: 2026-10-30T04:12:59.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-559696970aa5
   - type: implements
     from: SYM-core-split-command
     to: REQ-core-serve-flags

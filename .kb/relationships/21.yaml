@@ -420,6 +420,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-811a6a60c221
   - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-descriptor
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:14:59.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-206ce0572497
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-descriptor
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:15:00.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2713692a6764
+  - type: implements
+    from: SYM-ingest-app-connectors-declared-cross-checks
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:25:59.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1375383dfea2
+  - type: covered_by
+    from: SYM-ingest-app-connectors-declared-cross-checks
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-30T04:25:59.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-928ec77a217a
+  - type: implements
     from: SYM-ui-scope-label
     to: REQ-ui-formatting-number-format
     created_at: 2026-10-30T02:39:58.171Z

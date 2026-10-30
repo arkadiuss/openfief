@@ -56,7 +56,7 @@ classDiagram
   class Plugin {
     metadata.name : the instance name
     spec.image : repository@sha256 digest
-    spec.manifest : capabilities, egress, secrets, dataTiers, configSchema, browserPath, egressFromConfig, clusterService
+    spec.manifest : capabilities, egress, secrets, dataTiers, configSchema, browserPath, egressFromConfig, clusterService, crossCheckPrices, statementFiles
     spec.config : JSON object
     spec.clusterService : namespace, service, port
     status.conditions : Ready, ApprovalRequired, SignatureVerified

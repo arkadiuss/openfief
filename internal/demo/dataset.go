@@ -51,6 +51,9 @@ type Dataset struct {
 
 	Prices []valuation.Price
 	CPI    []valuation.IndexReading
+	// CrossCheckPrices are IBKR's synthetic mark prices at each monthly
+	// statement's end, one of them beyond the price check threshold.
+	CrossCheckPrices []valuation.CrossCheckPrice
 }
 
 // GoLive returns the demo's go-live date for today: a year before.
@@ -69,6 +72,7 @@ func Generate(seed uint64, today kernel.Date) (Dataset, error) {
 		return Dataset{}, err
 	}
 	h := simulateIBKR(m, newRNG(seed^streamIBKR), goLive, today)
+	ds.CrossCheckPrices = crossCheckPrices(m, &h)
 	ds.IBKROpening = openingFlex(&h)
 	for i := range h.statements {
 		ds.IBKRActivity = append(ds.IBKRActivity, activityFlex(&h.statements[i]))

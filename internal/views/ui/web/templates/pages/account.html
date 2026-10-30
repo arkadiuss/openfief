@@ -9,9 +9,13 @@
 <section class="card notice" aria-labelledby="upload-result-title">
   <div class="state">{{template "kasztan" "seal"}}<div>
   <h2 id="upload-result-title">Statement imported</h2>
-  <p role="status">Import batch {{.BatchId}} from {{.Institution}}: {{.Transactions}} transactions ({{.New}} new, {{.NewVersions}} new versions, {{.Unchanged}} unchanged) and {{.Assertions}} balance assertions{{if .FailedAssertions}}, {{.FailedAssertions}} of them flagged{{end}}.</p>
+  <p role="status">Import batch {{.BatchId}} from {{.Institution}}, in {{enum .Mode.String "MODE_"}} mode: {{.Transactions}} transactions ({{.New}} new, {{.NewVersions}} new versions, {{.Unchanged}} unchanged) and {{.Assertions}} balance assertions{{if .FailedAssertions}}, {{.FailedAssertions}} of them flagged{{end}}.</p>
+  {{if gt (len .AccountIds) 1}}<p>The statement covers several accounts and was booked into each: {{range $i, $a := .AccountIds}}{{if $i}}, {{end}}<a href="/accounts/{{$a}}">{{$a}}</a>{{end}}.</p>{{end}}
   {{if not .ProblemsTotal}}<p>Every row was imported.</p>{{end}}
   </div></div>
+  {{if .UnmappedBrokerAccounts}}
+  <p class="alert alert-warn">The statement also names {{len .UnmappedBrokerAccounts}} broker {{if eq (len .UnmappedBrokerAccounts) 1}}account{{else}}accounts{{end}} that no account is mapped to, so nothing of {{if eq (len .UnmappedBrokerAccounts) 1}}it{{else}}them{{end}} was booked: <span class="mono">{{range $i, $b := .UnmappedBrokerAccounts}}{{if $i}}, {{end}}{{$b}}{{end}}</span>. Map {{if eq (len .UnmappedBrokerAccounts) 1}}it{{else}}them{{end}} on the <a href="/accounts">accounts page</a>, then upload the statement again.</p>
+  {{end}}
   {{if .ProblemsTotal}}
   <p class="alert alert-warn">{{.ProblemsTotal}} rows were left out of the ledger{{if lt (len .Problems) .ProblemsTotal}}; the first {{len .Problems}} are listed{{end}}:</p>
   <div class="table"><table>
@@ -87,19 +91,20 @@
   </table></div>
 </section>
 
-{{if .UploadForm}}
+{{with .UploadForm}}
 <section class="card" aria-labelledby="upload-title">
   <h2 id="upload-title">Upload statement</h2>
-  <p class="muted">A statement file this account's institution exported, up to 64 MiB, such as an IBKR Flex Query statement. The core hands it to the connector bound to this account, which decides whether it can read it; importing the same statement again changes nothing.</p>
+  <p class="muted">A statement file this account's institution exported, up to 64 MiB, such as an IBKR Flex Query statement. The core hands it to {{.Instance}}, the connector bound to this account, which decides whether it can read it; a statement of several linked accounts is booked into each one mapped to it. Importing the same statement again changes nothing.</p>
   <form method="post" action="/accounts/{{$.Data.Account.Id}}/statements" enctype="multipart/form-data">
     <div class="fields">
       <div class="field">
         <label for="upload-mode">Statement</label>
         <select id="upload-mode" name="mode" aria-describedby="upload-mode-help">
-          <option value="transactions" selected>transactions</option>
+          <option value="auto" selected>{{if eq .Mode "opening"}}opening: the account isn't seeded yet{{else}}transactions: the account is seeded{{end}}</option>
           <option value="opening">opening (seeds the account)</option>
+          <option value="transactions">transactions</option>
         </select>
-        <p class="help" id="upload-mode-help">Choose opening only for the statement that seeds the account at go-live.</p>
+        <p class="help" id="upload-mode-help">The core chooses: opening seeds the account at go-live, and scheduled syncs then continue it; transactions after that. Override it only to seed again or to send transactions first.</p>
       </div>
       <div class="field">
         <label for="upload-file">File</label>

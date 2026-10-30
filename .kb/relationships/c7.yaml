@@ -377,6 +377,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-511661c9039d
+  - type: executable_for
+    from: SYM-valuation-test-cc-test-acknowledge
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-30T03:08:49.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be4da5407c4a
   - type: implements
     from: SYM-affected-image-inputs
     to: REQ-tooling-ci-affected-images

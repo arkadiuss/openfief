@@ -434,6 +434,69 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e3becc77e2f5
   - type: implements
+    from: SYM-exp-plugins-app-check-browser-view
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T22:00:03.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af36c23fba29
+  - type: covered_by
+    from: SYM-exp-plugins-app-check-browser-view
+    to: TEST-plugins-cli-browser-view
+    created_at: 2026-10-29T22:00:03.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e2485d2faee
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-reset
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:15:26.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-835e8dc9a7e3
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-reset
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:15:26.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c4fa12dc26a
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-price-check-service-client-acknowledge-price-check
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:22:38.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ad0cc3075b6
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-price-check-service-client-acknowledge-price-check
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:22:38.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f34131972003
+  - type: implements
+    from: SYM-ingest-gen-st-pb-upload-statement-response-get-account-ids
+    to: REQ-ingest-statement-mode-chosen-by-core
+    created_at: 2026-10-30T04:32:32.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e841e46e8a
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-upload-statement-response-get-account-ids
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:32:32.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a66b8bff442
+  - type: executable_for
+    from: SYM-ui-uc-test-st-test-upload-statement-core-chooses
+    to: TEST-ui-statements
+    created_at: 2026-10-30T06:22:08.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30bd613e767a
+  - type: implements
     from: SYM-valuation-app-display-settings
     to: REQ-valuation-owner-settings
     created_at: 2026-10-29T22:11:01.127Z
@@ -503,17 +566,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a6d9c97219e
-  - type: implements
-    from: SYM-exp-plugins-app-check-browser-view
-    to: REQ-plugins-cli-refuses-second-browser-view
-    created_at: 2026-10-29T22:00:03.610Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-af36c23fba29
-  - type: covered_by
-    from: SYM-exp-plugins-app-check-browser-view
-    to: TEST-plugins-cli-browser-view
-    created_at: 2026-10-29T22:00:03.648Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5e2485d2faee

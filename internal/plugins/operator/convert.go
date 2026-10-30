@@ -25,6 +25,8 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 			ConfigSchema:     rawJSON(spec.Manifest.ConfigSchema),
 			BrowserPath:      spec.Manifest.BrowserPath,
 			EgressFromConfig: spec.Manifest.EgressFromConfig,
+			CrossCheckPrices: spec.Manifest.CrossCheckPrices,
+			StatementFiles:   spec.Manifest.StatementFiles,
 		},
 		Config: rawJSON(spec.Config),
 	}

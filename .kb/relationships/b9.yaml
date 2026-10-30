@@ -657,6 +657,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09cbf5d44078
+  - type: validates
+    from: TEST-plugins-browser-view
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T21:58:43.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a08446dc13a
+  - type: validates
+    from: TEST-plugins-browser-view
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T21:58:43.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c738d9a2a5a
+  - type: validates
+    from: TEST-plugins-browser-view
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T21:58:43.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2372a29e5df8
+  - type: implements
+    from: SYM-core-auth-cmd-core-config-parse-enroll-link
+    to: REQ-identity-first-passkey-own-host-or-localhost
+    created_at: 2026-10-29T22:35:56.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-373c7d718ab6
+  - type: executable_for
+    from: SYM-ingest-test-decl-test-undeclared-cross-check-prices
+    to: TEST-ingest-declarations
+    created_at: 2026-10-30T04:31:03.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4916581fd90
   - type: implements
     from: SYM-core-serve-config
     to: REQ-core-serve-flags
@@ -727,34 +762,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2818c3a487dc
-  - type: validates
-    from: TEST-plugins-browser-view
-    to: REQ-plugins-one-browser-view
-    created_at: 2026-10-29T21:58:43.649Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4a08446dc13a
-  - type: validates
-    from: TEST-plugins-browser-view
-    to: REQ-plugins-cli-refuses-second-browser-view
-    created_at: 2026-10-29T21:58:43.717Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9c738d9a2a5a
-  - type: validates
-    from: TEST-plugins-browser-view
-    to: REQ-operator-refuses-second-browser-view
-    created_at: 2026-10-29T21:58:43.779Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2372a29e5df8
-  - type: implements
-    from: SYM-core-auth-cmd-core-config-parse-enroll-link
-    to: REQ-identity-first-passkey-own-host-or-localhost
-    created_at: 2026-10-29T22:35:56.964Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-373c7d718ab6
   - type: constrains
     from: REQ-ui-formatting-number-format
     to: FACT-SUBJECT-90104E84491E6BE9

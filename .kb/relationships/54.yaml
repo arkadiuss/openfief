@@ -468,6 +468,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6feddd35b364
+  - type: validates
+    from: TEST-ingest-app-uploads
+    to: REQ-ingest-statement-upload-bound-instance
+    created_at: 2026-10-30T04:10:46.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d0fae0d17b1
+  - type: validates
+    from: TEST-ingest-app-uploads
+    to: REQ-ingest-statement-upload-size-limit
+    created_at: 2026-10-30T04:10:46.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f0138dfda9d
   - type: verified_by
     from: SCEN-ingest-account-terms
     to: TEST-ingest-app-accounts
