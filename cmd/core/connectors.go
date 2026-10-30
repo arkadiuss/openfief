@@ -120,10 +120,8 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 			return fmt.Errorf("valuation store: %w", err)
 		}
 		l, recorder := ingestDeps(p.pool, vstore)
-		checks, err := valuationapp.NewCrossChecks(vstore, kernel.Decimal{})
-		if err != nil {
-			return fmt.Errorf("cross checks: %w", err)
-		}
+		// The connector commands record cross-check prices for no owner.
+		checks := valuationapp.NewCrossChecks(vstore, nil)
 		// The model's targets need no owner: no session is checked.
 		models, err := portfolioapp.New(portfoliopg.New(p.pool), vstore, nil, valuation.PLN())
 		if err != nil {

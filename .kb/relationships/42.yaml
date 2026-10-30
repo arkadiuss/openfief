@@ -386,13 +386,6 @@ relationships:
     id: rel-d3376bcd0efa
   - type: implements
     from: SYM-valuation-check-prices
-    to: REQ-valuation-price-check
-    created_at: 2026-10-29T05:38:19.390Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-28d89aad9692
-  - type: implements
-    from: SYM-valuation-check-prices
     to: REQ-AUTO-7374F67D85269872
     created_at: 2026-10-29T05:38:19.419Z
     created_by: kibi/upsert
@@ -496,3 +489,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffe7f5ba6f63
+  - type: implements
+    from: SYM-valuation-check-prices
+    to: REQ-valuation-price-check-latest-price
+    created_at: 2026-10-30T03:25:28.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b062e1e99a7a

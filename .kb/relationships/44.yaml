@@ -611,5 +611,41 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-3b9606126115
+      },
+    {
+        type: implements,
+        from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-string,
+        to: REQ-valuation-price-check-service,
+        created_at: 2026-10-30T03:18:54.471Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-4501c7324b06
+      },
+    {
+        type: covered_by,
+        from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-string,
+        to: TEST-core-price-checks,
+        created_at: 2026-10-30T03:18:54.560Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-f8861d1e4a0a
+      },
+    {
+        type: implements,
+        from: SYM-valuation-gen-pc-pb-file-openfief-valuation-v1-price-checks-proto-raw-desc-gzip,
+        to: REQ-valuation-price-check-service,
+        created_at: 2026-10-30T03:19:54.917Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-ab3ccdb8a9ed
+      },
+    {
+        type: covered_by,
+        from: SYM-valuation-gen-pc-pb-file-openfief-valuation-v1-price-checks-proto-raw-desc-gzip,
+        to: TEST-core-price-checks,
+        created_at: 2026-10-30T03:19:54.977Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-88e53cfa9686
       }
   ]

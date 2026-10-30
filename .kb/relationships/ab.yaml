@@ -328,13 +328,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8e5b4ca4b9c
-  - type: implements
-    from: SYM-valuation-postgres-store-cross-checked-prices
-    to: REQ-valuation-price-check
-    created_at: 2026-10-29T05:40:17.992Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6286f2b19029
   - type: covered_by
     from: SYM-valuation-postgres-store-cross-checked-prices
     to: TEST-valuation-postgres-crosscheck
@@ -440,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd70043d1d7d
+  - type: validates
+    from: TEST-valuation-postgres-price-check-settings
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T02:58:19.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9967746ff82e
+  - type: validates
+    from: TEST-valuation-postgres-price-check-settings
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T02:58:19.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27f3c2167d26
+  - type: implements
+    from: SYM-valuation-postgres-store-cross-checked-prices
+    to: REQ-valuation-price-check-latest-price
+    created_at: 2026-10-30T03:25:41.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f4e4ff0f695

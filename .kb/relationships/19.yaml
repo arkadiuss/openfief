@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f628357bdd46
+  - type: verified_by
+    from: SCEN-valuation-price-check-acknowledgement-lapses
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-30T02:58:33.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09dc58e8b93c
+  - type: verified_by
+    from: SCEN-valuation-price-check-acknowledgement-lapses
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T02:58:33.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-100e57403481

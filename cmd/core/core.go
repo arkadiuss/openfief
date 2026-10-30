@@ -100,17 +100,13 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 }
 
 // valuationSettings records the bond basis, which revalues everything when
-// it changed (D-36), and returns the cross-check use cases with the price
-// check threshold (D-22).
-func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, cfg *serveConfig) (*valuationapp.CrossChecks, error) {
+// it changed (D-36), and returns the cross-check use cases (D-22,
+// D-110..D-112), with the owner's sessions checked by owners.
+func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, cfg *serveConfig, owners valuationapp.Owners) (*valuationapp.CrossChecks, error) {
 	if _, err := recorder.ApplyBondBasis(ctx, cfg.BondBasis); err != nil {
 		return nil, fmt.Errorf("bond basis: %w", err)
 	}
-	checks, err := valuationapp.NewCrossChecks(vstore, cfg.PriceCheckThreshold)
-	if err != nil {
-		return nil, fmt.Errorf("price check threshold: %w", err)
-	}
-	return checks, nil
+	return valuationapp.NewCrossChecks(vstore, owners), nil
 }
 
 // newCore wires the core over a migrated database: the ledger with
@@ -121,7 +117,8 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // basis, which revalues everything when it changed. The browser port serves
 // the read API alone; the plugin port serves it with the AuthService, the
 // ModelPortfolioService (D-52), the BondLotService (D-9, D-49), the
-// StatementService (D-7, D-49) and the onboarding services, to the view
+// StatementService (D-7, D-49), the MarketDataService (D-94), the
+// PriceCheckService (D-110, D-112) and the onboarding services, to the view
 // plugins callers accepts (D-69, D-79, D-115). The read API
 // lists the installed plugins from installed, and without it, outside a
 // cluster, answers that they are unknown. Start the River client to run
@@ -139,7 +136,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 			return nil, fmt.Errorf("storing the default sleeves: %w", defErr)
 		}
 	}
-	checks, err := valuationSettings(ctx, recorder, vstore, cfg)
+	auth, err := newAuth(pool, &cfg.Auth, now)
+	if err != nil {
+		return nil, err
+	}
+	checks, err := valuationSettings(ctx, recorder, vstore, cfg, valuationOwners(auth, cfg.Auth.Origins))
 	if err != nil {
 		return nil, err
 	}
@@ -152,10 +153,6 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	})
 	if err != nil {
 		return nil, fmt.Errorf("revaluation workers: %w", err)
-	}
-	auth, err := newAuth(pool, &cfg.Auth, now)
-	if err != nil {
-		return nil, err
 	}
 	models, err := newModels(pool, vstore, auth, cfg.Auth.Origins, cfg.Reporting)
 	if err != nil {
@@ -180,6 +177,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withBondLotService(plugin, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	plugin = withStatementService(plugin, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
+	plugin = withPriceCheckService(plugin, checks, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins), newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed}, nil
 }

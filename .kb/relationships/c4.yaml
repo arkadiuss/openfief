@@ -489,3 +489,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fdb8768d152
+  - type: executable_for
+    from: SYM-valuation-app-test-cc-fake-cross-checks-save-price-check-threshold
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:03:10.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07bf0c1a26ba

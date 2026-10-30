@@ -428,13 +428,6 @@ relationships:
     id: rel-8208ecab5fab
   - type: implements
     from: SYM-valuation-app-cross-checks-price-checks
-    to: REQ-valuation-price-check
-    created_at: 2026-10-29T05:39:28.936Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7940ba2eb87
-  - type: implements
-    from: SYM-valuation-app-cross-checks-price-checks
     to: REQ-AUTO-7374F67D85269872
     created_at: 2026-10-29T05:39:28.974Z
     created_by: kibi/upsert
@@ -517,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e185adca3d8
+  - type: implements
+    from: SYM-valuation-app-cross-checks-price-checks
+    to: REQ-valuation-price-check-latest-price
+    created_at: 2026-10-30T03:25:02.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1873876aa5da

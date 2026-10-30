@@ -342,3 +342,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5860e8e5f677
+  - type: executable_for
+    from: SYM-valuation-app-test-cc-fake-cross-checks-append-price-check-acknowledgement
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:03:44.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d925e9fe99c

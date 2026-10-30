@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04597e3e4e12
+  - type: executable_for
+    from: SYM-core-test-pc-store-checked-prices
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:00:51.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89ec4bde5ba0

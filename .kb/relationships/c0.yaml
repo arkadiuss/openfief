@@ -475,3 +475,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af694e8aacd8
+  - type: implements
+    from: SYM-valuation-postgres-store-price-check-acknowledgements
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T03:09:47.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a93010715a
+  - type: covered_by
+    from: SYM-valuation-postgres-store-price-check-acknowledgements
+    to: TEST-valuation-postgres-price-check-settings
+    created_at: 2026-10-30T03:09:47.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-808cb64d6100
+  - type: implements
+    from: SYM-views-gen-pb-pc-price-check-get-threshold
+    to: REQ-views-price-checks
+    created_at: 2026-10-30T03:24:34.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-257acd2a2031
+  - type: covered_by
+    from: SYM-views-gen-pb-pc-price-check-get-threshold
+    to: TEST-views-connectapi-pricechecks
+    created_at: 2026-10-30T03:24:34.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2caab58428a

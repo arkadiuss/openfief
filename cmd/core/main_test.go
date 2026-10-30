@@ -45,7 +45,6 @@ func defaultServe(t *testing.T) serveConfig {
 		Listen: ":8080", PluginListen: ":8081", Reporting: pln,
 		EndOfDay: valuationpg.DailyAt{Hour: 23, Minute: 30, Location: warsaw(t)},
 		Workers:  2, BondBasis: valuation.NetIfRedeemed, EnsureDefaults: true, ShutdownTimeout: 25 * time.Second,
-		PriceCheckThreshold: valuation.DefaultPriceCheckThreshold(),
 		Sync: syncConfig{
 			Policy:         ingest.SyncPolicy{Interval: 6 * time.Hour, Jitter: 30 * time.Minute, RetryFirst: 5 * time.Minute, RetryMax: time.Hour},
 			Timeout:        5 * time.Minute,
@@ -81,7 +80,6 @@ func TestParseArgs(t *testing.T) {
 	utc := def
 	utc.EndOfDay = valuationpg.DailyAt{Hour: 22, Minute: 5, Location: time.UTC}
 	utc.Listen, utc.PluginListen, utc.Workers, utc.BondBasis, utc.EnsureDefaults, utc.ShutdownTimeout = "127.0.0.1:9090", "127.0.0.1:9091", 4, valuation.GrossAccrued, false, time.Second
-	utc.PriceCheckThreshold = kernel.NewDecimal(5, -3)
 	pod := def
 	pod.Connectors = true
 	tuned := pod
@@ -112,7 +110,6 @@ func TestParseArgs(t *testing.T) {
 			args: []string{
 				"--listen=127.0.0.1:9090", "--plugin-listen=127.0.0.1:9091", "--time-zone=UTC", "--end-of-day=22:05", "--workers=4",
 				"--bond-basis=gross_accrued", "--ensure-defaults=false", "--shutdown-timeout=1s",
-				"--price-check-threshold=0.005",
 			},
 			dsn: testDSN, want: command{Name: cmdServe, DSN: testDSN, Serve: utc},
 		},
@@ -151,8 +148,8 @@ func TestParseArgs(t *testing.T) {
 		{name: "enroll-link with an argument", args: []string{"enroll-link", "now"}, dsn: testDSN, wantErr: errUsage},
 		{name: "retry max below first", args: []string{"--sync-retry-first=1h", "--sync-retry-max=1m"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
 		{name: "zero sync interval", args: []string{"--sync-every=0s"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
-		{name: "a price check threshold of 1", args: []string{"--price-check-threshold=1"}, dsn: testDSN, wantErr: valuation.ErrInvalidPriceCheckThreshold},
-		{name: "a price check threshold in percent", args: []string{"--price-check-threshold=1%"}, dsn: testDSN, fail: true},
+		// The threshold is 1% unless the owner sets one per instrument (D-110): no flag.
+		{name: "a price check threshold flag", args: []string{"--price-check-threshold=0.005"}, dsn: testDSN, fail: true},
 		{
 			name: "connector bind", args: []string{"connector", "bind", "--instance", "xtb-main", "--account", "acc-1"}, dsn: testDSN,
 			want: command{Name: cmdBind, DSN: testDSN, Connector: connectorArgs{Instance: "xtb-main", Account: "acc-1"}},

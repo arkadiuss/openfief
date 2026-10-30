@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c675d037a56
+  - type: executable_for
+    from: SYM-core-test-pc-price-check-client
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:00:35.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7aa6464f22f
+  - type: executable_for
+    from: SYM-valuation-app-test-cc-fake-cross-checks-price-check-acknowledgements
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:03:27.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6429fcfbdc34

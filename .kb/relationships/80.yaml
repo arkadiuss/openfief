@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b284207cd457
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-source
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:18:06.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e5de15e3268
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-source
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:18:06.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b1c866d535d
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-unimplemented-price-check-service-handler-acknowledge-price-check
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:24:01.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f03b25a212e7
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-unimplemented-price-check-service-handler-acknowledge-price-check
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:24:01.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae5a24550dc2

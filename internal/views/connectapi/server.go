@@ -170,8 +170,10 @@ func assertionStatus(s viewsv1.AssertionStatus) (ledgerapp.AssertionStatus, erro
 	return 0, fmt.Errorf("%w: assertion status %d", errBadParameter, s)
 }
 
-// ListPriceChecks answers GET /v1/price-checks: every price compared with a
-// cross-check price (D-22), with the threshold they were flagged at.
+// ListPriceChecks answers GET /v1/price-checks: every cross-check price
+// compared with the latest price on or before its date (D-22, D-111), each
+// with its threshold and acknowledgement (D-110, D-112), and the default
+// threshold.
 func (s *readService) ListPriceChecks(ctx context.Context, req *connect.Request[viewsv1.ListPriceChecksRequest]) (*connect.Response[viewsv1.ListPriceChecksResponse], error) {
 	status, err := priceCheckStatus(req.Msg.GetStatus())
 	if err != nil {
@@ -201,6 +203,8 @@ func priceCheckStatus(s viewsv1.PriceCheckStatus) (valuation.PriceCheckStatus, e
 		return valuation.PriceMatched, nil
 	case viewsv1.PriceCheckStatus_PRICE_CHECK_STATUS_FLAGGED:
 		return valuation.PriceFlagged, nil
+	case viewsv1.PriceCheckStatus_PRICE_CHECK_STATUS_CURRENCY_MISMATCH:
+		return valuation.PriceCurrencyMismatch, nil
 	}
 	return 0, fmt.Errorf("%w: price check status %d", errBadParameter, s)
 }

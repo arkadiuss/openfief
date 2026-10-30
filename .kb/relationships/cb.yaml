@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23f06da1d1b0
+  - type: validates
+    from: TEST-views-connectapi-pricechecks
+    to: REQ-valuation-price-check-currency-mismatch
+    created_at: 2026-10-30T02:58:28.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-048609a63997
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-proto-message
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:15:57.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e3b9c00103c
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-proto-message
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:15:57.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e44cf4480c3

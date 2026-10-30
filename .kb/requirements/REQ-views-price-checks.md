@@ -1,47 +1,43 @@
 ---
-title: The read API must serve every price check as GET /v1/price-checks with its date, instrument, both prices with their sources, its relative difference as a decimal string and its status, filtered by status on request, together with the threshold the checks were flagged at, and must add only new methods and messages to the contract.
+title: The read API must serve every price check as GET /v1/price-checks with the cross-check price's date, the instrument, both prices with their sources, the price's own date, its relative difference as a decimal string, empty for a currency mismatch, its status, its threshold and whether the owner acknowledged it, filtered by status on request, together with the default threshold, and must add only new fields, values and methods to the contract.
 status: open
-text_ref: docs/DESIGN.md#D-22
+text_ref: docs/DESIGN.md#D-111
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-22
+  - provenance:docs-design-md-d-111
   - lane:strict
-semantic_text: The read API must serve every price check as GET /v1/price-checks with its date, instrument, both prices with their sources, its relative difference as a decimal string and its status, filtered by status on request, together with the threshold the checks were flagged at, and must add only new methods and messages to the contract.
+semantic_text: The read API must serve every price check as GET /v1/price-checks with the cross-check price's date, the instrument, both prices with their sources, the price's own date, its relative difference as a decimal string, empty for a currency mismatch, its status, its threshold and whether the owner acknowledged it, filtered by status on request, together with the default threshold, and must add only new fields, values and methods to the contract.
 logic_claims:
-  - CLAIM-6E8AD9D00747FAFD
+  - CLAIM-282A98BE4FFD3CB9
 semantic_clauses:
-  - The read API must serve every price check as GET /v1/price-checks with its date, instrument, both prices with their sources, its relative difference as a decimal string and its status, filtered by status on request, together with the threshold the checks were flagged at, and must add only new methods and messages to the contract.
+  - The read API must serve every price check as GET /v1/price-checks with the cross-check price's date, the instrument, both prices with their sources, the price's own date, its relative difference as a decimal string, empty for a currency mismatch, its status, its threshold and whether the owner acknowledged it, filtered by status on request, together with the default threshold, and must add only new fields, values and methods to the contract.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 75445fb75ac29e3018f22824ca4ab30720ae8298b0ec796e670eb18c287b560b
+semantic_source_hash: bde4eba97e5e4802c2a9d8fd4300a64dffcc9fad9580b8296f4ecb3c78c11e0f
 semantic_inventory:
-  - claim_key: CLAIM-6E8AD9D00747FAFD
-    claim_text: The read API must serve every price check as GET /v1/price-checks with its date, instrument, both prices with their sources, its relative difference as a decimal string and its status, filtered by status on request, together with the threshold the checks were flagged at, and must add only new methods and messages to the contract
+  - claim_key: CLAIM-282A98BE4FFD3CB9
+    claim_text: The read API must serve every price check as GET /v1/price-checks with the cross-check price's date, the instrument, both prices with their sources, the price's own date, its relative difference as a decimal string, empty for a currency mismatch, its status, its threshold and whether the owner acknowledged it, filtered by status on request, together with the default threshold, and must add only new fields, values and methods to the contract
     role: normative
     status: modeled
     span:
       start: 0
-      end: 330
+      end: 444
 origin:
   kind: agent
   recorded_at: '2026-10-29T07:03:09.006Z'
 id: REQ-views-price-checks
 type: req
 ---
-The read API must serve every price check as GET /v1/price-checks with its date, instrument, both prices with their sources, its relative difference as a decimal string and its status, filtered by status on request, together with the threshold the checks were flagged at, and must add only new methods and messages to the contract.
+The read API must serve every price check as GET /v1/price-checks with the cross-check price's date, the instrument, both prices with their sources, the price's own date, its relative difference as a decimal string, empty for a currency mismatch, its status, its threshold and whether the owner acknowledged it, filtered by status on request, together with the default threshold, and must add only new fields, values and methods to the contract.
 
 ## Context
 
-D-22's cross-check is only useful if the owner and the owner's scripts can see it, and D-6 makes the read API how every view, the built-in UI included, reads the record; D-50 defines it in protobuf with Vanguard REST. The contract only grows (buf breaking). Refines REQ-AUTO-7374F67D85269872. Modeled by Claude Code for the D-22 cross-check task (impl/cross-check); the author has not reviewed it yet.
+D-22 makes IBKR's prices a cross-check; D-110 adds per-instrument thresholds, D-111 compares with the latest price on or before the date and gives currency mismatches their own status, and D-112 adds acknowledgements. The read API carries all of it for the UI and scripts, additively.
 
 ## Source
 
-> Prices come from a market-data connector plugin where the user brings the API key (D-51); IBKR Flex prices serve as a cross-check.
+> A cross-check price is compared with the latest stored price of the same instrument on or before its date. When the two are in different currencies, the pair is shown with its own status instead of being skipped, because the market-data connector may be pricing another listing than the one held.
 
-docs/DESIGN.md D-22
-
-> OpenFief's public API is read-only REST/JSON with an OpenAPI spec, versioned `/v1` ... Every view plugin, the built-in UI included, uses it.
-
-docs/DESIGN.md D-6
+docs/DESIGN.md#D-111

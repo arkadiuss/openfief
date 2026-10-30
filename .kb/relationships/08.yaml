@@ -301,20 +301,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-eb74cbe8f283
   - type: implements
-    from: SYM-core-parse-threshold
-    to: REQ-core-config
-    created_at: 2026-10-29T06:26:46.608Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-00f6caa50381
-  - type: covered_by
-    from: SYM-core-parse-threshold
-    to: TEST-core-unit
-    created_at: 2026-10-29T06:26:46.644Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-03aaa4f13955
-  - type: implements
     from: SYM-fd-browserproxy-proxy-unreachable
     to: REQ-core-reverse-proxies-view-plugins
     created_at: 2026-10-29T12:06:33.097Z

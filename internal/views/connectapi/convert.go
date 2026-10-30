@@ -135,15 +135,21 @@ func pbCheck(c *ledgerapp.AssertionCheck) *viewsv1.AssertionCheck {
 }
 
 // pbPriceCheck converts a price check. Its instrument is written ISIN/symbol
-// in the valuation context, and an ISIN never holds a slash.
+// in the valuation context, and an ISIN never holds a slash. A currency
+// mismatch has no relative difference (D-111).
 func pbPriceCheck(c *valuation.PriceCheck) *viewsv1.PriceCheck {
 	isin, symbol, _ := strings.Cut(c.CrossCheck.Instrument, "/")
-	return &viewsv1.PriceCheck{
+	out := &viewsv1.PriceCheck{
 		Date: pbDate(c.CrossCheck.Date), Instrument: &viewsv1.Instrument{Isin: isin, Symbol: symbol},
-		Price: pbMoney(c.Price.Close), PriceSource: c.Price.Source,
+		Price: pbMoney(c.Price.Close), PriceSource: c.Price.Source, PriceDate: pbDate(c.Price.Date),
 		CrossCheck: pbMoney(c.CrossCheck.Close), CrossCheckSource: c.CrossCheck.Source,
-		RelativeDifference: c.Difference.String(), Status: viewsv1.PriceCheckStatus(enumNumber(int(c.Status))),
+		Status: viewsv1.PriceCheckStatus(enumNumber(int(c.Status))), Threshold: c.Threshold.String(),
+		Acknowledged: c.Acknowledged,
 	}
+	if c.Status != valuation.PriceCurrencyMismatch {
+		out.RelativeDifference = c.Difference.String()
+	}
+	return out
 }
 
 // pbValuation converts a stored valuation of a holding.

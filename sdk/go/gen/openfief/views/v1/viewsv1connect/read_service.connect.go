@@ -148,11 +148,12 @@ type ReadServiceClient interface {
 	// ListValuationStatuses returns every account's valuation status, in
 	// account ID order.
 	ListValuationStatuses(context.Context, *connect.Request[v1.ListValuationStatusesRequest]) (*connect.Response[v1.ListValuationStatusesResponse], error)
-	// ListPriceChecks returns every price compared with an institution's own
-	// price of the same instrument, date and currency, such as IBKR's mark
-	// price (D-22), in date, instrument and cross-check source order, with
-	// the threshold beyond which a check is flagged. A flagged check is for
-	// the owner to look at; it changes no price or valuation.
+	// ListPriceChecks returns every institution's own price, such as IBKR's
+	// mark price, compared with the latest stored price of its instrument on
+	// or before its date (D-22, D-111), in date, instrument and cross-check
+	// source order, each with the threshold it was flagged at (D-110) and
+	// whether the owner acknowledged it (D-112). A flagged check is for the
+	// owner to look at; it changes no price or valuation.
 	ListPriceChecks(context.Context, *connect.Request[v1.ListPriceChecksRequest]) (*connect.Response[v1.ListPriceChecksResponse], error)
 	// GetAllocation returns the portfolio's value on a date in the reporting
 	// currency, split by asset class, currency, institution or sleeve (D-30).
@@ -504,11 +505,12 @@ type ReadServiceHandler interface {
 	// ListValuationStatuses returns every account's valuation status, in
 	// account ID order.
 	ListValuationStatuses(context.Context, *connect.Request[v1.ListValuationStatusesRequest]) (*connect.Response[v1.ListValuationStatusesResponse], error)
-	// ListPriceChecks returns every price compared with an institution's own
-	// price of the same instrument, date and currency, such as IBKR's mark
-	// price (D-22), in date, instrument and cross-check source order, with
-	// the threshold beyond which a check is flagged. A flagged check is for
-	// the owner to look at; it changes no price or valuation.
+	// ListPriceChecks returns every institution's own price, such as IBKR's
+	// mark price, compared with the latest stored price of its instrument on
+	// or before its date (D-22, D-111), in date, instrument and cross-check
+	// source order, each with the threshold it was flagged at (D-110) and
+	// whether the owner acknowledged it (D-112). A flagged check is for the
+	// owner to look at; it changes no price or valuation.
 	ListPriceChecks(context.Context, *connect.Request[v1.ListPriceChecksRequest]) (*connect.Response[v1.ListPriceChecksResponse], error)
 	// GetAllocation returns the portfolio's value on a date in the reporting
 	// currency, split by asset class, currency, institution or sleeve (D-30).
