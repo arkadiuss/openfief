@@ -539,6 +539,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-615866233d36
   - type: implements
+    from: SYM-ingestv1-fee-rule-get-minimum-currency
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:47.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d71bf879bd5
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-get-minimum-currency
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:47.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9f67a7affaf
+  - type: validates
+    from: TEST-views-connectapi-transfers
+    to: REQ-ledger-transfer-suggestion
+    created_at: 2026-10-30T06:20:04.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bd5252e932f
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-link-pair
+    to: TEST-ledger-pg-transfers
+    created_at: 2026-10-30T06:42:03.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21d0f72f5992
+  - type: implements
     from: SYM-valuation-gen-pc-connect-price-check-service-client-set-price-check-threshold
     to: REQ-valuation-price-check-service
     created_at: 2026-10-30T03:22:23.287Z
@@ -581,16 +609,23 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-311c537acf33
   - type: implements
-    from: SYM-ingestv1-fee-rule-get-minimum-currency
-    to: REQ-ingest-account-terms
-    created_at: 2026-10-29T23:13:47.346Z
+    from: SYM-ui-bond-lot-form-exchange
+    to: REQ-ui-bond-lot-entry
+    created_at: 2026-10-30T07:37:36.724Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-8d71bf879bd5
+    id: rel-040ad54e60c7
+  - type: implements
+    from: SYM-ui-bond-lot-form-exchange
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T07:37:36.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1f87d7bed35
   - type: covered_by
-    from: SYM-ingestv1-fee-rule-get-minimum-currency
-    to: TEST-ingest-connectapi-accounts
-    created_at: 2026-10-29T23:13:47.382Z
+    from: SYM-ui-bond-lot-form-exchange
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-30T07:37:36.907Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-e9f67a7affaf
+    id: rel-eda057fb9f93

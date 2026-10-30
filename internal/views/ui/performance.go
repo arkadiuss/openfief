@@ -26,6 +26,9 @@ type performanceView struct {
 	Chart   string
 	// Model is the model portfolio; nil while it is off (D-52).
 	Model *modelView
+	// Suggested counts the suggested transfers the owner has not decided
+	// on (D-105): until confirmed, they count as cash flows.
+	Suggested int
 }
 
 // modelView is the model portfolio's targets and max drawdowns (D-54).
@@ -139,8 +142,9 @@ func buildPerformance(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPort
 	return v
 }
 
-// performance reads the time-weighted return from go-live up to date and,
-// while it is on, the model portfolio over the same days. A model portfolio
+// performance reads the time-weighted return from go-live up to date,
+// while it is on the model portfolio over the same days, and how many
+// suggested transfers wait for the owner. A model portfolio
 // that is off answers not found: then the page shows none of it (D-52).
 func (s *server) performance(r *http.Request, sess session, date kernel.Date) (performanceView, error) {
 	perf, err := s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{To: date.String()}, sess))
@@ -155,5 +159,9 @@ func (s *server) performance(r *http.Request, sess session, date kernel.Date) (p
 	case connect.CodeOf(err) != connect.CodeNotFound:
 		return performanceView{}, fmt.Errorf("GetModelPortfolio: %w", err)
 	}
-	return buildPerformance(perf.Msg, on, requestFormat(r)), nil
+	v := buildPerformance(perf.Msg, on, requestFormat(r))
+	if v.Suggested, err = s.suggestedTransfers(r, sess); err != nil {
+		return performanceView{}, err
+	}
+	return v, nil
 }

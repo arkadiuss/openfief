@@ -398,41 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f315699fffde
-  - type: validates
-    from: TEST-ingest-declarations
-    to: REQ-ingest-statement-mode-chosen-by-core
-    created_at: 2026-10-30T04:10:37.483Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-78f92fed6175
-  - type: validates
-    from: TEST-ingest-declarations
-    to: REQ-ingest-cross-check-prices-declared-only
-    created_at: 2026-10-30T04:10:37.530Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7299f3d36185
-  - type: implements
-    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-reset
-    to: REQ-ui-statement-upload-file-connectors-only
-    created_at: 2026-10-30T04:37:21.573Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dc740a37c2e4
-  - type: covered_by
-    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-reset
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-30T04:37:21.637Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0352675ab3b5
-  - type: verified_by
-    from: SCEN-ui-statement-upload-owner-form
-    to: TEST-ui-statements
-    created_at: 2026-10-30T05:17:54.766Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-da55fa48d699
   - type: implements
     from: SYM-valuation-app-input-cache-bond-terms
     to: REQ-valuation-bond-holding-values
@@ -489,3 +454,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d55d0291b43
+  - type: executable_for
+    from: SYM-ui-test-add-bond-lot-by-exchange
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-30T07:38:57.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e43d77accc3
+  - type: validates
+    from: TEST-ingest-declarations
+    to: REQ-ingest-statement-mode-chosen-by-core
+    created_at: 2026-10-30T04:10:37.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78f92fed6175
+  - type: validates
+    from: TEST-ingest-declarations
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:10:37.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7299f3d36185
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-reset
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:37:21.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc740a37c2e4
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-reset
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:37:21.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0352675ab3b5
+  - type: verified_by
+    from: SCEN-ui-statement-upload-owner-form
+    to: TEST-ui-statements
+    created_at: 2026-10-30T05:17:54.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da55fa48d699

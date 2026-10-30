@@ -532,20 +532,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-92b2b3025302
   - type: validates
-    from: TEST-valuation-app-crosscheck
-    to: REQ-valuation-price-check-instrument-threshold
-    created_at: 2026-10-30T02:58:26.164Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b9e346596432
-  - type: validates
-    from: TEST-valuation-app-crosscheck
-    to: REQ-valuation-price-check-acknowledge
-    created_at: 2026-10-30T02:58:26.246Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-443c7be5a1b3
-  - type: validates
     from: TEST-pl-tax
     to: REQ-pl-tax-wrappers
     created_at: 2026-10-29T21:47:18.993Z
@@ -650,3 +636,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e58a710a858e
+  - type: implements
+    from: SYM-ledger-connectapi-transfer-service-fail
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:39:34.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7388202a242
+  - type: covered_by
+    from: SYM-ledger-connectapi-transfer-service-fail
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:39:34.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2eb29252655
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-transfer-service
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:41:01.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4034f3a523ff
+  - type: implements
+    from: SYM-ledger-pg-scan-link
+    to: REQ-ledger-transfer-link-append-only
+    created_at: 2026-10-30T06:41:47.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b27d930b9d8
+  - type: covered_by
+    from: SYM-ledger-pg-scan-link
+    to: TEST-ledger-pg-transfers
+    created_at: 2026-10-30T06:41:47.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-637f088d9cb4
+  - type: validates
+    from: TEST-valuation-app-crosscheck
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T02:58:26.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9e346596432
+  - type: validates
+    from: TEST-valuation-app-crosscheck
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T02:58:26.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-443c7be5a1b3
+  - type: implements
+    from: SYM-ingest-bond-lot-price
+    to: REQ-ingest-bond-lot-rules
+    created_at: 2026-10-30T06:35:44.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fff39d14682f
+  - type: implements
+    from: SYM-ingest-bond-lot-price
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T06:35:44.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec0ba77535b5
+  - type: covered_by
+    from: SYM-ingest-bond-lot-price
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-30T06:35:45.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acbed21d9c52

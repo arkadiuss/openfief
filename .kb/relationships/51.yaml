@@ -441,6 +441,62 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b070535ad4d9
   - type: implements
+    from: SYM-valuationv1-init
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:21:13.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce1621df62d6
+  - type: covered_by
+    from: SYM-valuationv1-init
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:21:13.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d769929041f
+  - type: implements
+    from: SYM-ledgerv1-transfer-decision-string
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:52:31.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2773b9b56a1b
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-decision-string
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:52:31.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b65cda1dd230
+  - type: implements
+    from: SYM-ledgerv1-confirm-transfer-request-get-session-token
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:56:34.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d3be25ee320
+  - type: covered_by
+    from: SYM-ledgerv1-confirm-transfer-request-get-session-token
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:56:34.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85e2bdd8bdba
+  - type: implements
+    from: SYM-ledgerv1-confirm-transfer-response-string
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:57:15.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38ba933cdfe9
+  - type: covered_by
+    from: SYM-ledgerv1-confirm-transfer-response-string
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:57:15.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d49ff86c355
+  - type: implements
     from: SYM-ui-uc-upload-form
     to: REQ-ui-statement-upload-file-connectors-only
     created_at: 2026-10-30T06:20:59.900Z
@@ -455,16 +511,23 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ac2fa62fce5f
   - type: implements
-    from: SYM-valuationv1-init
-    to: REQ-valuation-settings-service
-    created_at: 2026-10-29T23:21:13.549Z
+    from: SYM-connectorv1-bond-lot-key-string
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:04:54.771Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-ce1621df62d6
+    id: rel-79bf17bb4b2f
   - type: covered_by
-    from: SYM-valuationv1-init
-    to: TEST-core-settings
-    created_at: 2026-10-29T23:21:13.586Z
+    from: SYM-connectorv1-bond-lot-key-string
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:04:54.812Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-3d769929041f
+    id: rel-3bd19cac6cd2
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-locked-ledger-add-opening-lots
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-30T06:34:53.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a3a59f981d6

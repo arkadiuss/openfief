@@ -405,48 +405,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3267c6d0fe9
-  - type: implements
-    from: SYM-exp-core-serve-when-ready
-    to: REQ-core-health-endpoints
-    created_at: 2026-10-29T21:00:01.165Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-be524a8ca672
-  - type: covered_by
-    from: SYM-exp-core-serve-when-ready
-    to: TEST-core-unit
-    created_at: 2026-10-29T21:00:01.191Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-62dbcb5227c1
-  - type: executable_for
-    from: SYM-valuation-postgres-test-pc-test-price-check-settings
-    to: TEST-valuation-postgres-price-check-settings
-    created_at: 2026-10-30T03:10:33.510Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-734b91727c03
-  - type: validates
-    from: TEST-ingest-kube
-    to: REQ-ingest-cross-check-prices-declared-only
-    created_at: 2026-10-30T04:10:49.580Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bfdab8111636
-  - type: verified_by
-    from: SCEN-ingest-statement-upload-checks
-    to: TEST-ingest-app-uploads
-    created_at: 2026-10-30T04:10:57.327Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ab6e7b0e72ff
-  - type: verified_by
-    from: SCEN-ingest-statement-upload-checks
-    to: TEST-ingest-file
-    created_at: 2026-10-30T04:10:57.385Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-979b7b3aa912
   - type: verified_by
     from: SCEN-views-holdings-lots-mark
     to: TEST-views-stale
@@ -483,6 +441,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-9a2ff1f9333d
   - type: implements
+    from: SYM-exp-core-serve-when-ready
+    to: REQ-core-health-endpoints
+    created_at: 2026-10-29T21:00:01.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be524a8ca672
+  - type: covered_by
+    from: SYM-exp-core-serve-when-ready
+    to: TEST-core-unit
+    created_at: 2026-10-29T21:00:01.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62dbcb5227c1
+  - type: implements
     from: SYM-ui-number-format
     to: REQ-ui-formatting-number-format
     created_at: 2026-10-30T02:57:49.524Z
@@ -503,3 +475,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8d8cc385b84
+  - type: constrains
+    from: REQ-ledger-opening-lots-one-at-a-time
+    to: FACT-SUBJECT-F11DA9F8F5B57A36
+    created_at: 2026-10-30T05:02:04.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e49e6d18114
+  - type: requires_property
+    from: REQ-ledger-opening-lots-one-at-a-time
+    to: FACT-PROP-0F0742369E6DBB14
+    created_at: 2026-10-30T05:02:04.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-688507c0526f
+  - type: specified_by
+    from: REQ-ledger-opening-lots-one-at-a-time
+    to: SCEN-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:02:04.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38584db09050
+  - type: executable_for
+    from: SYM-valuation-postgres-test-pc-test-price-check-settings
+    to: TEST-valuation-postgres-price-check-settings
+    created_at: 2026-10-30T03:10:33.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-734b91727c03
+  - type: validates
+    from: TEST-ingest-kube
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:10:49.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfdab8111636
+  - type: verified_by
+    from: SCEN-ingest-statement-upload-checks
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-30T04:10:57.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab6e7b0e72ff
+  - type: verified_by
+    from: SCEN-ingest-statement-upload-checks
+    to: TEST-ingest-file
+    created_at: 2026-10-30T04:10:57.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-979b7b3aa912

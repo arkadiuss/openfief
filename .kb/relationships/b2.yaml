@@ -447,3 +447,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7836c8765863
+  - type: verified_by
+    from: SCEN-ledger-transfer-legs
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:05:36.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19cb1a9e07a9
+  - type: verified_by
+    from: SCEN-ledger-transfer-legs
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:05:36.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e21cabd86025
+  - type: executable_for
+    from: SYM-views-test-helper-links
+    to: TEST-views-performance
+    created_at: 2026-10-30T06:50:25.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03caa6f908dd

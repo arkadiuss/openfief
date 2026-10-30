@@ -475,34 +475,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e96ab0261496
-  - type: implements
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:15:10.620Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5d2535337636
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:15:10.735Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-96cc22bfa3e1
-  - type: executable_for
-    from: SYM-core-test-up-upload-statement-in
-    to: TEST-core-statements
-    created_at: 2026-10-30T04:24:26.064Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b2784b9e236f
-  - type: implements
-    from: SYM-ui-server-upload-failed
-    to: REQ-ui-statement-upload-owner-form
-    created_at: 2026-10-30T05:18:40.281Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5a781a8ca544
   - type: executable_for
     from: SYM-jurisdiction-test-fee-rule-is-zero
     to: TEST-jurisdiction-fee
@@ -545,3 +517,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da1c4d29da66
+  - type: constrains
+    from: REQ-ledger-transfer-legs
+    to: FACT-SUBJECT-2ED66112542A7725
+    created_at: 2026-10-30T06:06:03.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32fe07e3788e
+  - type: requires_property
+    from: REQ-ledger-transfer-legs
+    to: FACT-PROP-0C7F7E012E1135F8
+    created_at: 2026-10-30T06:06:04.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebf9a4c41189
+  - type: specified_by
+    from: REQ-ledger-transfer-legs
+    to: SCEN-ledger-transfer-legs
+    created_at: 2026-10-30T06:06:04.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08bff899437b
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-transfers
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:28:06.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ace51cc41656
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:15:10.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d2535337636
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:15:10.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96cc22bfa3e1
+  - type: executable_for
+    from: SYM-core-test-up-upload-statement-in
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:24:26.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2784b9e236f
+  - type: implements
+    from: SYM-ui-server-upload-failed
+    to: REQ-ui-statement-upload-owner-form
+    created_at: 2026-10-30T05:18:40.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a781a8ca544

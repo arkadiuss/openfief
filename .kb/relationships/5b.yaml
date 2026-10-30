@@ -399,41 +399,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b0f787b91bb9
   - type: verified_by
-    from: SCEN-valuation-price-check-service
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T02:58:35.907Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7ce997dfcc18
-  - type: implements
-    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-proto-message
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:14:35.352Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fc3178f015ff
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-proto-message
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:14:35.400Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a9bca16745d7
-  - type: implements
-    from: SYM-ingest-mapped-accounts
-    to: REQ-ingest-statement-multi-account
-    created_at: 2026-10-30T04:28:47.472Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8a146267d865
-  - type: covered_by
-    from: SYM-ingest-mapped-accounts
-    to: TEST-ingest-app-brokers
-    created_at: 2026-10-30T04:28:47.501Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e98cbbe81a37
-  - type: verified_by
     from: SCEN-pl-oki-act-as-data
     to: TEST-pl-pack
     created_at: 2026-10-29T21:47:49.384Z
@@ -482,3 +447,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0feebdbf18da
+  - type: executable_for
+    from: SYM-views-app-test-helper-new-transfer-fixture
+    to: TEST-views-app-transfers
+    created_at: 2026-10-30T06:45:33.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c1df978c5a
+  - type: verified_by
+    from: SCEN-valuation-price-check-service
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T02:58:35.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ce997dfcc18
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-proto-message
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:14:35.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc3178f015ff
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-proto-message
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:14:35.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9bca16745d7
+  - type: implements
+    from: SYM-ingest-mapped-accounts
+    to: REQ-ingest-statement-multi-account
+    created_at: 2026-10-30T04:28:47.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a146267d865
+  - type: covered_by
+    from: SYM-ingest-mapped-accounts
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-30T04:28:47.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e98cbbe81a37

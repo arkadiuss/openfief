@@ -399,34 +399,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-208a00cec816
   - type: implements
-    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-origin
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:12:51.991Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0585166243ae
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-origin
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:12:52.054Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3fa1465a2dc0
-  - type: implements
-    from: SYM-valuation-gen-pc-pb-init
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:20:09.852Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-833b7efeec80
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-init
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:20:09.937Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-23e7d1b6bb88
-  - type: implements
     from: SYM-pl-belka-tax-decimal
     to: REQ-pl-values-per-wrapper
     created_at: 2026-10-29T21:55:07.719Z
@@ -461,3 +433,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-823aac6c6150
+  - type: implements
+    from: SYM-ledgerv1-transaction-key-proto-reflect
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:53:48.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d16f0292ed6a
+  - type: covered_by
+    from: SYM-ledgerv1-transaction-key-proto-reflect
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:53:48.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39ce61470da0
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-origin
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:12:51.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0585166243ae
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-origin
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:12:52.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fa1465a2dc0
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-init
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:20:09.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-833b7efeec80
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-init
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:20:09.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23e7d1b6bb88
+  - type: implements
+    from: SYM-ingestv1connect-bond-lot-service-client-delete-bond-lot
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:43:41.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42b2d5b9f543
+  - type: covered_by
+    from: SYM-ingestv1connect-bond-lot-service-client-delete-bond-lot
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:43:41.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c3449826d65

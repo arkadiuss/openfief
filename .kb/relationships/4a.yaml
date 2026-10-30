@@ -482,3 +482,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e15db800051
+  - type: implements
+    from: SYM-ledger-new-interest
+    to: REQ-ledger-interest-kind
+    created_at: 2026-10-30T05:03:52.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5403a4ea95b
+  - type: implements
+    from: SYM-ledger-new-interest
+    to: REQ-ledger-event-postings
+    created_at: 2026-10-30T05:03:52.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-041dd97ca354
+  - type: covered_by
+    from: SYM-ledger-new-interest
+    to: TEST-ledger-events
+    created_at: 2026-10-30T05:03:52.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dc5923fe98b
+  - type: implements
+    from: SYM-connectorv1-bond-lot-key-descriptor
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:05:18.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6440136c6e16
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-key-descriptor
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:05:18.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed96a901fe6e

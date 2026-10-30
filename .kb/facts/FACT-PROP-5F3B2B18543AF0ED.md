@@ -1,12 +1,12 @@
 ---
 title: Valid Only If Valuable On Purchase Date = true
 status: active
-text_ref: docs/DESIGN.md#D-9
+text_ref: docs/DESIGN.md#D-100
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-9
+  - provenance:docs-design-md-d-100
   - lane:strict
   - fact:property_value
 fact_kind: property_value
@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:ingest.bond_lot:valid_only_if_valuable
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-21FAF5872FD12268
-claim_text: A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, and can be valued on its purchase date by the Polish bond rules as a cash purchase.
+claim_key: CLAIM-B2DC2C0B0656E67B
+claim_text: A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, a purchase for cash at the nominal or by exchange at the exchange price, and can be valued on its purchase date by the Polish bond rules at that price.
 origin:
   kind: agent
   recorded_at: '2026-10-29T01:14:10.892Z'

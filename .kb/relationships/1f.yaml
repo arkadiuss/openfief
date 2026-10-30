@@ -315,13 +315,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-55685e0bac70
   - type: executable_for
-    from: SYM-views-test-match-transfers
-    to: TEST-views-performance
-    created_at: 2026-10-28T21:06:55.716Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4fcf87da2adb
-  - type: executable_for
     from: SYM-plugins-cli-test-cli-fake-cluster-create
     to: TEST-plugins-cli-run
     created_at: 2026-10-28T23:40:43.832Z
@@ -538,3 +531,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5384a5990047
+  - type: implements
+    from: SYM-ledger-app-transfers
+    to: REQ-ui-transfer-confirmation
+    created_at: 2026-10-30T06:36:38.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21d32a6a316b
+  - type: implements
+    from: SYM-ledger-app-transfers
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-30T06:36:38.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddaae2f6973d
+  - type: covered_by
+    from: SYM-ledger-app-transfers
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:36:38.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e266b6252368
+  - type: implements
+    from: SYM-ledger-connectapi-transfer-service-confirm-transfer
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:39:16.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12e902616df1
+  - type: implements
+    from: SYM-ledger-connectapi-transfer-service-confirm-transfer
+    to: REQ-ui-transfer-confirmation
+    created_at: 2026-10-30T06:39:16.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e47064280e
+  - type: covered_by
+    from: SYM-ledger-connectapi-transfer-service-confirm-transfer
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:39:16.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc64ae3d4a47
+  - type: implements
+    from: SYM-views-pb-list-transfers-request-string
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:01:49.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8f9417aec2b
+  - type: covered_by
+    from: SYM-views-pb-list-transfers-request-string
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:01:50.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-948dbdbb44c5

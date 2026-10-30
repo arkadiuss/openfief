@@ -1,6 +1,7 @@
 package app_test
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
@@ -38,6 +39,10 @@ type memStore struct {
 	outside []ledger.VersionedTransaction
 	// locks holds each account's LockAccount lock.
 	locks map[ledger.AccountID]*sync.Mutex
+	// links are the stored transfer link versions, in append order.
+	links []ledger.TransferLink
+	// transferLock is LockTransferLinks' lock.
+	transferLock sync.Mutex
 }
 
 // memTx is the app.Store that memStore.InTx passes in: the store itself,
@@ -131,6 +136,14 @@ func (tx *memTx) LockAccount(ctx context.Context, id ledger.AccountID) error {
 	m.Lock()
 	tx.held = append(tx.held, m)
 	tx.snapshot()
+	return nil
+}
+
+// LockTransferLinks waits for and holds the transfer links' lock until
+// InTx returns.
+func (tx *memTx) LockTransferLinks(_ context.Context) error {
+	tx.transferLock.Lock()
+	tx.held = append(tx.held, &tx.transferLock)
 	return nil
 }
 
@@ -267,6 +280,44 @@ func (s *memStore) AssertionChecks(_ context.Context, account ledger.AccountID) 
 		return a.Book.String() < b.Book.String()
 	})
 	return out, nil
+}
+
+// AppendTransferLink appends l, refusing a version its pair already has or
+// one that skips a number, like the Postgres store.
+func (s *memStore) AppendTransferLink(_ context.Context, l *ledger.TransferLink) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	n := 0
+	for _, stored := range s.links {
+		if stored.Pair == l.Pair {
+			n++
+		}
+	}
+	switch {
+	case l.Version <= n:
+		return fmt.Errorf("transfer %s version %d: %w", l.Pair, l.Version, app.ErrVersionConflict)
+	case l.Version != n+1:
+		return fmt.Errorf("transfer %s version %d: %w", l.Pair, l.Version, errVersionGap)
+	}
+	s.links = append(s.links, *l)
+	return nil
+}
+
+// TransferLinks returns every stored link version, in pair then version
+// order.
+func (s *memStore) TransferLinks(_ context.Context) ([]ledger.TransferLink, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	out := slices.Clone(s.links)
+	slices.SortFunc(out, func(a, b ledger.TransferLink) int {
+		return cmp.Or(cmp.Compare(a.Pair.String(), b.Pair.String()), cmp.Compare(a.Version, b.Version))
+	})
+	return out, nil
+}
+
+// LockTransferLinks fails outside InTx, like the Postgres store.
+func (s *memStore) LockTransferLinks(_ context.Context) error {
+	return fmt.Errorf("locking transfer links: %w", errNoTx)
 }
 
 // appendVersion appends v unless its key already has v.Version.

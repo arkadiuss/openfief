@@ -419,3 +419,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-029d1aba565f
+  - type: constrains
+    from: REQ-ledger-transfer-service
+    to: FACT-SUBJECT-31132F85257C200C
+    created_at: 2026-10-30T06:20:39.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63c33c236bf6
+  - type: requires_property
+    from: REQ-ledger-transfer-service
+    to: FACT-PROP-0D3F22A8635244F6
+    created_at: 2026-10-30T06:20:39.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5627ca52014d
+  - type: specified_by
+    from: REQ-ledger-transfer-service
+    to: SCEN-ledger-transfer-service
+    created_at: 2026-10-30T06:20:39.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-564a2e88481e
+  - type: validates
+    from: TEST-ui-format
+    to: REQ-ui-performance-chart
+    created_at: 2026-10-30T06:33:06.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ff43543b7bf
+  - type: validates
+    from: TEST-ui-format
+    to: REQ-ui-performance-chart-twr-index
+    created_at: 2026-10-30T06:33:06.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab93f3f0aee8
+  - type: validates
+    from: TEST-ui-format
+    to: REQ-views-model-line-on-performance-chart
+    created_at: 2026-10-30T06:33:06.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07437824d7f2
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-transfers
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T06:47:08.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e28150be6306
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-transfers
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T06:47:08.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2181d20e994e
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-transfers
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T06:49:13.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3a8c8f9f35d
+  - type: executable_for
+    from: SYM-ledger-pg-test-bond-lots-over-postgres
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-30T05:04:00.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f0d10f612c2

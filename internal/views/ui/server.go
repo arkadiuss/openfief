@@ -6,12 +6,14 @@ import (
 	"io/fs"
 	"log/slog"
 	"net/http"
+	"slices"
 	"strings"
 
 	"github.com/arkadiuss/openfief/design"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
@@ -32,7 +34,7 @@ const staticCacheControl = "public, max-age=3600"
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -64,6 +66,9 @@ type Config struct {
 	// Settings calls the core's SettingsService (D-78, D-113, D-79) like
 	// Auth: the owner's number format and marginal PIT rate.
 	Settings valuationv1connect.SettingsServiceClient
+	// Transfers calls the core's TransferService (D-105, D-79) like Auth:
+	// the owner's decisions on suggested transfers.
+	Transfers ledgerv1connect.TransferServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -77,8 +82,11 @@ type Config struct {
 // missingClient reports whether cfg lacks any of the clients the UI calls
 // the core with.
 func (cfg *Config) missingClient() bool {
-	return cfg.Auth == nil || cfg.Model == nil || cfg.BondLots == nil || cfg.Statements == nil || cfg.Read == nil ||
-		cfg.Sleeves == nil || cfg.Accounts == nil || cfg.MarketData == nil || cfg.PriceChecks == nil || cfg.Settings == nil
+	clients := []any{
+		cfg.Auth, cfg.Model, cfg.BondLots, cfg.Statements, cfg.Read, cfg.Sleeves, cfg.Accounts, cfg.MarketData,
+		cfg.PriceChecks, cfg.Settings, cfg.Transfers,
+	}
+	return slices.Contains(clients, nil)
 }
 
 // server holds the UI's handlers.
@@ -99,6 +107,7 @@ type server struct {
 	today       func() kernel.Date
 	log         *slog.Logger
 	settings    valuationv1connect.SettingsServiceClient
+	transfers   ledgerv1connect.TransferServiceClient
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -123,8 +132,8 @@ func New(cfg *Config) (http.Handler, error) {
 	s := &server{
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
 		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
-		settings: cfg.Settings,
-		pages:    p, pwa: app, today: cfg.Today, log: cfg.Log,
+		settings: cfg.Settings, transfers: cfg.Transfers,
+		pages: p, pwa: app, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
 		s.today = utcToday
@@ -156,11 +165,15 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /accounts/{id}", s.withSession(s.accountPage))
 	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
+	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
 	mux.HandleFunc("POST /accounts/{id}/statements", s.withOwner(s.uploadStatement))
 	mux.HandleFunc("GET /assertions", s.withSession(s.assertionsPage))
 	mux.HandleFunc("GET /price-checks", s.withSession(s.priceChecksPage))
 	mux.HandleFunc("POST /price-checks/acknowledge", s.withOwner(s.acknowledgePriceCheck))
 	mux.HandleFunc("POST /price-checks/threshold", s.withOwner(s.setPriceCheckThreshold))
+	mux.HandleFunc("GET /transfers", s.withSession(s.transfersPage))
+	mux.HandleFunc("POST /transfers/confirm", s.withOwner(s.confirmTransfer))
+	mux.HandleFunc("POST /transfers/reject", s.withOwner(s.rejectTransfer))
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	mux.HandleFunc("GET /settings", s.withOwner(s.settingsPage))
 	mux.HandleFunc("POST /settings/passkeys/{id}/remove", s.withOwner(s.removePasskey))

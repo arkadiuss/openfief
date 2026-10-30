@@ -469,20 +469,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b1e8f0e702e2
   - type: implements
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-proto-reflect
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:16:11.847Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e9456be181e7
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-proto-reflect
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:16:11.898Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-47189f4baaed
-  - type: implements
     from: SYM-valuationv1-set-number-format-request-reset
     to: REQ-valuation-settings-service
     created_at: 2026-10-29T23:17:41.329Z
@@ -496,3 +482,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e742f0d78ff
+  - type: validates
+    from: TEST-ui-transfers
+    to: REQ-ui-transfer-confirmation
+    created_at: 2026-10-30T06:32:27.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5286709a5550
+  - type: implements
+    from: SYM-ledger-app-transfer-link-store
+    to: REQ-ledger-transfer-link-append-only
+    created_at: 2026-10-30T06:36:04.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a3dfcadae28
+  - type: covered_by
+    from: SYM-ledger-app-transfer-link-store
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:36:04.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d339c738d29c
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-proto-reflect
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:16:11.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9456be181e7
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-proto-reflect
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:16:11.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47189f4baaed

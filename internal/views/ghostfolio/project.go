@@ -147,8 +147,9 @@ var (
 //   - a buy, a sell and an opening lot become a BUY or SELL at the unit price
 //     the holding's posting implies, with the fees in its currency, and an
 //     opening lot is dated when it was first acquired;
-//   - a dividend becomes a DIVIDEND of quantity 1 at the gross amount, with
-//     the tax withheld in its currency as its fee;
+//   - a dividend becomes a DIVIDEND, and interest, such as a bond's coupon
+//     (D-101), an INTEREST, of quantity 1 at the gross amount, with the tax
+//     withheld in its currency as its fee;
 //   - a fee becomes a FEE against the MANUAL fee asset of its currency, and
 //     fees or tax in another currency than their activity's become FEEs of
 //     their own;
@@ -222,10 +223,12 @@ func (p *projector) activities(accountID, comment string, t *ledger.Transaction)
 	case ledger.KindBuy, ledger.KindSell, ledger.KindOpeningLot:
 		return p.trade(accountID, comment, t)
 	case ledger.KindDividend:
-		return p.dividend(accountID, comment, t)
+		return p.income(accountID, comment, TypeDividend, t)
+	case ledger.KindInterest:
+		return p.income(accountID, comment, TypeInterest, t)
 	case ledger.KindFee:
 		return p.feesOnly(accountID, comment, t)
-	case ledger.KindFXConversion, ledger.KindDeposit, ledger.KindWithdrawal:
+	case ledger.KindFXConversion, ledger.KindDeposit, ledger.KindWithdrawal, ledger.KindDeletion:
 		return nil, nil
 	}
 	return nil, fmt.Errorf("%w: kind %s", errMalformed, t.Kind)
@@ -257,15 +260,16 @@ func (p *projector) trade(accountID, comment string, t *ledger.Transaction) ([]A
 	return p.withFees(&a, h, t, ledger.BookFee)
 }
 
-// dividend is one DIVIDEND of quantity 1 at the gross amount, its tax
-// withheld as the fee, plus FEEs in other currencies.
-func (p *projector) dividend(accountID, comment string, t *ledger.Transaction) ([]Activity, error) {
+// income is a dividend or interest: one activity of typ, DIVIDEND or
+// INTEREST, of quantity 1 at the gross amount, its tax withheld as the fee,
+// plus FEEs in other currencies.
+func (p *projector) income(accountID, comment string, typ ActivityType, t *ledger.Transaction) ([]Activity, error) {
 	h, err := holdingPosting(t)
 	if err != nil {
 		return nil, err
 	}
 	a := Activity{
-		AccountID: accountID, Comment: comment, Type: TypeDividend, Date: t.Date,
+		AccountID: accountID, Comment: comment, Type: typ, Date: t.Date,
 		Currency: h.Amount.Currency(), Quantity: kernel.NewDecimal(1, 0), UnitPrice: abs(h.Amount.Amount()),
 	}
 	return p.withFees(&a, h, t, ledger.BookWithholdingTax)

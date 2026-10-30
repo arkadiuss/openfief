@@ -576,6 +576,7 @@ render() {
 
 template="$root/deploy/demo/cloud-init.yaml"
 # Output is captured before grep: with pipefail, grep -q closing the pipe early would fail render by SIGPIPE.
+# Never pipe a render into grep -q: the output is over one 4 KiB write, and grep can exit between the writes.
 amd64="$(render "$template" cx23 || true)"
 arm64="$(render "$template" cax11 || true)"
 if grep -q "$b64" <<<"$amd64"; then r=yes; else r=no; fi
@@ -593,8 +594,9 @@ if render "$work/bad-template.yaml" cax11 >/dev/null; then r=no; else r=yes; fi
 check "render refuses an unknown placeholder" "$r"
 if grep -qF "host='none'" <<<"$arm64"; then r=yes; else r=no; fi
 check "render defaults to the machine's sslip.io host" "$r"
-if env "${pins[@]}" bash -c 'source "$1"; demo_render_cloud_init "$2" cax11 "demo.openfief.dev"' render \
-  "$root/scripts/demo/demo.sh" "$template" 2>/dev/null | grep -qF "host='demo.openfief.dev'"; then r=yes; else r=no; fi
+dns_host="$(env "${pins[@]}" bash -c 'source "$1"; demo_render_cloud_init "$2" cax11 "demo.openfief.dev"' render \
+  "$root/scripts/demo/demo.sh" "$template" 2>/dev/null || true)"
+if grep -qF "host='demo.openfief.dev'" <<<"$dns_host"; then r=yes; else r=no; fi
 check "render writes a DNS host" "$r"
 if env "${pins[@]}" bash -c 'source "$1"; demo_render_cloud_init "$2" cax11 "x; rm -rf /"' render \
   "$root/scripts/demo/demo.sh" "$template" >/dev/null 2>&1; then r=no; else r=yes; fi

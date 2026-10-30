@@ -20,6 +20,7 @@ import (
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
@@ -314,6 +315,8 @@ type fakeRead struct {
 	dimensions []viewsv1.AllocationDimension
 	pageTokens []string
 	dates      []string
+	// transfers holds the owner's decisions ListTransfers answers from.
+	transfers *fakeTransfers
 	// modelOn turns the model portfolio on; off, GetModelPortfolio is
 	// not found, as the core answers (D-52).
 	modelOn bool
@@ -576,6 +579,7 @@ type harness struct {
 	marketData *fakeMarketData
 	checks     *fakePriceChecks
 	settings   *fakeSettings
+	transfers  *fakeTransfers
 	read       *fakeRead
 	handler    http.Handler
 	tokenFile  string
@@ -590,6 +594,8 @@ func newHarness(t *testing.T) *harness {
 		sleeves: &fakeSleeves{}, accounts: &fakeAccounts{}, marketData: newFakeMarketData(), checks: &fakePriceChecks{},
 	}
 	h.settings = &fakeSettings{read: h.read}
+	h.transfers = &fakeTransfers{}
+	h.read.transfers = h.transfers
 	mux := http.NewServeMux()
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
 	mux.Handle(portfoliov1connect.NewModelPortfolioServiceHandler(h.model))
@@ -600,6 +606,7 @@ func newHarness(t *testing.T) *harness {
 	mux.Handle(valuationv1connect.NewMarketDataServiceHandler(h.marketData))
 	mux.Handle(valuationv1connect.NewPriceCheckServiceHandler(h.checks))
 	mux.Handle(valuationv1connect.NewSettingsServiceHandler(h.settings))
+	mux.Handle(ledgerv1connect.NewTransferServiceHandler(h.transfers))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
 	core := httptest.NewServer(mux)
 	t.Cleanup(core.Close)
@@ -617,6 +624,7 @@ func newHarness(t *testing.T) *harness {
 		Read:        viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:       func() kernel.Date { return mustDate(t, "2026-04-01") },
 		Settings:    valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Transfers:   ledgerv1connect.NewTransferServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 	})
 	if err != nil {
 		t.Fatalf("New: %v", err)

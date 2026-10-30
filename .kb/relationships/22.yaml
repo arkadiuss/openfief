@@ -342,41 +342,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f04c1f438ca
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-enroll-origin
-    created_at: 2026-10-29T22:34:18.605Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cc8780801b5f
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-enroll-localhost-forward
-    created_at: 2026-10-29T22:34:18.648Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-48f2fdf1294a
-  - type: validates
-    from: TEST-identity-cli
-    to: REQ-identity-first-run-wizard-follows
-    created_at: 2026-10-29T22:34:18.692Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-82f378bf5e72
-  - type: implements
-    from: SYM-valuation-gen-pc-connect-price-check-service-client
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:20:59.374Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-53bc316968d4
-  - type: covered_by
-    from: SYM-valuation-gen-pc-connect-price-check-service-client
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:20:59.440Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-970c5934bf7d
   - type: implements
     from: SYM-pl-average-balance
     to: REQ-pl-oki-act-as-data
@@ -426,6 +391,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d97c665ed16a
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:34:18.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc8780801b5f
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-enroll-localhost-forward
+    created_at: 2026-10-29T22:34:18.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48f2fdf1294a
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-first-run-wizard-follows
+    created_at: 2026-10-29T22:34:18.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82f378bf5e72
   - type: implements
     from: SYM-views-add-in
     to: REQ-views-totals-with-cash
@@ -461,3 +447,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca8913165a4b
+  - type: implements
+    from: SYM-ui-build-performance
+    to: REQ-ui-performance-chart-twr-index
+    created_at: 2026-10-30T06:33:12.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a0822491235
+  - type: implements
+    from: SYM-ui-build-performance
+    to: REQ-views-model-line-on-performance-chart
+    created_at: 2026-10-30T06:33:12.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce28ced1d55c
+  - type: executable_for
+    from: SYM-ledger-test-check-transfer
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:44:28.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1098d923c0f
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-price-check-service-client
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:20:59.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53bc316968d4
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-price-check-service-client
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:20:59.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-970c5934bf7d
+  - type: implements
+    from: SYM-connectorv1-bond-lot-key
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:04:38.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f18c1d1357d9
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-key
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:04:38.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6a31544f39

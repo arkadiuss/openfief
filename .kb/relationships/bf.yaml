@@ -629,3 +629,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02163e9f36dc
+  - type: implements
+    from: SYM-ledger-app-ledger-add-opening-lots
+    to: REQ-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:02:49.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c76e6ac712f
+  - type: implements
+    from: SYM-ledger-app-ledger-add-opening-lots
+    to: REQ-ledger-manual-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:02:49.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29a03645a8d4
+  - type: covered_by
+    from: SYM-ledger-app-ledger-add-opening-lots
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-30T05:02:49.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bdb562dd859
+  - type: implements
+    from: SYM-treasurybonds-mapper-deletions
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-10-30T06:38:49.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20ec283fa714
+  - type: implements
+    from: SYM-treasurybonds-mapper-deletions
+    to: REQ-treasurybonds-pre-go-live-opening-lot
+    created_at: 2026-10-30T06:38:49.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2250f01557dc
+  - type: covered_by
+    from: SYM-treasurybonds-mapper-deletions
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-30T06:38:49.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b39bb7e00dd

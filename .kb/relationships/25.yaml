@@ -566,3 +566,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f724bdd58a4c
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-response-string
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:59:29.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4df4c836e8a9
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-response-string
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:59:29.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7bb00dccfac
+  - type: implements
+    from: SYM-demo-seed-importer-add-opening-lots
+    to: REQ-ingest-bond-lot-go-live
+    created_at: 2026-10-30T06:34:12.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1598fe1423ce
+  - type: covered_by
+    from: SYM-demo-seed-importer-add-opening-lots
+    to: TEST-demo-seed-load
+    created_at: 2026-10-30T06:34:12.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa733861c567
+  - type: executable_for
+    from: SYM-delivery-test-helper-with-purchase
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-30T06:38:06.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b06ecabc32e3

@@ -25,9 +25,8 @@ const (
 
 // simulateBonds returns the bond account's seeding at go-live, its bond
 // lots and some cash, and its history since: the coupons of the COI bonds,
-// which pay their interest out yearly. The ledger has no interest kind yet,
-// so a coupon is booked as a dividend of its series, with no tax withheld
-// inside IKE.
+// which pay their interest out yearly, booked as interest of their series
+// (D-101), with no tax withheld inside IKE.
 func simulateBonds(goLive, today kernel.Date, readings []valuation.IndexReading) (history, error) {
 	lots, err := bondLots()
 	if err != nil {
@@ -113,10 +112,10 @@ func (w direct) coupon(l *bondLot, n int, goLive, today kernel.Date, readings []
 	in := l.series.Instrument
 	h := w.header("coupon:"+in.ISIN.String()+":"+paid.String(), paid)
 	none := kernel.NewMoney(kernel.Decimal{}, perBond.Currency())
-	t, err := ledger.NewDividend(h, in, perBond.Mul(kernel.NewDecimal(l.units, 0)), none)
+	t, err := ledger.NewInterest(h, in, perBond.Mul(kernel.NewDecimal(l.units, 0)), none)
 	if err != nil {
 		return ledger.Transaction{}, false, fmt.Errorf("demo coupon of %s: %w", terms.Series, err)
 	}
-	t.Description = in.Symbol + " coupon, period " + strconv.Itoa(n) + " (booked as a dividend)"
+	t.Description = in.Symbol + " coupon, period " + strconv.Itoa(n)
 	return t, true, nil
 }

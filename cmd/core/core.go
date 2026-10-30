@@ -125,7 +125,8 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // serves it with the AuthService, the ModelPortfolioService (D-52), the
 // BondLotService (D-9, D-49), the StatementService (D-7, D-49), the
 // MarketDataService (D-94), the PriceCheckService (D-110, D-112), the
-// onboarding services and the SettingsService (D-78, D-113), to the view
+// onboarding services, the SettingsService (D-78, D-113) and the
+// TransferService (D-105), to the view
 // plugins callers accepts (D-69, D-79, D-115). The read API
 // lists the installed plugins from installed, and without it, outside a
 // cluster, answers that they are unknown. Start the River client to run
@@ -189,6 +190,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins),
 		newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins), accountTerms{recorder, vstore}), callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
+	plugin = withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins)), callers, log)
 	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed}, nil
 }
 

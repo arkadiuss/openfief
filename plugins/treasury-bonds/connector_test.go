@@ -120,7 +120,8 @@ func edoLot() *connectorv1.BondLot {
 func TestImportBondLots(t *testing.T) {
 	t.Parallel()
 	client := served(t, fakeCPI{}, fakeRates{})
-	resp, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", Lots: []*connectorv1.BondLot{edoLot()}}))
+	// Bought after go-live: a deposit and a buy on the purchase date (D-98).
+	resp, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", GoLive: "2026-05-01", Lots: []*connectorv1.BondLot{edoLot()}}))
 	if err != nil {
 		t.Fatalf("ImportBondLots: %v", err)
 	}
@@ -166,21 +167,23 @@ func TestImportBondLotsRefuses(t *testing.T) {
 		return []*connectorv1.BondLot{l}
 	}
 	tests := []struct {
-		name string
-		lots []*connectorv1.BondLot
+		name   string
+		goLive string
+		lots   []*connectorv1.BondLot
 	}{
-		{name: "an unknown bond type", lots: with(func(l *connectorv1.BondLot) { l.Series = "XYZ0536" })},
-		{name: "a purchase date of another series", lots: with(func(l *connectorv1.BondLot) { l.PurchaseDate = "2026-06-04" })},
-		{name: "bought after today", lots: with(func(l *connectorv1.BondLot) { l.Series, l.PurchaseDate = "EDO1136", "2026-11-04" })},
-		{name: "a fraction of a bond", lots: with(func(l *connectorv1.BondLot) { l.Quantity = "2.5" })},
-		{name: "no fee", lots: with(func(l *connectorv1.BondLot) { l.EarlyRedemptionFee = nil })},
-		{name: "a rate that isn't a number", lots: with(func(l *connectorv1.BondLot) { l.FirstPeriodRate = "6%" })},
-		{name: "one series and day twice", lots: []*connectorv1.BondLot{edoLot(), edoLot()}},
+		{name: "no go-live date", lots: []*connectorv1.BondLot{edoLot()}},
+		{name: "an unknown bond type", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.Series = "XYZ0536" })},
+		{name: "a purchase date of another series", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.PurchaseDate = "2026-06-04" })},
+		{name: "bought after today", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.Series, l.PurchaseDate = "EDO1136", "2026-11-04" })},
+		{name: "a fraction of a bond", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.Quantity = "2.5" })},
+		{name: "no fee", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.EarlyRedemptionFee = nil })},
+		{name: "a rate that isn't a number", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.FirstPeriodRate = "6%" })},
+		{name: "one series and day twice", goLive: "2026-06-01", lots: []*connectorv1.BondLot{edoLot(), edoLot()}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", Lots: tt.lots}))
+			_, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", GoLive: tt.goLive, Lots: tt.lots}))
 			if connect.CodeOf(err) != connect.CodeInvalidArgument {
 				t.Errorf("ImportBondLots = %v, want InvalidArgument", err)
 			}
@@ -258,5 +261,43 @@ func TestSyncRefuses(t *testing.T) {
 				t.Errorf("Sync = %v, want %s", err, tt.want)
 			}
 		})
+	}
+}
+
+func TestImportBondLotsBeforeGoLiveAndDeleted(t *testing.T) {
+	t.Parallel()
+	client := served(t, fakeCPI{}, fakeRates{})
+	lot := edoLot()
+	lot.Purchase = connectorv1.BondPurchase_BOND_PURCHASE_EXCHANGE
+	resp, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{
+		BatchId: "b-1", GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{lot},
+		Deleted: []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "2026-05-10"}},
+	}))
+	if err != nil {
+		t.Fatalf("ImportBondLots: %v", err)
+	}
+	edo := &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"}
+	pln := func(amount string) *connectorv1.Money { return &connectorv1.Money{Amount: amount, Currency: "PLN"} }
+	key := func(id string) *connectorv1.TransactionKey {
+		return &connectorv1.TransactionKey{Source: "treasury-bonds:acc-bonds", ExternalId: id}
+	}
+	// Bought before go-live by exchange at 99.90 PLN a bond: an opening lot on go-live (D-98, D-100); the
+	// deleted lot of 2026-05-10, also before go-live, is a deletion of its opening lot.
+	want := []*connectorv1.Transaction{
+		{
+			Key: key("lot:EDO0536:2026-05-04"), AccountId: "acc-bonds", Kind: connectorv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT,
+			Date: "2026-06-01", LotOpened: "2026-05-04", Description: "Treasury bonds EDO0536 bought before go-live",
+			Postings: []*connectorv1.Posting{
+				{Book: &connectorv1.Book{Kind: connectorv1.BookKind_BOOK_KIND_HOLDING, Instrument: edo}, Amount: pln("3996"), Quantity: "40"},
+				{Book: &connectorv1.Book{Kind: connectorv1.BookKind_BOOK_KIND_EQUITY, Currency: "PLN"}, Amount: pln("-3996")},
+			},
+		},
+		{
+			Key: key("lot:EDO0536:2026-05-10"), AccountId: "acc-bonds", Kind: connectorv1.TransactionKind_TRANSACTION_KIND_DELETION,
+			Date: "2026-06-01", Description: "Deleted treasury bonds EDO0536",
+		},
+	}
+	if diff := cmp.Diff(want, resp.Msg.GetDelivery().GetTransactions(), protocmp.Transform()); diff != "" {
+		t.Errorf("ImportBondLots transactions (-want +got):\n%s", diff)
 	}
 }

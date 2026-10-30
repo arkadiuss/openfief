@@ -377,34 +377,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7c4f1d417f4
-  - type: implements
-    from: SYM-exp-plugins-refuse-second-browser-view
-    to: REQ-plugins-cli-refuses-second-browser-view
-    created_at: 2026-10-29T21:59:31.509Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-48e028c16d4b
-  - type: implements
-    from: SYM-exp-plugins-refuse-second-browser-view
-    to: REQ-plugins-one-browser-view
-    created_at: 2026-10-29T21:59:31.544Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a2881ecad047
-  - type: covered_by
-    from: SYM-exp-plugins-refuse-second-browser-view
-    to: TEST-plugins-browser-view
-    created_at: 2026-10-29T21:59:31.567Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6b46ce75cc7f
-  - type: implements
-    from: SYM-ingest-app-uploads
-    to: REQ-ingest-statement-upload-bound-instance
-    created_at: 2026-10-30T04:12:06.680Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c58533de13d8
   - type: constrains
     from: REQ-valuation-rules-version-revalues
     to: FACT-SUBJECT-FE8005F54B52310C
@@ -504,9 +476,51 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-18aa4753af82
   - type: implements
+    from: SYM-exp-plugins-refuse-second-browser-view
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T21:59:31.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48e028c16d4b
+  - type: implements
+    from: SYM-exp-plugins-refuse-second-browser-view
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T21:59:31.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2881ecad047
+  - type: covered_by
+    from: SYM-exp-plugins-refuse-second-browser-view
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T21:59:31.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b46ce75cc7f
+  - type: implements
     from: SYM-views-date-total
     to: REQ-views-totals-with-cash
     created_at: 2026-10-30T02:13:17.144Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3275a1e49ea7
+  - type: implements
+    from: SYM-connectorv1-bond-lot-get-purchase
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:04:30.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a9b0f9a9d08
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-get-purchase
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:04:31.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df51337e1530
+  - type: implements
+    from: SYM-ingest-app-uploads
+    to: REQ-ingest-statement-upload-bound-instance
+    created_at: 2026-10-30T04:12:06.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58533de13d8

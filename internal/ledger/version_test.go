@@ -23,6 +23,7 @@ func TestDecideImport(t *testing.T) {
 	described := original
 	described.Description = "corrected by the broker"
 	other := must(t)(ledger.NewBuy(header(t, "b-2", "2026-03-02"), in, qty(t, "1"), money(t, "1", "USD"), kernel.Money{}))
+	deletion := must(t)(ledger.NewDeletion(h))
 	v := func(tx ledger.Transaction, n int) ledger.VersionedTransaction {
 		return ledger.VersionedTransaction{Transaction: tx, Version: n}
 	}
@@ -40,6 +41,10 @@ func TestDecideImport(t *testing.T) {
 		{name: "changed description", versions: []ledger.VersionedTransaction{v(original, 1)}, incoming: described, want: ledger.ImportResult{Decision: ledger.ImportNewVersion, Version: 2, Supersedes: 1}},
 		{name: "corrected row again", versions: []ledger.VersionedTransaction{v(corrected, 2), v(original, 1)}, incoming: corrected, want: ledger.ImportResult{Decision: ledger.ImportUnchanged, Version: 2}},
 		{name: "back to the first content", versions: []ledger.VersionedTransaction{v(original, 1), v(corrected, 2)}, incoming: original, want: ledger.ImportResult{Decision: ledger.ImportNewVersion, Version: 3, Supersedes: 2}},
+		{name: "deletion supersedes the current version", versions: []ledger.VersionedTransaction{v(original, 1)}, incoming: deletion, want: ledger.ImportResult{Decision: ledger.ImportNewVersion, Version: 2, Supersedes: 1}},
+		{name: "deleting again changes nothing", versions: []ledger.VersionedTransaction{v(original, 1), v(deletion, 2)}, incoming: deletion, want: ledger.ImportResult{Decision: ledger.ImportUnchanged, Version: 2}},
+		{name: "entering a deleted row again brings it back", versions: []ledger.VersionedTransaction{v(original, 1), v(deletion, 2)}, incoming: original, want: ledger.ImportResult{Decision: ledger.ImportNewVersion, Version: 3, Supersedes: 2}},
+		{name: "deleting what was never recorded", incoming: deletion, wantErr: ledger.ErrNothingToDelete},
 		{name: "a version of another key", versions: []ledger.VersionedTransaction{v(other, 1)}, incoming: original, wantErr: ledger.ErrInvalidLog},
 		{name: "a repeated version", versions: []ledger.VersionedTransaction{v(original, 1), v(corrected, 1)}, incoming: original, wantErr: ledger.ErrInvalidLog},
 		{name: "a gap in versions", versions: []ledger.VersionedTransaction{v(original, 1), v(corrected, 3)}, incoming: original, wantErr: ledger.ErrInvalidLog},
@@ -67,6 +72,7 @@ func TestCurrentTransactions(t *testing.T) {
 	fixed := must(t)(ledger.NewBuy(header(t, "b-1", "2026-03-04"), in, qty(t, "12"), money(t, "120", "USD"), kernel.Money{}))
 	earlier := must(t)(ledger.NewDeposit(header(t, "d-1", "2026-03-02"), money(t, "500", "USD")))
 	sameDay := must(t)(ledger.NewDeposit(header(t, "a-1", "2026-03-04"), money(t, "1", "USD")))
+	deleted := must(t)(ledger.NewDeletion(header(t, "b-1", "2026-03-04")))
 	tests := []struct {
 		name    string
 		log     []ledger.VersionedTransaction
@@ -83,6 +89,24 @@ func TestCurrentTransactions(t *testing.T) {
 				{Transaction: earlier, Version: 1},
 			},
 			want: []ledger.Transaction{earlier, sameDay, fixed},
+		},
+		{
+			name: "deleted key left out, its versions kept in the log",
+			log: []ledger.VersionedTransaction{
+				{Transaction: first, Version: 1},
+				{Transaction: deleted, Version: 2},
+				{Transaction: earlier, Version: 1},
+			},
+			want: []ledger.Transaction{earlier},
+		},
+		{
+			name: "entered again after a deletion",
+			log: []ledger.VersionedTransaction{
+				{Transaction: first, Version: 1},
+				{Transaction: deleted, Version: 2},
+				{Transaction: fixed, Version: 3},
+			},
+			want: []ledger.Transaction{fixed},
 		},
 		{
 			name:    "repeated version",

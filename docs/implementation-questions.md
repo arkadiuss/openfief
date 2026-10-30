@@ -102,41 +102,65 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the minimum is an amount in any currency, converted at the FX rate of the valuation's day (a missing rate leaves the liquidation value missing); the commission applies to holdings priced at market only, not to bonds or cash; and foreign means priced in another currency than the pack's, PLN for Poland. The minimum applies to the commission alone, before the conversion percentage is added.
    - *Options:* keep; or tie the minimum to the instrument's currency; or charge the conversion percentage on foreign cash too.
 
+## Performance
+
+17. **What happens to a transfer decision when a leg is corrected.**
+   - *Problem:* D-105 stores the owner's confirmed link append-only, keyed by the two transactions. A broker can later correct either leg (D-18), say its amount or date, so that the two are no longer one possible transfer.
+   - *Today:* the link stays stored, but it counts only while the legs' current versions are still a withdrawal and a deposit of the opposite amount in different accounts; otherwise both legs are cash flows again and the pair is no longer listed as confirmed. The owner's rejections are stored the same way, so a rejected pair is never suggested again, and a leg can be in only one confirmed transfer.
+   - *Options:* keep; flag a broken link for the owner to look at, like a flagged balance assertion; or ask the owner again by suggesting the corrected pair.
+
+## Treasury bonds
+
+18. **What go-live is for a manually entered bond account.**
+   - *Problem:* D-98 books a lot bought before go-live as an opening lot at go-live and a later one as a deposit and a buy, but a manually entered account has no broker statement whose date would be its go-live, and D-98 doesn't say how a lot bought on the go-live date itself is booked.
+   - *Today:* the core sends the date the account was seeded on, or today for an account not seeded yet, so the first lot the owner enters seeds the account and fixes its go-live; every later lot is an opening lot on that date when it was bought on or before it. A lot bought on the go-live date is an opening lot, as a sync's transactions on that date are held by the seeding. Deleting every opening lot unseeds the account, and the next entry takes a new go-live, unless a later lot is still there (the ledger refuses an opening lot that would count it twice). Lots entered before this change, as a deposit and a buy, keep those keys.
+   - *Options:* keep; or let the owner set a manual account's go-live when creating it; or use the portfolio's go-live (its earliest seeding) for every manual account.
+
+19. **Who books the coupons of entered bond lots.**
+   - *Problem:* D-101 books coupons, such as COI's yearly interest, as interest. The ledger has the kind, the demo dataset books its coupons with it, and the pack's coupon types count only the current period's interest in a lot's value, so a paid coupon must reach the account's cash or the account loses it.
+   - *Today:* nothing books the coupons of COI, ROR and DOR lots the owner entered; the treasury-bonds connector is stateless and doesn't know the lots, and the owner can't enter interest.
+   - *Options:* the core computes each due coupon from the stored lots, terms and readings and imports it through the connector; or the owner enters coupons by hand as a new kind of entry (D-79).
+
+20. **The exchange price of OTS.**
+   - *Problem:* D-100 says bonds bought by exchange cost 99.90 PLN; the OTS issue letter (ust. 8) sets its exchange price at 100.00 PLN.
+   - *Today:* `pl.ExchangePrice` follows the letters: 99.90 PLN for every type but OTS, which exchanges at the nominal with no discount.
+   - *Options:* keep; or 99.90 PLN for OTS too; or refuse an OTS lot bought by exchange.
+
 ## Tooling
 
-17. **The kibi gate recompiles a broken store once.**
+21. **The kibi gate recompiles a broken store once.**
     - *Today:* `kibi sync --rebuild` sometimes leaves a compiled store that misses an authored relationship or holds an entity twice (about 1 run in 10 under load). The same files compile correctly on the next run, so it is a defect in the compile, not in the knowledge base. `task kibi:check` (`scripts/kibi-check.sh`) recompiles once when a check fails with exactly that defect, and the second check is final; any other failure is final at once. A defect still gets through if two compiles in a row hit it.
     - *Question:* acceptable, given docs/dev/testing.md forbids retry loops for tests? The reading here is that it recompiles a broken build artifact rather than retrying a verdict.
 
-18. **Fixing the kibi compile defect upstream.**
+22. **Fixing the kibi compile defect upstream.**
     - *Today:* the likely cause is that `kibi sync` terminates its compiling Prolog process with no grace period right after saving, then publishes the staging directory. A bug report draft exists in the implementation session's scratchpad, not filed.
     - *Options:* file the report with kibi's maintainers; carry a local patch that adds a grace period; or keep only the recompile.
 
 ## Statement uploads and price checks
 
-19. **How the core learns which connectors take statement files.**
+23. **How the core learns which connectors take statement files.**
    - *Problem:* D-109 has the owner's UI learn through its owner service which accounts have a connector that takes files, but no decision says how the core knows a connector takes files: the connector contract's `ImportFile` only answers `UNIMPLEMENTED` once a file is sent.
    - *Today:* a connector's manifest declares `statementFiles: true`, signed with its image like `crossCheckPrices` (D-112); ibkr-flex declares both. `StatementService.ListStatementAccounts` lists the accounts bound to exactly one running instance that declares it, and the UI shows the upload form only there. Neither declaration is a permission the grant approves.
    - *Options:* keep; or ask each connector through a new contract method; or make the declarations permissions the owner approves in the grant.
 
-20. **The mode of a statement that covers several accounts.**
+24. **The mode of a statement that covers several accounts.**
    - *Problem:* D-109 has the core choose the mode, opening for an account not yet seeded and transactions after, but a statement of linked accounts can cover a seeded account and one that isn't, and an upload is one batch in one mode.
    - *Today:* the mode follows the account the owner uploaded for; the owner may override it. An opening upload leaves out the seeding of linked broker accounts already seeded, as a sync does, so it seeds only the others; a transactions upload books every mapped account's transactions, an unseeded one's too.
    - *Options:* keep; or run an opening batch and then a transactions batch, as a sync does (`PlanSync`), which needs the file twice; or refuse a statement whose accounts disagree.
 
-21. **What a connector's undeclared cross-check prices do.**
+25. **What a connector's undeclared cross-check prices do.**
    - *Problem:* D-112 lets only a connector whose manifest declares it send cross-check prices, without saying what happens to a delivery from one that doesn't.
    - *Today:* the batch imports everything else; none of its cross-check prices is stored, and one skipped ingest problem says so. Refusing the batch would stop a broker's syncs over prices that only cross-check.
    - *Options:* keep; or refuse the whole delivery.
 
-22. **What an acknowledgement covers, and the owner's thresholds.**
+26. **What an acknowledgement covers, and the owner's thresholds.**
    - *Problem:* D-112 lets the owner acknowledge a flagged price check, recorded append-only, and D-110 lets the owner set a threshold per instrument; neither says how long an acknowledgement holds, whether a matched or currency-mismatch check can be acknowledged, or what thresholds are allowed.
    - *Today:* only a flagged check can be acknowledged; the acknowledgement records both prices and covers the check only while the cross-check price and the price it is compared with keep their dates and closes, so a changed mark or a newer price is flagged anew. A threshold is a fraction greater than 0 and less than 1; clearing it puts the instrument back on 1%; thresholds are not versioned. The overview counts instruments whose latest check is flagged and not acknowledged.
    - *Options:* keep; or let an acknowledgement cover every later check of the instrument until its prices diverge further; or let the owner acknowledge a currency mismatch too.
 
 ## Built-in UI on a phone
 
-23. **What the installed app shows offline.**
+27. **What the installed app shows offline.**
    - *Problem:* the author asked for a mobile PWA. D-69 makes the UI a backend-for-frontend whose pages hold the owner's record and are never cached; no decision says whether the app may keep any of the record on the device for offline reading.
    - *Today:* the service worker caches only static files (styles, scripts, fonts, icons, the manifest) and a static offline page with Kasztan asleep; every page comes from the network, the cache is emptied on sign-out, and nothing of the record is stored on the device ([Built-in UI](concepts/ui.md#on-a-phone-and-as-an-app)).
    - *Options:* keep; or keep the last overview (totals and accounts, no transactions) for offline reading, encrypted or not, cleared on sign-out, which puts portfolio data on the phone; or push notifications, which need a push service outside the owner's cluster.

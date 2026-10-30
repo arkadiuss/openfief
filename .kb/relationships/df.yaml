@@ -377,6 +377,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-487ee2bd7daa
+  - type: constrains
+    from: REQ-ingest-cross-check-prices
+    to: FACT-SUBJECT-4022BDCF8FBBCB20
+    created_at: 2026-10-30T04:11:22.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c248c07b3dc6
+  - type: requires_property
+    from: REQ-ingest-cross-check-prices
+    to: FACT-PROP-9ED1836B2D5CD64B
+    created_at: 2026-10-30T04:11:22.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dced4cec7a02
   - type: specified_by
     from: REQ-ingest-cross-check-prices
     to: SCEN-ingest-cross-check-prices
@@ -503,41 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8379e6cddd11
-  - type: constrains
-    from: REQ-ingest-cross-check-prices
-    to: FACT-SUBJECT-4022BDCF8FBBCB20
-    created_at: 2026-10-30T04:11:22.502Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c248c07b3dc6
-  - type: requires_property
-    from: REQ-ingest-cross-check-prices
-    to: FACT-PROP-9ED1836B2D5CD64B
-    created_at: 2026-10-30T04:11:22.553Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dced4cec7a02
-  - type: implements
-    from: SYM-ingest-app-uploads-file-accounts
-    to: REQ-ui-statement-upload-file-connectors-only
-    created_at: 2026-10-30T04:28:23.583Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0b688cd82005
-  - type: implements
-    from: SYM-ingest-app-uploads-file-accounts
-    to: REQ-ingest-statement-mode-chosen-by-core
-    created_at: 2026-10-30T04:28:23.626Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1be48c242f1d
-  - type: covered_by
-    from: SYM-ingest-app-uploads-file-accounts
-    to: TEST-ingest-app-file-accounts
-    created_at: 2026-10-30T04:28:23.672Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1696e8b05dfd
   - type: implements
     from: SYM-affected-carried
     to: REQ-tooling-ci-carry-signed-digest
@@ -573,3 +552,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-770a5300d6d1
+  - type: implements
+    from: SYM-core-ledger-importer-add-opening-lots
+    to: REQ-ingest-bond-lot-go-live
+    created_at: 2026-10-30T06:34:00.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c317cd5bcd8c
+  - type: covered_by
+    from: SYM-core-ledger-importer-add-opening-lots
+    to: TEST-core-bond-lots
+    created_at: 2026-10-30T06:34:01.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0de37d115307
+  - type: implements
+    from: SYM-ingest-app-uploads-file-accounts
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:28:23.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b688cd82005
+  - type: implements
+    from: SYM-ingest-app-uploads-file-accounts
+    to: REQ-ingest-statement-mode-chosen-by-core
+    created_at: 2026-10-30T04:28:23.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1be48c242f1d
+  - type: covered_by
+    from: SYM-ingest-app-uploads-file-accounts
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:28:23.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1696e8b05dfd

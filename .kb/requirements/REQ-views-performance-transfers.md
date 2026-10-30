@@ -1,6 +1,6 @@
 ---
 title: A withdrawal from one account and a deposit into another account of exactly the same amount and currency, dated at most five days apart in either order, must be matched as a transfer that is not an external cash flow, each withdrawal taking the nearest unmatched deposit, and opening cash must never be a leg.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-61
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ A withdrawal from one account and a deposit into another account of exactly the 
 
 ## Context
 
-D-61 says transfers between the owner's own accounts are not cash flows, but the record doesn't say which flows are the same money. This narrow matching rule and the five-day window are this context's reading, parked for the author; the response lists every matched transfer.
-
-## Source
-
-> **[D-61]** Next to the model, the portfolio's line is its time-weighted return: daily returns from valuations, chained across deposits and withdrawals, so cash flows don't count as performance. Transfers between the owner's own accounts are not cash flows. Both lines are in the reporting currency (D-62). ...
-
-docs/DESIGN.md#D-61
+Closed: superseded by REQ-views-performance-confirmed-transfers. D-105 leaves out of the time-weighted return's cash flows only the transfers the owner confirmed, not every pair this matching rule finds; the rule now only suggests (REQ-views-transfer-suggestions).

@@ -531,13 +531,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-470add374b3b
-  - type: validates
-    from: TEST-ingest-app-connectors
-    to: REQ-ingest-cross-check-prices-declared-only
-    created_at: 2026-10-30T04:10:41.236Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c826640b8698
   - type: verified_by
     from: SCEN-pl-values-per-wrapper
     to: TEST-pl-pack
@@ -601,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f77d818c659f
+  - type: implements
+    from: SYM-ledgerv1-transaction-key-string
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:53:32.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7d3ae5a9ee6
+  - type: covered_by
+    from: SYM-ledgerv1-transaction-key-string
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:53:32.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c52af08c3776
+  - type: validates
+    from: TEST-ingest-app-connectors
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:10:41.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c826640b8698

@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0d66108c832
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-new-client
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:40:53.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10f72a43fc24

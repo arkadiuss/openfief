@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb1ed10d0283
+  - type: specified_by
+    from: REQ-ledger-event-postings
+    to: SCEN-ledger-interest-postings
+    created_at: 2026-10-30T05:02:34.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3c486e7f9fd
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-importer-add-opening-lots
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:36:36.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1433dccaa5b5

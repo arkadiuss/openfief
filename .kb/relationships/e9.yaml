@@ -335,6 +335,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fae1f1db934f
+  - type: implements
+    from: SYM-connectorv1-bond-purchase-enum
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:06:11.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-650a47a729cc
+  - type: covered_by
+    from: SYM-connectorv1-bond-purchase-enum
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:06:11.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fb9a146d948
   - type: executable_for
     from: SYM-ingest-connectapi-test-st-test-list-statement-accounts
     to: TEST-ingest-connectapi-statements

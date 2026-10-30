@@ -469,27 +469,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-089b0dbd731f
   - type: implements
-    from: SYM-exp-core-server-browser-handler
-    to: REQ-core-browser-port-scope
-    created_at: 2026-10-29T20:59:40.120Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-785231f3fe38
-  - type: covered_by
-    from: SYM-exp-core-server-browser-handler
-    to: TEST-core-front-door
-    created_at: 2026-10-29T20:59:40.178Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eacf6339e32d
-  - type: validates
-    from: TEST-demo-cross-checks
-    to: REQ-valuation-price-check-one-percent
-    created_at: 2026-10-30T05:17:48.729Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f8c2c1f453d7
-  - type: implements
     from: SYM-valuationv1-number-format-descriptor
     to: REQ-valuation-settings-service
     created_at: 2026-10-29T23:14:57.633Z
@@ -532,6 +511,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-84ec59b3d74f
   - type: implements
+    from: SYM-exp-core-server-browser-handler
+    to: REQ-core-browser-port-scope
+    created_at: 2026-10-29T20:59:40.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-785231f3fe38
+  - type: covered_by
+    from: SYM-exp-core-server-browser-handler
+    to: TEST-core-front-door
+    created_at: 2026-10-29T20:59:40.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eacf6339e32d
+  - type: implements
     from: SYM-affected-ci-decision
     to: REQ-tooling-ci-docs-only-pr
     created_at: 2026-10-30T03:51:54.374Z
@@ -545,3 +538,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf6457e9a3de
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-fake-owners
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:37:41.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bee775118ad0
+  - type: implements
+    from: SYM-views-leg-keys
+    to: REQ-views-performance-confirmed-transfers
+    created_at: 2026-10-30T06:50:09.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-088c98695bc1
+  - type: covered_by
+    from: SYM-views-leg-keys
+    to: TEST-views-performance
+    created_at: 2026-10-30T06:50:09.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01a5663b95b5
+  - type: implements
+    from: SYM-ui-server-transfers-page
+    to: REQ-ui-transfers-page
+    created_at: 2026-10-30T07:26:59.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb4f22dfdc9b
+  - type: covered_by
+    from: SYM-ui-server-transfers-page
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:26:59.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f047d47f09a9
+  - type: implements
+    from: SYM-ui-parse-transfer-form
+    to: REQ-ui-transfers-page
+    created_at: 2026-10-30T07:27:59.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0a833a13a44
+  - type: covered_by
+    from: SYM-ui-parse-transfer-form
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:27:59.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82e959bac8b3
+  - type: validates
+    from: TEST-demo-cross-checks
+    to: REQ-valuation-price-check-one-percent
+    created_at: 2026-10-30T05:17:48.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c2c1f453d7

@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-424e4e420561
+  - type: validates
+    from: TEST-ui-bond-lots
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T07:37:13.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf8b158735a8
+  - type: validates
+    from: TEST-ui-bond-lots
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T07:37:13.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51ccd94dc2a9

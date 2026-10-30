@@ -202,13 +202,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7b262738053
-  - type: executable_for
-    from: SYM-treasurybonds-test-helper-row
-    to: TEST-treasurybonds-mapper
-    created_at: 2026-10-29T01:23:25.880Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e076f12660e1
   - type: implements
     from: SYM-views-kube-plugins-installed-plugins
     to: REQ-views-installed-plugins
@@ -307,13 +300,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47e422206375
-  - type: verified_by
-    from: SCEN-ui-price-checks-page
-    to: TEST-ui-pricechecks
-    created_at: 2026-10-30T05:17:56.866Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-51fc10290c49
   - type: executable_for
     from: SYM-ingest-app-test-helper-entry
     to: TEST-ingest-app-accounts
@@ -363,3 +349,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccec2acd1e05
+  - type: implements
+    from: SYM-ledger-decide-transfer-link
+    to: REQ-ledger-transfer-correction
+    created_at: 2026-10-30T06:43:36.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f219d003d84
+  - type: implements
+    from: SYM-ledger-decide-transfer-link
+    to: REQ-ledger-transfer-leg-once
+    created_at: 2026-10-30T06:43:36.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d4d02e0d719
+  - type: covered_by
+    from: SYM-ledger-decide-transfer-link
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:43:36.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc8eb5596bf
+  - type: implements
+    from: SYM-ledgerv1-transfer-decision-descriptor
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:52:40.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-629a1e1eaeb9
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-decision-descriptor
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:52:40.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8b1bd843416
+  - type: verified_by
+    from: SCEN-ui-price-checks-page
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T05:17:56.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51fc10290c49

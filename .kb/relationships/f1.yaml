@@ -405,20 +405,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-019d6ab410cf
-  - type: implements
-    from: SYM-ui-uc-check-row
-    to: REQ-ui-price-check-latest-per-instrument
-    created_at: 2026-10-30T06:17:37.233Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e3d0f8d2403d
-  - type: covered_by
-    from: SYM-ui-uc-check-row
-    to: TEST-ui-pricechecks
-    created_at: 2026-10-30T06:17:37.297Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6e080930fcee
   - type: executable_for
     from: SYM-jurisdiction-test-helper-rng-next
     to: TEST-jurisdiction-fee
@@ -468,3 +454,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7775d171a35d
+  - type: implements
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-list-transfers
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:04:20.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3897c5baac22
+  - type: covered_by
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-list-transfers
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:04:20.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9a2f6fb1581
+  - type: implements
+    from: SYM-ui-uc-check-row
+    to: REQ-ui-price-check-latest-per-instrument
+    created_at: 2026-10-30T06:17:37.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3d0f8d2403d
+  - type: covered_by
+    from: SYM-ui-uc-check-row
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:17:37.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e080930fcee
+  - type: constrains
+    from: REQ-ledger-deletion-supersedes
+    to: FACT-SUBJECT-C062A9F1D52AD7B2
+    created_at: 2026-10-30T05:01:53.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6df53395cbad
+  - type: requires_property
+    from: REQ-ledger-deletion-supersedes
+    to: FACT-PROP-DE7D546ED2CA963B
+    created_at: 2026-10-30T05:01:54.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bde365f997a
+  - type: specified_by
+    from: REQ-ledger-deletion-supersedes
+    to: SCEN-ledger-deletion-supersedes
+    created_at: 2026-10-30T05:01:54.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7f3434d80f4
+  - type: implements
+    from: SYM-treasurybonds-mapper-header
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-10-30T06:38:40.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8e7b79ac698
+  - type: implements
+    from: SYM-treasurybonds-mapper-header
+    to: REQ-treasurybonds-pre-go-live-opening-lot
+    created_at: 2026-10-30T06:38:40.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06fcdf3dde7b
+  - type: covered_by
+    from: SYM-treasurybonds-mapper-header
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-30T06:38:41.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e49cdcc92748

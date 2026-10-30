@@ -251,26 +251,25 @@ func moneyOf(m *viewsv1.Money) (kernel.Money, error) {
 	return out, nil
 }
 
+// transactionKinds returns a map of every read API transaction kind to the ledger's.
+func transactionKinds() map[viewsv1.TransactionKind]ledger.TransactionKind {
+	return map[viewsv1.TransactionKind]ledger.TransactionKind{
+		viewsv1.TransactionKind_TRANSACTION_KIND_BUY:           ledger.KindBuy,
+		viewsv1.TransactionKind_TRANSACTION_KIND_SELL:          ledger.KindSell,
+		viewsv1.TransactionKind_TRANSACTION_KIND_DIVIDEND:      ledger.KindDividend,
+		viewsv1.TransactionKind_TRANSACTION_KIND_FEE:           ledger.KindFee,
+		viewsv1.TransactionKind_TRANSACTION_KIND_FX_CONVERSION: ledger.KindFXConversion,
+		viewsv1.TransactionKind_TRANSACTION_KIND_DEPOSIT:       ledger.KindDeposit,
+		viewsv1.TransactionKind_TRANSACTION_KIND_WITHDRAWAL:    ledger.KindWithdrawal,
+		viewsv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT:   ledger.KindOpeningLot,
+		viewsv1.TransactionKind_TRANSACTION_KIND_INTEREST:      ledger.KindInterest,
+	}
+}
+
 // kindOf converts a read API transaction kind.
 func kindOf(k viewsv1.TransactionKind) (ledger.TransactionKind, error) {
-	switch k {
-	case viewsv1.TransactionKind_TRANSACTION_KIND_BUY:
-		return ledger.KindBuy, nil
-	case viewsv1.TransactionKind_TRANSACTION_KIND_SELL:
-		return ledger.KindSell, nil
-	case viewsv1.TransactionKind_TRANSACTION_KIND_DIVIDEND:
-		return ledger.KindDividend, nil
-	case viewsv1.TransactionKind_TRANSACTION_KIND_FEE:
-		return ledger.KindFee, nil
-	case viewsv1.TransactionKind_TRANSACTION_KIND_FX_CONVERSION:
-		return ledger.KindFXConversion, nil
-	case viewsv1.TransactionKind_TRANSACTION_KIND_DEPOSIT:
-		return ledger.KindDeposit, nil
-	case viewsv1.TransactionKind_TRANSACTION_KIND_WITHDRAWAL:
-		return ledger.KindWithdrawal, nil
-	case viewsv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT:
-		return ledger.KindOpeningLot, nil
-	case viewsv1.TransactionKind_TRANSACTION_KIND_UNSPECIFIED:
+	if kind, ok := transactionKinds()[k]; ok {
+		return kind, nil
 	}
 	return 0, fmt.Errorf("%w: transaction kind %s", ErrBadRecord, k)
 }

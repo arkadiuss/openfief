@@ -314,13 +314,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12b67975474e
-  - type: implements
-    from: SYM-views-compare-flows
-    to: REQ-views-performance-transfers
-    created_at: 2026-10-28T21:02:28.544Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5d2663e565ac
   - type: covered_by
     from: SYM-views-compare-flows
     to: TEST-views-performance
@@ -545,3 +538,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a55fae6bcecb
+  - type: implements
+    from: SYM-views-compare-flows
+    to: REQ-views-performance-confirmed-transfers
+    created_at: 2026-10-30T06:21:18.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-484abb4e3f7b
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-owners-check-owner
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:40:06.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b5f64f9ed53
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-request-descriptor
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:58:32.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f4bbf42d216
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-request-descriptor
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:58:32.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30545060ea44
+  - type: executable_for
+    from: SYM-ledger-test-check-opening-lots
+    to: TEST-ledger-seed
+    created_at: 2026-10-30T05:04:14.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc1f973d2f61

@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aeb78afcfcad
+  - type: implements
+    from: SYM-ingestv1-bond-purchase
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:43:00.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db17f229784f
+  - type: covered_by
+    from: SYM-ingestv1-bond-purchase
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:43:00.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dd5b24c5690

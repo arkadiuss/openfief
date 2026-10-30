@@ -1,0 +1,74 @@
+{{define "transfer-keys"}}<input type="hidden" name="withdrawal_source" value="{{.WithdrawalSource}}"><input type="hidden" name="withdrawal_id" value="{{.WithdrawalExternalId}}"><input type="hidden" name="deposit_source" value="{{.DepositSource}}"><input type="hidden" name="deposit_id" value="{{.DepositExternalId}}">{{end}}
+{{define "transfer-head"}}<thead><tr>
+    <th scope="col">Withdrawn from</th><th scope="col">On</th>
+    <th scope="col">Deposited into</th><th scope="col">On</th>
+    <th scope="col" class="num">Amount</th><th scope="col"><span class="sr-only">Decision</span></th>
+  </tr></thead>{{end}}
+{{define "transfer-cells"}}<td><a href="/accounts/{{.WithdrawalAccountId}}">{{.WithdrawalAccountId}}</a></td><td class="mono">{{.WithdrawalDate}}</td>
+    <td><a href="/accounts/{{.DepositAccountId}}">{{.DepositAccountId}}</a></td><td class="mono">{{.DepositDate}}</td>
+    <td class="num">{{money .Amount}}</td>{{end}}
+{{define "content"}}
+{{$owner := $.Session.Owner}}
+{{with .Data}}
+<p class="lede">Money you move between two of your accounts arrives as a withdrawal in one and a deposit in the other. OpenFief suggests such pairs: the same amount and currency, another account, at most five days apart. Only a transfer you confirm stays out of the time-weighted return's cash flows; until then both are counted as money in and out.</p>
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+<section class="card" aria-labelledby="suggested-title">
+  <h2 id="suggested-title">Suggested</h2>
+  {{if .Suggested}}
+  <div class="table"><table>
+    {{template "transfer-head"}}
+    <tbody>
+    {{range .Suggested}}
+    <tr>
+      {{template "transfer-cells" .}}
+      <td>{{if $owner}}<form method="post" action="/transfers/confirm" class="inline">{{template "transfer-keys" .}}<button type="submit">Confirm</button></form>
+        <form method="post" action="/transfers/reject" class="inline">{{template "transfer-keys" .}}<button type="submit" class="danger">Not a transfer</button></form>{{else}}<span class="muted">Waiting for the owner</span>{{end}}</td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{else}}
+  <div class="state">{{template "kasztan" "asleep"}}<div>
+    <p class="state-title">No suggested transfers.</p>
+    <p class="muted">No withdrawal has a matching deposit in another account that you haven't decided on.</p>
+  </div></div>
+  {{end}}
+</section>
+<section class="card" aria-labelledby="confirmed-title">
+  <h2 id="confirmed-title">Confirmed</h2>
+  {{if .Confirmed}}
+  <div class="table"><table>
+    {{template "transfer-head"}}
+    <tbody>
+    {{range .Confirmed}}
+    <tr>
+      {{template "transfer-cells" .}}
+      <td>{{if $owner}}<form method="post" action="/transfers/reject" class="inline">{{template "transfer-keys" .}}<button type="submit" class="danger">Not a transfer</button></form>{{end}}</td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{else}}
+  <p class="muted">No confirmed transfers yet.</p>
+  {{end}}
+</section>
+<section class="card" aria-labelledby="rejected-title">
+  <h2 id="rejected-title">Rejected</h2>
+  {{if .Rejected}}
+  <div class="table"><table>
+    {{template "transfer-head"}}
+    <tbody>
+    {{range .Rejected}}
+    <tr>
+      {{template "transfer-cells" .}}
+      <td>{{if $owner}}<form method="post" action="/transfers/confirm" class="inline">{{template "transfer-keys" .}}<button type="submit">Confirm</button></form>{{end}}</td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{else}}
+  <p class="muted">No rejected pairs.</p>
+  {{end}}
+</section>
+{{end}}
+{{end}}

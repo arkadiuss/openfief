@@ -335,3 +335,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5d626ccacd3
+  - type: implements
+    from: SYM-ledgerv1-transfer-link-get-deposit
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:55:16.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2da03c4b63c
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-link-get-deposit
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:55:16.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-547fd49d75df
+  - type: implements
+    from: SYM-views-pb-transfer-get-withdrawal-source
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:00:44.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-087884842cc1
+  - type: covered_by
+    from: SYM-views-pb-transfer-get-withdrawal-source
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:00:44.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad4d0177b31
+  - type: implements
+    from: SYM-connectorv1-bond-purchase-descriptor
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:06:29.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2611a0eaa021
+  - type: covered_by
+    from: SYM-connectorv1-bond-purchase-descriptor
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:06:29.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d54aa1b5164d
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-map-row
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-30T06:39:05.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-533333fb2c12

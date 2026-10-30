@@ -461,3 +461,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c5de2560617
+  - type: implements
+    from: SYM-ledger-compare-keys
+    to: REQ-ledger-transfer-correction
+    created_at: 2026-10-30T06:43:52.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92cfb75425c3
+  - type: covered_by
+    from: SYM-ledger-compare-keys
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:43:52.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-691ed2bcaed0
+  - type: implements
+    from: SYM-views-pb-list-transfers-request-proto-message
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:02:00.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-315675225d80
+  - type: covered_by
+    from: SYM-views-pb-list-transfers-request-proto-message
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:02:00.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c51e320084bc
+  - type: executable_for
+    from: SYM-core-test-helper-transfer-client
+    to: TEST-core-transfers
+    created_at: 2026-10-30T07:26:30.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc1814a964b3
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-bond-lot
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-30T05:03:19.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69591cc58d2a
+  - type: validates
+    from: TEST-ingest-bondlot
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T06:32:54.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bfe633ca12c

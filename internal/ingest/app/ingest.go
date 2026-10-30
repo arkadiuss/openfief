@@ -43,6 +43,10 @@ type LedgerImporter interface {
 	// seeded, unless the seeding changes nothing for it: then the summary
 	// lists it in AlreadySeeded (D-23).
 	Seed(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error)
+	// AddOpeningLots imports like Import, in one database transaction that
+	// adds opening lots to an account one at a time, all on its go-live
+	// date (D-98), and refuses anything else that would seed it.
+	AddOpeningLots(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error)
 }
 
 // Mapper translates one institution's statement into the ledger in a mode.
@@ -104,7 +108,7 @@ func (s *Service) ingest(ctx context.Context, institution ingest.InstitutionID, 
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("ingest %s batch %s: %w", institution, batch.ID, err)
 	}
-	imported, err := importMapping(ctx, s.Ledger, mode, &m)
+	imported, err := importMapping(ctx, s.Ledger, mode, source, &m)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("ingest %s batch %s: %w", institution, batch.ID, err)
 	}
@@ -112,14 +116,23 @@ func (s *Service) ingest(ctx context.Context, institution ingest.InstitutionID, 
 	return batch, nil
 }
 
-// importMapping imports m into l: an opening batch through Seed, which
-// refuses to seed an account twice, and a transactions batch through
-// Import, after refusing any seeding transaction in it (D-23).
-func importMapping(ctx context.Context, l LedgerImporter, mode ingest.Mode, m *ingest.Mapping) (ingest.ImportSummary, error) {
+// importMapping imports m, from source, into l: an opening batch through
+// Seed, which refuses to seed an account twice; the owner's bond lots
+// (SourceEntry) through AddOpeningLots, which takes opening lots one at a
+// time (D-98); and any other transactions batch through Import, after
+// refusing any seeding transaction in it (D-23).
+func importMapping(ctx context.Context, l LedgerImporter, mode ingest.Mode, source string, m *ingest.Mapping) (ingest.ImportSummary, error) {
 	if mode == ingest.ModeOpening {
 		sum, err := l.Seed(ctx, m.Transactions, m.Assertions)
 		if err != nil {
 			return ingest.ImportSummary{}, fmt.Errorf("seeding: %w", err)
+		}
+		return sum, nil
+	}
+	if source == SourceEntry {
+		sum, err := l.AddOpeningLots(ctx, m.Transactions, m.Assertions)
+		if err != nil {
+			return ingest.ImportSummary{}, fmt.Errorf("adding opening lots: %w", err)
 		}
 		return sum, nil
 	}

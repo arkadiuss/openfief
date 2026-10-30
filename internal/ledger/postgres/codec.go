@@ -10,7 +10,7 @@ import (
 
 // parseKind returns the transaction kind whose String is s.
 func parseKind(s string) (ledger.TransactionKind, error) {
-	for k := ledger.KindBuy; k <= ledger.KindOpeningLot; k++ {
+	for k := ledger.KindBuy; k <= ledger.KindDeletion; k++ {
 		if k.String() == s {
 			return k, nil
 		}

@@ -482,3 +482,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb5c8c37f28c
+  - type: implements
+    from: SYM-views-pb-transfer-get-deposit-external-id
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:01:21.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbcd015d4ffc
+  - type: covered_by
+    from: SYM-views-pb-transfer-get-deposit-external-id
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:01:21.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-702812789473
+  - type: implements
+    from: SYM-ui-server-confirm-transfer
+    to: REQ-ui-transfers-page
+    created_at: 2026-10-30T07:27:25.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-223766c6429f
+  - type: implements
+    from: SYM-ui-server-confirm-transfer
+    to: REQ-ui-transfer-confirmation
+    created_at: 2026-10-30T07:27:25.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d64e6d7ccd0a
+  - type: covered_by
+    from: SYM-ui-server-confirm-transfer
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:27:25.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b51e98c6f21d

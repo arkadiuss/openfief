@@ -230,48 +230,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0559f13b1714
-  - type: implements
-    from: SYM-valuation-price-check-acknowledgement
-    to: REQ-valuation-price-check-acknowledge
-    created_at: 2026-10-30T03:07:43.775Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ca24e4172b18
-  - type: implements
-    from: SYM-valuation-price-check-acknowledgement
-    to: REQ-valuation-price-check-acknowledgement-lapses
-    created_at: 2026-10-30T03:07:43.802Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ea9609739ee5
-  - type: covered_by
-    from: SYM-valuation-price-check-acknowledgement
-    to: TEST-valuation-crosscheck
-    created_at: 2026-10-30T03:07:43.826Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f343659cc96e
-  - type: implements
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-date
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:17:49.691Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-918d24cffb76
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-date
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:17:49.732Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c1be92de0ecb
-  - type: executable_for
-    from: SYM-core-test-up-check-opening-upload
-    to: TEST-core-statements
-    created_at: 2026-10-30T04:25:35.523Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3308e93506d7
   - type: verified_by
     from: SCEN-pl-early-redemption-fee-by-wrapper
     to: TEST-pl-value
@@ -412,3 +370,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67df7b3f6db8
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-request-proto-message
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:58:17.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8821d5d2d3c9
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-request-proto-message
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:58:17.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c45293a0456
+  - type: implements
+    from: SYM-valuation-price-check-acknowledgement
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T03:07:43.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca24e4172b18
+  - type: implements
+    from: SYM-valuation-price-check-acknowledgement
+    to: REQ-valuation-price-check-acknowledgement-lapses
+    created_at: 2026-10-30T03:07:43.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea9609739ee5
+  - type: covered_by
+    from: SYM-valuation-price-check-acknowledgement
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-30T03:07:43.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f343659cc96e
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-date
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:17:49.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-918d24cffb76
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-date
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:17:49.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1be92de0ecb
+  - type: executable_for
+    from: SYM-core-test-up-check-opening-upload
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:25:35.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3308e93506d7
+  - type: executable_for
+    from: SYM-ui-test-delete-bond-lot
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-30T07:39:16.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a7ab944c038

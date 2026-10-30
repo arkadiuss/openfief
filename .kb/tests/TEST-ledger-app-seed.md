@@ -1,5 +1,5 @@
 ---
-title: Ledger.Seed refuses a re-seed and serializes concurrent seedings
+title: Seed refuses reseeding and AddOpeningLots adds lots one at a time against an in-memory store
 status: active
 sourceFile: internal/ledger/app/seed_test.go
 origin:

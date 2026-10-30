@@ -484,7 +484,7 @@ components:
           items:
             $ref: '#/components/schemas/openfief.views.v1.Transfer'
           title: transfers
-          description: The transfers between the owner's accounts with a leg in the range.
+          description: The confirmed transfers between the owner's accounts with a leg in the range.
         reportingCurrency:
           type: string
           title: reporting_currency
@@ -882,6 +882,33 @@ components:
           title: next_page_token
           description: Pass as page_token to get the next page; empty on the last page.
       title: ListTransactionsResponse
+      additionalProperties: false
+    openfief.views.v1.ListTransfersRequest:
+      type: object
+      title: ListTransfersRequest
+      additionalProperties: false
+    openfief.views.v1.ListTransfersResponse:
+      type: object
+      properties:
+        suggested:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Transfer'
+          title: suggested
+          description: Suggested pairs, in the withdrawals' date order.
+        confirmed:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Transfer'
+          title: confirmed
+          description: 'Pairs the owner confirmed: neither leg is a cash flow.'
+        rejected:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Transfer'
+          title: rejected
+          description: 'Pairs the owner rejected: both legs stay cash flows.'
+      title: ListTransfersResponse
       additionalProperties: false
     openfief.views.v1.ListValuationStatusesRequest:
       type: object
@@ -1450,6 +1477,7 @@ components:
         - TRANSACTION_KIND_DEPOSIT
         - TRANSACTION_KIND_WITHDRAWAL
         - TRANSACTION_KIND_OPENING_LOT
+        - TRANSACTION_KIND_INTEREST
       description: TransactionKind is what kind of economic event a transaction is.
     openfief.views.v1.Transfer:
       type: object
@@ -1472,12 +1500,25 @@ components:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: amount
+        withdrawalSource:
+          type: string
+          title: withdrawal_source
+          description: The legs' transaction keys, as ListTransactions gives them.
+        withdrawalExternalId:
+          type: string
+          title: withdrawal_external_id
+        depositSource:
+          type: string
+          title: deposit_source
+        depositExternalId:
+          type: string
+          title: deposit_external_id
       title: Transfer
       additionalProperties: false
       description: |-
-        Transfer is a withdrawal from one of the owner's accounts matched with a
+        Transfer is a withdrawal from one of the owner's accounts paired with a
          deposit of the same amount and currency into another, at most five days
-         apart: not a cash flow.
+         apart (D-105): suggested, or confirmed or rejected by the owner.
     openfief.views.v1.UnvaluedHolding:
       type: object
       properties:
@@ -2038,9 +2079,9 @@ paths:
         GetPerformance returns the portfolio's time-weighted return per day
          (D-61) as an index that starts at 100, with the portfolio's value
          including cash, in the reporting currency. Deposits and withdrawals are
-         not performance; transfers between the owner's own accounts are not cash
-         flows. The series stops at the last day every account is valued for,
-         and says why.
+         not performance; transfers between the owner's own accounts that the
+         owner confirmed (D-105) are not cash flows. The series stops at the last
+         day every account is valued for, and says why.
       operationId: openfief.views.v1.ReadService.GetPerformance
       parameters:
         - name: from
@@ -2158,6 +2199,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListSleevesResponse'
+  /v1/transfers:
+    get:
+      tags:
+        - ReadService
+      summary: ListTransfers
+      description: |-
+        ListTransfers returns the transfers between the owner's own accounts
+         (D-105): those suggested for the owner to confirm or reject, and the
+         pairs the owner confirmed or rejected. A withdrawal is suggested with
+         the nearest deposit in date into another account of exactly the same
+         amount and currency, at most five calendar days apart, that is not
+         already taken or rejected with it. Only confirmed transfers are left out
+         of the performance's cash flows. Decisions are made through the owner's
+         TransferService, not here.
+      operationId: openfief.views.v1.ReadService.ListTransfers
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListTransfersResponse'
   /v1/valuation-status:
     get:
       tags:
