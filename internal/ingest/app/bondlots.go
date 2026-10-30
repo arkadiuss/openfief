@@ -88,12 +88,41 @@ func (b *BondLots) Add(ctx context.Context, origin, sessionToken string, account
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
 	}
-	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, []ingest.BondLot{*lot})
+	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, ingest.BondLotEntries{Lots: []ingest.BondLot{*lot}})
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
 	}
 	if err := b.Batches.RecordBatch(ctx, instance, &batch); err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
+	}
+	return batch, nil
+}
+
+// Delete deletes the lot of account that key names, as a correction
+// (D-100), for the owner whose session sessionToken is, on origin: it hands
+// the key to the one connector instance bound to account, which delivers a
+// deletion of each of the lot's transactions, and imports them as a new
+// transactions batch. Each deletion supersedes the lot's transaction, which
+// the ledger keeps (D-18); deleting it again changes nothing. A key without
+// a series or date wraps ingest.ErrInvalidBondLot, and a lot never entered
+// wraps ledger.ErrNothingToDelete; otherwise Delete fails as Add does.
+func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, account ledger.AccountID, key ingest.BondLotKey) (ingest.Batch, error) {
+	if err := b.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
+		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
+	}
+	if err := key.Validate(); err != nil {
+		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
+	}
+	instance, err := boundInstance(ctx, b.Bindings, account)
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
+	}
+	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, ingest.BondLotEntries{Deleted: []ingest.BondLotKey{key}})
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
+	}
+	if err := b.Batches.RecordBatch(ctx, instance, &batch); err != nil {
+		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
 	return batch, nil
 }

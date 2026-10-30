@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddbd324e1490
+  - type: implements
+    from: SYM-demo-seed-importer-add-opening-lots
+    to: REQ-ingest-bond-lot-go-live
+    created_at: 2026-10-30T06:34:12.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1598fe1423ce
+  - type: covered_by
+    from: SYM-demo-seed-importer-add-opening-lots
+    to: TEST-demo-seed-load
+    created_at: 2026-10-30T06:34:12.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa733861c567
+  - type: executable_for
+    from: SYM-delivery-test-helper-with-purchase
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-30T06:38:06.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b06ecabc32e3

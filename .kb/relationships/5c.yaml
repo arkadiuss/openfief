@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bf36e698d23
+  - type: verified_by
+    from: SCEN-ledger-deletion-supersedes
+    to: TEST-ledger-version
+    created_at: 2026-10-30T05:01:37.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f6234943eb3
+  - type: verified_by
+    from: SCEN-ledger-deletion-supersedes
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-30T05:01:37.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9adedeb1fbaa
+  - type: verified_by
+    from: SCEN-ledger-deletion-supersedes
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-30T05:01:38.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-161d5e3d6add

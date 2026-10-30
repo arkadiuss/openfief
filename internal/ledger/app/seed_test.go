@@ -146,3 +146,65 @@ func TestConcurrentSeedsSeedOnce(t *testing.T) {
 	w := statements[winner]
 	checkLog(t, store, []ledger.VersionedTransaction{versioned(&w[1], 1), versioned(&w[0], 1)})
 }
+
+// bondLot returns a synthetic opening lot of account at go-live on day,
+// opened on opened, keyed per series and purchase date as a manually entered
+// account's lots are.
+func bondLot(t *testing.T, account ledger.AccountID, series, opened, day, units string) ledger.Transaction {
+	t.Helper()
+	h := header(t, account, "lot:"+series+":"+opened, day)
+	h.Key.Source = "test/" + string(account)
+	in := instrument(t, "PLEDO0536000", series)
+	return must(t)(ledger.NewOpeningLot(h, in, qty(t, units), money(t, units+"00", "PLN"), date(t, opened)))
+}
+
+func TestAddOpeningLots(t *testing.T) {
+	t.Parallel()
+	l, store := seeded(t)
+	ctx := t.Context()
+	first := bondLot(t, acc1, "EDO0536", "2026-05-12", "2026-06-01", "10")
+	sum, err := l.AddOpeningLots(ctx, []ledger.Transaction{first}, nil)
+	if err != nil {
+		t.Fatalf("first lot: %v", err)
+	}
+	checkSummary(t, &app.ImportSummary{New: 1, EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
+
+	second := bondLot(t, acc1, "EDO0536", "2026-05-20", "2026-06-01", "5")
+	if sum, err = l.AddOpeningLots(ctx, []ledger.Transaction{second}, nil); err != nil {
+		t.Fatalf("second lot: %v", err)
+	}
+	checkSummary(t, &app.ImportSummary{New: 1, EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
+
+	if sum, err = l.AddOpeningLots(ctx, []ledger.Transaction{second}, nil); err != nil {
+		t.Fatalf("second lot again: %v", err)
+	}
+	checkSummary(t, &app.ImportSummary{Unchanged: 1}, &sum)
+
+	// A lot on another date than go-live would move it: refused, nothing imported.
+	late := bondLot(t, acc1, "EDO0536", "2026-05-21", "2026-06-15", "1")
+	_, err = l.AddOpeningLots(ctx, []ledger.Transaction{late}, nil)
+	if diff := cmp.Diff(ledger.ErrGoLiveMismatch, err, cmpopts.EquateErrors()); diff != "" {
+		t.Errorf("lot off go-live error (-want +got):\n%s", diff)
+	}
+
+	// Deleting the first lot supersedes it and keeps it in the log.
+	gone := must(t)(ledger.NewDeletion(ledger.TransactionHeader{Key: first.Key, Account: acc1, Date: first.Date}))
+	if sum, err = l.AddOpeningLots(ctx, []ledger.Transaction{gone}, nil); err != nil {
+		t.Fatalf("deleting the first lot: %v", err)
+	}
+	checkSummary(t, &app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
+	checkLog(t, store, []ledger.VersionedTransaction{versioned(&first, 1), versioned(&gone, 2), versioned(&second, 1)})
+	current, err := l.CurrentTransactions(ctx, acc1)
+	if err != nil {
+		t.Fatalf("CurrentTransactions: %v", err)
+	}
+	if diff := cmp.Diff([]ledger.Transaction{second}, current); diff != "" {
+		t.Errorf("current transactions after the deletion (-want +got):\n%s", diff)
+	}
+
+	never := must(t)(ledger.NewDeletion(header(t, acc1, "lot:EDO0536:2026-05-01", "2026-06-01")))
+	_, err = l.Import(ctx, []ledger.Transaction{never}, nil)
+	if diff := cmp.Diff(ledger.ErrNothingToDelete, err, cmpopts.EquateErrors()); diff != "" {
+		t.Errorf("deleting a lot never entered (-want +got):\n%s", diff)
+	}
+}

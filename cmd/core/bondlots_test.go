@@ -29,7 +29,7 @@ type bondsConnector struct {
 }
 
 func (bondsConnector) ImportBondLots(_ context.Context, req *connect.Request[connectorv1.ImportBondLotsRequest]) (*connect.Response[connectorv1.ImportBondLotsResponse], error) {
-	lots, err := delivery.BondLots(req.Msg.GetLots())
+	entries, err := delivery.BondLotEntries(req.Msg)
 	if err != nil {
 		return nil, refused(err)
 	}
@@ -37,7 +37,7 @@ func (bondsConnector) ImportBondLots(_ context.Context, req *connect.Request[con
 	if err != nil {
 		return nil, refused(err)
 	}
-	m, terms, err := treasurybonds.Mapper{Account: demo.BondsAccount}.Map(lots, today)
+	m, terms, err := treasurybonds.Mapper{Account: demo.BondsAccount}.Map(&entries, today)
 	if err != nil {
 		return nil, refused(err)
 	}
@@ -107,16 +107,41 @@ func TestBondLotService(t *testing.T) {
 		return fmt.Sprintf("http://127.0.0.1:%d", port), nil
 	}, staticTokens{}))
 
+	// The account is not seeded, so it goes live today and the lot, bought
+	// before, is one opening lot (D-98).
 	got, err := lots.AddBondLot(t.Context(), edoRequest(session, string(demo.BondsAccount)))
-	if err != nil || got.Msg.GetNew() != 2 {
-		t.Fatalf("AddBondLot = %v, %v; want a deposit and a buy, both new", got, err)
+	if err != nil || got.Msg.GetNew() != 1 {
+		t.Fatalf("AddBondLot = %v, %v; want one new opening lot", got, err)
 	}
 	again, err := lots.AddBondLot(t.Context(), edoRequest(session, string(demo.BondsAccount)))
-	if err != nil || again.Msg.GetUnchanged() != 2 || again.Msg.GetNew() != 0 {
-		t.Errorf("entering the lot again = %v, %v; want both unchanged (D-18)", again, err)
+	if err != nil || again.Msg.GetUnchanged() != 1 || again.Msg.GetNew() != 0 {
+		t.Errorf("entering the lot again = %v, %v; want it unchanged (D-18, D-98)", again, err)
 	}
 	checkBondLotRefusals(t, lots, session)
 	checkBondValued(t, srv, session)
+	checkBondLotDeleted(t, lots, session)
+}
+
+// checkBondLotDeleted deletes the lot as a correction (D-100): a new version
+// of its opening lot, then nothing when deleted again; a lot never entered
+// is refused.
+func checkBondLotDeleted(t *testing.T, lots bondLotAPI, session string) {
+	t.Helper()
+	del := func(date string) (*connect.Response[ingestv1.DeleteBondLotResponse], error) {
+		return lots.DeleteBondLot(t.Context(), connect.NewRequest(&ingestv1.DeleteBondLotRequest{
+			Origin: localUI, SessionToken: session, AccountId: string(demo.BondsAccount), Series: "EDO0536", PurchaseDate: date,
+		}))
+	}
+	got, err := del("2026-05-04")
+	if err != nil || got.Msg.GetNewVersions() != 1 {
+		t.Errorf("DeleteBondLot = %v, %v; want the opening lot superseded", got, err)
+	}
+	if got, err = del("2026-05-04"); err != nil || got.Msg.GetUnchanged() != 1 {
+		t.Errorf("deleting again = %v, %v; want it unchanged", got, err)
+	}
+	if _, err = del("2026-05-05"); connect.CodeOf(err) != connect.CodeInvalidArgument {
+		t.Errorf("deleting a lot never entered: %v, want InvalidArgument", err)
+	}
 }
 
 // enrollCode returns the code of the enrollment link enroll-link printed.

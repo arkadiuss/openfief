@@ -46,10 +46,11 @@ type fakeLedger struct {
 	summary ingest.ImportSummary
 	err     error
 	// calls counts imports and seeds; seeds counts seeds alone.
-	calls      int
-	seeds      int
-	txs        []ledger.Transaction
-	assertions []ledger.BalanceAssertion
+	calls       int
+	seeds       int
+	openingLots int
+	txs         []ledger.Transaction
+	assertions  []ledger.BalanceAssertion
 }
 
 func (f *fakeLedger) Import(_ context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
@@ -60,6 +61,11 @@ func (f *fakeLedger) Import(_ context.Context, txs []ledger.Transaction, asserti
 
 func (f *fakeLedger) Seed(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
 	f.seeds++
+	return f.Import(ctx, txs, assertions)
+}
+
+func (f *fakeLedger) AddOpeningLots(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
+	f.openingLots++
 	return f.Import(ctx, txs, assertions)
 }
 

@@ -468,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa2be6b1f043
+  - type: implements
+    from: SYM-ledger-app-locked-log
+    to: REQ-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:03:11.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6934f1741ee
+  - type: covered_by
+    from: SYM-ledger-app-locked-log
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-30T05:03:11.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc2f9138de5d

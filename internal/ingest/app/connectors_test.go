@@ -36,6 +36,7 @@ type fakeCaller struct {
 	file      string
 	media     string
 	lots      []ingest.BondLot
+	entries   ingest.BondLotEntries
 }
 
 func (f *fakeCaller) Sync(_ context.Context, instance string, call *app.SyncCall) (app.Delivery, error) {
@@ -53,8 +54,8 @@ func (f *fakeCaller) ImportFile(_ context.Context, instance string, id ingest.Ba
 	return f.delivery, f.err
 }
 
-func (f *fakeCaller) ImportBondLots(_ context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (app.Delivery, error) {
-	f.instance, f.id, f.lots = instance, id, lots
+func (f *fakeCaller) ImportBondLots(_ context.Context, instance string, id ingest.BatchID, e *ingest.BondLotEntries) (app.Delivery, error) {
+	f.instance, f.id, f.lots, f.entries = instance, id, e.Lots, *e
 	return f.delivery, f.err
 }
 

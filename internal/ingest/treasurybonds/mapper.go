@@ -35,11 +35,15 @@ var (
 	// into.
 	ErrNoAccount = errors.New("no ledger account for the bond lots")
 	// ErrDuplicateLot reports two lots of one series bought on one day in
-	// one batch: they would share a key, so the owner enters them as one.
+	// one batch, added or deleted: they would share a key, so the owner
+	// enters them as one.
 	ErrDuplicateLot = errors.New("two lots of one series bought on one day")
 	// ErrConflictingTerms reports two lots of one series in one batch with
 	// different series terms.
 	ErrConflictingTerms = errors.New("one series with two different terms")
+	// ErrNoGoLive reports a batch without the account's go-live date, which
+	// decides how each lot is booked (D-98).
+	ErrNoGoLive = errors.New("no go-live date for the bond lots")
 )
 
 // Instrument returns the instrument of bond series s: its venue symbol is
@@ -64,52 +68,92 @@ type Mapper struct {
 	Account ledger.AccountID
 }
 
-// Map validates each lot as of today (ingest.BondLot.Validate) and maps it
-// to two transactions on its purchase date, so that the account's cash
-// stays at zero and the money counts as having entered the portfolio then
-// (D-61): a deposit of its cost against equity, and the buy of its bonds for
-// that cost. It also returns each series' terms once, in the order the
-// series first appear. Any invalid lot, two lots of one series bought on one
-// day, or one series with two different terms refuses the whole batch.
+// Map validates each lot of e as of today (ingest.BondLot.Validate) and maps
+// it by e's go-live date (D-98): a lot bought on or before go-live is an
+// opening lot on the go-live date, keeping its own purchase date and cost; a
+// later one is two transactions on its purchase date, a deposit of its cost
+// against equity and the buy of its bonds for that cost, so the account's
+// cash stays at zero and the money counts as having entered the portfolio
+// then (D-61). Each deleted lot of e (D-100) becomes a deletion of each of
+// its transactions, keyed and dated as adding it was. Map also returns each
+// series' terms once, in the order the series first appear. A missing
+// go-live, any invalid lot, one series bought on one day twice in the batch,
+// or one series with two different terms refuses the whole batch.
 //
-// The keys are "lot:<series>:<purchase date>:deposit" and ":buy", under the
-// source SourcePrefix plus the account ID. Entering a lot of the same series
-// and day again with another quantity makes a new version of both, which
-// supersedes the old (D-18).
-func (m Mapper) Map(lots []ingest.BondLot, today kernel.Date) (ingest.Mapping, []ingest.BondTerms, error) {
-	if m.Account == "" {
+// The keys are "lot:<series>:<purchase date>" for an opening lot and the
+// same with ":deposit" and ":buy" for a later lot, under the source
+// SourcePrefix plus the account ID, so each lot is idempotent per series and
+// purchase date: entering it again unchanged changes nothing, and with
+// another quantity, price or terms makes a new version that supersedes the
+// old (D-18).
+func (m Mapper) Map(e *ingest.BondLotEntries, today kernel.Date) (ingest.Mapping, []ingest.BondTerms, error) {
+	switch {
+	case m.Account == "":
 		return ingest.Mapping{}, nil, ErrNoAccount
+	case e.GoLive.IsZero():
+		return ingest.Mapping{}, nil, ErrNoGoLive
 	}
 	var (
 		out   ingest.Mapping
 		terms []ingest.BondTerms
-		seen  = map[string]bool{}
+		seen  = map[ingest.BondLotKey]bool{}
 		bySer = map[pl.Series]int{}
 	)
-	for i := range lots {
-		l := &lots[i]
+	for i := range e.Lots {
+		l := &e.Lots[i]
 		if err := l.Validate(today); err != nil {
 			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
 		}
-		id := "lot:" + l.Series().String() + ":" + l.Purchased.String()
-		if seen[id] {
-			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w: %s on %s", i+1, ErrDuplicateLot, l.Series(), l.Purchased)
-		}
-		seen[id] = true
-		in, err := Instrument(l.Series())
+		in, err := m.unique(seen, l.Key())
 		if err != nil {
 			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
 		}
 		if terms, err = addTerms(terms, bySer, in, &l.Terms); err != nil {
 			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
 		}
-		txs, err := m.lotTransactions(id, in, l)
+		txs, err := m.lotTransactions(in, l, e.GoLive)
 		if err != nil {
 			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
 		}
 		out.Transactions = append(out.Transactions, txs...)
 	}
+	deleted, err := m.mapDeleted(e, seen)
+	if err != nil {
+		return ingest.Mapping{}, nil, err
+	}
+	out.Transactions = append(out.Transactions, deleted...)
 	return out, terms, nil
+}
+
+// mapDeleted returns the deletions of e's deleted lots, recording each in
+// seen.
+func (m Mapper) mapDeleted(e *ingest.BondLotEntries, seen map[ingest.BondLotKey]bool) ([]ledger.Transaction, error) {
+	var out []ledger.Transaction
+	for i, k := range e.Deleted {
+		if err := k.Validate(); err != nil {
+			return nil, fmt.Errorf("deleted lot %d: %w", i+1, err)
+		}
+		in, err := m.unique(seen, k)
+		if err != nil {
+			return nil, fmt.Errorf("deleted lot %d: %w", i+1, err)
+		}
+		txs, err := m.deletions(in, k, e.GoLive)
+		if err != nil {
+			return nil, fmt.Errorf("deleted lot %d: %w", i+1, err)
+		}
+		out = append(out, txs...)
+	}
+	return out, nil
+}
+
+// unique records k in seen and returns its series' instrument, or fails
+// with ErrDuplicateLot when the batch named k already.
+func (m Mapper) unique(seen map[ingest.BondLotKey]bool, k ingest.BondLotKey) (ledger.Instrument, error) {
+	if seen[k] {
+		return ledger.Instrument{}, fmt.Errorf("%w: %s on %s", ErrDuplicateLot, k.Series, k.Purchased)
+	}
+	seen[k] = true
+	return Instrument(k.Series)
 }
 
 // addTerms appends t for in to terms unless its series is already there,
@@ -131,24 +175,61 @@ func sameTerms(a, b *pl.Terms) bool {
 		a.Margin.Equal(b.Margin) && a.EarlyRedemptionFee.Equal(b.EarlyRedemptionFee)
 }
 
-// lotTransactions returns the deposit and the buy of lot l keyed under id.
-func (m Mapper) lotTransactions(id string, in ledger.Instrument, l *ingest.BondLot) ([]ledger.Transaction, error) {
-	header := func(suffix string) ledger.TransactionHeader {
-		return ledger.TransactionHeader{
-			Key:     ledger.TransactionKey{Source: SourcePrefix + string(m.Account), ExternalID: id + ":" + suffix},
-			Account: m.Account, Date: l.Purchased,
-		}
+// lotID returns the base external ID of the lot k: "lot:<series>:<date>".
+func lotID(k ingest.BondLotKey) string {
+	return "lot:" + k.Series.String() + ":" + k.Purchased.String()
+}
+
+// header returns the header of the transaction with external ID id on day.
+func (m Mapper) header(id string, day kernel.Date) ledger.TransactionHeader {
+	return ledger.TransactionHeader{
+		Key:     ledger.TransactionKey{Source: SourcePrefix + string(m.Account), ExternalID: id},
+		Account: m.Account, Date: day,
 	}
-	cost := l.Cost()
-	deposit, err := ledger.NewDeposit(header("deposit"), cost)
+}
+
+// lotTransactions returns the transactions of lot l: an opening lot on
+// goLive when it was bought on or before goLive, else a deposit and a buy
+// on its purchase date.
+func (m Mapper) lotTransactions(in ledger.Instrument, l *ingest.BondLot, goLive kernel.Date) ([]ledger.Transaction, error) {
+	id, cost := lotID(l.Key()), l.Cost()
+	if !l.Purchased.After(goLive) {
+		lot, err := ledger.NewOpeningLot(m.header(id, goLive), in, l.Quantity, cost, l.Purchased)
+		if err != nil {
+			return nil, fmt.Errorf("opening lot of %s: %w", in.Symbol, err)
+		}
+		lot.Description = "Treasury bonds " + in.Symbol + " bought before go-live"
+		return []ledger.Transaction{lot}, nil
+	}
+	deposit, err := ledger.NewDeposit(m.header(id+":deposit", l.Purchased), cost)
 	if err != nil {
 		return nil, fmt.Errorf("deposit for %s: %w", in.Symbol, err)
 	}
 	deposit.Description = "Cash for treasury bonds " + in.Symbol
-	buy, err := ledger.NewBuy(header("buy"), in, l.Quantity, cost, kernel.Money{})
+	buy, err := ledger.NewBuy(m.header(id+":buy", l.Purchased), in, l.Quantity, cost, kernel.Money{})
 	if err != nil {
 		return nil, fmt.Errorf("buy of %s: %w", in.Symbol, err)
 	}
 	buy.Description = "Treasury bonds " + in.Symbol
 	return []ledger.Transaction{deposit, buy}, nil
+}
+
+// deletions returns the deletion of each transaction lot k was booked as,
+// keyed and dated as lotTransactions books it.
+func (m Mapper) deletions(in ledger.Instrument, k ingest.BondLotKey, goLive kernel.Date) ([]ledger.Transaction, error) {
+	id := lotID(k)
+	headers := []ledger.TransactionHeader{m.header(id, goLive)}
+	if k.Purchased.After(goLive) {
+		headers = []ledger.TransactionHeader{m.header(id+":deposit", k.Purchased), m.header(id+":buy", k.Purchased)}
+	}
+	out := make([]ledger.Transaction, 0, len(headers))
+	for _, h := range headers {
+		t, err := ledger.NewDeletion(h)
+		if err != nil {
+			return nil, fmt.Errorf("deletion of %s: %w", in.Symbol, err)
+		}
+		t.Description = "Deleted treasury bonds " + in.Symbol
+		out = append(out, t)
+	}
+	return out, nil
 }

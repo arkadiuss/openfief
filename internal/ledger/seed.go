@@ -48,7 +48,7 @@ func IsSeeding(t *Transaction) bool {
 		return true
 	case KindDeposit, KindWithdrawal:
 		return strings.HasPrefix(t.Key.ExternalID, OpeningCashPrefix)
-	case KindBuy, KindSell, KindDividend, KindFee, KindFXConversion:
+	case KindBuy, KindSell, KindDividend, KindFee, KindFXConversion, KindInterest, KindDeletion:
 		return false
 	}
 	return false
@@ -151,4 +151,78 @@ func DecideSeed(log []VersionedTransaction, account AccountID, incoming []Transa
 		}
 	}
 	return SeedUnchanged, nil
+}
+
+// Errors adding opening lots one at a time.
+var (
+	// ErrGoLiveMismatch reports opening lots added one at a time on another
+	// date than the account's go-live date, or on two dates at once.
+	ErrGoLiveMismatch = errors.New("opening lots not on the account's go-live date")
+	// ErrBookedBeforeGoLive reports opening lots for an account that is not
+	// seeded but has a current transaction dated on or before them: the lot
+	// would count what that transaction holds twice.
+	ErrBookedBeforeGoLive = errors.New("the account has transactions on or before go-live")
+	// ErrNotOpeningLot reports a seeding transaction other than an opening
+	// lot, such as opening cash, among opening lots added one at a time.
+	ErrNotOpeningLot = errors.New("only opening lots are added one at a time")
+)
+
+// CheckOpeningLots checks adding the seeding transactions of account in
+// incoming to it one at a time, as a manually entered account receives its
+// opening lots (D-98), given log, every stored version of every key in
+// account. Unlike a seeding (DecideSeed), the account may already be
+// seeded. Every incoming seeding transaction must be an opening lot
+// (ErrNotOpeningLot), all on one date, and that date must be the account's
+// go-live date (GoLive) when it is seeded, so its go-live never moves
+// (ErrGoLiveMismatch). An account not seeded takes that date as its go-live
+// and must have no current transaction dated on or before it
+// (ErrBookedBeforeGoLive). Each lot is then imported like any transaction,
+// keyed per lot, so entering one again unchanged changes nothing
+// (DecideImport). Transactions of other accounts and those that don't seed
+// are ignored.
+func CheckOpeningLots(log []VersionedTransaction, account AccountID, incoming []Transaction) error {
+	day, err := openingLotsDate(account, incoming)
+	if err != nil || day.IsZero() {
+		return err
+	}
+	goLive, seeded, err := GoLive(log, account)
+	if err != nil {
+		return err
+	}
+	if seeded {
+		if !goLive.Equal(day) {
+			return fmt.Errorf("%w: %s went live on %s, not %s", ErrGoLiveMismatch, account, goLive, day)
+		}
+		return nil
+	}
+	current, err := CurrentTransactions(log)
+	if err != nil {
+		return err
+	}
+	for i := range current {
+		if t := &current[i]; t.Account == account && !t.Date.After(day) {
+			return fmt.Errorf("%w: %s has %s on %s, go-live %s", ErrBookedBeforeGoLive, account, t.Key, t.Date, day)
+		}
+	}
+	return nil
+}
+
+// openingLotsDate returns the one date of the seeding transactions of
+// account in incoming, all opening lots, or the zero date when there are
+// none.
+func openingLotsDate(account AccountID, incoming []Transaction) (kernel.Date, error) {
+	var day kernel.Date
+	for i := range incoming {
+		t := &incoming[i]
+		switch {
+		case t.Account != account || !IsSeeding(t):
+			continue
+		case t.Kind != KindOpeningLot:
+			return kernel.Date{}, fmt.Errorf("%w: %s", ErrNotOpeningLot, t.Key)
+		case !day.IsZero() && !t.Date.Equal(day):
+			return kernel.Date{}, fmt.Errorf("%w: %s on %s and %s", ErrGoLiveMismatch, account, day, t.Date)
+		}
+		day = t.Date
+	}
+	return day, nil
 }

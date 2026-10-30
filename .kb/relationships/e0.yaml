@@ -525,34 +525,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-8c2dff2728ec
   - type: implements
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-origin
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:16:47.494Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-45780e1c4c91
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-origin
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:16:47.566Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-61af7a9a23f7
-  - type: implements
-    from: SYM-ingest-gen-st-pb-statement-account-get-account-id
-    to: REQ-ui-statement-upload-file-connectors-only
-    created_at: 2026-10-30T04:36:16.201Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0877c56e4772
-  - type: covered_by
-    from: SYM-ingest-gen-st-pb-statement-account-get-account-id
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-30T04:36:16.245Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f53146857a25
-  - type: implements
     from: SYM-jurisdiction-wrapper
     to: REQ-pl-tax-wrappers
     created_at: 2026-10-29T22:03:21.576Z
@@ -609,6 +581,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-bfbe54b76177
   - type: implements
+    from: SYM-connectorv1-bond-lot-key-proto-message
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:05:02.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6da871797e74
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-key-proto-message
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:05:02.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea193cc11f1f
+  - type: implements
+    from: SYM-connectorv1-bond-purchase-type
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:06:38.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a57f40683ffa
+  - type: covered_by
+    from: SYM-connectorv1-bond-purchase-type
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:06:38.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82625b36e0c7
+  - type: implements
     from: SYM-affected-script-reads
     to: REQ-tooling-hook-affected-packages
     created_at: 2026-10-30T03:59:47.114Z
@@ -636,3 +636,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b4f426cc77c
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-pre-go-live-opening-lot
+    created_at: 2026-10-30T06:32:49.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea4e5a442e0e
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-post-go-live-deposit-buy
+    created_at: 2026-10-30T06:32:49.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c15638d11125
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T06:32:49.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07fa9552053c
+  - type: implements
+    from: SYM-ui-posted-once
+    to: REQ-ui-bond-lot-entry
+    created_at: 2026-10-30T07:37:48.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f591beaa4b14
+  - type: implements
+    from: SYM-ui-posted-once
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T07:37:48.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f231429a697
+  - type: covered_by
+    from: SYM-ui-posted-once
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-30T07:37:48.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5764c6015fe
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-origin
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:16:47.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45780e1c4c91
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-origin
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:16:47.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61af7a9a23f7
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account-get-account-id
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:36:16.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0877c56e4772
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account-get-account-id
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:36:16.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f53146857a25

@@ -385,13 +385,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-40de33baf718
   - type: executable_for
-    from: SYM-ui-uc-test-st-fake-statements-list-statement-accounts
-    to: TEST-ui-statements
-    created_at: 2026-10-30T06:21:41.031Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e0fd8fa24f7c
-  - type: executable_for
     from: SYM-pl-test-yearly-tax
     to: TEST-pl-pack
     created_at: 2026-10-29T22:08:37.108Z
@@ -419,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14008063f167
+  - type: executable_for
+    from: SYM-ingest-app-test-bond-lots-delete
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-30T06:34:35.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbabaeb2a8b6
+  - type: executable_for
+    from: SYM-ui-uc-test-st-fake-statements-list-statement-accounts
+    to: TEST-ui-statements
+    created_at: 2026-10-30T06:21:41.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0fd8fa24f7c

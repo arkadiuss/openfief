@@ -503,20 +503,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e185adca3d8
-  - type: implements
-    from: SYM-valuation-app-cross-checks-price-checks
-    to: REQ-valuation-price-check-latest-price
-    created_at: 2026-10-30T03:25:02.062Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1873876aa5da
-  - type: implements
-    from: SYM-ingest-app-capped-reader
-    to: REQ-ingest-statement-upload-size-limit
-    created_at: 2026-10-30T04:12:26.510Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bbb188c139b2
   - type: constrains
     from: REQ-views-settings
     to: FACT-SUBJECT-32B414739B338134
@@ -538,3 +524,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f2047dc4892
+  - type: implements
+    from: SYM-ingestv1-delete-bond-lot-request-proto-reflect
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:40:43.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f0ed5dab47f
+  - type: covered_by
+    from: SYM-ingestv1-delete-bond-lot-request-proto-reflect
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:40:43.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9172c4391b6f
+  - type: implements
+    from: SYM-valuation-app-cross-checks-price-checks
+    to: REQ-valuation-price-check-latest-price
+    created_at: 2026-10-30T03:25:02.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1873876aa5da
+  - type: implements
+    from: SYM-ingest-app-capped-reader
+    to: REQ-ingest-statement-upload-size-limit
+    created_at: 2026-10-30T04:12:26.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbb188c139b2

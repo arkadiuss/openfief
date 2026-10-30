@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d044b19f8348
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-pre-go-live-opening-lot
+    created_at: 2026-10-30T06:32:52.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac863e1b7875
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-post-go-live-deposit-buy
+    created_at: 2026-10-30T06:32:52.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bc5b909859a

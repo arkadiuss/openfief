@@ -182,7 +182,7 @@ func (*scriptedCaller) ImportFile(context.Context, string, ingest.BatchID, inges
 	return app.Delivery{}, errCaller
 }
 
-func (*scriptedCaller) ImportBondLots(context.Context, string, ingest.BatchID, []ingest.BondLot) (app.Delivery, error) {
+func (*scriptedCaller) ImportBondLots(context.Context, string, ingest.BatchID, *ingest.BondLotEntries) (app.Delivery, error) {
 	return app.Delivery{}, errCaller
 }
 
@@ -510,6 +510,12 @@ func (f *lockedLedger) GoLive(_ context.Context, account ledger.AccountID) (kern
 }
 
 func (f *lockedLedger) Import(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return f.l.Import(ctx, txs, assertions)
+}
+
+func (f *lockedLedger) AddOpeningLots(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	return f.l.Import(ctx, txs, assertions)

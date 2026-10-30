@@ -390,6 +390,8 @@ enum TransactionKind {
   TRANSACTION_KIND_DEPOSIT = 6;
   TRANSACTION_KIND_WITHDRAWAL = 7;
   TRANSACTION_KIND_OPENING_LOT = 8;
+  // Interest paid on a holding, such as a treasury bond's coupon (D-101).
+  TRANSACTION_KIND_INTEREST = 9;
 }
 
 // Transaction is the current version of one economic event, keyed by its

@@ -1,5 +1,5 @@
 ---
-title: Event constructors book balanced postings in original currencies
+title: Each transaction constructor books its postings; interest is its own kind
 status: active
 sourceFile: internal/ledger/events_test.go
 origin:

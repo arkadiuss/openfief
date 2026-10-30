@@ -67,3 +67,29 @@ func TestNominal(t *testing.T) {
 		t.Errorf("(-want +got):\n%s", diff)
 	}
 }
+
+func TestExchangePrice(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		bondType pl.BondType
+		want     string
+	}{
+		{pl.EDO, "99.90"},
+		{pl.COI, "99.90"},
+		{pl.TOS, "99.90"},
+		{pl.ROR, "99.90"},
+		{pl.DOR, "99.90"},
+		{pl.ROS, "99.90"},
+		{pl.ROD, "99.90"},
+		// OTS exchanges at the nominal, as its issue letter sets.
+		{pl.OTS, "100"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.bondType.String(), func(t *testing.T) {
+			t.Parallel()
+			if got := pl.ExchangePrice(tt.bondType); !got.Equal(plnMoney(t, tt.want)) {
+				t.Errorf("ExchangePrice(%s) = %s, want %s PLN", tt.bondType, got, tt.want)
+			}
+		})
+	}
+}

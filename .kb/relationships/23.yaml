@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6d45ae659ad
+  - type: implements
+    from: SYM-ingestv1-bond-purchase-enum-descriptor
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:39:57.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-750aaa8927b8
+  - type: covered_by
+    from: SYM-ingestv1-bond-purchase-enum-descriptor
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:39:57.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f84d8310e8b

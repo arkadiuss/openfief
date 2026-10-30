@@ -86,12 +86,12 @@ func (e *entryCaller) ImportFile(ctx context.Context, instance string, id ingest
 }
 
 // ImportBondLots hands bond lots to instance through the client.
-func (e *entryCaller) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (ingestapp.Delivery, error) {
+func (e *entryCaller) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, entries *ingest.BondLotEntries) (ingestapp.Delivery, error) {
 	c, err := e.get()
 	if err != nil {
 		return ingestapp.Delivery{}, err
 	}
-	d, err := c.ImportBondLots(ctx, instance, id, lots)
+	d, err := c.ImportBondLots(ctx, instance, id, entries)
 	if err != nil {
 		return ingestapp.Delivery{}, fmt.Errorf("import bond lots: %w", err)
 	}

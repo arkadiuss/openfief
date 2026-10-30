@@ -202,13 +202,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7b262738053
-  - type: executable_for
-    from: SYM-treasurybonds-test-helper-row
-    to: TEST-treasurybonds-mapper
-    created_at: 2026-10-29T01:23:25.880Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e076f12660e1
   - type: implements
     from: SYM-views-kube-plugins-installed-plugins
     to: REQ-views-installed-plugins

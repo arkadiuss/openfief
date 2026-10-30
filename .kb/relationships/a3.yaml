@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57f7053739cd
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-request-get-go-live
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:05:45.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47b596e086e4
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-request-get-go-live
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:05:46.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc3147aca602

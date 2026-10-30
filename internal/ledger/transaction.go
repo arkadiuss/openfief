@@ -45,28 +45,28 @@ const (
 	// KindOpeningLot seeds a lot from a broker's current lot-level positions
 	// at go-live (D-23).
 	KindOpeningLot
+	// KindInterest records interest paid on a holding, such as a treasury
+	// bond's coupon (D-101).
+	KindInterest
+	// KindDeletion is a version that deletes its key's transaction as a
+	// correction (D-100): it supersedes the current version, which stays in
+	// the log, and records nothing, so the key has no current transaction.
+	KindDeletion
 )
+
+// lastKind is the highest valid transaction kind.
+const lastKind = KindDeletion
 
 // String returns the kind's name, such as "buy", or a placeholder for an
 // invalid kind.
 func (k TransactionKind) String() string {
-	switch k {
-	case KindBuy:
-		return "buy"
-	case KindSell:
-		return "sell"
-	case KindDividend:
-		return "dividend"
-	case KindFee:
-		return "fee"
-	case KindFXConversion:
-		return "fx-conversion"
-	case KindDeposit:
-		return "deposit"
-	case KindWithdrawal:
-		return "withdrawal"
-	case KindOpeningLot:
-		return "opening-lot"
+	names := [...]string{
+		KindBuy: "buy", KindSell: "sell", KindDividend: "dividend", KindFee: "fee",
+		KindFXConversion: "fx-conversion", KindDeposit: "deposit", KindWithdrawal: "withdrawal",
+		KindOpeningLot: "opening-lot", KindInterest: "interest", KindDeletion: "deletion",
+	}
+	if k >= KindBuy && k <= lastKind {
+		return names[k]
 	}
 	return fmt.Sprintf("TransactionKind(%d)", int(k))
 }
@@ -134,10 +134,16 @@ func (e *UnbalancedError) Error() string {
 // Validate reports whether t is well formed and balanced: it returns an error
 // wrapping ErrInvalidTransaction for a malformed transaction, and an
 // *UnbalancedError, naming the first currency in code order, when its
-// postings don't sum to zero per currency.
+// postings don't sum to zero per currency. A deletion has no postings.
 func (t *Transaction) Validate() error {
 	if err := t.validateHeader(); err != nil {
 		return err
+	}
+	if t.Kind == KindDeletion {
+		if len(t.Postings) > 0 {
+			return fmt.Errorf("%w %s: a deletion has no postings", ErrInvalidTransaction, t.Key)
+		}
+		return nil
 	}
 	if len(t.Postings) < minPostings {
 		return fmt.Errorf("%w %s: %d postings, need at least %d", ErrInvalidTransaction, t.Key, len(t.Postings), minPostings)
@@ -162,7 +168,7 @@ func (t *Transaction) validateHeader() error {
 		return fmt.Errorf("%w %s: needs a source and an external ID", ErrInvalidTransaction, t.Key)
 	case t.Account == "":
 		return fmt.Errorf("%w %s: no account", ErrInvalidTransaction, t.Key)
-	case t.Kind < KindBuy || t.Kind > KindOpeningLot:
+	case t.Kind < KindBuy || t.Kind > lastKind:
 		return fmt.Errorf("%w %s: %s", ErrInvalidTransaction, t.Key, t.Kind)
 	case t.Date.IsZero():
 		return fmt.Errorf("%w %s: no date", ErrInvalidTransaction, t.Key)

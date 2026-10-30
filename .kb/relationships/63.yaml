@@ -370,3 +370,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3425e0a9dc5
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-add-bond-lot-by-exchange
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:36:45.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a8e716ac580

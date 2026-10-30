@@ -83,3 +83,47 @@ func TestLockAccount(t *testing.T) {
 		t.Errorf("LockAccount of an unknown account (-want +got):\n%s", diff)
 	}
 }
+
+// TestBondLotsOverPostgres stores what a manually entered bond account
+// receives through the real store: opening lots one at a time, interest on
+// one of them (D-101), and the deletion of another (D-100), whose superseded
+// version stays in the log.
+func TestBondLotsOverPostgres(t *testing.T) {
+	t.Parallel()
+	store, _ := seededStore(t)
+	l := app.New(store)
+	ctx := t.Context()
+	in := instrument(t, isinA, "COI0530")
+	lot := func(opened, units string) ledger.Transaction {
+		return must(t)(ledger.NewOpeningLot(header(t, acc1, "lot:COI0530:"+opened, "2026-06-01"), in, qty(t, units), money(t, units+"00", "PLN"), date(t, opened)))
+	}
+	first, second := lot("2026-05-04", "30"), lot("2026-05-18", "10")
+	for _, tx := range []ledger.Transaction{first, second} {
+		if _, err := l.AddOpeningLots(ctx, []ledger.Transaction{tx}, nil); err != nil {
+			t.Fatalf("AddOpeningLots %s: %v", tx.Key, err)
+		}
+	}
+	coupon := must(t)(ledger.NewInterest(header(t, acc1, "coupon:COI0530:2027-05-04", "2027-05-04"), in, money(t, "186.00", "PLN"), money(t, "35.34", "PLN")))
+	gone := must(t)(ledger.NewDeletion(ledger.TransactionHeader{Key: second.Key, Account: acc1, Date: second.Date}))
+	if _, err := l.Import(ctx, []ledger.Transaction{coupon, gone}, nil); err != nil {
+		t.Fatalf("Import of the coupon and the deletion: %v", err)
+	}
+	versions, err := store.Versions(ctx, second.Key)
+	if err != nil {
+		t.Fatalf("Versions: %v", err)
+	}
+	if diff := cmp.Diff([]ledger.VersionedTransaction{versioned(&second, 1), versioned(&gone, 2)}, versions, cmpopts.EquateEmpty()); diff != "" {
+		t.Errorf("versions of the deleted lot (-want +got):\n%s", diff)
+	}
+	current, err := l.CurrentTransactions(ctx, acc1)
+	if err != nil {
+		t.Fatalf("CurrentTransactions: %v", err)
+	}
+	if diff := cmp.Diff([]ledger.Transaction{first, coupon}, current, cmpopts.EquateEmpty()); diff != "" {
+		t.Errorf("current transactions (-want +got):\n%s", diff)
+	}
+	late := must(t)(ledger.NewOpeningLot(header(t, acc1, "lot:COI0530:2026-05-25", "2026-06-02"), in, qty(t, "1"), money(t, "100", "PLN"), date(t, "2026-05-25")))
+	if _, err := l.AddOpeningLots(ctx, []ledger.Transaction{late}, nil); !errors.Is(err, ledger.ErrGoLiveMismatch) {
+		t.Errorf("AddOpeningLots off go-live: %v, want ErrGoLiveMismatch", err)
+	}
+}

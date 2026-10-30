@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98cc0a5c346e
+  - type: validates
+    from: TEST-ledger-app-seed
+    to: REQ-ledger-manual-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:01:28.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6c35e04ded
+  - type: validates
+    from: TEST-ledger-app-seed
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T05:01:28.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94834cc2c530

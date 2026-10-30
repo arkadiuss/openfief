@@ -224,6 +224,8 @@ const (
 	TransactionKind_TRANSACTION_KIND_DEPOSIT       TransactionKind = 6
 	TransactionKind_TRANSACTION_KIND_WITHDRAWAL    TransactionKind = 7
 	TransactionKind_TRANSACTION_KIND_OPENING_LOT   TransactionKind = 8
+	// Interest paid on a holding, such as a treasury bond's coupon (D-101).
+	TransactionKind_TRANSACTION_KIND_INTEREST TransactionKind = 9
 )
 
 // Enum value maps for TransactionKind.
@@ -238,6 +240,7 @@ var (
 		6: "TRANSACTION_KIND_DEPOSIT",
 		7: "TRANSACTION_KIND_WITHDRAWAL",
 		8: "TRANSACTION_KIND_OPENING_LOT",
+		9: "TRANSACTION_KIND_INTEREST",
 	}
 	TransactionKind_value = map[string]int32{
 		"TRANSACTION_KIND_UNSPECIFIED":   0,
@@ -249,6 +252,7 @@ var (
 		"TRANSACTION_KIND_DEPOSIT":       6,
 		"TRANSACTION_KIND_WITHDRAWAL":    7,
 		"TRANSACTION_KIND_OPENING_LOT":   8,
+		"TRANSACTION_KIND_INTEREST":      9,
 	}
 )
 
@@ -6066,7 +6070,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\rBOOK_KIND_FEE\x10\x03\x12\x1d\n" +
 	"\x19BOOK_KIND_WITHHOLDING_TAX\x10\x04\x12\x10\n" +
 	"\fBOOK_KIND_FX\x10\x05\x12\x14\n" +
-	"\x10BOOK_KIND_EQUITY\x10\x06*\xa6\x02\n" +
+	"\x10BOOK_KIND_EQUITY\x10\x06*\xc5\x02\n" +
 	"\x0fTransactionKind\x12 \n" +
 	"\x1cTRANSACTION_KIND_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14TRANSACTION_KIND_BUY\x10\x01\x12\x19\n" +
@@ -6076,7 +6080,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x1eTRANSACTION_KIND_FX_CONVERSION\x10\x05\x12\x1c\n" +
 	"\x18TRANSACTION_KIND_DEPOSIT\x10\x06\x12\x1f\n" +
 	"\x1bTRANSACTION_KIND_WITHDRAWAL\x10\a\x12 \n" +
-	"\x1cTRANSACTION_KIND_OPENING_LOT\x10\b*o\n" +
+	"\x1cTRANSACTION_KIND_OPENING_LOT\x10\b\x12\x1d\n" +
+	"\x19TRANSACTION_KIND_INTEREST\x10\t*o\n" +
 	"\x0fAssertionStatus\x12 \n" +
 	"\x1cASSERTION_STATUS_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18ASSERTION_STATUS_MATCHED\x10\x01\x12\x1c\n" +

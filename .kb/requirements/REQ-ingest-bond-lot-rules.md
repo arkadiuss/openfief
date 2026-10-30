@@ -1,43 +1,43 @@
 ---
-title: A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, and can be valued on its purchase date by the Polish bond rules as a cash purchase.
+title: A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, a purchase for cash at the nominal or by exchange at the exchange price, and can be valued on its purchase date by the Polish bond rules at that price.
 status: open
-text_ref: docs/DESIGN.md#D-9
+text_ref: docs/DESIGN.md#D-100
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-9
+  - provenance:docs-design-md-d-100
   - lane:strict
-semantic_text: A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, and can be valued on its purchase date by the Polish bond rules as a cash purchase.
+semantic_text: A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, a purchase for cash at the nominal or by exchange at the exchange price, and can be valued on its purchase date by the Polish bond rules at that price.
 logic_claims:
-  - CLAIM-21FAF5872FD12268
+  - CLAIM-B2DC2C0B0656E67B
 semantic_clauses:
-  - A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, and can be valued on its purchase date by the Polish bond rules as a cash purchase.
+  - A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, a purchase for cash at the nominal or by exchange at the exchange price, and can be valued on its purchase date by the Polish bond rules at that price.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: e6c75355a39378d3d3bb984c306a5b2033f85ee7825b89049d17a4e0b2ed153f
+semantic_source_hash: 685e0c53abf24107587186c21bd762c5ba2c4793a0138fa75f35ed93bad0b379
 semantic_inventory:
-  - claim_key: CLAIM-21FAF5872FD12268
-    claim_text: A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, and can be valued on its purchase date by the Polish bond rules as a cash purchase
+  - claim_key: CLAIM-B2DC2C0B0656E67B
+    claim_text: A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, a purchase for cash at the nominal or by exchange at the exchange price, and can be valued on its purchase date by the Polish bond rules at that price
     role: exception
     status: modeled
     span:
       start: 0
-      end: 211
+      end: 279
 origin:
   kind: agent
   recorded_at: '2026-10-29T01:14:12.885Z'
 id: REQ-ingest-bond-lot-rules
 type: req
 ---
-A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, and can be valued on its purchase date by the Polish bond rules as a cash purchase.
+A treasury bond lot entered by hand must be refused unless it has a purchase date no later than today, a margin of zero or more, a purchase for cash at the nominal or by exchange at the exchange price, and can be valued on its purchase date by the Polish bond rules at that price.
 
 ## Context
 
-D-9 names the fields (series, quantity, purchase date) and says valuation is computed; valuing needs the series terms too, so a lot carries them. Refusing a future date, reusing pl.ValueLot as the check, and assuming a cash purchase at the nominal are this task's narrow choices, listed for the author. Modeled by Claude Code for the manual bond lot task; the author has not reviewed it yet.
+D-9 makes manual entry the bonds' path; D-100 adds the exchange purchase at 99.90 PLN, refined here from the earlier rule that took cash purchases only. OTS keeps its letter's 100.00 PLN exchange price. Recorded by the bonds implementation agent (impl/bonds-2).
 
 ## Source
 
-> **[D-9]** M0 data paths: XTB through uploaded xStation export files; treasury bonds through manual lot entry (series, quantity, purchase date) with valuation computed; an import of the bond service's own export is added if one exists (OQ-22).
+> Manual bond lots are cash purchases at 100 PLN or exchanges of maturing bonds at 99.90 PLN, whose 0.10 PLN discount is taxed with the interest on redemption. The owner can delete a lot as a correction, which supersedes it (D-18) and erases nothing.
 
-docs/DESIGN.md#D-9
+docs/DESIGN.md#D-100

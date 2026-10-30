@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24cec6e57287
+  - type: validates
+    from: TEST-ledger-version
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T05:01:24.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3da10b2fd891

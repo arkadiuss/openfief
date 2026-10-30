@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e0682925608
+  - type: implements
+    from: SYM-ingestv1-delete-bond-lot-response-descriptor
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:42:30.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-491e6cee154a
+  - type: covered_by
+    from: SYM-ingestv1-delete-bond-lot-response-descriptor
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:42:30.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-268b93affe67

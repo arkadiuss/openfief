@@ -510,3 +510,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-656d3d770f0d
+  - type: implements
+    from: SYM-ledger-app-guard
+    to: REQ-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:14:48.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0589f18854e
+  - type: covered_by
+    from: SYM-ledger-app-guard
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-30T05:14:48.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e31db8f8f520
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-client-deletes-bond-lots
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T06:37:21.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5695dfb6da74

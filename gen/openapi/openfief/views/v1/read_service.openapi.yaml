@@ -1477,6 +1477,7 @@ components:
         - TRANSACTION_KIND_DEPOSIT
         - TRANSACTION_KIND_WITHDRAWAL
         - TRANSACTION_KIND_OPENING_LOT
+        - TRANSACTION_KIND_INTEREST
       description: TransactionKind is what kind of economic event a transaction is.
     openfief.views.v1.Transfer:
       type: object

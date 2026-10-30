@@ -405,3 +405,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b67fc5eb3fc1
+  - type: executable_for
+    from: SYM-ingest-test-bond-lot-cost-by-purchase
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-30T06:35:53.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f46393f9d14
+  - type: executable_for
+    from: SYM-pl-test-exchange-price
+    to: TEST-pl-terms
+    created_at: 2026-10-30T06:39:31.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce2d889b5d14

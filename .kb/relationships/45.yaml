@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57223c3c415d
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-request-get-deleted
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:05:55.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2011ca011588
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-request-get-deleted
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:05:55.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8315ca7a97d0

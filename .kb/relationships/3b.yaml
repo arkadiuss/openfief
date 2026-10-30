@@ -461,3 +461,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b96765792b8c
+  - type: constrains
+    from: REQ-ingest-bond-lot-delete-entry
+    to: FACT-SUBJECT-BDB16DBA9CB82400
+    created_at: 2026-10-30T06:33:43.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-235dd384176c
+  - type: requires_property
+    from: REQ-ingest-bond-lot-delete-entry
+    to: FACT-PROP-520A255349486F7A
+    created_at: 2026-10-30T06:33:43.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38bc5158fab7
+  - type: specified_by
+    from: REQ-ingest-bond-lot-delete-entry
+    to: SCEN-ingest-bond-lot-delete-entry
+    created_at: 2026-10-30T06:33:43.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac1f94aaa10c
+  - type: implements
+    from: SYM-ingestv1-delete-bond-lot-response-string
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:42:01.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c199265ea33
+  - type: covered_by
+    from: SYM-ingestv1-delete-bond-lot-response-string
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:42:01.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d7b34d1d91b

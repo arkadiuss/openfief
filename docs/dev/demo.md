@@ -246,7 +246,7 @@ k -n flux-system patch kustomization demo-openfief --type=merge -p '{"spec":{"su
 
 Flux re-applies the layer within its interval, which re-creates the Job and scales the core back to one replica. Or replace the machine: `task demo:recreate ENV=demo CONFIRM=demo` gives a fresh machine whose empty database the Job loads for the new day.
 
-**How it's tested.** `task test` runs the dataset's tests (TEST-demo-dataset): it's deterministic, every ISIN is synthetic, the IBKR statements map with only the intended skipped summary rows, the other accounts' balance assertions match, and bond coupons follow the published rates. It also runs the loader's flag and rate tests (TEST-demo-seed-unit). `task test:pg` loads the dataset end to end into a throwaway PostgreSQL (TEST-demo-seed-load). That test checks that every account has holdings valued through today with no flagged balance assertion, that a second load of the same day changes nothing, and that a database that isn't a demo is refused.
+**How it's tested.** `task test` runs the dataset's tests (TEST-demo-dataset): it's deterministic, every ISIN is synthetic, the IBKR statements map with only the intended skipped summary rows, the other accounts' balance assertions match, and bond coupons, booked as interest (D-101), follow the published rates. It also runs the loader's flag and rate tests (TEST-demo-seed-unit). `task test:pg` loads the dataset end to end into a throwaway PostgreSQL (TEST-demo-seed-load). That test checks that every account has holdings valued through today with no flagged balance assertion, that a second load of the same day changes nothing, and that a database that isn't a demo is refused.
 
 ## From the pipeline
 

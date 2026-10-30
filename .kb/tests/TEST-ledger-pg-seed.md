@@ -1,5 +1,5 @@
 ---
-title: Concurrent seedings over PostgreSQL seed an account once
+title: Seeding, opening lots one at a time, interest and deletion on real PostgreSQL
 status: active
 sourceFile: internal/ledger/postgres/seed_test.go
 origin:

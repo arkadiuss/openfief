@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3308e93506d7
+  - type: executable_for
+    from: SYM-ui-test-delete-bond-lot
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-30T07:39:16.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a7ab944c038

@@ -447,3 +447,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-981fc60bb3af
+  - type: implements
+    from: SYM-ingestv1-bond-purchase-type
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:43:33.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53417742a3ee
+  - type: covered_by
+    from: SYM-ingestv1-bond-purchase-type
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:43:33.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a505ff8a8403
+  - type: executable_for
+    from: SYM-core-test-helper-check-bond-lot-deleted
+    to: TEST-core-bond-lots
+    created_at: 2026-10-30T06:45:03.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64ff29247e1d

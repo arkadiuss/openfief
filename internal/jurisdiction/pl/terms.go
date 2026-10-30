@@ -106,3 +106,16 @@ func (t *Terms) validate() error {
 	}
 	return nil
 }
+
+// ExchangePrice returns the price per bond of type t bought by exchange
+// (zamiana) of maturing bonds: 99.90 PLN (D-100; "Cena zamiany jednej
+// obligacji wynosi 99,90 zł", issue letters of ROR, DOR, TOS, COI, EDO, ROS
+// and ROD), except OTS, whose letter sets 100.00 PLN. The discount below
+// the nominal is taxed with the interest on redemption.
+func ExchangePrice(t BondType) kernel.Money {
+	if t == OTS {
+		return Nominal()
+	}
+	const exchangeGrosze = 9990
+	return kernel.NewMoney(kernel.NewDecimal(exchangeGrosze, -grosze), pln())
+}

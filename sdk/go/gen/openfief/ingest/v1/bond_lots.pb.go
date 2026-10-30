@@ -25,6 +25,8 @@
 //   doesn't match the series or lies in the future, a quantity that is not
 //   a positive whole number, malformed terms) fails with INVALID_ARGUMENT
 //   naming the rule, and nothing is imported.
+// - Deleting a lot that was never entered fails with INVALID_ARGUMENT, and
+//   nothing is imported.
 // - An account with no connector instance bound to it, or with more than
 //   one, fails with FAILED_PRECONDITION; so does a bound connector that
 //   takes no bond lots. A connector that can't be reached fails with
@@ -53,10 +55,64 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// BondPurchase is how the bonds of a lot were bought (D-100).
+type BondPurchase int32
+
+const (
+	// Not given: a cash purchase.
+	BondPurchase_BOND_PURCHASE_UNSPECIFIED BondPurchase = 0
+	// For cash at the nominal, 100 PLN per bond.
+	BondPurchase_BOND_PURCHASE_CASH BondPurchase = 1
+	// By exchange (zamiana) of maturing bonds at the series' exchange price,
+	// 99.90 PLN per bond; the discount is taxed with the interest.
+	BondPurchase_BOND_PURCHASE_EXCHANGE BondPurchase = 2
+)
+
+// Enum value maps for BondPurchase.
+var (
+	BondPurchase_name = map[int32]string{
+		0: "BOND_PURCHASE_UNSPECIFIED",
+		1: "BOND_PURCHASE_CASH",
+		2: "BOND_PURCHASE_EXCHANGE",
+	}
+	BondPurchase_value = map[string]int32{
+		"BOND_PURCHASE_UNSPECIFIED": 0,
+		"BOND_PURCHASE_CASH":        1,
+		"BOND_PURCHASE_EXCHANGE":    2,
+	}
+)
+
+func (x BondPurchase) Enum() *BondPurchase {
+	p := new(BondPurchase)
+	*p = x
+	return p
+}
+
+func (x BondPurchase) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (BondPurchase) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_ingest_v1_bond_lots_proto_enumTypes[0].Descriptor()
+}
+
+func (BondPurchase) Type() protoreflect.EnumType {
+	return &file_openfief_ingest_v1_bond_lots_proto_enumTypes[0]
+}
+
+func (x BondPurchase) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use BondPurchase.Descriptor instead.
+func (BondPurchase) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_bond_lots_proto_rawDescGZIP(), []int{0}
+}
+
 // BondLot is one lot as the owner enters it: what D-9 names (series,
 // quantity, purchase date), plus the series' terms from its issue letter,
-// which valuing it needs. The bonds were bought for cash at the nominal,
-// 100 PLN each.
+// which valuing it needs, and how the bonds were bought: for cash at the
+// nominal, 100 PLN each, or by exchange at 99.90 PLN each (D-100).
 type BondLot struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The series code, such as "EDO0536".
@@ -74,8 +130,10 @@ type BondLot struct {
 	// The series' early-redemption fee per bond in PLN, as a decimal string,
 	// such as "2.00".
 	EarlyRedemptionFeePln string `protobuf:"bytes,6,opt,name=early_redemption_fee_pln,json=earlyRedemptionFeePln,proto3" json:"early_redemption_fee_pln,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	// How the bonds were bought; unspecified is a cash purchase.
+	Purchase      BondPurchase `protobuf:"varint,7,opt,name=purchase,proto3,enum=openfief.ingest.v1.BondPurchase" json:"purchase,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *BondLot) Reset() {
@@ -148,6 +206,13 @@ func (x *BondLot) GetEarlyRedemptionFeePln() string {
 		return x.EarlyRedemptionFeePln
 	}
 	return ""
+}
+
+func (x *BondLot) GetPurchase() BondPurchase {
+	if x != nil {
+		return x.Purchase
+	}
+	return BondPurchase_BOND_PURCHASE_UNSPECIFIED
 }
 
 type AddBondLotRequest struct {
@@ -290,18 +355,161 @@ func (x *AddBondLotResponse) GetUnchanged() int32 {
 	return 0
 }
 
+type DeleteBondLotRequest struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	// The OpenFief account the lot is in.
+	AccountId string `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	// The lot's series code, such as "EDO0536".
+	Series string `protobuf:"bytes,4,opt,name=series,proto3" json:"series,omitempty"`
+	// The day the lot's bonds were bought, "YYYY-MM-DD".
+	PurchaseDate  string `protobuf:"bytes,5,opt,name=purchase_date,json=purchaseDate,proto3" json:"purchase_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteBondLotRequest) Reset() {
+	*x = DeleteBondLotRequest{}
+	mi := &file_openfief_ingest_v1_bond_lots_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteBondLotRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteBondLotRequest) ProtoMessage() {}
+
+func (x *DeleteBondLotRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_bond_lots_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteBondLotRequest.ProtoReflect.Descriptor instead.
+func (*DeleteBondLotRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_bond_lots_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *DeleteBondLotRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *DeleteBondLotRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *DeleteBondLotRequest) GetAccountId() string {
+	if x != nil {
+		return x.AccountId
+	}
+	return ""
+}
+
+func (x *DeleteBondLotRequest) GetSeries() string {
+	if x != nil {
+		return x.Series
+	}
+	return ""
+}
+
+func (x *DeleteBondLotRequest) GetPurchaseDate() string {
+	if x != nil {
+		return x.PurchaseDate
+	}
+	return ""
+}
+
+type DeleteBondLotResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The import batch the deletion came in by.
+	BatchId string `protobuf:"bytes,1,opt,name=batch_id,json=batchId,proto3" json:"batch_id,omitempty"`
+	// How many of the lot's transactions were deleted now, or had been
+	// deleted before.
+	NewVersions   int32 `protobuf:"varint,2,opt,name=new_versions,json=newVersions,proto3" json:"new_versions,omitempty"`
+	Unchanged     int32 `protobuf:"varint,3,opt,name=unchanged,proto3" json:"unchanged,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteBondLotResponse) Reset() {
+	*x = DeleteBondLotResponse{}
+	mi := &file_openfief_ingest_v1_bond_lots_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteBondLotResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteBondLotResponse) ProtoMessage() {}
+
+func (x *DeleteBondLotResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_bond_lots_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteBondLotResponse.ProtoReflect.Descriptor instead.
+func (*DeleteBondLotResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_bond_lots_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *DeleteBondLotResponse) GetBatchId() string {
+	if x != nil {
+		return x.BatchId
+	}
+	return ""
+}
+
+func (x *DeleteBondLotResponse) GetNewVersions() int32 {
+	if x != nil {
+		return x.NewVersions
+	}
+	return 0
+}
+
+func (x *DeleteBondLotResponse) GetUnchanged() int32 {
+	if x != nil {
+		return x.Unchanged
+	}
+	return 0
+}
+
 var File_openfief_ingest_v1_bond_lots_proto protoreflect.FileDescriptor
 
 const file_openfief_ingest_v1_bond_lots_proto_rawDesc = "" +
 	"\n" +
-	"\"openfief/ingest/v1/bond_lots.proto\x12\x12openfief.ingest.v1\"\xfd\x01\n" +
+	"\"openfief/ingest/v1/bond_lots.proto\x12\x12openfief.ingest.v1\"\xbb\x02\n" +
 	"\aBondLot\x12\x16\n" +
 	"\x06series\x18\x01 \x01(\tR\x06series\x12\x1a\n" +
 	"\bquantity\x18\x02 \x01(\tR\bquantity\x12#\n" +
 	"\rpurchase_date\x18\x03 \x01(\tR\fpurchaseDate\x129\n" +
 	"\x19first_period_rate_percent\x18\x04 \x01(\tR\x16firstPeriodRatePercent\x12%\n" +
 	"\x0emargin_percent\x18\x05 \x01(\tR\rmarginPercent\x127\n" +
-	"\x18early_redemption_fee_pln\x18\x06 \x01(\tR\x15earlyRedemptionFeePln\"\x9e\x01\n" +
+	"\x18early_redemption_fee_pln\x18\x06 \x01(\tR\x15earlyRedemptionFeePln\x12<\n" +
+	"\bpurchase\x18\a \x01(\x0e2 .openfief.ingest.v1.BondPurchaseR\bpurchase\"\x9e\x01\n" +
 	"\x11AddBondLotRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
@@ -312,10 +520,26 @@ const file_openfief_ingest_v1_bond_lots_proto_rawDesc = "" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12\x10\n" +
 	"\x03new\x18\x02 \x01(\x05R\x03new\x12!\n" +
 	"\fnew_versions\x18\x03 \x01(\x05R\vnewVersions\x12\x1c\n" +
-	"\tunchanged\x18\x04 \x01(\x05R\tunchanged2m\n" +
+	"\tunchanged\x18\x04 \x01(\x05R\tunchanged\"\xaf\x01\n" +
+	"\x14DeleteBondLotRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x03 \x01(\tR\taccountId\x12\x16\n" +
+	"\x06series\x18\x04 \x01(\tR\x06series\x12#\n" +
+	"\rpurchase_date\x18\x05 \x01(\tR\fpurchaseDate\"s\n" +
+	"\x15DeleteBondLotResponse\x12\x19\n" +
+	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12!\n" +
+	"\fnew_versions\x18\x02 \x01(\x05R\vnewVersions\x12\x1c\n" +
+	"\tunchanged\x18\x03 \x01(\x05R\tunchanged*a\n" +
+	"\fBondPurchase\x12\x1d\n" +
+	"\x19BOND_PURCHASE_UNSPECIFIED\x10\x00\x12\x16\n" +
+	"\x12BOND_PURCHASE_CASH\x10\x01\x12\x1a\n" +
+	"\x16BOND_PURCHASE_EXCHANGE\x10\x022\xd3\x01\n" +
 	"\x0eBondLotService\x12[\n" +
 	"\n" +
-	"AddBondLot\x12%.openfief.ingest.v1.AddBondLotRequest\x1a&.openfief.ingest.v1.AddBondLotResponseB\xd7\x01\n" +
+	"AddBondLot\x12%.openfief.ingest.v1.AddBondLotRequest\x1a&.openfief.ingest.v1.AddBondLotResponse\x12d\n" +
+	"\rDeleteBondLot\x12(.openfief.ingest.v1.DeleteBondLotRequest\x1a).openfief.ingest.v1.DeleteBondLotResponseB\xd7\x01\n" +
 	"\x16com.openfief.ingest.v1B\rBondLotsProtoP\x01ZDgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1;ingestv1\xa2\x02\x03OIX\xaa\x02\x12Openfief.Ingest.V1\xca\x02\x12Openfief\\Ingest\\V1\xe2\x02\x1eOpenfief\\Ingest\\V1\\GPBMetadata\xea\x02\x14Openfief::Ingest::V1b\x06proto3"
 
 var (
@@ -330,21 +554,28 @@ func file_openfief_ingest_v1_bond_lots_proto_rawDescGZIP() []byte {
 	return file_openfief_ingest_v1_bond_lots_proto_rawDescData
 }
 
-var file_openfief_ingest_v1_bond_lots_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_openfief_ingest_v1_bond_lots_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_openfief_ingest_v1_bond_lots_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_openfief_ingest_v1_bond_lots_proto_goTypes = []any{
-	(*BondLot)(nil),            // 0: openfief.ingest.v1.BondLot
-	(*AddBondLotRequest)(nil),  // 1: openfief.ingest.v1.AddBondLotRequest
-	(*AddBondLotResponse)(nil), // 2: openfief.ingest.v1.AddBondLotResponse
+	(BondPurchase)(0),             // 0: openfief.ingest.v1.BondPurchase
+	(*BondLot)(nil),               // 1: openfief.ingest.v1.BondLot
+	(*AddBondLotRequest)(nil),     // 2: openfief.ingest.v1.AddBondLotRequest
+	(*AddBondLotResponse)(nil),    // 3: openfief.ingest.v1.AddBondLotResponse
+	(*DeleteBondLotRequest)(nil),  // 4: openfief.ingest.v1.DeleteBondLotRequest
+	(*DeleteBondLotResponse)(nil), // 5: openfief.ingest.v1.DeleteBondLotResponse
 }
 var file_openfief_ingest_v1_bond_lots_proto_depIdxs = []int32{
-	0, // 0: openfief.ingest.v1.AddBondLotRequest.lot:type_name -> openfief.ingest.v1.BondLot
-	1, // 1: openfief.ingest.v1.BondLotService.AddBondLot:input_type -> openfief.ingest.v1.AddBondLotRequest
-	2, // 2: openfief.ingest.v1.BondLotService.AddBondLot:output_type -> openfief.ingest.v1.AddBondLotResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 0: openfief.ingest.v1.BondLot.purchase:type_name -> openfief.ingest.v1.BondPurchase
+	1, // 1: openfief.ingest.v1.AddBondLotRequest.lot:type_name -> openfief.ingest.v1.BondLot
+	2, // 2: openfief.ingest.v1.BondLotService.AddBondLot:input_type -> openfief.ingest.v1.AddBondLotRequest
+	4, // 3: openfief.ingest.v1.BondLotService.DeleteBondLot:input_type -> openfief.ingest.v1.DeleteBondLotRequest
+	3, // 4: openfief.ingest.v1.BondLotService.AddBondLot:output_type -> openfief.ingest.v1.AddBondLotResponse
+	5, // 5: openfief.ingest.v1.BondLotService.DeleteBondLot:output_type -> openfief.ingest.v1.DeleteBondLotResponse
+	4, // [4:6] is the sub-list for method output_type
+	2, // [2:4] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_openfief_ingest_v1_bond_lots_proto_init() }
@@ -357,13 +588,14 @@ func file_openfief_ingest_v1_bond_lots_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_ingest_v1_bond_lots_proto_rawDesc), len(file_openfief_ingest_v1_bond_lots_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   3,
+			NumEnums:      1,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_openfief_ingest_v1_bond_lots_proto_goTypes,
 		DependencyIndexes: file_openfief_ingest_v1_bond_lots_proto_depIdxs,
+		EnumInfos:         file_openfief_ingest_v1_bond_lots_proto_enumTypes,
 		MessageInfos:      file_openfief_ingest_v1_bond_lots_proto_msgTypes,
 	}.Build()
 	File_openfief_ingest_v1_bond_lots_proto = out.File

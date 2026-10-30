@@ -254,25 +254,26 @@ func bookKind(k ledger.BookKind) (connectorv1.BookKind, error) {
 	return 0, fmt.Errorf("%w: ledger account kind %d", ErrUnknownValue, k)
 }
 
+// transactionKinds returns a map of every ledger transaction kind to the contract's.
+func transactionKinds() map[ledger.TransactionKind]connectorv1.TransactionKind {
+	return map[ledger.TransactionKind]connectorv1.TransactionKind{
+		ledger.KindBuy:          connectorv1.TransactionKind_TRANSACTION_KIND_BUY,
+		ledger.KindSell:         connectorv1.TransactionKind_TRANSACTION_KIND_SELL,
+		ledger.KindDividend:     connectorv1.TransactionKind_TRANSACTION_KIND_DIVIDEND,
+		ledger.KindFee:          connectorv1.TransactionKind_TRANSACTION_KIND_FEE,
+		ledger.KindFXConversion: connectorv1.TransactionKind_TRANSACTION_KIND_FX_CONVERSION,
+		ledger.KindDeposit:      connectorv1.TransactionKind_TRANSACTION_KIND_DEPOSIT,
+		ledger.KindWithdrawal:   connectorv1.TransactionKind_TRANSACTION_KIND_WITHDRAWAL,
+		ledger.KindOpeningLot:   connectorv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT,
+		ledger.KindInterest:     connectorv1.TransactionKind_TRANSACTION_KIND_INTEREST,
+		ledger.KindDeletion:     connectorv1.TransactionKind_TRANSACTION_KIND_DELETION,
+	}
+}
+
 // transactionKind writes a transaction kind.
 func transactionKind(k ledger.TransactionKind) (connectorv1.TransactionKind, error) {
-	switch k {
-	case ledger.KindBuy:
-		return connectorv1.TransactionKind_TRANSACTION_KIND_BUY, nil
-	case ledger.KindSell:
-		return connectorv1.TransactionKind_TRANSACTION_KIND_SELL, nil
-	case ledger.KindDividend:
-		return connectorv1.TransactionKind_TRANSACTION_KIND_DIVIDEND, nil
-	case ledger.KindFee:
-		return connectorv1.TransactionKind_TRANSACTION_KIND_FEE, nil
-	case ledger.KindFXConversion:
-		return connectorv1.TransactionKind_TRANSACTION_KIND_FX_CONVERSION, nil
-	case ledger.KindDeposit:
-		return connectorv1.TransactionKind_TRANSACTION_KIND_DEPOSIT, nil
-	case ledger.KindWithdrawal:
-		return connectorv1.TransactionKind_TRANSACTION_KIND_WITHDRAWAL, nil
-	case ledger.KindOpeningLot:
-		return connectorv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT, nil
+	if kind, ok := transactionKinds()[k]; ok {
+		return kind, nil
 	}
 	return 0, fmt.Errorf("%w: transaction kind %d", ErrUnknownValue, k)
 }

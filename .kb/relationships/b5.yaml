@@ -545,41 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96053e570fc5
-  - type: validates
-    from: TEST-core-front-door
-    to: REQ-core-only-browser-entry-point
-    created_at: 2026-10-29T20:58:01.729Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b76d44356455
-  - type: validates
-    from: TEST-core-front-door
-    to: REQ-core-browser-port-scope
-    created_at: 2026-10-29T20:58:01.786Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1c68ffecac25
-  - type: validates
-    from: TEST-core-front-door
-    to: REQ-core-plugin-port-scope
-    created_at: 2026-10-29T20:58:01.832Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-661c3ae983d6
-  - type: implements
-    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-reset
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:11:19.908Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7f9ed3d274ac
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-reset
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:11:19.995Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-be95d61456f5
   - type: constrains
     from: REQ-views-yearly-taxes
     to: FACT-SUBJECT-06519DD16C4DF2F5
@@ -615,6 +580,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9b81dfcc907
+  - type: validates
+    from: TEST-core-front-door
+    to: REQ-core-only-browser-entry-point
+    created_at: 2026-10-29T20:58:01.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b76d44356455
+  - type: validates
+    from: TEST-core-front-door
+    to: REQ-core-browser-port-scope
+    created_at: 2026-10-29T20:58:01.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c68ffecac25
+  - type: validates
+    from: TEST-core-front-door
+    to: REQ-core-plugin-port-scope
+    created_at: 2026-10-29T20:58:01.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-661c3ae983d6
   - type: implements
     from: SYM-ui-as-of-date
     to: REQ-ui-overview-values
@@ -622,3 +608,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-140e21ab5634
+  - type: executable_for
+    from: SYM-delivery-test-bond-lot-entries
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-30T06:37:57.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2df5d9e0c214
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-reset
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:11:19.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f9ed3d274ac
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-reset
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:11:19.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be95d61456f5

@@ -228,6 +228,15 @@ func (i importer) Import(ctx context.Context, txs []ledger.Transaction, assertio
 	return summary(&sum), nil
 }
 
+// AddOpeningLots adds opening lots one at a time through the ledger.
+func (i importer) AddOpeningLots(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
+	sum, err := i.ledger.AddOpeningLots(ctx, txs, assertions)
+	if err != nil {
+		return ingest.ImportSummary{}, fmt.Errorf("ledger: %w", err)
+	}
+	return summary(&sum), nil
+}
+
 // Seed seeds through the ledger.
 func (i importer) Seed(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
 	sum, err := i.ledger.Seed(ctx, txs, assertions)

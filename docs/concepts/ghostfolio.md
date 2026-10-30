@@ -63,12 +63,13 @@ Every step is safe to repeat: accounts are created with the same UUIDs, an activ
 | Buy, opening lot | `BUY` of the holding posting's quantity at its amount divided by the quantity; an opening lot is dated when the lot was first acquired |
 | Sell | `SELL` at the proceeds divided by the quantity |
 | Dividend | `DIVIDEND` of quantity 1 at the gross amount, the tax withheld as its fee (D-108) |
+| Interest, such as a bond's coupon (D-101) | `INTEREST`, shaped like a `DIVIDEND` |
 | Fee | `FEE` against the fee asset of its currency (D-108) |
 | FX conversion, deposit, withdrawal | none: they move only cash, which the balance follows |
 
 Fees of a buy or sell in the activity's currency are its fee; a fee or withheld tax in another currency becomes a `FEE` of its own, commented `#fee:` and the currency after the transaction's comment. A treasury bond (an instrument the read API classes as `treasury_bond`) is a `MANUAL` asset: its symbol is `BondSymbol`, a UUID derived from the instance's name, the Ghostfolio user's ID and the series code, and its name the code, and every sync sends its whole price history, each stored valuation divided by the quantity held at the end of that day (D-64). A fee asset is a `MANUAL` asset per currency named "OpenFief fees" and the currency, `FeeSymbol` of the instance, the user and the currency (D-108). Symbols are unique across Ghostfolio's users, so keying them by the instance alone would still collide between two installs whose instances share a name ([implementation question 13](../implementation-questions.md#ghostfolio-view)). A listed instrument takes Ghostfolio's data source and symbol, such as `YAHOO` and its ticker, from the owner's listings by ISIN (D-108); an instrument with no listing is left out as a `ProblemUnlisted`, and the rest is still synced.
 
-The record's ledger has no interest kind in the read API yet (D-101 adds one), so no transaction becomes an `INTEREST` activity; a bond's coupon, booked as a dividend until then, is a `DIVIDEND`.
+Interest, such as a bond's coupon (D-101), becomes an `INTEREST` activity, shaped like a `DIVIDEND`: quantity 1 at the gross amount, with the tax withheld as its fee.
 
 ### The cash balance
 
