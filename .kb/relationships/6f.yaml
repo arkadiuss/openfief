@@ -475,3 +475,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a8394a5bf50
+  - type: implements
+    from: SYM-viewsv1-lot-get-no-longer-updated
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:31:54.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b4fbc64b302
+  - type: covered_by
+    from: SYM-viewsv1-lot-get-no-longer-updated
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:31:54.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18aa4753af82

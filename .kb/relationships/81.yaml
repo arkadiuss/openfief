@@ -328,3 +328,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c343c3547b3b
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-proto-message
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:07.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe0174ea03f
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-proto-message
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:08.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa603c77680

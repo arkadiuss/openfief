@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-abdce2e61dd8
+  - type: implements
+    from: SYM-views-unvalued
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:17:10.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ee2d59fd547
+  - type: implements
+    from: SYM-views-unvalued
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:17:10.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-834859fc858a
+  - type: covered_by
+    from: SYM-views-unvalued
+    to: TEST-views-values
+    created_at: 2026-10-30T01:17:10.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74faa3790b97

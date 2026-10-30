@@ -370,3 +370,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-407d650c4078
+  - type: implements
+    from: SYM-views-app-views-cash-items
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:20:50.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e50ce2c9810
+  - type: implements
+    from: SYM-views-app-views-cash-items
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:20:50.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2ef43724d06
+  - type: covered_by
+    from: SYM-views-app-views-cash-items
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:50.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e104195db0
+  - type: implements
+    from: SYM-viewsv1-number-format-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:52.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8785ee53c39f
+  - type: covered_by
+    from: SYM-viewsv1-number-format-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:52.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a43a9ad5aa79

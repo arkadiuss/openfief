@@ -545,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d0a5c782801
+  - type: implements
+    from: SYM-viewsv1-account-get-tax-wrapper
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:27:18.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92b901e1098c
+  - type: covered_by
+    from: SYM-viewsv1-account-get-tax-wrapper
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:27:18.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e2655b21473

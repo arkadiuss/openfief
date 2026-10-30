@@ -468,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88e7e2328af5
+  - type: implements
+    from: SYM-views-cash-value
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:25:05.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f86b09495402
+  - type: implements
+    from: SYM-views-cash-value
+    to: REQ-pl-ikze-liquidation-missing
+    created_at: 2026-10-30T01:25:05.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82264b9e70ed
+  - type: covered_by
+    from: SYM-views-cash-value
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:05.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9bec4a885d3

@@ -92177,3 +92177,2285 @@ symbols:
         target: TEST-core-settings
       - type: implements
         target: REQ-valuation-settings-service
+  - id: SYM-views-unvalued
+    title: Unvalued
+    sourceFile: internal/views/allocation.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:17:06.224Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-app-terms
+    title: Terms
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:17:15.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-app-with-jurisdiction
+    title: WithJurisdiction
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:17:24.700Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-app-account-terms
+    title: AccountTerms
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:17:32.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-app-views-account-terms
+    title: Views.AccountTerms
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:17:39.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-ledger-account-tax-wrapper
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-app-settings
+    title: Settings
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:17:46.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-views-settings
+  - id: SYM-views-app-default-number-format
+    title: defaultNumberFormat
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:17:54.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-settings
+  - id: SYM-views-app-views-settings
+    title: Views.Settings
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:01.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-views-settings
+  - id: SYM-views-app-views-cash-days
+    title: Views.cashDays
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:07.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-app-views-cash-values
+    title: Views.cashValues
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:14.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-app-views-value-settings
+    title: Views.valueSettings
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:21.899Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-app-views-yearly-taxes
+    title: Views.YearlyTaxes
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:29.386Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-pl-oki-yearly-tax
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-app-views-wrapper-balances
+    title: Views.wrapperBalances
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:36.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-pl-oki-yearly-tax
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-app-views-accounts-in
+    title: Views.accountsIn
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:43.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-app-views-totals
+    title: Views.totals
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:51.056Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-app-marked-holdings
+    title: MarkedHoldings
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:18:58.137Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-holdings-lots
+  - id: SYM-views-app-marked-lots
+    title: MarkedLots
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:06.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-holdings-lots
+  - id: SYM-views-app-views-mark-holdings
+    title: Views.markHoldings
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:13.029Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-mark-at-read
+  - id: SYM-views-app-views-mark-lots
+    title: Views.markLots
+    sourceFile: internal/views/app/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:19.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-mark-at-read
+  - id: SYM-views-app-test-helper-fake-terms
+    title: fakeTerms
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:25.414Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-helper-fake-terms-tax-wrapper
+    title: fakeTerms.TaxWrapper
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:32.400Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-helper-fake-terms-fee-rule
+    title: fakeTerms.FeeRule
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:38.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-helper-fake-terms-value-settings
+    title: fakeTerms.ValueSettings
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:45.460Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-helper-fake-terms-number-format
+    title: fakeTerms.NumberFormat
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:51.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-helper-values-views
+    title: valuesViews
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:19:58.655Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-helper-ikze-terms
+    title: ikzeTerms
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:04.886Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-account-terms
+    title: TestAccountTerms
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:11.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-settings
+    title: TestSettings
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:17.751Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-totals-with-ikze-cash
+    title: TestTotalsWithIKZECash
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:23.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-allocation-of-a-kind
+    title: TestAllocationOfAKind
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:30.217Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-yearly-taxes
+    title: TestYearlyTaxes
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:36.439Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-holdings-and-lots-mark-removed-instances
+    title: TestHoldingsAndLotsMarkRemovedInstances
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:42.519Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-views-cash-items
+    title: Views.cashItems
+    sourceFile: internal/views/app/views.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:48.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-connectapi-pb-fee-rule
+    title: pbFeeRule
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:20:54.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-connectapi-test-helper-fake-terms
+    title: fakeTerms
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:00.052Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-helper-fake-terms-tax-wrapper
+    title: fakeTerms.TaxWrapper
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:06.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-helper-fake-terms-fee-rule
+    title: fakeTerms.FeeRule
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:13.211Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-helper-fake-terms-value-settings
+    title: fakeTerms.ValueSettings
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:19.996Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-helper-fake-terms-number-format
+    title: fakeTerms.NumberFormat
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:27.221Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-read-service-get-settings
+    title: readService.GetSettings
+    sourceFile: internal/views/connectapi/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:34.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-connectapi-read-service-list-yearly-taxes
+    title: readService.ListYearlyTaxes
+    sourceFile: internal/views/connectapi/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:41.700Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-connectapi-pb-number-format
+    title: pbNumberFormat
+    sourceFile: internal/views/connectapi/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:49.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-connectapi-pb-yearly-tax
+    title: pbYearlyTax
+    sourceFile: internal/views/connectapi/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:21:56.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-connectapi-clamp-int32
+    title: clampInt32
+    sourceFile: internal/views/connectapi/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:22:03.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-connectapi-value-kind
+    title: valueKind
+    sourceFile: internal/views/connectapi/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:22:10.606Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-views-connectapi-test-helper-get-json
+    title: getJSON
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:22:17.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-helper-rest-money
+    title: restMoney
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:22:24.685Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-settings-over-rest
+    title: TestSettingsOverREST
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:22:31.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-helper-account-values-json
+    title: accountValuesJSON
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:22:39.308Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-values-over-rest
+    title: TestValuesOverREST
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:22:46.308Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-yearly-taxes-over-rest
+    title: TestYearlyTaxesOverREST
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:22:53.557Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-allocation-of-a-kind-over-rest
+    title: TestAllocationOfAKindOverREST
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:00.780Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-rest-holdings-and-lots-marked
+    title: TestRESTHoldingsAndLotsMarked
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:07.904Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-helper-marked
+    title: marked
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:15.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-removed-behind-holdings
+    title: RemovedBehindHoldings
+    sourceFile: internal/views/stale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:21.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-stale
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-holdings-lots
+  - id: SYM-views-removed-behind-lots
+    title: RemovedBehindLots
+    sourceFile: internal/views/stale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:27.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-stale
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-holdings-lots
+  - id: SYM-views-opened-lots
+    title: openedLots
+    sourceFile: internal/views/stale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:33.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-stale
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-holdings-lots
+  - id: SYM-views-consume-lots
+    title: consumeLots
+    sourceFile: internal/views/stale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:39.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-stale
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-holdings-lots
+  - id: SYM-views-mark-consumed
+    title: markConsumed
+    sourceFile: internal/views/stale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:45.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-stale
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-holdings-lots
+  - id: SYM-views-add-name
+    title: addName
+    sourceFile: internal/views/stale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:51.445Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-stale
+      - type: implements
+        target: REQ-views-holdings-lots-mark
+      - type: implements
+        target: REQ-views-removed-instance-holdings-lots
+  - id: SYM-views-test-helper-stale-log
+    title: staleLog
+    sourceFile: internal/views/stale_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:23:57.665Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-stale
+  - id: SYM-views-test-removed-behind-holdings
+    title: TestRemovedBehindHoldings
+    sourceFile: internal/views/stale_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:03.283Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-stale
+  - id: SYM-views-test-removed-behind-lots
+    title: TestRemovedBehindLots
+    sourceFile: internal/views/stale_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:09.407Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-stale
+  - id: SYM-views-day-total
+    title: dayTotal
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:15.248Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-day-total-add-holding
+    title: dayTotal.addHolding
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:22.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-day-total-add-cash
+    title: dayTotal.addCash
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:29.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-day-total-add
+    title: dayTotal.add
+    sourceFile: internal/views/valuation.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:36.935Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-value-kind
+    title: ValueKind
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:43.055Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-value-kind-string
+    title: ValueKind.String
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:49.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-holding-value
+    title: HoldingValue
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:24:56.750Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-three-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-cash-value
+    title: CashValue
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:03.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-pl-ikze-liquidation-missing
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-views-day-cash
+    title: DayCash
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:10.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-cash-balance
+    title: CashBalance
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:17.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-cash-on-days
+    title: CashOnDays
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:24.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-add-cash
+    title: addCash
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:30.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-non-zero-cash
+    title: nonZeroCash
+    sourceFile: internal/views/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:37.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-values
+      - type: implements
+        target: REQ-valuation-totals-include-cash
+      - type: implements
+        target: REQ-views-totals-with-cash
+  - id: SYM-views-test-value-kind-names
+    title: TestValueKindNames
+    sourceFile: internal/views/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:44.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-values
+  - id: SYM-views-test-helper-ikze-row
+    title: ikzeRow
+    sourceFile: internal/views/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:50.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-values
+  - id: SYM-views-test-holding-value
+    title: TestHoldingValue
+    sourceFile: internal/views/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:56.927Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-values
+  - id: SYM-views-test-cash-value
+    title: TestCashValue
+    sourceFile: internal/views/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:02.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-values
+  - id: SYM-views-test-totals-by-date-with-cash
+    title: TestTotalsByDateWithCash
+    sourceFile: internal/views/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:08.684Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-values
+  - id: SYM-views-test-cash-on-days
+    title: TestCashOnDays
+    sourceFile: internal/views/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:14.445Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-values
+  - id: SYM-views-test-value-holdings-of-a-kind
+    title: TestValueHoldingsOfAKind
+    sourceFile: internal/views/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:20.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-values
+  - id: SYM-viewsv1-value-kind
+    title: ValueKind
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:25.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-value-kind-enum
+    title: ValueKind.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:32.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-value-kind-string
+    title: ValueKind.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:39.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-value-kind-descriptor
+    title: ValueKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:46.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-value-kind-type
+    title: ValueKind.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:54.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-value-kind-number
+    title: ValueKind.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:01.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-value-kind-enum-descriptor
+    title: ValueKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:09.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-account-get-tax-wrapper
+    title: Account.GetTaxWrapper
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:17.013Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-account-get-fee-rule
+    title: Account.GetFeeRule
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:23.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule
+    title: FeeRule
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:30.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule-reset
+    title: FeeRule.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:37.317Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule-string
+    title: FeeRule.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:44.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule-proto-message
+    title: FeeRule.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:52.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule-proto-reflect
+    title: FeeRule.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:59.899Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule-descriptor
+    title: FeeRule.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:07.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule-get-rate
+    title: FeeRule.GetRate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:15.048Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule-get-minimum
+    title: FeeRule.GetMinimum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:22.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-fee-rule-get-conversion-rate
+    title: FeeRule.GetConversionRate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:29.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format
+    title: NumberFormat
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:35.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format-reset
+    title: NumberFormat.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:43.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format-string
+    title: NumberFormat.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:50.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format-proto-message
+    title: NumberFormat.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:58.934Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format-proto-reflect
+    title: NumberFormat.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:06.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format-descriptor
+    title: NumberFormat.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:14.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format-get-key
+    title: NumberFormat.GetKey
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:21.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format-get-group-separator
+    title: NumberFormat.GetGroupSeparator
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:28.306Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-number-format-get-decimal-separator
+    title: NumberFormat.GetDecimalSeparator
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:36.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax
+    title: YearlyTax
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:42.340Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-reset
+    title: YearlyTax.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:49.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-string
+    title: YearlyTax.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:58.066Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-proto-message
+    title: YearlyTax.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:30:05.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-proto-reflect
+    title: YearlyTax.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:30:13.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-descriptor
+    title: YearlyTax.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:30:21.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-tax-wrapper
+    title: YearlyTax.GetTaxWrapper
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:30:28.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-year
+    title: YearlyTax.GetYear
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:30:36.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-in-force
+    title: YearlyTax.GetInForce
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:30:44.015Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-days
+    title: YearlyTax.GetDays
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:30:52.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-average
+    title: YearlyTax.GetAverage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:30:59.916Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-limit
+    title: YearlyTax.GetLimit
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:31:07.041Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-rate
+    title: YearlyTax.GetRate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:31:14.655Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-excess
+    title: YearlyTax.GetExcess
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:31:22.192Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-yearly-tax-get-tax
+    title: YearlyTax.GetTax
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:31:29.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-holding-get-no-longer-updated
+    title: Holding.GetNoLongerUpdated
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:31:37.126Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-holding-get-removed-instances
+    title: Holding.GetRemovedInstances
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:31:44.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-lot-get-no-longer-updated
+    title: Lot.GetNoLongerUpdated
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:31:51.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-lot-get-removed-instances
+    title: Lot.GetRemovedInstances
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:31:59.523Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-valuation-get-net-reporting
+    title: Valuation.GetNetReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:32:06.647Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-valuation-get-liquidation-reporting
+    title: Valuation.GetLiquidationReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:32:13.403Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-valuation-get-net-missing
+    title: Valuation.GetNetMissing
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:32:20.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-valuation-get-liquidation-missing
+    title: Valuation.GetLiquidationMissing
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:32:26.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-date-total-get-net-reporting
+    title: DateTotal.GetNetReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:32:34.608Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-date-total-get-liquidation-reporting
+    title: DateTotal.GetLiquidationReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:32:41.934Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-date-total-get-cash-reporting
+    title: DateTotal.GetCashReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:32:49.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-date-total-get-cash-unconverted
+    title: DateTotal.GetCashUnconverted
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:32:58.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-unvalued-holding-get-missing
+    title: UnvaluedHolding.GetMissing
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:33:07.330Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-unvalued-holding-get-cash
+    title: UnvaluedHolding.GetCash
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:33:15.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-request
+    title: GetSettingsRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:33:22.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-request-reset
+    title: GetSettingsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:33:33.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-request-string
+    title: GetSettingsRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:33:42.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-request-proto-message
+    title: GetSettingsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:33:50.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-request-proto-reflect
+    title: GetSettingsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:34:00.047Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-request-descriptor
+    title: GetSettingsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:34:09.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response
+    title: GetSettingsResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:34:15.785Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-reset
+    title: GetSettingsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:34:25.664Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-string
+    title: GetSettingsResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:34:34.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-proto-message
+    title: GetSettingsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:34:43.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-proto-reflect
+    title: GetSettingsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:34:52.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-descriptor
+    title: GetSettingsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:35:01.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-get-reporting-currency
+    title: GetSettingsResponse.GetReportingCurrency
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:35:09.141Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-get-number-format
+    title: GetSettingsResponse.GetNumberFormat
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:35:16.628Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-get-number-format-default
+    title: GetSettingsResponse.GetNumberFormatDefault
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:35:24.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-settings-response-get-tax-wrappers
+    title: GetSettingsResponse.GetTaxWrappers
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:35:32.189Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-request
+    title: ListYearlyTaxesRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:35:38.628Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-request-reset
+    title: ListYearlyTaxesRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:35:46.139Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-request-string
+    title: ListYearlyTaxesRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:35:53.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-request-proto-message
+    title: ListYearlyTaxesRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:36:01.115Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-request-proto-reflect
+    title: ListYearlyTaxesRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:36:08.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-request-descriptor
+    title: ListYearlyTaxesRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:36:16.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-request-get-year
+    title: ListYearlyTaxesRequest.GetYear
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:36:23.721Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-response
+    title: ListYearlyTaxesResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:36:30.509Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-response-reset
+    title: ListYearlyTaxesResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:36:38.074Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-response-string
+    title: ListYearlyTaxesResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:36:45.926Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-response-proto-message
+    title: ListYearlyTaxesResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:36:54.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-response-proto-reflect
+    title: ListYearlyTaxesResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:37:03.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-response-descriptor
+    title: ListYearlyTaxesResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:37:10.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-list-yearly-taxes-response-get-taxes
+    title: ListYearlyTaxesResponse.GetTaxes
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:37:18.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-allocation-request-get-value
+    title: GetAllocationRequest.GetValue
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:37:27.100Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1-get-allocation-response-get-value
+    title: GetAllocationResponse.GetValue
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:37:35.340Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-three-values
+  - id: SYM-viewsv1connect-read-service-client-get-settings
+    title: readServiceClient.GetSettings
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:37:42.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-viewsv1connect-read-service-client-list-yearly-taxes
+    title: readServiceClient.ListYearlyTaxes
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:37:50.511Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
+    title: UnimplementedReadServiceHandler.GetSettings
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:37:57.954Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes
+  - id: SYM-viewsv1connect-unimplemented-read-service-handler-list-yearly-taxes
+    title: UnimplementedReadServiceHandler.ListYearlyTaxes
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:38:05.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-taxes

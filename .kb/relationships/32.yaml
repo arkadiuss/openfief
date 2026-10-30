@@ -377,3 +377,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6770c333707c
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T00:04:46.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4402b3241679
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T00:04:46.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b0bc81b9625
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-30T00:04:46.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e72e037cbd
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T00:04:46.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c222ae0bab9a
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-30T00:04:46.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5d5875a32dc
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T00:04:46.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46ff81c3c3f5
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-holdings-and-lots-marked
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:23:10.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a75f7ef6201d

@@ -363,3 +363,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9b4ccce90ce
+  - type: implements
+    from: SYM-views-app-views-wrapper-balances
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:18:38.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39dbeeccea8e
+  - type: implements
+    from: SYM-views-app-views-wrapper-balances
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-30T01:18:38.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-764edd6187c9
+  - type: covered_by
+    from: SYM-views-app-views-wrapper-balances
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:38.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a37ee686bb67

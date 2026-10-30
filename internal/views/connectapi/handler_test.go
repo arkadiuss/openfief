@@ -17,6 +17,8 @@ import (
 	"github.com/getkin/kin-openapi/routers/legacy"
 	"github.com/google/go-cmp/cmp"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
+	"github.com/arkadiuss/openfief/internal/views/app"
 	"github.com/arkadiuss/openfief/internal/views/connectapi"
 )
 
@@ -33,7 +35,7 @@ type api struct {
 func newAPI(t *testing.T, l *fakeLedger) api {
 	t.Helper()
 	var log bytes.Buffer
-	h, err := connectapi.New(newViews(t, l), fakeVerifier{},
+	h, err := connectapi.New(newViews(t, l, app.WithJurisdiction(pl.NewPack(), fakeTerms{})), fakeVerifier{},
 		connectapi.WithLogger(slog.New(slog.NewJSONHandler(&log, nil))),
 		connectapi.WithRequestIDs(func() string { return "req-1" }))
 	if err != nil {
@@ -125,6 +127,11 @@ func TestREST(t *testing.T) {
 		{"/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_SLEEVE", http.StatusOK},
 		{"/v1/performance", http.StatusOK},
 		{"/v1/performance?from=2026-03-01&to=2026-03-04", http.StatusOK},
+		{"/v1/settings", http.StatusOK},
+		{"/v1/yearly-taxes?year=2026", http.StatusOK},
+		{"/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_ASSET_CLASS&value=VALUE_KIND_NET", http.StatusOK},
+		{"/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_ASSET_CLASS&value=VALUE_KIND_LIQUIDATION", http.StatusOK},
+		{"/v1/yearly-taxes?year=0", http.StatusBadRequest},
 		{"/v1/accounts/nope", http.StatusNotFound},
 		{"/v1/accounts/nope/holdings?date=2026-03-02", http.StatusNotFound},
 		{"/v1/accounts/nope/valuation-status", http.StatusNotFound},

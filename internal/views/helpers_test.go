@@ -73,6 +73,7 @@ func (v *val) build(t *testing.T) valuation.HoldingValuation {
 	return valuation.HoldingValuation{
 		Account: "acc-1", Instrument: instrument(t, v.isin, v.symbol), Date: date(t, v.day),
 		Basis: valuation.Market, Source: "test", Value: money(t, v.value, v.currency), PLN: money(t, v.pln, "PLN"),
+		Net: money(t, v.pln, "PLN"), Liquidation: money(t, v.pln, "PLN"),
 	}
 }
 

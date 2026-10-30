@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b91df550eaa5
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms-value-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:47.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cab9614c4594
+  - type: executable_for
+    from: SYM-views-connectapi-test-settings-over-rest
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:22:34.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-336bdab4dd3b

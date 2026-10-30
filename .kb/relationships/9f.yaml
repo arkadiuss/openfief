@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84004941232b
+  - type: implements
+    from: SYM-views-app-views-value-settings
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:18:24.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bf48ede4e18
+  - type: implements
+    from: SYM-views-app-views-value-settings
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:18:24.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b429b78443
+  - type: covered_by
+    from: SYM-views-app-views-value-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:24.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543c0683cd2a

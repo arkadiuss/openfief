@@ -461,3 +461,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1180996b1948
+  - type: verified_by
+    from: SCEN-views-yearly-taxes
+    to: TEST-views-app-values
+    created_at: 2026-10-30T00:04:58.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-024fb84aaaba
+  - type: verified_by
+    from: SCEN-views-yearly-taxes
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T00:04:58.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04f0dffe683b
+  - type: implements
+    from: SYM-views-day-cash
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:25:12.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ea9b3e68ec3
+  - type: implements
+    from: SYM-views-day-cash
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:25:12.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4358585a9d7
+  - type: covered_by
+    from: SYM-views-day-cash
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:12.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ac8210e2b53
+  - type: implements
+    from: SYM-viewsv1-get-allocation-response-get-value
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:37:37.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-215b18ee807c
+  - type: covered_by
+    from: SYM-viewsv1-get-allocation-response-get-value
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:37:37.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7db643a6d318

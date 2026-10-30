@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-369c6d021eb2
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-fee-rule
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-30T01:21:15.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91f237bbaa49
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-fee-rule
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:15.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e089426d8bc

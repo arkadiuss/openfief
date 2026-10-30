@@ -216,3 +216,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34d6277d1576
+  - type: implements
+    from: SYM-viewsv1-date-total-get-cash-reporting
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:52.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d2a0628fd2
+  - type: covered_by
+    from: SYM-viewsv1-date-total-get-cash-reporting
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:52.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d921a602a2c1

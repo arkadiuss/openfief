@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-317e9bd5f0b4
+  - type: implements
+    from: SYM-viewsv1-fee-rule-get-minimum
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:24.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-505a279e4719
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule-get-minimum
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:24.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a458e8ec6edf

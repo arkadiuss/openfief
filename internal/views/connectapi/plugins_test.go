@@ -60,6 +60,11 @@ func pluginAPI(t *testing.T, plugins app.Plugins) http.Handler {
 			instance = "ibkr-old"
 		}
 		l.txs[i].Key.Source = ingest.ConnectorKeySource(instance, "ibkr")
+		for j := range l.lots {
+			if l.lots[j].Origin.ExternalID == l.txs[i].Key.ExternalID {
+				l.lots[j].Origin = l.txs[i].Key
+			}
+		}
 	}
 	var opts []app.Option
 	if plugins != nil {

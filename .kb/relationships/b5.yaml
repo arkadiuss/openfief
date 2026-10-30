@@ -559,3 +559,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96053e570fc5
+  - type: constrains
+    from: REQ-views-yearly-taxes
+    to: FACT-SUBJECT-06519DD16C4DF2F5
+    created_at: 2026-10-30T00:05:35.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dce04bdb52e4
+  - type: requires_property
+    from: REQ-views-yearly-taxes
+    to: FACT-PROP-E26B930EA07E184B
+    created_at: 2026-10-30T00:05:35.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98489bd72f38
+  - type: specified_by
+    from: REQ-views-yearly-taxes
+    to: SCEN-views-yearly-taxes
+    created_at: 2026-10-30T00:05:35.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c3fc827e1eb
+  - type: implements
+    from: SYM-viewsv1-number-format-get-decimal-separator
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:29:38.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7947a93a3569
+  - type: covered_by
+    from: SYM-viewsv1-number-format-get-decimal-separator
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:29:38.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9b81dfcc907

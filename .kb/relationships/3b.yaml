@@ -349,3 +349,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81deff739348
+  - type: implements
+    from: SYM-views-app-views-cash-days
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:18:10.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-303b260a8695
+  - type: implements
+    from: SYM-views-app-views-cash-days
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:18:10.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dceaf505b3e
+  - type: covered_by
+    from: SYM-views-app-views-cash-days
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:10.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fb51afd6b4c

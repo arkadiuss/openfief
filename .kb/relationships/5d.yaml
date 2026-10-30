@@ -384,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef0a4cac41d0
+  - type: executable_for
+    from: SYM-views-test-helper-ikze-row
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:52.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c904196ea2da

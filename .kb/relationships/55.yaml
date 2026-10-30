@@ -412,3 +412,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c476de9e482c
+  - type: implements
+    from: SYM-views-app-views-totals
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:18:53.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-229f7573fe51
+  - type: implements
+    from: SYM-views-app-views-totals
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:18:53.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97c4384744f1
+  - type: covered_by
+    from: SYM-views-app-views-totals
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:53.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed25eb21b7ab
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:27.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-132e2d59f3cc

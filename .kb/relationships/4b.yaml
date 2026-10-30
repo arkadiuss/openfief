@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06e80b2b7108
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-30T01:21:02.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd620e14558a
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:02.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdb372a897b8

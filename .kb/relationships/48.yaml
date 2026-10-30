@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d81d449720a5
+  - type: executable_for
+    from: SYM-views-test-helper-stale-log
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:59.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77c96f6a02dd

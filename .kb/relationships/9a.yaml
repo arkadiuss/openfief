@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcfbab08f398
+  - type: implements
+    from: SYM-viewsv1-get-settings-response-proto-message
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:34:45.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3784cfaaa9b
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response-proto-message
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:34:46.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a50b6e0e151

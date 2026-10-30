@@ -440,3 +440,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-495dc6401e06
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-tax-wrapper
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-30T01:21:08.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-058d1b86cd4a
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-tax-wrapper
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:08.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7775d171a35d

@@ -510,3 +510,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b3d0e593b1d
+  - type: implements
+    from: SYM-viewsv1-unvalued-holding-get-cash
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:33:18.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba57d2660520
+  - type: covered_by
+    from: SYM-viewsv1-unvalued-holding-get-cash
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:33:18.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92502f951111
+  - type: implements
+    from: SYM-viewsv1-list-yearly-taxes-response-reset
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:36:40.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b1789440762
+  - type: covered_by
+    from: SYM-viewsv1-list-yearly-taxes-response-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:36:40.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ebb5faa8786

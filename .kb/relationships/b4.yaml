@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3424b47d68c2
+  - type: implements
+    from: SYM-viewsv1-fee-rule-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:27:46.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e52aeb7c68e4
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:27:46.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74d1aa691426

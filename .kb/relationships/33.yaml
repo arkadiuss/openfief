@@ -279,3 +279,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80507215c33d
+  - type: implements
+    from: SYM-views-add-name
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:23:53.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28971f159377
+  - type: implements
+    from: SYM-views-add-name
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:23:53.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e58c319b40b5
+  - type: covered_by
+    from: SYM-views-add-name
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:53.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb0b2a2b7407
+  - type: implements
+    from: SYM-views-value-kind-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:24:52.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-040368461300
+  - type: implements
+    from: SYM-views-value-kind-string
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:24:52.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5f7ddf5bb92
+  - type: covered_by
+    from: SYM-views-value-kind-string
+    to: TEST-views-values
+    created_at: 2026-10-30T01:24:52.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e233f2091332
+  - type: implements
+    from: SYM-views-add-cash
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:25:33.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fc139365f57
+  - type: implements
+    from: SYM-views-add-cash
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:25:33.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd8a6457d4cc
+  - type: covered_by
+    from: SYM-views-add-cash
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:33.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2bbc85abd7c
+  - type: implements
+    from: SYM-viewsv1-get-settings-request-reset
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:33:36.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85fd010c89a5
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-request-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:33:36.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f1a27156b91

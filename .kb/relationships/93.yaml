@@ -671,3 +671,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3a0a7f96689
+  - type: implements
+    from: SYM-views-app-settings
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:17:49.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee29b44b611
+  - type: implements
+    from: SYM-views-app-settings
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T01:17:49.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc047948e7a
+  - type: covered_by
+    from: SYM-views-app-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:17:49.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e75ecefc36f2

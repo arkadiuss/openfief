@@ -559,3 +559,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-968caaacaab7
+  - type: implements
+    from: SYM-views-opened-lots
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:23:35.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19866e053a4d
+  - type: implements
+    from: SYM-views-opened-lots
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:23:35.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3e54d34be23
+  - type: covered_by
+    from: SYM-views-opened-lots
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:35.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d156e157049
+  - type: implements
+    from: SYM-viewsv1-fee-rule-proto-reflect
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:02.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-312d2e5b965e
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule-proto-reflect
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:02.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9be4f936863

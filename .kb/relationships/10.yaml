@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bb7d231e68c
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms-number-format
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:54.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37a60ff482b3

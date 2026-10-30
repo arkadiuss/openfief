@@ -161,7 +161,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)))
+	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
+		viewsapp.WithJurisdiction(jurisdictionPack(), vstore))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)

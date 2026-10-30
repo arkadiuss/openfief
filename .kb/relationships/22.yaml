@@ -391,3 +391,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0638b1ea250
+  - type: implements
+    from: SYM-viewsv1-value-kind-enum-descriptor
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:27:11.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d7b5beadb71
+  - type: covered_by
+    from: SYM-viewsv1-value-kind-enum-descriptor
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:27:11.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cce24c4b3ae8
+  - type: implements
+    from: SYM-viewsv1-date-total-get-cash-unconverted
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:33:01.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6e2044eac23
+  - type: covered_by
+    from: SYM-viewsv1-date-total-get-cash-unconverted
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:33:01.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d97c665ed16a

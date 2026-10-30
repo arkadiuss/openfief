@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d1570ab2a29
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-proto-reflect
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:15.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-110fcbd25d87
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-proto-reflect
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:15.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50be9054bc3f

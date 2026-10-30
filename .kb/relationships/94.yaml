@@ -426,3 +426,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14c3fba09007
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-tax
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:31:31.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4ad2cb1b063
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-tax
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:31:31.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-326d7f5bc39d
+  - type: implements
+    from: SYM-viewsv1-date-total-get-liquidation-reporting
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:44.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69484cdc3f10
+  - type: covered_by
+    from: SYM-viewsv1-date-total-get-liquidation-reporting
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:44.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94e252ebbd3f

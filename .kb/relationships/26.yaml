@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c64a768c1e99
+  - type: implements
+    from: SYM-viewsv1-number-format-reset
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:45.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-894cef81b41f
+  - type: covered_by
+    from: SYM-viewsv1-number-format-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:45.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a61d5827da3

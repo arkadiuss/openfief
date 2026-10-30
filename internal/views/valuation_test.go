@@ -21,7 +21,10 @@ func totals(t *testing.T, ts []total) []views.DateTotal {
 	t.Helper()
 	out := make([]views.DateTotal, 0, len(ts))
 	for _, w := range ts {
-		dt := views.DateTotal{Date: date(t, w.day), Reporting: money(t, w.pln, "PLN"), ByCurrency: []kernel.Money{}}
+		dt := views.DateTotal{
+			Date: date(t, w.day), Reporting: money(t, w.pln, "PLN"), ByCurrency: []kernel.Money{},
+			Net: money(t, w.pln, "PLN"), Liquidation: money(t, w.pln, "PLN"), Cash: money(t, "0", "PLN"),
+		}
 		for _, c := range w.byCurrency {
 			dt.ByCurrency = append(dt.ByCurrency, money(t, c[0], c[1]))
 		}
@@ -70,7 +73,7 @@ func TestTotalsByDate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := views.TotalsByDate(vals(t, tt.vals), pln(t))
+			got, err := views.TotalsByDate(vals(t, tt.vals), nil, pln(t))
 			if err != nil {
 				t.Fatalf("TotalsByDate() error = %v", err)
 			}
@@ -85,7 +88,7 @@ func TestTotalsByDateOtherCurrency(t *testing.T) {
 	t.Parallel()
 	in := vals(t, []val{{isinIE, "ETF1", "2026-03-02", "1", "USD", "1"}})
 	in[0].PLN = money(t, "1", "USD")
-	if _, err := views.TotalsByDate(in, pln(t)); !errors.Is(err, views.ErrNotReportingCurrency) {
+	if _, err := views.TotalsByDate(in, nil, pln(t)); !errors.Is(err, views.ErrNotReportingCurrency) {
 		t.Errorf("TotalsByDate() error = %v, want %v", err, views.ErrNotReportingCurrency)
 	}
 }

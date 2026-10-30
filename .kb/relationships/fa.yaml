@@ -412,3 +412,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39624a5b816a
+  - type: implements
+    from: SYM-views-day-total
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:24:17.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cf6da64f76e
+  - type: implements
+    from: SYM-views-day-total
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:24:17.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b257dc16261d
+  - type: covered_by
+    from: SYM-views-day-total
+    to: TEST-views-values
+    created_at: 2026-10-30T01:24:17.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-425a971eaaf8
+  - type: implements
+    from: SYM-viewsv1-valuation-get-net-reporting
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:08.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cb93b3d9170
+  - type: covered_by
+    from: SYM-viewsv1-valuation-get-net-reporting
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:08.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d9bd8d37a94

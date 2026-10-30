@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0bc7df7683c
+  - type: implements
+    from: SYM-views-day-total-add-holding
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:24:25.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0e30299eb2e
+  - type: implements
+    from: SYM-views-day-total-add-holding
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:24:25.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e6ff9fe39c2
+  - type: covered_by
+    from: SYM-views-day-total-add-holding
+    to: TEST-views-values
+    created_at: 2026-10-30T01:24:25.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91961c8520f4

@@ -573,3 +573,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73b04309d21f
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-excess
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:31:24.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebf4e42e8bc8
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-excess
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:31:24.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5bf59bfc38c
+  - type: implements
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:38:00.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02d7b6b3b8da
+  - type: implements
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:38:00.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fec7ce478d0
+  - type: covered_by
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:38:00.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f128c1fee1a1

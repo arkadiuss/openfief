@@ -363,3 +363,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82298c261e51
+  - type: implements
+    from: SYM-views-removed-behind-holdings
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:23:23.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-471febb1d218
+  - type: implements
+    from: SYM-views-removed-behind-holdings
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:23:23.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c4f1830510d
+  - type: covered_by
+    from: SYM-views-removed-behind-holdings
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:23.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a14434fb827d

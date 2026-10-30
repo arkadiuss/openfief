@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9ed970284a0
+  - type: executable_for
+    from: SYM-views-app-test-yearly-taxes
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:38.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb5ff97a69a6

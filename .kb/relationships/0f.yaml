@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66539e4a98de
+  - type: executable_for
+    from: SYM-views-app-test-helper-values-views
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:00.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0147045381ee

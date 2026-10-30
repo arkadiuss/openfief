@@ -398,3 +398,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f7fdffc98ac
+  - type: implements
+    from: SYM-viewsv1-number-format
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:37.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82c263d451fe
+  - type: covered_by
+    from: SYM-viewsv1-number-format
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:37.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edbf0bea4de0
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-limit
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:31:09.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02d947529b79
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-limit
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:31:09.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b4908ba8c48

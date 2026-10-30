@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fda2568f4613
+  - type: executable_for
+    from: SYM-views-test-cash-value
+    to: TEST-views-values
+    created_at: 2026-10-30T01:26:04.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e7c20df648

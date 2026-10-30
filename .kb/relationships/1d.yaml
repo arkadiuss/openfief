@@ -601,3 +601,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8bd5da0ae321
+  - type: implements
+    from: SYM-views-removed-behind-lots
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:23:29.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86315621df9c
+  - type: implements
+    from: SYM-views-removed-behind-lots
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:23:29.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db8fa65dc864
+  - type: covered_by
+    from: SYM-views-removed-behind-lots
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:29.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74b058dd5ea7
+  - type: implements
+    from: SYM-viewsv1-valuation-get-liquidation-missing
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:28.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5685dc569a4
+  - type: covered_by
+    from: SYM-viewsv1-valuation-get-liquidation-missing
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:28.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd592b5b38d1
