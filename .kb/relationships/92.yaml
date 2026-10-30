@@ -545,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ff2321aab18
+  - type: verified_by
+    from: SCEN-ui-installable
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:07:53.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22e9827253ad
+  - type: verified_by
+    from: SCEN-ui-installable
+    to: TEST-ui-browser-checks
+    created_at: 2026-10-30T08:07:53.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19c6361324ab

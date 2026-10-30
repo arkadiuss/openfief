@@ -99893,3 +99893,389 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-kibi-check
+  - id: SYM-ui-pwa-sign-in-paths
+    title: signInPaths
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:33:17.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-cached-type
+    title: cachedType
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:33:25.930Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-app-colors
+    title: appColors
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:33:34.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-read-app-colors
+    title: readAppColors
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:33:43.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-token-block
+    title: tokenBlock
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:33:51.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-resolve-token
+    title: resolveToken
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:33:59.704Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-app-icon
+    title: appIcon
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:34:06.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-design-colors
+    title: designColors
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:34:14.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-theme-color
+    title: themeColor
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:34:23.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-design-system
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-manifest-icon
+    title: manifestIcon
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:34:31.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-build-manifest
+    title: buildManifest
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:34:39.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+  - id: SYM-ui-pwa-worker-config
+    title: workerConfig
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:34:46.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-pwa
+    title: pwa
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:34:54.738Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-asset-list
+    title: assetList
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:35:05.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-static-assets
+    title: staticAssets
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:35:14.768Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-build-pwa
+    title: buildPWA
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:35:23.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-serve-bytes
+    title: serveBytes
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:35:31.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-pwa-routes
+    title: pwa.routes
+    sourceFile: internal/views/ui/pwa.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:35:39.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-installable-app
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-pages-execute
+    title: pages.execute
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:35:47.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pwa
+      - type: implements
+        target: REQ-ui-service-worker-static-only
+  - id: SYM-ui-pwa-test-test-serve-for-browser
+    title: TestServeForBrowser
+    sourceFile: internal/views/ui/browser_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:35:57.034Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-browser-checks
+  - id: SYM-ui-pwa-test-helper-served-worker
+    title: servedWorker
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:36:04.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-helper-worker-of
+    title: workerOf
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:36:12.937Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-helper-manifest-members
+    title: manifestMembers
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:36:21.094Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-test-manifest
+    title: TestManifest
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:36:29.482Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-test-service-worker
+    title: TestServiceWorker
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:36:39.098Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-test-service-worker-caches-only-static-files
+    title: TestServiceWorkerCachesOnlyStaticFiles
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:36:48.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-helper-want-static-asset
+    title: wantStaticAsset
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:36:57.978Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-helper-under-page
+    title: underPage
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:37:09.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-test-offline-page
+    title: TestOfflinePage
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:37:19.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-test-every-page-is-installable
+    title: TestEveryPageIsInstallable
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:37:29.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-test-read-app-colors
+    title: TestReadAppColors
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:37:39.892Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa
+  - id: SYM-ui-pwa-test-test-worker-version
+    title: TestWorkerVersion
+    sourceFile: internal/views/ui/pwa_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T08:37:49.417Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pwa

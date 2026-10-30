@@ -809,6 +809,18 @@ tasks:
     cmds:
       - '{{.BIN}}/hugo server --source . --config site/hugo.toml'
 
+  design:icons:
+    desc: Render the built-in UI's app icons (design/marks/app-icon-*.png) from the Seal; run after changing seal.svg or the argent token
+    cmds:
+      - node scripts/app-icons.mjs
+
+  ui:browser:
+    desc: "Browser checks of the built-in UI over its fakes: phone and desktop screenshots in SHOTS, no sideways scroll, installable, service worker (needs Chromium; not part of check)"
+    vars:
+      SHOTS: '{{.SHOTS | default "/tmp/openfief-ui-shots"}}'
+    cmds:
+      - node scripts/ui-browser.mjs {{.SHOTS}}
+
   docs:fresh:
     desc: 'Staleness gate over a pushed range: covered code changed only with its docs pages or a Docs-Unchanged trailer, e.g. task docs:fresh BASE=origin/main'
     vars:

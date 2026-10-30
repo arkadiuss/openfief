@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0960f4d30d36
+  - type: implements
+    from: SYM-ui-pwa-serve-bytes
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:35:33.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-533f274ada20
+  - type: covered_by
+    from: SYM-ui-pwa-serve-bytes
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:35:33.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f664fd8f97a8

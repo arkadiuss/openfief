@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50be9054bc3f
+  - type: executable_for
+    from: SYM-ui-pwa-test-test-service-worker-caches-only-static-files
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:36:51.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c88d5c8c82

@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a4f34958f0c
+  - type: verified_by
+    from: SCEN-ui-worker-static-only
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:07:57.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a9a3affa0b7
+  - type: verified_by
+    from: SCEN-ui-worker-static-only
+    to: TEST-ui-browser-checks
+    created_at: 2026-10-30T08:07:57.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26e4c27faa37

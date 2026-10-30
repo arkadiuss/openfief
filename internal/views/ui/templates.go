@@ -55,6 +55,7 @@ func templateFuncs(f numberFormat) template.FuncMap {
 		"roleFields":   roleFields,
 		"sleeveSelect": sleeveSelect,
 		"terms":        termsFields,
+		"themeColor":   themeColor,
 	}
 }
 
@@ -90,24 +91,34 @@ func parsePages() (*pages, error) {
 // htmx swap. Each render executes a clone of the parsed set with f's
 // helpers, so the parsed set is never executed and stays clonable.
 func (p *pages) render(w http.ResponseWriter, status int, name, tmpl string, data any, f numberFormat) error {
-	parsed, ok := p.sets[name]
-	if !ok {
-		return fmt.Errorf("%w: %s", errNoPage, name)
-	}
-	set, err := parsed.Clone()
+	body, err := p.execute(name, tmpl, data, f)
 	if err != nil {
-		return fmt.Errorf("clone %s: %w", name, err)
-	}
-	var buf bytes.Buffer
-	if err := set.Funcs(templateFuncs(f)).ExecuteTemplate(&buf, tmpl, data); err != nil {
-		return fmt.Errorf("render %s: %w", name, err)
+		return err
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(status)
-	if _, err := buf.WriteTo(w); err != nil {
+	if _, err := w.Write(body); err != nil {
 		return fmt.Errorf("write %s: %w", name, err)
 	}
 	return nil
+}
+
+// execute runs a template of a page on a clone of its parsed set, with
+// amounts in the number format f, and returns what it wrote.
+func (p *pages) execute(name, tmpl string, data any, f numberFormat) ([]byte, error) {
+	parsed, ok := p.sets[name]
+	if !ok {
+		return nil, fmt.Errorf("%w: %s", errNoPage, name)
+	}
+	set, err := parsed.Clone()
+	if err != nil {
+		return nil, fmt.Errorf("clone %s: %w", name, err)
+	}
+	var buf bytes.Buffer
+	if err := set.Funcs(templateFuncs(f)).ExecuteTemplate(&buf, tmpl, data); err != nil {
+		return nil, fmt.Errorf("render %s: %w", name, err)
+	}
+	return buf.Bytes(), nil
 }
 
 // show renders a whole page, or a plain 500 when the template fails.

@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab27db794f3a
+  - type: executable_for
+    from: SYM-ui-pwa-test-helper-worker-of
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:36:15.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a7120668593

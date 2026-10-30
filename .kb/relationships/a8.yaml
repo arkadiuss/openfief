@@ -671,3 +671,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17f8895182c1
+  - type: implements
+    from: SYM-ui-pwa-theme-color
+    to: REQ-ui-installable-app
+    created_at: 2026-10-30T08:34:26.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1142941a761
+  - type: implements
+    from: SYM-ui-pwa-theme-color
+    to: REQ-ui-design-system
+    created_at: 2026-10-30T08:34:26.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c880c8c692f
+  - type: covered_by
+    from: SYM-ui-pwa-theme-color
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:34:26.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3b555dcf53

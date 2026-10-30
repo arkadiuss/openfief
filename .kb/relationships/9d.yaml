@@ -454,3 +454,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-483ebfa75fde
+  - type: implements
+    from: SYM-ui-pwa-pwa
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:34:58.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2ae0dd32fbe
+  - type: implements
+    from: SYM-ui-pwa-pwa
+    to: REQ-ui-installable-app
+    created_at: 2026-10-30T08:34:58.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19530f3a589b
+  - type: covered_by
+    from: SYM-ui-pwa-pwa
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:34:58.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebb6fca97227

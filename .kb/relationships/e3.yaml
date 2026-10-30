@@ -475,3 +475,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7c93840e800
+  - type: verified_by
+    from: SCEN-ui-phone-width
+    to: TEST-ui-browser-checks
+    created_at: 2026-10-30T08:07:50.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d86281f62d
+  - type: verified_by
+    from: SCEN-ui-phone-width
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:07:50.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36b5503c8818

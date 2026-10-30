@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0632b081bde5
+  - type: implements
+    from: SYM-ui-pwa-worker-config
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:34:49.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1c4a5e78083
+  - type: covered_by
+    from: SYM-ui-pwa-worker-config
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:34:49.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f4c69303f6d

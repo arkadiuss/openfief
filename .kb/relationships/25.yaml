@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03acd996fa2c
+  - type: executable_for
+    from: SYM-ui-pwa-test-helper-manifest-members
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:36:23.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f724bdd58a4c
