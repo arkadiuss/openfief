@@ -370,3 +370,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63b83b1de163
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-add-balance
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:27:48.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1738a1444152
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-add-balance
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:27:48.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44c315747c20

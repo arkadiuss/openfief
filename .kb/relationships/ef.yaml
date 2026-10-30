@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6b51a32f90a
+  - type: implements
+    from: SYM-views-ghostfolio-plan-balances
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:26:16.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e337ded5d022
+  - type: covered_by
+    from: SYM-views-ghostfolio-plan-balances
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-30T01:26:16.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05784b05a2e8

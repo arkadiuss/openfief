@@ -37,7 +37,7 @@ func (f *fakeGhostfolio) User(context.Context) (ghostfolio.User, error) {
 	if err != nil {
 		return ghostfolio.User{}, fmt.Errorf("base currency: %w", err)
 	}
-	return ghostfolio.User{BaseCurrency: c, RestrictedView: f.restricted}, nil
+	return ghostfolio.User{ID: gfUser, BaseCurrency: c, RestrictedView: f.restricted}, nil
 }
 
 func (f *fakeGhostfolio) Accounts(context.Context) ([]string, error) {
@@ -100,6 +100,24 @@ func (f *fakeGhostfolio) DeleteActivitiesInAccounts(_ context.Context, accounts 
 	return nil
 }
 
+func (f *fakeGhostfolio) Balances(_ context.Context, account string) ([]ghostfolio.Balance, error) {
+	f.calls = append(f.calls, "read balances")
+	return f.balancesIn(func(id string) bool { return id == account }), nil
+}
+
+func (f *fakeGhostfolio) SetBalance(_ context.Context, b *ghostfolio.Balance) error {
+	f.calls = append(f.calls, "set balance")
+	f.balances = slices.DeleteFunc(f.balances, func(o ghostfolio.Balance) bool { return o.AccountID == b.AccountID && o.Date == b.Date })
+	f.addBalance(*b)
+	return nil
+}
+
+func (f *fakeGhostfolio) DeleteBalance(_ context.Context, id string) error {
+	f.calls = append(f.calls, "drop balance")
+	f.balances = slices.DeleteFunc(f.balances, func(o ghostfolio.Balance) bool { return o.ID == id })
+	return nil
+}
+
 // TestSync runs the reconcile loop over the synthetic record and a fake
 // Ghostfolio: the first sync creates the owned accounts and imports, the
 // second changes nothing but the prices, a manual edit is reverted, a
@@ -109,7 +127,7 @@ func TestSync(t *testing.T) {
 	t.Parallel()
 	ctx := t.Context()
 	record := syntheticRecord()
-	g := &fakeGhostfolio{ghostfolioModel: ghostfolioModel{accounts: []string{foreignAccount}}}
+	g := &fakeGhostfolio{ghostfolioModel: newModel()}
 	s := ghostfolio.NewSyncer(record, g, instance, nil)
 	steps := []struct {
 		name      string
@@ -118,12 +136,12 @@ func TestSync(t *testing.T) {
 		wantCalls string
 	}{
 		{
-			name: "first sync", want: ghostfolio.Report{AccountsCreated: 2, Imported: 3},
-			wantCalls: "login user accounts create account create account dry run 3 import 3",
+			name: "first sync", want: ghostfolio.Report{AccountsCreated: 2, Imported: 3, BalancesSet: 3},
+			wantCalls: "login user accounts create account create account dry run 3 import 3 set balance set balance set balance",
 		},
 		{
 			name: "nothing changed: only the prices are sent", want: ghostfolio.Report{},
-			wantCalls: "login user accounts activities dry run 0 import 0",
+			wantCalls: "login user accounts activities read balances read balances dry run 0 import 0",
 		},
 		{
 			name: "a manual edit is reverted",
@@ -132,13 +150,13 @@ func TestSync(t *testing.T) {
 				g.activities[i].Quantity = g.activities[i].Quantity.Add(dec(t, "1"))
 			},
 			want:      ghostfolio.Report{Imported: 1, Deleted: 1},
-			wantCalls: "login user accounts activities dry run 1 import 1 delete",
+			wantCalls: "login user accounts activities read balances read balances dry run 1 import 1 delete",
 		},
 		{
 			name:      "a removed transaction is deleted",
 			before:    func() { record.withoutBond("fee-1") },
-			want:      ghostfolio.Report{Deleted: 1},
-			wantCalls: "login user accounts activities dry run 0 import 0 delete",
+			want:      ghostfolio.Report{Deleted: 1, BalancesDeleted: 1},
+			wantCalls: "login user accounts activities read balances read balances dry run 0 import 0 delete drop balance",
 		},
 		{
 			name: "an account left with nothing is emptied",
@@ -146,8 +164,8 @@ func TestSync(t *testing.T) {
 				record.withoutBond("open-1")
 				record.withoutBond("buy-1")
 			},
-			want:      ghostfolio.Report{AccountsCleared: 1},
-			wantCalls: "login user accounts activities bulk delete",
+			want:      ghostfolio.Report{AccountsCleared: 1, BalancesDeleted: 1},
+			wantCalls: "login user accounts activities read balances read balances bulk delete drop balance",
 		},
 	}
 	for _, st := range steps {

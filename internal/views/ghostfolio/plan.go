@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"maps"
 	"slices"
+
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 // Actual is what Ghostfolio holds now, as far as the view looks.
@@ -15,21 +17,32 @@ type Actual struct {
 	// Activities are the activities in owned accounts. Any other is left
 	// out of the plan.
 	Activities []Activity
+	// Balances are the cash balances of owned accounts. Any other is left
+	// out of the plan.
+	Balances []Balance
 }
 
 // Plan is what one sync changes in Ghostfolio, in the order Syncer applies
-// it (D-64): create the missing owned accounts, delete the stale
-// activities an import would otherwise skip as duplicates, import the
-// missing activities with every asset's full price history, then delete
-// the remaining stale activities, one by one or a whole owned account at a
-// time.
+// it (D-64, D-108): create the missing owned accounts, delete the stale
+// activities an import would otherwise skip or move to another asset,
+// import the missing activities with every asset's full price history,
+// delete the remaining stale activities, one by one or a whole owned
+// account at a time, then set the cash balances that differ and delete the
+// ones that shouldn't be there.
 type Plan struct {
 	CreateAccounts []Account
-	// PreDelete are stale activities that a missing activity duplicates in
-	// every field Ghostfolio's import compares, such as one moved to
-	// another owned account. Ghostfolio would skip that import, so these go
-	// before it; the import then brings back any asset the delete removed,
-	// with its prices.
+	// PreDelete are the stale activities an import would trip over:
+	//
+	//   - one that a missing activity duplicates in every field Ghostfolio's
+	//     import compares, such as one moved to another owned account.
+	//     Ghostfolio would skip that import; the import then brings back any
+	//     asset the delete removed, with its prices;
+	//   - when the sync imports onto a MANUAL asset, one on a MANUAL asset
+	//     that is not desired, such as the bond asset an earlier version
+	//     keyed by the series code alone. Ghostfolio's import reuses the
+	//     user's MANUAL asset that has the name of a new one, so a leftover
+	//     asset named like a desired one must go first; nothing desired
+	//     needs its price history.
 	PreDelete []Activity
 	Import    []Activity
 	// Assets are always sent, so every sync sends the full price history.
@@ -38,12 +51,18 @@ type Plan struct {
 	// Clear are owned accounts that should hold no activity but do: each is
 	// emptied with one bulk delete filtered to it.
 	Clear []string
+	// SetBalances are the desired cash balances Ghostfolio lacks or holds
+	// with another value; Ghostfolio keeps one per account and date.
+	SetBalances []Balance
+	// DeleteBalances are the owned accounts' balances on dates that should
+	// have none.
+	DeleteBalances []Balance
 }
 
 // IsEmpty reports whether p changes nothing but the price history.
 func (p *Plan) IsEmpty() bool {
 	return len(p.CreateAccounts) == 0 && len(p.PreDelete) == 0 && len(p.Import) == 0 &&
-		len(p.Delete) == 0 && len(p.Clear) == 0
+		len(p.Delete) == 0 && len(p.Clear) == 0 && len(p.SetBalances) == 0 && len(p.DeleteBalances) == 0
 }
 
 // MakePlan compares desired with actual and returns what to change (D-4,
@@ -52,7 +71,8 @@ func (p *Plan) IsEmpty() bool {
 // every field, comment included; a desired activity nothing agrees with is
 // imported, and an activity in an owned account that matches no desired
 // one is stale and deleted. So a manual edit is reverted: the edited
-// activity is stale and the desired one is imported again.
+// activity is stale and the desired one is imported again. Cash balances
+// are compared by account and date the same way.
 func MakePlan(desired *Desired, actual *Actual) Plan {
 	owned := map[string]bool{}
 	for _, a := range desired.Accounts {
@@ -80,8 +100,32 @@ func MakePlan(desired *Desired, actual *Actual) Plan {
 			p.Import = append(p.Import, *d)
 		}
 	}
-	p.splitStale(acts, kept, wanted)
+	p.splitStale(acts, kept, wanted, desired.Assets)
+	p.balances(desired.Balances, actual.Balances, owned)
 	return p
+}
+
+// balances plans the cash balances: a desired balance no actual one agrees
+// with is set, and an owned account's balance on a date with no desired
+// one is deleted. Setting a balance replaces the one of its date.
+func (p *Plan) balances(desired, actual []Balance, owned map[string]bool) {
+	want := map[string]map[kernel.Date]bool{}
+	for i := range desired {
+		d := &desired[i]
+		if want[d.AccountID] == nil {
+			want[d.AccountID] = map[kernel.Date]bool{}
+		}
+		want[d.AccountID][d.Date] = true
+		if !slices.ContainsFunc(actual, func(a Balance) bool { return a.sameAs(d) }) {
+			p.SetBalances = append(p.SetBalances, *d)
+		}
+	}
+	for _, a := range actual {
+		if owned[a.AccountID] && !want[a.AccountID][a.Date] {
+			p.DeleteBalances = append(p.DeleteBalances, a)
+		}
+	}
+	slices.SortFunc(p.DeleteBalances, func(a, b Balance) int { return cmp.Compare(a.ID, b.ID) })
 }
 
 // keep marks the first activity in acts not yet kept that agrees with d in
@@ -96,10 +140,28 @@ func keep(acts []Activity, kept []bool, d *Activity) bool {
 	return false
 }
 
+// blocksImport returns the test for a stale activity that must go before
+// p's imports (Plan.PreDelete): one an import duplicates, or, when p
+// imports onto a MANUAL asset, one on a MANUAL asset not among assets.
+func (p *Plan) blocksImport(assets []AssetProfile) func(s *Activity) bool {
+	desiredAsset := map[string]bool{}
+	for _, a := range assets {
+		desiredAsset[a.Symbol] = true
+	}
+	importsManual := slices.ContainsFunc(p.Import, func(a Activity) bool { return a.DataSource == DataSourceManual })
+	return func(s *Activity) bool {
+		if importsManual && s.DataSource == DataSourceManual && !desiredAsset[s.Symbol] {
+			return true
+		}
+		return slices.ContainsFunc(p.Import, func(d Activity) bool { return d.duplicateOf(s) })
+	}
+}
+
 // splitStale sorts the stale activities, those in acts not kept, into
 // PreDelete, Clear and Delete. wanted holds the owned accounts with a
-// desired activity.
-func (p *Plan) splitStale(acts []Activity, kept []bool, wanted map[string]bool) {
+// desired activity, and assets the desired MANUAL assets.
+func (p *Plan) splitStale(acts []Activity, kept []bool, wanted map[string]bool, assets []AssetProfile) {
+	blocksImport := p.blocksImport(assets)
 	blocked := map[string]bool{}
 	var stale []Activity
 	for i := range acts {
@@ -107,7 +169,7 @@ func (p *Plan) splitStale(acts []Activity, kept []bool, wanted map[string]bool) 
 			continue
 		}
 		s := acts[i]
-		if slices.ContainsFunc(p.Import, func(d Activity) bool { return d.duplicateOf(&s) }) {
+		if blocksImport(&s) {
 			p.PreDelete = append(p.PreDelete, s)
 			blocked[s.AccountID] = true
 			continue

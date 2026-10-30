@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c5423c35c9b
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-apply-balances
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:28:02.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-877c187c3c7e

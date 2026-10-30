@@ -148,65 +148,130 @@ func securityToken() (string, error) {
 }
 
 // TestGhostfolioContract is the contract test of the supported Ghostfolio
-// versions (D-64): it replays the reconcile loop against recordings of a
-// real Ghostfolio 3.93.0. The first sync creates the owned accounts and
-// imports; a second sync against what Ghostfolio stored changes nothing,
-// which proves every field survives Ghostfolio's round trip; a manual edit
-// is reverted; a removed transaction is deleted; an emptied account is
-// cleared with a filtered bulk delete; a sync with the restricted view on
-// is refused; and the owner's own account and activity are never touched.
+// versions (D-64, D-108): it replays the reconcile loop against recordings
+// of a real Ghostfolio 3.93.0. The owned bond account starts with an
+// activity on the bond asset an earlier version keyed by the series code
+// alone, which the first sync moves to the new asset of the same name while
+// it creates the other owned account, imports and sets the cash balances; a
+// second sync against what Ghostfolio stored changes nothing, which proves
+// every field survives Ghostfolio's round trip; a manual edit of an activity
+// and of the balances is reverted; a removed transaction is deleted with its
+// balance; an emptied account is cleared with a filtered bulk delete; a sync
+// with the restricted view on is refused; and the owner's own account,
+// activity, asset and balance are never touched.
 func TestGhostfolioContract(t *testing.T) {
 	t.Parallel()
 	ctx := t.Context()
 	hc := contractClient(t)
 	c := ghostfolio.NewClient(hc, recordedBaseURL, securityToken)
-	own := addOwnActivity(t, c)
+	own, ownBalance := addOwnActivity(t, hc, c)
+	addLegacyBond(t, c)
 	record := syntheticRecord()
 	s := ghostfolio.NewSyncer(record, c, instance, nil)
 	runSteps(t, s, []syncStep{
-		{name: "first sync", want: ghostfolio.Report{AccountsCreated: 2, Imported: 3}},
+		{name: "first sync", want: ghostfolio.Report{AccountsCreated: 1, Imported: 3, Deleted: 1, BalancesSet: 3}},
 		{name: "nothing changed", want: ghostfolio.Report{}},
 		{name: "a manual edit is reverted", before: func(t *testing.T) {
 			t.Helper()
 			editBuy(t, hc, c)
 		}, want: ghostfolio.Report{Imported: 1, Deleted: 1}},
-		{name: "nothing changed after the revert", want: ghostfolio.Report{}},
-		{name: "a removed transaction is deleted", before: func(*testing.T) { record.withoutBond("fee-1") }, want: ghostfolio.Report{Deleted: 1}},
+		{name: "manual balances are reverted", before: func(t *testing.T) {
+			t.Helper()
+			bonds := ghostfolio.AccountUUID(instance, bondAccount)
+			setBalance(t, c, bonds, "2025-01-03", "1")
+			setBalance(t, c, bonds, "2025-01-04", "999")
+		}, want: ghostfolio.Report{BalancesSet: 1, BalancesDeleted: 1}},
+		{name: "nothing changed after the reverts", want: ghostfolio.Report{}},
+		{name: "a removed transaction is deleted, with its balance", before: func(*testing.T) { record.withoutBond("fee-1") }, want: ghostfolio.Report{Deleted: 1, BalancesDeleted: 1}},
 		{name: "an emptied account is cleared", before: func(*testing.T) {
 			record.withoutBond("open-1")
 			record.withoutBond("buy-1")
-		}, want: ghostfolio.Report{AccountsCleared: 1}},
+		}, want: ghostfolio.Report{AccountsCleared: 1, BalancesDeleted: 1}},
 	})
 	setRestrictedView(t, hc, true)
 	if _, err := s.Sync(ctx); !errors.Is(err, ghostfolio.ErrRestrictedView) {
 		t.Errorf("Sync with the restricted view on = %v, want ErrRestrictedView", err)
 	}
 	setRestrictedView(t, hc, false)
+	checkOwnUntouched(t, c, &own, &ownBalance)
+}
+
+// checkOwnUntouched checks that the owner's own account still holds own
+// and ownBalance, unchanged.
+func checkOwnUntouched(t *testing.T, c *ghostfolio.Client, own *ghostfolio.Activity, ownBalance *ghostfolio.Balance) {
+	t.Helper()
+	ctx := t.Context()
 	acts, err := c.Activities(ctx, []string{own.AccountID})
-	if err != nil || len(acts) != 1 || acts[0].Comment != own.Comment || !acts[0].Fee.Equal(own.Fee) {
+	if err != nil || len(acts) != 1 || acts[0].Comment != own.Comment || !acts[0].Fee.Equal(own.Fee) || acts[0].Symbol != own.Symbol {
 		t.Errorf("the owner's own activities = %+v, %v; want the one fee of their own, unchanged", acts, err)
+	}
+	bs, err := c.Balances(ctx, own.AccountID)
+	if err != nil || len(bs) != 1 || !bs[0].Value.Equal(ownBalance.Value) || bs[0].Date != ownBalance.Date {
+		t.Errorf("the owner's own balances = %+v, %v; want their one balance, unchanged", bs, err)
 	}
 }
 
-// addOwnActivity logs c in and gives the new user's own account an
-// activity of the owner's own, which no sync may touch, and returns it.
-func addOwnActivity(t *testing.T, c *ghostfolio.Client) ghostfolio.Activity {
+// ownAsset is the symbol of a MANUAL asset of the owner's own.
+const ownAsset = "3f8e4c1a-6b2d-4e9f-8a7c-1d2e3f4a5b6c"
+
+// addOwnActivity logs c in, makes PLN the user's base currency, and gives
+// the new user's own account an activity on an asset of the owner's own
+// and a cash balance, which no sync may touch, and returns them.
+func addOwnActivity(t *testing.T, hc *http.Client, c *ghostfolio.Client) (ghostfolio.Activity, ghostfolio.Balance) {
 	t.Helper()
 	ctx := t.Context()
 	if err := c.Login(ctx); err != nil {
 		t.Fatalf("Login: %v", err)
 	}
+	send(t, hc, http.MethodPut, "/api/v1/user/setting", map[string]any{"baseCurrency": "PLN"})
 	ids, err := c.Accounts(ctx)
 	if err != nil || len(ids) != 1 {
 		t.Fatalf("Accounts = %v, %v; want the new user's own account", ids, err)
 	}
-	own := activity(t, "own", "1", ghostfolio.TypeFee, "2025-01-02", "PLN", ghostfolio.DataSourceManual, ghostfolio.FeeSymbol(cur(t, "PLN")), "0", "0", "3")
+	own := activity(t, "own", "1", ghostfolio.TypeFee, "2025-01-02", "PLN", ghostfolio.DataSourceManual, ownAsset, "0", "0", "3")
 	own.AccountID, own.Comment = ids[0], "a fee of my own"
-	feeAsset := ghostfolio.AssetProfile{Symbol: own.Symbol, Name: "OpenFief fees (PLN)", Currency: cur(t, "PLN")}
-	if _, err := c.Import(ctx, &ghostfolio.Batch{Activities: []ghostfolio.Activity{own}, Assets: []ghostfolio.AssetProfile{feeAsset}}, false); err != nil {
+	asset := ghostfolio.AssetProfile{Symbol: own.Symbol, Name: "My own fees", Currency: cur(t, "PLN")}
+	if _, err := c.Import(ctx, &ghostfolio.Batch{Activities: []ghostfolio.Activity{own}, Assets: []ghostfolio.AssetProfile{asset}}, false); err != nil {
 		t.Fatalf("importing the owner's own activity: %v", err)
 	}
-	return own
+	return own, setBalance(t, c, ids[0], "2025-01-02", "42")
+}
+
+// legacyBondSymbol is the symbol an earlier version of the view gave the
+// synthetic bond series EDO0136: a UUID version 5 in the view's namespace
+// derived from "bond", a NUL and the series code alone.
+const legacyBondSymbol = "4512a0f0-0f02-594a-8add-87da055fe65d"
+
+// addLegacyBond leaves Ghostfolio as an earlier version of the view would:
+// the owned bond account, holding the opening lot on the bond asset keyed
+// by the series code alone and named by it.
+func addLegacyBond(t *testing.T, c *ghostfolio.Client) {
+	t.Helper()
+	ctx := t.Context()
+	owned := ghostfolio.AccountUUID(instance, bondAccount)
+	if err := c.CreateAccount(ctx, ghostfolio.Account{ID: owned, Name: "Synthetic bonds", Currency: cur(t, "PLN")}); err != nil {
+		t.Fatalf("CreateAccount: %v", err)
+	}
+	old := activity(t, "bonds", "open-1", ghostfolio.TypeBuy, "2024-11-04", "PLN", ghostfolio.DataSourceManual, legacyBondSymbol, "10", "100", "0")
+	old.AccountID = owned
+	asset := ghostfolio.AssetProfile{
+		Symbol: legacyBondSymbol, Name: "EDO0136", ISIN: isinPL, Currency: cur(t, "PLN"), AssetClass: "FIXED_INCOME", AssetSubClass: "BOND",
+		MarketData: []ghostfolio.Price{{Date: date(t, "2025-01-02"), Price: dec(t, "100.41")}},
+	}
+	if _, err := c.Import(ctx, &ghostfolio.Batch{Activities: []ghostfolio.Activity{old}, Assets: []ghostfolio.AssetProfile{asset}}, false); err != nil {
+		t.Fatalf("importing the earlier version's bond: %v", err)
+	}
+}
+
+// setBalance sets account's cash balance on day by hand, as the owner
+// would in Ghostfolio's UI, and returns it.
+func setBalance(t *testing.T, c *ghostfolio.Client, account, day, value string) ghostfolio.Balance {
+	t.Helper()
+	b := ghostfolio.Balance{AccountID: account, Date: date(t, day), Value: dec(t, value)}
+	if err := c.SetBalance(t.Context(), &b); err != nil {
+		t.Fatalf("SetBalance: %v", err)
+	}
+	return b
 }
 
 // syncStep is one sync of a scenario: what changes before it, and what it

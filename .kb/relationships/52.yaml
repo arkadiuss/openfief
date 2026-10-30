@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d25a0aa5681a
+  - type: implements
+    from: SYM-views-ghostfolio-client-balances
+    to: REQ-views-ghostfolio-cash-balances
+    created_at: 2026-10-30T01:26:29.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-907e40d940d0
+  - type: implements
+    from: SYM-views-ghostfolio-client-balances
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-30T01:26:29.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e794acbfd640
+  - type: covered_by
+    from: SYM-views-ghostfolio-client-balances
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:26:29.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd84ae4c2536

@@ -274,13 +274,6 @@ relationships:
     id: rel-638571c33580
   - type: implements
     from: SYM-views-ghostfolio-syncer-apply
-    to: REQ-views-ghostfolio-reconcile
-    created_at: 2026-10-29T01:03:03.669Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-477783d4e9d7
-  - type: implements
-    from: SYM-views-ghostfolio-syncer-apply
     to: REQ-views-ghostfolio-import-before-delete
     created_at: 2026-10-29T01:03:03.695Z
     created_by: kibi/upsert
@@ -384,3 +377,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20a65f8dc0a7
+  - type: implements
+    from: SYM-views-ghostfolio-syncer-apply
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:25:04.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f249674ca0f0

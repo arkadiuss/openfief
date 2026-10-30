@@ -25,6 +25,15 @@ type Ghostfolio interface {
 	Import(ctx context.Context, b *Batch, dryRun bool) ([]ImportedActivity, error)
 	DeleteActivity(ctx context.Context, id string) error
 	DeleteActivitiesInAccounts(ctx context.Context, accounts []string) error
+	CashBalances
+}
+
+// CashBalances is the part of Ghostfolio's API that keeps an account's
+// cash balance history (D-108); *Client implements it.
+type CashBalances interface {
+	Balances(ctx context.Context, account string) ([]Balance, error)
+	SetBalance(ctx context.Context, b *Balance) error
+	DeleteBalance(ctx context.Context, id string) error
 }
 
 // BatchSize is the most activities one import carries, which keeps each
@@ -53,6 +62,8 @@ type Report struct {
 	Imported        int
 	Deleted         int
 	AccountsCleared int
+	BalancesSet     int
+	BalancesDeleted int
 	Problems        []Problem
 }
 
@@ -61,13 +72,17 @@ type Report struct {
 //
 //  1. log in, and refuse while the restricted view is on;
 //  2. read the record and project it (Project);
-//  3. read the owned accounts' activities and plan (MakePlan);
+//  3. read the owned accounts' activities and cash balances, and plan
+//     (MakePlan);
 //  4. create the missing owned accounts with their derived UUIDs;
-//  5. delete the stale activities an import would skip as duplicates;
+//  5. delete the stale activities an import would skip as duplicates or
+//     move to a leftover asset of the same name (Plan.PreDelete);
 //  6. import the missing activities with every asset's price history, each
 //     batch checked first with a dry run (CheckPreview);
 //  7. delete the remaining stale activities, one by one or with a bulk
-//     delete filtered to an owned account.
+//     delete filtered to an owned account;
+//  8. set the owned accounts' cash balances that differ, and delete the
+//     ones on dates that should have none (D-108).
 func (s *Syncer) Sync(ctx context.Context) (Report, error) {
 	g := s.ghostfolio
 	if err := g.Login(ctx); err != nil {
@@ -84,7 +99,7 @@ func (s *Syncer) Sync(ctx context.Context) (Report, error) {
 	if err != nil {
 		return Report{}, err
 	}
-	desired, problems := Project(&Source{Instance: s.instance, Currency: user.BaseCurrency, Accounts: accounts, Listings: s.listings})
+	desired, problems := Project(&Source{Instance: s.instance, User: user.ID, Currency: user.BaseCurrency, Accounts: accounts, Listings: s.listings})
 	actual, err := s.actual(ctx, &desired)
 	if err != nil {
 		return Report{}, err
@@ -95,7 +110,8 @@ func (s *Syncer) Sync(ctx context.Context) (Report, error) {
 	return rep, err
 }
 
-// actual reads which accounts exist and the activities in the owned ones.
+// actual reads which accounts exist, and the activities and cash balances
+// in the owned ones.
 func (s *Syncer) actual(ctx context.Context, desired *Desired) (Actual, error) {
 	ids, err := s.ghostfolio.Accounts(ctx)
 	if err != nil {
@@ -113,6 +129,13 @@ func (s *Syncer) actual(ctx context.Context, desired *Desired) (Actual, error) {
 	}
 	if act.Activities, err = s.ghostfolio.Activities(ctx, owned); err != nil {
 		return Actual{}, fmt.Errorf("listing the owned accounts' activities: %w", err)
+	}
+	for _, id := range owned {
+		bs, err := s.ghostfolio.Balances(ctx, id)
+		if err != nil {
+			return Actual{}, fmt.Errorf("listing an owned account's balances: %w", err)
+		}
+		act.Balances = append(act.Balances, bs...)
 	}
 	return act, nil
 }
@@ -142,6 +165,24 @@ func (s *Syncer) apply(ctx context.Context, p *Plan, rep *Report) error {
 			return fmt.Errorf("emptying owned accounts: %w", err)
 		}
 		rep.AccountsCleared += len(p.Clear)
+	}
+	return s.applyBalances(ctx, p, rep)
+}
+
+// applyBalances sets and deletes the cash balances p names, counting into
+// rep.
+func (s *Syncer) applyBalances(ctx context.Context, p *Plan, rep *Report) error {
+	for i := range p.SetBalances {
+		if err := s.ghostfolio.SetBalance(ctx, &p.SetBalances[i]); err != nil {
+			return fmt.Errorf("setting a cash balance: %w", err)
+		}
+		rep.BalancesSet++
+	}
+	for _, b := range p.DeleteBalances {
+		if err := s.ghostfolio.DeleteBalance(ctx, b.ID); err != nil {
+			return fmt.Errorf("deleting a cash balance: %w", err)
+		}
+		rep.BalancesDeleted++
 	}
 	return nil
 }

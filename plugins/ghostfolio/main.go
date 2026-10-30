@@ -163,7 +163,8 @@ func loop(ctx context.Context, s syncer, interval time.Duration, log *slog.Logge
 			log.Error("sync failed", "error", err.Error())
 		} else {
 			log.Info("synced", "accounts_created", rep.AccountsCreated, "imported", rep.Imported,
-				"deleted", rep.Deleted, "accounts_cleared", rep.AccountsCleared, "left_out", len(rep.Problems))
+				"deleted", rep.Deleted, "accounts_cleared", rep.AccountsCleared, "balances_set", rep.BalancesSet,
+				"balances_deleted", rep.BalancesDeleted, "left_out", len(rep.Problems))
 		}
 		select {
 		case <-ctx.Done():

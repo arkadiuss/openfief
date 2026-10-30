@@ -391,13 +391,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc61ca7e372a
-  - type: implements
-    from: SYM-views-ghostfolio-asset-profile
-    to: REQ-views-ghostfolio-bond-assets
-    created_at: 2026-10-29T00:55:48.851Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dde8ba837eec
   - type: covered_by
     from: SYM-views-ghostfolio-asset-profile
     to: TEST-views-ghostfolio-project
@@ -468,3 +461,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ed517d11e2b
+  - type: implements
+    from: SYM-views-ghostfolio-asset-profile
+    to: REQ-views-ghostfolio-asset-keys
+    created_at: 2026-10-30T01:21:43.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1e8f0e702e2

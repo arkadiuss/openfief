@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b5a0dc30668
+  - type: validates
+    from: TEST-views-ghostfolio-contract
+    to: REQ-views-ghostfolio-cash-balance
+    created_at: 2026-10-30T01:21:36.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8011d936689
+  - type: validates
+    from: TEST-views-ghostfolio-contract
+    to: REQ-views-ghostfolio-bond-asset-symbol
+    created_at: 2026-10-30T01:21:36.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b14271b8b67
