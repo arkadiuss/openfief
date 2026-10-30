@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d1024fbae05
+  - type: executable_for
+    from: SYM-ui-test-overview-links-suggested-transfers
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:29:12.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c63de4548ed6

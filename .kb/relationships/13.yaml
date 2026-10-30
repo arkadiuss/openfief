@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9836c0973ed3
+  - type: executable_for
+    from: SYM-ledger-test-transfer-strings
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:44:51.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e7b2c3ff395

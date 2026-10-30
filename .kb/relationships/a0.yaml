@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-823aac6c6150
+  - type: implements
+    from: SYM-ledgerv1-transaction-key-proto-reflect
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:53:48.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d16f0292ed6a
+  - type: covered_by
+    from: SYM-ledgerv1-transaction-key-proto-reflect
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:53:48.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39ce61470da0

@@ -55198,7 +55198,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-transfers
+        target: REQ-views-performance-confirmed-transfers
   - id: SYM-views-transfer
     title: Transfer
     sourceFile: internal/views/flows.go
@@ -55212,7 +55212,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-transfers
+        target: REQ-views-performance-confirmed-transfers
   - id: SYM-views-transfer-in-transit-on
     title: Transfer.InTransitOn
     sourceFile: internal/views/flows.go
@@ -55225,7 +55225,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-transfers
+        target: REQ-views-performance-confirmed-transfers
       - type: implements
         target: REQ-views-performance-value
   - id: SYM-views-external-flows
@@ -55240,7 +55240,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-transfers
+        target: REQ-views-performance-confirmed-transfers
       - type: implements
         target: REQ-views-performance-twr
   - id: SYM-views-compare-flows
@@ -55255,22 +55255,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-transfers
-  - id: SYM-views-match-transfers
-    title: MatchTransfers
-    sourceFile: internal/views/flows.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T21:02:32.114Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-performance
-      - type: implements
-        target: REQ-portfolio-twr-comparison
-      - type: implements
-        target: REQ-views-performance-transfers
+        target: REQ-views-performance-confirmed-transfers
   - id: SYM-views-nearest-deposit
     title: nearestDeposit
     sourceFile: internal/views/flows.go
@@ -55283,7 +55268,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-transfers
+        target: REQ-views-performance-confirmed-transfers
   - id: SYM-views-performance-gap
     title: PerformanceGap
     sourceFile: internal/views/performance.go
@@ -55394,7 +55379,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-transfers
+        target: REQ-views-performance-confirmed-transfers
   - id: SYM-views-cash-key
     title: cashKey
     sourceFile: internal/views/performance.go
@@ -55516,7 +55501,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-transfers
+        target: REQ-views-performance-confirmed-transfers
       - type: implements
         target: REQ-views-performance-value
   - id: SYM-views-day-builder-flows-on
@@ -55873,26 +55858,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T21:06:45.394Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-performance
-  - id: SYM-views-test-helper-matched
-    title: matched
-    sourceFile: internal/views/performance_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T21:06:49.978Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-performance
-  - id: SYM-views-test-match-transfers
-    title: TestMatchTransfers
-    sourceFile: internal/views/performance_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T21:06:54.463Z
     relationships:
       - type: executable_for
         target: TEST-views-performance
@@ -63959,10 +63924,16 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-model
+      - type: covered_by
+        target: TEST-ui-transfers
       - type: implements
         target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
+      - type: implements
+        target: REQ-ui-performance-chart
+      - type: implements
+        target: REQ-ui-transfers-page
   - id: SYM-ui-model-view
     title: modelView
     sourceFile: internal/views/ui/performance.go
@@ -64083,6 +64054,10 @@ symbols:
         target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
+      - type: implements
+        target: REQ-ui-performance-chart-twr-index
+      - type: implements
+        target: REQ-views-model-line-on-performance-chart
   - id: SYM-ui-server-performance
     title: server.performance
     sourceFile: internal/views/ui/performance.go
@@ -64094,10 +64069,16 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-model
+      - type: covered_by
+        target: TEST-ui-transfers
       - type: implements
         target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
+      - type: implements
+        target: REQ-ui-performance-chart
+      - type: implements
+        target: REQ-ui-transfers-page
   - id: SYM-views-ghostfolio-activity-type
     title: ActivityType
     sourceFile: internal/views/ghostfolio/model.go
@@ -97492,3 +97473,2610 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-kibi-check
+  - id: SYM-ledger-app-test-helper-mem-tx-lock-transfer-links
+    title: memTx.LockTransferLinks
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:35:28.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-helper-mem-store-append-transfer-link
+    title: memStore.AppendTransferLink
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:35:36.607Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-helper-mem-store-transfer-links
+    title: memStore.TransferLinks
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:35:45.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-helper-mem-store-lock-transfer-links
+    title: memStore.LockTransferLinks
+    sourceFile: internal/ledger/app/memstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:35:53.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-transfer-link-store
+    title: TransferLinkStore
+    sourceFile: internal/ledger/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:36:02.352Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-ledger-transfer-link-append-only
+  - id: SYM-ledger-app-owners
+    title: Owners
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:36:10.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-core-owner-entry-service-callers
+  - id: SYM-ledger-app-ledger-transfer-links
+    title: Ledger.TransferLinks
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:36:19.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+  - id: SYM-ledger-app-ledger-decide-transfer
+    title: Ledger.DecideTransfer
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:36:28.548Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-ledger-transfer-leg-once
+      - type: implements
+        target: REQ-ledger-transfer-link-append-only
+  - id: SYM-ledger-app-transfers
+    title: Transfers
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:36:35.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-core-owner-entry-service-callers
+      - type: implements
+        target: REQ-ui-transfer-confirmation
+  - id: SYM-ledger-app-transfer-decider
+    title: TransferDecider
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:36:44.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-ui-transfer-confirmation
+  - id: SYM-ledger-app-transfers-decide
+    title: Transfers.Decide
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:36:54.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-core-owner-entry-service-callers
+      - type: implements
+        target: REQ-ui-transfer-confirmation
+  - id: SYM-ledger-app-decide-in
+    title: decideIn
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:37:03.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+      - type: implements
+        target: REQ-ledger-transfer-leg-once
+  - id: SYM-ledger-app-check-legs
+    title: checkLegs
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:37:12.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-ledger-transfer-legs
+  - id: SYM-ledger-app-current-links
+    title: currentLinks
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:37:21.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+  - id: SYM-ledger-app-current-by-key
+    title: currentByKey
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:37:30.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfers
+      - type: implements
+        target: REQ-ledger-transfer-legs
+  - id: SYM-ledger-app-test-helper-fake-owners
+    title: fakeOwners
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:37:38.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-helper-fake-owners-check-owner
+    title: fakeOwners.CheckOwner
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:37:48.002Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-helper-transfer-ledger
+    title: transferLedger
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:37:57.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-helper-tpair
+    title: tpair
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:38:06.987Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-decide-transfer
+    title: TestDecideTransfer
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:38:15.810Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-helper-step
+    title: step
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:38:24.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-helper-check-decision
+    title: checkDecision
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:38:33.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-transfers-need-the-owner
+    title: TestTransfersNeedTheOwner
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:38:41.326Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-app-test-concurrent-confirmations-take-a-leg-once
+    title: TestConcurrentConfirmationsTakeALegOnce
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:38:49.501Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfers
+  - id: SYM-ledger-connectapi-new-transfers
+    title: NewTransfers
+    sourceFile: internal/ledger/connectapi/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:38:57.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledger-connectapi-transfer-service
+    title: transferService
+    sourceFile: internal/ledger/connectapi/transfers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:39:04.284Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledger-connectapi-transfer-service-confirm-transfer
+    title: transferService.ConfirmTransfer
+    sourceFile: internal/ledger/connectapi/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:39:13.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+      - type: implements
+        target: REQ-ui-transfer-confirmation
+  - id: SYM-ledger-connectapi-transfer-service-reject-transfer
+    title: transferService.RejectTransfer
+    sourceFile: internal/ledger/connectapi/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:39:22.915Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+      - type: implements
+        target: REQ-ui-transfer-confirmation
+  - id: SYM-ledger-connectapi-transfer-service-fail
+    title: transferService.fail
+    sourceFile: internal/ledger/connectapi/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:39:31.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledger-connectapi-pair-from
+    title: pairFrom
+    sourceFile: internal/ledger/connectapi/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:39:40.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledger-connectapi-pb-link
+    title: pbLink
+    sourceFile: internal/ledger/connectapi/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:39:49.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledger-connectapi-test-helper-owners
+    title: owners
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:39:56.555Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-owners-check-owner
+    title: owners.CheckOwner
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:40:04.259Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-decider
+    title: decider
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:40:10.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-decider-decide-transfer
+    title: decider.DecideTransfer
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:40:18.567Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-view-only
+    title: viewOnly
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:40:26.557Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-bearer
+    title: bearer
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:40:34.606Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-client
+    title: client
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:40:42.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-new-client
+    title: newClient
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:40:51.349Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-transfer-service
+    title: TestTransferService
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:40:59.096Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-transfer-service-errors
+    title: TestTransferServiceErrors
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:41:06.642Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-pg-store-append-transfer-link
+    title: Store.AppendTransferLink
+    sourceFile: internal/ledger/postgres/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:41:15.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-transfers
+      - type: implements
+        target: REQ-ledger-transfer-link-append-only
+  - id: SYM-ledger-pg-store-transfer-links
+    title: Store.TransferLinks
+    sourceFile: internal/ledger/postgres/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:41:24.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-transfers
+      - type: implements
+        target: REQ-ledger-transfer-link-append-only
+  - id: SYM-ledger-pg-store-lock-transfer-links
+    title: Store.LockTransferLinks
+    sourceFile: internal/ledger/postgres/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:41:33.413Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-transfers
+      - type: implements
+        target: REQ-ledger-transfer-leg-once
+  - id: SYM-ledger-pg-scan-link
+    title: scanLink
+    sourceFile: internal/ledger/postgres/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:41:44.964Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-transfers
+      - type: implements
+        target: REQ-ledger-transfer-link-append-only
+  - id: SYM-ledger-pg-parse-decision
+    title: parseDecision
+    sourceFile: internal/ledger/postgres/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:41:53.249Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-transfers
+      - type: implements
+        target: REQ-ledger-transfer-link-append-only
+  - id: SYM-ledger-pg-test-helper-link-pair
+    title: linkPair
+    sourceFile: internal/ledger/postgres/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:42:00.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-transfers
+  - id: SYM-ledger-pg-test-transfer-links-round-trip
+    title: TestTransferLinksRoundTrip
+    sourceFile: internal/ledger/postgres/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:42:08.974Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-transfers
+  - id: SYM-ledger-pg-test-transfer-links-are-append-only
+    title: TestTransferLinksAreAppendOnly
+    sourceFile: internal/ledger/postgres/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:42:18.307Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-transfers
+  - id: SYM-ledger-pg-test-decide-transfer-over-postgres
+    title: TestDecideTransferOverPostgres
+    sourceFile: internal/ledger/postgres/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:42:25.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-transfers
+  - id: SYM-ledger-transfer-decision
+    title: TransferDecision
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:42:32.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+  - id: SYM-ledger-transfer-decision-string
+    title: TransferDecision.String
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:42:40.048Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+  - id: SYM-ledger-transfer-pair
+    title: TransferPair
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:42:46.735Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-legs
+  - id: SYM-ledger-transfer-pair-string
+    title: TransferPair.String
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:42:54.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-legs
+  - id: SYM-ledger-transfer-link
+    title: TransferLink
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:43:02.517Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-link-append-only
+  - id: SYM-ledger-transfer-amount
+    title: TransferAmount
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:43:09.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-legs
+  - id: SYM-ledger-check-transfer
+    title: CheckTransfer
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:43:17.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-legs
+      - type: implements
+        target: REQ-ledger-transfer-suggestion
+  - id: SYM-ledger-current-transfer-links
+    title: CurrentTransferLinks
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:43:25.664Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+  - id: SYM-ledger-decide-transfer-link
+    title: DecideTransferLink
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:43:34.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+      - type: implements
+        target: REQ-ledger-transfer-leg-once
+  - id: SYM-ledger-compare-pairs
+    title: comparePairs
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:43:42.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+  - id: SYM-ledger-compare-keys
+    title: compareKeys
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:43:50.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfers
+      - type: implements
+        target: REQ-ledger-transfer-correction
+  - id: SYM-ledger-test-helper-leg
+    title: leg
+    sourceFile: internal/ledger/transfer_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:43:55.983Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfers
+  - id: SYM-ledger-test-helper-key
+    title: key
+    sourceFile: internal/ledger/transfer_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:44:02.437Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfers
+  - id: SYM-ledger-test-helper-pair
+    title: pair
+    sourceFile: internal/ledger/transfer_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:44:11.645Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfers
+  - id: SYM-ledger-test-transfer-amount
+    title: TestTransferAmount
+    sourceFile: internal/ledger/transfer_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:44:18.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfers
+  - id: SYM-ledger-test-check-transfer
+    title: TestCheckTransfer
+    sourceFile: internal/ledger/transfer_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:44:26.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfers
+  - id: SYM-ledger-test-current-transfer-links
+    title: TestCurrentTransferLinks
+    sourceFile: internal/ledger/transfer_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:44:32.759Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfers
+  - id: SYM-ledger-test-decide-transfer-link
+    title: TestDecideTransferLink
+    sourceFile: internal/ledger/transfer_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:44:40.244Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfers
+  - id: SYM-ledger-test-transfer-strings
+    title: TestTransferStrings
+    sourceFile: internal/ledger/transfer_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:44:48.099Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfers
+  - id: SYM-views-app-test-helper-fake-ledger-transfer-links
+    title: fakeLedger.TransferLinks
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:44:56.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-transfers
+  - id: SYM-views-app-transfers
+    title: Transfers
+    sourceFile: internal/views/app/transfers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:45:06.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-app-views-transfers
+    title: Views.Transfers
+    sourceFile: internal/views/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:45:15.668Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-app-test-helper-transfer-key
+    title: transferKey
+    sourceFile: internal/views/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:45:23.609Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-transfers
+  - id: SYM-views-app-test-helper-new-transfer-fixture
+    title: newTransferFixture
+    sourceFile: internal/views/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:45:30.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-transfers
+  - id: SYM-views-app-test-helper-leg-keys
+    title: legKeys
+    sourceFile: internal/views/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:45:37.289Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-transfers
+  - id: SYM-views-app-test-transfers
+    title: TestTransfers
+    sourceFile: internal/views/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:45:44.859Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-transfers
+  - id: SYM-views-app-test-transfers-fail-with-the-ledger
+    title: TestTransfersFailWithTheLedger
+    sourceFile: internal/views/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:45:54.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-transfers
+  - id: SYM-views-connectapi-pb-transfers
+    title: pbTransfers
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:46:04.887Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-connectapi-test-helper-fake-ledger-transfer-links
+    title: fakeLedger.TransferLinks
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:46:17.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-transfers
+  - id: SYM-views-connectapi-read-service-list-transfers
+    title: readService.ListTransfers
+    sourceFile: internal/views/connectapi/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:47:05.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-connectapi-test-helper-transfer-body
+    title: transferBody
+    sourceFile: internal/views/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:47:44.673Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-transfers
+  - id: SYM-views-connectapi-test-helper-transfers-body
+    title: transfersBody
+    sourceFile: internal/views/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:48:26.860Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-transfers
+  - id: SYM-views-connectapi-test-rest-transfers
+    title: TestRESTTransfers
+    sourceFile: internal/views/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:49:09.829Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-transfers
+  - id: SYM-views-transfer-pair
+    title: Transfer.Pair
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:49:20.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-linked-transfers
+    title: LinkedTransfers
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:49:31.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-confirmed-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-confirmed-transfers
+    title: ConfirmedTransfers
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:49:40.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-portfolio-twr-confirmed-transfers-only
+      - type: implements
+        target: REQ-views-performance-confirmed-transfers
+  - id: SYM-views-suggest-transfers
+    title: SuggestTransfers
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:49:50.198Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-ledger-transfer-suggestion
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-legs-match
+    title: legsMatch
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:49:58.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-leg-keys
+    title: legKeys
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:50:06.947Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-confirmed-transfers
+  - id: SYM-views-test-helper-pairs-of
+    title: pairsOf
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:50:14.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-helper-links
+    title: links
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:50:23.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-suggest-transfers
+    title: TestSuggestTransfers
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:50:30.791Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-views-test-confirmed-transfers
+    title: TestConfirmedTransfers
+    sourceFile: internal/views/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:50:39.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-performance
+  - id: SYM-ledgerv1connect-transfer-service-client-interface
+    title: TransferServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:50:48.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-new-transfer-service-client
+    title: NewTransferServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:50:56.953Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-transfer-service-client
+    title: transferServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:51:04.591Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-transfer-service-client-confirm-transfer
+    title: transferServiceClient.ConfirmTransfer
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:51:13.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-transfer-service-client-reject-transfer
+    title: transferServiceClient.RejectTransfer
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:51:21.136Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-transfer-service-handler
+    title: TransferServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:51:29.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-new-transfer-service-handler
+    title: NewTransferServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:51:38.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-unimplemented-transfer-service-handler
+    title: UnimplementedTransferServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:51:46.397Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-unimplemented-transfer-service-handler-confirm-transfer
+    title: UnimplementedTransferServiceHandler.ConfirmTransfer
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:51:55.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1connect-unimplemented-transfer-service-handler-reject-transfer
+    title: UnimplementedTransferServiceHandler.RejectTransfer
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/transfers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:52:03.508Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-decision
+    title: TransferDecision
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:52:10.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-decision-enum
+    title: TransferDecision.Enum
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:52:19.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-decision-string
+    title: TransferDecision.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:52:28.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-decision-descriptor
+    title: TransferDecision.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:52:37.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-decision-type
+    title: TransferDecision.Type
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:52:46.541Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-decision-number
+    title: TransferDecision.Number
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:52:55.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-decision-enum-descriptor
+    title: TransferDecision.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:53:04.932Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transaction-key
+    title: TransactionKey
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:53:12.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transaction-key-reset
+    title: TransactionKey.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:53:21.339Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transaction-key-string
+    title: TransactionKey.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:53:30.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transaction-key-proto-message
+    title: TransactionKey.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:53:37.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transaction-key-proto-reflect
+    title: TransactionKey.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:53:46.177Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transaction-key-descriptor
+    title: TransactionKey.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:53:54.566Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transaction-key-get-source
+    title: TransactionKey.GetSource
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:54:02.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transaction-key-get-external-id
+    title: TransactionKey.GetExternalId
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:54:10.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link
+    title: TransferLink
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:54:17.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-reset
+    title: TransferLink.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:54:25.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-string
+    title: TransferLink.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:54:32.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-proto-message
+    title: TransferLink.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:54:40.212Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-proto-reflect
+    title: TransferLink.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:54:48.402Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-descriptor
+    title: TransferLink.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:54:56.319Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-get-withdrawal
+    title: TransferLink.GetWithdrawal
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:55:04.726Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-get-deposit
+    title: TransferLink.GetDeposit
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:55:13.376Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-get-decision
+    title: TransferLink.GetDecision
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:55:22.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-transfer-link-get-version
+    title: TransferLink.GetVersion
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:55:31.003Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request
+    title: ConfirmTransferRequest
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:55:37.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-reset
+    title: ConfirmTransferRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:55:45.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-string
+    title: ConfirmTransferRequest.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:55:54.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-proto-message
+    title: ConfirmTransferRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:56:01.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-proto-reflect
+    title: ConfirmTransferRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:56:08.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-descriptor
+    title: ConfirmTransferRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:56:16.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-get-origin
+    title: ConfirmTransferRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:56:24.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-get-session-token
+    title: ConfirmTransferRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:56:32.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-get-withdrawal
+    title: ConfirmTransferRequest.GetWithdrawal
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:56:39.853Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-request-get-deposit
+    title: ConfirmTransferRequest.GetDeposit
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:56:47.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-response
+    title: ConfirmTransferResponse
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:56:54.706Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-response-reset
+    title: ConfirmTransferResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:57:03.386Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-response-string
+    title: ConfirmTransferResponse.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:57:12.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-response-proto-message
+    title: ConfirmTransferResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:57:20.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-response-proto-reflect
+    title: ConfirmTransferResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:57:28.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-response-descriptor
+    title: ConfirmTransferResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:57:35.866Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-confirm-transfer-response-get-link
+    title: ConfirmTransferResponse.GetLink
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:57:43.768Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request
+    title: RejectTransferRequest
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:57:50.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-reset
+    title: RejectTransferRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:57:59.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-string
+    title: RejectTransferRequest.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:58:07.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-proto-message
+    title: RejectTransferRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:58:15.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-proto-reflect
+    title: RejectTransferRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:58:22.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-descriptor
+    title: RejectTransferRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:58:29.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-get-origin
+    title: RejectTransferRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:58:37.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-get-session-token
+    title: RejectTransferRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:58:45.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-get-withdrawal
+    title: RejectTransferRequest.GetWithdrawal
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:58:53.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-request-get-deposit
+    title: RejectTransferRequest.GetDeposit
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:59:02.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-response
+    title: RejectTransferResponse
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:59:09.228Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-response-reset
+    title: RejectTransferResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:59:18.034Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-response-string
+    title: RejectTransferResponse.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:59:26.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-response-proto-message
+    title: RejectTransferResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:59:34.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-response-proto-reflect
+    title: RejectTransferResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:59:42.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-response-descriptor
+    title: RejectTransferResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:59:49.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-reject-transfer-response-get-link
+    title: RejectTransferResponse.GetLink
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:59:57.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-file_openfief_ledger_v1_transfers_proto_raw-desc-gzip
+    title: file_openfief_ledger_v1_transfers_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:00:05.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:00:13.690Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-file_openfief_ledger_v1_transfers_proto_init
+    title: file_openfief_ledger_v1_transfers_proto_init
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:00:22.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-ledgerv1-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/ledger/v1/transfers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:00:30.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-ledger-transfer-service
+  - id: SYM-views-pb-transfer-get-withdrawal-source
+    title: Transfer.GetWithdrawalSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:00:39.846Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-transfer-get-withdrawal-external-id
+    title: Transfer.GetWithdrawalExternalId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:00:54.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-transfer-get-deposit-source
+    title: Transfer.GetDepositSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:01:06.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-transfer-get-deposit-external-id
+    title: Transfer.GetDepositExternalId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:01:18.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-request
+    title: ListTransfersRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:01:27.276Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-request-reset
+    title: ListTransfersRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:01:37.602Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-request-string
+    title: ListTransfersRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:01:47.042Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-request-proto-message
+    title: ListTransfersRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:01:57.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-request-proto-reflect
+    title: ListTransfersRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:02:07.803Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-request-descriptor
+    title: ListTransfersRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:02:18.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response
+    title: ListTransfersResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:02:28.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response-reset
+    title: ListTransfersResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:02:39.869Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response-string
+    title: ListTransfersResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:02:51.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response-proto-message
+    title: ListTransfersResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:03:01.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response-proto-reflect
+    title: ListTransfersResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:03:11.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response-descriptor
+    title: ListTransfersResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:03:23.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response-get-suggested
+    title: ListTransfersResponse.GetSuggested
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:03:33.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response-get-confirmed
+    title: ListTransfersResponse.GetConfirmed
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:03:43.200Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-views-pb-list-transfers-response-get-rejected
+    title: ListTransfersResponse.GetRejected
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:03:54.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-viewsv1connect-read-service-client-list-transfers
+    title: readServiceClient.ListTransfers
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:04:04.785Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-viewsv1connect-unimplemented-read-service-handler-list-transfers
+    title: UnimplementedReadServiceHandler.ListTransfers
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:04:16.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-transfers
+      - type: implements
+        target: REQ-views-transfer-suggestions
+  - id: SYM-core-ledger-owners
+    title: ledgerOwners
+    sourceFile: cmd/core/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:25:49.203Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-transfers
+      - type: implements
+        target: REQ-core-owner-entry-service-callers
+  - id: SYM-core-new-transfers
+    title: newTransfers
+    sourceFile: cmd/core/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:25:58.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-transfers
+      - type: implements
+        target: REQ-core-owner-entry-services
+  - id: SYM-core-with-transfer-service
+    title: withTransferService
+    sourceFile: cmd/core/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:26:07.069Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-transfers
+      - type: implements
+        target: REQ-core-owner-entry-service-callers
+      - type: implements
+        target: REQ-core-owner-entry-services
+  - id: SYM-core-test-helper-transfer-api
+    title: transferAPI
+    sourceFile: cmd/core/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:26:16.351Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-transfers
+  - id: SYM-core-test-helper-transfer-client
+    title: transferClient
+    sourceFile: cmd/core/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:26:27.250Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-transfers
+  - id: SYM-core-test-transfer-service
+    title: TestTransferService
+    sourceFile: cmd/core/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:26:37.402Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-transfers
+  - id: SYM-ui-transfers-view
+    title: transfersView
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:26:47.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-server-transfers-page
+    title: server.transfersPage
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:26:56.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-server-render-transfers
+    title: server.renderTransfers
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:27:04.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-server-suggested-transfers
+    title: server.suggestedTransfers
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:27:14.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-server-confirm-transfer
+    title: server.confirmTransfer
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:27:23.139Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfer-confirmation
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-server-reject-transfer
+    title: server.rejectTransfer
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:27:31.384Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfer-confirmation
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-server-decide-transfer
+    title: server.decideTransfer
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:27:39.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-transfer-form
+    title: transferForm
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:27:47.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-parse-transfer-form
+    title: parseTransferForm
+    sourceFile: internal/views/ui/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:27:55.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-transfers-page
+  - id: SYM-ui-test-helper-fake-transfers
+    title: fakeTransfers
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:28:03.467Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-helper-fake-transfers-confirm-transfer
+    title: fakeTransfers.ConfirmTransfer
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:28:11.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-helper-fake-transfers-reject-transfer
+    title: fakeTransfers.RejectTransfer
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:28:20.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-helper-fake-transfers-decide
+    title: fakeTransfers.decide
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:28:28.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-helper-fake-read-list-transfers
+    title: fakeRead.ListTransfers
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:28:37.109Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-helper-transfer-post
+    title: transferPost
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:28:44.994Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-transfers-page
+    title: TestTransfersPage
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:28:54.164Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-transfers-refusals
+    title: TestTransfersRefusals
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:29:02.305Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-overview-links-suggested-transfers
+    title: TestOverviewLinksSuggestedTransfers
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:29:09.989Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers

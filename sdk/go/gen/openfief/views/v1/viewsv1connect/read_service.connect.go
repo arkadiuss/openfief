@@ -105,6 +105,9 @@ const (
 	// ReadServiceGetPerformanceProcedure is the fully-qualified name of the ReadService's
 	// GetPerformance RPC.
 	ReadServiceGetPerformanceProcedure = "/openfief.views.v1.ReadService/GetPerformance"
+	// ReadServiceListTransfersProcedure is the fully-qualified name of the ReadService's ListTransfers
+	// RPC.
+	ReadServiceListTransfersProcedure = "/openfief.views.v1.ReadService/ListTransfers"
 	// ReadServiceGetModelPortfolioProcedure is the fully-qualified name of the ReadService's
 	// GetModelPortfolio RPC.
 	ReadServiceGetModelPortfolioProcedure = "/openfief.views.v1.ReadService/GetModelPortfolio"
@@ -187,10 +190,19 @@ type ReadServiceClient interface {
 	// GetPerformance returns the portfolio's time-weighted return per day
 	// (D-61) as an index that starts at 100, with the portfolio's value
 	// including cash, in the reporting currency. Deposits and withdrawals are
-	// not performance; transfers between the owner's own accounts are not cash
-	// flows. The series stops at the last day every account is valued for,
-	// and says why.
+	// not performance; transfers between the owner's own accounts that the
+	// owner confirmed (D-105) are not cash flows. The series stops at the last
+	// day every account is valued for, and says why.
 	GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error)
+	// ListTransfers returns the transfers between the owner's own accounts
+	// (D-105): those suggested for the owner to confirm or reject, and the
+	// pairs the owner confirmed or rejected. A withdrawal is suggested with
+	// the nearest deposit in date into another account of exactly the same
+	// amount and currency, at most five calendar days apart, that is not
+	// already taken or rejected with it. Only confirmed transfers are left out
+	// of the performance's cash flows. Decisions are made through the owner's
+	// TransferService, not here.
+	ListTransfers(context.Context, *connect.Request[v1.ListTransfersRequest]) (*connect.Response[v1.ListTransfersResponse], error)
 	// GetModelPortfolio returns the model portfolio (D-52) with its backtest
 	// (D-53) as an index that starts at 100 on go-live, like the
 	// performance series, and the max drawdown of the model and of each
@@ -356,6 +368,13 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		listTransfers: connect.NewClient[v1.ListTransfersRequest, v1.ListTransfersResponse](
+			httpClient,
+			baseURL+ReadServiceListTransfersProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListTransfers")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 		getModelPortfolio: connect.NewClient[v1.GetModelPortfolioRequest, v1.GetModelPortfolioResponse](
 			httpClient,
 			baseURL+ReadServiceGetModelPortfolioProcedure,
@@ -395,6 +414,7 @@ type readServiceClient struct {
 	listPriceChecks       *connect.Client[v1.ListPriceChecksRequest, v1.ListPriceChecksResponse]
 	getAllocation         *connect.Client[v1.GetAllocationRequest, v1.GetAllocationResponse]
 	getPerformance        *connect.Client[v1.GetPerformanceRequest, v1.GetPerformanceResponse]
+	listTransfers         *connect.Client[v1.ListTransfersRequest, v1.ListTransfersResponse]
 	getModelPortfolio     *connect.Client[v1.GetModelPortfolioRequest, v1.GetModelPortfolioResponse]
 	listPlugins           *connect.Client[v1.ListPluginsRequest, v1.ListPluginsResponse]
 }
@@ -499,6 +519,11 @@ func (c *readServiceClient) GetPerformance(ctx context.Context, req *connect.Req
 	return c.getPerformance.CallUnary(ctx, req)
 }
 
+// ListTransfers calls openfief.views.v1.ReadService.ListTransfers.
+func (c *readServiceClient) ListTransfers(ctx context.Context, req *connect.Request[v1.ListTransfersRequest]) (*connect.Response[v1.ListTransfersResponse], error) {
+	return c.listTransfers.CallUnary(ctx, req)
+}
+
 // GetModelPortfolio calls openfief.views.v1.ReadService.GetModelPortfolio.
 func (c *readServiceClient) GetModelPortfolio(ctx context.Context, req *connect.Request[v1.GetModelPortfolioRequest]) (*connect.Response[v1.GetModelPortfolioResponse], error) {
 	return c.getModelPortfolio.CallUnary(ctx, req)
@@ -584,10 +609,19 @@ type ReadServiceHandler interface {
 	// GetPerformance returns the portfolio's time-weighted return per day
 	// (D-61) as an index that starts at 100, with the portfolio's value
 	// including cash, in the reporting currency. Deposits and withdrawals are
-	// not performance; transfers between the owner's own accounts are not cash
-	// flows. The series stops at the last day every account is valued for,
-	// and says why.
+	// not performance; transfers between the owner's own accounts that the
+	// owner confirmed (D-105) are not cash flows. The series stops at the last
+	// day every account is valued for, and says why.
 	GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error)
+	// ListTransfers returns the transfers between the owner's own accounts
+	// (D-105): those suggested for the owner to confirm or reject, and the
+	// pairs the owner confirmed or rejected. A withdrawal is suggested with
+	// the nearest deposit in date into another account of exactly the same
+	// amount and currency, at most five calendar days apart, that is not
+	// already taken or rejected with it. Only confirmed transfers are left out
+	// of the performance's cash flows. Decisions are made through the owner's
+	// TransferService, not here.
+	ListTransfers(context.Context, *connect.Request[v1.ListTransfersRequest]) (*connect.Response[v1.ListTransfersResponse], error)
 	// GetModelPortfolio returns the model portfolio (D-52) with its backtest
 	// (D-53) as an index that starts at 100 on go-live, like the
 	// performance series, and the max drawdown of the model and of each
@@ -749,6 +783,13 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	readServiceListTransfersHandler := connect.NewUnaryHandler(
+		ReadServiceListTransfersProcedure,
+		svc.ListTransfers,
+		connect.WithSchema(readServiceMethods.ByName("ListTransfers")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	readServiceGetModelPortfolioHandler := connect.NewUnaryHandler(
 		ReadServiceGetModelPortfolioProcedure,
 		svc.GetModelPortfolio,
@@ -805,6 +846,8 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 			readServiceGetAllocationHandler.ServeHTTP(w, r)
 		case ReadServiceGetPerformanceProcedure:
 			readServiceGetPerformanceHandler.ServeHTTP(w, r)
+		case ReadServiceListTransfersProcedure:
+			readServiceListTransfersHandler.ServeHTTP(w, r)
 		case ReadServiceGetModelPortfolioProcedure:
 			readServiceGetModelPortfolioHandler.ServeHTTP(w, r)
 		case ReadServiceListPluginsProcedure:
@@ -896,6 +939,10 @@ func (UnimplementedReadServiceHandler) GetAllocation(context.Context, *connect.R
 
 func (UnimplementedReadServiceHandler) GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.GetPerformance is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListTransfers(context.Context, *connect.Request[v1.ListTransfersRequest]) (*connect.Response[v1.ListTransfersResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListTransfers is not implemented"))
 }
 
 func (UnimplementedReadServiceHandler) GetModelPortfolio(context.Context, *connect.Request[v1.GetModelPortfolioRequest]) (*connect.Response[v1.GetModelPortfolioResponse], error) {

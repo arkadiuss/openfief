@@ -587,3 +587,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-360a9334483c
+  - type: executable_for
+    from: SYM-ledger-pg-test-transfer-links-are-append-only
+    to: TEST-ledger-pg-transfers
+    created_at: 2026-10-30T06:42:21.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83a19bd4e094

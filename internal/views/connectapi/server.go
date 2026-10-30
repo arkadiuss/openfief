@@ -321,6 +321,17 @@ func (s *readService) GetPerformance(ctx context.Context, req *connect.Request[v
 	return connect.NewResponse(pbPerformance(&p, s.views.ReportingCurrency())), nil
 }
 
+// ListTransfers answers GET /v1/transfers (D-105).
+func (s *readService) ListTransfers(ctx context.Context, _ *connect.Request[viewsv1.ListTransfersRequest]) (*connect.Response[viewsv1.ListTransfersResponse], error) {
+	ts, err := s.views.Transfers(ctx)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	return connect.NewResponse(&viewsv1.ListTransfersResponse{
+		Suggested: pbTransfers(ts.Suggested), Confirmed: pbTransfers(ts.Confirmed), Rejected: pbTransfers(ts.Rejected),
+	}), nil
+}
+
 // GetModelPortfolio answers GET /v1/model-portfolio: not found while the
 // model portfolio is off (D-52).
 func (s *readService) GetModelPortfolio(ctx context.Context, req *connect.Request[viewsv1.GetModelPortfolioRequest]) (*connect.Response[viewsv1.GetModelPortfolioResponse], error) {

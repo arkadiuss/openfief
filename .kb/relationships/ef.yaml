@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e38eef84294
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-decider-decide-transfer
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:40:21.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a27a0f689eb3

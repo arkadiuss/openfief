@@ -664,3 +664,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17f8895182c1
+  - type: constrains
+    from: REQ-views-transfer-suggestions
+    to: FACT-SUBJECT-AC29AA1365C0438F
+    created_at: 2026-10-30T06:20:30.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dc5d3071c28
+  - type: requires_property
+    from: REQ-views-transfer-suggestions
+    to: FACT-PROP-167C42F51FBA6FB2
+    created_at: 2026-10-30T06:20:30.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cee995f8275
+  - type: specified_by
+    from: REQ-views-transfer-suggestions
+    to: SCEN-views-transfer-suggestions
+    created_at: 2026-10-30T06:20:30.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3d5d01ba46
+  - type: implements
+    from: SYM-ledgerv1-transfer-link-proto-message
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:54:43.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a91ba4aafeb1
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-link-proto-message
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:54:43.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4f7b9d203e4

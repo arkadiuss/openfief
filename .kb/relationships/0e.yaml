@@ -461,3 +461,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e759f3270db
+  - type: implements
+    from: SYM-ledgerv1-confirm-transfer-request
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:55:40.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f032d3226bc
+  - type: covered_by
+    from: SYM-ledgerv1-confirm-transfer-request
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:55:40.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deaf70acfb9b
+  - type: executable_for
+    from: SYM-ui-test-transfers-page
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:28:56.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95860af81e26

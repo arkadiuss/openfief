@@ -475,3 +475,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-217b54cffee9
+  - type: implements
+    from: SYM-ledger-app-current-links
+    to: REQ-ledger-transfer-correction
+    created_at: 2026-10-30T06:37:24.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72fc31e4a69c
+  - type: covered_by
+    from: SYM-ledger-app-current-links
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:37:24.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81d1a64988a0
+  - type: implements
+    from: SYM-ledgerv1-file_openfief_ledger_v1_transfers_proto_init
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T07:00:24.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8347c73f40e
+  - type: covered_by
+    from: SYM-ledgerv1-file_openfief_ledger_v1_transfers_proto_init
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T07:00:24.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8599c724532

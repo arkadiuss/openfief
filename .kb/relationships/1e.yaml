@@ -482,3 +482,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-178731c6a173
+  - type: implements
+    from: SYM-views-suggest-transfers
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T06:49:53.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-571a4b0b9f5a
+  - type: implements
+    from: SYM-views-suggest-transfers
+    to: REQ-ledger-transfer-suggestion
+    created_at: 2026-10-30T06:49:53.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8087b43ecc46
+  - type: covered_by
+    from: SYM-views-suggest-transfers
+    to: TEST-views-performance
+    created_at: 2026-10-30T06:49:53.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-938e73749897
+  - type: implements
+    from: SYM-ledgerv1-transfer-decision-number
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:52:59.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9efbb6e7b70
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-decision-number
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:52:59.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7952e79f8fe9
+  - type: implements
+    from: SYM-ledgerv1-confirm-transfer-request-proto-message
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:56:03.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d601a3fda662
+  - type: covered_by
+    from: SYM-ledgerv1-confirm-transfer-request-proto-message
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:56:03.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-973a9bdc1bc3

@@ -74,6 +74,9 @@ type PerformanceInput struct {
 	// cash is in.
 	Rates     []valuation.FXRate
 	Reporting kernel.Currency
+	// Links are the owner's current transfer links (D-105): only the
+	// confirmed ones leave cash flows out.
+	Links []ledger.TransferLink
 }
 
 // PerformanceDay is the portfolio at the end of one day, in the reporting
@@ -91,8 +94,8 @@ type PerformanceDay struct {
 }
 
 // PerformanceSeries is the portfolio's time-weighted return per day (D-61),
-// with the transfers between its accounts that were not counted as cash
-// flows. Gap says why Days ends before the last day asked for.
+// with the confirmed transfers between its accounts, which were not counted
+// as cash flows. Gap says why Days ends before the last day asked for.
 type PerformanceSeries struct {
 	Days      []PerformanceDay
 	Gap       PerformanceGap
@@ -106,8 +109,9 @@ type PerformanceSeries struct {
 // external cash flows so they don't count as performance. Flows are taken
 // at the end of their day: a day's factor is (value - flow) / the previous
 // day's value, rounded to TWRPlaces, and 1 when the previous value is not
-// positive. External flows are deposits and withdrawals (MatchTransfers
-// leaves transfers out) and opening lots, at their share of the holding's
+// positive. External flows are deposits and withdrawals, but not the legs of
+// a transfer the owner confirmed (ConfirmedTransfers, D-105), and opening
+// lots, at their share of the holding's
 // valuation. The series stops before the first day that lacks an input,
 // naming the gap. Stored valuations are in PLN, so only PLN reporting adds
 // up; any other is an error wrapping ErrNotReportingCurrency.
@@ -118,7 +122,7 @@ func Performance(in *PerformanceInput) (PerformanceSeries, error) {
 	if !in.Reporting.Equal(valuation.PLN()) {
 		return PerformanceSeries{}, fmt.Errorf("performance: %w %s: valuations are in %s", ErrNotReportingCurrency, in.Reporting, valuation.PLN())
 	}
-	transfers, external := MatchTransfers(ExternalFlows(in.Transactions), TransferWindowDays)
+	transfers, external := ConfirmedTransfers(ExternalFlows(in.Transactions), in.Links)
 	b := newDayBuilder(in, external, transfers)
 	out := PerformanceSeries{Transfers: transfersIn(transfers, in.From, in.To)}
 	growth := kernel.NewDecimal(1, 0)

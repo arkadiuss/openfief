@@ -102,6 +102,13 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the minimum is an amount in any currency, converted at the FX rate of the valuation's day (a missing rate leaves the liquidation value missing); the commission applies to holdings priced at market only, not to bonds or cash; and foreign means priced in another currency than the pack's, PLN for Poland. The minimum applies to the commission alone, before the conversion percentage is added.
    - *Options:* keep; or tie the minimum to the instrument's currency; or charge the conversion percentage on foreign cash too.
 
+## Performance
+
+19. **What happens to a transfer decision when a leg is corrected.**
+   - *Problem:* D-105 stores the owner's confirmed link append-only, keyed by the two transactions. A broker can later correct either leg (D-18), say its amount or date, so that the two are no longer one possible transfer.
+   - *Today:* the link stays stored, but it counts only while the legs' current versions are still a withdrawal and a deposit of the opposite amount in different accounts; otherwise both legs are cash flows again and the pair is no longer listed as confirmed. The owner's rejections are stored the same way, so a rejected pair is never suggested again, and a leg can be in only one confirmed transfer.
+   - *Options:* keep; flag a broken link for the owner to look at, like a flagged balance assertion; or ask the owner again by suggesting the corrected pair.
+
 ## Tooling
 
 17. **The kibi gate recompiles a broken store once.**

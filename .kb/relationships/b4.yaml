@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74d1aa691426
+  - type: implements
+    from: SYM-views-pb-transfer-get-deposit-source
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:01:10.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5ab3abc8d4a
+  - type: covered_by
+    from: SYM-views-pb-transfer-get-deposit-source
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:01:10.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35b58825b9d9

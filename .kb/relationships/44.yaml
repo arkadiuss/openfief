@@ -665,5 +665,32 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-c27bab61e1e7
+      },
+    {
+        type: executable_for,
+        from: SYM-ledger-connectapi-test-helper-owners,
+        to: TEST-ledger-connectapi-transfers,
+        created_at: 2026-10-30T06:39:58.891Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-21a6036435fb
+      },
+    {
+        type: implements,
+        from: SYM-ledger-pg-store-lock-transfer-links,
+        to: REQ-ledger-transfer-leg-once,
+        created_at: 2026-10-30T06:41:37.021Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-6e0b57b2972d
+      },
+    {
+        type: covered_by,
+        from: SYM-ledger-pg-store-lock-transfer-links,
+        to: TEST-ledger-pg-transfers,
+        created_at: 2026-10-30T06:41:37.337Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-47e439d16086
       }
   ]

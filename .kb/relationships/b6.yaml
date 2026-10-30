@@ -321,3 +321,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dad81e3b3893
+  - type: implements
+    from: SYM-ledgerv1-transfer-link-get-deposit
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:55:16.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2da03c4b63c
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-link-get-deposit
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:55:16.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-547fd49d75df
+  - type: implements
+    from: SYM-views-pb-transfer-get-withdrawal-source
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:00:44.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-087884842cc1
+  - type: covered_by
+    from: SYM-views-pb-transfer-get-withdrawal-source
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:00:44.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad4d0177b31

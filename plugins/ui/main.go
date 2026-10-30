@@ -27,6 +27,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/views/ui"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
@@ -98,6 +99,7 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		Accounts:   ingestv1connect.NewAccountServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		MarketData: valuationv1connect.NewMarketDataServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Settings:   valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Transfers:  ledgerv1connect.NewTransferServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Read:       viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:        log,
 	})

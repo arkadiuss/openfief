@@ -328,3 +328,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05cf442b8d04
+  - type: implements
+    from: SYM-ledgerv1connect-transfer-service-client-reject-transfer
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:51:23.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1457ee23e07b
+  - type: covered_by
+    from: SYM-ledgerv1connect-transfer-service-client-reject-transfer
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:51:23.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54e08dce46bd
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-request-get-withdrawal
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:58:56.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0054cd792263
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-request-get-withdrawal
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:58:56.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93fcc0b6bc30

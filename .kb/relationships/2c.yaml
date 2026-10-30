@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e089426d8bc
+  - type: executable_for
+    from: SYM-views-app-test-helper-leg-keys
+    to: TEST-views-app-transfers
+    created_at: 2026-10-30T06:45:39.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-083e7e815226

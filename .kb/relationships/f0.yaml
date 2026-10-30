@@ -489,3 +489,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab27db794f3a
+  - type: executable_for
+    from: SYM-core-test-transfer-service
+    to: TEST-core-transfers
+    created_at: 2026-10-30T07:26:40.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ac4c7d6519f

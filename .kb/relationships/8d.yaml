@@ -461,3 +461,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9dfac858e3b8
+  - type: implements
+    from: SYM-ledger-app-transfer-decider
+    to: REQ-ui-transfer-confirmation
+    created_at: 2026-10-30T06:36:47.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55bcfd5a7d55
+  - type: covered_by
+    from: SYM-ledger-app-transfer-decider
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:36:47.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c18d1cccc723
+  - type: implements
+    from: SYM-views-app-views-transfers
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T06:45:18.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65fbb4a863c4
+  - type: covered_by
+    from: SYM-views-app-views-transfers
+    to: TEST-views-app-transfers
+    created_at: 2026-10-30T06:45:18.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bebfa2094f6e
+  - type: executable_for
+    from: SYM-views-test-helper-pairs-of
+    to: TEST-views-performance
+    created_at: 2026-10-30T06:50:17.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34cff65fb842
+  - type: implements
+    from: SYM-ledgerv1-transaction-key-reset
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:53:24.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-985a4800e74f
+  - type: covered_by
+    from: SYM-ledgerv1-transaction-key-reset
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:53:24.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e133e632fc7f

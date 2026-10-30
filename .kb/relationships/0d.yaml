@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f32730d40cc7
+  - type: implements
+    from: SYM-views-legs-match
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T06:50:01.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d57c70ffdb17
+  - type: covered_by
+    from: SYM-views-legs-match
+    to: TEST-views-performance
+    created_at: 2026-10-30T06:50:01.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7f18dd53b7b

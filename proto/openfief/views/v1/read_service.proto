@@ -173,12 +173,25 @@ service ReadService {
   // GetPerformance returns the portfolio's time-weighted return per day
   // (D-61) as an index that starts at 100, with the portfolio's value
   // including cash, in the reporting currency. Deposits and withdrawals are
-  // not performance; transfers between the owner's own accounts are not cash
-  // flows. The series stops at the last day every account is valued for,
-  // and says why.
+  // not performance; transfers between the owner's own accounts that the
+  // owner confirmed (D-105) are not cash flows. The series stops at the last
+  // day every account is valued for, and says why.
   rpc GetPerformance(GetPerformanceRequest) returns (GetPerformanceResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/performance"};
+  }
+
+  // ListTransfers returns the transfers between the owner's own accounts
+  // (D-105): those suggested for the owner to confirm or reject, and the
+  // pairs the owner confirmed or rejected. A withdrawal is suggested with
+  // the nearest deposit in date into another account of exactly the same
+  // amount and currency, at most five calendar days apart, that is not
+  // already taken or rejected with it. Only confirmed transfers are left out
+  // of the performance's cash flows. Decisions are made through the owner's
+  // TransferService, not here.
+  rpc ListTransfers(ListTransfersRequest) returns (ListTransfersResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/transfers"};
   }
 
   // GetModelPortfolio returns the model portfolio (D-52) with its backtest
@@ -826,9 +839,9 @@ message PerformanceDay {
   Money flow_reporting = 7;
 }
 
-// Transfer is a withdrawal from one of the owner's accounts matched with a
+// Transfer is a withdrawal from one of the owner's accounts paired with a
 // deposit of the same amount and currency into another, at most five days
-// apart: not a cash flow.
+// apart (D-105): suggested, or confirmed or rejected by the owner.
 message Transfer {
   string withdrawal_account_id = 1;
   // YYYY-MM-DD.
@@ -837,6 +850,22 @@ message Transfer {
   // YYYY-MM-DD.
   string deposit_date = 4;
   Money amount = 5;
+  // The legs' transaction keys, as ListTransactions gives them.
+  string withdrawal_source = 6;
+  string withdrawal_external_id = 7;
+  string deposit_source = 8;
+  string deposit_external_id = 9;
+}
+
+message ListTransfersRequest {}
+
+message ListTransfersResponse {
+  // Suggested pairs, in the withdrawals' date order.
+  repeated Transfer suggested = 1;
+  // Pairs the owner confirmed: neither leg is a cash flow.
+  repeated Transfer confirmed = 2;
+  // Pairs the owner rejected: both legs stay cash flows.
+  repeated Transfer rejected = 3;
 }
 
 message GetPerformanceRequest {
@@ -860,7 +889,7 @@ message GetPerformanceResponse {
   // A revaluation of some account is pending or running, so the series
   // may change.
   bool revaluation_pending = 5;
-  // The transfers between the owner's accounts with a leg in the range.
+  // The confirmed transfers between the owner's accounts with a leg in the range.
   repeated Transfer transfers = 6;
   // The currency of every *_reporting value.
   string reporting_currency = 7;

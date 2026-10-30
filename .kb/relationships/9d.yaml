@@ -454,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-483ebfa75fde
+  - type: implements
+    from: SYM-ledger-app-owners
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-30T06:36:13.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b974fb1e1f4f
+  - type: covered_by
+    from: SYM-ledger-app-owners
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:36:13.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1239e58c5ca5

@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23a6453320b7
+  - type: implements
+    from: SYM-ledgerv1-transaction-key-get-external-id
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:54:13.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c739f2cb2d01
+  - type: covered_by
+    from: SYM-ledgerv1-transaction-key-get-external-id
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:54:13.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b22346af822c

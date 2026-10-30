@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69c4d5f3017a
+  - type: verified_by
+    from: SCEN-ui-transfers-page
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T06:32:33.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a4be86915f

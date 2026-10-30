@@ -587,3 +587,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8a9547fbf9cb
+  - type: constrains
+    from: REQ-ledger-transfer-leg-once
+    to: FACT-SUBJECT-2ED66112542A7725
+    created_at: 2026-10-30T06:06:11.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88e3a6e1376e
+  - type: requires_property
+    from: REQ-ledger-transfer-leg-once
+    to: FACT-PROP-D90DD990C76A8BA9
+    created_at: 2026-10-30T06:06:11.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d49f261e2480
+  - type: specified_by
+    from: REQ-ledger-transfer-leg-once
+    to: SCEN-ledger-transfer-leg-once
+    created_at: 2026-10-30T06:06:11.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32afcf9da321

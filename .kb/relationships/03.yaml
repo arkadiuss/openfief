@@ -335,13 +335,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23e20263eb98
-  - type: implements
-    from: SYM-views-external-flows
-    to: REQ-views-performance-transfers
-    created_at: 2026-10-28T21:02:23.800Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f870154aa6c6
   - type: covered_by
     from: SYM-views-external-flows
     to: TEST-views-performance
@@ -692,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1729ae3b55aa
+  - type: implements
+    from: SYM-views-external-flows
+    to: REQ-views-performance-confirmed-transfers
+    created_at: 2026-10-30T06:21:47.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77fe6b554fcb
+  - type: executable_for
+    from: SYM-ui-test-transfers-refusals
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:29:04.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fd69046cded

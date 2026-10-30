@@ -545,3 +545,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09703dd60db4
+  - type: implements
+    from: SYM-views-connectapi-pb-transfers
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T06:46:08.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58beeb9152f5
+  - type: covered_by
+    from: SYM-views-connectapi-pb-transfers
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T06:46:08.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5086d04548be
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-response-proto-message
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:59:37.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26f8ec1fb548
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-response-proto-message
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:59:37.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1250bd7500a6
+  - type: implements
+    from: SYM-views-pb-list-transfers-response-reset
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:02:43.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cb7b12c42ba
+  - type: covered_by
+    from: SYM-views-pb-list-transfers-response-reset
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:02:43.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88d1a081e9ed

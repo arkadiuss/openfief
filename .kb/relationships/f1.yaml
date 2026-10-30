@@ -454,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7775d171a35d
+  - type: implements
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-list-transfers
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:04:20.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3897c5baac22
+  - type: covered_by
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-list-transfers
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:04:20.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9a2f6fb1581
