@@ -46,3 +46,7 @@ docs/DESIGN.md#D-64
 > The Ghostfolio plugin books a dividend as quantity 1 at the gross amount, with the withheld tax as its fee, and a standalone fee against a manual "OpenFief fees" asset per currency. Each of its Ghostfolio accounts' cash balance follows OpenFief's cash, so Ghostfolio's totals include it. Listed instruments need the owner's mapping from ISIN to Ghostfolio's data source and symbol.
 
 docs/DESIGN.md#D-108
+
+## Why this changed
+
+D-64 was amended: a bond's MANUAL asset symbol now derives from the plugin instance as well as the series code, so two installs sharing one Ghostfolio never collide. This package also keys the fee assets of D-108 the same way and adds the Ghostfolio user's ID, since symbols are unique across all of Ghostfolio's users.

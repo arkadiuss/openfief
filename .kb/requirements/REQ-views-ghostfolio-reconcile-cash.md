@@ -46,3 +46,7 @@ docs/DESIGN.md#D-64
 > The Ghostfolio plugin books a dividend as quantity 1 at the gross amount, with the withheld tax as its fee, and a standalone fee against a manual "OpenFief fees" asset per currency. Each of its Ghostfolio accounts' cash balance follows OpenFief's cash, so Ghostfolio's totals include it. Listed instruments need the owner's mapping from ISIN to Ghostfolio's data source and symbol.
 
 docs/DESIGN.md#D-108
+
+## Why this changed
+
+D-108 makes each owned account's cash balance follow OpenFief's cash, so the sync now reconciles balances too; and the re-keyed assets of the amended D-64 need stale activities on leftover MANUAL assets deleted before an import, because Ghostfolio's import would otherwise reuse the leftover asset of the same name.
