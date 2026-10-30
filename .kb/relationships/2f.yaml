@@ -384,13 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e3783e63156
-  - type: implements
-    from: SYM-ui-server-flagged-price-checks
-    to: REQ-ui-price-checks
-    created_at: 2026-10-29T07:05:54.141Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-acd36efedc53
   - type: covered_by
     from: SYM-ui-server-flagged-price-checks
     to: TEST-ui-pricechecks
@@ -475,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bf0a1f66291
+  - type: implements
+    from: SYM-ui-server-flagged-price-checks
+    to: REQ-ui-price-checks-page
+    created_at: 2026-10-30T05:19:58.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9970135151c
+  - type: implements
+    from: SYM-demo-close-on-or-before
+    to: REQ-demo-dataset-flagged-price-check
+    created_at: 2026-10-30T06:16:54.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f4590d45c7e
+  - type: covered_by
+    from: SYM-demo-close-on-or-before
+    to: TEST-demo-cross-checks
+    created_at: 2026-10-30T06:16:54.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f074d6ad2eb

@@ -685,3 +685,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89ec4bde5ba0
+  - type: implements
+    from: SYM-ui-uc-server-after-price-check-form
+    to: REQ-ui-price-checks-page
+    created_at: 2026-10-30T06:19:11.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c7baf48828f
+  - type: covered_by
+    from: SYM-ui-uc-server-after-price-check-form
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:19:11.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e37bc49c416
+  - type: executable_for
+    from: SYM-ui-uc-test-pc-fake-price-checks-locked
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:20:25.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd62583c9be3

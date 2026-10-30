@@ -51,8 +51,10 @@ type accountData struct {
 	// BondLot is the "Add bond lot" form, shown to the owner on a bond
 	// account's page only (D-9); nil elsewhere.
 	BondLot *bondLotForm
-	// UploadForm shows the owner the "Upload statement" form (D-49).
-	UploadForm bool
+	// UploadForm is the owner's "Upload statement" form, shown only on an
+	// account whose bound connector takes statement files (D-109); nil
+	// elsewhere.
+	UploadForm *uploadForm
 	// Upload is the import the owner's last upload became, to show its
 	// counts and ingest problems; nil otherwise.
 	Upload *ingestv1.UploadStatementResponse
@@ -114,10 +116,11 @@ func (s *server) renderAccount(w http.ResponseWriter, r *http.Request, sess sess
 	}
 	data := accountData{
 		Date: date.String(), Account: acc.Msg.GetAccount(), Status: status.Msg.GetStatus(), Error: form.Error,
-		UploadForm: sess.Owner(), Upload: form.Upload,
+		Upload: form.Upload,
 	}
-	if sess.Owner() && data.Account.GetInstitution() == bondInstitution {
-		data.BondLot = cmp.Or(form.Lot, &bondLotForm{})
+	if formErr := s.ownerForms(r, sess, &data, form.Lot); formErr != nil {
+		s.coreFailed(w, r, "ListStatementAccounts", formErr)
+		return
 	}
 	if method, posErr := s.positions(r, sess, &data); posErr != nil {
 		s.coreFailed(w, r, method, posErr)
@@ -128,6 +131,26 @@ func (s *server) renderAccount(w http.ResponseWriter, r *http.Request, sess sess
 		return
 	}
 	s.show(w, r, code, "account", page{Title: data.Account.GetName(), Session: &sess, Data: data})
+}
+
+// ownerForms adds, for the owner, the "Upload statement" form when the
+// account's connector takes files (D-109) and a bond account's "Add bond
+// lot" form, with lot as posted, to data.
+func (s *server) ownerForms(r *http.Request, sess session, data *accountData, lot *bondLotForm) error {
+	if !sess.Owner() {
+		return nil
+	}
+	upload, ok, err := s.uploadForm(r, sess, data.Account.GetId())
+	if err != nil {
+		return err
+	}
+	if ok {
+		data.UploadForm = upload
+	}
+	if data.Account.GetInstitution() == bondInstitution {
+		data.BondLot = cmp.Or(lot, &bondLotForm{})
+	}
+	return nil
 }
 
 // positions reads an account's holdings, valuations, lots, cash and

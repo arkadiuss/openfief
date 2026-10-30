@@ -377,3 +377,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d44835100e6f
+  - type: implements
+    from: SYM-ui-uc-mode-name
+    to: REQ-ui-statement-upload-owner-form
+    created_at: 2026-10-30T06:21:27.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8fa40081f5f
+  - type: covered_by
+    from: SYM-ui-uc-mode-name
+    to: TEST-ui-statements
+    created_at: 2026-10-30T06:21:27.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a70ef61e1537

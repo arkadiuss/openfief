@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b2faedc6cfd
+  - type: executable_for
+    from: SYM-ui-uc-test-pc-fake-price-checks-set-price-check-threshold
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:20:00.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df359d51ba82

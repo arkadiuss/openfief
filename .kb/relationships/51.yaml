@@ -440,3 +440,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b070535ad4d9
+  - type: implements
+    from: SYM-ui-uc-upload-form
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T06:20:59.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2637114dec7d
+  - type: covered_by
+    from: SYM-ui-uc-upload-form
+    to: TEST-ui-statements
+    created_at: 2026-10-30T06:20:59.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac2fa62fce5f

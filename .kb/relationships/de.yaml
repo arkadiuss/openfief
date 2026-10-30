@@ -349,3 +349,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35865c6c03aa
+  - type: implements
+    from: SYM-ui-uc-server-set-price-check-threshold
+    to: REQ-ui-price-checks-page
+    created_at: 2026-10-30T06:19:01.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4b8b1435812
+  - type: covered_by
+    from: SYM-ui-uc-server-set-price-check-threshold
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:19:01.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85c45f22716b

@@ -73202,7 +73202,7 @@ symbols:
       - type: implements
         target: REQ-ingest-uploads-through-core
       - type: implements
-        target: REQ-ui-statement-upload
+        target: REQ-ui-statement-upload-owner-form
   - id: SYM-ui-server-upload-statement
     title: server.uploadStatement
     sourceFile: internal/views/ui/statements.go
@@ -73217,7 +73217,7 @@ symbols:
       - type: implements
         target: REQ-ingest-uploads-through-core
       - type: implements
-        target: REQ-ui-statement-upload
+        target: REQ-ui-statement-upload-owner-form
   - id: SYM-ui-upload-parts
     title: uploadParts
     sourceFile: internal/views/ui/statements.go
@@ -73232,7 +73232,7 @@ symbols:
       - type: implements
         target: REQ-ingest-uploads-through-core
       - type: implements
-        target: REQ-ui-statement-upload
+        target: REQ-ui-statement-upload-owner-form
   - id: SYM-ui-server-send-statement
     title: server.sendStatement
     sourceFile: internal/views/ui/statements.go
@@ -73247,7 +73247,7 @@ symbols:
       - type: implements
         target: REQ-ingest-uploads-through-core
       - type: implements
-        target: REQ-ui-statement-upload
+        target: REQ-ui-statement-upload-owner-form
   - id: SYM-ui-server-upload-failed
     title: server.uploadFailed
     sourceFile: internal/views/ui/statements.go
@@ -73262,7 +73262,7 @@ symbols:
       - type: implements
         target: REQ-ingest-uploads-through-core
       - type: implements
-        target: REQ-ui-statement-upload
+        target: REQ-ui-statement-upload-owner-form
   - id: SYM-ui-test-helper-fake-statements
     title: fakeStatements
     sourceFile: internal/views/ui/statements_test.go
@@ -73407,7 +73407,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-plugin
       - type: implements
-        target: REQ-ui-statement-upload
+        target: REQ-ui-statement-upload-file-connectors-only
   - id: SYM-uiplugin-test-upload-client
     title: TestUploadClient
     sourceFile: plugins/ui/main_test.go
@@ -75384,7 +75384,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks
+        target: REQ-ui-price-checks-page
   - id: SYM-ui-price-checks-view
     title: priceChecksView
     sourceFile: internal/views/ui/pricechecks.go
@@ -75397,7 +75397,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks
+        target: REQ-ui-price-check-latest-per-instrument
   - id: SYM-ui-server-price-checks-page
     title: server.priceChecksPage
     sourceFile: internal/views/ui/pricechecks.go
@@ -75412,7 +75412,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-7374F67D85269872
       - type: implements
-        target: REQ-ui-price-checks
+        target: REQ-ui-price-check-latest-per-instrument
   - id: SYM-ui-server-flagged-price-checks
     title: server.flaggedPriceChecks
     sourceFile: internal/views/ui/pricechecks.go
@@ -75425,7 +75425,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks
+        target: REQ-ui-price-checks-page
   - id: SYM-ui-test-helper-fake-read-list-price-checks
     title: fakeRead.ListPriceChecks
     sourceFile: internal/views/ui/pricechecks_test.go
@@ -91687,3 +91687,324 @@ symbols:
         target: TEST-plugins-cli-render
       - type: implements
         target: REQ-plugins-manifest-declarations
+  - id: SYM-demo-cross-check-prices
+    title: crossCheckPrices
+    sourceFile: internal/demo/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:16:38.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-cross-checks
+      - type: implements
+        target: REQ-demo-dataset-flagged-price-check
+  - id: SYM-demo-close-on-or-before
+    title: closeOnOrBefore
+    sourceFile: internal/demo/crosscheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:16:52.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-cross-checks
+      - type: implements
+        target: REQ-demo-dataset-flagged-price-check
+  - id: SYM-demo-test-cc-test-cross-check-prices-flag-one
+    title: TestCrossCheckPricesFlagOne
+    sourceFile: internal/demo/crosscheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:17:02.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-cross-checks
+  - id: SYM-ui-uc-server-owner-forms
+    title: server.ownerForms
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:17:19.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ui-statement-upload-file-connectors-only
+  - id: SYM-ui-uc-check-row
+    title: checkRow
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:17:34.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-check-latest-per-instrument
+  - id: SYM-ui-uc-instrument-checks
+    title: instrumentChecks
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:17:44.689Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-check-latest-per-instrument
+  - id: SYM-ui-uc-instrument-checks-open
+    title: instrumentChecks.Open
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:17:57.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-check-latest-per-instrument
+  - id: SYM-ui-uc-open-check
+    title: openCheck
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:18:11.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-check-latest-per-instrument
+  - id: SYM-ui-uc-latest-per-instrument
+    title: latestPerInstrument
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:18:25.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-check-latest-per-instrument
+  - id: SYM-ui-uc-server-render-price-checks
+    title: server.renderPriceChecks
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:18:38.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-check-latest-per-instrument
+  - id: SYM-ui-uc-server-acknowledge-price-check
+    title: server.acknowledgePriceCheck
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:18:48.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-checks-page
+  - id: SYM-ui-uc-server-set-price-check-threshold
+    title: server.setPriceCheckThreshold
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:18:59.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-checks-page
+  - id: SYM-ui-uc-server-after-price-check-form
+    title: server.afterPriceCheckForm
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:19:09.903Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-checks-page
+  - id: SYM-ui-uc-fraction-of
+    title: fractionOf
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:19:21.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-price-checks-page
+  - id: SYM-ui-uc-test-pc-other-instrument
+    title: otherInstrument
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:19:35.244Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-uc-test-pc-fake-price-checks
+    title: fakePriceChecks
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:19:45.921Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-uc-test-pc-fake-price-checks-set-price-check-threshold
+    title: fakePriceChecks.SetPriceCheckThreshold
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:19:57.460Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-uc-test-pc-fake-price-checks-acknowledge-price-check
+    title: fakePriceChecks.AcknowledgePriceCheck
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:20:10.421Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-uc-test-pc-fake-price-checks-locked
+    title: fakePriceChecks.locked
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:20:22.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-uc-test-pc-test-price-check-forms
+    title: TestPriceCheckForms
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:20:34.759Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-uc-test-pc-test-fraction-of
+    title: TestFractionOf
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:20:46.118Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-uc-upload-form
+    title: uploadForm
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:20:57.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ui-statement-upload-file-connectors-only
+  - id: SYM-ui-uc-server-upload-form
+    title: server.uploadForm
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:21:10.376Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ui-statement-upload-file-connectors-only
+  - id: SYM-ui-uc-mode-name
+    title: modeName
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:21:24.215Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ui-statement-upload-owner-form
+  - id: SYM-ui-uc-test-st-fake-statements-list-statement-accounts
+    title: fakeStatements.ListStatementAccounts
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:21:38.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-uc-test-st-chosen-mode
+    title: chosenMode
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:21:52.579Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-uc-test-st-test-upload-statement-core-chooses
+    title: TestUploadStatementCoreChooses
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T06:22:05.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements

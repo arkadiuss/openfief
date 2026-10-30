@@ -489,3 +489,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a66b8bff442
+  - type: executable_for
+    from: SYM-ui-uc-test-st-test-upload-statement-core-chooses
+    to: TEST-ui-statements
+    created_at: 2026-10-30T06:22:08.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30bd613e767a

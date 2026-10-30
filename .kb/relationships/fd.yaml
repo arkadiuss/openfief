@@ -335,3 +335,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-288726909c09
+  - type: implements
+    from: SYM-ui-uc-server-render-price-checks
+    to: REQ-ui-price-check-latest-per-instrument
+    created_at: 2026-10-30T06:18:40.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db63e0ced088
+  - type: covered_by
+    from: SYM-ui-uc-server-render-price-checks
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:18:40.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6de0edf59263
+  - type: executable_for
+    from: SYM-ui-uc-test-st-chosen-mode
+    to: TEST-ui-statements
+    created_at: 2026-10-30T06:21:55.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e60a1e692d79

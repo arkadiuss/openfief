@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-200be7fad52c
+  - type: implements
+    from: SYM-ui-uc-instrument-checks-open
+    to: REQ-ui-price-check-latest-per-instrument
+    created_at: 2026-10-30T06:18:00.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fe60d56d248
+  - type: covered_by
+    from: SYM-ui-uc-instrument-checks-open
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:18:00.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b392ea1f4d7
