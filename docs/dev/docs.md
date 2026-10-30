@@ -149,5 +149,6 @@ The site is [Hugo](https://gohugo.io), pinned in the Taskfile like the other too
 The docs double as the author's verification tool:
 
 - **[Status](/status/)** lists every decision with the kibi requirements derived from it, how many implementing symbols and tests each has, and its evidence level. A decision with no implemented requirement is visibly not built.
+- **[Requirements report](/requirements/)** is kibi's stricter view: a requirement counts as tested only with a fresh, passing receipt from `kibi prove` for an end-to-end test of its scenario, and unit or integration tests never count. OpenFief records no receipts yet, so it shows none tested; its *below evidence floor* count, zero today, says whether any requirement lacks the evidence its firmness asks for.
 - **[Code map](/reference/code-map/)** draws the as-built dependencies between bounded contexts from the Go imports. Compare it with the designed context map in [code-organization.md](code-organization.md).
 - **Concept pages** end with `Verification` (which tests prove which behavior) and `Not built yet` (decided but missing).
