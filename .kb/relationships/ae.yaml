@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3c486e7f9fd
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-importer-add-opening-lots
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:36:36.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1433dccaa5b5

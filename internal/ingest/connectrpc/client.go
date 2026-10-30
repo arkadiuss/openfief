@@ -110,15 +110,17 @@ func (c *Client) ImportFile(ctx context.Context, instance string, id ingest.Batc
 	return deliveryFrom(resp.Msg.GetDelivery(), id, "")
 }
 
-// ImportBondLots hands lots to instance as batch id. An INVALID_ARGUMENT
-// answer wraps app.ErrEntryRefused with the connector's reason, an
-// UNIMPLEMENTED one app.ErrNoEntries.
-func (c *Client) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (app.Delivery, error) {
+// ImportBondLots hands e's lots, deleted lots and go-live date to instance
+// as batch id. An INVALID_ARGUMENT answer wraps app.ErrEntryRefused with
+// the connector's reason, an UNIMPLEMENTED one app.ErrNoEntries.
+func (c *Client) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, e *ingest.BondLotEntries) (app.Delivery, error) {
 	call, err := c.service(ctx, instance)
 	if err != nil {
 		return app.Delivery{}, fmt.Errorf("%w: %w", app.ErrConnectorUnavailable, err)
 	}
-	req := connect.NewRequest(&connectorv1.ImportBondLotsRequest{BatchId: string(id), Lots: bondLotsTo(lots)})
+	req := connect.NewRequest(&connectorv1.ImportBondLotsRequest{
+		BatchId: string(id), Lots: bondLotsTo(e.Lots), GoLive: e.GoLive.String(), Deleted: bondLotKeysTo(e.Deleted),
+	})
 	req.Header().Set("Authorization", call.auth)
 	resp, err := call.svc.ImportBondLots(ctx, req)
 	if err != nil {

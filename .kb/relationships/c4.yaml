@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ccc007d37d0
+  - type: executable_for
+    from: SYM-plugins-treasury-bonds-test-import-bond-lots-before-go-live-and-deleted
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-30T06:39:40.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d3c181b035f

@@ -405,3 +405,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8eb0910370a7
+  - type: validates
+    from: TEST-ingest-connectapi
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T06:33:05.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d38ea800e32d
+  - type: validates
+    from: TEST-ingest-connectapi
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T06:33:05.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b05ddccf4dc
+  - type: constrains
+    from: REQ-ingest-bond-lot-go-live
+    to: FACT-SUBJECT-BDB16DBA9CB82400
+    created_at: 2026-10-30T06:33:36.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68df40e4fa02
+  - type: requires_property
+    from: REQ-ingest-bond-lot-go-live
+    to: FACT-PROP-877437A1823FEF1F
+    created_at: 2026-10-30T06:33:36.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71762a15969d
+  - type: specified_by
+    from: REQ-ingest-bond-lot-go-live
+    to: SCEN-ingest-bond-lot-go-live
+    created_at: 2026-10-30T06:33:36.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc21cf7fbd65

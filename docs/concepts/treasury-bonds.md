@@ -26,7 +26,7 @@ Every bond has a nominal of 100 PLN. A [bond type](../glossary.md) is the produc
 
 ROS and ROD are family bonds. A [bond series](../glossary.md) code adds the maturity month and two-digit year to the type: EDO0536 is EDO maturing in May 2036. A series is sold during one calendar month, but each bond's term runs from its own purchase date. So a lot's purchase date plus the type's term must land in the series' month; if not, the lot was entered under the wrong series.
 
-A bond is bought for cash at the nominal, or by exchange (zamiana) of maturing bonds at the series' [exchange price](../glossary.md), usually 99.90 PLN (100 PLN for OTS). The discount below the nominal is taxed along with the interest.
+A bond is bought for cash at the nominal, or by exchange (zamiana) of maturing bonds at the series' [exchange price](../glossary.md), usually 99.90 PLN (100 PLN for OTS); `ExchangePrice` returns it per bond type. The discount below the nominal is taxed along with the interest. D-100 makes these the two ways an entered lot is bought.
 
 ### Series terms
 
@@ -93,7 +93,7 @@ Inside OKI no Belka tax is due; instead, a yearly tax falls on the part of the a
 | File | Contents |
 |---|---|
 | [series.go](../../internal/jurisdiction/pl/series.go) | `BondType` and its `Structure` (term, period, `Indexation`, `Payout`); `Series` and `ParseSeries` |
-| [terms.go](../../internal/jurisdiction/pl/terms.go) | `Nominal`, `Terms`, `Indices`, `Terms.PeriodRate`, `MissingIndexError` |
+| [terms.go](../../internal/jurisdiction/pl/terms.go) | `Nominal`, `ExchangePrice`, `Terms`, `Indices`, `Terms.PeriodRate`, `MissingIndexError` |
 | [calendar.go](../../internal/jurisdiction/pl/calendar.go) | `Maturity`, `PeriodStart`, `CPIMonth` |
 | [businessday.go](../../internal/jurisdiction/pl/businessday.go) | `IsBusinessDay`, `ReferenceRateDay`, `RateChange`, `RateInForce`, `FirstCalendarYear`, `ErrOutsideCalendar` |
 | [value.go](../../internal/jurisdiction/pl/value.go) | `Purchase`, `LotValue`, `ValueLot` |
@@ -197,6 +197,7 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 - **D-76**: the four wrappers, no Belka tax inside OKI, and OKI's yearly tax computed only under an act in force. The act's date, limit and rate are unknown to the code, so nothing is computed yet; how the tax applies to days before an act takes effect mid-year, and averaging over the days given, are this package's narrow readings ([Implementation questions](../implementation-questions.md)).
 - **D-77**: gross, net and liquidation per product kind and wrapper, as tabled above. The tax rules per wrapper are the narrowest reading of Polish tax law: IKE's exit untaxed and its return taxed on the gain, IKZE's 10% exit tax, per-holding gains without loss offsetting, rounding half up.
 - **D-78**: an IKZE's liquidation value is `LiquidationUnknown` until the owner's marginal rate is set; a sale's cost comes from the account's fee rule, which valuation applies.
+- **D-100**: an entered lot is bought for cash at `Nominal` or by exchange at `ExchangePrice`; its 0.10 PLN discount per bond is the `LotValue.Discount` the pack taxes with the interest at the planned exit and on redemption today. OTS keeps its letter's 100.00 PLN exchange price, so an OTS exchange has no discount.
 - **D-37**: issuer tables and examples over the letter. Implemented as decided: the TOS base isn't rounded between years, and Belka tax rounds half up.
 - **D-62**, **D-113**: the pack's defaults are PLN and the space-comma number format. The Polish pack may assume PLN for tax; `Nominal()`, all bond amounts and every value the pack computes are PLN, and it refuses another currency (`ErrNotPLN`).
 
@@ -204,6 +205,7 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 
 | Behavior | Tests | kibi |
 |---|---|---|
+| The exchange price per bond type | `TestExchangePrice` in [terms_test.go](../../internal/jurisdiction/pl/terms_test.go) | REQ-ingest-bond-lot-purchase-kinds, TEST-pl-terms |
 | Series codes parse; each type's structure | `TestParseSeries`, `TestBondTypeStructure` in [series_test.go](../../internal/jurisdiction/pl/series_test.go) | REQ-pl-series-code, SCEN-pl-series-code, TEST-pl-series |
 | Maturity; a lot under the wrong series fails | `TestMaturity` in [calendar_test.go](../../internal/jurisdiction/pl/calendar_test.go), `TestValueLotRejectsBadInput` | REQ-pl-series-code, SCEN-pl-series-code, TEST-pl-calendar, TEST-pl-value |
 | Period dates from the purchase date, including rows of the ROR1027 issue letter | `TestPeriodStart` | REQ-pl-bond-accrual, SCEN-pl-bond-accrual, TEST-pl-calendar |
@@ -224,5 +226,6 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 
 ## Not built yet
 
-- **D-9**: anything that fetches series terms (the owner types each series' terms with its lots); entering a lot bought by exchange at the [exchange price](../glossary.md), since entered lots are cash purchases at the nominal; and an import of the bond service's export, if one exists (OQ-22).
+- **D-9**, **D-97**: anything that fetches series terms (the owner types each series' terms with its lots; D-97 waits on OQ-30); and an import of the bond service's export, if one exists (OQ-22).
+- **D-101**: booking the coupons of entered COI, ROR and DOR lots. The ledger has the interest kind and the demo dataset books its coupons with it, but nothing generates coupons for lots the owner entered ([Implementation questions](../implementation-questions.md)).
 - **D-76**: OKI's yearly tax in practice: the act's in-force date, limit and rate.

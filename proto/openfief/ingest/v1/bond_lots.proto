@@ -25,6 +25,8 @@
 //   doesn't match the series or lies in the future, a quantity that is not
 //   a positive whole number, malformed terms) fails with INVALID_ARGUMENT
 //   naming the rule, and nothing is imported.
+// - Deleting a lot that was never entered fails with INVALID_ARGUMENT, and
+//   nothing is imported.
 // - An account with no connector instance bound to it, or with more than
 //   one, fails with FAILED_PRECONDITION; so does a bound connector that
 //   takes no bond lots. A connector that can't be reached fails with
@@ -40,12 +42,29 @@ service BondLotService {
   // the same day again replaces it: its quantity and the series' terms are
   // the ones last entered (D-18).
   rpc AddBondLot(AddBondLotRequest) returns (AddBondLotResponse);
+  // DeleteBondLot deletes the lot of a series bought on a day as a
+  // correction (D-100): through the same connector, a new version of each
+  // of its transactions deletes it and supersedes the old, which stays in
+  // the ledger (D-18). Deleting it again changes nothing; entering it again
+  // brings it back.
+  rpc DeleteBondLot(DeleteBondLotRequest) returns (DeleteBondLotResponse);
+}
+
+// BondPurchase is how the bonds of a lot were bought (D-100).
+enum BondPurchase {
+  // Not given: a cash purchase.
+  BOND_PURCHASE_UNSPECIFIED = 0;
+  // For cash at the nominal, 100 PLN per bond.
+  BOND_PURCHASE_CASH = 1;
+  // By exchange (zamiana) of maturing bonds at the series' exchange price,
+  // 99.90 PLN per bond; the discount is taxed with the interest.
+  BOND_PURCHASE_EXCHANGE = 2;
 }
 
 // BondLot is one lot as the owner enters it: what D-9 names (series,
 // quantity, purchase date), plus the series' terms from its issue letter,
-// which valuing it needs. The bonds were bought for cash at the nominal,
-// 100 PLN each.
+// which valuing it needs, and how the bonds were bought: for cash at the
+// nominal, 100 PLN each, or by exchange at 99.90 PLN each (D-100).
 message BondLot {
   // The series code, such as "EDO0536".
   string series = 1;
@@ -62,6 +81,8 @@ message BondLot {
   // The series' early-redemption fee per bond in PLN, as a decimal string,
   // such as "2.00".
   string early_redemption_fee_pln = 6;
+  // How the bonds were bought; unspecified is a cash purchase.
+  BondPurchase purchase = 7;
 }
 
 message AddBondLotRequest {
@@ -80,4 +101,24 @@ message AddBondLotResponse {
   int32 new = 2;
   int32 new_versions = 3;
   int32 unchanged = 4;
+}
+
+message DeleteBondLotRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The OpenFief account the lot is in.
+  string account_id = 3;
+  // The lot's series code, such as "EDO0536".
+  string series = 4;
+  // The day the lot's bonds were bought, "YYYY-MM-DD".
+  string purchase_date = 5;
+}
+
+message DeleteBondLotResponse {
+  // The import batch the deletion came in by.
+  string batch_id = 1;
+  // How many of the lot's transactions were deleted now, or had been
+  // deleted before.
+  int32 new_versions = 2;
+  int32 unchanged = 3;
 }

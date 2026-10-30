@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b4f426cc77c
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-pre-go-live-opening-lot
+    created_at: 2026-10-30T06:32:49.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea4e5a442e0e
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-post-go-live-deposit-buy
+    created_at: 2026-10-30T06:32:49.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c15638d11125
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T06:32:49.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07fa9552053c

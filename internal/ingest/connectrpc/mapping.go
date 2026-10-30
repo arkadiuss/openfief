@@ -371,6 +371,9 @@ func bondTermsFrom(field string, b *connectorv1.BondTerms) (ingest.BondTerms, er
 // bondLotsTo writes treasury bond lots as contract messages, rates as
 // fractions and every amount as an exact decimal string.
 func bondLotsTo(lots []ingest.BondLot) []*connectorv1.BondLot {
+	purchases := map[ingest.BondPurchase]connectorv1.BondPurchase{
+		ingest.PurchaseCash: connectorv1.BondPurchase_BOND_PURCHASE_CASH, ingest.PurchaseExchange: connectorv1.BondPurchase_BOND_PURCHASE_EXCHANGE,
+	}
 	out := make([]*connectorv1.BondLot, 0, len(lots))
 	for i := range lots {
 		l := &lots[i]
@@ -379,6 +382,7 @@ func bondLotsTo(lots []ingest.BondLot) []*connectorv1.BondLot {
 			Series: l.Series().String(), Quantity: l.Quantity.String(), PurchaseDate: l.Purchased.String(),
 			FirstPeriodRate: l.Terms.FirstPeriodRate.String(), Margin: l.Terms.Margin.String(),
 			EarlyRedemptionFee: &connectorv1.Money{Amount: fee.Amount().String(), Currency: fee.Currency().String()},
+			Purchase:           purchases[l.Purchase],
 		})
 	}
 	return out
@@ -507,4 +511,13 @@ func indexLevelFrom(field string, l *connectorv1.IndexLevel) (valuation.IndexLev
 		return valuation.IndexLevel{}, invalid(field+" is not a valid index level", err)
 	}
 	return out, nil
+}
+
+// bondLotKeysTo writes the keys of deleted lots as contract messages.
+func bondLotKeysTo(keys []ingest.BondLotKey) []*connectorv1.BondLotKey {
+	out := make([]*connectorv1.BondLotKey, 0, len(keys))
+	for _, k := range keys {
+		out = append(out, &connectorv1.BondLotKey{Series: k.Series.String(), PurchaseDate: k.Purchased.String()})
+	}
+	return out
 }

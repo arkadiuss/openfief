@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-823aac6c6150
+  - type: implements
+    from: SYM-ingestv1connect-bond-lot-service-client-delete-bond-lot
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:43:41.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42b2d5b9f543
+  - type: covered_by
+    from: SYM-ingestv1connect-bond-lot-service-client-delete-bond-lot
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:43:41.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c3449826d65

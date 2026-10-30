@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ca2fd10ff7f
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-exchange-discount-taxed
+    created_at: 2026-10-30T06:32:59.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c3ec958418a

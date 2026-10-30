@@ -482,3 +482,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-699b908fad5c
+  - type: implements
+    from: SYM-ingest-connectapi-service-delete-bond-lot
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:36:19.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0adcfd411448
+  - type: implements
+    from: SYM-ingest-connectapi-service-delete-bond-lot
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T06:36:19.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f6ff4333877
+  - type: covered_by
+    from: SYM-ingest-connectapi-service-delete-bond-lot
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:36:19.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63016c653f71
+  - type: implements
+    from: SYM-treasurybonds-mapper-unique
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-10-30T06:38:24.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da208a205100
+  - type: implements
+    from: SYM-treasurybonds-mapper-unique
+    to: REQ-treasurybonds-pre-go-live-opening-lot
+    created_at: 2026-10-30T06:38:24.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecd6a4273813
+  - type: covered_by
+    from: SYM-treasurybonds-mapper-unique
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-30T06:38:24.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d77fec4c620

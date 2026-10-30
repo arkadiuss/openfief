@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-934261815643
+  - type: implements
+    from: SYM-treasurybonds-mapper-deletions
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-10-30T06:38:49.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20ec283fa714
+  - type: implements
+    from: SYM-treasurybonds-mapper-deletions
+    to: REQ-treasurybonds-pre-go-live-opening-lot
+    created_at: 2026-10-30T06:38:49.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2250f01557dc
+  - type: covered_by
+    from: SYM-treasurybonds-mapper-deletions
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-30T06:38:49.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b39bb7e00dd

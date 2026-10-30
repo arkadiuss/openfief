@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-770a5300d6d1
+  - type: implements
+    from: SYM-core-ledger-importer-add-opening-lots
+    to: REQ-ingest-bond-lot-go-live
+    created_at: 2026-10-30T06:34:00.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c317cd5bcd8c
+  - type: covered_by
+    from: SYM-core-ledger-importer-add-opening-lots
+    to: TEST-core-bond-lots
+    created_at: 2026-10-30T06:34:01.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0de37d115307

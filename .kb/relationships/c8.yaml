@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14008063f167
+  - type: executable_for
+    from: SYM-ingest-app-test-bond-lots-delete
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-30T06:34:35.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbabaeb2a8b6

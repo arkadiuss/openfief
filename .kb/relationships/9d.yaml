@@ -454,3 +454,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-483ebfa75fde
+  - type: implements
+    from: SYM-ingest-app-bond-lots-delete
+    to: REQ-ingest-bond-lot-delete-entry
+    created_at: 2026-10-30T06:34:25.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3a4fe21bf63
+  - type: implements
+    from: SYM-ingest-app-bond-lots-delete
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T06:34:25.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0677ff6cc9cc
+  - type: covered_by
+    from: SYM-ingest-app-bond-lots-delete
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-30T06:34:25.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b4e323b7683
+  - type: implements
+    from: SYM-ingestv1-delete-bond-lot-response
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:41:43.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9132377a04c0
+  - type: covered_by
+    from: SYM-ingestv1-delete-bond-lot-response
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:41:43.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07c44acc4192
+  - type: implements
+    from: SYM-ingestv1-delete-bond-lot-response-reset
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:41:52.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d44cbea79e4b
+  - type: covered_by
+    from: SYM-ingestv1-delete-bond-lot-response-reset
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:41:52.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-537cc4e10f70

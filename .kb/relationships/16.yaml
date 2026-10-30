@@ -468,3 +468,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c5de2560617
+  - type: validates
+    from: TEST-ingest-bondlot
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T06:32:54.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bfe633ca12c

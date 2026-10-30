@@ -76,7 +76,7 @@ type ConnectorCaller interface {
 	// ImportBondLots hands treasury bond lots the owner entered to instance
 	// as a transactions batch. A refusal wraps ErrEntryRefused, a connector
 	// that takes no bond lots ErrNoEntries.
-	ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (Delivery, error)
+	ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, e *ingest.BondLotEntries) (Delivery, error)
 }
 
 // SyncCall is one Sync call to a connector instance: the import batch, its
@@ -269,13 +269,25 @@ func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.
 	return b, nil
 }
 
-// ImportBondLots hands treasury bond lots the owner entered for account to
-// instance as transactions batch id, and imports what it maps (D-9, D-49:
-// manual bond-lot entries go through the core to the right connector).
-// Every transaction and balance assertion delivered must be in account, or
+// ImportBondLots hands treasury bond lots the owner entered for account, and
+// those the owner deletes, to instance as transactions batch id, and
+// imports what it maps (D-9, D-49: manual bond-lot entries go through the
+// core to the right connector). It sends the account's go-live date, as
+// Seeding answers, or today for an account not seeded yet, which then goes
+// live with its first lots (D-98). The opening lots delivered are added to
+// the account one at a time (LedgerImporter.AddOpeningLots). Every
+// transaction and balance assertion delivered must be in account, or
 // nothing is imported.
-func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, lots []ingest.BondLot) (ingest.Batch, error) {
-	d, err := c.Caller.ImportBondLots(ctx, instance, id, lots)
+func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, e ingest.BondLotEntries) (ingest.Batch, error) {
+	goLive, err := c.GoLiveDates(ctx, []ledger.AccountID{account})
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("import bond lots into %s batch %s: %w", instance, id, err)
+	}
+	var ok bool
+	if e.GoLive, ok = goLive[account]; !ok {
+		e.GoLive = c.Today()
+	}
+	d, err := c.Caller.ImportBondLots(ctx, instance, id, &e)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import bond lots into %s batch %s: %w", instance, id, err)
 	}
@@ -315,7 +327,7 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 		}
 	}
 	m.Transactions = ingest.ScopeToConnector(instance, m.Transactions)
-	imported, err := importMapping(ctx, c.Ledger, mode, &m)
+	imported, err := importMapping(ctx, c.Ledger, mode, source, &m)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}

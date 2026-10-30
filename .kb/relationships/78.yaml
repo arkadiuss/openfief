@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a4f34958f0c
+  - type: implements
+    from: SYM-delivery-purchase-from
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T06:37:40.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c9c3fcd13bd
+  - type: covered_by
+    from: SYM-delivery-purchase-from
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-30T06:37:40.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc1cd3ae5de7

@@ -102,12 +102,29 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the minimum is an amount in any currency, converted at the FX rate of the valuation's day (a missing rate leaves the liquidation value missing); the commission applies to holdings priced at market only, not to bonds or cash; and foreign means priced in another currency than the pack's, PLN for Poland. The minimum applies to the commission alone, before the conversion percentage is added.
    - *Options:* keep; or tie the minimum to the instrument's currency; or charge the conversion percentage on foreign cash too.
 
+## Treasury bonds
+
+17. **What go-live is for a manually entered bond account.**
+   - *Problem:* D-98 books a lot bought before go-live as an opening lot at go-live and a later one as a deposit and a buy, but a manually entered account has no broker statement whose date would be its go-live, and D-98 doesn't say how a lot bought on the go-live date itself is booked.
+   - *Today:* the core sends the date the account was seeded on, or today for an account not seeded yet, so the first lot the owner enters seeds the account and fixes its go-live; every later lot is an opening lot on that date when it was bought on or before it. A lot bought on the go-live date is an opening lot, as a sync's transactions on that date are held by the seeding. Deleting every opening lot unseeds the account, and the next entry takes a new go-live, unless a later lot is still there (the ledger refuses an opening lot that would count it twice). Lots entered before this change, as a deposit and a buy, keep those keys.
+   - *Options:* keep; or let the owner set a manual account's go-live when creating it; or use the portfolio's go-live (its earliest seeding) for every manual account.
+
+18. **Who books the coupons of entered bond lots.**
+   - *Problem:* D-101 books coupons, such as COI's yearly interest, as interest. The ledger has the kind, the demo dataset books its coupons with it, and the pack's coupon types count only the current period's interest in a lot's value, so a paid coupon must reach the account's cash or the account loses it.
+   - *Today:* nothing books the coupons of COI, ROR and DOR lots the owner entered; the treasury-bonds connector is stateless and doesn't know the lots, and the owner can't enter interest.
+   - *Options:* the core computes each due coupon from the stored lots, terms and readings and imports it through the connector; or the owner enters coupons by hand as a new kind of entry (D-79).
+
+19. **The exchange price of OTS.**
+   - *Problem:* D-100 says bonds bought by exchange cost 99.90 PLN; the OTS issue letter (ust. 8) sets its exchange price at 100.00 PLN.
+   - *Today:* `pl.ExchangePrice` follows the letters: 99.90 PLN for every type but OTS, which exchanges at the nominal with no discount.
+   - *Options:* keep; or 99.90 PLN for OTS too; or refuse an OTS lot bought by exchange.
+
 ## Tooling
 
-17. **The kibi gate recompiles a broken store once.**
+20. **The kibi gate recompiles a broken store once.**
     - *Today:* `kibi sync --rebuild` sometimes leaves a compiled store that misses an authored relationship or holds an entity twice (about 1 run in 10 under load). The same files compile correctly on the next run, so it is a defect in the compile, not in the knowledge base. `task kibi:check` (`scripts/kibi-check.sh`) recompiles once when a check fails with exactly that defect, and the second check is final; any other failure is final at once. A defect still gets through if two compiles in a row hit it.
     - *Question:* acceptable, given docs/dev/testing.md forbids retry loops for tests? The reading here is that it recompiles a broken build artifact rather than retrying a verdict.
 
-18. **Fixing the kibi compile defect upstream.**
+21. **Fixing the kibi compile defect upstream.**
     - *Today:* the likely cause is that `kibi sync` terminates its compiling Prolog process with no grace period right after saving, then publishes the staging directory. A bug report draft exists in the implementation session's scratchpad, not filed.
     - *Options:* file the report with kibi's maintainers; carry a local patch that adds a grace period; or keep only the recompile.

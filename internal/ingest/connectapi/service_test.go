@@ -65,8 +65,9 @@ func (bindings) BoundAccounts(context.Context, string) ([]ledger.AccountID, erro
 // caller records the lots it is handed and delivers a deposit of their
 // cost, or fails with err.
 type caller struct {
-	err  error
-	lots []ingest.BondLot
+	err     error
+	lots    []ingest.BondLot
+	deleted []ingest.BondLotKey
 }
 
 func (c *caller) Sync(context.Context, string, *app.SyncCall) (app.Delivery, error) {
@@ -77,14 +78,22 @@ func (c *caller) ImportFile(context.Context, string, ingest.BatchID, ingest.Mode
 	return app.Delivery{}, c.err
 }
 
-func (c *caller) ImportBondLots(_ context.Context, _ string, _ ingest.BatchID, lots []ingest.BondLot) (app.Delivery, error) {
-	c.lots = lots
+func (c *caller) ImportBondLots(_ context.Context, _ string, _ ingest.BatchID, e *ingest.BondLotEntries) (app.Delivery, error) {
+	c.lots, c.deleted = e.Lots, e.Deleted
 	if c.err != nil {
 		return app.Delivery{}, c.err
 	}
-	t, err := ledger.NewDeposit(ledger.TransactionHeader{
-		Key: ledger.TransactionKey{Source: "bonds", ExternalID: "d"}, Account: bondsAccount, Date: lots[0].Purchased,
-	}, lots[0].Cost())
+	h := ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "bonds", ExternalID: "d"}, Account: bondsAccount}
+	if len(e.Lots) == 0 {
+		h.Date = e.Deleted[0].Purchased
+		t, err := ledger.NewDeletion(h)
+		if err != nil {
+			return app.Delivery{}, fmt.Errorf("deletion: %w", err)
+		}
+		return app.Delivery{Institution: "treasury-bonds", Mapping: ingest.Mapping{Transactions: []ledger.Transaction{t}}}, nil
+	}
+	h.Date = e.Lots[0].Purchased
+	t, err := ledger.NewDeposit(h, e.Lots[0].Cost())
 	if err != nil {
 		return app.Delivery{}, fmt.Errorf("fake caller: %w", err)
 	}
@@ -101,6 +110,10 @@ func (i importer) Import(_ context.Context, txs []ledger.Transaction, _ []ledger
 }
 
 func (i importer) Seed(ctx context.Context, txs []ledger.Transaction, a []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
+	return i.Import(ctx, txs, a)
+}
+
+func (i importer) AddOpeningLots(ctx context.Context, txs []ledger.Transaction, a []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
 	return i.Import(ctx, txs, a)
 }
 
@@ -217,6 +230,8 @@ func TestAddBondLotRefusals(t *testing.T) {
 		{name: "the connector takes no bond lots", callErr: app.ErrNoEntries, want: connect.CodeFailedPrecondition},
 		{name: "the connector can't be reached", callErr: app.ErrConnectorUnavailable, want: connect.CodeUnavailable},
 		{name: "the ledger fails", ledger: errDown, want: connect.CodeInternal},
+		{name: "a purchase that isn't one", edit: func(l *ingestv1.BondLot) { l.Purchase = ingestv1.BondPurchase(9) }, want: connect.CodeInvalidArgument, wantText: "purchase"},
+		{name: "a lot that would count earlier transactions twice", ledger: fmt.Errorf("adding: %w", ledger.ErrBookedBeforeGoLive), want: connect.CodeFailedPrecondition},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -243,5 +258,67 @@ func or(s, def string) string {
 func apply(edit func(l *ingestv1.BondLot), l *ingestv1.BondLot) {
 	if edit != nil {
 		edit(l)
+	}
+}
+
+func TestAddBondLotByExchange(t *testing.T) {
+	t.Parallel()
+	c := &caller{}
+	l := lot()
+	l.Purchase = ingestv1.BondPurchase_BOND_PURCHASE_EXCHANGE
+	_, err := newClient(t, c, importer{}, viewCaller).AddBondLot(t.Context(), connect.NewRequest(&ingestv1.AddBondLotRequest{
+		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Lot: l,
+	}))
+	if err != nil {
+		t.Fatalf("AddBondLot: %v", err)
+	}
+	if len(c.lots) != 1 || c.lots[0].Purchase != ingest.PurchaseExchange || c.lots[0].Cost().Amount().Cmp(kernel.NewDecimal(3996, 0)) != 0 {
+		t.Errorf("handed %v; want one lot bought by exchange for 40 x 99.90 = 3996.00 PLN (D-100)", c.lots)
+	}
+}
+
+func TestDeleteBondLot(t *testing.T) {
+	t.Parallel()
+	c := &caller{}
+	got, err := newClient(t, c, importer{}, viewCaller).DeleteBondLot(t.Context(), connect.NewRequest(&ingestv1.DeleteBondLotRequest{
+		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Series: "EDO0536", PurchaseDate: "2026-05-04",
+	}))
+	if err != nil {
+		t.Fatalf("DeleteBondLot: %v", err)
+	}
+	if got.Msg.GetBatchId() != "b-1" {
+		t.Errorf("DeleteBondLot = %v, want batch b-1", got.Msg)
+	}
+	if len(c.lots) != 0 || len(c.deleted) != 1 || c.deleted[0].Series.String() != "EDO0536" || c.deleted[0].Purchased.String() != "2026-05-04" {
+		t.Errorf("handed lots %v and deleted %v; want only EDO0536 of 2026-05-04 deleted", c.lots, c.deleted)
+	}
+}
+
+func TestDeleteBondLotRefusals(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		session string
+		series  string
+		date    string
+		ledger  error
+		want    connect.Code
+	}{
+		{name: "a read-scoped session", session: readSession, want: connect.CodePermissionDenied},
+		{name: "a series that isn't one", series: "EDO536", want: connect.CodeInvalidArgument},
+		{name: "a date that isn't one", date: "4.5.2026", want: connect.CodeInvalidArgument},
+		{name: "a lot never entered", ledger: fmt.Errorf("importing: %w", ledger.ErrNothingToDelete), want: connect.CodeInvalidArgument},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := newClient(t, &caller{}, importer{err: tt.ledger}, viewCaller).DeleteBondLot(t.Context(), connect.NewRequest(&ingestv1.DeleteBondLotRequest{
+				Origin: local, SessionToken: or(tt.session, ownerSession), AccountId: bondsAccount,
+				Series: or(tt.series, "EDO0536"), PurchaseDate: or(tt.date, "2026-05-04"),
+			}))
+			if connect.CodeOf(err) != tt.want {
+				t.Errorf("DeleteBondLot = %v, want %s", err, tt.want)
+			}
+		})
 	}
 }

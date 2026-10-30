@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-140e21ab5634
+  - type: executable_for
+    from: SYM-delivery-test-bond-lot-entries
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-30T06:37:57.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2df5d9e0c214

@@ -475,3 +475,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-217b54cffee9
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-delete-entry
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-30T06:33:11.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6e96c28450
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-delete-entry
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:33:11.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6321d5c63536
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-delete-entry
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-30T06:33:11.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b2be80eb903

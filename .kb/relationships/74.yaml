@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e58a710a858e
+  - type: implements
+    from: SYM-ingest-bond-lot-price
+    to: REQ-ingest-bond-lot-rules
+    created_at: 2026-10-30T06:35:44.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fff39d14682f
+  - type: implements
+    from: SYM-ingest-bond-lot-price
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T06:35:44.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec0ba77535b5
+  - type: covered_by
+    from: SYM-ingest-bond-lot-price
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-30T06:35:45.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acbed21d9c52
