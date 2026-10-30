@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97ca41a1141c
+  - type: implements
+    from: SYM-affected-classify
+    to: REQ-tooling-hook-full-fallback
+    created_at: 2026-10-30T03:50:19.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb4d27f03096
+  - type: implements
+    from: SYM-affected-classify
+    to: REQ-tooling-hook-docs-only
+    created_at: 2026-10-30T03:50:19.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f021206fb19
+  - type: covered_by
+    from: SYM-affected-classify
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T03:50:19.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87efc3fdf502

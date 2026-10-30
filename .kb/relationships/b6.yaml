@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07e26ba96ea3
+  - type: implements
+    from: SYM-affected-operator-dirs
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:11.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b2ce49e511a
+  - type: covered_by
+    from: SYM-affected-operator-dirs
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:11.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad81e3b3893

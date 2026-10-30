@@ -524,3 +524,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb7163ac8f99
+  - type: implements
+    from: SYM-tooling-ci-images-select-record-build
+    to: REQ-tooling-ci-affected-images
+    created_at: 2026-10-30T03:47:52.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb98fd266d06
+  - type: covered_by
+    from: SYM-tooling-ci-images-select-record-build
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-10-30T03:47:52.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47bf9c8ab77d
+  - type: implements
+    from: SYM-affected-choose-images
+    to: REQ-tooling-ci-affected-images
+    created_at: 2026-10-30T03:57:35.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3d1f42e5b65
+  - type: implements
+    from: SYM-affected-choose-images
+    to: REQ-tooling-ci-carry-signed-digest
+    created_at: 2026-10-30T03:57:36.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed3b0cf247d0
+  - type: covered_by
+    from: SYM-affected-choose-images
+    to: TEST-tooling-affected-images
+    created_at: 2026-10-30T03:57:36.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d24e16ffdca6

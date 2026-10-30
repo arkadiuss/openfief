@@ -41,6 +41,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - No sleeps: wait on conditions, with a deadline.
 - No wall clock: inject the date.
 - No unseeded randomness, no network in unit or replay tests, no dependence on test order.
+- A test that reads a file outside its package names it with a literal relative path, such as `"../../deploy/crds"` or `filepath.Join("..", "..", "deploy")`, and a script test names repository files as `$root/<path>`, so the pre-commit hook reruns it when that file changes **(P)**.
 - A flaky test is a bug: fix the cause. Never skip, disable, retry-loop or quarantine a test to get green.
 - Test behavior through public APIs; don't test private helpers or mock what you own.
 

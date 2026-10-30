@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e355420f833
+  - type: implements
+    from: SYM-affected-area
+    to: REQ-tooling-hook-full-fallback
+    created_at: 2026-10-30T03:49:44.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60e589fa8153
+  - type: covered_by
+    from: SYM-affected-area
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T03:49:45.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddbca228dd1f

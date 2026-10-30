@@ -447,3 +447,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7131e81f0b89
+  - type: executable_for
+    from: SYM-affected-test-test-script-reads
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:01:37.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ab923f767ef

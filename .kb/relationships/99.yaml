@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87ab939f9553
+  - type: executable_for
+    from: SYM-tooling-image-carry-test-tagged
+    to: TEST-tooling-image-carry
+    created_at: 2026-10-30T03:49:21.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-870d7d74eee6
