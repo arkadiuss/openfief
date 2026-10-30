@@ -251,13 +251,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36a9c8229f14
-  - type: implements
-    from: SYM-ui-server-save-model
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:13:21.129Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0da2c22bbbe1
   - type: covered_by
     from: SYM-ui-server-save-model
     to: TEST-ui-model
@@ -461,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-317c3c4ab9d4
+  - type: implements
+    from: SYM-ui-server-save-model
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:44:24.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e7bb0fad8c

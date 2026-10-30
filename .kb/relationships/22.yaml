@@ -244,13 +244,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2aba42613eda
-  - type: implements
-    from: SYM-ui-build-performance
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:15:07.991Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-056fc2994526
   - type: covered_by
     from: SYM-ui-build-performance
     to: TEST-ui-format
@@ -433,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2515cab180e
+  - type: implements
+    from: SYM-ui-build-performance
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:40:15.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d334d30a1d4

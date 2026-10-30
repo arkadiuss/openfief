@@ -63691,7 +63691,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
   - id: SYM-ui-model-form
     title: modelForm
     sourceFile: internal/views/ui/model.go
@@ -63705,7 +63705,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
   - id: SYM-ui-model-form-with-blank-rows
     title: modelForm.withBlankRows
     sourceFile: internal/views/ui/model.go
@@ -63718,7 +63718,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
   - id: SYM-ui-form-of
     title: formOf
     sourceFile: internal/views/ui/model.go
@@ -63731,7 +63731,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
   - id: SYM-ui-parse-model-form
     title: parseModelForm
     sourceFile: internal/views/ui/model.go
@@ -63744,7 +63744,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
   - id: SYM-ui-model-form-message
     title: modelForm.message
     sourceFile: internal/views/ui/model.go
@@ -63757,7 +63757,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
   - id: SYM-ui-server-load-model
     title: server.loadModel
     sourceFile: internal/views/ui/model.go
@@ -63770,7 +63770,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
   - id: SYM-ui-server-save-model
     title: server.saveModel
     sourceFile: internal/views/ui/model.go
@@ -63783,7 +63783,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
   - id: SYM-ui-test-helper-fake-model
     title: fakeModel
     sourceFile: internal/views/ui/model_test.go
@@ -63917,7 +63917,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-model-view
@@ -63932,7 +63932,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-drawdown-row
@@ -63947,7 +63947,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-chart-series
@@ -63962,7 +63962,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-target-label
@@ -63977,7 +63977,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-gap-label
@@ -63992,7 +63992,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-drawdown-of
@@ -64007,7 +64007,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-build-model
@@ -64022,7 +64022,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-build-performance
@@ -64037,7 +64037,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-ui-server-performance
@@ -64052,7 +64052,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-model
       - type: implements
-        target: REQ-ui-model-portfolio
+        target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
   - id: SYM-views-ghostfolio-activity-type
