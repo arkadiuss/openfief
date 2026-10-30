@@ -1,11 +1,11 @@
 HTTP/1.1 201 Created
-Content-Length: 25
+Content-Length: 637
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:53 GMT
-Etag: W/"cb-g8LfslX3bCvNe0FusWh1E3k8uEc"
+Date: Fri, 30 Oct 2026 00:00:54 GMT
+Etag: W/"27d-yvo6D5dxP5IcpFkb860XroBl6sE"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"authToken":"SANITIZED"}
+{"activities":[{"accountId":"adf13c77-ee3a-4f55-9920-0b5a50a4e181","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"a fee of my own","createdAt":"2026-10-30T00:00:54.488Z","currency":"PLN","date":"2025-01-02T00:00:00.000Z","fee":3,"id":"899b7661-6ce6-4129-bb40-040c5b38ea8f","quantity":0,"symbolProfileId":"97c58422-c401-41ab-a57d-afa71f383bbf","type":"FEE","unitPrice":0,"updatedAt":"2026-10-30T00:00:54.488Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","assetProfile":{"currency":"PLN","name":"My own fees","dataSource":"MANUAL","symbol":"3f8e4c1a-6b2d-4e9f-8a7c-1d2e3f4a5b6c"},"value":0,"valueInBaseCurrency":0}]}

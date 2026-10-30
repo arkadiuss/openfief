@@ -1,4 +1,4 @@
-DELETE http://127.0.0.1:3333/api/v1/activities/ea757994-877b-4268-b0ea-f0f5d2e1d982 HTTP/1.1
+GET http://127.0.0.1:3333/api/v1/account/e9ba7ed7-cf9d-5b65-ba7e-1a064226aa56/balances HTTP/1.1
 Host: 127.0.0.1:3333
 User-Agent: Go-http-client/1.1
 Accept: application/json

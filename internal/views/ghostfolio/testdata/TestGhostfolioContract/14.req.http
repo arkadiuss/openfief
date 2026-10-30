@@ -1,9 +1,9 @@
 POST http://127.0.0.1:3333/api/v1/import?dryRun=true HTTP/1.1
 Host: 127.0.0.1:3333
 User-Agent: Go-http-client/1.1
-Content-Length: 534
+Content-Length: 1319
 Accept: application/json
 Authorization: SANITIZED
 Content-Type: application/json
 
-{"activities":[],"assetProfiles":[{"currency":"PLN","dataSource":"MANUAL","marketData":[],"name":"OpenFief fees (PLN)","symbol":"2cfb82e0-7096-5770-a0dc-e2f2d0d6cd2c"},{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","dataSource":"MANUAL","isin":"PLTEST000010","marketData":[{"date":"2025-01-02T00:00:00.000Z","marketPrice":100.41},{"date":"2025-01-03T00:00:00.000Z","marketPrice":100.45},{"date":"2025-01-06T00:00:00.000Z","marketPrice":100.53}],"name":"EDO0136","symbol":"4512a0f0-0f02-594a-8add-87da055fe65d"}]}
+{"activities":[{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","comment":"openfief:test/bonds/buy-1","currency":"PLN","dataSource":"MANUAL","date":"2025-01-03T00:00:00.000Z","fee":0,"quantity":5,"symbol":"751886d2-3583-55a8-9e96-37ef67241dd8","type":"BUY","unitPrice":100},{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","comment":"openfief:test/bonds/fee-1","currency":"PLN","dataSource":"MANUAL","date":"2025-01-06T00:00:00.000Z","fee":2,"quantity":0,"symbol":"042c0ae6-d931-5ac9-834d-4104ff2e9b26","type":"FEE","unitPrice":0},{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","comment":"openfief:test/bonds/open-1","currency":"PLN","dataSource":"MANUAL","date":"2024-11-04T00:00:00.000Z","fee":0,"quantity":10,"symbol":"751886d2-3583-55a8-9e96-37ef67241dd8","type":"BUY","unitPrice":100}],"assetProfiles":[{"currency":"PLN","dataSource":"MANUAL","marketData":[],"name":"OpenFief fees (PLN)","symbol":"042c0ae6-d931-5ac9-834d-4104ff2e9b26"},{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","dataSource":"MANUAL","isin":"PLTEST000010","marketData":[{"date":"2025-01-02T00:00:00.000Z","marketPrice":100.41},{"date":"2025-01-03T00:00:00.000Z","marketPrice":100.45},{"date":"2025-01-06T00:00:00.000Z","marketPrice":100.53}],"name":"EDO0136","symbol":"751886d2-3583-55a8-9e96-37ef67241dd8"}]}

@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Length: 268
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Date: Fri, 30 Oct 2026 00:00:56 GMT
+Etag: W/"10c-oTf8hMkTiAIYzaeWTz5yY7MqdAo"
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","createdAt":"2026-10-30T00:00:56.167Z","date":"2025-01-04T00:00:00.000Z","id":"2523828e-2aaa-4858-9c04-583fefe97499","updatedAt":"2026-10-30T00:00:56.167Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","value":999}

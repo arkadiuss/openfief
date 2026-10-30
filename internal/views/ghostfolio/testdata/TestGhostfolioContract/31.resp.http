@@ -1,11 +1,11 @@
-HTTP/1.1 201 Created
-Content-Length: 25
+HTTP/1.1 200 OK
+Content-Length: 1520
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:54 GMT
-Etag: W/"cb-n1+LjJwzqXVvRrNBOTeHFGB80pA"
+Date: Fri, 30 Oct 2026 00:00:55 GMT
+Etag: W/"5f0-bDzLOuRrhEujCk85gqWHQC+lRRg"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"authToken":"SANITIZED"}
+{"accounts":[{"comment":null,"createdAt":"2026-10-30T00:00:45.337Z","currency":"USD","id":"adf13c77-ee3a-4f55-9920-0b5a50a4e181","name":"My Account","platformId":null,"updatedAt":"2026-10-30T00:00:45.337Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","platform":null,"tags":[],"balance":42,"activitiesCount":1,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":42,"allocationInPercentage":0,"balanceInBaseCurrency":42,"value":42},{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","platform":null,"tags":[],"balance":-502,"activitiesCount":3,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":-502,"allocationInPercentage":0,"balanceInBaseCurrency":-502,"value":-502},{"comment":null,"createdAt":"2026-10-30T00:00:55.204Z","currency":"PLN","id":"e9ba7ed7-cf9d-5b65-ba7e-1a064226aa56","name":"Synthetic cash","platformId":null,"updatedAt":"2026-10-30T00:00:55.204Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","platform":null,"tags":[],"balance":100,"activitiesCount":0,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":100,"allocationInPercentage":0,"balanceInBaseCurrency":100,"value":100}],"activitiesCount":4,"totalBalanceInBaseCurrency":-360,"totalDividendInBaseCurrency":0,"totalInterestInBaseCurrency":0,"totalValueInBaseCurrency":-360}
