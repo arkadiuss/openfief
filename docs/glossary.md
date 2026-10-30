@@ -216,6 +216,11 @@ Don't create code for these before their milestone.
 | Paper trading | Trading against a simulated account with fake money. |
 | OTS / ROR / DOR / TOS | Polish retail treasury bond types: OTS 3-month fixed, ROR 1-year and DOR 2-year with monthly coupons at the NBP reference rate plus a margin, TOS 3-year fixed and capitalized yearly. |
 | PIT | Podatek dochodowy od osób fizycznych, Poland's personal income tax; also the act that levies it. |
+| PPE | Pracowniczy program emerytalny, an employer pension programme in Poland: the employer pays a basic contribution, the employee may add more, and a payout from 60 is tax-free. |
+| PPK | Pracownicze plany kapitałowe, Poland's employee capital plans: employee, employer and state contributions in target-date funds, with penalties for withdrawing before 60. |
+| Red folder (czerwona teczka) | A folder of documents and instructions for the owner's family in case of death: which institutions hold what and who to contact, never passwords. |
+| RSU / ESPP | Restricted stock units, shares an employer promises and delivers as they vest; an employee stock purchase plan, shares an employee buys from salary, usually at a discount. |
+| Vesting | The schedule by which granted equity becomes the employee's own; unvested units are usually forfeited on leaving. |
 | PIT-8C | The annual statement of capital income that Polish brokers issue to clients and the tax office. |
 | PIT-38 | The Polish annual tax return for capital gains (securities, derivatives). |
 | PIT/ZG | The PIT attachment that declares foreign income, one per country. |
