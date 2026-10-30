@@ -419,3 +419,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36f3a4e951ba
+  - type: implements
+    from: SYM-plugins-cli-write-declarations
+    to: REQ-plugins-manifest-declarations
+    created_at: 2026-10-30T04:50:18.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-368e653776a4
+  - type: covered_by
+    from: SYM-plugins-cli-write-declarations
+    to: TEST-plugins-cli-render
+    created_at: 2026-10-30T04:50:18.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee502b78b44b

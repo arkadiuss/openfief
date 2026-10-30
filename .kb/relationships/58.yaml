@@ -496,3 +496,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e835d889e7a8
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-descriptor
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:38:23.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6817ae7ebef
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:38:23.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7014f1b93df

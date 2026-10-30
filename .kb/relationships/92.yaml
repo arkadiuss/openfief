@@ -454,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9231b0ce491
+  - type: executable_for
+    from: SYM-ingest-app-test-conn-fake-declarations
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-30T04:26:11.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea0d97a16f23

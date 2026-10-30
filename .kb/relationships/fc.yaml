@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05afa9452f0c
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-proto-message
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:37:50.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1278ab30350
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-proto-message
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:37:50.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-875b572528b4

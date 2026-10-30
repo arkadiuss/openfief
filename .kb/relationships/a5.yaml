@@ -363,3 +363,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-292aa66f3618
+  - type: executable_for
+    from: SYM-core-test-up-flex-discovery-declarations
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:25:12.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d044b19f8348

@@ -475,3 +475,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f34131972003
+  - type: implements
+    from: SYM-ingest-gen-st-pb-upload-statement-response-get-account-ids
+    to: REQ-ingest-statement-mode-chosen-by-core
+    created_at: 2026-10-30T04:32:32.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e841e46e8a
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-upload-statement-response-get-account-ids
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:32:32.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a66b8bff442

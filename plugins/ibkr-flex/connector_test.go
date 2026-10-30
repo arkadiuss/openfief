@@ -283,7 +283,7 @@ func TestFetchCode(t *testing.T) {
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), is a valid manifest asking for exactly what the
 // plugin needs: the connector capability, IBKR's Flex Web Service host and
-// the credentials Secret where the plugin reads it.
+// the credentials Secret where the plugin reads it, and its declarations.
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -298,6 +298,9 @@ func TestManifest(t *testing.T) {
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       []plugins.EgressHost{{Host: "ndcdyn.interactivebrokers.com", Port: 443}},
 		Secrets:      []plugins.SecretMount{{Role: "flex-token", MountPath: flexMount}},
+		// It sends IBKR's mark prices as cross-check prices (D-112) and maps
+		// uploaded Flex statements (D-109).
+		CrossCheckPrices: true, StatementFiles: true,
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)

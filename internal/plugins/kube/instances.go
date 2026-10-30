@@ -201,6 +201,8 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 				ConfigSchema:     raw(m.ConfigSchema),
 				BrowserPath:      m.BrowserPath,
 				EgressFromConfig: slices.Clone(m.EgressFromConfig),
+				CrossCheckPrices: m.CrossCheckPrices,
+				StatementFiles:   m.StatementFiles,
 			},
 			Config: raw(p.Config),
 		},

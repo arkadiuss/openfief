@@ -552,3 +552,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8453187cab32
+  - type: implements
+    from: SYM-core-entry-caller-declarations
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:23:51.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f50415fe2d8
+  - type: covered_by
+    from: SYM-core-entry-caller-declarations
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:23:51.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c3eb6f097f5
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account-get-mode
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:36:52.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af9ee819ce9f
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account-get-mode
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:36:52.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-200be7fad52c

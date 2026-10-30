@@ -58,6 +58,7 @@ func RenderProposal(p *app.Proposal) string {
 	if r := m.ClusterService; r != nil {
 		writeClusterService(&b, r, p.Plugin.ClusterService)
 	}
+	writeDeclarations(&b, m)
 	b.WriteString("  Config:       ")
 	b.WriteString(strings.Join(describeSchema(m.ConfigSchema), "\n                "))
 	b.WriteString("\n")
@@ -237,4 +238,15 @@ func yesNo(b bool) string {
 		return "yes"
 	}
 	return "no"
+}
+
+// writeDeclarations writes what a connector's manifest declares it sends
+// and takes (D-112, D-109); nothing when it declares neither.
+func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
+	if m.CrossCheckPrices {
+		b.WriteString("  Declares:     it sends cross-check prices, which the core stores (D-112)\n")
+	}
+	if m.StatementFiles {
+		b.WriteString("  Declares:     it takes statement files the owner uploads (D-109)\n")
+	}
 }

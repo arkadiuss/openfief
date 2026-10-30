@@ -84,3 +84,25 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* D-64 (amended) derives a bond's symbol from the plugin instance and the series code, so two installs sharing one Ghostfolio never collide. Ghostfolio's symbols are unique across all its users, and two installs can name their instances alike (an install names an instance after the plugin's catalog name unless told otherwise); then they would collide. D-108's fee asset per currency has the same problem.
    - *Today:* both symbols are UUIDs derived from the instance's name, the Ghostfolio user's ID and the series code or currency. Two instances writing to the same Ghostfolio user still meet in Ghostfolio's name-based reuse of `MANUAL` assets, which the dry run catches.
    - *Options:* keep; or the instance's name alone, as D-64 says; or a per-install ID, which a plugin can't read today.
+
+## Statement uploads and price checks
+
+14. **How the core learns which connectors take statement files.**
+   - *Problem:* D-109 has the owner's UI learn through its owner service which accounts have a connector that takes files, but no decision says how the core knows a connector takes files: the connector contract's `ImportFile` only answers `UNIMPLEMENTED` once a file is sent.
+   - *Today:* a connector's manifest declares `statementFiles: true`, signed with its image like `crossCheckPrices` (D-112); ibkr-flex declares both. `StatementService.ListStatementAccounts` lists the accounts bound to exactly one running instance that declares it, and the UI shows the upload form only there. Neither declaration is a permission the grant approves.
+   - *Options:* keep; or ask each connector through a new contract method; or make the declarations permissions the owner approves in the grant.
+
+15. **The mode of a statement that covers several accounts.**
+   - *Problem:* D-109 has the core choose the mode, opening for an account not yet seeded and transactions after, but a statement of linked accounts can cover a seeded account and one that isn't, and an upload is one batch in one mode.
+   - *Today:* the mode follows the account the owner uploaded for; the owner may override it. An opening upload leaves out the seeding of linked broker accounts already seeded, as a sync does, so it seeds only the others; a transactions upload books every mapped account's transactions, an unseeded one's too.
+   - *Options:* keep; or run an opening batch and then a transactions batch, as a sync does (`PlanSync`), which needs the file twice; or refuse a statement whose accounts disagree.
+
+16. **What a connector's undeclared cross-check prices do.**
+   - *Problem:* D-112 lets only a connector whose manifest declares it send cross-check prices, without saying what happens to a delivery from one that doesn't.
+   - *Today:* the batch imports everything else; none of its cross-check prices is stored, and one skipped ingest problem says so. Refusing the batch would stop a broker's syncs over prices that only cross-check.
+   - *Options:* keep; or refuse the whole delivery.
+
+17. **What an acknowledgement covers, and the owner's thresholds.**
+   - *Problem:* D-112 lets the owner acknowledge a flagged price check, recorded append-only, and D-110 lets the owner set a threshold per instrument; neither says how long an acknowledgement holds, whether a matched or currency-mismatch check can be acknowledged, or what thresholds are allowed.
+   - *Today:* only a flagged check can be acknowledged; the acknowledgement records both prices and covers the check only while the cross-check price and the price it is compared with keep their dates and closes, so a changed mark or a newer price is flagged anew. A threshold is a fraction greater than 0 and less than 1; clearing it puts the instrument back on 1%; thresholds are not versioned. The overview counts instruments whose latest check is flagged and not acknowledged.
+   - *Options:* keep; or let an acknowledgement cover every later check of the instrument until its prices diverge further; or let the owner acknowledge a currency mismatch too.

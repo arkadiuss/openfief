@@ -85,6 +85,13 @@ type Manifest struct {
 	// ClusterService, when not nil, asks for one in-cluster service that the
 	// owner picks at install and the plugin reaches directly (D-74).
 	ClusterService *ClusterServiceRequest
+	// CrossCheckPrices declares that a connector sends cross-check prices:
+	// the core stores them only from a connector that declares it (D-112).
+	CrossCheckPrices bool
+	// StatementFiles declares that a connector takes statement files the
+	// owner uploads, so the UI offers the upload form on the accounts bound
+	// to it (D-109).
+	StatementFiles bool
 }
 
 // Validate returns every problem in m, each a *FieldError, joined; or nil.

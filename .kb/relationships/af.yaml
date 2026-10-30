@@ -384,3 +384,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6ac2259c8af
+  - type: implements
+    from: SYM-ingest-upload-mode
+    to: REQ-ingest-statement-mode-chosen-by-core
+    created_at: 2026-10-30T04:30:42.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f884f9fb4bc
+  - type: covered_by
+    from: SYM-ingest-upload-mode
+    to: TEST-ingest-declarations
+    created_at: 2026-10-30T04:30:43.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a28c1f380d8c
+  - type: implements
+    from: SYM-ingest-kube-discovery-declarations
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:31:17.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc8b6bcfc686
+  - type: implements
+    from: SYM-ingest-kube-discovery-declarations
+    to: REQ-plugins-manifest-declarations
+    created_at: 2026-10-30T04:31:17.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49ab7bed6142
+  - type: covered_by
+    from: SYM-ingest-kube-discovery-declarations
+    to: TEST-ingest-kube
+    created_at: 2026-10-30T04:31:17.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-656d3d770f0d

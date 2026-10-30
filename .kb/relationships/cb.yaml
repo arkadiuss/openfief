@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e44cf4480c3
+  - type: implements
+    from: SYM-core-entry-caller-connector-instances
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:24:03.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec8a08ae122a
+  - type: covered_by
+    from: SYM-core-entry-caller-connector-instances
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:24:03.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dca0d2da36d

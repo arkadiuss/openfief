@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-734b91727c03
+  - type: validates
+    from: TEST-ingest-kube
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:10:49.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfdab8111636
+  - type: verified_by
+    from: SCEN-ingest-statement-upload-checks
+    to: TEST-ingest-app-uploads
+    created_at: 2026-10-30T04:10:57.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab6e7b0e72ff
+  - type: verified_by
+    from: SCEN-ingest-statement-upload-checks
+    to: TEST-ingest-file
+    created_at: 2026-10-30T04:10:57.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-979b7b3aa912

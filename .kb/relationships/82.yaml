@@ -363,13 +363,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bb811b208ba
-  - type: constrains
-    from: REQ-ingest-scheduler-when-due
-    to: FACT-SUBJECT-4BFD344454E24D51
-    created_at: 2026-10-29T17:20:16.533Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-85ab4529703a
   - type: specified_by
     from: REQ-ingest-scheduler-when-due
     to: SCEN-ingest-sync-when-due
@@ -391,13 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61f636156350
-  - type: requires_property
-    from: REQ-ingest-scheduler-when-due
-    to: FACT-PROP-B0460D3EED7103D0
-    created_at: 2026-10-29T17:20:51.137Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-72b3e841f373
   - type: executable_for
     from: SYM-valuation-app-test-cc-fake-cross-checks-price-check-thresholds
     to: TEST-valuation-app-crosscheck
@@ -405,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc490b700adc
+  - type: constrains
+    from: REQ-ingest-scheduler-when-due
+    to: FACT-SUBJECT-4BFD344454E24D51
+    created_at: 2026-10-30T04:11:33.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85ab4529703a
+  - type: requires_property
+    from: REQ-ingest-scheduler-when-due
+    to: FACT-PROP-B0460D3EED7103D0
+    created_at: 2026-10-30T04:11:33.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72b3e841f373

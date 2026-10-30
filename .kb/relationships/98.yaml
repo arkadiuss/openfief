@@ -328,13 +328,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b26a15b2f2f
-  - type: implements
-    from: SYM-ingest-app-uploads-max-bytes
-    to: REQ-ingest-statement-upload-limits
-    created_at: 2026-10-29T05:10:16.563Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8d1ff798458e
   - type: covered_by
     from: SYM-ingest-app-uploads-max-bytes
     to: TEST-ingest-app-uploads
@@ -475,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-056c01590199
+  - type: implements
+    from: SYM-ingest-app-uploads-max-bytes
+    to: REQ-ingest-statement-upload-size-limit
+    created_at: 2026-10-30T04:12:48.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82796a7df7ae
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-proto-message
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:33:42.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fab6356ab3f
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-proto-message
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:33:42.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c861df31e804

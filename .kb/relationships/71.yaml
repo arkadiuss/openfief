@@ -342,3 +342,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8818356ef7e8
+  - type: constrains
+    from: REQ-ingest-statement-upload-checks
+    to: FACT-SUBJECT-6E456E81146115C7
+    created_at: 2026-10-30T04:11:11.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dad468bd1a2
+  - type: requires_property
+    from: REQ-ingest-statement-upload-checks
+    to: FACT-PROP-C7C9460EB99114FE
+    created_at: 2026-10-30T04:11:12.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b93326b3d68
+  - type: specified_by
+    from: REQ-ingest-statement-upload-checks
+    to: SCEN-ingest-statement-upload-checks
+    created_at: 2026-10-30T04:11:12.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d496529fcf62

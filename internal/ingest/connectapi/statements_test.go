@@ -100,6 +100,17 @@ func (fileBindings) BoundAccounts(context.Context, string) ([]ledger.AccountID, 
 	return []ledger.AccountID{flexAccount}, nil
 }
 
+// flexInstance runs flex-main, which declares statement files (D-109).
+type flexInstance struct{}
+
+func (flexInstance) ConnectorInstances(context.Context) ([]string, error) {
+	return []string{"flex-main"}, nil
+}
+
+func (flexInstance) Declarations(context.Context, string) (ingest.Declarations, error) {
+	return ingest.Declarations{StatementFiles: true}, nil
+}
+
 // viewStreams admits streams bearing viewCaller, like cmd/core's
 // view-plugin check.
 type viewStreams struct{}
@@ -135,8 +146,10 @@ func newStatementsClient(t *testing.T, c *fileCaller, l importer) statementsClie
 	}
 	uploads := &app.Uploads{
 		Owners: owners{}, Bindings: fileBindings{}, Batches: recorder{}, MaxBytes: 300000, Sniff: http.DetectContentType,
-		Connectors: &app.Connectors{Caller: c, Bindings: fileBindings{}, Ledger: l, Today: func() kernel.Date { return day }},
-		NewBatchID: func() ingest.BatchID { return "b-1" },
+		Connectors: &app.Connectors{
+			Caller: c, Bindings: fileBindings{}, Ledger: l, Today: func() kernel.Date { return day }, Declarations: flexInstance{},
+		},
+		NewBatchID: func() ingest.BatchID { return "b-1" }, Instances: flexInstance{},
 	}
 	_, handler := connectapi.NewStatements(uploads, viewStreams{}, slog.New(slog.DiscardHandler))
 	srv := httptest.NewServer(handler)
@@ -195,6 +208,7 @@ func TestUploadStatement(t *testing.T) {
 	}
 	want := &ingestv1.UploadStatementResponse{
 		BatchId: "b-1", Institution: "ibkr", Transactions: 1, New: 1, ProblemsTotal: 105,
+		Mode: ingestv1.Mode_MODE_TRANSACTIONS, AccountIds: []string{flexAccount},
 	}
 	for i := range 100 {
 		want.Problems = append(want.Problems, &ingestv1.Problem{
@@ -207,6 +221,35 @@ func TestUploadStatement(t *testing.T) {
 	handed := []string{c.name, c.media, c.mode.String(), strconv.FormatBool(bytes.Equal(c.file, statement))}
 	if diff := cmp.Diff([]string{"statement.xml", "text/xml; charset=utf-8", "transactions", "true"}, handed); diff != "" {
 		t.Errorf("handed to the connector: name, sniffed type, mode, every byte (-want +got):\n%s", diff)
+	}
+}
+
+// TestListStatementAccounts checks that the owner learns which accounts
+// take statement files, with the mode the core chooses for the next upload,
+// and that an upload without a mode takes it (D-109).
+func TestListStatementAccounts(t *testing.T) {
+	t.Parallel()
+	c := &fileCaller{account: flexAccount}
+	client := newStatementsClient(t, c, importer{})
+	got, err := client.ListStatementAccounts(t.Context(), connect.NewRequest(&ingestv1.ListStatementAccountsRequest{Origin: local, SessionToken: ownerSession}))
+	if err != nil {
+		t.Fatalf("ListStatementAccounts: %v", err)
+	}
+	want := &ingestv1.ListStatementAccountsResponse{Accounts: []*ingestv1.StatementAccount{
+		{AccountId: flexAccount, Instance: "flex-main", Mode: ingestv1.Mode_MODE_OPENING},
+	}}
+	if diff := cmp.Diff(want, got.Msg, protocmp.Transform()); diff != "" {
+		t.Errorf("ListStatementAccounts (-want +got):\n%s", diff)
+	}
+	_, err = client.ListStatementAccounts(t.Context(), connect.NewRequest(&ingestv1.ListStatementAccountsRequest{Origin: local, SessionToken: "ofsess_unknown"}))
+	if connect.CodeOf(err) != connect.CodeUnauthenticated {
+		t.Errorf("ListStatementAccounts with an unknown session = %v, want unauthenticated", err)
+	}
+	h := header()
+	h.Mode = ingestv1.Mode_MODE_UNSPECIFIED
+	up, err := upload(t, client, viewCaller, []*ingestv1.UploadStatementRequest{headerPart(h)}, syntheticStatement())
+	if err != nil || up.GetMode() != ingestv1.Mode_MODE_OPENING || c.mode != ingest.ModeOpening {
+		t.Errorf("an upload without a mode = %v, %v, handed %s; want opening, the account not being seeded", up, err, c.mode)
 	}
 }
 
@@ -234,7 +277,6 @@ func TestUploadStatementRefusals(t *testing.T) {
 		{name: "no header", parts: []*ingestv1.UploadStatementRequest{}, file: statement, want: connect.CodeInvalidArgument, wantText: "header"},
 		{name: "no message at all", parts: []*ingestv1.UploadStatementRequest{}, file: []byte{}, want: connect.CodeInvalidArgument, wantText: "header"},
 		{name: "a second header", parts: []*ingestv1.UploadStatementRequest{headerPart(header()), chunkPart([]byte("x")), headerPart(header())}, want: connect.CodeInvalidArgument, wantText: "second header"},
-		{name: "no mode", parts: edit(func(h *ingestv1.StatementHeader) { h.Mode = ingestv1.Mode_MODE_UNSPECIFIED }), want: connect.CodeInvalidArgument, wantText: "mode"},
 		{name: "an empty file", file: []byte{}, want: connect.CodeInvalidArgument, wantText: "empty"},
 		{name: "a file over the limit", file: bytes.Repeat([]byte("x"), 300001), want: connect.CodeResourceExhausted, wantText: "too large"},
 		{name: "a message over 1 MiB", parts: []*ingestv1.UploadStatementRequest{headerPart(header()), chunkPart(bytes.Repeat([]byte("x"), 2<<20))}, want: connect.CodeResourceExhausted},

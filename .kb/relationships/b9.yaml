@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-373c7d718ab6
+  - type: executable_for
+    from: SYM-ingest-test-decl-test-undeclared-cross-check-prices
+    to: TEST-ingest-declarations
+    created_at: 2026-10-30T04:31:03.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4916581fd90

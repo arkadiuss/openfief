@@ -136,6 +136,11 @@ spec:
                       must satisfy.
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
+                  crossCheckPrices:
+                    description: |-
+                      CrossCheckPrices declares that a connector sends cross-check prices,
+                      which the core stores only from a connector that declares it (D-112).
+                    type: boolean
                   dataTiers:
                     description: DataTiers lists the classes of data the plugin asks
                       to see.
@@ -199,6 +204,11 @@ spec:
                     x-kubernetes-list-map-keys:
                     - role
                     x-kubernetes-list-type: map
+                  statementFiles:
+                    description: |-
+                      StatementFiles declares that a connector takes statement files the
+                      owner uploads (D-109).
+                    type: boolean
                 required:
                 - capabilities
                 type: object
@@ -353,6 +363,11 @@ spec:
                           must satisfy.
                         type: object
                         x-kubernetes-preserve-unknown-fields: true
+                      crossCheckPrices:
+                        description: |-
+                          CrossCheckPrices declares that a connector sends cross-check prices,
+                          which the core stores only from a connector that declares it (D-112).
+                        type: boolean
                       dataTiers:
                         description: DataTiers lists the classes of data the plugin
                           asks to see.
@@ -416,6 +431,11 @@ spec:
                         x-kubernetes-list-map-keys:
                         - role
                         x-kubernetes-list-type: map
+                      statementFiles:
+                        description: |-
+                          StatementFiles declares that a connector takes statement files the
+                          owner uploads (D-109).
+                        type: boolean
                     required:
                     - capabilities
                     type: object

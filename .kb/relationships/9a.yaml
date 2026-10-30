@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-947df703f5f2
+  - type: implements
+    from: SYM-core-connector-discovery
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:23:39.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64680b8b565b
+  - type: covered_by
+    from: SYM-core-connector-discovery
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:23:39.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d2cd455be4d
