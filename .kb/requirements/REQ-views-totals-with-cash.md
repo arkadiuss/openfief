@@ -36,6 +36,10 @@ Valuation totals must sum, per date, the valued holdings and each account's cash
 
 Supersedes REQ-views-valuation-totals, which summed stored valuations only: D-106 makes valuation totals include cash. Valuing cash in its wrapper follows D-77. Modeled by Claude Code for the values work package; the author has not reviewed it yet.
 
+## Why this changed
+
+It replaces REQ-views-valuation-totals: D-106 makes valuation totals include cash. The superseded requirement is closed.
+
 ## Source
 
 > **[D-106]** Value and performance are separate charts. The value-over-time chart shows money, cash included, with D-77's switch between gross, net and liquidation value. [...] Valuation totals include cash.

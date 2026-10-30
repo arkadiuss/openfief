@@ -1,12 +1,12 @@
 ---
 title: Ships As View Plugin = true
 status: active
-text_ref: docs/DESIGN.md#D-3
+text_ref: docs/DESIGN.md#D-28
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-3
+  - provenance:docs-design-md-d-28
   - lane:strict
   - fact:property_value
 fact_kind: property_value
@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:views.built_in_ui:ships_as_view_plugin
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-02EC642940108645
-claim_text: The built-in UI must ship as the plugin image ui whose manifest asks for the view capability only, with no egress host and no Secret, serving the owner's browser and a health endpoint on the plugin port, and the demo must serve it at / through its Ingress while /v1 stays the core's.
+claim_key: CLAIM-A7CDB767C046AB1B
+claim_text: The built-in UI must ship as the plugin image ui whose manifest asks for the view capability only, with no egress host and no Secret, serving the owner's browser and a health endpoint on the plugin port, and the demo must serve it at / through its Ingress to the core's http port while /v1 stays the core's.
 origin:
   kind: agent
   recorded_at: '2026-10-28T19:50:16.556Z'

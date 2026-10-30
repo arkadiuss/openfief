@@ -545,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-326a127a2f5d
+  - type: covered_by
+    from: SYM-exp-core-listen
+    to: TEST-core-unit
+    created_at: 2026-10-29T21:00:11.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25fe07e3d50a
+  - type: executable_for
+    from: SYM-exp-identity-cli-test-helper-fake-core-allowed-origins
+    to: TEST-identity-cli
+    created_at: 2026-10-29T22:37:22.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e0a0b85d55d
+  - type: implements
+    from: SYM-exp-core-listen
+    to: REQ-core-serve-flags
+    created_at: 2026-10-30T02:09:57.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43685a025eec

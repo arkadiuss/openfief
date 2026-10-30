@@ -358,13 +358,6 @@ relationships:
     id: rel-d46a6f0dd204
   - type: validates
     from: TEST-identity-auth-app
-    to: REQ-identity-install-without-hostname
-    created_at: 2026-10-28T19:26:36.705Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9867704144c2
-  - type: validates
-    from: TEST-identity-auth-app
     to: REQ-identity-passkey-new-hostname
     created_at: 2026-10-28T19:26:36.725Z
     created_by: kibi/upsert
@@ -573,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-834bcc421c01
+  - type: validates
+    from: TEST-identity-auth-app
+    to: REQ-identity-first-passkey-own-host-or-localhost
+    created_at: 2026-10-29T22:34:30.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bb7a5b7d113

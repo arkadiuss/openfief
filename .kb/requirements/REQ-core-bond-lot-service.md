@@ -1,43 +1,43 @@
 ---
-title: The core must serve BondLotService next to the read API to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules.
+title: The core must serve BondLotService on its plugin port to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules.
 status: open
-text_ref: docs/DESIGN.md#D-49
+text_ref: docs/DESIGN.md#D-115
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-49
+  - provenance:docs-design-md-d-115
   - lane:strict
-semantic_text: The core must serve BondLotService next to the read API to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules.
+semantic_text: The core must serve BondLotService on its plugin port to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules.
 logic_claims:
-  - CLAIM-14322D32E2325A58
+  - CLAIM-49EF810348D6F835
 semantic_clauses:
-  - The core must serve BondLotService next to the read API to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules.
+  - The core must serve BondLotService on its plugin port to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 98c46ae76297b8ee75381db32e42e544c4214d2cf00fae1c7f9960380be6fb08
+semantic_source_hash: f9a20987d1cf11004588c74d2bcd65e553b67f8facbcaa814e212415c8d0ec37
 semantic_inventory:
-  - claim_key: CLAIM-14322D32E2325A58
-    claim_text: The core must serve BondLotService next to the read API to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules
+  - claim_key: CLAIM-49EF810348D6F835
+    claim_text: The core must serve BondLotService on its plugin port to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules
     role: normative
     status: modeled
     span:
       start: 0
-      end: 295
+      end: 293
 origin:
   kind: agent
   recorded_at: '2026-10-29T01:54:50.264Z'
 id: REQ-core-bond-lot-service
 type: req
 ---
-The core must serve BondLotService next to the read API to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules.
+The core must serve BondLotService on its plugin port to view plugins, reach the bound connector instance through the client its connector discovery builds, answering unavailable until then, and record delivered bond series terms through valuation so imported lots are valued by the bond rules.
 
 ## Context
 
-D-49 routes manual bond-lot entries through the core to the right connector; D-9 says their valuation is computed. Entry needs connector discovery, so it works only in a cluster with connectors on. Modeled by Claude Code for the manual bond lot task; the author has not reviewed it yet.
+D-49 has the core call connectors and D-79 gives each kind of hand-entered data its own owner service; the built-in UI calls it for the owner. D-115 serves the owner services on the plugin port only, so no route reaches them.
 
 ## Source
 
-> **[D-49]** The core calls connectors: a connector serves a Connect service for syncing and for importing files, and the core owns the schedules, retries and import batches. Views are clients of the read API. File uploads and manual bond-lot entries in the built-in UI go to the core, which hands them to the right connector.
+> The core listens on two ports. The browser port, which the Service's `http` port targets and a route points at, serves the front door (D-81), the read API (D-50) and the health endpoints. The plugin port, which the Service's `connect` port targets and only plugin pods may reach, serves the read API and the services only plugins call: the AuthService (D-69) and the owner services (D-79). No route reaches a plugin-only service.
 
-docs/DESIGN.md#D-49
+docs/DESIGN.md#D-115

@@ -384,3 +384,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e74eb0aeb72a
+  - type: implements
+    from: SYM-exp-identity-kube-auth-origins
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:36:47.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-660d442d64ae
+  - type: covered_by
+    from: SYM-exp-identity-kube-auth-origins
+    to: TEST-identity-kube-core-access
+    created_at: 2026-10-29T22:36:47.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20a65f8dc0a7

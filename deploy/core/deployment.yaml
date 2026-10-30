@@ -37,7 +37,9 @@ spec:
           image: ghcr.io/arkadiuss/openfief/core
           args:
             - serve
+            # The browser port (Service port http) and the plugin port (Service port connect), D-115.
             - --listen=:8080
+            - --plugin-listen=:8081
             - --reporting-currency=PLN
             - --time-zone=Europe/Warsaw
             - --end-of-day=23:30
@@ -63,6 +65,8 @@ spec:
           ports:
             - name: http
               containerPort: 8080
+            - name: connect
+              containerPort: 8081
           # /healthz answers as soon as the process listens, also while it waits for the database and migrates;
           # /readyz only once it is migrated and the database answers. Neither needs a token or returns data.
           livenessProbe:

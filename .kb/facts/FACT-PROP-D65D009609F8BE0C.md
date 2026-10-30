@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:core.serve_flags:documented_defaults:e
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-CC16AA39A7C1638B
-claim_text: The core must read its database connection string from OPENFIEF_DSN and its listen address, reporting currency, the jurisdiction pack's by default, time zone, end-of-day time, revaluation concurrency and shutdown timeout from flags with documented defaults, and refuse to start on a missing or invalid value.
+claim_key: CLAIM-78D6A6E77268C2C9
+claim_text: The core must read its database connection string from OPENFIEF_DSN and, from flags with documented defaults, its browser port's and plugin port's listen addresses, reporting currency, the jurisdiction pack's by default, time zone, end-of-day time, revaluation concurrency and shutdown timeout, and refuse to start on a missing or invalid value.
 origin:
   kind: agent
   recorded_at: '2026-10-29T21:49:38.468Z'

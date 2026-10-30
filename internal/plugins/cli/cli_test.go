@@ -55,7 +55,7 @@ func (c *fakeCluster) Create(_ context.Context, p *plugins.Plugin, g *plugins.Gr
 	c.plugins[p.Name], c.grants[p.Name] = *p, *g
 	c.instances = append(c.instances, app.Instance{
 		Name: p.Name, Image: p.Image, HasPlugin: true, HasGrant: true, Secrets: g.Permissions.Secrets,
-		ClusterService: p.ClusterService,
+		ClusterService: p.ClusterService, BrowserPath: p.Manifest.BrowserPath,
 	})
 	c.granted = append(c.granted, g.Permissions)
 	return nil
@@ -107,6 +107,12 @@ func (fakeImages) Inspect(_ context.Context, image plugins.ImageRef) (plugins.Si
 			Capabilities:     []plugins.Capability{plugins.CapabilityView},
 			EgressFromConfig: []string{"url"},
 			ClusterService:   &plugins.ClusterServiceRequest{Description: "the owner's Ghostfolio"},
+		}}, nil
+	}
+	if image.String() == galleryImage {
+		return plugins.SignedImage{Image: image, Signatures: []plugins.SignerIdentity{id}, Manifest: plugins.Manifest{
+			Capabilities: []plugins.Capability{plugins.CapabilityView},
+			BrowserPath:  "/gallery",
 		}}, nil
 	}
 	if image.String() == sampleV2 {
@@ -341,8 +347,8 @@ func checkRun(t *testing.T, tt *runCase) {
 		return
 	}
 	var names []string
-	for _, i := range tt.cluster.instances {
-		names = append(names, i.Name)
+	for i := range tt.cluster.instances {
+		names = append(names, tt.cluster.instances[i].Name)
 	}
 	if diff := cmp.Diff(tt.wantNames, names); diff != "" {
 		t.Errorf("instances (-want +got):\n%s", diff)

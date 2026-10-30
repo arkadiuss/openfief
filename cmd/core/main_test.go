@@ -42,7 +42,7 @@ func defaultServe(t *testing.T) serveConfig {
 		t.Fatalf("ParseCurrency: %v", err)
 	}
 	return serveConfig{
-		Listen: ":8080", Reporting: pln,
+		Listen: ":8080", PluginListen: ":8081", Reporting: pln,
 		EndOfDay: valuationpg.DailyAt{Hour: 23, Minute: 30, Location: warsaw(t)},
 		Workers:  2, EnsureDefaults: true, ShutdownTimeout: 25 * time.Second,
 		PriceCheckThreshold: valuation.DefaultPriceCheckThreshold(),
@@ -80,7 +80,7 @@ func TestParseArgs(t *testing.T) {
 	def := defaultServe(t)
 	utc := def
 	utc.EndOfDay = valuationpg.DailyAt{Hour: 22, Minute: 5, Location: time.UTC}
-	utc.Listen, utc.Workers, utc.EnsureDefaults, utc.ShutdownTimeout = "127.0.0.1:9090", 4, false, time.Second
+	utc.Listen, utc.PluginListen, utc.Workers, utc.EnsureDefaults, utc.ShutdownTimeout = "127.0.0.1:9090", "127.0.0.1:9091", 4, false, time.Second
 	utc.PriceCheckThreshold = kernel.NewDecimal(5, -3)
 	pod := def
 	pod.Connectors = true
@@ -110,7 +110,7 @@ func TestParseArgs(t *testing.T) {
 		{
 			name: "serve flags",
 			args: []string{
-				"--listen=127.0.0.1:9090", "--time-zone=UTC", "--end-of-day=22:05", "--workers=4",
+				"--listen=127.0.0.1:9090", "--plugin-listen=127.0.0.1:9091", "--time-zone=UTC", "--end-of-day=22:05", "--workers=4",
 				"--ensure-defaults=false", "--shutdown-timeout=1s",
 				"--price-check-threshold=0.005",
 			},
@@ -249,6 +249,8 @@ func TestHealthBeforeReady(t *testing.T) {
 	tests := []struct {
 		name     string
 		draining bool
+		// plugin asks the plugin port, not the browser port.
+		plugin   bool
 		path     string
 		want     int
 		wantBody string
@@ -256,6 +258,7 @@ func TestHealthBeforeReady(t *testing.T) {
 		{name: "alive while starting", path: "/healthz", want: http.StatusOK, wantBody: "ok"},
 		{name: "not ready while starting", path: "/readyz", want: http.StatusServiceUnavailable, wantBody: "starting"},
 		{name: "no API while starting", path: "/v1/accounts", want: http.StatusServiceUnavailable, wantBody: "starting"},
+		{name: "no plugin services while starting", plugin: true, path: "/openfief.identity.v1.AuthService/WhoAmI", want: http.StatusServiceUnavailable, wantBody: "starting"},
 		{name: "alive while draining", draining: true, path: "/healthz", want: http.StatusOK, wantBody: "ok"},
 		{name: "not ready while draining", draining: true, path: "/readyz", want: http.StatusServiceUnavailable, wantBody: "shutting down"},
 	}
@@ -265,7 +268,11 @@ func TestHealthBeforeReady(t *testing.T) {
 			s := &server{}
 			s.draining.Store(tt.draining)
 			rec := httptest.NewRecorder()
-			s.handler().ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodGet, tt.path, http.NoBody))
+			h := s.browserHandler()
+			if tt.plugin {
+				h = s.pluginHandler()
+			}
+			h.ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodGet, tt.path, http.NoBody))
 			if rec.Code != tt.want || strings.TrimSpace(rec.Body.String()) != tt.wantBody {
 				t.Errorf("GET %s = %d %q, want %d %q", tt.path, rec.Code, rec.Body.String(), tt.want, tt.wantBody)
 			}

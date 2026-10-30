@@ -1,0 +1,24 @@
+# The route to the core's browser port (D-28, D-115). parentRefs and hostnames are placeholders (kustomization.yaml).
+# The Gateway's listener must allow routes from the namespace openfief (its allowedRoutes).
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: openfief
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: gateway
+      namespace: gateway-system
+      sectionName: https
+  hostnames:
+    - openfief.invalid
+  rules:
+    - backendRefs:
+        # Service openfief-core, port http: the front door, the read API and the health endpoints.
+        - name: openfief-core
+          port: 8080

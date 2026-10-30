@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-543c0683cd2a
+  - type: implements
+    from: SYM-exp-identity-kube-core-access-allowed-origins
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:36:35.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e973b02328b
+  - type: covered_by
+    from: SYM-exp-identity-kube-core-access-allowed-origins
+    to: TEST-identity-kube-core-access
+    created_at: 2026-10-29T22:36:35.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d59e0f1a0c80

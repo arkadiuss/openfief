@@ -587,3 +587,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8fc46793de4
+  - type: validates
+    from: TEST-deploy-gateway-component
+    to: REQ-platform-httproute-component
+    created_at: 2026-10-29T20:58:08.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a9fa4915fec
+  - type: validates
+    from: TEST-deploy-gateway-component
+    to: REQ-platform-exposes-nothing-by-default
+    created_at: 2026-10-29T20:58:08.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fefc1868169
+  - type: validates
+    from: TEST-deploy-gateway-component
+    to: REQ-core-plugin-port-scope
+    created_at: 2026-10-29T20:58:08.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54c7d24f8f98

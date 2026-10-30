@@ -114,14 +114,14 @@ relationships:
   - type: constrains
     from: REQ-core-health-endpoints
     to: FACT-SUBJECT-D6A091F8C6B86AD8
-    created_at: 2026-10-28T14:33:08.929Z
+    created_at: 2026-10-29T20:58:56.668Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56b9bdb9a390
   - type: requires_property
     from: REQ-core-health-endpoints
     to: FACT-PROP-D54777BA6F452EA6
-    created_at: 2026-10-28T14:33:08.963Z
+    created_at: 2026-10-29T20:58:56.728Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d07e699b05f
@@ -310,14 +310,14 @@ relationships:
   - type: constrains
     from: REQ-views-browser-proxy-headers
     to: FACT-SUBJECT-058686C92437C05A
-    created_at: 2026-10-29T12:02:12.904Z
+    created_at: 2026-10-29T23:11:26.559Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3ed2e82abd6
   - type: requires_property
     from: REQ-views-browser-proxy-headers
     to: FACT-PROP-9540BE3755B3AFC2
-    created_at: 2026-10-29T12:02:12.978Z
+    created_at: 2026-10-29T23:11:26.606Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8df3845e91d9

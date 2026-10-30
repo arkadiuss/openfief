@@ -36,6 +36,10 @@ The core must record the version of the jurisdiction pack's rules at start-up an
 
 Supersedes REQ-valuation-basis-change: D-36 no longer revalues on a basis change since D-77 removed the basis. A code change to the pack's rules changes stored values, so its version stands in for the basis. Modeled by Claude Code for the values work package; the author has not reviewed it yet.
 
+## Why this changed
+
+It replaces REQ-valuation-basis-change: D-36 no longer revalues on a basis change. The superseded requirement is closed.
+
 ## Source
 
 > **[D-36]** Valuations are stored rows derived from the transaction log, prices, FX rates and index readings, and can be rebuilt from them at any time. [...] Configurable: worker concurrency and the end-of-day schedule. Each stored valuation holds all three values of D-77. What triggers a revaluation is not configurable.

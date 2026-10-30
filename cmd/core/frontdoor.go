@@ -12,10 +12,12 @@ import (
 	viewskube "github.com/arkadiuss/openfief/internal/views/kube"
 )
 
-// withFrontDoor returns api behind the core's front door (D-81): the
-// paths the core serves itself (plugins.CoreServesPath: the read API, its
-// Connect services and the health endpoints) go to api, and every other
-// path to browser, which proxies it to the view plugin that serves it.
+// withFrontDoor returns api, the browser port's read API, behind the core's
+// front door (D-81): the paths the core serves itself (plugins.CoreServesPath:
+// the read API, the paths of its Connect services and the health endpoints)
+// go to api, which answers 404 for the services only plugins call (D-115),
+// and every other path to browser, which proxies it to the one view plugin
+// that holds a browser path (D-114).
 func withFrontDoor(api, browser http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if plugins.CoreServesPath(r.URL.Path) {

@@ -4,7 +4,7 @@
 //
 // Usage:
 //
-//	openfief enroll [--port 8080] [--ttl 15m]
+//	openfief enroll [--origin https://HOST | --port 8080] [--ttl 15m]
 //	openfief plugin install <catalog-name|image@sha256:...> [--name NAME] [--config FILE]
 //	                        [--cluster-service NAMESPACE/SERVICE:PORT]
 //	                        [--trusted-signers FILE] [--yes] [--print]
@@ -21,10 +21,12 @@
 // same way, shows how its requested permissions differ and, once the owner
 // confirms, replaces the Plugin and its grant (D-90). uninstall deletes an
 // instance's PluginGrant, Plugin and its Secrets (D-58, D-89).
-// enroll forwards localhost:8080 to the core, the only entry point for
-// browsers (D-81), has the core issue D-60's one-time link for it by running
-// core enroll-link in its pod, prints the link and keeps forwarding until
-// Ctrl-C. Every command takes --kubeconfig and --context.
+// enroll has the core issue D-60's one-time link for the first passkey by
+// running core enroll-link in its pod (D-80): with --origin, for that
+// origin, which must be one of the core's --auth-origin, and with no
+// port-forward; without it, it forwards localhost:8080 to the core, the only
+// entry point for browsers (D-81), prints the link for it and keeps
+// forwarding until Ctrl-C. Every command takes --kubeconfig and --context.
 package main
 
 import (

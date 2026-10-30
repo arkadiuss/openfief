@@ -36,6 +36,10 @@ Worker concurrency, the daily end-of-day time with its time zone and the jurisdi
 
 Supersedes REQ-valuation-settings: D-77 removed the bond basis from what D-36 makes configurable. Modeled by Claude Code for the values work package; the author has not reviewed it yet.
 
+## Why this changed
+
+It replaces REQ-valuation-settings: D-77 removed the bond basis from the settings. The superseded requirement is closed.
+
 ## Source
 
 > **[D-36]** Valuations are stored rows derived from the transaction log, prices, FX rates and index readings, and can be rebuilt from them at any time. [...] Configurable: worker concurrency and the end-of-day schedule. Each stored valuation holds all three values of D-77. What triggers a revaluation is not configurable.

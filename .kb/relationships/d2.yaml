@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a6d9c97219e
+  - type: implements
+    from: SYM-exp-plugins-app-check-browser-view
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T22:00:03.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af36c23fba29
+  - type: covered_by
+    from: SYM-exp-plugins-app-check-browser-view
+    to: TEST-plugins-cli-browser-view
+    created_at: 2026-10-29T22:00:03.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e2485d2faee

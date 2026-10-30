@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68753c430b08
+  - type: implements
+    from: SYM-exp-plugins-browser-view-senior
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T21:59:20.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b052f05d10
+  - type: covered_by
+    from: SYM-exp-plugins-browser-view-senior
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T21:59:20.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5860e8e5f677

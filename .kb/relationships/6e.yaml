@@ -405,13 +405,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-452039f9c1b4
-  - type: implements
-    from: SYM-fd-identity-cli-run
-    to: REQ-identity-first-passkey-link
-    created_at: 2026-10-29T12:03:41.886Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2073e9df65cd
   - type: covered_by
     from: SYM-fd-identity-cli-run
     to: TEST-identity-cli
@@ -475,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ea6f4023d1d
+  - type: implements
+    from: SYM-fd-identity-cli-run
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:35:27.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df4c930ea07c
+  - type: implements
+    from: SYM-fd-identity-cli-run
+    to: REQ-identity-enroll-localhost-forward
+    created_at: 2026-10-29T22:35:37.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-020de3ecc427

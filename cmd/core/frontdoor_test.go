@@ -63,10 +63,25 @@ func browserCluster(t *testing.T, uiURL string) *cluster {
 	return &cluster{client: client, dynamic: dyn, namespace: "openfief"}
 }
 
-// TestFrontDoor checks D-81 over the core's own server: a browser's path
-// the core doesn't serve reaches the view plugin ui with the core's token
-// and the browser's Host and scheme, while the read API, the AuthService
-// and the health endpoints stay the core's.
+// pluginOnlyPaths are one procedure of each service only plugins call: the
+// AuthService and the owner services (D-115).
+func pluginOnlyPaths() []string {
+	return []string{
+		"/openfief.identity.v1.AuthService/GetLoginMethods",
+		"/openfief.ingest.v1.AccountService/CreateAccount",
+		"/openfief.ingest.v1.BondLotService/AddBondLot",
+		"/openfief.ingest.v1.StatementService/UploadStatement",
+		"/openfief.portfolio.v1.SleeveService/AddSleeveKind",
+		"/openfief.portfolio.v1.ModelPortfolioService/GetModelPortfolio",
+	}
+}
+
+// TestFrontDoor checks D-81 and D-115 over the core's own servers: on the
+// browser port, a browser's path the core doesn't serve reaches the view
+// plugin ui with the core's token and the browser's Host and scheme, the
+// read API and the health endpoints stay the core's, and the services only
+// plugins call are not there; the plugin port serves the read API and
+// those services, and neither the front door nor the health endpoints.
 func TestFrontDoor(t *testing.T) {
 	t.Parallel()
 	type seen struct{ path, auth, host, proto string }
@@ -76,8 +91,8 @@ func TestFrontDoor(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	}))
 	t.Cleanup(ui.Close)
-	_, srv, _ := startCoreIn(t, emptyDatabase(t), browserCluster(t, ui.URL), func(*serveConfig) {})
-	status := waitRouted(t, srv, "/login")
+	_, ports, _ := startCorePorts(t, emptyDatabase(t), browserCluster(t, ui.URL), func(*serveConfig) {})
+	status := waitRouted(t, ports.browser, "/login")
 	if status != http.StatusTeapot {
 		t.Fatalf("GET /login through the core = %d, want the UI's 418", status)
 	}
@@ -85,14 +100,14 @@ func TestFrontDoor(t *testing.T) {
 	if s := <-got; s != want {
 		t.Errorf("the UI saw %+v, want %+v", s, want)
 	}
-	for path, wantStatus := range map[string]int{
-		"/v1/accounts": http.StatusUnauthorized, "/healthz": http.StatusOK,
-		"/openfief.identity.v1.AuthService/GetLoginMethods": http.StatusMethodNotAllowed,
-	} {
-		if r := browserGet(t, srv, path); r != wantStatus {
-			t.Errorf("GET %s = %d, want the core's %d", path, r, wantStatus)
-		}
+	browserWant := map[string]int{"/v1/accounts": http.StatusUnauthorized, "/healthz": http.StatusOK}
+	pluginWant := map[string]int{"/v1/accounts": http.StatusUnauthorized, "/healthz": http.StatusNotFound, "/login": http.StatusNotFound}
+	for _, path := range pluginOnlyPaths() {
+		browserWant[path] = http.StatusNotFound
+		pluginWant[path] = mounted
 	}
+	checkStatuses(t, "browser", ports.browser, browserWant)
+	checkStatuses(t, "plugin", ports.plugin, pluginWant)
 	select {
 	case s := <-got:
 		t.Errorf("the UI got a request for a core path: %+v", s)
@@ -100,14 +115,36 @@ func TestFrontDoor(t *testing.T) {
 	}
 }
 
+// mounted stands for any status but 404 in checkStatuses: the service is
+// there, and refuses a plain GET as its protocol does (405, 415).
+const mounted = 0
+
+// checkStatuses checks that GET of each path on the core's port srv
+// answers the status want gives it.
+func checkStatuses(t *testing.T, port string, srv *httptest.Server, want map[string]int) {
+	t.Helper()
+	for path, wantStatus := range want {
+		r := browserGet(t, srv, path)
+		switch {
+		case wantStatus == mounted && r == http.StatusNotFound:
+			t.Errorf("GET %s on the %s port = 404, want the service there", path, port)
+		case wantStatus != mounted && r != wantStatus:
+			t.Errorf("GET %s on the %s port = %d, want %d", path, port, r, wantStatus)
+		}
+	}
+}
+
 // TestFrontDoorOutsideACluster checks that outside a cluster, with no view
-// plugin to proxy to, the core answers a browser's path itself with 404.
+// plugin to proxy to, the core answers a browser's path itself with 404,
+// and its browser port still serves no plugin-only service.
 func TestFrontDoorOutsideACluster(t *testing.T) {
 	t.Parallel()
 	_, srv, _ := startCoreWith(t, emptyDatabase(t), func(*serveConfig) {})
-	if r := browserGet(t, srv, "/login"); r != http.StatusNotFound {
-		t.Errorf("GET /login outside a cluster = %d, want 404", r)
+	want := map[string]int{"/login": http.StatusNotFound}
+	for _, path := range pluginOnlyPaths() {
+		want[path] = http.StatusNotFound
 	}
+	checkStatuses(t, "browser", srv, want)
 }
 
 // waitRouted asks the core for path until it no longer answers 503 while

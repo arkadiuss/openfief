@@ -385,13 +385,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-be182a28a984
   - type: executable_for
-    from: SYM-core-test-helper-start-core-in
-    to: TEST-core-read-api
-    created_at: 2026-10-29T10:55:40.695Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-229e83ed03b7
-  - type: executable_for
     from: SYM-fd-core-test-front-door
     to: TEST-core-front-door
     created_at: 2026-10-29T12:08:14.754Z
@@ -517,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84ec59b3d74f
+  - type: implements
+    from: SYM-exp-core-server-browser-handler
+    to: REQ-core-browser-port-scope
+    created_at: 2026-10-29T20:59:40.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-785231f3fe38
+  - type: covered_by
+    from: SYM-exp-core-server-browser-handler
+    to: TEST-core-front-door
+    created_at: 2026-10-29T20:59:40.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eacf6339e32d

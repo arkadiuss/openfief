@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23b84d4a27e4
+  - type: validates
+    from: TEST-plugins-cli-browser-view
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T21:58:46.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84230cf4d015

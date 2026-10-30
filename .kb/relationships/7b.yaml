@@ -447,3 +447,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25cf7f6a512a
+  - type: verified_by
+    from: SCEN-views-totals-with-cash
+    to: TEST-views-valuation
+    created_at: 2026-10-30T02:13:04.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d55d0291b43

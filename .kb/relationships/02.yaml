@@ -310,14 +310,14 @@ relationships:
   - type: constrains
     from: REQ-core-bond-lot-service
     to: FACT-SUBJECT-6166007EBA87AC71
-    created_at: 2026-10-29T01:54:50.273Z
+    created_at: 2026-10-29T23:10:41.404Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d3155c698b3
   - type: requires_property
     from: REQ-core-bond-lot-service
     to: FACT-PROP-58E2B3EAFBDC19CA
-    created_at: 2026-10-29T01:54:50.335Z
+    created_at: 2026-10-29T23:10:41.456Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d357cbb000c8

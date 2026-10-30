@@ -133,8 +133,48 @@ func (r *PluginReconciler) observe(ctx context.Context, p *v1alpha1.Plugin) (*ob
 	o.grantErr = grant.err
 	if o.grantErr == nil {
 		r.plan(ctx, p, o, current, grant.grant)
+		if err := r.oneBrowserView(ctx, p, o); err != nil {
+			return nil, err
+		}
 	}
 	return o, nil
+}
+
+// oneBrowserView keeps the version that would run from running when it
+// holds a browser path while another instance holds one (D-114), and
+// records why: a plugin that holds none yet yields to any holder, and of
+// two that both hold one the older Plugin keeps it.
+func (r *PluginReconciler) oneBrowserView(ctx context.Context, p *v1alpha1.Plugin, o *observation) error {
+	if o.runSpec == nil || o.rollout.Run == nil || o.rollout.Run.BrowserPath() == "" {
+		return nil
+	}
+	var list v1alpha1.PluginList
+	if err := r.Client.List(ctx, &list, client.InNamespace(plugins.Namespace)); err != nil {
+		return fmt.Errorf("list plugins: %w", err)
+	}
+	var held []plugins.BrowserView
+	for i := range list.Items {
+		if v, ok := heldBrowserView(&list.Items[i]); ok {
+			held = append(held, v)
+		}
+	}
+	_, holding := heldBrowserView(p)
+	self := plugins.BrowserView{Instance: p.Name, Path: o.rollout.Run.BrowserPath(), Created: p.CreationTimestamp.Time}
+	if err := plugins.MayHoldBrowserPath(self, holding, held); err != nil {
+		o.browserErr, o.runSpec = err, nil
+	}
+	return nil
+}
+
+// heldBrowserView returns the browser path a Plugin holds: one its status
+// records as effective for the version that runs, while it is not being
+// deleted.
+func heldBrowserView(p *v1alpha1.Plugin) (plugins.BrowserView, bool) {
+	e := p.Status.Effective
+	if p.DeletionTimestamp != nil || p.Status.Deployed == nil || e == nil || len(e.BrowserPaths) == 0 {
+		return plugins.BrowserView{}, false
+	}
+	return plugins.BrowserView{Instance: p.Name, Path: e.BrowserPaths[0], Created: p.CreationTimestamp.Time}, true
 }
 
 // plan decides the rollout and which version's spec runs. The previous

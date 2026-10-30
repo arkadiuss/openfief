@@ -58,6 +58,9 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 	if err != nil {
 		return UpgradeProposal{}, fmt.Errorf("plan upgrade: %w", err)
 	}
+	if err := CheckBrowserView(ctx, store, &p); err != nil {
+		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, err)
+	}
 	from, to := current.Requested(), p.Requested()
 	out := UpgradeProposal{
 		Proposal: Proposal{Plugin: p, Grant: g, Decision: decision, ConfigHosts: configHosts(&p)},
@@ -71,8 +74,12 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 }
 
 // Upgrade applies a confirmed upgrade: the new Plugin and a grant of exactly
-// what it requests.
+// what it requests. Like PrepareUpgrade, it refuses a version that declares
+// a browser path while another instance declares one (D-114).
 func Upgrade(ctx context.Context, store InstanceStore, up *UpgradeProposal) error {
+	if err := CheckBrowserView(ctx, store, &up.Plugin); err != nil {
+		return fmt.Errorf("upgrade %q: %w", up.Plugin.Name, err)
+	}
 	if err := store.Update(ctx, &up.Plugin, &up.Grant); err != nil {
 		return fmt.Errorf("upgrade %q: %w", up.Plugin.Name, err)
 	}

@@ -298,6 +298,10 @@ func TestReconcile(t *testing.T) {
 			t.Errorf("state mismatch (-want +got):\n%s", diff)
 		}
 	})
+	t.Run("a second view with a browser path does not run", func(t *testing.T) {
+		t.Parallel()
+		testOneBrowserView(t, tc, signed)
+	})
 	t.Run("revoking the grant removes the plugin", func(t *testing.T) {
 		t.Parallel()
 		testRevoke(t, tc, signed)

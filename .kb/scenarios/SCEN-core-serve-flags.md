@@ -1,5 +1,5 @@
 ---
-title: The core reads its serve flags with defaults and refuses bad ones, the bond basis flag included
+title: The core reads its serve flags, both ports' addresses included, with defaults and refuses bad ones
 status: active
 origin:
   kind: agent
@@ -7,4 +7,4 @@ origin:
 id: SCEN-core-serve-flags
 type: scenario
 ---
-Given no flags, when the core parses serve, then it listens on :8080 with PLN reporting from the jurisdiction pack and the documented defaults; given valid flags, then they are taken; a bad currency, time zone, end of day, threshold, or the --bond-basis flag removed by D-77, makes it refuse to start.
+Given no flags, when serve is parsed, then the browser port listens on :8080, the plugin port on :8081 and the reporting currency is the pack's PLN; given --listen, --plugin-listen and the other flags, then they are taken; given a bad value or the removed --bond-basis flag, then serve refuses to start.

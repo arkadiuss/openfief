@@ -69,13 +69,18 @@ func newTokens(pool *pgxpool.Pool, now func() time.Time) *identityapp.Tokens {
 	return identityapp.NewTokens(identitypg.New(pool), now, nil)
 }
 
-// core is the wired core service: the read API's handler, the River
-// client that runs the revaluation workers, and what the connector
-// scheduler is built from.
+// core is the wired core service: what each of its ports serves (D-115),
+// the River client that runs the revaluation workers, and what the
+// connector scheduler is built from.
 type core struct {
-	api   http.Handler
-	river *river.Client[pgx.Tx]
-	deps  *connectorDeps
+	// browserPort serves the read API and, in a cluster, the front door
+	// (D-81); the health endpoints are the server's own.
+	browserPort http.Handler
+	// pluginPort serves the read API, the AuthService and the owner
+	// services, which only plugins call.
+	pluginPort http.Handler
+	river      *river.Client[pgx.Tx]
+	deps       *connectorDeps
 	// connectors is closed when the connector scheduler has stopped; nil
 	// when it doesn't run.
 	connectors chan struct{}
@@ -119,10 +124,11 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // accepts as its verifier (readTokens, D-27). It stores
 // the built-in sleeve kinds and sleeves when cfg asks, and records the
 // jurisdiction pack's rules version, which revalues everything when it
-// changed. Next to the read API it
-// serves the AuthService, the ModelPortfolioService (D-52), the
-// BondLotService (D-9, D-49) and the StatementService (D-7, D-49) to the
-// view plugins callers accepts (author decision, auth split). The read API
+// changed. The browser port serves the read API alone; the plugin port
+// serves it with the AuthService, the ModelPortfolioService (D-52), the
+// BondLotService (D-9, D-49), the StatementService (D-7, D-49), the
+// onboarding services and the SettingsService (D-78, D-113), to the view
+// plugins callers accepts (D-69, D-79, D-115). The read API
 // lists the installed plugins from installed, and without it, outside a
 // cluster, answers that they are unknown. Start the River client to run
 // the workers.
@@ -177,14 +183,14 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		entries: &entryCaller{}, bonds: vstore, model: models,
 		rankings: newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
 	}
-	served := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
-	served = withBondLotService(served, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
-	served = withStatementService(served, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
-	served = withMarketDataService(served, deps.rankings, callers, log)
-	served = withOnboardingServices(served, newSleeves(l, auth, cfg.Auth.Origins),
+	plugin := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
+	plugin = withBondLotService(plugin, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	plugin = withStatementService(plugin, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
+	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins),
 		newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins), accountTerms{recorder, vstore}), callers, log)
-	served = withSettingsService(served, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
-	return &core{api: served, river: client, deps: deps, plugins: installed}, nil
+	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
+	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed}, nil
 }
 
 // viewOptions configures the views with the model portfolio's reports, the

@@ -489,3 +489,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8a8f9681950
+  - type: implements
+    from: SYM-fd-views-route-browser-path
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T21:01:39.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-752e21ec2ee0

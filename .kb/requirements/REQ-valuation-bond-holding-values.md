@@ -36,6 +36,10 @@ A holding of a bond with stored series terms must be valued as the sum of its op
 
 Supersedes REQ-valuation-bond-holding, which counted one configured basis that D-77 removed. Modeled by Claude Code for the values work package; the author has not reviewed it yet.
 
+## Why this changed
+
+It replaces REQ-valuation-bond-holding: D-77 removed the configured bond basis. It replaces REQ-valuation-bond-basis: D-77 removed the configured bond basis; gross, net and liquidation replace it. The superseded requirement is closed.
+
 ## Source
 
 > **[D-77]** Every holding, account and total has three values, computed by the jurisdiction pack for each kind of product and tax wrapper: Gross: before any tax or fee; market value, or the accrued value of a bond or deposit. Net: what the owner keeps at the planned exit (maturity, or a withdrawal from a wrapper once its conditions are met), after the taxes due then and without early-exit fees. Liquidation: the cash in hand if everything were sold or redeemed and withdrawn today, after every tax and fee due today: early-redemption fees, early-withdrawal taxes and sale commissions.
