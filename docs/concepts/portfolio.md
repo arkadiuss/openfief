@@ -15,7 +15,7 @@ The portfolio context describes the portfolio as a whole: the parts it is divide
 
 **Why defensive and offensive.** The split resembles core-satellite investing: a large, diversified core held for the long run, plus smaller satellites for active bets. OpenFief turns that habit into a hard line for agents. GR-6 leases each thesis agent's budget only from the offensive part, and a defensive sleeve is never available to agents. Because a sleeve is made of accounts at institutions, the line can later be drawn by the broker too. P-11 (a), a proposal, puts each offensive sleeve in its own IBKR linked cash account, so even a compromised OpenFief host couldn't trade defensive accounts.
 
-**Sleeve kinds.** The role is a two-value switch that GR-6 relies on, so it stays fixed. A sleeve kind is the owner-facing label on top: emergency fund, bonds, retirement, core, satellite, agent pool, or one the owner adds. Each kind has a default role, and the allocation chart can group by kind (D-30). The owner may rename a kind, but its default role never changes, because every sleeve of that kind was checked against it. The role is stored on the sleeve itself, so renaming a kind can't change what agents may lease from. A sleeve may always be *more* defensive than its kind; making it offensive in a defensive kind needs an explicit override.
+**Sleeve kinds.** The role is a two-value switch that GR-6 relies on, so it stays fixed. A sleeve kind is the owner-facing label on top (D-71): emergency fund, bonds, retirement, core, satellite, agent pool, or one the owner adds. Each kind has a default role, and the allocation chart can group by kind (D-30). The owner may rename a kind, but its default role never changes, because every sleeve of that kind was checked against it. The role is stored on the sleeve itself, so renaming a kind can't change what agents may lease from. A sleeve whose role differs from its kind's, either way, needs the owner's explicit choice, the *role override*.
 
 **Sleeves in future fiefs.** These are proposals in [control-plane.md](../proposals/control-plane.md), not decisions. A [fief](../glossary.md) is a revocable lease from the offensive sleeve to one agent. P-12 sweeps sale proceeds above the lease back to the offensive sleeve. P-11 (f) adds kill switches per agent, per sleeve and global. In P-24, a closed fief returns its capital to the offensive sleeve. Still open: whether there is one offensive sleeve or several (OQ-20, T-7), and who sets its size (OQ-12).
 
@@ -29,13 +29,14 @@ Package `portfolio` ([sleeve.go](../../internal/portfolio/sleeve.go), [kind.go](
 
 | Name | What it does |
 |---|---|
-| `Sleeve` | `ID`, `Name`, `Kind`, `Role` and `OffensiveOverride`. `Validate` checks the ID, name and role. |
+| `Sleeve` | `ID`, `Name`, `Kind`, `Role` and `RoleOverride`. `Validate` checks the ID, name and role. |
 | `Role`, `ParseRole` | `RoleDefensive` or `RoleOffensive`, stored as those words. The zero `Role` is not a role. |
 | `Kind`, `KindKey` | A key of lowercase hyphenated words (at most 64 characters), a name and a `DefaultRole`. |
 | `DefaultKinds` | The built-in kinds: `agent-pool` and `satellite` offensive; `bonds`, `core`, `emergency-fund` and `retirement` defensive. |
 | `CheckKind` | A new key adds a kind, a known key renames it; changing a stored kind's default role is `ErrKindRoleChange`. |
 | `CheckSleeve` | Checks a sleeve against the stored kinds and fills in a missing role (diagram below). |
-| `DefaultSleeves`, `MissingDefaults` | An install's starting sleeves, Bonds, Core and Satellite, and which defaults are not stored yet. |
+| `DefaultSleeves`, `MissingDefaults` | An install's starting sleeves, Bonds, Core and Satellite, and which defaults are not stored yet: the built-in kinds always, the default sleeves only while no sleeve is stored. |
+| `KeyFromName` | The key, sleeve ID or account ID made from a name the owner typed: lower case, Polish letters in ASCII, other runs of characters one hyphen, at most 64 characters (`ErrNoKey` when nothing is left). |
 | `KindBySleeve` | Maps each sleeve to its kind, for an allocation grouped by kind (D-30). |
 
 ```mermaid
@@ -45,15 +46,15 @@ flowchart TD
   k -- yes --> r{"role given?"}
   r -- no --> d["role = kind's default role"] --> v
   r -- yes --> v{"role vs kind's default"}
-  v -- "same, or defensive in an offensive kind" --> o1{"OffensiveOverride set?"}
+  v -- "same" --> o1{"RoleOverride set?"}
   o1 -- no --> ok["stored as is"]
   o1 -- yes --> e2["ErrRoleOverride: the flag means one thing only"]
-  v -- "offensive in a defensive kind" --> o2{"OffensiveOverride set?"}
+  v -- "differs, either way" --> o2{"RoleOverride set?"}
   o2 -- yes --> ok
-  o2 -- no --> e3["ErrRoleOverride: needs the owner's explicit override"]
+  o2 -- no --> e3["ErrRoleOverride: needs the owner's explicit choice (D-71)"]
 ```
 
-The portfolio context's own store, the `portfolio` schema, holds only the model portfolio, so the ledger keeps sleeves and kinds next to the accounts that refer to them, and the `ledger` package imports `portfolio`, not the other way round. [0002_sleeve_kinds.sql](../../internal/ledger/postgres/migrations/0002_sleeve_kinds.sql) creates `ledger.sleeve_kinds`, seeds the six built-in kinds, and adds a trigger that refuses any change to a kind's key or default role. Each sleeve gets a required `kind` and an `offensive_override` that a `CHECK` allows only on offensive sleeves; sleeves stored before kinds existed became `core` or `satellite`, whichever matches their role. In `internal/ledger/app`, `SaveKind` runs `CheckKind`, `SaveSleeve` runs `CheckSleeve`, and `SaveAccount` refuses an account whose sleeve isn't stored ([ledger.go](../../internal/ledger/app/ledger.go), [kinds.go](../../internal/ledger/app/kinds.go)). `EnsureDefaults` stores whichever default kinds and sleeves are missing, in one transaction, and never changes a stored one; `cmd/core` runs it on every start unless `--ensure-defaults=false`, so an install starts with the default sleeves.
+The portfolio context's own store, the `portfolio` schema, holds only the model portfolio, so the ledger keeps sleeves and kinds next to the accounts that refer to them, and the `ledger` package imports `portfolio`, not the other way round. [0002_sleeve_kinds.sql](../../internal/ledger/postgres/migrations/0002_sleeve_kinds.sql) creates `ledger.sleeve_kinds`, seeds the six built-in kinds, and adds a trigger that refuses any change to a kind's key or default role. Each sleeve gets a required `kind`; sleeves stored before kinds existed became `core` or `satellite`, whichever matches their role. [0003_role_override.sql](../../internal/ledger/postgres/migrations/0003_role_override.sql) turns 0002's offensive override into D-71's `role_override`: sleeves stored before that were defensive in an offensive kind keep their role and get the override, and a trigger refuses a sleeve whose override isn't set exactly when its role differs from its kind's. In `internal/ledger/app`, `SaveKind` runs `CheckKind`, `SaveSleeve` runs `CheckSleeve`, and `SaveAccount` refuses an account whose sleeve isn't stored ([ledger.go](../../internal/ledger/app/ledger.go), [kinds.go](../../internal/ledger/app/kinds.go)). `EnsureDefaults` stores whichever built-in kinds are missing and, while no sleeve is stored at all, the default sleeves, in one transaction, and never changes a stored one; `cmd/core` runs it on every start unless `--ensure-defaults=false`, so an install starts with the default sleeves (D-71), and a sleeve the owner later moves or the demo dataset's own sleeves are never joined by the defaults again.
 
 ```mermaid
 flowchart LR
@@ -128,7 +129,7 @@ sequenceDiagram
 
 | Package | What it holds |
 |---|---|
-| [`portfolio/app`](../../internal/portfolio/app/models.go) | `Models`: `Settings` and `Save` for the owner, `CheckModel` and `ParseInstrument`; `Report`, the backtest and drawdowns for the read API, only while the model is on. The ports `ModelStore`, `MarketData` (prices, index levels and FX rates, which `*valuation/postgres.Store` serves) and `Owners`, with `ErrNoSession` and `ErrNotOwner`. PLN is the only reporting currency, as in the read API. |
+| [`portfolio/app`](../../internal/portfolio/app/models.go) | `Models`: `Settings` and `Save` for the owner, `CheckModel` and `ParseInstrument`; `MarketDataTargets`, the instruments and index names of the model while it is on, which the core asks market-data connectors to price (D-93, [Ingest](ingest.md#what-market-data-connectors-price)); `Report`, the backtest and drawdowns for the read API, only while the model is on. The ports `ModelStore`, `MarketData` (prices, index levels and FX rates, which `*valuation/postgres.Store` serves) and `Owners`, with `ErrNoSession` and `ErrNotOwner`. PLN is the only reporting currency, as in the read API. |
 | [`portfolio/postgres`](../../internal/portfolio/postgres/store.go) | The `portfolio` schema ([0001_model.sql](../../internal/portfolio/postgres/migrations/0001_model.sql)): `model`, at most one row with `enabled`, and `model_targets` in the owner's order. No row is the zero `Model`, off (D-52). Saving replaces both in one transaction. Table checks repeat the per-target rules; the 100% sum is checked before saving. |
 | [`portfolio/connectapi`](../../internal/portfolio/connectapi/service.go) | The generated handler, the conversion between messages and the domain, and the error mapping. |
 
@@ -138,17 +139,29 @@ sequenceDiagram
 
 The read API serves the report as `GetModelPortfolio`, rebased to 100 on go-live, and answers 404 while the model is off ([Read API](read-api.md#the-model-portfolio)).
 
+### Built: the owner's sleeve entries
+
+The owner adds and renames kinds and adds and changes sleeves in the built-in UI, on its Sleeves page and in the first-run wizard (D-71, D-73). D-79 makes each kind of owner entry its own service, so the core serves `openfief.portfolio.v1.SleeveService` ([sleeves.proto](../../proto/openfief/portfolio/v1/sleeves.proto)) to view plugins only, with the `ModelPortfolioService`'s conventions: the caller's plugin token, the browser's origin and the owner's session in the request, owner scope only.
+
+| Method | What it does |
+|---|---|
+| `AddSleeveKind` | A kind named by the owner, its key made from the name (`KeyFromName`), with a default role that never changes. A taken key is `ALREADY_EXISTS` |
+| `RenameSleeveKind` | A new name for any kind, built-in ones too; key and default role stay |
+| `AddSleeve` | A sleeve of a stored kind, its ID made from its name; no role takes the kind's, another role needs `role_override` (D-71) |
+| `UpdateSleeve` | A new name, kind or role for a stored sleeve; its ID stays |
+
+`portfolio/app.Sleeves` ([sleeves.go](../../internal/portfolio/app/sleeves.go)) checks the owner through the `Owners` port and stores through its `SleeveStore` port, which `cmd/core` fills with the ledger's `*ledgerapp.Ledger`: the ledger keeps sleeves and kinds next to the accounts and runs `CheckKind` and `CheckSleeve` before it stores one, so the rules hold whoever calls. `portfolio/connectapi` ([sleeves.go](../../internal/portfolio/connectapi/sleeves.go)) maps a broken rule to `INVALID_ARGUMENT` with the rule, a taken key or ID to `ALREADY_EXISTS`, an unknown kind or sleeve to change to `NOT_FOUND`. The read API lists kinds as `ListSleeveKinds` and gives each sleeve its `role_override` ([Read API](read-api.md#sleeves-accounts-and-connectors)).
+
 The [built-in UI](ui.md) draws it as the second line of the value-over-time chart, from go-live, both lines at 100 (D-106 moves it to a separate performance chart, not built yet), with the drawdowns in a table, and offers the form on its settings page.
 
 ## Decisions
 
-- **GR-6**: one fixed role per sleeve; offensive in a defensive kind needs an override.
+- **GR-6**, **D-71**: one fixed role per sleeve; any role other than the kind's needs the owner's explicit choice. The built-in kinds, their default roles and the three default sleeves are D-71's.
 - **D-30**: the read API's allocation and the built-in UI's chart group by sleeve, and `ListSleeves` gives each sleeve's kind ([Read API](read-api.md)). `KindBySleeve` would let the allocation group by kind, but nothing calls it.
 - **D-52, D-53, D-54**: the model's targets and weights, its backtest and max drawdowns are built as pure rules. When it rebalances (each December 31), the 0.01% weight step, the 50-target limit and the precision are this context's reading, not the author's.
 - **D-61, D-62**: the backtest is in the reporting currency and a foreign target starts with its first FX rate.
 - **D-52, D-49: how the UI hands the model to the core is not decided in detail.** The core serves `ModelPortfolioService` to view plugins only, with the `AuthService`'s caller check and owner-scoped sessions, as the narrowest write path that keeps the read API read-only. Manual bond lots now take the same shape, `BondLotService` ([Ingest](ingest.md#treasury-bond-lots)); whether this is the shape the author wants for owner entries is for the author.
 - **A target's own drawdown (D-54) is in the reporting currency** over the target's history where it has both closes and FX rates. P-48, not decided, would compute it in the target's own currency over its whole history.
-- **No decision ID for sleeve kinds.** The commit and the migration call them an "author decision", and the glossary defines the term, but DESIGN.md records no D-ID for the built-in kinds, the default sleeves or the override.
 - **Which offensive sleeves agents may lease from.** The glossary makes every offensive sleeve "the part fiefs are leased from". [kind.go](../../internal/portfolio/kind.go) says only `agent-pool` is what fiefs are leased from and `satellite` holds the owner's own higher-risk positions, yet both are offensive and the default Satellite sleeve is offensive. Nothing in the code tells them apart; OQ-20 is still open.
 
 ## Verification
@@ -156,24 +169,27 @@ The [built-in UI](ui.md) draws it as the second line of the value-over-time char
 | Behavior | Tests | kibi |
 |---|---|---|
 | A sleeve needs an ID, a name and one known role | `TestSleeveValidate`, `TestParseRole` in [sleeve_test.go](../../internal/portfolio/sleeve_test.go) | REQ-portfolio-sleeve-role |
-| Kind keys, the built-in kinds, fixed default roles, the override rules, the defaults and kind by sleeve | `TestKindValidate`, `TestDefaultKinds`, `TestCheckKind`, `TestCheckSleeve`, `TestDefaultSleeves`, `TestMissingDefaults`, `TestKindBySleeve` in [kind_test.go](../../internal/portfolio/kind_test.go) | REQ-portfolio-sleeve-kind, REQ-portfolio-default-kinds, REQ-portfolio-kind-role-fixed, REQ-portfolio-sleeve-role-override, REQ-portfolio-allocation-by-kind |
-| The ledger checks kinds and sleeves before storing; defaults are ensured once | `TestSaveKind`, `TestEnsureDefaults` in [kinds_test.go](../../internal/ledger/app/kinds_test.go); `TestSaveSleeve`, `TestSaveAccount` in [ledger_test.go](../../internal/ledger/app/ledger_test.go) | REQ-ledger-app-sleeve-kinds, REQ-ledger-app-registry |
-| PostgreSQL seeds the kinds, backfills old sleeves, refuses role changes and stray overrides | `TestMigrateStoresTheDefaultKinds`, `TestMigrateGivesStoredSleevesAKind`, `TestKindRoundTrip`, `TestSleeveKindConstraints`, `TestEnsureDefaultsOnPostgres` in [kinds_test.go](../../internal/ledger/postgres/kinds_test.go); `TestRegistryRoundTrip` | REQ-ledger-pg-sleeve-kinds, REQ-ledger-pg-store |
+| Kind keys, the built-in kinds, fixed default roles, the override rules, the defaults and kind by sleeve | `TestKindValidate`, `TestDefaultKinds`, `TestCheckKind`, `TestCheckSleeve`, `TestDefaultSleeves`, `TestMissingDefaults`, `TestKindBySleeve` in [kind_test.go](../../internal/portfolio/kind_test.go) | REQ-portfolio-sleeve-kind, REQ-portfolio-default-kinds, REQ-portfolio-kind-role-fixed, REQ-portfolio-sleeve-role-override, REQ-portfolio-allocation-by-kind, REQ-portfolio-role-differs-explicit |
+| Keys made from names | `TestKeyFromName` in [key_test.go](../../internal/portfolio/key_test.go) | REQ-portfolio-key-from-name |
+| The owner's sleeve entries: keys from names, fixed roles, the override, taken and unknown IDs, owner only | `TestSleevesAddKind`, `TestSleevesRenameKind`, `TestSleevesAddAndUpdateSleeve`, `TestSleevesOwnerOnly`, `TestSleevesStoreFailure` in [app/sleeves_test.go](../../internal/portfolio/app/sleeves_test.go); `TestSleeveServiceRoundTrip`, `TestSleeveServiceErrors` in [connectapi/sleeves_test.go](../../internal/portfolio/connectapi/sleeves_test.go); `TestOnboardingServices` in [cmd/core](../../cmd/core/onboarding_test.go) under `task test:pg` | REQ-portfolio-sleeve-service, REQ-core-owner-entry-services, REQ-core-owner-entry-service-callers |
+| The ledger checks kinds and sleeves before storing; defaults are ensured once, the sleeves only on a fresh install | `TestSaveKind`, `TestEnsureDefaults`, `TestEnsureDefaultsOnlyOnAFreshInstall` in [kinds_test.go](../../internal/ledger/app/kinds_test.go); `TestSaveSleeve`, `TestSaveAccount` in [ledger_test.go](../../internal/ledger/app/ledger_test.go) | REQ-ledger-app-sleeve-kinds, REQ-ledger-app-registry |
+| PostgreSQL seeds the kinds, backfills old sleeves and their overrides, refuses role changes and stray or missing overrides | `TestMigrateStoresTheDefaultKinds`, `TestMigrateGivesStoredSleevesAKind`, `TestMigrateGivesDifferingSleevesARoleOverride`, `TestKindRoundTrip`, `TestSleeveKindConstraints`, `TestEnsureDefaultsOnPostgres` in [kinds_test.go](../../internal/ledger/postgres/kinds_test.go); `TestRegistryRoundTrip` | REQ-ledger-pg-sleeve-kinds, REQ-ledger-pg-store |
 | An account needs a sleeve | `TestAccountValidate` in [account_test.go](../../internal/ledger/account_test.go) | REQ-ledger-account-sleeve |
 | Targets, weights and the 100% sum | `TestModelValidate`, `TestTargetKind`, `TestTargetKey` in [model_test.go](../../internal/portfolio/model_test.go) | REQ-portfolio-model-targets, REQ-portfolio-model-weights |
 | Histories in PLN, the start, the end, the year-end rebalance, gaps and bad history | `TestBacktest`, `TestBacktestTargetHistories`, `TestMissingDataString` in [backtest_test.go](../../internal/portfolio/backtest_test.go) | REQ-portfolio-backtest-history, REQ-portfolio-backtest-index, REQ-portfolio-backtest-yearly-rebalance |
 | Max drawdown and rebasing | `TestMaxDrawdown`, `TestSince` in [drawdown_test.go](../../internal/portfolio/drawdown_test.go) | REQ-portfolio-drawdown-depth, REQ-portfolio-rebase, REQ-portfolio-max-drawdown |
 | The owner reads and saves the model; other sessions are refused; invalid models and bad ISINs are refused; the report while on, nothing read while off | `TestSettingsAndSave`, `TestOwnerOnly`, `TestSaveRejects`, `TestReport`, `TestReportOff`, `TestReportMissingAndFailures` in [app/models_test.go](../../internal/portfolio/app/models_test.go) | REQ-portfolio-model-entry, REQ-portfolio-model-report, REQ-portfolio-model-optional |
+| The model's instruments and index names go to the market-data connectors only while it is on | `TestMarketDataTargets` in [app/models_test.go](../../internal/portfolio/app/models_test.go) | REQ-ingest-market-data-scope |
 | The service over Connect: callers, sessions, error codes, round trip | `TestSaveAndGet`, `TestErrors` in [connectapi/service_test.go](../../internal/portfolio/connectapi/service_test.go); `TestModelPortfolioService` in [cmd/core/model_test.go](../../cmd/core/model_test.go) under `task test:pg` | REQ-portfolio-model-entry |
 | PostgreSQL: off by default, round trip, table checks | `TestModelRoundTrip`, `TestModelConstraints` in [postgres/store_test.go](../../internal/portfolio/postgres/store_test.go) under `task test:pg` | REQ-portfolio-model-store |
 | Properties: one target is its price, price scale doesn't matter, the drawdown is the worst pair | `TestBacktestOfOneTargetIsItsPrice`, `TestBacktestIgnoresPriceScale`, `TestMaxDrawdownIsTheWorstPair` in [backtest_property_test.go](../../internal/portfolio/backtest_property_test.go) | REQ-portfolio-backtest-index, REQ-portfolio-drawdown-depth |
 
 Run `go test ./internal/portfolio/... ./internal/ledger/app/...` or `task test`; the PostgreSQL tests run with `task test:pg`.
 
-From reading the code: the override guards only one path to offensive. Saving a sleeve again with an offensive kind, such as moving Core to `agent-pool`, makes it offensive with no override, and saving an account again can move it to another sleeve. Nothing records either change. That is harmless while no agent exists, but it will matter once fiefs are leased from offensive sleeves.
+From reading the code: the override guards a role that differs from the kind's, not a change of kind. Saving a sleeve again with an offensive kind, such as moving Core to `agent-pool`, makes it offensive with that kind's default role and no override, and saving an account again can move it to another sleeve. Nothing records either change. That is harmless while no agent exists, but it will matter once fiefs are leased from offensive sleeves.
 
 ## Not built yet
 
 - **D-62**: the reporting currency setting and its default from the jurisdiction pack. The backtest also needs FX history into it, which starts no earlier than NBP's first rate on 2002-01-02.
 - An allocation grouped by sleeve kind: `KindBySleeve` is unused, and the read API's dimensions are asset class, currency, institution and sleeve.
-- Managing sleeves. Only `cmd/demo-seed` saves sleeves other than the defaults, for the demo dataset; no API or UI adds sleeves or kinds, renames them or sets the override.
+- Deleting a sleeve or a kind. The owner can add, rename and change them, but nothing removes one.

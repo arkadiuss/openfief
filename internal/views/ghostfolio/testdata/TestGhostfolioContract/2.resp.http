@@ -1,11 +1,11 @@
-HTTP/1.1 201 Created
-Content-Length: 645
+HTTP/1.1 200 OK
+Content-Length: 599
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:53 GMT
-Etag: W/"285-1sKvPKi5KRhX50Y5uN9qdMFv7TE"
+Date: Fri, 30 Oct 2026 00:00:54 GMT
+Etag: W/"257-jtSRC26aghLX2hADqm0nSBzX9sE"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"activities":[{"accountId":"6f2518ca-5394-442f-9e2d-b17303fc27d7","accountUserId":"3699c05d-f0c4-489d-879a-324b3cc499d1","comment":"a fee of my own","createdAt":"2026-10-29T00:38:53.175Z","currency":"PLN","date":"2025-01-02T00:00:00.000Z","fee":3,"id":"9c6ab525-100c-4674-9519-a3bc2700997c","quantity":0,"symbolProfileId":"8d4fd1db-ceb7-4c9e-bdf6-296164c2bfcf","type":"FEE","unitPrice":0,"updatedAt":"2026-10-29T00:38:53.175Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","assetProfile":{"currency":"PLN","name":"OpenFief fees (PLN)","dataSource":"MANUAL","symbol":"2cfb82e0-7096-5770-a0dc-e2f2d0d6cd2c"},"value":0,"valueInBaseCurrency":0}]}
+{"accounts":[{"comment":null,"createdAt":"2026-10-30T00:00:45.337Z","currency":"USD","id":"adf13c77-ee3a-4f55-9920-0b5a50a4e181","name":"My Account","platformId":null,"updatedAt":"2026-10-30T00:00:45.337Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","platform":null,"tags":[],"balance":0,"activitiesCount":0,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":0,"allocationInPercentage":0,"balanceInBaseCurrency":0,"value":0}],"activitiesCount":0,"totalBalanceInBaseCurrency":0,"totalDividendInBaseCurrency":0,"totalInterestInBaseCurrency":0,"totalValueInBaseCurrency":0}

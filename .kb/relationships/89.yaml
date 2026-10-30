@@ -356,6 +356,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-399ad81046fe
+  - type: validates
+    from: TEST-ledger-app-kinds
+    to: REQ-portfolio-install-sleeves
+    created_at: 2026-10-29T11:35:23.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e369bfb1bbc0
+  - type: implements
+    from: SYM-viewsv1-connector-binding-get-connector-instance
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:45:02.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7299b2000178
+  - type: covered_by
+    from: SYM-viewsv1-connector-binding-get-connector-instance
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:45:02.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9da1056b6efc
   - type: implements
     from: SYM-fd-views-app-front-door-target
     to: REQ-core-reverse-proxies-view-plugins
@@ -384,3 +405,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1e1a1bccd83
+  - type: implements
+    from: SYM-valuation-default-institution
+    to: REQ-valuation-market-data-default-ranking
+    created_at: 2026-10-29T18:17:04.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86c3589c541f
+  - type: covered_by
+    from: SYM-valuation-default-institution
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:17:04.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d012c3d4598d
+  - type: implements
+    from: SYM-views-ghostfolio-client-set-balance
+    to: REQ-views-ghostfolio-cash-balances
+    created_at: 2026-10-30T01:26:35.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3d0abfcf5af
+  - type: implements
+    from: SYM-views-ghostfolio-client-set-balance
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-30T01:26:35.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19ea461e923a
+  - type: covered_by
+    from: SYM-views-ghostfolio-client-set-balance
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:26:35.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1dd2ad7d446
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-drop-unused
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:28:08.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89238607c43e
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-request
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:15:22.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1083d8464dd3
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-request
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:15:22.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0393ded29523

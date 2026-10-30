@@ -31,13 +31,14 @@ type fakeCaller struct {
 	id        ingest.BatchID
 	mode      ingest.Mode
 	watermark string
+	scope     ingest.MarketDataScope
 	file      string
 	media     string
 	lots      []ingest.BondLot
 }
 
-func (f *fakeCaller) Sync(_ context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (app.Delivery, error) {
-	f.instance, f.id, f.mode, f.watermark = instance, id, mode, watermark
+func (f *fakeCaller) Sync(_ context.Context, instance string, call *app.SyncCall) (app.Delivery, error) {
+	f.instance, f.id, f.mode, f.watermark, f.scope = instance, call.ID, call.Mode, call.Watermark, call.Scope
 	return f.delivery, f.err
 }
 
@@ -66,6 +67,14 @@ type fakeStores struct {
 	levels   []valuation.IndexLevel
 	terms    []ingest.BondTerms
 	checks   []valuation.CrossCheckPrice
+	sources  []valuation.Source
+}
+
+// StoreSources records the sources without counting a call, so the other
+// tests count only the stores of values.
+func (f *fakeStores) StoreSources(_ context.Context, _ ingest.BatchID, sources []valuation.Source) error {
+	f.sources = sources
+	return f.err
 }
 
 func (f *fakeStores) StoreCrossCheckPrices(_ context.Context, _ ingest.BatchID, prices []valuation.CrossCheckPrice) error {
@@ -143,7 +152,7 @@ func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, 
 	day := march2(t)
 	return &app.Connectors{
 		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores, Terms: stores,
-		CrossChecks: stores, Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
+		CrossChecks: stores, Sources: stores, Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
 		Today: func() kernel.Date { return day },
 	}
 }
@@ -153,7 +162,7 @@ func TestConnectorsSync(t *testing.T) {
 	caller := &fakeCaller{delivery: delivery(t)}
 	l := &fakeLedger{summary: ingest.ImportSummary{New: 1}}
 	stores := &fakeStores{}
-	got, err := connectors(t, caller, l, stores).Sync(t.Context(), "xtb-main", "b-1", ingest.ModeTransactions, "w-1")
+	got, err := connectors(t, caller, l, stores).Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions, Watermark: "w-1"})
 	if err != nil {
 		t.Fatalf("Sync: %v", err)
 	}
@@ -178,6 +187,14 @@ func TestConnectorsSync(t *testing.T) {
 	if diff := cmp.Diff([]any{d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels}, []any{stores.prices, stores.rates, stores.readings, stores.levels}); diff != "" {
 		t.Errorf("stored inputs (-want +got):\n%s", diff)
 	}
+	wantSources := []valuation.Source{
+		{Kind: valuation.KindPrices, Name: "xtb-main", Institution: "xtb"},
+		{Kind: valuation.KindFXRates, Name: "xtb-main", Institution: "xtb"},
+		{Kind: valuation.KindIndexReadings, Name: "xtb-main", Institution: "xtb"},
+	}
+	if diff := cmp.Diff(wantSources, stores.sources); diff != "" {
+		t.Errorf("recorded sources (-want +got):\n%s", diff)
+	}
 }
 
 // TestConnectorsCrossCheckPrices checks that a delivery's cross-check
@@ -192,7 +209,7 @@ func TestConnectorsCrossCheckPrices(t *testing.T) {
 	}
 	d.CrossCheckPrices = []valuation.CrossCheckPrice{mark}
 	stores := &fakeStores{}
-	if _, err := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, stores).Sync(t.Context(), "ibkr-main", "b-1", ingest.ModeTransactions, ""); err != nil {
+	if _, err := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, stores).Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions}); err != nil {
 		t.Fatalf("Sync: %v", err)
 	}
 	mark.Source = "ibkr-main"
@@ -205,9 +222,52 @@ func TestConnectorsCrossCheckPrices(t *testing.T) {
 
 	c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, &fakeStores{})
 	c.CrossChecks = nil
-	_, err := c.Sync(t.Context(), "ibkr-main", "b-2", ingest.ModeTransactions, "")
+	_, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-2", Mode: ingest.ModeTransactions})
 	if diff := cmp.Diff(app.ErrNoCrossCheckStore, err, cmpopts.EquateErrors()); diff != "" {
 		t.Errorf("Sync without a cross-check store error (-want +got):\n%s", diff)
+	}
+}
+
+// fixedSeeding seeds acc-1 on goLive, or fails with err.
+type fixedSeeding struct {
+	goLive kernel.Date
+	err    error
+}
+
+func (f fixedSeeding) GoLive(_ context.Context, account ledger.AccountID) (kernel.Date, bool, error) {
+	return f.goLive, account == "acc-1" && f.err == nil, f.err
+}
+
+// TestConnectorsSyncKeepsFromGoLive checks that a sync's transactions batch
+// leaves out a seeded account's transactions up to its go-live, as skipped
+// problems (D-95, D-23), while an upload the owner sends is booked whole.
+func TestConnectorsSyncKeepsFromGoLive(t *testing.T) {
+	t.Parallel()
+	d := delivery(t)
+	d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels = nil, nil, nil, nil
+	l := &fakeLedger{}
+	c := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{})
+	c.Seeding = fixedSeeding{goLive: march2(t)}
+	got, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions})
+	if err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	wantProblems := []ingest.Problem{
+		ingest.Unsupported("row 2", "broker interest"),
+		ingest.Skipped("test/1", "a transaction before go-live 2026-03-02"),
+	}
+	if diff := cmp.Diff(wantProblems, got.Batch.Problems); diff != "" || len(l.txs) != 0 || got.Batch.Transactions != 0 {
+		t.Errorf("Sync booked %d transactions with problems (-want +got):\n%s", len(l.txs), diff)
+	}
+	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-2", "acc-1", ingest.ModeTransactions, app.NamedFile{Contents: strings.NewReader("x")}); err != nil {
+		t.Fatalf("ImportFile: %v", err)
+	}
+	if len(l.txs) != 1 {
+		t.Errorf("an upload booked %d transactions, want 1", len(l.txs))
+	}
+	c.Seeding = fixedSeeding{err: errStore}
+	if _, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-3", Mode: ingest.ModeTransactions}); !errors.Is(err, errStore) {
+		t.Errorf("Sync with a failing ledger = %v, want its error", err)
 	}
 }
 
@@ -268,7 +328,7 @@ func TestConnectorsFailures(t *testing.T) {
 			}
 			l := &fakeLedger{err: tt.ledgerErr}
 			c := connectors(t, &fakeCaller{delivery: d, err: tt.callerErr}, l, &fakeStores{err: tt.storeErr})
-			_, err := c.Sync(t.Context(), "xtb-main", "b-1", tt.mode, "")
+			_, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: tt.mode})
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("Sync error (-want +got):\n%s", diff)
 			}

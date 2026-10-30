@@ -18,6 +18,8 @@ import (
 type Ledger interface {
 	// Sleeves returns every sleeve, in ID order.
 	Sleeves(ctx context.Context) ([]portfolio.Sleeve, error)
+	// Kinds returns every sleeve kind, in key order.
+	Kinds(ctx context.Context) ([]portfolio.Kind, error)
 	// Accounts returns every account, in ID order.
 	Accounts(ctx context.Context) ([]ledger.Account, error)
 	// Account returns the account id.

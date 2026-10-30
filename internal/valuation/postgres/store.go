@@ -46,12 +46,17 @@ func NewStore(pool *pgxpool.Pool) (*Store, error) {
 	return &Store{pool: pool, insert: c}, nil
 }
 
-// Prices returns every price of instrument dated on or before through, in
-// date order.
+// Prices returns the price of instrument on each date on or before
+// through that has one, in date order: of every source's, the
+// highest-ranked source's (D-94, valuation.RankedPrices).
 func (s *Store) Prices(ctx context.Context, instrument string, through kernel.Date) ([]valuation.Price, error) {
+	rank, err := s.rankOf(ctx, valuation.KindPrices)
+	if err != nil {
+		return nil, err
+	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT instrument, date::text, close::text, currency, source FROM valuation.prices
-		WHERE instrument = $1 AND date <= $2 ORDER BY date`, instrument, through.String())
+		WHERE instrument = $1 AND date <= $2 ORDER BY date, source`, instrument, through.String())
 	if err != nil {
 		return nil, fmt.Errorf("loading prices of %s: %w", instrument, err)
 	}
@@ -59,7 +64,7 @@ func (s *Store) Prices(ctx context.Context, instrument string, through kernel.Da
 	if err != nil {
 		return nil, fmt.Errorf("loading prices of %s: %w", instrument, err)
 	}
-	return out, nil
+	return valuation.RankedPrices(out, rank).Winners, nil
 }
 
 // scanPrice reads one price row.
@@ -106,12 +111,17 @@ func scanIndexLevel(row pgx.CollectableRow) (valuation.IndexLevel, error) {
 	return valuation.IndexLevel{Index: index, Date: d, Level: v, Source: source}, nil
 }
 
-// FXRates returns every rate of currency dated on or before through, in
-// date order.
+// FXRates returns the rate of currency on each date on or before through
+// that has one, in date order: of every source's, the highest-ranked
+// source's (D-94).
 func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through kernel.Date) ([]valuation.FXRate, error) {
+	rank, err := s.rankOf(ctx, valuation.KindFXRates)
+	if err != nil {
+		return nil, err
+	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT currency, date::text, rate::text, source FROM valuation.fx_rates
-		WHERE currency = $1 AND date <= $2 ORDER BY date`, currency.String(), through.String())
+		WHERE currency = $1 AND date <= $2 ORDER BY date, source`, currency.String(), through.String())
 	if err != nil {
 		return nil, fmt.Errorf("loading FX rates of %s: %w", currency, err)
 	}
@@ -119,7 +129,7 @@ func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through k
 	if err != nil {
 		return nil, fmt.Errorf("loading FX rates of %s: %w", currency, err)
 	}
-	return out, nil
+	return valuation.RankedFXRates(out, rank), nil
 }
 
 // scanRate reads one FX rate row.
@@ -137,11 +147,16 @@ func scanRate(row pgx.CollectableRow) (valuation.FXRate, error) {
 	return valuation.FXRate{Currency: c, Date: d, Rate: r, Source: source}, nil
 }
 
-// IndexReadings returns every period index reading, in kind, year and month
-// order.
+// IndexReadings returns the reading of each index kind and month, in kind,
+// year and month order: of every source's, the highest-ranked source's
+// (D-94).
 func (s *Store) IndexReadings(ctx context.Context) ([]valuation.IndexReading, error) {
+	rank, err := s.rankOf(ctx, valuation.KindIndexReadings)
+	if err != nil {
+		return nil, err
+	}
 	rows, err := s.pool.Query(ctx, `
-		SELECT kind, year, month, value::text, source FROM valuation.index_readings ORDER BY kind, year, month`)
+		SELECT kind, year, month, value::text, source FROM valuation.index_readings ORDER BY kind, year, month, source`)
 	if err != nil {
 		return nil, fmt.Errorf("loading index readings: %w", err)
 	}
@@ -149,7 +164,7 @@ func (s *Store) IndexReadings(ctx context.Context) ([]valuation.IndexReading, er
 	if err != nil {
 		return nil, fmt.Errorf("loading index readings: %w", err)
 	}
-	return out, nil
+	return valuation.RankedIndexReadings(out, rank), nil
 }
 
 // scanReading reads one index reading row.
@@ -190,19 +205,6 @@ func (s *Store) BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool
 	return pl.Terms{Series: sr, FirstPeriodRate: f, Margin: m, EarlyRedemptionFee: b}, true, nil
 }
 
-// TaxWrapper returns account's tax wrapper, pl.Taxable unless one is stored.
-func (s *Store) TaxWrapper(ctx context.Context, account ledger.AccountID) (pl.TaxWrapper, error) {
-	var name string
-	err := s.pool.QueryRow(ctx, `SELECT wrapper FROM valuation.tax_wrappers WHERE account_id = $1`, string(account)).Scan(&name)
-	if errors.Is(err, pgx.ErrNoRows) {
-		return pl.Taxable, nil
-	}
-	if err != nil {
-		return 0, fmt.Errorf("loading the tax wrapper of %s: %w", account, err)
-	}
-	return parseWrapper(name)
-}
-
 // ValuedThrough returns account's valued-through date, and false when the
 // account was never revalued.
 func (s *Store) ValuedThrough(ctx context.Context, account ledger.AccountID) (kernel.Date, bool, error) {
@@ -224,12 +226,15 @@ func (s *Store) ValuedThrough(ctx context.Context, account ledger.AccountID) (ke
 // insertValuation stores one row of valuation.holding_valuations.
 const insertValuation = `
 INSERT INTO valuation.holding_valuations
-    (account_id, isin, symbol, date, basis, quantity, value, value_currency, pln, source, price_date, rate_date, missing, detail)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+    (account_id, isin, symbol, date, basis, quantity, value, value_currency, pln, source, price_date, rate_date, missing, detail,
+     net, liquidation, net_missing, liquidation_missing)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
 ON CONFLICT (account_id, isin, symbol, date, basis) DO UPDATE SET
     quantity = EXCLUDED.quantity, value = EXCLUDED.value, value_currency = EXCLUDED.value_currency,
     pln = EXCLUDED.pln, source = EXCLUDED.source, price_date = EXCLUDED.price_date,
-    rate_date = EXCLUDED.rate_date, missing = EXCLUDED.missing, detail = EXCLUDED.detail`
+    rate_date = EXCLUDED.rate_date, missing = EXCLUDED.missing, detail = EXCLUDED.detail,
+    net = EXCLUDED.net, liquidation = EXCLUDED.liquidation, net_missing = EXCLUDED.net_missing,
+    liquidation_missing = EXCLUDED.liquidation_missing`
 
 // ReplaceValuations removes account's valuations dated on or after from,
 // upserts rows, keyed by account, instrument, date and basis, and records
@@ -260,59 +265,4 @@ func (s *Store) ReplaceValuations(ctx context.Context, account ledger.AccountID,
 		return fmt.Errorf("replacing the valuations of %s: %w", account, err)
 	}
 	return nil
-}
-
-// valuationArgs returns the insertValuation arguments of r.
-func valuationArgs(r *valuation.HoldingValuation) []any {
-	var value, currency, pln, missing *string
-	if r.Valued() {
-		v, c, p := r.Value.Amount().String(), r.Value.Currency().String(), r.PLN.Amount().String()
-		value, currency, pln = &v, &c, &p
-	} else {
-		m := r.Missing.String()
-		missing = &m
-	}
-	return []any{
-		string(r.Account), r.Instrument.ISIN.String(), r.Instrument.Symbol, r.Date.String(), r.Basis.String(),
-		r.Quantity.String(), value, currency, pln, r.Source, optionalDate(r.PriceDate), optionalDate(r.RateDate),
-		missing, r.Detail,
-	}
-}
-
-// Valuations returns account's stored valuations dated on or after from
-// and on or before to, in date, instrument and basis order.
-func (s *Store) Valuations(ctx context.Context, account ledger.AccountID, from, to kernel.Date) ([]valuation.HoldingValuation, error) {
-	rows, err := s.pool.Query(ctx, `
-		SELECT account_id, isin, symbol, date::text, basis, quantity::text, coalesce(value::text, ''),
-		       coalesce(value_currency, ''), coalesce(pln::text, ''), source, coalesce(price_date::text, ''),
-		       coalesce(rate_date::text, ''), coalesce(missing, ''), detail
-		FROM valuation.holding_valuations
-		WHERE account_id = $1 AND date BETWEEN $2 AND $3
-		ORDER BY date, isin, symbol COLLATE "C", basis`, string(account), from.String(), to.String())
-	if err != nil {
-		return nil, fmt.Errorf("loading the valuations of %s: %w", account, err)
-	}
-	out, err := pgx.CollectRows(rows, scanValuation)
-	if err != nil {
-		return nil, fmt.Errorf("loading the valuations of %s: %w", account, err)
-	}
-	return out, nil
-}
-
-// scanValuation reads one row of Valuations.
-func scanValuation(row pgx.CollectableRow) (valuation.HoldingValuation, error) {
-	var account, isin, symbol, day, basis, quantity, value, currency, pln, source, priceDate, rateDate, missing, detail string
-	if err := row.Scan(&account, &isin, &symbol, &day, &basis, &quantity, &value, &currency, &pln,
-		&source, &priceDate, &rateDate, &missing, &detail); err != nil {
-		return valuation.HoldingValuation{}, fmt.Errorf("reading a valuation: %w", err)
-	}
-	v, err := decodeValuation(&valuationText{
-		isin: isin, symbol: symbol, day: day, basis: basis, quantity: quantity, value: value, currency: currency,
-		pln: pln, priceDate: priceDate, rateDate: rateDate, missing: missing,
-	})
-	if err != nil {
-		return valuation.HoldingValuation{}, fmt.Errorf("%w: valuation of %s: %w", ErrCorrupt, account, err)
-	}
-	v.Account, v.Source, v.Detail = ledger.AccountID(account), source, detail
-	return v, nil
 }

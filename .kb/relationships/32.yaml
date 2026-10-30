@@ -301,12 +301,33 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-55692d9dfdbc
   - type: implements
-    from: SYM-fd-identity-kube-core-access-forward
-    to: REQ-identity-first-passkey-link
-    created_at: 2026-10-29T12:04:34.912Z
+    from: SYM-ingestv1-account-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:19:04.256Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-1d84eb925a45
+    id: rel-735f3fcdd2d7
+  - type: covered_by
+    from: SYM-ingestv1-account-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:19:04.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b8775ed6c1b
+  - type: implements
+    from: SYM-portfoliov1-sleeve-role-enum-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:31:09.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8e5493508a6
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-role-enum-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:31:09.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9819aa4a07fa
   - type: covered_by
     from: SYM-fd-identity-kube-core-access-forward
     to: TEST-e2e-first-passkey
@@ -328,3 +349,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9faf9ef76a45
+  - type: implements
+    from: SYM-fd-identity-kube-core-access-forward
+    to: REQ-identity-enroll-localhost-forward
+    created_at: 2026-10-29T22:35:02.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20d4efddbc6e
+  - type: validates
+    from: TEST-views-ghostfolio-plan-properties
+    to: REQ-views-ghostfolio-bond-asset-symbol
+    created_at: 2026-10-30T01:21:37.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-423b1f79513a
+  - type: implements
+    from: SYM-valuation-app-input-cache-account-terms
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:10:23.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5862683dd27b
+  - type: implements
+    from: SYM-valuation-app-input-cache-account-terms
+    to: REQ-pl-ikze-early-withdrawal-tax
+    created_at: 2026-10-29T22:10:24.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64058ffb6775
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-account-terms
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:24.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6770c333707c
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T00:04:46.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4402b3241679
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T00:04:46.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b0bc81b9625
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-30T00:04:46.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e72e037cbd
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T00:04:46.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c222ae0bab9a
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-30T00:04:46.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5d5875a32dc
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T00:04:46.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46ff81c3c3f5
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-holdings-and-lots-marked
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:23:10.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a75f7ef6201d
+  - type: implements
+    from: SYM-ui-all-values
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:10:03.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbd7d96ada27
+  - type: implements
+    from: SYM-ui-all-values
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T03:10:03.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47eda1b00b08
+  - type: covered_by
+    from: SYM-ui-all-values
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:10:03.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2997db91f20f
+  - type: implements
+    from: SYM-affected-select-changes
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:30.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b1b9927d478
+  - type: implements
+    from: SYM-affected-select-changes
+    to: REQ-tooling-hook-full-fallback
+    created_at: 2026-10-30T04:06:30.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8a8fa3cf89b
+  - type: covered_by
+    from: SYM-affected-select-changes
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:30.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04fe660d8242

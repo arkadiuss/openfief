@@ -42,9 +42,9 @@ func defaultServe(t *testing.T) serveConfig {
 		t.Fatalf("ParseCurrency: %v", err)
 	}
 	return serveConfig{
-		Listen: ":8080", Reporting: pln,
+		Listen: ":8080", PluginListen: ":8081", Reporting: pln,
 		EndOfDay: valuationpg.DailyAt{Hour: 23, Minute: 30, Location: warsaw(t)},
-		Workers:  2, BondBasis: valuation.NetIfRedeemed, EnsureDefaults: true, ShutdownTimeout: 25 * time.Second,
+		Workers:  2, EnsureDefaults: true, ShutdownTimeout: 25 * time.Second,
 		PriceCheckThreshold: valuation.DefaultPriceCheckThreshold(),
 		Sync: syncConfig{
 			Policy:         ingest.SyncPolicy{Interval: 6 * time.Hour, Jitter: 30 * time.Minute, RetryFirst: 5 * time.Minute, RetryMax: time.Hour},
@@ -80,7 +80,7 @@ func TestParseArgs(t *testing.T) {
 	def := defaultServe(t)
 	utc := def
 	utc.EndOfDay = valuationpg.DailyAt{Hour: 22, Minute: 5, Location: time.UTC}
-	utc.Listen, utc.Workers, utc.BondBasis, utc.EnsureDefaults, utc.ShutdownTimeout = "127.0.0.1:9090", 4, valuation.GrossAccrued, false, time.Second
+	utc.Listen, utc.PluginListen, utc.Workers, utc.EnsureDefaults, utc.ShutdownTimeout = "127.0.0.1:9090", "127.0.0.1:9091", 4, false, time.Second
 	utc.PriceCheckThreshold = kernel.NewDecimal(5, -3)
 	pod := def
 	pod.Connectors = true
@@ -110,8 +110,8 @@ func TestParseArgs(t *testing.T) {
 		{
 			name: "serve flags",
 			args: []string{
-				"--listen=127.0.0.1:9090", "--time-zone=UTC", "--end-of-day=22:05", "--workers=4",
-				"--bond-basis=gross_accrued", "--ensure-defaults=false", "--shutdown-timeout=1s",
+				"--listen=127.0.0.1:9090", "--plugin-listen=127.0.0.1:9091", "--time-zone=UTC", "--end-of-day=22:05", "--workers=4",
+				"--ensure-defaults=false", "--shutdown-timeout=1s",
 				"--price-check-threshold=0.005",
 			},
 			dsn: testDSN, want: command{Name: cmdServe, DSN: testDSN, Serve: utc},
@@ -189,8 +189,7 @@ func TestParseArgs(t *testing.T) {
 		{name: "unknown flag", args: []string{"--verbose"}, dsn: testDSN, fail: true},
 		{name: "bad lifetime", args: []string{"token", "issue", "--ttl=soon"}, dsn: testDSN, fail: true},
 		{name: "bad currency", args: []string{"--reporting-currency=zloty"}, dsn: testDSN, fail: true},
-		{name: "market basis for bonds", args: []string{"--bond-basis=market"}, dsn: testDSN, wantErr: valuation.ErrBasisNotForBonds},
-		{name: "unknown basis", args: []string{"--bond-basis=par"}, dsn: testDSN, wantErr: valuation.ErrUnknownBasis},
+		{name: "the bond basis is gone since D-77", args: []string{"--bond-basis=gross_accrued"}, dsn: testDSN, fail: true},
 		{name: "unknown time zone", args: []string{"--time-zone=Mars/Olympus"}, dsn: testDSN, fail: true},
 		{name: "end of day hour", args: []string{"--end-of-day=24:00"}, dsn: testDSN, wantErr: errBadEndOfDay},
 		{name: "end of day minute", args: []string{"--end-of-day=23:60"}, dsn: testDSN, wantErr: errBadEndOfDay},
@@ -250,6 +249,8 @@ func TestHealthBeforeReady(t *testing.T) {
 	tests := []struct {
 		name     string
 		draining bool
+		// plugin asks the plugin port, not the browser port.
+		plugin   bool
 		path     string
 		want     int
 		wantBody string
@@ -257,6 +258,7 @@ func TestHealthBeforeReady(t *testing.T) {
 		{name: "alive while starting", path: "/healthz", want: http.StatusOK, wantBody: "ok"},
 		{name: "not ready while starting", path: "/readyz", want: http.StatusServiceUnavailable, wantBody: "starting"},
 		{name: "no API while starting", path: "/v1/accounts", want: http.StatusServiceUnavailable, wantBody: "starting"},
+		{name: "no plugin services while starting", plugin: true, path: "/openfief.identity.v1.AuthService/WhoAmI", want: http.StatusServiceUnavailable, wantBody: "starting"},
 		{name: "alive while draining", draining: true, path: "/healthz", want: http.StatusOK, wantBody: "ok"},
 		{name: "not ready while draining", draining: true, path: "/readyz", want: http.StatusServiceUnavailable, wantBody: "shutting down"},
 	}
@@ -266,7 +268,11 @@ func TestHealthBeforeReady(t *testing.T) {
 			s := &server{}
 			s.draining.Store(tt.draining)
 			rec := httptest.NewRecorder()
-			s.handler().ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodGet, tt.path, http.NoBody))
+			h := s.browserHandler()
+			if tt.plugin {
+				h = s.pluginHandler()
+			}
+			h.ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodGet, tt.path, http.NoBody))
 			if rec.Code != tt.want || strings.TrimSpace(rec.Body.String()) != tt.wantBody {
 				t.Errorf("GET %s = %d %q, want %d %q", tt.path, rec.Code, rec.Body.String(), tt.want, tt.wantBody)
 			}

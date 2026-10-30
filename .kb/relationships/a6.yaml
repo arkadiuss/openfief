@@ -385,6 +385,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-03aaf17a7644
   - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_accounts_proto_raw-desc-gzip
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:07.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d80e2f3fdcf
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_accounts_proto_raw-desc-gzip
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:07.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe87d2d97160
+  - type: implements
     from: SYM-fd-views-app-front-door
     to: REQ-core-reverse-proxies-view-plugins
     created_at: 2026-10-29T12:05:32.769Z
@@ -398,3 +412,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e122a6baa23
+  - type: implements
+    from: SYM-valuation-app-revaluer-value-market
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:10:17.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0e6d6a3e8d7
+  - type: implements
+    from: SYM-valuation-app-revaluer-value-market
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:10:17.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7eea0aa2df4c
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-value-market
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:17.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e3ee59fcdbd
+  - type: implements
+    from: SYM-affected-literal-paths
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:55:14.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-276bc287aae8
+  - type: covered_by
+    from: SYM-affected-literal-paths
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:55:14.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cae8756e1a07

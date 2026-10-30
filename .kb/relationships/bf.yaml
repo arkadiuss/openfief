@@ -461,3 +461,157 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d489223cd42
+  - type: verified_by
+    from: SCEN-plugins-cli-install-secret-in-use
+    to: TEST-plugins-app-install
+    created_at: 2026-10-29T15:10:10.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f5e8dfa8a95
+  - type: implements
+    from: SYM-pl-equal-ptr
+    to: REQ-plugins-effective-intersection
+    created_at: 2026-10-29T15:18:18.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87d32796baae
+  - type: covered_by
+    from: SYM-pl-equal-ptr
+    to: TEST-plugins-effective
+    created_at: 2026-10-29T15:18:18.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-556f2234ec90
+  - type: implements
+    from: SYM-ui-setup-data
+    to: REQ-ui-first-run-wizard-steps
+    created_at: 2026-10-29T13:15:51.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42387d4dc673
+  - type: implements
+    from: SYM-ui-setup-data
+    to: REQ-ui-first-run-wizard
+    created_at: 2026-10-29T13:15:51.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdcd4f1fa23c
+  - type: covered_by
+    from: SYM-ui-setup-data
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:15:51.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9d357a7895c
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-client-update-sleeve
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:29:40.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4301e9a9b73b
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-client-update-sleeve
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:29:40.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cf6e7f1ada5
+  - type: implements
+    from: SYM-viewsv1connect-read-service-client-list-connector-bindings
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:51:43.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c17458a5a0c9
+  - type: covered_by
+    from: SYM-viewsv1connect-read-service-client-list-connector-bindings
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:51:43.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c05549fe42a3
+  - type: implements
+    from: SYM-ingest-app-bond-series
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-10-29T17:13:18.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deed377b5d6c
+  - type: implements
+    from: SYM-ingest-app-bond-series
+    to: REQ-ingest-new-instrument-priced
+    created_at: 2026-10-29T17:13:18.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09fcb7bf74bb
+  - type: covered_by
+    from: SYM-ingest-app-bond-series
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:13:18.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7c1848aa785
+  - type: implements
+    from: SYM-valuation-gen-pb-ranked-source
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:22:09.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c2edcab1049
+  - type: covered_by
+    from: SYM-valuation-gen-pb-ranked-source
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:22:09.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc17d9d34da5
+  - type: implements
+    from: SYM-valuation-gen-pb-ranked-source-string
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:22:24.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dbcde45c6b0
+  - type: covered_by
+    from: SYM-valuation-gen-pb-ranked-source-string
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:22:24.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cdeb5d3fe15
+  - type: verified_by
+    from: SCEN-valuation-settings-service
+    to: TEST-core-settings
+    created_at: 2026-10-29T22:59:02.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d763396e29f
+  - type: implements
+    from: SYM-views-connectapi-value-kind
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:22:12.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6259499b3a6
+  - type: implements
+    from: SYM-views-connectapi-value-kind
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:22:12.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61b1e20e9da6
+  - type: covered_by
+    from: SYM-views-connectapi-value-kind
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:22:12.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-024f83f6796f
+  - type: executable_for
+    from: SYM-affected-test-test-run-ci
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:04:01.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-934261815643

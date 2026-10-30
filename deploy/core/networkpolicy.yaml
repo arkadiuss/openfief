@@ -1,8 +1,10 @@
-# The core's own NetworkPolicy. Ingress: plugin pods on the core's port (they dial the Service's connect port).
-# Probes come from the node, and kubectl port-forward enters through the kubelet, so neither needs a rule here.
-# The core is the only entry point for browsers (D-81): an installation that routes traffic in through an Ingress
-# controller adds a policy that admits it to the core (the demo does, in deploy/demo/openfief), never to a plugin. Egress: DNS, the CloudNativePG cluster openfief-db, plugin pods on their Connect
-# port, and the Kubernetes API server, and nothing else.
+# The core's own NetworkPolicy. Ingress: plugin pods on the core's plugin port 8081 only (they dial the Service's
+# connect port, D-115). Nothing is admitted to the browser port 8080: probes come from the node, and kubectl
+# port-forward enters through the kubelet, so neither needs a rule here. The core is the only entry point for
+# browsers (D-81): an installation that routes traffic in adds a policy that admits its Ingress controller or
+# Gateway to the browser port 8080 alone (deploy/gateway does for a Gateway, the demo for Traefik in
+# deploy/demo/openfief), never to the plugin port or to a plugin. Egress: DNS, the CloudNativePG cluster
+# openfief-db, plugin pods on their Connect port, and the Kubernetes API server, and nothing else.
 #
 # The API server rule: a pod reaches it through Service kubernetes (default namespace), which is DNAT-ed to the
 # API server's own address before NetworkPolicy sees the packet, so the rule must name that address and port, not
@@ -31,7 +33,7 @@ spec:
               app.kubernetes.io/name: openfief-plugin
       ports:
         - protocol: TCP
-          port: 8080
+          port: 8081
   egress:
     - to:
         - podSelector:

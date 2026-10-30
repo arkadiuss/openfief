@@ -454,3 +454,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d1976884018
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-client-add-sleeve
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:29:33.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d444b0781bba
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-client-add-sleeve
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:29:33.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46aaf48be678
+  - type: implements
+    from: SYM-portfoliov1-sleeve-role-enum
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:30:37.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f79fd5921b62
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-role-enum
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:30:37.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d47780853a18
+  - type: validates
+    from: TEST-core-market-data
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:00:45.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90b187bb24f6
+  - type: executable_for
+    from: SYM-exp-core-test-helper-core-ports
+    to: TEST-core-read-api
+    created_at: 2026-10-29T21:00:42.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8e67617b73f
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-balances-in
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:28:15.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19e889311df4
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-balances-in
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:28:15.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b5d7ca0b0a
+  - type: implements
+    from: SYM-jurisdiction-fee-rule-is-zero
+    to: REQ-valuation-sale-fee-rule-zero
+    created_at: 2026-10-29T22:00:59.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9ceda8a7e84
+  - type: covered_by
+    from: SYM-jurisdiction-fee-rule-is-zero
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:00:59.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb7163ac8f99
+  - type: implements
+    from: SYM-tooling-ci-images-select-record-build
+    to: REQ-tooling-ci-affected-images
+    created_at: 2026-10-30T03:47:52.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb98fd266d06
+  - type: covered_by
+    from: SYM-tooling-ci-images-select-record-build
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-10-30T03:47:52.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47bf9c8ab77d
+  - type: implements
+    from: SYM-affected-choose-images
+    to: REQ-tooling-ci-affected-images
+    created_at: 2026-10-30T03:57:35.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3d1f42e5b65
+  - type: implements
+    from: SYM-affected-choose-images
+    to: REQ-tooling-ci-carry-signed-digest
+    created_at: 2026-10-30T03:57:36.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed3b0cf247d0
+  - type: covered_by
+    from: SYM-affected-choose-images
+    to: TEST-tooling-affected-images
+    created_at: 2026-10-30T03:57:36.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d24e16ffdca6

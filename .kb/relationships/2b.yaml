@@ -391,3 +391,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-abfebec024b6
+  - type: validates
+    from: TEST-plugins-config-host
+    to: REQ-plugins-config-field-host-grant
+    created_at: 2026-10-29T15:09:56.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43bef95b793d
+  - type: validates
+    from: TEST-plugins-config-host
+    to: REQ-plugins-config-field-host-https
+    created_at: 2026-10-29T15:09:56.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74458eddb74e
+  - type: validates
+    from: TEST-plugins-config-host
+    to: REQ-plugins-config-field-host-via-proxy
+    created_at: 2026-10-29T15:09:56.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab8776e4c092
+  - type: implements
+    from: SYM-ui-server-render-setup
+    to: REQ-ui-first-run-wizard-steps
+    created_at: 2026-10-29T13:16:16.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba76961fbd7c
+  - type: implements
+    from: SYM-ui-server-render-setup
+    to: REQ-ui-first-run-wizard
+    created_at: 2026-10-29T13:16:16.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecba6e95863c
+  - type: covered_by
+    from: SYM-ui-server-render-setup
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:16:16.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d22e38bcbea3
+  - type: validates
+    from: TEST-plugins-app-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:03:50.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-443c6b872bc8
+  - type: validates
+    from: TEST-ingest-marketdata
+    to: REQ-ingest-market-data-sync-instruments
+    created_at: 2026-10-29T16:57:04.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a48f5c07666d
+  - type: validates
+    from: TEST-ui-market-data
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:00:48.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18f8532415f1
+  - type: implements
+    from: SYM-core-new-rankings
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:11:07.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23afb3e5c5e2
+  - type: covered_by
+    from: SYM-core-new-rankings
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:11:07.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc9b5dfb0d67
+  - type: implements
+    from: SYM-valuation-btoi
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:17:47.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-168d34a577a3
+  - type: implements
+    from: SYM-valuation-btoi
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:17:47.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d4936a0bb39
+  - type: covered_by
+    from: SYM-valuation-btoi
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:17:47.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4996dff511dd
+  - type: implements
+    from: SYM-views-mark-consumed
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:23:47.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7ef87f623d9
+  - type: implements
+    from: SYM-views-mark-consumed
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:23:47.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78db43e00b6d
+  - type: covered_by
+    from: SYM-views-mark-consumed
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:47.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a36ae0881c05

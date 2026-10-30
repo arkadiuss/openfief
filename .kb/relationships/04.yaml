@@ -476,6 +476,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d13d9ca2798f
   - type: implements
+    from: SYM-ui-server-add-kind
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:17:57.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1f85e993271
+  - type: covered_by
+    from: SYM-ui-server-add-kind
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:17:57.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27f7dc9d427
+  - type: implements
     from: SYM-fd-identity-kube-core-access-enroll-link
     to: REQ-identity-first-passkey-command
     created_at: 2026-10-29T12:04:28.634Z
@@ -489,3 +503,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c2f4c4cf2d9
+  - type: implements
+    from: SYM-valuation-gen-pb-source-ranking
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:23:11.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f64f8c941664
+  - type: covered_by
+    from: SYM-valuation-gen-pb-source-ranking
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:23:11.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd3207fcb145
+  - type: executable_for
+    from: SYM-exp-core-test-helper-start-core-ports
+    to: TEST-core-read-api
+    created_at: 2026-10-29T21:00:31.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83d35df2005e
+  - type: executable_for
+    from: SYM-exp-plugins-cli-test-run-refuses-second-browser-view
+    to: TEST-plugins-cli-browser-view
+    created_at: 2026-10-29T22:01:28.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-804bacc1a979
+  - type: implements
+    from: SYM-ui-missing-label
+    to: REQ-ui-three-values-shown
+    created_at: 2026-10-30T03:02:39.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b10e75a86c
+  - type: implements
+    from: SYM-ui-missing-label
+    to: REQ-pl-ikze-liquidation-missing
+    created_at: 2026-10-30T03:02:39.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b364b941335
+  - type: covered_by
+    from: SYM-ui-missing-label
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:02:39.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f9b24478028
+  - type: executable_for
+    from: SYM-tooling-ci-images-select-test-select-images
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-10-30T03:48:34.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc281b57ea73

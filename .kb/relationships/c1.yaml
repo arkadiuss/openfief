@@ -342,3 +342,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbf936d76a49
+  - type: implements
+    from: SYM-pl-installer-verify
+    to: REQ-plugins-cli-install-verifies
+    created_at: 2026-10-29T15:22:55.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bab0076fe60
+  - type: covered_by
+    from: SYM-pl-installer-verify
+    to: TEST-plugins-app-install
+    created_at: 2026-10-29T15:22:55.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cab98635e984
+  - type: validates
+    from: TEST-ingest-connectapi-accounts
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-29T12:45:22.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93949fbffe36
+  - type: executable_for
+    from: SYM-ledger-app-test-go-live
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-29T17:17:47.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7115f224d49b
+  - type: implements
+    from: SYM-valuation-gen-connect-market-data-service-client
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:53.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64accf458b22
+  - type: covered_by
+    from: SYM-valuation-gen-connect-market-data-service-client
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:54.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ef077e25eb3
+  - type: implements
+    from: SYM-pl-tax-wrapper-string
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:08:49.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50042dd7f375
+  - type: implements
+    from: SYM-pl-tax-wrapper-string
+    to: REQ-pl-oki-no-belka-tax
+    created_at: 2026-10-29T22:08:49.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b0919f3cb75
+  - type: covered_by
+    from: SYM-pl-tax-wrapper-string
+    to: TEST-pl-tax
+    created_at: 2026-10-29T22:08:49.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62f8d6285432
+  - type: validates
+    from: TEST-ingest-connectapi-accounts
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T22:58:54.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce59c36ac009
+  - type: implements
+    from: SYM-valuationv1-set-number-format-request-proto-message
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:17:54.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3120eab8d298
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-request-proto-message
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:17:54.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9abb0671934b
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-account-values-json
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:22:41.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c0960af2680

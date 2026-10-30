@@ -62,20 +62,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f62588d7740
-  - type: implements
-    from: SYM-valuation-app-input-cache-market
-    to: REQ-valuation-market-holding
-    created_at: 2026-10-28T07:34:45.293Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7e02d8118c95
-  - type: covered_by
-    from: SYM-valuation-app-input-cache-market
-    to: TEST-valuation-app-revalue
-    created_at: 2026-10-28T07:34:45.317Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4a4f68d23c43
   - type: validates
     from: TEST-ledger-app-seed
     to: REQ-AUTO-3C2A493C661181C7
@@ -160,13 +146,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1479a996575a
-  - type: implements
-    from: SYM-portfolio-default-kinds
-    to: REQ-portfolio-default-kinds
-    created_at: 2026-10-28T09:38:09.819Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-89a1f5b165aa
   - type: covered_by
     from: SYM-portfolio-default-kinds
     to: TEST-portfolio-sleeve-kind
@@ -202,13 +181,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eed9be54e1e1
-  - type: specified_by
-    from: REQ-ledger-app-ensure-defaults
-    to: SCEN-ledger-app-ensure-defaults
-    created_at: 2026-10-28T09:53:27.234Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-92a3dec5f4bb
   - type: executable_for
     from: SYM-views-test-value-holdings
     to: TEST-views-allocation
@@ -265,13 +237,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41ce32056f11
-  - type: implements
-    from: SYM-core-command-line
-    to: REQ-core-config
-    created_at: 2026-10-28T14:33:45.760Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e0f024c38ce3
   - type: covered_by
     from: SYM-core-command-line
     to: TEST-core-unit
@@ -433,20 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4fdc4c9f321
-  - type: verified_by
-    from: SCEN-identity-no-auth-bypass
-    to: TEST-core-auth
-    created_at: 2026-10-29T10:54:14.546Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6860343ffe47
-  - type: verified_by
-    from: SCEN-identity-no-auth-bypass
-    to: TEST-ui-plugin
-    created_at: 2026-10-29T10:54:14.625Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9c213b300f5c
   - type: executable_for
     from: SYM-e2e-test-helper-uninstall-fx
     to: TEST-e2e-plugins
@@ -468,3 +419,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c9ae7aac2b2
+  - type: implements
+    from: SYM-portfolio-default-kinds
+    to: REQ-portfolio-builtin-kinds
+    created_at: 2026-10-29T11:38:43.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61330f0aa8d8
+  - type: implements
+    from: SYM-ingest-app-accounts-create
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:58:58.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7fb170e0eba
+  - type: implements
+    from: SYM-ingest-app-accounts-create
+    to: REQ-ingest-owner-creates-accounts
+    created_at: 2026-10-29T12:58:58.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f78763c8885b
+  - type: covered_by
+    from: SYM-ingest-app-accounts-create
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:58:58.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f570a94debb1
+  - type: implements
+    from: SYM-viewsv1-list-broker-accounts-response-reset
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:50:52.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c32e304ee963
+  - type: covered_by
+    from: SYM-viewsv1-list-broker-accounts-response-reset
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:50:52.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-372f43f4aeb4
+  - type: verified_by
+    from: SCEN-identity-no-auth-bypass
+    to: TEST-core-auth
+    created_at: 2026-10-29T10:54:14.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6860343ffe47
+  - type: verified_by
+    from: SCEN-identity-no-auth-bypass
+    to: TEST-ui-plugin
+    created_at: 2026-10-29T10:54:14.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c213b300f5c
+  - type: constrains
+    from: REQ-valuation-market-data-service
+    to: FACT-SUBJECT-39E6C7397E8CD407
+    created_at: 2026-10-29T18:01:22.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fa4f76e9d2f
+  - type: requires_property
+    from: REQ-valuation-market-data-service
+    to: FACT-PROP-F2E8E8A7EAA01E45
+    created_at: 2026-10-29T18:01:22.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c2cd74e60cd
+  - type: specified_by
+    from: REQ-valuation-market-data-service
+    to: SCEN-valuation-market-data-service
+    created_at: 2026-10-29T18:01:22.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b868cc98a1a
+  - type: implements
+    from: SYM-core-command-line
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:53:16.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b8463b6b17
+  - type: implements
+    from: SYM-jurisdiction-parse-number-format
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:50.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-237ea4a50685
+  - type: implements
+    from: SYM-jurisdiction-parse-number-format
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:50.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-115afdc47dd9
+  - type: covered_by
+    from: SYM-jurisdiction-parse-number-format
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:50.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b451ca0e1ac7

@@ -20,10 +20,13 @@ type EffectivePermissions struct {
 	dataTiers    []DataTier
 	browserPath  string
 	config       []byte
+	// clusterService is the granted in-cluster service (D-74); nil if none.
+	clusterService *ClusterService
 }
 
 // Effective returns the intersection of what p requests and what g approves.
-// Secrets match by name and keep the mount path the manifest asks for. It
+// Secrets match by the name the instance mounts for each role (D-89) and
+// keep the mount path the manifest asks for. It
 // fails when p or g is invalid, when g is for another plugin, and with
 // ErrNoCapabilityGranted when no requested capability is approved.
 func Effective(p *Plugin, g *Grant) (*EffectivePermissions, error) {
@@ -31,7 +34,7 @@ func Effective(p *Plugin, g *Grant) (*EffectivePermissions, error) {
 	if err != nil {
 		return nil, err
 	}
-	req := p.Manifest.Requested()
+	req := p.Requested()
 	e := &EffectivePermissions{
 		plugin:       p.Name,
 		image:        image,
@@ -41,17 +44,20 @@ func Effective(p *Plugin, g *Grant) (*EffectivePermissions, error) {
 		config:       bytes.Clone(p.Config),
 	}
 	for _, s := range p.Manifest.Secrets {
-		if slices.Contains(g.Permissions.Secrets, s.Name) {
+		if slices.Contains(g.Permissions.Secrets, SecretName(p.Name, s.Role)) {
 			e.secrets = append(e.secrets, s)
 		}
 	}
-	slices.SortFunc(e.secrets, func(a, b SecretMount) int { return cmp.Compare(a.Name, b.Name) })
+	slices.SortFunc(e.secrets, func(a, b SecretMount) int { return cmp.Compare(a.Role, b.Role) })
 	if len(e.capabilities) == 0 {
 		return nil, fmt.Errorf("%w: plugin %q", ErrNoCapabilityGranted, p.Name)
 	}
 	if bp := p.Manifest.BrowserPath; bp != "" && slices.Contains(g.Permissions.BrowserPaths, bp) &&
 		slices.Contains(e.capabilities, CapabilityView) {
 		e.browserPath = bp
+	}
+	if cs := both(req.ClusterServices, g.Permissions.ClusterServices); len(cs) == 1 {
+		e.clusterService = &cs[0]
 	}
 	return e, nil
 }
@@ -80,8 +86,18 @@ func (e *EffectivePermissions) Capabilities() []Capability { return slices.Clone
 // Egress returns the enforced egress hosts, sorted.
 func (e *EffectivePermissions) Egress() []EgressHost { return slices.Clone(e.egress) }
 
-// Secrets returns the enforced Secret mounts, sorted by Secret name.
+// Secrets returns the enforced Secret mounts, sorted by role.
 func (e *EffectivePermissions) Secrets() []SecretMount { return slices.Clone(e.secrets) }
+
+// SecretNames returns the names of the enforced Secrets this instance
+// mounts, sorted (D-89).
+func (e *EffectivePermissions) SecretNames() []string {
+	out := make([]string, 0, len(e.secrets))
+	for _, s := range e.secrets {
+		out = append(out, SecretName(e.plugin, s.Role))
+	}
+	return out
+}
 
 // DataTiers returns the enforced data tiers, sorted.
 func (e *EffectivePermissions) DataTiers() []DataTier { return slices.Clone(e.dataTiers) }
@@ -94,14 +110,36 @@ func (e *EffectivePermissions) BrowserPath() string { return e.browserPath }
 // Config returns the plugin's config document.
 func (e *EffectivePermissions) Config() []byte { return bytes.Clone(e.config) }
 
+// ClusterService returns the in-cluster service the plugin may reach
+// directly, the one it requests and its grant approves (D-74), and whether
+// there is one.
+func (e *EffectivePermissions) ClusterService() (ClusterService, bool) {
+	if e.clusterService == nil {
+		return ClusterService{}, false
+	}
+	return *e.clusterService, true
+}
+
 // Equal reports whether e and o enforce the same permissions for the same
 // plugin, image and config.
 func (e *EffectivePermissions) Equal(o *EffectivePermissions) bool {
 	if e == nil || o == nil {
 		return e == o
 	}
-	return e.plugin == o.plugin && e.image.Equal(o.image) &&
-		slices.Equal(e.capabilities, o.capabilities) && slices.Equal(e.egress, o.egress) &&
+	return e.plugin == o.plugin && e.image.Equal(o.image) && bytes.Equal(e.config, o.config) && e.samePermissions(o)
+}
+
+// samePermissions reports whether e and o enforce the same permissions.
+func (e *EffectivePermissions) samePermissions(o *EffectivePermissions) bool {
+	return slices.Equal(e.capabilities, o.capabilities) && slices.Equal(e.egress, o.egress) &&
 		slices.Equal(e.secrets, o.secrets) && slices.Equal(e.dataTiers, o.dataTiers) &&
-		e.browserPath == o.browserPath && bytes.Equal(e.config, o.config)
+		e.browserPath == o.browserPath && equalPtr(e.clusterService, o.clusterService)
+}
+
+// equalPtr reports whether a and b are both nil or point to equal values.
+func equalPtr[T comparable](a, b *T) bool {
+	if a == nil || b == nil {
+		return a == b
+	}
+	return *a == *b
 }

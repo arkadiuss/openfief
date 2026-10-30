@@ -265,3 +265,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10e61dc7e13d
+  - type: implements
+    from: SYM-ingest-app-batches-for
+    to: REQ-ingest-sync-mode-from-ledger
+    created_at: 2026-10-29T17:15:29.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21fea8a78953
+  - type: implements
+    from: SYM-ingest-app-batches-for
+    to: REQ-ingest-seeded-account-transactions-mode
+    created_at: 2026-10-29T17:15:29.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8161f3fd819
+  - type: covered_by
+    from: SYM-ingest-app-batches-for
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:15:30.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f0a3199a8fe
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-follows-the-ledgers-seeding
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:15:51.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8e9b3e94ae2
+  - type: executable_for
+    from: SYM-ingest-test-helper-go-live-tx
+    to: TEST-ingest-golive
+    created_at: 2026-10-29T17:17:05.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f6e18dd8563
+  - type: executable_for
+    from: SYM-views-test-holding-value
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:59.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07e26ba96ea3
+  - type: implements
+    from: SYM-affected-operator-dirs
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:11.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b2ce49e511a
+  - type: covered_by
+    from: SYM-affected-operator-dirs
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:11.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad81e3b3893

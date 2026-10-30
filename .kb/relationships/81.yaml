@@ -230,3 +230,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4520127abc4a
+  - type: implements
+    from: SYM-ingestv1-update-account-response-get-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:24:52.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7dce039d437
+  - type: covered_by
+    from: SYM-ingestv1-update-account-response-get-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:24:52.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9277bc02dd7f
+  - type: implements
+    from: SYM-ingestv1-bind-account-response
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:26:27.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30022c849f14
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-response
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:26:28.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eabd1080038
+  - type: implements
+    from: SYM-portfoliov1-sleeve-role-type
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:30:56.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30dda2e5d333
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-role-type
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:30:56.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f47a522b2a2e
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-request-descriptor
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:49:00.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49e74b9a7933
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-request-descriptor
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:49:00.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3a97dc66adf
+  - type: implements
+    from: SYM-valuation-source
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:17:11.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3232806c256
+  - type: implements
+    from: SYM-valuation-source
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:17:11.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88117605058e
+  - type: covered_by
+    from: SYM-valuation-source
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:17:11.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47e422206375
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-entry
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:10:41.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d86b3f3affc
+  - type: implements
+    from: SYM-valuationv1connect-new-settings-service-client
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:21:42.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-616c81134e4c
+  - type: covered_by
+    from: SYM-valuationv1connect-new-settings-service-client
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:21:43.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c343c3547b3b
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-proto-message
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:07.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe0174ea03f
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-proto-message
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:08.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa603c77680
+  - type: implements
+    from: SYM-affected-step
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:05:39.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c1f79eed4b8
+  - type: covered_by
+    from: SYM-affected-step
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:05:39.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccec2acd1e05

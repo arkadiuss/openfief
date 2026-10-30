@@ -30,12 +30,17 @@ type fakeLedger struct {
 	accounts []ledger.Account
 	txs      map[ledger.AccountID][]ledger.Transaction
 	holdings map[ledger.AccountID][]ledger.Holding
+	lots     map[ledger.AccountID][]ledger.Lot
 	cash     map[ledger.AccountID][]kernel.Money
 	checks   map[ledger.AccountID][]ledgerapp.AssertionCheck
 	fail     error
 }
 
 func (f *fakeLedger) Sleeves(context.Context) ([]portfolio.Sleeve, error) { return f.sleeves, f.fail }
+
+func (f *fakeLedger) Kinds(context.Context) ([]portfolio.Kind, error) {
+	return portfolio.DefaultKinds(), f.fail
+}
 
 func (f *fakeLedger) Accounts(context.Context) ([]ledger.Account, error) { return f.accounts, f.fail }
 
@@ -63,7 +68,7 @@ func (f *fakeLedger) HoldingsOn(ctx context.Context, id ledger.AccountID, _ kern
 
 func (f *fakeLedger) LotsOn(ctx context.Context, id ledger.AccountID, _ kernel.Date) ([]ledger.Lot, error) {
 	_, err := f.Account(ctx, id)
-	return nil, err
+	return f.lots[id], err
 }
 
 func (f *fakeLedger) CashOn(ctx context.Context, id ledger.AccountID, _ kernel.Date) ([]kernel.Money, error) {
@@ -173,7 +178,10 @@ func newFixture(t *testing.T) *fixture {
 	bond, etf1, etf2 := instrument(t, isinPL, "EDO0334"), instrument(t, isinIE, "ETF1"), instrument(t, isinIE, "ETF2")
 	units := func(n int64) kernel.Quantity { return kernel.NewQuantity(kernel.NewDecimal(n, 0)) }
 	value := func(in ledger.Instrument, day, v, c, pln string) valuation.HoldingValuation {
-		return valuation.HoldingValuation{Account: "acc-1", Instrument: in, Date: date(t, day), Basis: valuation.Market, Source: "test", Value: money(t, v, c), PLN: money(t, pln, "PLN")}
+		return valuation.HoldingValuation{
+			Account: "acc-1", Instrument: in, Date: date(t, day), Basis: valuation.Market, Source: "test", Value: money(t, v, c), PLN: money(t, pln, "PLN"),
+			Net: money(t, pln, "PLN"), Liquidation: money(t, pln, "PLN"),
+		}
 	}
 	return &fixture{
 		on: on,

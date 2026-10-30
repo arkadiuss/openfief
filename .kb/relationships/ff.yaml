@@ -268,14 +268,14 @@ relationships:
   - type: constrains
     from: REQ-ui-plugin-packaging
     to: FACT-SUBJECT-90104E84491E6BE9
-    created_at: 2026-10-28T19:50:19.118Z
+    created_at: 2026-10-29T23:10:52.980Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-326aeb129349
   - type: requires_property
     from: REQ-ui-plugin-packaging
     to: FACT-PROP-1B08A057CAE7C1E7
-    created_at: 2026-10-28T19:50:19.154Z
+    created_at: 2026-10-29T23:10:53.026Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-989292718f98
@@ -426,6 +426,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b1343db1d7e
+  - type: implements
+    from: SYM-viewsv1-connector-binding-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:44:22.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0f6d8004e6f
+  - type: covered_by
+    from: SYM-viewsv1-connector-binding-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:44:23.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9feb6af8e9fd
   - type: verified_by
     from: SCEN-views-browser-route-longest-prefix
     to: TEST-views-browser-routing
@@ -440,3 +454,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b689e34cac9a
+  - type: executable_for
+    from: SYM-pl-test-run-upgrade
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:53.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1038444d2c3
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-request-get-origin
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:24:43.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71b2a0984570
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-request-get-origin
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:24:43.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1e080fd8cb5
+  - type: implements
+    from: SYM-valuation-postgres-optional-value
+    to: REQ-decision-d36-9-three-values-stored
+    created_at: 2026-10-29T22:13:41.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dcb9a5ae636
+  - type: covered_by
+    from: SYM-valuation-postgres-optional-value
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-29T22:13:41.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a657b627457
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-request-reset
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:15:28.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0ad5f9e6d4c
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-request-reset
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:15:28.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e355420f833
+  - type: implements
+    from: SYM-affected-area
+    to: REQ-tooling-hook-full-fallback
+    created_at: 2026-10-30T03:49:44.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60e589fa8153
+  - type: covered_by
+    from: SYM-affected-area
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T03:49:45.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddbca228dd1f

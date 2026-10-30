@@ -328,3 +328,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7737df1c5ad7
+  - type: implements
+    from: SYM-pl-effective-permissions-same-permissions
+    to: REQ-plugins-effective-intersection
+    created_at: 2026-10-29T15:18:12.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dde0b2b0b4d
+  - type: covered_by
+    from: SYM-pl-effective-permissions-same-permissions
+    to: TEST-plugins-effective
+    created_at: 2026-10-29T15:18:12.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edb5e0d44efc
+  - type: implements
+    from: SYM-ui-server-update-sleeve
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:18:18.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8617d4930415
+  - type: covered_by
+    from: SYM-ui-server-update-sleeve
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:18:18.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4a3c5832238
+  - type: implements
+    from: SYM-ingestv1-create-account-request-string
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:20:00.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d62b779b4c34
+  - type: covered_by
+    from: SYM-ingestv1-create-account-request-string
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:20:00.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04a9de2cd209
+  - type: implements
+    from: SYM-valuationv1-number-format-get-group-separator
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:15:10.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d1aba7929f0
+  - type: covered_by
+    from: SYM-valuationv1-number-format-get-group-separator
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:15:10.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-672cff3e8a19
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-get-tax-wrappers
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:17:23.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50683f44afe5
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-get-tax-wrappers
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:17:23.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58a87051f831
+  - type: implements
+    from: SYM-affected-any-under
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:08:15.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acc283278759
+  - type: covered_by
+    from: SYM-affected-any-under
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:08:15.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21f1e134256b
+  - type: executable_for
+    from: SYM-affected-test-steps
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:09:06.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b3f1b7f66b5

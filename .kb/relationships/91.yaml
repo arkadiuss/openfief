@@ -461,3 +461,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbe65e202dff
+  - type: implements
+    from: SYM-ingest-app-scheduler-plan
+    to: REQ-ingest-sync-mode-from-ledger
+    created_at: 2026-10-29T17:15:14.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6773e5ff247
+  - type: implements
+    from: SYM-ingest-app-scheduler-plan
+    to: REQ-ingest-seeded-account-transactions-mode
+    created_at: 2026-10-29T17:15:14.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-806db8f63c43
+  - type: covered_by
+    from: SYM-ingest-app-scheduler-plan
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:15:14.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e96ab0261496
+  - type: executable_for
+    from: SYM-jurisdiction-test-fee-rule-is-zero
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:35.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f538dc1cb8a
+  - type: implements
+    from: SYM-ui-format-of
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:57:57.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4e050f009a1
+  - type: implements
+    from: SYM-ui-format-of
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:57:57.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-232ac1154f3a
+  - type: covered_by
+    from: SYM-ui-format-of
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:57:57.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-188891df4e53
+  - type: verified_by
+    from: SCEN-tooling-hook-docs-only
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T03:32:50.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67874a630dd3
+  - type: verified_by
+    from: SCEN-tooling-hook-docs-only
+    to: TEST-tooling-check-commit
+    created_at: 2026-10-30T03:32:50.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da1c4d29da66

@@ -545,13 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35084f007123
-  - type: implements
-    from: SYM-ui-model-form
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:12:48.317Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cf7d51ddd175
   - type: covered_by
     from: SYM-ui-model-form
     to: TEST-ui-model
@@ -650,3 +643,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1439bdd23b80
+  - type: verified_by
+    from: SCEN-portfolio-defaults-on-fresh-install
+    to: TEST-portfolio-sleeve-kind
+    created_at: 2026-10-29T11:35:47.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-167f2a9ebb91
+  - type: verified_by
+    from: SCEN-portfolio-defaults-on-fresh-install
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-29T11:35:47.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bb7f8d2d1c4
+  - type: verified_by
+    from: SCEN-portfolio-defaults-on-fresh-install
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-29T11:35:48.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d0c59f38687
+  - type: implements
+    from: SYM-portfoliov1-sleeve-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:32:43.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f95e451a1e43
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:32:43.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07de3d1a91e2
+  - type: implements
+    from: SYM-viewsv1-sleeve-get-role-override
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:42:47.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8abf9f84d3a3
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-get-role-override
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:42:47.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cf7fe9f6ad8
+  - type: implements
+    from: SYM-viewsv1-list-broker-accounts-response
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:50:44.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de723ce02691
+  - type: covered_by
+    from: SYM-viewsv1-list-broker-accounts-response
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:50:44.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f64c7ad9c165
+  - type: implements
+    from: SYM-ingest-app-sync-call
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-10-29T17:12:21.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-365a92f36d97
+  - type: implements
+    from: SYM-ingest-app-sync-call
+    to: REQ-ingest-sync-mode-from-ledger
+    created_at: 2026-10-29T17:12:21.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33a557e4177d
+  - type: covered_by
+    from: SYM-ingest-app-sync-call
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:12:21.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84d03c9ea75a
+  - type: implements
+    from: SYM-viewsv1-get-settings-response-get-number-format
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:35:19.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39e2ec8ba74f
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response-get-number-format
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:35:19.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37db3a39e07d
+  - type: implements
+    from: SYM-exp-operator-held-browser-view
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T22:00:35.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a1acaa19a85
+  - type: covered_by
+    from: SYM-exp-operator-held-browser-view
+    to: TEST-operator-browser-view
+    created_at: 2026-10-29T22:00:35.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fdbdf24dadd
+  - type: implements
+    from: SYM-ui-model-form
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:41:58.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a270d37cf28e

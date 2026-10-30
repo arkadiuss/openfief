@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d49d129d2e2
-  - type: implements
-    from: SYM-portfolio-missing-defaults
-    to: REQ-portfolio-default-kinds
-    created_at: 2026-10-28T09:38:53.511Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-74485a3c4ddc
   - type: covered_by
     from: SYM-portfolio-missing-defaults
     to: TEST-portfolio-sleeve-kind
@@ -258,6 +251,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4069e98a56e5
+  - type: implements
+    from: SYM-portfolio-missing-defaults
+    to: REQ-portfolio-defaults-on-fresh-install
+    created_at: 2026-10-29T11:38:56.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f11f440bb0e
+  - type: implements
+    from: SYM-portfolio-missing-defaults
+    to: REQ-portfolio-install-sleeves
+    created_at: 2026-10-29T11:38:56.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543069774345
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-brokers
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:47:18.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f16ea5f6f093
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-broker-accounts-need-a-store
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:48:23.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad5730e6158b
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-links-record-broker-accounts
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:02:49.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4bc165824f4
+  - type: implements
+    from: SYM-viewsv1-list-broker-accounts-request-proto-message
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:50:17.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-becb9fb83235
+  - type: covered_by
+    from: SYM-viewsv1-list-broker-accounts-request-proto-message
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:50:17.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e6b0ed42a39
   - type: executable_for
     from: SYM-fd-views-kube-test-browser-route-of
     to: TEST-views-kube-browser
@@ -265,3 +307,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f56fefa77893
+  - type: implements
+    from: SYM-ingest-app-pricing-scope
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-10-29T17:13:31.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e850fe09d1d9
+  - type: implements
+    from: SYM-ingest-app-pricing-scope
+    to: REQ-ingest-new-instrument-priced
+    created_at: 2026-10-29T17:13:31.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38a3ffd0d8e5
+  - type: covered_by
+    from: SYM-ingest-app-pricing-scope
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:13:31.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95bdd3b3b0d4
+  - type: implements
+    from: SYM-pl-new-pack
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:05:19.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2da377993942
+  - type: implements
+    from: SYM-pl-new-pack
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:05:19.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6484fc2079ea
+  - type: covered_by
+    from: SYM-pl-new-pack
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:05:19.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-439cae6517db
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-new-settings
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:12:03.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b3d187fc6a
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request-proto-reflect
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:48.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-201fda7b332f
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request-proto-reflect
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:48.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-407d650c4078
+  - type: implements
+    from: SYM-views-app-views-cash-items
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:20:50.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e50ce2c9810
+  - type: implements
+    from: SYM-views-app-views-cash-items
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:20:50.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2ef43724d06
+  - type: covered_by
+    from: SYM-views-app-views-cash-items
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:50.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e104195db0
+  - type: implements
+    from: SYM-viewsv1-number-format-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:52.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8785ee53c39f
+  - type: covered_by
+    from: SYM-viewsv1-number-format-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:52.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a43a9ad5aa79
+  - type: constrains
+    from: REQ-tooling-hook-full-fallback
+    to: FACT-SUBJECT-AD0E41D410701C0F
+    created_at: 2026-10-30T03:33:50.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb441b881d0f
+  - type: requires_property
+    from: REQ-tooling-hook-full-fallback
+    to: FACT-PROP-61739ED7FC74CEBF
+    created_at: 2026-10-30T03:33:50.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-123199653535
+  - type: specified_by
+    from: REQ-tooling-hook-full-fallback
+    to: SCEN-tooling-hook-full-fallback
+    created_at: 2026-10-30T03:33:50.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-449c9b2e9c91

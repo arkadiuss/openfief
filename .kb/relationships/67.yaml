@@ -13,13 +13,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-baa7883df4f8
-  - type: implements
-    from: SYM-valuation-parse-basis
-    to: REQ-valuation-bond-basis
-    created_at: 2026-10-28T05:30:56.859Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a0a9d3324856
   - type: covered_by
     from: SYM-valuation-parse-basis
     to: TEST-valuation-valuation
@@ -202,27 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6aa3f4661a5
-  - type: implements
-    from: SYM-ingest-sched-app-batch-for
-    to: REQ-ingest-scheduler-retry
-    created_at: 2026-10-28T16:52:25.945Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-edd28fdd0a69
-  - type: implements
-    from: SYM-ingest-sched-app-batch-for
-    to: REQ-ingest-scheduler-due
-    created_at: 2026-10-28T16:52:25.965Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ac79130e319e
-  - type: covered_by
-    from: SYM-ingest-sched-app-batch-for
-    to: TEST-ingest-app-scheduler
-    created_at: 2026-10-28T16:52:25.982Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3b3acde25c9a
   - type: executable_for
     from: SYM-sdk-go-test-public-jwk
     to: TEST-sdk-go-jwks-verifier
@@ -412,20 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78e1f7ed8af7
-  - type: implements
-    from: SYM-ui-build-model
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:15:02.776Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ed9c48bd292c
-  - type: implements
-    from: SYM-ui-build-model
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:15:02.814Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8288b14cd05c
   - type: covered_by
     from: SYM-ui-build-model
     to: TEST-ui-model
@@ -503,6 +461,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2703da1ef292
+  - type: implements
+    from: SYM-ingest-broker-account-id
+    to: REQ-ingest-broker-account-record
+    created_at: 2026-10-29T11:48:43.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-868f17b7a326
+  - type: covered_by
+    from: SYM-ingest-broker-account-id
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:48:43.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1210be70dc89
+  - type: implements
+    from: SYM-ingest-connectrpc-broker-entries-list
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:50:38.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1409d20bddb3
+  - type: covered_by
+    from: SYM-ingest-connectrpc-broker-entries-list
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:50:38.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96d34be5ef89
+  - type: verified_by
+    from: SCEN-ui-sleeve-and-account-pages
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T12:45:42.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5ee7b3742eb
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-accounts-sleeves
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T13:00:06.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f041a7eb4443
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-response-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:39:49.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c75882a5b3aa
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-response-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:39:49.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eceb53f4056
   - type: executable_for
     from: SYM-fd-plugins-test-core-serves-path
     to: TEST-plugins-browser-path
@@ -510,3 +524,143 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c711ed02bf6
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-legacy-symbol
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:27:35.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea640acb9091
+  - type: implements
+    from: SYM-valuation-parse-basis
+    to: REQ-valuation-bond-holding-values
+    created_at: 2026-10-29T21:56:10.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ad99088d445
+  - type: executable_for
+    from: SYM-jurisdiction-test-sale-cost-properties
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:30.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96065de48677
+  - type: implements
+    from: SYM-jurisdiction-cash
+    to: REQ-jurisdiction-in-process
+    created_at: 2026-10-29T22:04:03.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fa1e33a123d
+  - type: implements
+    from: SYM-jurisdiction-cash
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:04:03.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef8784aa5793
+  - type: covered_by
+    from: SYM-jurisdiction-cash
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:04:03.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f8456fc48e3
+  - type: executable_for
+    from: SYM-pl-test-value-cash
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:08:17.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccd05b29ab73
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:11:54.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-778cda800eaa
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T23:11:55.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d304e3932e3d
+  - type: covered_by
+    from: SYM-valuation-connectapi-settings-service
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:11:55.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abdce2e61dd8
+  - type: implements
+    from: SYM-views-unvalued
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:17:10.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ee2d59fd547
+  - type: implements
+    from: SYM-views-unvalued
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:17:10.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-834859fc858a
+  - type: covered_by
+    from: SYM-views-unvalued
+    to: TEST-views-values
+    created_at: 2026-10-30T01:17:10.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74faa3790b97
+  - type: implements
+    from: SYM-ui-build-model
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:41:35.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-285be39abd5d
+  - type: implements
+    from: SYM-ui-value-chart-view-query
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:00:21.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ec10d369d9d
+  - type: implements
+    from: SYM-ui-value-chart-view-query
+    to: REQ-ui-value-chart-value-switch
+    created_at: 2026-10-30T03:00:21.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79a6d456ddf5
+  - type: covered_by
+    from: SYM-ui-value-chart-view-query
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:00:21.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64d0068df15e
+  - type: implements
+    from: SYM-ui-build-model
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:39:58.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f54cd1a456ad
+  - type: implements
+    from: SYM-affected-load-graph
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:58:43.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-725bd08c7a66
+  - type: covered_by
+    from: SYM-affected-load-graph
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:58:43.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3950880f2b95

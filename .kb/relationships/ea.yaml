@@ -237,3 +237,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8f40048d3e8
+  - type: implements
+    from: SYM-pl-config-field-rune
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:15:27.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2407b76174cf
+  - type: covered_by
+    from: SYM-pl-config-field-rune
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:27.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6721f646fa88
+  - type: executable_for
+    from: SYM-pl-test-plan-install-owner-picks
+    to: TEST-plugins-install
+    created_at: 2026-10-29T15:18:25.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f6b7dacb4cf
+  - type: executable_for
+    from: SYM-core-test-onboarding-services
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T12:57:51.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c28b84f8b539
+  - type: validates
+    from: TEST-operator-browser-view
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T21:58:47.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d86d9e84cb9d
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-ghostfolio-set-balance
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:28:47.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-510f45bed3ea
+  - type: implements
+    from: SYM-jurisdiction-number-format-validate
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:36.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbd71e609d4c
+  - type: implements
+    from: SYM-jurisdiction-number-format-validate
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:36.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f7e7050591c
+  - type: covered_by
+    from: SYM-jurisdiction-number-format-validate
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:36.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90036b86baad
+  - type: implements
+    from: SYM-valuationv1-set-number-format-response-descriptor
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:08.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b5bb33d1965
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-response-descriptor
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:08.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47a41d20502e

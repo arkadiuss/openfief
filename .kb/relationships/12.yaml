@@ -496,3 +496,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1fc30428f4da
+  - type: validates
+    from: TEST-plugins-cli-run
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:11:29.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee58cbea2651
+  - type: validates
+    from: TEST-plugins-cli-run
+    to: REQ-plugins-in-cluster-service-plain-http-warning
+    created_at: 2026-10-29T15:11:29.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf95ca062334
+  - type: validates
+    from: TEST-plugins-cli-run
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:11:29.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3ef0fde73d9
+  - type: validates
+    from: TEST-plugins-cli-run
+    to: REQ-plugins-config-field-host-grant
+    created_at: 2026-10-29T15:11:29.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47ebbf2abec3
+  - type: executable_for
+    from: SYM-pl-test-helper-in-cluster-grant
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:20:04.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40633fa2a206
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-resolve-broker-accounts
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:48:02.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-808bea259137
+  - type: implements
+    from: SYM-connectorv1-delivery-get-broker-accounts
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:55:57.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02082ac9f5d1
+  - type: covered_by
+    from: SYM-connectorv1-delivery-get-broker-accounts
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:55:57.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4c536fba53c
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-response
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:34:46.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d03348d6e2a2
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-response
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:34:47.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17dd5b5db7c8
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-book
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:14:00.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa5479d38d1a
+  - type: implements
+    from: SYM-ingest-app-accounts-record-terms
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:09:57.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9c47ea9a6c2
+  - type: implements
+    from: SYM-ingest-app-accounts-record-terms
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:09:57.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ed26a28271e
+  - type: covered_by
+    from: SYM-ingest-app-accounts-record-terms
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:09:57.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25833b299e6e
+  - type: implements
+    from: SYM-valuationv1connect-new-settings-service-handler
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:22:22.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fd57860c52c
+  - type: covered_by
+    from: SYM-valuationv1connect-new-settings-service-handler
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:22:22.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c53971b0fdd

@@ -49,7 +49,7 @@ type FrontDoor struct {
 
 // Target returns where the browser's request for path goes. It fails with
 // an error wrapping views.ErrNoBrowserRoute or
-// views.ErrAmbiguousBrowserRoute when no single view plugin serves path,
+// views.ErrSeveralBrowserViews when no single view plugin serves path,
 // ErrViewsUnknown while the routes can't be read, and otherwise when the
 // instance has no address or no token can be issued for it.
 func (f *FrontDoor) Target(ctx context.Context, path string) (BrowserTarget, error) {

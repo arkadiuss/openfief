@@ -92,13 +92,6 @@ relationships:
     id: rel-efb901f46180
   - type: implements
     from: SYM-ingest-sched-sync-policy-next-sync
-    to: REQ-ingest-scheduler-due
-    created_at: 2026-10-28T16:58:54.581Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7c48bd5d8f41
-  - type: implements
-    from: SYM-ingest-sched-sync-policy-next-sync
     to: REQ-ingest-scheduler-retry
     created_at: 2026-10-28T16:58:54.595Z
     created_by: kibi/upsert
@@ -483,6 +476,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-4877267e1bbd
   - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-request-reset
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:33:41.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a5c26a0bed4
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-request-reset
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:33:41.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-068d2207da6a
+  - type: implements
     from: SYM-fd-core-new-front-door
     to: REQ-core-reverse-proxies-view-plugins
     created_at: 2026-10-29T12:02:49.599Z
@@ -503,3 +510,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1ccdb157d55
+  - type: implements
+    from: SYM-ingest-sched-sync-policy-next-sync
+    to: REQ-ingest-scheduler-when-due
+    created_at: 2026-10-29T17:22:13.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63a8f4cdebc0
+  - type: implements
+    from: SYM-valuation-connectapi-service-list-source-rankings
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:14:42.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de51dff41761
+  - type: covered_by
+    from: SYM-valuation-connectapi-service-list-source-rankings
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:14:42.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d25a0aa5681a
+  - type: implements
+    from: SYM-views-ghostfolio-client-balances
+    to: REQ-views-ghostfolio-cash-balances
+    created_at: 2026-10-30T01:26:29.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-907e40d940d0
+  - type: implements
+    from: SYM-views-ghostfolio-client-balances
+    to: REQ-views-ghostfolio-client
+    created_at: 2026-10-30T01:26:29.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e794acbfd640
+  - type: covered_by
+    from: SYM-views-ghostfolio-client-balances
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:26:29.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd84ae4c2536
+  - type: verified_by
+    from: SCEN-valuation-bond-holding-values
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T21:47:57.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-142fa322bfd6
+  - type: verified_by
+    from: SCEN-valuation-bond-holding-values
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T21:47:57.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8763c1acc88e
+  - type: executable_for
+    from: SYM-pl-test-helper-want-values
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:50.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97cc9c0af8ba
+  - type: implements
+    from: SYM-viewsv1-list-yearly-taxes-request
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:35:40.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-084632d5fbe4
+  - type: covered_by
+    from: SYM-viewsv1-list-yearly-taxes-request
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:35:40.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9a3688bd932

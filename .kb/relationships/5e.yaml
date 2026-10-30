@@ -496,3 +496,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d889580a7f21
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-check-stored
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T13:00:34.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88c696af8e38
+  - type: executable_for
+    from: SYM-ingest-app-test-accounts-bind
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T13:00:49.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16308456bf5f
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-sleeve-service-errors
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:08:24.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55a281033f97
+  - type: implements
+    from: SYM-ui-return-to
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:16:37.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94831c5a9cdc
+  - type: covered_by
+    from: SYM-ui-return-to
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:16:37.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac995229fed5
+  - type: implements
+    from: SYM-ingestv1-account-proto-message
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:18:48.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3927f9e62354
+  - type: covered_by
+    from: SYM-ingestv1-account-proto-message
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:18:48.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa4582c71327
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-asks-market-data-connectors-for-the-scope
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-10-29T17:16:19.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06f1114b5bf6
+  - type: implements
+    from: SYM-valuation-postgres-store-save-sources
+    to: REQ-valuation-market-data-all-sources-stored
+    created_at: 2026-10-29T18:15:25.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d6ddec7babf
+  - type: implements
+    from: SYM-valuation-postgres-store-save-sources
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:15:25.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cba3ebb4b65
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-sources
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:15:25.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23a6453320b7

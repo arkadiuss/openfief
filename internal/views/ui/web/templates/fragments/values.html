@@ -1,0 +1,12 @@
+{{/* The three values of D-77, side by side: a total's (DateTotal) and a
+     holding's stored valuation (Valuation), each missing value saying so. */}}
+{{define "three-values"}}<td class="num">{{money .ValueReporting}}</td>
+<td class="num">{{with .NetReporting}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</td>
+<td class="num">{{with .LiquidationReporting}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</td>{{end}}
+
+{{define "valuation-values"}}<td class="num">{{money .ValueReporting}}</td>
+<td class="num">{{with .NetReporting}}{{money .}}{{else}}<span class="warn-text">missing: {{missing .NetMissing}}</span>{{end}}</td>
+<td class="num">{{with .LiquidationReporting}}{{money .}}{{else}}<span class="warn-text">missing: {{missing .LiquidationMissing}}</span>{{end}}</td>{{end}}
+
+{{/* D-91: a holding or lot behind a removed connector instance. */}}
+{{define "no-longer-updated"}}{{if .NoLongerUpdated}} <span class="pill pill-warn" title="A transaction behind it came from a connector instance that is no longer installed">no longer updated</span> <span class="muted">from {{range $i, $n := .RemovedInstances}}{{if $i}}, {{end}}<span class="mono">{{$n}}</span>{{end}}</span>{{end}}{{end}}

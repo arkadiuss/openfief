@@ -9,6 +9,11 @@
 // - Dates are calendar dates as strings, YYYY-MM-DD, with no time of day.
 // - Every amount keeps its original currency (D-20); totals, valuations and
 //   the allocation also carry their value in the reporting currency (D-62).
+// - Every holding, account and total has three values (D-77): gross,
+//   before any tax or fee; net, what the owner keeps at the planned exit;
+//   and liquidation, the cash in hand if everything were sold today. A
+//   value that can't be computed, such as an IKZE's liquidation value
+//   before the owner sets the marginal rate (D-78), is left unset.
 syntax = "proto3";
 
 package openfief.views.v1;
@@ -25,10 +30,48 @@ service ReadService {
     option (google.api.http) = {get: "/v1/sleeves"};
   }
 
+  // ListSleeveKinds returns every sleeve kind, in key order (D-71).
+  rpc ListSleeveKinds(ListSleeveKindsRequest) returns (ListSleeveKindsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/sleeve-kinds"};
+  }
+
+  // GetSettings returns the settings every reader writes the record with:
+  // the reporting currency (D-62), the number format (D-113) and the tax
+  // wrappers an account can have (D-76).
+  rpc GetSettings(GetSettingsRequest) returns (GetSettingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/settings"};
+  }
+
+  // ListYearlyTaxes returns, for one year, the yearly tax of each tax
+  // wrapper taxed on its balance, such as OKI's (D-76), summed over every
+  // account in it. A tax whose law isn't in force that year says so and
+  // carries no amounts.
+  rpc ListYearlyTaxes(ListYearlyTaxesRequest) returns (ListYearlyTaxesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/yearly-taxes"};
+  }
+
   // ListAccounts returns every account, in ID order.
   rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/accounts"};
+  }
+
+  // ListConnectorBindings returns every connector binding: which connector
+  // instance may write to which account, in instance then account order.
+  rpc ListConnectorBindings(ListConnectorBindingsRequest) returns (ListConnectorBindingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/connector-bindings"};
+  }
+
+  // ListBrokerAccounts returns the broker accounts connector instances
+  // reported (D-72), in instance then ID order, each with the account it is
+  // mapped to. Nothing of an unmapped broker account is booked.
+  rpc ListBrokerAccounts(ListBrokerAccountsRequest) returns (ListBrokerAccountsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/broker-accounts"};
   }
 
   // GetAccount returns one account.
@@ -46,14 +89,16 @@ service ReadService {
   }
 
   // ListHoldings returns an account's non-zero holdings at the end of a date,
-  // in ISIN then venue symbol order.
+  // in ISIN then venue symbol order, each marked as no longer updated when
+  // a transaction behind it came from a removed instance (D-91).
   rpc ListHoldings(ListHoldingsRequest) returns (ListHoldingsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/accounts/{account_id}/holdings"};
   }
 
   // ListLots returns an account's open tax lots at the end of a date, per
-  // instrument, oldest first.
+  // instrument, oldest first, each marked as no longer updated when a
+  // transaction behind it came from a removed instance (D-91).
   rpc ListLots(ListLotsRequest) returns (ListLotsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/accounts/{account_id}/lots"};
@@ -75,7 +120,8 @@ service ReadService {
   }
 
   // ListAccountValuations returns an account's stored valuations in a date
-  // range, with their totals per date.
+  // range, each with its three values (D-77), and its totals per date with
+  // its cash (D-106).
   rpc ListAccountValuations(ListAccountValuationsRequest) returns (ListAccountValuationsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/accounts/{account_id}/valuations"};
@@ -89,7 +135,8 @@ service ReadService {
   }
 
   // ListValuationTotals returns the whole portfolio's value per date in a
-  // date range, summed over every account's stored valuations.
+  // date range, its three values (D-77) summed over every account's stored
+  // valuations and cash (D-106).
   rpc ListValuationTotals(ListValuationTotalsRequest) returns (ListValuationTotalsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/valuations"};
@@ -112,10 +159,12 @@ service ReadService {
     option (google.api.http) = {get: "/v1/price-checks"};
   }
 
-  // GetAllocation returns the portfolio's value on a date in the reporting
-  // currency, split by asset class, currency, institution or sleeve (D-30).
-  // Holdings count at their stored valuation on the date and cash at the FX
-  // rate for the date; holdings without a valuation are listed as unvalued.
+  // GetAllocation returns the portfolio's gross, net or liquidation value
+  // (D-77) on a date in the reporting currency, split by asset class,
+  // currency, institution or sleeve (D-30). Holdings count at their stored
+  // valuation on the date and cash at the FX rate for the date, in its
+  // account's tax wrapper; holdings and cash without that value are listed
+  // as unvalued, with the reason.
   rpc GetAllocation(GetAllocationRequest) returns (GetAllocationResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/allocation"};
@@ -183,6 +232,40 @@ message Sleeve {
   SleeveRole role = 3;
   // The key of the sleeve's kind, such as "core" or "agent-pool".
   string kind = 4;
+  // The owner's explicit choice of a role other than the kind's default
+  // role (D-71).
+  bool role_override = 5;
+}
+
+// SleeveKind is a named category of sleeve with the role a sleeve of it
+// gets by default, which never changes (D-71).
+message SleeveKind {
+  string key = 1;
+  string name = 2;
+  SleeveRole default_role = 3;
+}
+
+// ConnectorBinding lets one connector instance write to one account.
+message ConnectorBinding {
+  string connector_instance = 1;
+  string account_id = 2;
+}
+
+// BrokerAccount is one of the owner's accounts as the institution names it,
+// as a connector instance reported it (D-72).
+message BrokerAccount {
+  string connector_instance = 1;
+  // The institution's own ID of the account, such as an IBKR Flex account
+  // ID.
+  string id = 2;
+  string institution = 3;
+  // The OpenFief account it is mapped to; empty while it is unmapped.
+  string account_id = 4;
+  // The day a delivery last reported it, YYYY-MM-DD.
+  string last_seen = 5;
+  // Whether the instance's last delivery that reported broker accounts
+  // reported it.
+  bool in_last_delivery = 6;
 }
 
 // Account is one account at an institution. It belongs to one sleeve.
@@ -192,6 +275,64 @@ message Account {
   string name = 3;
   // The ID of the account's sleeve.
   string sleeve = 4;
+  // The account's tax wrapper, a key of the jurisdiction pack, such as
+  // "taxable", "ike", "ikze" or "oki" (D-76).
+  string tax_wrapper = 5;
+  // The fee rule its broker charges a sale (D-78); zero until set.
+  FeeRule fee_rule = 6;
+}
+
+// FeeRule is how an account's broker charges a sale (D-78): rate of the
+// value sold, at least minimum, plus conversion_rate of the value for an
+// instrument in a foreign currency. Rates are decimal fractions as strings.
+message FeeRule {
+  string rate = 1;
+  // Unset when the rule has no minimum.
+  Money minimum = 2;
+  string conversion_rate = 3;
+}
+
+// NumberFormat is how amounts are written (D-113): only the separators.
+message NumberFormat {
+  // The format's key, such as "space-comma".
+  string key = 1;
+  // The separator between groups of three integer digits: " ", ",", ".",
+  // "'" or "" for none.
+  string group_separator = 2;
+  // The decimal separator: "," or ".".
+  string decimal_separator = 3;
+}
+
+// ValueKind is one of the three values of D-77.
+enum ValueKind {
+  // Means gross.
+  VALUE_KIND_UNSPECIFIED = 0;
+  // Before any tax or fee: the value broker statements show.
+  VALUE_KIND_GROSS = 1;
+  // What the owner keeps at the planned exit, after the taxes due then.
+  VALUE_KIND_NET = 2;
+  // The cash in hand if everything were sold or redeemed today, after
+  // every tax and fee.
+  VALUE_KIND_LIQUIDATION = 3;
+}
+
+// YearlyTax is a tax wrapper's tax for one year on the average balance of
+// its accounts (D-76).
+message YearlyTax {
+  string tax_wrapper = 1;
+  int32 year = 2;
+  // Whether the law that levies it is in force in the year; when false,
+  // nothing below is set.
+  bool in_force = 3;
+  // The days the average was taken over.
+  int32 days = 4;
+  Money average = 5;
+  // The balance up to which nothing is taxed, and the rate of the part
+  // above it, as a decimal fraction.
+  Money limit = 6;
+  string rate = 7;
+  Money excess = 8;
+  Money tax = 9;
 }
 
 // BookKind is the kind of a ledger account inside an account.
@@ -264,6 +405,13 @@ message Holding {
   Instrument instrument = 1;
   // A decimal string.
   string quantity = 2;
+  // True when a transaction behind the holding came from a connector
+  // instance that is no longer installed (D-91): the holding is no longer
+  // updated. False while the core can't tell which instances are
+  // installed.
+  bool no_longer_updated = 3;
+  // Those removed instances, in name order.
+  repeated string removed_instances = 4;
 }
 
 // Lot is an open tax lot. An opening lot was seeded at go-live from what the
@@ -279,6 +427,12 @@ message Lot {
   // The key of the transaction that opened the lot.
   string origin_source = 6;
   string origin_external_id = 7;
+  // True when the transaction that opened the lot, or one that consumed
+  // part of it, came from a removed instance (D-91): the lot is no longer
+  // updated.
+  bool no_longer_updated = 8;
+  // Those removed instances, in name order.
+  repeated string removed_instances = 9;
 }
 
 // AssertionStatus is the result of checking a balance assertion.
@@ -304,33 +458,56 @@ message AssertionCheck {
   AssertionStatus status = 5;
 }
 
-// ValuationBasis says which value of a holding a valuation is.
+// ValuationBasis says how a holding's gross value was found.
 enum ValuationBasis {
   VALUATION_BASIS_UNSPECIFIED = 0;
   VALUATION_BASIS_MARKET = 1;
   VALUATION_BASIS_GROSS_ACCRUED = 2;
+  // No longer used: D-77 replaced the net-if-redeemed basis with the net
+  // and liquidation values every valuation carries.
   VALUATION_BASIS_NET_IF_REDEEMED = 3;
 }
 
 // Valuation is the stored value of a holding on a date, with its basis and
-// source, in its original currency and in the reporting currency.
+// source: its gross value in its original currency and in the reporting
+// currency, and its net and liquidation values (D-77).
 message Valuation {
   // YYYY-MM-DD.
   string date = 1;
   Instrument instrument = 2;
   ValuationBasis basis = 3;
   string source = 4;
+  // The gross value.
   Money value = 5;
   Money value_reporting = 6;
+  // Unset when net_missing says why.
+  Money net_reporting = 7;
+  // Unset when liquidation_missing says why.
+  Money liquidation_reporting = 8;
+  // Why the net value is missing: "fx_rate" or "lots"; empty when it isn't.
+  string net_missing = 9;
+  // Why the liquidation value is missing: "fx_rate", "lots" or
+  // "marginal_rate"; empty when it isn't.
+  string liquidation_missing = 10;
 }
 
-// DateTotal is the sum of the valuations dated on one date, in the
-// reporting currency and per original currency, in currency order.
+// DateTotal is the sum of the valued holdings and the cash on one date, in
+// the reporting currency and per original currency, in currency order.
 message DateTotal {
   // YYYY-MM-DD.
   string date = 1;
+  // The gross total, cash included.
   Money value_reporting = 2;
   repeated Money by_currency = 3;
+  // The net and liquidation totals, cash included; unset when some valued
+  // holding or cash lacks that value.
+  Money net_reporting = 4;
+  Money liquidation_reporting = 5;
+  // The cash in the totals.
+  Money cash_reporting = 6;
+  // Some cash had no FX rate on or before the date and is in no total but
+  // by_currency.
+  bool cash_unconverted = 7;
 }
 
 // ValuationStatus says how current an account's stored valuations are.
@@ -393,19 +570,66 @@ message AllocationGroup {
   Money value_reporting = 2;
 }
 
-// UnvaluedHolding is a holding with no stored valuation on the date asked
-// for, left out of the allocation.
+// UnvaluedHolding is a holding, or an account's cash, without the value
+// asked for on the date, left out of the allocation.
 message UnvaluedHolding {
   string account_id = 1;
+  // Unset for cash.
   Instrument instrument = 2;
-  // A decimal string.
+  // A decimal string; empty for cash.
   string quantity = 3;
+  // What the value lacks, such as "price", "fx_rate" or "marginal_rate".
+  string missing = 4;
+  // The cash left out; unset for a holding.
+  Money cash = 5;
 }
 
 message ListSleevesRequest {}
 
 message ListSleevesResponse {
   repeated Sleeve sleeves = 1;
+}
+
+message ListSleeveKindsRequest {}
+
+message ListSleeveKindsResponse {
+  repeated SleeveKind kinds = 1;
+}
+
+message ListConnectorBindingsRequest {}
+
+message ListConnectorBindingsResponse {
+  repeated ConnectorBinding bindings = 1;
+}
+
+message ListBrokerAccountsRequest {
+  // Only the broker accounts not mapped to an OpenFief account.
+  bool unmapped = 1;
+}
+
+message ListBrokerAccountsResponse {
+  repeated BrokerAccount broker_accounts = 1;
+}
+
+message GetSettingsRequest {}
+
+message GetSettingsResponse {
+  // An ISO 4217 code, such as "PLN".
+  string reporting_currency = 1;
+  // The owner's number format, or the jurisdiction pack's default.
+  NumberFormat number_format = 2;
+  // Whether number_format is the pack's default.
+  bool number_format_default = 3;
+  // The tax wrappers an account can have, the default first.
+  repeated string tax_wrappers = 4;
+}
+
+message ListYearlyTaxesRequest {
+  int32 year = 1;
+}
+
+message ListYearlyTaxesResponse {
+  repeated YearlyTax taxes = 1;
 }
 
 message ListAccountsRequest {}
@@ -551,11 +775,15 @@ message GetAllocationRequest {
   // YYYY-MM-DD.
   string date = 1;
   AllocationDimension by = 2;
+  // Which value to split; unspecified is gross.
+  ValueKind value = 3;
 }
 
 message GetAllocationResponse {
   string date = 1;
   AllocationDimension by = 2;
+  // The value split, as resolved: never unspecified.
+  ValueKind value = 6;
   // The sum of all groups, in the reporting currency.
   Money total_reporting = 3;
   // Largest value first, then by key.

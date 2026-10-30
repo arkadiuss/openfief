@@ -139,20 +139,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50834fb69232
-  - type: implements
-    from: SYM-portfolio-has-sleeve
-    to: REQ-portfolio-default-kinds
-    created_at: 2026-10-28T09:39:01.311Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8cf90588cb57
-  - type: covered_by
-    from: SYM-portfolio-has-sleeve
-    to: TEST-portfolio-sleeve-kind
-    created_at: 2026-10-28T09:39:01.355Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-da33e2401568
   - type: executable_for
     from: SYM-views-connectapi-test-connect-pages
     to: TEST-views-connectapi-connect
@@ -405,6 +391,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea10d0318dbc
+  - type: implements
+    from: SYM-ingestv1connect-account-service-client-interface
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T15:08:57.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81a98c246831
+  - type: covered_by
+    from: SYM-ingestv1connect-account-service-client-interface
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T15:08:57.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1849814d5b3
   - type: constrains
     from: REQ-identity-enroll-localhost-forward
     to: FACT-SUBJECT-9565864B05E4ACEA
@@ -426,3 +426,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98c0cc88d46b
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-response-descriptor
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:25:27.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfe792278e84
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-response-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:25:27.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24e40f92d1d7
+  - type: implements
+    from: SYM-jurisdiction-default-wrapper
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:04:35.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b65d7c8d1b38
+  - type: covered_by
+    from: SYM-jurisdiction-default-wrapper
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:04:35.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eed71341e429
+  - type: implements
+    from: SYM-valuation-app-input-cache-prices
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:10:30.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-958915207111
+  - type: implements
+    from: SYM-valuation-app-input-cache-prices
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:10:30.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-734b06f8b2a3
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-prices
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:30.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7be677ebc0f
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms-tax-wrapper
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:11:35.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65ac609e689c
+  - type: verified_by
+    from: SCEN-ui-value-switches
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:37:14.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed3f49ba99a5

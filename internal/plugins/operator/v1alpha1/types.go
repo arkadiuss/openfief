@@ -58,6 +58,39 @@ type PluginSpec struct {
 	// +kubebuilder:validation:Type=object
 	// +kubebuilder:pruning:PreserveUnknownFields
 	Config *runtime.RawExtension `json:"config,omitempty"`
+
+	// ClusterService is the in-cluster service the owner picked at install
+	// for a manifest that asks for one (D-74). The plugin reaches it
+	// directly at its ClusterIP, not through the egress proxy.
+	// +optional
+	ClusterService *ClusterServiceRef `json:"clusterService,omitempty"`
+}
+
+// ClusterServiceRef names a Service port in another namespace than
+// openfief (D-74).
+type ClusterServiceRef struct {
+	// Namespace is the Service's namespace; never openfief.
+	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:Pattern=`^[a-z]([-a-z0-9]*[a-z0-9])?$`
+	Namespace string `json:"namespace"`
+	// Service is the Service's name.
+	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:Pattern=`^[a-z]([-a-z0-9]*[a-z0-9])?$`
+	Service string `json:"service"`
+	// Port is the Service port the plugin dials.
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=65535
+	Port int32 `json:"port"`
+}
+
+// ClusterServiceRequest is a manifest's request for one in-cluster service
+// that the owner picks at install (D-74).
+type ClusterServiceRequest struct {
+	// Description says what the service is for, such as "the owner's
+	// Ghostfolio"; the CLI shows it when it asks for the service.
+	// +optional
+	// +kubebuilder:validation:MaxLength=200
+	Description string `json:"description,omitempty"`
 }
 
 // Manifest is what a plugin declares (D-11).
@@ -76,12 +109,14 @@ type Manifest struct {
 	// +listType=set
 	Egress []string `json:"egress,omitempty"`
 
-	// Secrets lists the Kubernetes Secrets, in the openfief namespace, that
-	// the plugin needs mounted read-only. The owner creates them (D-29).
+	// Secrets lists, by role, the Kubernetes Secrets the plugin needs
+	// mounted read-only. Each instance mounts the Secret named
+	// <instance>-<role> in the openfief namespace, so two instances never
+	// share one (D-89). The owner creates them (D-29).
 	// +optional
 	// +kubebuilder:validation:MaxItems=32
 	// +listType=map
-	// +listMapKey=name
+	// +listMapKey=role
 	Secrets []SecretMount `json:"secrets,omitempty"`
 
 	// DataTiers lists the classes of data the plugin asks to see.
@@ -104,14 +139,31 @@ type Manifest struct {
 	// +kubebuilder:validation:MaxLength=256
 	// +kubebuilder:validation:Pattern=`^/[-a-z0-9_./]*$`
 	BrowserPath string `json:"browserPath,omitempty"`
+
+	// EgressFromConfig names top-level config fields whose https URL's host
+	// the plugin reaches through the egress proxy, instead of a fixed host
+	// (D-75).
+	// +optional
+	// +kubebuilder:validation:MaxItems=8
+	// +kubebuilder:validation:items:MaxLength=64
+	// +listType=set
+	EgressFromConfig []string `json:"egressFromConfig,omitempty"`
+
+	// ClusterService, when set, asks for one in-cluster service that the
+	// owner picks at install (D-74).
+	// +optional
+	ClusterService *ClusterServiceRequest `json:"clusterService,omitempty"`
 }
 
-// SecretMount asks for one Secret to be mounted read-only at MountPath.
+// SecretMount asks for the instance's Secret of one role to be mounted
+// read-only at MountPath.
 type SecretMount struct {
-	// Name is the Secret's name.
+	// Role names the Secret's purpose, such as flex-token; the instance's
+	// Secret is <instance>-<role>.
 	// +kubebuilder:validation:MinLength=1
-	// +kubebuilder:validation:MaxLength=253
-	Name string `json:"name"`
+	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:Pattern=`^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
+	Role string `json:"role"`
 	// MountPath is an absolute path outside /var/run/secrets.
 	// +kubebuilder:validation:MinLength=2
 	// +kubebuilder:validation:MaxLength=1024
@@ -132,7 +184,8 @@ type Permissions struct {
 	// +kubebuilder:validation:items:MaxLength=259
 	// +listType=set
 	Egress []string `json:"egress,omitempty"`
-	// Secrets lists Secret names.
+	// Secrets lists Secret names: <instance>-<role> for each role the
+	// plugin's manifest names (D-89).
 	// +optional
 	// +kubebuilder:validation:MaxItems=32
 	// +kubebuilder:validation:items:MaxLength=253
@@ -151,6 +204,12 @@ type Permissions struct {
 	// +kubebuilder:validation:items:MaxLength=256
 	// +listType=set
 	BrowserPaths []string `json:"browserPaths,omitempty"`
+	// ClusterServices lists the in-cluster service a plugin reaches
+	// directly, outside the egress proxy (D-74): at most one.
+	// +optional
+	// +kubebuilder:validation:MaxItems=1
+	// +listType=atomic
+	ClusterServices []ClusterServiceRef `json:"clusterServices,omitempty"`
 }
 
 // PluginStatus is what the operator observed and did.

@@ -181,13 +181,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee4ff1a7853f
-  - type: implements
-    from: SYM-core-parse-end-of-day
-    to: REQ-core-config
-    created_at: 2026-10-28T14:34:06.703Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-84e32ecaa126
   - type: covered_by
     from: SYM-core-parse-end-of-day
     to: TEST-core-unit
@@ -293,13 +286,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-029551e8a388
-  - type: implements
-    from: SYM-views-ghostfolio-fee-symbol
-    to: REQ-views-ghostfolio-projection
-    created_at: 2026-10-29T00:56:14.673Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ce8ab226b0bd
   - type: covered_by
     from: SYM-views-ghostfolio-fee-symbol
     to: TEST-views-ghostfolio-project
@@ -356,3 +342,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e62d05f27e0a
+  - type: implements
+    from: SYM-pl-instances-cluster-service
+    to: REQ-plugins-cli-in-cluster-service-access
+    created_at: 2026-10-29T15:20:53.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-293f8ac74764
+  - type: implements
+    from: SYM-pl-instances-cluster-service
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:20:53.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d06d954b84ed
+  - type: covered_by
+    from: SYM-pl-instances-cluster-service
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:20:53.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae50e84bcab
+  - type: implements
+    from: SYM-exp-core-server-plugin-handler
+    to: REQ-core-plugin-port-scope
+    created_at: 2026-10-29T20:59:50.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfd1e1fdd843
+  - type: covered_by
+    from: SYM-exp-core-server-plugin-handler
+    to: TEST-core-front-door
+    created_at: 2026-10-29T20:59:50.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e864cf36b743
+  - type: implements
+    from: SYM-views-ghostfolio-fee-symbol
+    to: REQ-views-ghostfolio-asset-keys
+    created_at: 2026-10-30T01:25:34.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb91c31debfc
+  - type: implements
+    from: SYM-core-parse-end-of-day
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:53:48.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2925d5c693cf
+  - type: implements
+    from: SYM-ui-request-format
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T03:01:51.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e81649e2852
+  - type: implements
+    from: SYM-ui-request-format
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T03:01:51.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-555edccf4992
+  - type: covered_by
+    from: SYM-ui-request-format
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:01:51.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00eac7231304

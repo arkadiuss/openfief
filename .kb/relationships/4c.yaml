@@ -426,3 +426,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ef3110419f
+  - type: implements
+    from: SYM-ui-accounts-data-unmapped
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:27.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-349e556c4666
+  - type: implements
+    from: SYM-ui-accounts-data-unmapped
+    to: REQ-ingest-unmapped-broker-account
+    created_at: 2026-10-29T13:11:27.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-464e8c5408c2
+  - type: covered_by
+    from: SYM-ui-accounts-data-unmapped
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:27.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db6f0827f22e
+  - type: implements
+    from: SYM-ingestv1-create-account-response-get-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:22:26.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffe0579a3219
+  - type: covered_by
+    from: SYM-ingestv1-create-account-response-get-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:22:26.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f65ee591dab6
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:40:38.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5a82893eca1
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:40:38.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f2d527c600b
+  - type: executable_for
+    from: SYM-portfolio-app-test-market-data-targets
+    to: TEST-portfolio-app-models
+    created_at: 2026-10-29T17:18:20.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0916a1c72fb
+  - type: implements
+    from: SYM-valuation-connectapi-kind-from
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:15:18.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e295fbc5320b
+  - type: covered_by
+    from: SYM-valuation-connectapi-kind-from
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:15:18.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91e441720051
+  - type: implements
+    from: SYM-views-ghostfolio-syncer-apply-balances
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:27:03.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6511d24eb33
+  - type: covered_by
+    from: SYM-views-ghostfolio-syncer-apply-balances
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:27:03.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69cd7104d466
+  - type: implements
+    from: SYM-views-app-views-accounts-in
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:18:45.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f375cdb2539c
+  - type: covered_by
+    from: SYM-views-app-views-accounts-in
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:45.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49b86dd9bded

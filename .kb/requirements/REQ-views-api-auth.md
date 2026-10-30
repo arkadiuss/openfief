@@ -34,10 +34,10 @@ Every read API call, over any protocol, must carry a bearer token that the token
 
 ## Context
 
-D-27 gives scripts scoped, read-only personal tokens and plugins projected ServiceAccount tokens; both reach the API as bearer tokens. Verifying them belongs to the identity context, which comes later, so the API checks through a consumer-side TokenVerifier port in views/app. Even behind kubectl port-forward (D-28) a user's own Ingress can expose the API, so it never answers unauthenticated. Modeled by Claude Code for the M0 read API task; the author has not reviewed it yet.
+D-27 gives scripts read-only tokens and D-83 lists the read API's callers. The read API is on both of the core's ports (D-115): the browser port, which the owner's route or a port-forward reaches, and the plugin port, which view plugins call; every call on either needs a token.
 
 ## Source
 
-> Plugins authenticate to the core with projected ServiceAccount tokens (audience `openfief-core`). Scripts get separate, scoped, expiring, read-only personal tokens.
+> Scripts and view plugins read through the API with tokens (D-27); the read API accepts sessions of either scope, script tokens, and view plugins' own tokens (D-83).
 
-docs/DESIGN.md D-27
+docs/DESIGN.md#D-83

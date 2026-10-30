@@ -356,3 +356,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2585f99cc3a
+  - type: executable_for
+    from: SYM-ledger-app-test-ensure-defaults-only-on-a-fresh-install
+    to: TEST-ledger-app-kinds
+    created_at: 2026-10-29T11:53:47.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4d2dcf0a275
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-fixture
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:03:38.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe1bcc2c14ec
+  - type: constrains
+    from: REQ-ingest-sync-keeps-from-go-live
+    to: FACT-SUBJECT-8A31F337F2AAFE7E
+    created_at: 2026-10-29T16:57:41.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fccfac63b96
+  - type: requires_property
+    from: REQ-ingest-sync-keeps-from-go-live
+    to: FACT-PROP-CE462AF7CD84758F
+    created_at: 2026-10-29T16:57:41.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14cf4911d06e
+  - type: specified_by
+    from: REQ-ingest-sync-keeps-from-go-live
+    to: SCEN-ingest-sync-keeps-from-go-live
+    created_at: 2026-10-29T16:57:41.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee7c398f1899
+  - type: implements
+    from: SYM-valuation-lower-ranked-checks
+    to: REQ-valuation-lower-ranked-cross-checks
+    created_at: 2026-10-29T18:18:47.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b938de4b21c1
+  - type: covered_by
+    from: SYM-valuation-lower-ranked-checks
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:18:47.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-019d6ab410cf
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-next
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:02:00.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b4a8601340f
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-next
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:00.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b442ff3ec5b
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-rng-next
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:02:00.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-679d972a14f2
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-tax-wrapper
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:14:14.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acb68301878c
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-tax-wrapper
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:14:14.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-495dc6401e06
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-tax-wrapper
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-30T01:21:08.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-058d1b86cd4a
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-tax-wrapper
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:08.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7775d171a35d

@@ -335,3 +335,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c41ffbc8321a
+  - type: implements
+    from: SYM-portfolio-connectapi-new-sleeves
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:06:19.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73485929be5a
+  - type: covered_by
+    from: SYM-portfolio-connectapi-new-sleeves
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:06:19.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18fd4159e0ca
+  - type: implements
+    from: SYM-ui-server-load-accounts
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:34.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f079702a0727
+  - type: covered_by
+    from: SYM-ui-server-load-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:34.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c44ff69db96
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-request-proto-message
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:37:59.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d50d6ca6e19
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-request-proto-message
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:37:59.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1eedbbd1f87
+  - type: implements
+    from: SYM-plugins-eodhd-targets
+    to: REQ-plugins-eodhd-requested-instruments
+    created_at: 2026-10-29T17:18:28.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e55d103f10ce
+  - type: implements
+    from: SYM-plugins-eodhd-targets
+    to: REQ-ingest-market-data-watch-list
+    created_at: 2026-10-29T17:18:28.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f44a59b84cb6
+  - type: covered_by
+    from: SYM-plugins-eodhd-targets
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-29T17:18:28.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b140f049e2a3
+  - type: implements
+    from: SYM-valuation-gen-pb-source-ranking-string
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:23:25.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8183ff898c1e
+  - type: covered_by
+    from: SYM-valuation-gen-pb-source-ranking-string
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:23:25.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05b1d449e85e
+  - type: implements
+    from: SYM-exp-operator-one-browser-view
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T22:00:25.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc6f7b4c710d
+  - type: covered_by
+    from: SYM-exp-operator-one-browser-view
+    to: TEST-operator-browser-view
+    created_at: 2026-10-29T22:00:25.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf5895ce1f3f

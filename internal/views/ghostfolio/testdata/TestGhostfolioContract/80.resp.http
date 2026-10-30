@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Length: 1564
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Date: Fri, 30 Oct 2026 00:00:57 GMT
+Etag: W/"61c-sTv2da6K+w6XxpxxDhPVo1zv+HU"
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+{"activities":[{"accountId":"adf13c77-ee3a-4f55-9920-0b5a50a4e181","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"a fee of my own","createdAt":"2026-10-30T00:00:54.488Z","currency":"PLN","date":"2025-01-02T00:00:00.000Z","fee":3,"id":"899b7661-6ce6-4129-bb40-040c5b38ea8f","quantity":0,"symbolProfileId":"97c58422-c401-41ab-a57d-afa71f383bbf","type":"FEE","unitPrice":0,"updatedAt":"2026-10-30T00:00:54.488Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","account":{"comment":null,"createdAt":"2026-10-30T00:00:45.337Z","currency":"USD","id":"adf13c77-ee3a-4f55-9920-0b5a50a4e181","name":"My Account","platformId":null,"updatedAt":"2026-10-30T00:00:45.337Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","platform":null,"tags":[]},"tags":[],"assetProfile":{"assetClass":null,"assetSubClass":null,"comment":null,"countries":[],"createdAt":"2026-10-30T00:00:54.460Z","currency":"PLN","cusip":null,"dataGatheringFrequency":"DAILY","dataSource":"MANUAL","figi":null,"figiComposite":null,"figiShareClass":null,"holdings":[],"id":"97c58422-c401-41ab-a57d-afa71f383bbf","isActive":true,"isin":null,"name":"My own fees","scraperConfiguration":null,"sectors":[],"symbol":"3f8e4c1a-6b2d-4e9f-8a7c-1d2e3f4a5b6c","symbolMapping":{},"updatedAt":"2026-10-30T00:00:54.460Z","url":null,"userId":"0f51f620-82d8-4744-885e-457d56daad1d","activitiesCount":1,"dateOfFirstActivity":"2025-01-02T00:00:00.000Z","watchedByCount":0},"feeInAssetProfileCurrency":3,"feeInBaseCurrency":3,"unitPriceInAssetProfileCurrency":0,"value":0,"valueInBaseCurrency":0}],"count":1}

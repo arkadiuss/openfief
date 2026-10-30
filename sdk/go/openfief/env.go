@@ -18,8 +18,9 @@ const (
 	// EnvIdentityFile holds the path of the plugin's projected
 	// ServiceAccount token for the core (audience openfief-core, D-27).
 	EnvIdentityFile = "OPENFIEF_TOKEN_FILE"
-	// EnvCoreAddress holds the core's address as ClusterIP:port; plugins
-	// have no DNS.
+	// EnvCoreAddress holds the core's plugin port (D-115), the ClusterIP
+	// and connect port of its Service, as ClusterIP:port; plugins have no
+	// DNS.
 	EnvCoreAddress = "OPENFIEF_CORE_ADDRESS"
 	// EnvListenPort holds the port the plugin serves Connect RPC on.
 	EnvListenPort = "OPENFIEF_LISTEN_PORT"

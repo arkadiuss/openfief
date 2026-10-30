@@ -384,8 +384,20 @@ func bondLotsTo(lots []ingest.BondLot) []*connectorv1.BondLot {
 	return out
 }
 
+// instrumentsTo writes instruments as contract messages; none is nil.
+func instrumentsTo(ins []ledger.Instrument) []*connectorv1.Instrument {
+	if len(ins) == 0 {
+		return nil
+	}
+	out := make([]*connectorv1.Instrument, 0, len(ins))
+	for _, in := range ins {
+		out = append(out, &connectorv1.Instrument{Isin: in.ISIN.String(), Symbol: in.Symbol})
+	}
+	return out
+}
+
 // mappingFrom translates a delivery's transactions, balance assertions and
-// ingest problems.
+// ingest problems, with those named by broker account apart (D-72).
 func mappingFrom(d *connectorv1.Delivery) (ingest.Mapping, error) {
 	txs, err := translate("transactions", d.GetTransactions(), transactionFrom)
 	if err != nil {
@@ -399,7 +411,11 @@ func mappingFrom(d *connectorv1.Delivery) (ingest.Mapping, error) {
 	if err != nil {
 		return ingest.Mapping{}, err
 	}
-	return ingest.Mapping{Transactions: txs, Assertions: assertions, Problems: problems}, nil
+	m := ingest.Mapping{Transactions: txs, Assertions: assertions, Problems: problems}
+	if err := splitByBrokerAccount(d, &m); err != nil {
+		return ingest.Mapping{}, err
+	}
+	return m, nil
 }
 
 // priceFrom translates one end-of-day price; the close must be positive.

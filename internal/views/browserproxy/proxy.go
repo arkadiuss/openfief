@@ -1,9 +1,10 @@
 // Package browserproxy is the views context's HTTP adapter for D-81: the
 // core is the only entry point for browsers, and it reverse-proxies each
-// browser request to the view plugin that serves its path, such as the
-// built-in UI, with the core's own token for that instance (D-59). It is
-// the only way a browser reaches a plugin: kubectl port-forward and the
-// owner's own Ingress (D-28) reach the core alone.
+// browser request to the one view plugin that holds a browser path (D-114),
+// such as the built-in UI, with the core's own token for that instance
+// (D-59). It is the only way a browser reaches a plugin: kubectl
+// port-forward and the owner's own route (D-28) reach the core's browser
+// port alone.
 //
 // Toward the plugin it sets what the plugin may trust, and only that: the
 // browser's Host, the scheme the browser used in X-Forwarded-Proto, and the
@@ -74,9 +75,10 @@ func New(door *app.FrontDoor, log *slog.Logger) *Proxy {
 	return p
 }
 
-// ServeHTTP sends r to the view plugin that serves its path. A path no
-// plugin serves is 404; two plugins on one prefix, or routes not read yet,
-// 503; a plugin without an address, a token or an answer, 502.
+// ServeHTTP sends r to the one view plugin that holds a browser path
+// (D-114), when its path is under it. A path no plugin serves is 404; more
+// than one view holding a browser path, or routes not read yet, 503; a
+// plugin without an address, a token or an answer, 502.
 func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	target, err := p.door.Target(r.Context(), r.URL.Path)
 	if err != nil {
@@ -92,7 +94,7 @@ func (p *Proxy) refuse(w http.ResponseWriter, r *http.Request, err error) {
 	case errors.Is(err, views.ErrNoBrowserRoute):
 		plain(w, http.StatusNotFound, "not found")
 		return
-	case errors.Is(err, views.ErrAmbiguousBrowserRoute), errors.Is(err, app.ErrViewsUnknown):
+	case errors.Is(err, views.ErrSeveralBrowserViews), errors.Is(err, app.ErrViewsUnknown):
 		w.Header().Set("Retry-After", "5")
 		plain(w, http.StatusServiceUnavailable, "no view plugin can serve this path now")
 	default:

@@ -1,0 +1,26 @@
+# Admits the Gateway's data plane to the core's browser port, 8080, and nothing else (D-28, D-115); it adds to the
+# core's own NetworkPolicy, which admits plugin pods to the plugin port alone. The source is a placeholder: every
+# pod in namespace gateway-system. With Envoy Gateway, for example, the proxies run in envoy-gateway-system with the
+# label app.kubernetes.io/component: proxy. Some implementations proxy from the node instead of a pod (Cilium's
+# Gateway, for one); follow their guide to admit it.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-core-from-gateway
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-core
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: gateway-system
+      ports:
+        - protocol: TCP
+          port: 8080

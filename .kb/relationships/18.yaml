@@ -314,3 +314,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7f3471e34b9
+  - type: implements
+    from: SYM-pl-validate-config-fields
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:15:10.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec3c741f9bb
+  - type: covered_by
+    from: SYM-pl-validate-config-fields
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:10.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff234fd4b143
+  - type: implements
+    from: SYM-ingest-connectrpc-owner
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:50:47.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11b1eaf5f930
+  - type: covered_by
+    from: SYM-ingest-connectrpc-owner
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:50:47.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48dfee725dce
+  - type: implements
+    from: SYM-ingestv1-update-account-request-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:23:14.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd9b61d7a165
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:23:14.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43236d9c56bb
+  - type: verified_by
+    from: SCEN-plugins-upgrade-plan-keeps-instance
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:03:59.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f33b8fe81f45
+  - type: verified_by
+    from: SCEN-plugins-upgrade-plan-keeps-instance
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-10-29T17:03:59.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55d016479c04
+  - type: implements
+    from: SYM-ledger-app-ledger-go-live
+    to: REQ-ledger-go-live
+    created_at: 2026-10-29T17:17:40.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90bf5c40feb4
+  - type: covered_by
+    from: SYM-ledger-app-ledger-go-live
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-29T17:17:40.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2fe4f3027ae
+  - type: implements
+    from: SYM-core-valuation-owners
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:11:00.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-391da84f2253
+  - type: covered_by
+    from: SYM-core-valuation-owners
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:11:00.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebc240ae4cdb
+  - type: constrains
+    from: REQ-jurisdiction-number-format-choices
+    to: FACT-SUBJECT-EE454ADE4B449D43
+    created_at: 2026-10-29T21:48:45.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fd811ad881e
+  - type: requires_property
+    from: REQ-jurisdiction-number-format-choices
+    to: FACT-PROP-A7858136EAD1B88A
+    created_at: 2026-10-29T21:48:45.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa189eb3944e
+  - type: specified_by
+    from: REQ-jurisdiction-number-format-choices
+    to: SCEN-jurisdiction-number-format-choices
+    created_at: 2026-10-29T21:48:45.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0c84d5c17ef
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms-record-fee-rule
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:11:28.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e5790806ac2
+  - type: implements
+    from: SYM-affected-parse-name-status
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:59:58.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3056f3b385b
+  - type: covered_by
+    from: SYM-affected-parse-name-status
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:59:58.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59419ed85b40

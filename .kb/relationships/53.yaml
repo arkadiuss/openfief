@@ -335,3 +335,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f7121229a7e
+  - type: implements
+    from: SYM-portfolio-app-sleeve-store
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:04:09.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c559ba2a230f
+  - type: covered_by
+    from: SYM-portfolio-app-sleeve-store
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:04:09.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83cc6955b57b
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-origin
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:23:22.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54ebe7da4871
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-origin
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:23:22.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9021b0a45bd7
+  - type: implements
+    from: SYM-valuation-connectapi-new
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:14:29.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b0985675d19
+  - type: covered_by
+    from: SYM-valuation-connectapi-new
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:14:29.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d3546f60929
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-add-legacy-bond
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:29:07.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-557f845f9be5
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-bond-lot-values
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:49.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1eca02180bd

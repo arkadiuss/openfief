@@ -47,6 +47,7 @@ type fakeConnector struct {
 	auths      []string
 	modes      []connectorv1.Mode
 	watermark  string
+	scope      []string
 	header     *connectorv1.FileHeader
 	file       []byte
 	chunks     int
@@ -56,6 +57,10 @@ func (f *fakeConnector) Sync(_ context.Context, req *connect.Request[connectorv1
 	f.record(req.Header().Get("Authorization"), req.Msg.GetMode())
 	f.mu.Lock()
 	f.watermark = req.Msg.GetWatermark()
+	for _, in := range req.Msg.GetInstruments() {
+		f.scope = append(f.scope, in.GetIsin()+"/"+in.GetSymbol())
+	}
+	f.scope = append(f.scope, req.Msg.GetIndices()...)
 	f.mu.Unlock()
 	return connect.NewResponse(&connectorv1.SyncResponse{Delivery: f.delivery(req.Msg.GetBatchId()), Watermark: "w-2"}), nil
 }
@@ -139,7 +144,8 @@ func TestClientSync(t *testing.T) {
 	t.Parallel()
 	conn := &fakeConnector{}
 	c := newClient(t, conn)
-	got, err := c.Sync(t.Context(), "xtb-main", "b-1", ingest.ModeOpening, "w-1")
+	scope := ingest.MarketDataScope{Instruments: []ledger.Instrument{scopedInstrument(t)}, Indices: []string{"FAKE20"}}
+	got, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeOpening, Watermark: "w-1", Scope: scope})
 	if err != nil {
 		t.Fatalf("Sync: %v", err)
 	}
@@ -151,6 +157,9 @@ func TestClientSync(t *testing.T) {
 	}
 	if conn.auths[0] != "Bearer synthetic-core-xtb-main" || conn.modes[0] != connectorv1.Mode_MODE_OPENING || conn.watermark != "w-1" {
 		t.Errorf("connector got auth %q, mode %v, watermark %q", conn.auths[0], conn.modes[0], conn.watermark)
+	}
+	if want := []string{"PLTEST000010/TST", "FAKE20"}; !slices.Equal(conn.scope, want) {
+		t.Errorf("connector was asked to price %q, want %q", conn.scope, want)
 	}
 }
 
@@ -200,7 +209,7 @@ func TestClientFailures(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			c := newClient(t, tt.conn)
-			_, syncErr := c.Sync(t.Context(), tt.instance, "b-1", tt.mode, "")
+			_, syncErr := c.Sync(t.Context(), tt.instance, &app.SyncCall{ID: "b-1", Mode: tt.mode})
 			file := app.NamedFile{Name: "f.csv", Contents: strings.NewReader("synthetic")}
 			_, importErr := c.ImportFile(t.Context(), tt.instance, "b-1", tt.mode, file)
 			for _, err := range []error{syncErr, importErr} {
@@ -213,4 +222,14 @@ func TestClientFailures(t *testing.T) {
 			}
 		})
 	}
+}
+
+// scopedInstrument is a synthetic instrument a sync asks to price.
+func scopedInstrument(t *testing.T) ledger.Instrument {
+	t.Helper()
+	isin, err := ledger.ParseISIN("PLTEST000010")
+	if err != nil {
+		t.Fatalf("ParseISIN: %v", err)
+	}
+	return ledger.Instrument{ISIN: isin, Symbol: "TST"}
 }

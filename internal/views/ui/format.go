@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	// groupSeparator separates thousands: a narrow no-break space, so an
-	// amount never wraps and reads the same in any locale.
-	groupSeparator = " "
+	// narrowSpace is how a space group separator is written: a narrow
+	// no-break space, so an amount never wraps.
+	narrowSpace = "\u202f"
 	// groupDigits is how many digits a thousands group has.
 	groupDigits = 3
 	// sharePlaces is how many decimal places a share in percent shows.
@@ -20,11 +20,47 @@ const (
 	hundred = 100
 )
 
-// formatAmount groups an exact decimal amount's integer digits in
-// thousands, keeping its sign and every decimal place: "-1234567.80"
-// becomes "-1 234 567.80". Anything that isn't a decimal is returned as is,
-// so the page shows what the read API sent rather than nothing.
-func formatAmount(amount string) string {
+// numberFormat is how the page writes amounts (D-113): only the separator
+// between groups of three integer digits and the decimal separator. It
+// changes nothing else: not the digits, the sign or the currency.
+type numberFormat struct {
+	// Group separates thousands as written: a space format's separator is
+	// the narrow no-break space; empty for none.
+	Group string
+	// Decimal is the decimal separator.
+	Decimal string
+}
+
+// plainFormat writes amounts as the read API sends them, grouped with a
+// narrow space. Only pages without a session, which show no amount, use it.
+func plainFormat() numberFormat { return numberFormat{Group: narrowSpace, Decimal: "."} }
+
+// formatOf returns the number format the read API's settings name, a
+// space written as the narrow no-break space; a format without a decimal
+// separator is the plain format.
+func formatOf(f *viewsv1.NumberFormat) numberFormat {
+	return separators(f.GetGroupSeparator(), f.GetDecimalSeparator())
+}
+
+// separators returns the number format with group and decimal as the
+// settings name them, a space group written as the narrow no-break space;
+// no decimal separator is the plain format.
+func separators(group, decimal string) numberFormat {
+	if decimal == "" {
+		return plainFormat()
+	}
+	if group == " " {
+		group = narrowSpace
+	}
+	return numberFormat{Group: group, Decimal: decimal}
+}
+
+// amount writes an exact decimal amount in the format: its integer digits
+// grouped in thousands, its sign and every decimal place kept, so with a
+// space and a decimal comma "-1234567.80" becomes "-1 234 567,80".
+// Anything that isn't a decimal is returned as is, so the page shows what
+// the read API sent rather than nothing.
+func (f numberFormat) amount(amount string) string {
 	if _, err := kernel.ParseDecimal(amount); err != nil {
 		return amount
 	}
@@ -40,23 +76,34 @@ func formatAmount(amount string) string {
 	b.WriteString(sign)
 	for i, r := range whole {
 		if i > 0 && (len(whole)-i)%groupDigits == 0 {
-			b.WriteString(groupSeparator)
+			b.WriteString(f.Group)
 		}
 		b.WriteRune(r)
 	}
 	if hasFrac {
-		b.WriteString("." + frac)
+		b.WriteString(f.Decimal + frac)
 	}
 	return b.String()
 }
 
-// formatMoney formats a Money as its grouped amount and currency code; an
-// unset Money is empty.
-func formatMoney(m *viewsv1.Money) string {
+// money writes a Money as its amount in the format and its currency code;
+// an unset Money is empty.
+func (f numberFormat) money(m *viewsv1.Money) string {
 	if m == nil {
 		return ""
 	}
-	return formatAmount(m.GetAmount()) + " " + m.GetCurrency()
+	return f.amount(m.GetAmount()) + " " + m.GetCurrency()
+}
+
+// balance writes a balance of a ledger account, such as a balance
+// assertion's reported or derived balance, with its unit: a holding's is a
+// quantity of its instrument, any other's an amount in the ledger
+// account's currency, which is always shown (D-20).
+func (f numberFormat) balance(b *viewsv1.Book, balance string) string {
+	if b.GetKind() == viewsv1.BookKind_BOOK_KIND_HOLDING {
+		return f.amount(balance)
+	}
+	return f.amount(balance) + " " + b.GetCurrency()
 }
 
 // share returns part as a percentage of total, rounded half-even to one
@@ -116,17 +163,6 @@ func bookLabel(b *viewsv1.Book) string {
 		return instrumentLabel(b.GetInstrument())
 	}
 	return enumLabel(b.GetKind().String(), "BOOK_KIND_") + " " + b.GetCurrency()
-}
-
-// balanceLabel formats a balance of a ledger account, such as a balance
-// assertion's reported or derived balance, with its unit: a holding's is a
-// quantity of its instrument, any other's an amount in the ledger
-// account's currency, which is always shown (D-20).
-func balanceLabel(b *viewsv1.Book, balance string) string {
-	if b.GetKind() == viewsv1.BookKind_BOOK_KIND_HOLDING {
-		return formatAmount(balance)
-	}
-	return formatAmount(balance) + " " + b.GetCurrency()
 }
 
 // instrumentLabel names an instrument by its venue symbol and ISIN.

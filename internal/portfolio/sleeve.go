@@ -52,10 +52,10 @@ type Sleeve struct {
 	Name string
 	Kind KindKey
 	Role Role
-	// OffensiveOverride records that the owner explicitly made this sleeve
-	// offensive although its kind is defensive. CheckSleeve requires it for
-	// exactly that case and refuses it otherwise.
-	OffensiveOverride bool
+	// RoleOverride records the owner's explicit choice of a role other than
+	// its kind's default role (D-71). CheckSleeve requires it for exactly
+	// that case and refuses it otherwise.
+	RoleOverride bool
 }
 
 // Validate reports whether s has an ID, a name and one known role.

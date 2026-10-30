@@ -1,6 +1,7 @@
 {{define "content"}}
 {{with .Data}}
-<p class="lede">{{.Account.Institution}} · sleeve {{.Account.Sleeve}} · showing {{.Date}}</p>
+<p class="lede">{{.Account.Institution}} · sleeve {{.Account.Sleeve}} · {{wrapper .Account.TaxWrapper}} · showing {{.Date}}</p>
+<p class="muted">Sale fee rule: {{feeRule .Account.FeeRule}}.</p>
 <p>{{template "valuation-status" .Status}}</p>
 {{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
 
@@ -25,26 +26,40 @@
 </section>
 {{end}}
 
+<section class="card" aria-labelledby="account-value-title">
+  <h2 id="account-value-title">Value on {{.Date}}</h2>
+  {{with .Total}}
+  <div class="table"><table>
+    <thead><tr><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col" class="num">Of which cash</th></tr></thead>
+    <tbody><tr>{{template "three-values" .}}<td class="num">{{money .CashReporting}}</td></tr></tbody>
+  </table></div>
+  <p class="muted">Holdings and cash in the reporting currency. Gross is before any tax or fee; net is what you keep at the planned exit; liquidation is the cash in hand if everything were sold today, after every tax and fee.{{if .CashUnconverted}} Some cash has no FX rate yet and is left out.{{end}}</p>
+  {{else}}
+  <p class="muted">Nothing is valued on this date yet.</p>
+  {{end}}
+</section>
+
 <section class="card" aria-labelledby="holdings-title">
   <h2 id="holdings-title">Holdings</h2>
   <div class="table"><table>
-    <thead><tr><th scope="col">Instrument</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Value</th><th scope="col" class="num">Reporting value</th><th scope="col">Basis</th></tr></thead>
+    <thead><tr><th scope="col">Instrument</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Value</th><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col">Basis</th></tr></thead>
     <tbody>
     {{range .Holdings}}
     <tr>
-      <td>{{instrument .Holding.Instrument}}</td>
+      <td>{{instrument .Holding.Instrument}}{{template "no-longer-updated" .Holding}}</td>
       <td class="num">{{amount .Holding.Quantity}}</td>
       {{with .Valuation}}
-      <td class="num">{{money .Value}}</td><td class="num">{{money .ValueReporting}}</td><td>{{enum .Basis.String "VALUATION_BASIS_"}}</td>
+      <td class="num">{{money .Value}}</td>{{template "valuation-values" .}}<td>{{enum .Basis.String "VALUATION_BASIS_"}}</td>
       {{else}}
-      <td colspan="3" class="empty">no valuation on this date</td>
+      <td colspan="5" class="empty">no valuation on this date</td>
       {{end}}
     </tr>
     {{else}}
-    <tr><td colspan="5" class="empty">No holdings.</td></tr>
+    <tr><td colspan="7" class="empty">No holdings.</td></tr>
     {{end}}
     </tbody>
   </table></div>
+  <p class="muted">Value is the gross value in the instrument's currency; gross, net and liquidation are in the reporting currency.</p>
 </section>
 
 <section class="card" aria-labelledby="cash-title">
@@ -63,7 +78,7 @@
     <thead><tr><th scope="col">Instrument</th><th scope="col">Opened</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Cost</th><th scope="col">Origin</th></tr></thead>
     <tbody>
     {{range .Lots}}
-    <tr><td>{{instrument .Instrument}}</td><td class="mono">{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
+    <tr><td>{{instrument .Instrument}}{{template "no-longer-updated" .}}</td><td class="mono">{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
       <td>{{if .Opening}}opening lot{{else}}{{.OriginSource}} <span class="mono">{{.OriginExternalId}}</span>{{end}}</td></tr>
     {{else}}
     <tr><td colspan="5" class="empty">No open lots.</td></tr>

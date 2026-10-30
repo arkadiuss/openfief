@@ -122,6 +122,8 @@ func run(args []string) error {
 	}
 	pr := &operator.PluginReconciler{
 		Client: mgr.GetClient(), Scheme: scheme, Settings: o.settings, Verifier: verifier,
+		// An in-cluster service lives outside the namespaced cache (D-74).
+		ServiceReader: mgr.GetAPIReader(),
 	}
 	dc, err := discovery.NewDiscoveryClientForConfig(mgr.GetConfig())
 	if err != nil {

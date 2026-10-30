@@ -44,6 +44,31 @@ func TestMigrateGivesStoredSleevesAKind(t *testing.T) {
 	checkResult(t, "Sleeves", want, sleeves, err)
 }
 
+func TestMigrateGivesDifferingSleevesARoleOverride(t *testing.T) {
+	t.Parallel()
+	ctx := t.Context()
+	pool := newDatabase(t)
+	if err := postgres.MigrateThrough(ctx, pool, 2); err != nil {
+		t.Fatalf("MigrateThrough(2): %v", err)
+	}
+	// Before D-71 a defensive sleeve of an offensive kind needed no override.
+	if _, err := pool.Exec(ctx, `INSERT INTO ledger.sleeves (id, name, kind, role, offensive_override) VALUES
+		('calm', 'Calm', 'satellite', 'defensive', false), ('core', 'Core', 'core', 'defensive', false),
+		('play', 'Play', 'retirement', 'offensive', true)`); err != nil {
+		t.Fatalf("storing sleeves before the role override: %v", err)
+	}
+	if err := postgres.Migrate(ctx, pool); err != nil {
+		t.Fatalf("Migrate: %v", err)
+	}
+	sleeves, err := postgres.New(pool).Sleeves(ctx)
+	want := []portfolio.Sleeve{
+		{ID: "calm", Name: "Calm", Kind: portfolio.KindSatellite, Role: portfolio.RoleDefensive, RoleOverride: true},
+		{ID: "core", Name: "Core", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive},
+		{ID: "play", Name: "Play", Kind: portfolio.KindRetirement, Role: portfolio.RoleOffensive, RoleOverride: true},
+	}
+	checkResult(t, "Sleeves", want, sleeves, err)
+}
+
 func TestKindRoundTrip(t *testing.T) {
 	t.Parallel()
 	ctx := t.Context()
@@ -84,8 +109,18 @@ func TestSleeveKindConstraints(t *testing.T) {
 			want:   foreignKeyViolation,
 		},
 		{
-			name:   "override on a defensive sleeve",
-			sleeve: portfolio.Sleeve{ID: "s", Name: "S", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive, OffensiveOverride: true},
+			name:   "override on a sleeve whose role is its kind's",
+			sleeve: portfolio.Sleeve{ID: "s", Name: "S", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive, RoleOverride: true},
+			want:   checkViolation,
+		},
+		{
+			name:   "defensive in an offensive kind without the override",
+			sleeve: portfolio.Sleeve{ID: "s", Name: "S", Kind: portfolio.KindSatellite, Role: portfolio.RoleDefensive},
+			want:   checkViolation,
+		},
+		{
+			name:   "offensive in a defensive kind without the override",
+			sleeve: portfolio.Sleeve{ID: "s", Name: "S", Kind: portfolio.KindBonds, Role: portfolio.RoleOffensive},
 			want:   checkViolation,
 		},
 	}

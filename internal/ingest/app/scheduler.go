@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"slices"
 	"sync"
 	"time"
 
@@ -37,8 +38,6 @@ type OpenBatch struct {
 type SyncClaim struct {
 	// Watermark is what the last successful sync returned, empty before it.
 	Watermark string
-	// Seeded reports whether an opening batch of the instance completed.
-	Seeded bool
 	// Failures counts the attempts that failed since the last success.
 	Failures int
 	// Open is the batch a failed attempt left open, nil when none.
@@ -63,8 +62,8 @@ type SyncStore interface {
 	// at; a batch it replaces is recorded as abandoned.
 	StartBatch(ctx context.Context, instance string, b OpenBatch, at time.Time) error
 	// CompleteSync records the open batch b as completed at at, stores
-	// watermark, marks the instance seeded after an opening batch, resets
-	// its failures, sets its next sync and releases the claim, all at once.
+	// watermark, resets its failures, sets its next sync and releases the
+	// claim, all at once.
 	CompleteSync(ctx context.Context, instance string, b *ingest.Batch, watermark string, next, at time.Time) error
 	// FailSync records a failed attempt of the open batch id at at, keeps
 	// the batch open, sets the instance's failures and next sync and
@@ -74,16 +73,33 @@ type SyncStore interface {
 	SyncStates(ctx context.Context) ([]SyncState, error)
 }
 
+// ScopeSource says what market-data connectors are asked to price (D-93).
+// PricingScope implements it.
+type ScopeSource interface {
+	MarketDataScope(ctx context.Context) (ingest.MarketDataScope, error)
+}
+
 // Scheduler owns connector instances' syncs (D-49): it syncs every running
 // instance when its SyncPolicy says it is due, one sync per instance at a
 // time, retries a failed batch with the same batch ID after a backoff, and
 // stores the watermark of each completed sync. An instance that is no
 // longer listed is no longer synced; its state and data stay (D-58).
+//
+// The mode follows the ledger (D-23, D-95): an instance whose bound
+// accounts are all seeded syncs in transactions mode on its own, one with
+// none seeded in opening mode, and one with both, such as a broker account
+// mapped after the others were seeded, runs an opening batch and then a
+// transactions batch (ingest.PlanSync). An instance bound to no account is
+// a market-data connector: it syncs in transactions mode and is asked to
+// price what Scope says (D-93).
 type Scheduler struct {
 	Connectors *Connectors
 	Instances  InstanceLister
 	Store      SyncStore
-	Policy     ingest.SyncPolicy
+	// Scope says what to ask market-data connectors to price; nil asks for
+	// nothing.
+	Scope  ScopeSource
+	Policy ingest.SyncPolicy
 	// Timeout bounds one attempt: the call and the import.
 	Timeout time.Duration
 	Now     func() time.Time
@@ -150,8 +166,9 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 func (s *Scheduler) Wait() { s.wg.Wait() }
 
 // SyncNow syncs instance at once and waits for it, in mode, or with a zero
-// mode in the mode its state calls for. It fails with ErrSyncRunning while
-// the instance syncs. A failure counts like a scheduled one.
+// mode in the modes its accounts call for, and returns the last batch. It
+// fails with ErrSyncRunning while the instance syncs. A failure counts like
+// a scheduled one.
 func (s *Scheduler) SyncNow(ctx context.Context, instance string, mode ingest.Mode) (SyncResult, error) {
 	if !s.begin(instance) {
 		return SyncResult{}, fmt.Errorf("%w: %s", ErrSyncRunning, instance)
@@ -181,24 +198,89 @@ func (s *Scheduler) end(instance string) {
 	delete(s.running, instance)
 }
 
-// attempt runs one sync attempt of instance: it claims the instance,
-// retries its open batch or starts one, calls the connector and imports
-// the delivery within the timeout, and records the outcome with the next
-// sync's due time.
+// attempt runs one sync attempt of instance: it plans the attempt's
+// batches, claims the instance, and runs each batch in turn, retrying an
+// open batch first. When an opening batch is followed by a transactions
+// batch, both ask from the watermark the instance had before them, so the
+// seeded accounts miss none of their transactions, and the instance is
+// claimed again for the second.
 func (s *Scheduler) attempt(ctx context.Context, instance string, mode ingest.Mode) (SyncResult, error) {
+	plan, err := s.plan(ctx, instance, mode)
+	if err != nil {
+		return SyncResult{}, fmt.Errorf("planning a sync of %s: %w", instance, err)
+	}
 	now := s.Now()
 	claim, err := s.Store.ClaimSync(ctx, instance, now, now.Add(s.Timeout+leaseMargin))
 	if err != nil {
 		return SyncResult{}, fmt.Errorf("claiming %s: %w", instance, err)
 	}
-	b := batchFor(&claim, mode, s.NewBatchID)
+	batches := batchesFor(&claim, mode, plan.modes, s.NewBatchID)
+	watermark := claim.Watermark
+	var res SyncResult
+	for i, b := range batches {
+		if i > 0 {
+			now = s.Now()
+			if claim, err = s.Store.ClaimSync(ctx, instance, now, now.Add(s.Timeout+leaseMargin)); err != nil {
+				return res, fmt.Errorf("claiming %s: %w", instance, err)
+			}
+		}
+		call := SyncCall{ID: b.ID, Mode: b.Mode, Watermark: watermark, Scope: plan.scope}
+		keep := i < len(batches)-1
+		if res, err = s.run(ctx, instance, &claim, &call, keep); err != nil {
+			return res, err
+		}
+	}
+	return res, nil
+}
+
+// syncPlan is what an attempt asks for: the modes of its batches, and what
+// a market-data connector is to price.
+type syncPlan struct {
+	modes []ingest.Mode
+	scope ingest.MarketDataScope
+}
+
+// plan returns the plan of a sync of instance: mode when the caller asks
+// for one, otherwise what its bound accounts' seeding calls for
+// (ingest.PlanSync); and the market-data scope for an instance bound to no
+// account.
+func (s *Scheduler) plan(ctx context.Context, instance string, mode ingest.Mode) (syncPlan, error) {
+	bound, err := s.Connectors.Bindings.BoundAccounts(ctx, instance)
+	if err != nil {
+		return syncPlan{}, fmt.Errorf("connector bindings: %w", err)
+	}
+	var p syncPlan
+	if len(bound) == 0 && s.Scope != nil {
+		if p.scope, err = s.Scope.MarketDataScope(ctx); err != nil {
+			return syncPlan{}, fmt.Errorf("market-data scope: %w", err)
+		}
+	}
+	if mode != 0 {
+		p.modes = []ingest.Mode{mode}
+		return p, nil
+	}
+	goLive, err := s.Connectors.GoLiveDates(ctx, bound)
+	if err != nil {
+		return syncPlan{}, err
+	}
+	p.modes = ingest.PlanSync(bound, goLive)
+	return p, nil
+}
+
+// run runs one batch of an attempt on the claimed instance: it starts the
+// batch unless it is the claim's open one, calls the connector and imports
+// the delivery within the timeout, and records the outcome with the next
+// sync's due time. With keep, the instance keeps its watermark, because
+// another batch follows from it.
+func (s *Scheduler) run(ctx context.Context, instance string, claim *SyncClaim, call *SyncCall, keep bool) (SyncResult, error) {
+	b := OpenBatch{ID: call.ID, Mode: call.Mode}
 	if claim.Open == nil || *claim.Open != b {
-		if err := s.Store.StartBatch(ctx, instance, b, now); err != nil {
+		if err := s.Store.StartBatch(ctx, instance, b, s.Now()); err != nil {
 			return SyncResult{}, fmt.Errorf("starting a batch of %s: %w", instance, err)
 		}
 	}
 	actx, cancel := context.WithTimeout(ctx, s.Timeout)
-	res, syncErr := s.Connectors.Sync(actx, instance, b.ID, b.Mode, claim.Watermark)
+	res, syncErr := s.Connectors.Sync(actx, instance, call)
 	cancel()
 	ended := s.Now()
 	// Record the outcome even when ctx ended during the attempt.
@@ -211,8 +293,12 @@ func (s *Scheduler) attempt(ctx context.Context, instance string, mode ingest.Mo
 		s.logger().Info("connector sync attempt failed", "instance", instance, "batch", string(b.ID), "failures", failures)
 		return SyncResult{}, syncErr
 	}
+	watermark := res.Watermark
+	if keep {
+		watermark = call.Watermark
+	}
 	next := s.Policy.NextSync(ended, 0, s.Jitter(s.Policy.Jitter))
-	if err := s.Store.CompleteSync(rctx, instance, &res.Batch, res.Watermark, next, ended); err != nil {
+	if err := s.Store.CompleteSync(rctx, instance, &res.Batch, watermark, next, ended); err != nil {
 		return SyncResult{}, fmt.Errorf("recording sync %s of %s: %w", b.ID, instance, err)
 	}
 	s.logger().Info("connector synced", "instance", instance, "batch", string(b.ID), "mode", b.Mode.String(),
@@ -220,20 +306,24 @@ func (s *Scheduler) attempt(ctx context.Context, instance string, mode ingest.Mo
 	return res, nil
 }
 
-// batchFor returns the batch an attempt runs: the open one, unless mode
-// asks for another mode; otherwise a new batch in mode, or, with a zero
-// mode, opening until the instance is seeded and transactions after (D-23).
-func batchFor(claim *SyncClaim, mode ingest.Mode, newID func() ingest.BatchID) OpenBatch {
+// batchesFor returns the batches an attempt runs, in order. The open batch
+// a failed attempt left is retried first, with its ID and mode, unless mode
+// asks for another mode; an open opening batch is followed by a
+// transactions batch when the plan has one. Otherwise each planned mode
+// gets a new batch.
+func batchesFor(claim *SyncClaim, mode ingest.Mode, planned []ingest.Mode, newID func() ingest.BatchID) []OpenBatch {
 	if claim.Open != nil && (mode == 0 || mode == claim.Open.Mode) {
-		return *claim.Open
-	}
-	if mode == 0 {
-		mode = ingest.ModeOpening
-		if claim.Seeded {
-			mode = ingest.ModeTransactions
+		out := []OpenBatch{*claim.Open}
+		if claim.Open.Mode == ingest.ModeOpening && slices.Contains(planned, ingest.ModeTransactions) {
+			out = append(out, OpenBatch{ID: newID(), Mode: ingest.ModeTransactions})
 		}
+		return out
 	}
-	return OpenBatch{ID: newID(), Mode: mode}
+	out := make([]OpenBatch, 0, len(planned))
+	for _, m := range planned {
+		out = append(out, OpenBatch{ID: newID(), Mode: m})
+	}
+	return out
 }
 
 // logger returns Log, or a logger that discards everything.

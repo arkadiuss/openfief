@@ -139,7 +139,7 @@ func samplePlugin(name, image string, egress ...string) *v1alpha1.Plugin {
 			Manifest: v1alpha1.Manifest{
 				Capabilities: []string{"connector"},
 				Egress:       egress,
-				Secrets:      []v1alpha1.SecretMount{{Name: name + "-token", MountPath: "/etc/openfief/token"}},
+				Secrets:      []v1alpha1.SecretMount{{Role: "token", MountPath: "/etc/openfief/token"}},
 				ConfigSchema: &runtime.RawExtension{Raw: []byte(`{"type":"object","properties":{"interval":{"type":"string"}}}`)},
 			},
 			Config: &runtime.RawExtension{Raw: []byte(`{"interval":"24h"}`)},
@@ -297,6 +297,10 @@ func TestReconcile(t *testing.T) {
 		if diff := cmp.Diff(want, tc.state(ctx, t, "noegress"), cmpopts.EquateEmpty()); diff != "" {
 			t.Errorf("state mismatch (-want +got):\n%s", diff)
 		}
+	})
+	t.Run("a second view with a browser path does not run", func(t *testing.T) {
+		t.Parallel()
+		testOneBrowserView(t, tc, signed)
 	})
 	t.Run("revoking the grant removes the plugin", func(t *testing.T) {
 		t.Parallel()
@@ -508,7 +512,7 @@ func testPolicyVerifier(t *testing.T, tc *testCluster) {
 	t.Helper()
 	ctx := t.Context()
 	label, err := plugins.ParseManifestLabel(`{"capabilities":["connector"],"egress":["api.example.com"],` +
-		`"secrets":[{"name":"signedci-token","mountPath":"/etc/openfief/token"}],` +
+		`"secrets":[{"role":"token","mountPath":"/etc/openfief/token"}],` +
 		`"configSchema":{"type":"object","properties":{"interval":{"type":"string"}}}}`)
 	if err != nil {
 		t.Fatalf("label: %v", err)
@@ -518,7 +522,11 @@ func testPolicyVerifier(t *testing.T, tc *testCluster) {
 	}}
 	r := tc.reconciler(operator.NewPolicyVerifier(src, testPolicy(t)))
 	for _, name := range []string{"signedci", "relabelled"} {
-		create(ctx, t, tc.client, samplePlugin(name, imageB, "api.example.com"))
+		p := samplePlugin(name, imageB, "api.example.com")
+		if name == "relabelled" { // declares a mount the signed label doesn't
+			p.Spec.Manifest.Secrets[0].MountPath = "/etc/openfief/elsewhere"
+		}
+		create(ctx, t, tc.client, p)
 		create(ctx, t, tc.client, sampleGrant(name, "api.example.com"))
 		tc.reconcile(ctx, t, r, name)
 	}

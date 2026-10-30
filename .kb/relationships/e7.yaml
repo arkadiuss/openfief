@@ -454,3 +454,171 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb3fefb7ab39
+  - type: constrains
+    from: REQ-plugins-cli-install-secret-in-use
+    to: FACT-SUBJECT-D7D075E2C9A42556
+    created_at: 2026-10-29T15:10:44.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ce1f400e3e0
+  - type: requires_property
+    from: REQ-plugins-cli-install-secret-in-use
+    to: FACT-PROP-AAC42C08AEA29DBB
+    created_at: 2026-10-29T15:10:44.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44926edf49ba
+  - type: specified_by
+    from: REQ-plugins-cli-install-secret-in-use
+    to: SCEN-plugins-cli-install-secret-in-use
+    created_at: 2026-10-29T15:10:44.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a8552aadb05
+  - type: executable_for
+    from: SYM-ingest-delivery-test-helper-check-named-by-broker-account
+    to: TEST-ingest-delivery
+    created_at: 2026-10-29T11:51:37.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be7b8f1d9248
+  - type: implements
+    from: SYM-connectorv1-broker-account-proto-reflect
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:55:34.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75a36fe5a2ac
+  - type: covered_by
+    from: SYM-connectorv1-broker-account-proto-reflect
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:55:34.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53324b124d92
+  - type: implements
+    from: SYM-ingest-binding
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:01:03.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ee661f4f695
+  - type: covered_by
+    from: SYM-ingest-binding
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:01:03.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a94d5227e82
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-connections-all-broker-accounts
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:09:18.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e257fafd9cbc
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-request-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:34:01.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8dd09b4ba17
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-request-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:34:01.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bf872f36c0d
+  - type: verified_by
+    from: SCEN-plugins-eodhd-requested-instruments
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-29T16:57:22.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-debc29e073cd
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fixed-seeding
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T17:12:49.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b14e07b1e18
+  - type: verified_by
+    from: SCEN-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-30T01:20:53.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5717d6acc3ef
+  - type: verified_by
+    from: SCEN-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-30T01:20:54.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e8261d894f4
+  - type: verified_by
+    from: SCEN-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:20:54.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23bd77040b4b
+  - type: verified_by
+    from: SCEN-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:20:54.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d16c19622de
+  - type: implements
+    from: SYM-valuationv1-file_openfief_valuation_v1_settings_proto_init
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:21:20.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44a7504fb840
+  - type: covered_by
+    from: SYM-valuationv1-file_openfief_valuation_v1_settings_proto_init
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:21:20.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-968caaacaab7
+  - type: implements
+    from: SYM-views-opened-lots
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:23:35.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19866e053a4d
+  - type: implements
+    from: SYM-views-opened-lots
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:23:35.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3e54d34be23
+  - type: covered_by
+    from: SYM-views-opened-lots
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:35.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d156e157049
+  - type: implements
+    from: SYM-viewsv1-fee-rule-proto-reflect
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:02.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-312d2e5b965e
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule-proto-reflect
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:02.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9be4f936863

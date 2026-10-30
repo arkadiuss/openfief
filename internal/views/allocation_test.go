@@ -186,7 +186,10 @@ func TestValueHoldings(t *testing.T) {
 	moved.Account = "acc-2"
 	stored = append(stored, moved)
 
-	items, unvalued := views.ValueHoldings(acc, holdings, stored, on)
+	items, unvalued, err := views.ValueHoldings(acc, holdings, stored, on, views.Gross)
+	if err != nil {
+		t.Fatalf("ValueHoldings: %v", err)
+	}
 	wantItems := []views.AllocationItem{
 		{Account: acc, AssetClass: views.AssetTreasuryBond, Value: money(t, "1050.00", "PLN"), Reporting: money(t, "1050.00", "PLN")},
 		{Account: acc, AssetClass: views.AssetListed, Value: money(t, "30", "USD"), Reporting: money(t, "120.00", "PLN")},
@@ -194,7 +197,7 @@ func TestValueHoldings(t *testing.T) {
 	if diff := cmp.Diff(wantItems, items); diff != "" {
 		t.Errorf("ValueHoldings() items mismatch (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff([]ledger.Holding{holdings[2]}, unvalued); diff != "" {
+	if diff := cmp.Diff([]views.Unvalued{{Account: acc.ID, Holding: holdings[2], Missing: "price"}}, unvalued); diff != "" {
 		t.Errorf("ValueHoldings() unvalued mismatch (-want +got):\n%s", diff)
 	}
 }

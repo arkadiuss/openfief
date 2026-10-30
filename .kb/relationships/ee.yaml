@@ -321,13 +321,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b1813d789fc
-  - type: implements
-    from: SYM-views-ghostfolio-new-syncer
-    to: REQ-views-ghostfolio-reconcile
-    created_at: 2026-10-29T01:02:44.448Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9065b60131c8
   - type: covered_by
     from: SYM-views-ghostfolio-new-syncer
     to: TEST-views-ghostfolio-sync
@@ -349,3 +342,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a3377e50de7
+  - type: implements
+    from: SYM-pl-cluster-service-info
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:22:40.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c6f70054381
+  - type: covered_by
+    from: SYM-pl-cluster-service-info
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:22:40.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd7cdf2ee624
+  - type: constrains
+    from: REQ-portfolio-role-override-explicit
+    to: FACT-SUBJECT-20F39635C8813292
+    created_at: 2026-10-29T11:36:16.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-513055780be0
+  - type: requires_property
+    from: REQ-portfolio-role-override-explicit
+    to: FACT-PROP-2F3C3544A4DE1C2A
+    created_at: 2026-10-29T11:36:16.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fcf8c3aac51
+  - type: specified_by
+    from: REQ-portfolio-role-override-explicit
+    to: SCEN-portfolio-role-override-explicit
+    created_at: 2026-10-29T11:36:16.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ad052c6e3eb
+  - type: supersedes
+    from: REQ-portfolio-role-override-explicit
+    to: REQ-portfolio-sleeve-role-override
+    created_at: 2026-10-29T11:36:16.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba0cddbe4017
+  - type: implements
+    from: SYM-ingest-connectrpc-broker-account-from
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:50:12.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a65fe983495e
+  - type: covered_by
+    from: SYM-ingest-connectrpc-broker-account-from
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:50:12.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0decd1ec86e8
+  - type: implements
+    from: SYM-portfoliov1-sleeve-kind-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:31:50.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03b88c6184ae
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-kind-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:31:50.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e278c8aca819
+  - type: implements
+    from: SYM-pl-instances-update
+    to: REQ-plugins-upgrade-applies-on-confirmation
+    created_at: 2026-10-29T17:06:46.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9059ce28d7f9
+  - type: implements
+    from: SYM-pl-instances-update
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:06:46.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-349c0cca6f5d
+  - type: covered_by
+    from: SYM-pl-instances-update
+    to: TEST-plugins-kube-upgrade
+    created_at: 2026-10-29T17:06:46.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-418310dbfaf9
+  - type: implements
+    from: SYM-views-ghostfolio-new-syncer
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:24:07.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f964b7f64ed
+  - type: constrains
+    from: REQ-valuation-bond-holding-values
+    to: FACT-SUBJECT-FDA8A1C642277888
+    created_at: 2026-10-29T21:49:01.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f23f6067041f
+  - type: requires_property
+    from: REQ-valuation-bond-holding-values
+    to: FACT-PROP-D0A08ACC4AD65944
+    created_at: 2026-10-29T21:49:01.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c4391b573a0
+  - type: specified_by
+    from: REQ-valuation-bond-holding-values
+    to: SCEN-valuation-bond-holding-values
+    created_at: 2026-10-29T21:49:01.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-308a1507acea
+  - type: supersedes
+    from: REQ-valuation-bond-holding-values
+    to: REQ-valuation-bond-holding
+    created_at: 2026-10-29T21:49:01.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fe6eab56197
+  - type: supersedes
+    from: REQ-valuation-bond-holding-values
+    to: REQ-valuation-bond-basis
+    created_at: 2026-10-29T21:49:01.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16ec2c48265f

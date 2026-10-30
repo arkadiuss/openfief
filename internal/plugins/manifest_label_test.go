@@ -14,7 +14,7 @@ import (
 // another order.
 const sampleLabel = `{"capabilities":["connector"],` +
 	`"egress":["data.example.org:8443","api.example.com"],` +
-	`"secrets":[{"name":"sample-cert","mountPath":"/etc/openfief/cert"},{"name":"sample-token","mountPath":"/etc/openfief/token"}],` +
+	`"secrets":[{"role":"cert","mountPath":"/etc/openfief/cert"},{"role":"token","mountPath":"/etc/openfief/token"}],` +
 	`"dataTiers":["T1"],"configSchema":{"type":"object"}}`
 
 func TestParseManifestLabel(t *testing.T) {
@@ -39,17 +39,27 @@ func TestParseManifestLabel(t *testing.T) {
 				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 				Egress:       []plugins.EgressHost{host("data.example.org", 8443), host("api.example.com", 443)},
 				Secrets: []plugins.SecretMount{
-					{Name: "sample-cert", MountPath: "/etc/openfief/cert"},
-					{Name: "sample-token", MountPath: "/etc/openfief/token"},
+					{Role: "cert", MountPath: "/etc/openfief/cert"},
+					{Role: "token", MountPath: "/etc/openfief/token"},
 				},
 				DataTiers:    []plugins.DataTier{"T1"},
 				ConfigSchema: []byte(`{"type":"object"}`),
 			},
 		},
+		{
+			name: "config host and in-cluster service",
+			in:   `{"capabilities":["view"],"egressFromConfig":["url"],"clusterService":{"description":"the owner's Ghostfolio"}}`,
+			want: plugins.Manifest{
+				Capabilities:     []plugins.Capability{plugins.CapabilityView},
+				EgressFromConfig: []string{"url"},
+				ClusterService:   &plugins.ClusterServiceRequest{Description: "the owner's Ghostfolio"},
+			},
+		},
+		{name: "bad config field", in: `{"capabilities":["view"],"egressFromConfig":["a.b"]}`, wantErr: plugins.ErrInvalidName},
 		{name: "no capability", in: `{}`, wantErr: plugins.ErrNoCapability},
 		{name: "unknown capability", in: `{"capabilities":["trader"]}`, wantErr: plugins.ErrUnknownCapability},
 		{name: "IP egress", in: `{"capabilities":["connector"],"egress":["10.0.0.1"]}`, wantErr: plugins.ErrIPLiteral},
-		{name: "reserved mount path", in: `{"capabilities":["connector"],"secrets":[{"name":"s","mountPath":"/var/run/secrets/x"}]}`, wantErr: plugins.ErrInvalidMountPath},
+		{name: "reserved mount path", in: `{"capabilities":["connector"],"secrets":[{"role":"s","mountPath":"/var/run/secrets/x"}]}`, wantErr: plugins.ErrInvalidMountPath},
 		{name: "unknown field", in: `{"capabilities":["view"],"privileged":true}`, wantErr: plugins.ErrInvalidJSON},
 		{name: "not JSON", in: `capabilities: [view]`, wantErr: plugins.ErrInvalidJSON},
 	}
@@ -98,6 +108,8 @@ func TestManifestEqual(t *testing.T) {
 		{name: "other schema", change: func(m *plugins.Manifest) { m.ConfigSchema = []byte(`{"type":"string"}`) }},
 		{name: "no schema", change: func(m *plugins.Manifest) { m.ConfigSchema = nil }},
 		{name: "invalid schema", change: func(m *plugins.Manifest) { m.ConfigSchema = []byte(`{`) }},
+		{name: "extra config host field", change: func(m *plugins.Manifest) { m.EgressFromConfig = []string{"url"} }},
+		{name: "extra in-cluster service", change: func(m *plugins.Manifest) { m.ClusterService = &plugins.ClusterServiceRequest{} }},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

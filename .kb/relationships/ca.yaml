@@ -111,27 +111,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67e90a2b58bc
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-bond-basis
-    to: TEST-valuation-app-revalue
-    created_at: 2026-10-28T07:38:51.566Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-80baf262230e
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-bond-basis
-    to: TEST-valuation-app-plan
-    created_at: 2026-10-28T07:38:51.585Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4cd11ef82827
-  - type: implements
-    from: SYM-valuation-postgres-daily-at
-    to: REQ-valuation-settings
-    created_at: 2026-10-28T08:04:30.787Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-832984c6210d
   - type: covered_by
     from: SYM-valuation-postgres-daily-at
     to: TEST-valuation-postgres-worker
@@ -365,13 +344,6 @@ relationships:
     id: rel-7171806108d6
   - type: implements
     from: SYM-views-ghostfolio-activity-same-as
-    to: REQ-views-ghostfolio-reconcile
-    created_at: 2026-10-29T00:55:37.756Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-df9faecdb4b6
-  - type: implements
-    from: SYM-views-ghostfolio-activity-same-as
     to: REQ-AUTO-4F8D1E2BADB7AED0
     created_at: 2026-10-29T00:55:37.792Z
     created_by: kibi/upsert
@@ -384,13 +356,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4cf0cfe79af1
-  - type: implements
-    from: SYM-views-ghostfolio-held-on
-    to: REQ-views-ghostfolio-bond-assets
-    created_at: 2026-10-29T00:58:09.055Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-136b3816282a
   - type: covered_by
     from: SYM-views-ghostfolio-held-on
     to: TEST-views-ghostfolio-project
@@ -454,3 +419,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8c8d4e59f67
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fixed-seeding-go-live
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T17:12:57.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebc195ba1a55
+  - type: verified_by
+    from: SCEN-valuation-market-data-service
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:00:54.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88663c26ed23
+  - type: verified_by
+    from: SCEN-valuation-market-data-service
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:00:54.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bdd6e67bb98
+  - type: implements
+    from: SYM-valuation-gen-pb-market-data-kind-enum-descriptor
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:22:03.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ce29d647604
+  - type: covered_by
+    from: SYM-valuation-gen-pb-market-data-kind-enum-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:22:03.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fd80f015f12
+  - type: implements
+    from: SYM-views-ghostfolio-held-on
+    to: REQ-views-ghostfolio-asset-keys
+    created_at: 2026-10-30T01:22:04.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93bb951ef40e
+  - type: implements
+    from: SYM-views-ghostfolio-activity-same-as
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:23:17.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc6fa8be3e42
+  - type: implements
+    from: SYM-valuation-postgres-daily-at
+    to: REQ-valuation-revaluation-config
+    created_at: 2026-10-29T21:56:27.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2001f906d263
+  - type: implements
+    from: SYM-valuation-holding-valuation-net-valued
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:15:31.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a37ad0c8a6c
+  - type: implements
+    from: SYM-valuation-holding-valuation-net-valued
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:15:31.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-935b6be4bdb7
+  - type: covered_by
+    from: SYM-valuation-holding-valuation-net-valued
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:15:31.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-165d00fdc68f
+  - type: implements
+    from: SYM-affected-within
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:54:37.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7952d6d89639
+  - type: covered_by
+    from: SYM-affected-within
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T03:54:37.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40a6ff3d8fa4

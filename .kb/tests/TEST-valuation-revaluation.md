@@ -1,5 +1,5 @@
 ---
-title: Holding valuations, missing inputs, valued-through dates and coalescing
+title: Holding valuations with their three values, missing inputs, valued-through dates and coalescing
 status: active
 sourceFile: internal/valuation/revaluation_test.go
 origin:
@@ -8,4 +8,4 @@ origin:
 id: TEST-valuation-revaluation
 type: test
 ---
-Table tests value synthetic holdings: 12.5 ETF units on a Sunday at Friday's 101.37 USD close and 4.0123 rate give exactly 1267.125 USD and 5084.09 PLN half up; a PLN close needs no rate; no price or no rate yields a row marked missing with no value instead of an error, and conflicting rates fail. A two-lot EDO holding sums pl.ValueLot's net values by default and gross values when configured, takes its second-year CPI reading, and is marked missing without it; the market basis, a non-PLN cost and a lot outside its series' month fail. ValuedThrough stops the day before the first gap, keeps an earlier gap before the start, and Coalesce keeps the earliest date per account.
+Pure tests with synthetic prices, rates and lots: a USD ETF worth 5084.09 PLN on a cost of 4800.00 PLN has its net and liquidation values in each wrapper and under fee rules (commission, conversion fee, a USD minimum converted on the day), and lacks them with the reason when a minimum or a lot's cost has no rate, its lots are unknown or the owner's marginal rate is not set; bond holdings sum their lots' three values per wrapper; missing inputs become rows; valued-through dates and coalescing.

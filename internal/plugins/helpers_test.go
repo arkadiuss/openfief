@@ -27,8 +27,8 @@ func samplePlugin() plugins.Plugin {
 			Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 			Egress:       []plugins.EgressHost{host("api.example.com", 443), host("data.example.org", 8443)},
 			Secrets: []plugins.SecretMount{
-				{Name: "sample-token", MountPath: "/etc/openfief/token"},
-				{Name: "sample-cert", MountPath: "/etc/openfief/cert"},
+				{Role: "token", MountPath: "/etc/openfief/token"},
+				{Role: "cert", MountPath: "/etc/openfief/cert"},
 			},
 			DataTiers:    []plugins.DataTier{"T1"},
 			ConfigSchema: []byte(`{"type":"object"}`),

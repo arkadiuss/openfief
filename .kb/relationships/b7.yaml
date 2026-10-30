@@ -391,3 +391,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2d0b2a7c482
+  - type: executable_for
+    from: SYM-pl-test-manifest-egress-from-config-fields
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:53.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5b6c3ce0f4c
+  - type: implements
+    from: SYM-pl-instances-delete-service-access
+    to: REQ-plugins-cli-in-cluster-service-access
+    created_at: 2026-10-29T15:21:41.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43480f024387
+  - type: covered_by
+    from: SYM-pl-instances-delete-service-access
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:41.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94121cbc03a8
+  - type: executable_for
+    from: SYM-ingest-app-test-accounts-update
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T13:00:42.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83c95dd45dd0
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-get-number-format-default
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:17:09.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c707e52212c
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-get-number-format-default
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:17:09.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d8dae14b9df
+  - type: executable_for
+    from: SYM-exp-identity-cli-test-enroll-origin
+    to: TEST-identity-cli
+    created_at: 2026-10-29T22:37:01.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-841f931e9c4c
+  - type: verified_by
+    from: SCEN-tooling-ci-carry-signed-digest
+    to: TEST-tooling-image-carry
+    created_at: 2026-10-30T03:33:03.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a2581b3779e
+  - type: verified_by
+    from: SCEN-tooling-ci-carry-signed-digest
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-10-30T03:33:03.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32af430572e6

@@ -27,7 +27,7 @@ import (
 
 // sampleLabel is a synthetic connector's manifest label.
 const sampleLabel = `{"capabilities":["connector"],"egress":["api.example.com"],` +
-	`"secrets":[{"name":"sample-credentials","mountPath":"/etc/openfief/sample"}],` +
+	`"secrets":[{"role":"credentials","mountPath":"/etc/openfief/sample"}],` +
 	`"configSchema":{"type":"object","properties":{"start":{"type":"string"}},"additionalProperties":false}}`
 
 // world is a registry with a key-signed and an unsigned image, a fake

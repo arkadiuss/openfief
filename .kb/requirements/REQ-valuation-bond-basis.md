@@ -1,6 +1,6 @@
 ---
 title: A bond lot must count in totals at the configured valuation basis, gross_accrued or net_if_redeemed, with net_if_redeemed when nothing is configured, and the market basis must be rejected for retail treasury bonds.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-25
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ A bond lot must count in totals at the configured valuation basis, gross_accrued
 
 ## Context
 
-D-25 makes the bond value in totals configurable with net-if-redeemed-today as the default. Retail treasury bonds are not traded, so the market basis has no price to use and is an error rather than a fallback. Refines REQ-AUTO-0C90AD924924F4F6 and REQ-AUTO-E10BE8CE13E67657. Modeled by Claude Code for the M0 valuation task; the author has not reviewed it yet.
-
-## Source
-
-> Which bond value counts in totals is configurable; the default is net-if-redeemed-today
-
-docs/DESIGN.md D-25
+Closed: superseded by REQ-valuation-bond-holding-values. D-77 removed the configured bond basis; gross, net and liquidation replace it. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

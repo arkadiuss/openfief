@@ -134,13 +134,6 @@ relationships:
     id: rel-295a86a6227a
   - type: validates
     from: TEST-operator-manifests
-    to: REQ-AUTO-3E7CF23DAD42DA83
-    created_at: 2026-10-28T07:08:28.928Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-41866744795c
-  - type: validates
-    from: TEST-operator-manifests
     to: REQ-AUTO-BBBDDCF207E884A1
     created_at: 2026-10-28T07:08:28.963Z
     created_by: kibi/upsert
@@ -461,3 +454,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a568edd32c8
+  - type: constrains
+    from: REQ-plugins-cluster-service-outside-openfief
+    to: FACT-SUBJECT-457059D043CC4DB6
+    created_at: 2026-10-29T15:11:05.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ae2049d27f4
+  - type: requires_property
+    from: REQ-plugins-cluster-service-outside-openfief
+    to: FACT-PROP-B190468D59D6ED53
+    created_at: 2026-10-29T15:11:05.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad9fe9c91323
+  - type: specified_by
+    from: REQ-plugins-cluster-service-outside-openfief
+    to: SCEN-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:11:05.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ab8ef19245d
+  - type: implements
+    from: SYM-pl-validate-cluster-services
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:45.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd5ec689299
+  - type: covered_by
+    from: SYM-pl-validate-cluster-services
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:45.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c88b42fa4ee
+  - type: implements
+    from: SYM-ui-server-connector-instances
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:40.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b9913ea7f59
+  - type: covered_by
+    from: SYM-ui-server-connector-instances
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:40.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9886da250b1
+  - type: implements
+    from: SYM-ingestv1-update-account-request-string
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:22:49.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f05726eb7c2f
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-string
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:22:49.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2a96e529dea
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind-proto-reflect
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:43:25.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b8385166bc1
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind-proto-reflect
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:43:25.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff419fb788f5
+  - type: constrains
+    from: REQ-valuation-lower-ranked-cross-checks
+    to: FACT-SUBJECT-19451673BD884125
+    created_at: 2026-10-29T18:01:42.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-458faf88d406
+  - type: requires_property
+    from: REQ-valuation-lower-ranked-cross-checks
+    to: FACT-PROP-818A047B057FE3D1
+    created_at: 2026-10-29T18:01:42.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f3ed714a8bd
+  - type: specified_by
+    from: REQ-valuation-lower-ranked-cross-checks
+    to: SCEN-valuation-lower-ranked-cross-checks
+    created_at: 2026-10-29T18:01:42.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bc83a26c775
+  - type: implements
+    from: SYM-pl-pack-tax-rate-date
+    to: REQ-AUTO-C17116F5350E97D6
+    created_at: 2026-10-29T22:05:39.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70cb58fb8a37
+  - type: covered_by
+    from: SYM-pl-pack-tax-rate-date
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:05:39.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05019ede02b3
+  - type: validates
+    from: TEST-operator-manifests
+    to: REQ-platform-exposes-nothing-by-default
+    created_at: 2026-10-29T20:58:20.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d626b81a7288
+  - type: implements
+    from: SYM-affected-touches
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:08:08.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af80ba09aad0
+  - type: covered_by
+    from: SYM-affected-touches
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:08:08.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14b70ced650f

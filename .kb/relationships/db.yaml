@@ -440,3 +440,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-831de34e0b60
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-connector-bindings
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:14:44.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e072bf49981
+  - type: implements
+    from: SYM-ui-server-load-sleeves
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:17:11.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d77349ddd72
+  - type: covered_by
+    from: SYM-ui-server-load-sleeves
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:17:11.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b12ea7bf4de3
+  - type: executable_for
+    from: SYM-valuation-test-helper-ranked-price
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:19:15.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3458821249f9
+  - type: implements
+    from: SYM-valuationv1connect-settings-service-client-interface
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:37:10.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c63e6c14c66
+  - type: covered_by
+    from: SYM-valuationv1connect-settings-service-client-interface
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:37:10.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0d45149648a

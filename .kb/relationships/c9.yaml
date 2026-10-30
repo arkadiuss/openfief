@@ -6,13 +6,6 @@ relationships:
     created_at: "2026-10-28T04:50:09.521Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-  - type: implements
-    from: SYM-pl-belka-rate
-    to: REQ-pl-belka-tax
-    created_at: 2026-10-28T05:23:49.094Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5267850a2351
   - type: covered_by
     from: SYM-pl-belka-rate
     to: TEST-pl-tax
@@ -202,13 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e6070846501
-  - type: implements
-    from: SYM-valuation-postgres-end-of-day
-    to: REQ-valuation-settings
-    created_at: 2026-10-28T08:06:28.712Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6cbdaa075a9f
   - type: covered_by
     from: SYM-valuation-postgres-end-of-day
     to: TEST-valuation-postgres-worker
@@ -412,13 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9b0afbf8f89
-  - type: implements
-    from: SYM-views-ghostfolio-plan-split-stale
-    to: REQ-views-ghostfolio-reconcile
-    created_at: 2026-10-29T00:59:00.620Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2ec08eca8d75
   - type: covered_by
     from: SYM-views-ghostfolio-plan-split-stale
     to: TEST-views-ghostfolio-plan
@@ -461,3 +440,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7969b22a833e
+  - type: implements
+    from: SYM-valuation-app-ranking-store
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:12:32.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25ab2f0e5112
+  - type: implements
+    from: SYM-valuation-app-ranking-store
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:12:32.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdb2cb99f38d
+  - type: covered_by
+    from: SYM-valuation-app-ranking-store
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:12:32.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a552ff4c1d1
+  - type: implements
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:28:36.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccd65272dcd8
+  - type: covered_by
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:28:36.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a61c548df25
+  - type: implements
+    from: SYM-views-ghostfolio-plan-split-stale
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:24:36.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb01e0c5ca6b
+  - type: implements
+    from: SYM-pl-belka-rate
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T21:54:55.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac3032005fa7
+  - type: implements
+    from: SYM-valuation-postgres-end-of-day
+    to: REQ-valuation-revaluation-config
+    created_at: 2026-10-29T21:56:39.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225d7cc39052
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-number-format
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:12:56.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d496fb628bf3
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-number-format
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:12:56.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90cf4dff50d2
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-number-format
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:12:56.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3629756a81f
+  - type: executable_for
+    from: SYM-valuation-postgres-test-save-rules-version-revalues-only-on-a-change
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-29T22:13:48.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b0b981a6b44
+  - type: executable_for
+    from: SYM-core-test-helper-settings-client
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:08:47.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-576f0d650f75
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request-get-rate
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:20:13.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e28413c3dc2
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request-get-rate
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:20:13.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d718d077d1d6
+  - type: verified_by
+    from: SCEN-tooling-hook-full-fallback
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T03:32:54.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81b72ab7052b
+  - type: verified_by
+    from: SCEN-tooling-hook-full-fallback
+    to: TEST-tooling-check-commit
+    created_at: 2026-10-30T03:32:54.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d67b6168f00b
+  - type: verified_by
+    from: SCEN-tooling-hook-full-fallback
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:32:55.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1763f2936355

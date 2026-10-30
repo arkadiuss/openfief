@@ -342,3 +342,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d004d286a679
+  - type: verified_by
+    from: SCEN-operator-in-cluster-service-reads-service
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:10:18.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16dcba1d3382
+  - type: executable_for
+    from: SYM-ingest-postgres-test-broker-account-store
+    to: TEST-ingest-postgres-brokers
+    created_at: 2026-10-29T11:53:27.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a695442852a5
+  - type: verified_by
+    from: SCEN-ingest-account-service
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:45:36.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9b29338349c
+  - type: verified_by
+    from: SCEN-ingest-account-service
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T12:45:36.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fa9f81b2842
+  - type: verified_by
+    from: SCEN-ingest-account-service
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T12:45:36.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a2ddf6c406e
+  - type: implements
+    from: SYM-ingestv1-account-get-sleeve
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:19:37.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15129680dc0b
+  - type: covered_by
+    from: SYM-ingestv1-account-get-sleeve
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:19:37.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08187f7ce10c
+  - type: implements
+    from: SYM-valuation-gen-pb-ranked-source-get-institution
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:22:59.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-177e44b5148d
+  - type: covered_by
+    from: SYM-valuation-gen-pb-ranked-source-get-institution
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:22:59.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdbc480319f1
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-descriptor
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:23.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2100ffd15295
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-descriptor
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:23.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc2578c910af
+  - type: implements
+    from: SYM-exp-plugins-held-by
+    to: REQ-plugins-one-browser-view
+    created_at: 2026-10-29T21:59:53.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4e0ed21beab
+  - type: covered_by
+    from: SYM-exp-plugins-held-by
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T21:59:53.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f32730d40cc7

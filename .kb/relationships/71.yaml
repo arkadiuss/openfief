@@ -307,6 +307,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-856d57e2248d
+  - type: executable_for
+    from: SYM-portfolio-app-test-sleeves-add-and-update-sleeve
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:06:01.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1f229f47850
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-request-string
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:48:39.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2b397295fb7
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-request-string
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:48:39.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9da87195200b
   - type: validates
     from: TEST-views-browser-proxy
     to: REQ-core-reverse-proxies-view-plugins
@@ -314,10 +335,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e63c1796dcbb
-  - type: validates
-    from: TEST-views-browser-proxy
-    to: REQ-core-browser-entry-point
-    created_at: 2026-10-29T12:01:41.916Z
+  - type: implements
+    from: SYM-valuation-app-settings-display
+    to: REQ-valuation-owner-settings
+    created_at: 2026-10-29T22:11:27.012Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-5c2879132a09
+    id: rel-4a5107b45f27
+  - type: implements
+    from: SYM-valuation-app-settings-display
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-29T22:11:27.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a89dcd354f1a
+  - type: covered_by
+    from: SYM-valuation-app-settings-display
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:11:27.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cde809372fe
+  - type: executable_for
+    from: SYM-views-app-test-holdings-and-lots-mark-removed-instances
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:44.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8d0cf508c67
+  - type: implements
+    from: SYM-viewsv1-holding-get-removed-instances
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:31:46.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da1addd84016
+  - type: covered_by
+    from: SYM-viewsv1-holding-get-removed-instances
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:31:46.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ede05f24c83f
+  - type: implements
+    from: SYM-viewsv1connect-read-service-client-get-settings
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:37:45.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f12f6965a786
+  - type: implements
+    from: SYM-viewsv1connect-read-service-client-get-settings
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:37:45.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59ad0955c252
+  - type: covered_by
+    from: SYM-viewsv1connect-read-service-client-get-settings
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:37:45.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae75c2400685
+  - type: validates
+    from: TEST-views-browser-proxy
+    to: REQ-core-only-browser-entry-point
+    created_at: 2026-10-29T20:58:06.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8818356ef7e8
+  - type: implements
+    from: SYM-affected-plan-builder-skip
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:07:45.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63882cfa86e9
+  - type: covered_by
+    from: SYM-affected-plan-builder-skip
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:07:45.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82df3df7a6bd

@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"maps"
 	"net"
 	"path"
 	"slices"
@@ -68,6 +69,10 @@ const (
 	// Service name.
 	MaxPluginNameLen = 56
 )
+
+// namespaceNameLabel is the label Kubernetes sets on every namespace to its
+// name, which a NetworkPolicy's namespace selector matches.
+const namespaceNameLabel = "kubernetes.io/metadata.name"
 
 // ErrPluginNameTooLong reports a plugin name longer than MaxPluginNameLen.
 var ErrPluginNameTooLong = errors.New("plugin name too long")
@@ -198,7 +203,9 @@ func networkPolicy(w *plugins.Workload, c *Cluster) (*networkingv1.NetworkPolicy
 	return np, nil
 }
 
-// peer selects the pods of a NetworkPolicy peer in the openfief namespace.
+// peer selects the pods of a NetworkPolicy peer: the core's or the egress
+// proxy's in the openfief namespace, or those behind the plugin's granted
+// in-cluster service in that service's namespace (D-74).
 func peer(p plugins.Peer, c *Cluster) ([]networkingv1.NetworkPolicyPeer, error) {
 	var selector map[string]string
 	switch p {
@@ -206,6 +213,14 @@ func peer(p plugins.Peer, c *Cluster) ([]networkingv1.NetworkPolicyPeer, error) 
 		selector = c.CoreSelector
 	case plugins.PeerEgressProxy:
 		selector = c.EgressProxySelector
+	case plugins.PeerClusterService:
+		if len(c.ClusterServiceSelector) == 0 || c.ClusterServiceNamespace == "" || c.ClusterServiceNamespace == plugins.Namespace {
+			return nil, fmt.Errorf("%w: peer %q has no usable pod selector", ErrServiceUnusable, p)
+		}
+		return []networkingv1.NetworkPolicyPeer{{
+			NamespaceSelector: &metav1.LabelSelector{MatchLabels: map[string]string{namespaceNameLabel: c.ClusterServiceNamespace}},
+			PodSelector:       &metav1.LabelSelector{MatchLabels: maps.Clone(c.ClusterServiceSelector)},
+		}}, nil
 	}
 	if len(selector) == 0 || selectsPluginPods(selector) {
 		return nil, fmt.Errorf("%w: peer %q has no usable pod selector", ErrServiceUnusable, p)

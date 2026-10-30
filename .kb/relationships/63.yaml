@@ -195,13 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62998622bf7b
-  - type: implements
-    from: SYM-ui-model-form-message
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:13:09.947Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-91869e98cb25
   - type: covered_by
     from: SYM-ui-model-form-message
     to: TEST-ui-model
@@ -272,3 +265,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7423197c495c
+  - type: implements
+    from: SYM-pl-cluster-service-validate
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:37.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eecffda7e67
+  - type: covered_by
+    from: SYM-pl-cluster-service-validate
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:37.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-080ee5edac93
+  - type: executable_for
+    from: SYM-pl-test-reconcile-cluster-service
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:20:10.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ef8bbd41b2f
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-connections-all-broker-accounts
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:10:29.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150a6c35b377
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-request-get-origin
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:34:15.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8693c0252c34
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-request-get-origin
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:34:15.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-839da077c33a
+  - type: implements
+    from: SYM-valuation-gen-connect-market-data-service-handler
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:28:24.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b277e0fa1c3b
+  - type: covered_by
+    from: SYM-valuation-gen-connect-market-data-service-handler
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:28:24.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21cc42c53f89
+  - type: implements
+    from: SYM-jurisdiction-listed
+    to: REQ-jurisdiction-in-process
+    created_at: 2026-10-29T22:03:49.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc7e57f9cbab
+  - type: implements
+    from: SYM-jurisdiction-listed
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:03:49.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5967a4af1dff
+  - type: covered_by
+    from: SYM-jurisdiction-listed
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:03:49.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a644b0683560
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-reset
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:29:52.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e508c4a61c6b
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:29:52.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d6b7fea41aa
+  - type: implements
+    from: SYM-ui-model-form-message
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:42:16.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2081394be9f7
+  - type: executable_for
+    from: SYM-affected-test-test-scripts
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:08:58.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3425e0a9dc5

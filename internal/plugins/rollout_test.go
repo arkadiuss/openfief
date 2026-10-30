@@ -41,7 +41,7 @@ func TestPlanRollout(t *testing.T) {
 			name:        "no grant runs nothing and everything is pending",
 			in:          plugins.RolloutInput{Current: &current, CurrentDeployable: true, Previous: &previous},
 			wantOutcome: plugins.RolloutNoGrant,
-			wantPending: current.Manifest.Requested(),
+			wantPending: current.Requested(),
 		},
 		{
 			name:        "fully granted current version runs",

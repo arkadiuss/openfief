@@ -57,6 +57,11 @@ type PluginReconciler struct {
 	Scheme   *runtime.Scheme
 	Verifier ImageVerifier
 	Settings Settings
+	// ServiceReader reads a plugin's granted in-cluster service in its own
+	// namespace, outside the operator's namespaced cache (D-74), with the
+	// read access the owner's install granted for that one Service; nil
+	// reads through Client.
+	ServiceReader client.Reader
 }
 
 // Reconcile brings one Plugin's objects, the allow-list and its status in
@@ -102,7 +107,9 @@ const verifyRetry = time.Minute
 func (o *observation) result() ctrl.Result {
 	unknown := o.signature.Status == metav1.ConditionUnknown ||
 		(o.previousSignature != nil && o.previousSignature.Status == metav1.ConditionUnknown)
-	if unknown {
+	// An in-cluster service in another namespace isn't watched (D-74), so a
+	// cluster that couldn't be read is read again too.
+	if unknown || o.clusterErr != nil {
 		return ctrl.Result{RequeueAfter: verifyRetry}
 	}
 	return ctrl.Result{}
@@ -126,8 +133,48 @@ func (r *PluginReconciler) observe(ctx context.Context, p *v1alpha1.Plugin) (*ob
 	o.grantErr = grant.err
 	if o.grantErr == nil {
 		r.plan(ctx, p, o, current, grant.grant)
+		if err := r.oneBrowserView(ctx, p, o); err != nil {
+			return nil, err
+		}
 	}
 	return o, nil
+}
+
+// oneBrowserView keeps the version that would run from running when it
+// holds a browser path while another instance holds one (D-114), and
+// records why: a plugin that holds none yet yields to any holder, and of
+// two that both hold one the older Plugin keeps it.
+func (r *PluginReconciler) oneBrowserView(ctx context.Context, p *v1alpha1.Plugin, o *observation) error {
+	if o.runSpec == nil || o.rollout.Run == nil || o.rollout.Run.BrowserPath() == "" {
+		return nil
+	}
+	var list v1alpha1.PluginList
+	if err := r.Client.List(ctx, &list, client.InNamespace(plugins.Namespace)); err != nil {
+		return fmt.Errorf("list plugins: %w", err)
+	}
+	var held []plugins.BrowserView
+	for i := range list.Items {
+		if v, ok := heldBrowserView(&list.Items[i]); ok {
+			held = append(held, v)
+		}
+	}
+	_, holding := heldBrowserView(p)
+	self := plugins.BrowserView{Instance: p.Name, Path: o.rollout.Run.BrowserPath(), Created: p.CreationTimestamp.Time}
+	if err := plugins.MayHoldBrowserPath(self, holding, held); err != nil {
+		o.browserErr, o.runSpec = err, nil
+	}
+	return nil
+}
+
+// heldBrowserView returns the browser path a Plugin holds: one its status
+// records as effective for the version that runs, while it is not being
+// deleted.
+func heldBrowserView(p *v1alpha1.Plugin) (plugins.BrowserView, bool) {
+	e := p.Status.Effective
+	if p.DeletionTimestamp != nil || p.Status.Deployed == nil || e == nil || len(e.BrowserPaths) == 0 {
+		return plugins.BrowserView{}, false
+	}
+	return plugins.BrowserView{Instance: p.Name, Path: e.BrowserPaths[0], Created: p.CreationTimestamp.Time}, true
 }
 
 // plan decides the rollout and which version's spec runs. The previous
@@ -225,10 +272,13 @@ func (r *PluginReconciler) cluster(ctx context.Context) (Cluster, error) {
 // is available. When the cluster cannot be read, nothing runs.
 func (r *PluginReconciler) apply(ctx context.Context, p *v1alpha1.Plugin, o *observation) (bool, error) {
 	c, err := r.cluster(ctx)
+	if cs, ok := o.rollout.Run.ClusterService(); ok && err == nil {
+		err = r.addClusterService(ctx, &c, cs)
+	}
 	var objs Objects
 	if err == nil {
 		var w plugins.Workload
-		if w, err = plugins.Compile(o.rollout.Run, c.Topology); err == nil {
+		if w, err = plugins.Compile(o.rollout.Run, &c.Topology); err == nil {
 			objs, err = BuildObjects(&w, &c)
 		}
 	}
@@ -245,6 +295,20 @@ func (r *PluginReconciler) apply(ctx context.Context, p *v1alpha1.Plugin, o *obs
 		return false, err
 	}
 	return deploymentAvailable(objs.Deployment), nil
+}
+
+// addClusterService reads the plugin's granted in-cluster service and adds
+// it to c (D-74).
+func (r *PluginReconciler) addClusterService(ctx context.Context, c *Cluster, cs plugins.ClusterService) error {
+	reader := r.ServiceReader
+	if reader == nil {
+		reader = r.Client
+	}
+	var svc corev1.Service
+	if err := reader.Get(ctx, types.NamespacedName{Namespace: cs.Namespace, Name: cs.Service}, &svc); err != nil {
+		return fmt.Errorf("in-cluster service %s: %w", cs, err)
+	}
+	return c.AddClusterService(&svc, cs.Port)
 }
 
 // deploymentAvailable reports whether d's current generation has an

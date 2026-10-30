@@ -32,6 +32,9 @@ const (
 	outsiderPod = "outsider"
 	// coreURL is the core's Service, port http, as the demo's Ingress names it.
 	coreURL = "http://openfief-core.openfief.svc.cluster.local:8080"
+	// corePluginURL is the core's Service, port connect: the plugin port,
+	// which only plugin pods reach (D-115).
+	corePluginURL = "http://openfief-core.openfief.svc.cluster.local:8081"
 	// coreTimeout bounds the wait for the core Deployment to be available.
 	coreTimeout = 5 * time.Minute
 	// seedTimeout bounds the wait for the demo-seed Job, which loads and
@@ -104,7 +107,10 @@ func TestTraefikRoutesToCore(t *testing.T) {
 
 // TestCorePolicyRefusesOtherPods checks that the core's NetworkPolicies are
 // enforced: a pod no policy admits cannot connect to the core while an
-// admitted one can (SCEN-e2e-core-policy-enforced, D-12).
+// admitted one can, and the pod admitted to the browser port, as the demo's
+// Traefik is, cannot connect to the plugin port, which only plugin pods
+// reach (SCEN-e2e-core-policy-enforced, D-12, D-115). The built-in UI's
+// login (ui_test.go) shows a plugin pod reaching it.
 func TestCorePolicyRefusesOtherPods(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
@@ -115,6 +121,9 @@ func TestCorePolicyRefusesOtherPods(t *testing.T) {
 	}
 	if r := answerFrom(t, k, outsiderPod, "/healthz"); r.status != 0 {
 		t.Fatalf("GET /healthz from %s: status %d; want no connection (is NetworkPolicy enforced?)", outsiderPod, r.status)
+	}
+	if r := answerAt(t, k, clientPod, corePluginURL+"/v1/accounts"); r.status != 0 {
+		t.Fatalf("GET the plugin port from %s: status %d; want no connection, only plugin pods reach it", clientPod, r.status)
 	}
 }
 
@@ -310,14 +319,24 @@ func get(ctx context.Context, k *kube, pod, url string, headers ...string) (repl
 	return r, nil
 }
 
-// mustCall is call that fails t on an error.
+// mustCall is call that retries a failed exec stream (kind's API server can
+// drop it while busy) and fails t if it never gets curl's answer.
 func mustCall(t *testing.T, k *kube, pod, path, token string) reply {
 	t.Helper()
-	r, err := call(t.Context(), k, pod, path, token)
+	var got reply
+	// Like answerAt: only a failed exec stream is retried, never an HTTP answer.
+	err := waitFor(t.Context(), coreTimeout, func(ctx context.Context) (string, bool, error) {
+		r, callErr := call(ctx, k, pod, path, token)
+		if callErr != nil {
+			return "", false, fmt.Errorf("%w: %w", errRetry, callErr)
+		}
+		got = r
+		return "", true, nil
+	})
 	if err != nil {
-		t.Fatal(err)
+		t.Fatalf("GET %s from %s: %v", path, pod, err)
 	}
-	return r
+	return got
 }
 
 // parseReply splits curl's output into the body and the status code that

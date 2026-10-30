@@ -293,3 +293,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c997cbfbe59
+  - type: implements
+    from: SYM-portfoliov1connect-new-sleeve-service-client
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:29:06.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f352ae76456
+  - type: covered_by
+    from: SYM-portfoliov1connect-new-sleeve-service-client
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:29:06.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-165bc693e901
+  - type: verified_by
+    from: SCEN-valuation-lower-ranked-cross-checks
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:01:00.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3d1d08a05a7
+  - type: verified_by
+    from: SCEN-valuation-lower-ranked-cross-checks
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:01:01.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-520fa9c4f913
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-request-get-session-token
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:24:49.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73bcd27efc75
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-request-get-session-token
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:24:49.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4cd3c398b30
+  - type: executable_for
+    from: SYM-jurisdiction-test-number-format-keys
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:03:03.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65580c4371f5

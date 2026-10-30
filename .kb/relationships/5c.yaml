@@ -349,13 +349,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a975f13d7cd
-  - type: validates
-    from: TEST-core-auth
-    to: REQ-identity-install-without-hostname
-    created_at: 2026-10-28T19:26:44.288Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d2932a06a3e
   - type: executable_for
     from: SYM-identity-connectapi-handler-test-test-callers
     to: TEST-identity-auth-connectapi
@@ -433,13 +426,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-813f4bcdd919
-  - type: implements
-    from: SYM-views-ghostfolio-projector-prices
-    to: REQ-views-ghostfolio-bond-assets
-    created_at: 2026-10-29T00:57:59.658Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b4702bb9ec4c
   - type: covered_by
     from: SYM-views-ghostfolio-projector-prices
     to: TEST-views-ghostfolio-project
@@ -496,3 +482,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8da830afb36
+  - type: constrains
+    from: REQ-portfolio-sleeve-service
+    to: FACT-SUBJECT-7D628E9AE5C6B625
+    created_at: 2026-10-29T12:45:55.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-135520121f3d
+  - type: requires_property
+    from: REQ-portfolio-sleeve-service
+    to: FACT-PROP-84D1D1EBF4EAC7A1
+    created_at: 2026-10-29T12:45:55.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-462bacbcbf46
+  - type: specified_by
+    from: REQ-portfolio-sleeve-service
+    to: SCEN-portfolio-sleeve-service
+    created_at: 2026-10-29T12:45:55.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74d49d016480
+  - type: implements
+    from: SYM-views-app-views-sleeve-kinds
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:08:46.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ef7bd5e63df
+  - type: covered_by
+    from: SYM-views-app-views-sleeve-kinds
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:08:46.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c2169ba48a8
+  - type: executable_for
+    from: SYM-pl-test-helper-versioned-catalog
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:05:17.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b6fe3e1b8c7
+  - type: implements
+    from: SYM-ingest-app-model-targets
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-10-29T17:13:25.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e40fdf80e0e
+  - type: implements
+    from: SYM-ingest-app-model-targets
+    to: REQ-ingest-new-instrument-priced
+    created_at: 2026-10-29T17:13:25.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a8a9860b264
+  - type: covered_by
+    from: SYM-ingest-app-model-targets
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:13:25.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60d5dc46190a
+  - type: validates
+    from: TEST-core-auth
+    to: REQ-identity-first-passkey-own-host-or-localhost
+    created_at: 2026-10-29T22:34:27.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee72b4a9e214
+  - type: implements
+    from: SYM-views-ghostfolio-projector-prices
+    to: REQ-views-ghostfolio-asset-keys
+    created_at: 2026-10-30T01:22:35.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6ffb0b154c7
+  - type: implements
+    from: SYM-valuationv1-file_openfief_valuation_v1_settings_proto_raw-desc-gzip
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:21:06.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62be37a7866c
+  - type: covered_by
+    from: SYM-valuationv1-file_openfief_valuation_v1_settings_proto_raw-desc-gzip
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:21:06.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bf36e698d23

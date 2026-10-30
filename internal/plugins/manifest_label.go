@@ -2,6 +2,7 @@ package plugins
 
 import (
 	"bytes"
+	"cmp"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,24 +21,35 @@ type manifestDoc struct {
 	Capabilities []Capability `json:"capabilities"`
 	Egress       []string     `json:"egress,omitempty"`
 	Secrets      []struct {
-		Name      string `json:"name"`
+		Role      string `json:"role"`
 		MountPath string `json:"mountPath"`
 	} `json:"secrets,omitempty"`
-	DataTiers    []DataTier      `json:"dataTiers,omitempty"`
-	ConfigSchema json.RawMessage `json:"configSchema,omitempty"`
-	BrowserPath  string          `json:"browserPath,omitempty"`
+	DataTiers        []DataTier      `json:"dataTiers,omitempty"`
+	ConfigSchema     json.RawMessage `json:"configSchema,omitempty"`
+	BrowserPath      string          `json:"browserPath,omitempty"`
+	EgressFromConfig []string        `json:"egressFromConfig,omitempty"`
+	ClusterService   *struct {
+		Description string `json:"description"`
+	} `json:"clusterService,omitempty"`
 }
 
 // ParseManifestLabel reads a manifest from the value of an image's
 // ManifestLabel: a JSON object with the fields of spec.manifest
-// (capabilities, egress, secrets, dataTiers, configSchema, browserPath). Unknown fields
-// are refused, so a manifest is never half-read. The manifest is validated.
+// (capabilities, egress, secrets, dataTiers, configSchema, browserPath,
+// egressFromConfig, clusterService). Unknown fields are refused, so a
+// manifest is never half-read. The manifest is validated.
 func ParseManifestLabel(value string) (Manifest, error) {
 	var doc manifestDoc
 	if err := decodeStrict([]byte(value), &doc); err != nil {
 		return Manifest{}, fmt.Errorf("manifest label: %w", err)
 	}
-	m := Manifest{Capabilities: doc.Capabilities, DataTiers: doc.DataTiers, BrowserPath: doc.BrowserPath}
+	m := Manifest{
+		Capabilities: doc.Capabilities, DataTiers: doc.DataTiers, BrowserPath: doc.BrowserPath,
+		EgressFromConfig: doc.EgressFromConfig,
+	}
+	if doc.ClusterService != nil {
+		m.ClusterService = &ClusterServiceRequest{Description: doc.ClusterService.Description}
+	}
 	if len(doc.ConfigSchema) > 0 && !bytes.Equal(doc.ConfigSchema, []byte("null")) {
 		m.ConfigSchema = doc.ConfigSchema
 	}
@@ -63,22 +75,24 @@ func ParseManifestLabel(value string) (Manifest, error) {
 }
 
 // Equal reports whether m and o declare the same thing: the same sets of
-// capabilities, egress hosts, secret mounts and data tiers, in any order, the
-// same browser path, and config schemas that are the same JSON value.
+// capabilities, egress hosts, secret mounts, data tiers and config fields
+// giving egress hosts, in any order, the same browser path and in-cluster
+// service request, and config schemas that are the same JSON value.
 func (m *Manifest) Equal(o *Manifest) bool {
-	a, b := m.Requested(), o.Requested()
-	return slices.Equal(a.Capabilities, b.Capabilities) &&
-		slices.Equal(a.Egress, b.Egress) &&
-		slices.Equal(a.DataTiers, b.DataTiers) &&
+	return slices.Equal(sortedCopy(m.Capabilities, cmp.Compare[Capability]), sortedCopy(o.Capabilities, cmp.Compare[Capability])) &&
+		slices.Equal(sortedCopy(m.Egress, compareEgressHosts), sortedCopy(o.Egress, compareEgressHosts)) &&
+		slices.Equal(sortedCopy(m.DataTiers, cmp.Compare[DataTier]), sortedCopy(o.DataTiers, cmp.Compare[DataTier])) &&
 		slices.Equal(sortedMounts(m.Secrets), sortedMounts(o.Secrets)) &&
 		m.BrowserPath == o.BrowserPath &&
+		slices.Equal(sortedCopy(m.EgressFromConfig, strings.Compare), sortedCopy(o.EgressFromConfig, strings.Compare)) &&
+		equalPtr(m.ClusterService, o.ClusterService) &&
 		sameJSON(m.ConfigSchema, o.ConfigSchema)
 }
 
-// sortedMounts returns the mounts sorted by name, then mount path.
+// sortedMounts returns the mounts sorted by role, then mount path.
 func sortedMounts(ms []SecretMount) []SecretMount {
 	return sortedCopy(ms, func(a, b SecretMount) int {
-		if c := strings.Compare(a.Name, b.Name); c != 0 {
+		if c := strings.Compare(a.Role, b.Role); c != 0 {
 			return c
 		}
 		return strings.Compare(a.MountPath, b.MountPath)

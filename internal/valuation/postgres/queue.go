@@ -137,7 +137,7 @@ func (s *Store) SavePrices(ctx context.Context, prices []valuation.Price, revals
 		for _, p := range prices {
 			batch.Queue(`
 				INSERT INTO valuation.prices (instrument, date, close, currency, source) VALUES ($1, $2, $3, $4, $5)
-				ON CONFLICT (instrument, date) DO UPDATE SET close = EXCLUDED.close, currency = EXCLUDED.currency, source = EXCLUDED.source`,
+				ON CONFLICT (instrument, date, source) DO UPDATE SET close = EXCLUDED.close, currency = EXCLUDED.currency`,
 				p.Instrument, p.Date.String(), p.Close.Amount().String(), p.Close.Currency().String(), p.Source)
 		}
 		return tx.SendBatch(ctx, batch).Close()
@@ -155,7 +155,7 @@ func (s *Store) SaveFXRates(ctx context.Context, rates []valuation.FXRate, reval
 		for _, r := range rates {
 			batch.Queue(`
 				INSERT INTO valuation.fx_rates (currency, date, rate, source) VALUES ($1, $2, $3, $4)
-				ON CONFLICT (currency, date) DO UPDATE SET rate = EXCLUDED.rate, source = EXCLUDED.source`,
+				ON CONFLICT (currency, date, source) DO UPDATE SET rate = EXCLUDED.rate`,
 				r.Currency.String(), r.Date.String(), r.Rate.String(), r.Source)
 		}
 		return tx.SendBatch(ctx, batch).Close()
@@ -192,7 +192,7 @@ func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.Inde
 		for _, r := range readings {
 			batch.Queue(`
 				INSERT INTO valuation.index_readings (kind, year, month, value, source) VALUES ($1, $2, $3, $4, $5)
-				ON CONFLICT (kind, year, month) DO UPDATE SET value = EXCLUDED.value, source = EXCLUDED.source`,
+				ON CONFLICT (kind, year, month, source) DO UPDATE SET value = EXCLUDED.value`,
 				r.Kind.String(), r.Year, int(r.Month), r.Value.String(), r.Source)
 		}
 		return tx.SendBatch(ctx, batch).Close()
@@ -223,56 +223,4 @@ func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.T
 		return fmt.Errorf("saving bond terms of %s: %w", isin, err)
 	}
 	return nil
-}
-
-// SaveTaxWrapper records account's tax wrapper and enqueues revals in one
-// transaction.
-func (s *Store) SaveTaxWrapper(ctx context.Context, account ledger.AccountID, wrapper pl.TaxWrapper, revals []valuation.Revaluation) error {
-	name, err := wrapperName(wrapper)
-	if err != nil {
-		return fmt.Errorf("saving the tax wrapper of %s: %w", account, err)
-	}
-	err = s.inTx(ctx, revals, func(tx pgx.Tx) error {
-		if _, execErr := tx.Exec(ctx, `
-			INSERT INTO valuation.tax_wrappers (account_id, wrapper) VALUES ($1, $2)
-			ON CONFLICT (account_id) DO UPDATE SET wrapper = EXCLUDED.wrapper`, string(account), name); execErr != nil {
-			return fmt.Errorf("upserting: %w", execErr)
-		}
-		return nil
-	})
-	if err != nil {
-		return fmt.Errorf("saving the tax wrapper of %s: %w", account, err)
-	}
-	return nil
-}
-
-// bondBasisKey is the settings key of the bond basis.
-const bondBasisKey = "bond_basis"
-
-// SaveBondBasis records basis and, only when the recorded basis differs or
-// none was recorded, enqueues revals, in one transaction. It reports whether
-// it enqueued them.
-func (s *Store) SaveBondBasis(ctx context.Context, basis valuation.Basis, revals []valuation.Revaluation) (bool, error) {
-	changed := false
-	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
-		var old string
-		err := tx.QueryRow(ctx, `SELECT value FROM valuation.settings WHERE key = $1 FOR UPDATE`, bondBasisKey).Scan(&old)
-		if err != nil && !errors.Is(err, pgx.ErrNoRows) {
-			return fmt.Errorf("reading the recorded basis: %w", err)
-		}
-		if old == basis.String() {
-			return nil
-		}
-		changed = true
-		if _, err := tx.Exec(ctx, `
-			INSERT INTO valuation.settings (key, value) VALUES ($1, $2)
-			ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value`, bondBasisKey, basis.String()); err != nil {
-			return fmt.Errorf("recording the basis: %w", err)
-		}
-		return s.enqueueTx(ctx, tx, revals)
-	})
-	if err != nil {
-		return false, fmt.Errorf("saving the bond basis: %w", err)
-	}
-	return changed, nil
 }

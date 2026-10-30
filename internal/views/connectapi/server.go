@@ -46,7 +46,11 @@ func (s *readService) ListAccounts(ctx context.Context, _ *connect.Request[views
 	}
 	out := &viewsv1.ListAccountsResponse{Accounts: make([]*viewsv1.Account, 0, len(accounts))}
 	for i := range accounts {
-		out.Accounts = append(out.Accounts, pbAccount(&accounts[i]))
+		terms, termsErr := s.views.AccountTerms(ctx, accounts[i].ID)
+		if termsErr != nil {
+			return nil, toConnectError(ctx, s.log, termsErr)
+		}
+		out.Accounts = append(out.Accounts, pbAccount(&accounts[i], &terms))
 	}
 	return connect.NewResponse(out), nil
 }
@@ -57,7 +61,11 @@ func (s *readService) GetAccount(ctx context.Context, req *connect.Request[views
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}
-	return connect.NewResponse(&viewsv1.GetAccountResponse{Account: pbAccount(&a)}), nil
+	terms, err := s.views.AccountTerms(ctx, a.ID)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	return connect.NewResponse(&viewsv1.GetAccountResponse{Account: pbAccount(&a, &terms)}), nil
 }
 
 // ListTransactions answers GET /v1/accounts/{account_id}/transactions.
@@ -102,9 +110,14 @@ func (s *readService) ListHoldings(ctx context.Context, req *connect.Request[vie
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}
-	out := &viewsv1.ListHoldingsResponse{AccountId: req.Msg.GetAccountId(), Date: pbDate(on), Holdings: make([]*viewsv1.Holding, 0, len(holdings))}
-	for i := range holdings {
-		out.Holdings = append(out.Holdings, &viewsv1.Holding{Instrument: pbInstrument(holdings[i].Instrument), Quantity: holdings[i].Quantity.String()})
+	out := &viewsv1.ListHoldingsResponse{AccountId: req.Msg.GetAccountId(), Date: pbDate(on), Holdings: make([]*viewsv1.Holding, 0, len(holdings.Holdings))}
+	for i := range holdings.Holdings {
+		h := &holdings.Holdings[i]
+		removed := holdings.Removed[h.Instrument]
+		out.Holdings = append(out.Holdings, &viewsv1.Holding{
+			Instrument: pbInstrument(h.Instrument), Quantity: h.Quantity.String(),
+			NoLongerUpdated: len(removed) > 0, RemovedInstances: removed,
+		})
 	}
 	return connect.NewResponse(out), nil
 }
@@ -119,9 +132,9 @@ func (s *readService) ListLots(ctx context.Context, req *connect.Request[viewsv1
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}
-	out := &viewsv1.ListLotsResponse{AccountId: req.Msg.GetAccountId(), Date: pbDate(on), Lots: make([]*viewsv1.Lot, 0, len(lots))}
-	for i := range lots {
-		out.Lots = append(out.Lots, pbLot(&lots[i]))
+	out := &viewsv1.ListLotsResponse{AccountId: req.Msg.GetAccountId(), Date: pbDate(on), Lots: make([]*viewsv1.Lot, 0, len(lots.Lots))}
+	for i := range lots.Lots {
+		out.Lots = append(out.Lots, pbLot(&lots.Lots[i], lots.Removed[lots.Lots[i].Origin]))
 	}
 	return connect.NewResponse(out), nil
 }
@@ -280,7 +293,11 @@ func (s *readService) GetAllocation(ctx context.Context, req *connect.Request[vi
 	if _, dimErr := views.ParseDimension(by.String()); dimErr != nil {
 		return nil, toConnectError(ctx, s.log, dimErr)
 	}
-	a, err := s.views.Allocation(ctx, on, by)
+	kind, err := valueKind(req.Msg.GetValue())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	a, err := s.views.Allocation(ctx, on, by, kind)
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}

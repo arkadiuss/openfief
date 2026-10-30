@@ -1,11 +1,11 @@
 HTTP/1.1 200 OK
-Content-Length: 599
+Content-Length: 2158
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:53 GMT
-Etag: W/"257-oH0hXpWK3Opq/6z09krc3+344nU"
+Date: Fri, 30 Oct 2026 00:00:54 GMT
+Etag: W/"86e-U9EhVLspmlQFF9ZbCRTxWZ7tbmk"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"accounts":[{"comment":null,"createdAt":"2026-10-29T00:38:33.036Z","currency":"USD","id":"6f2518ca-5394-442f-9e2d-b17303fc27d7","name":"My Account","platformId":null,"updatedAt":"2026-10-29T00:38:33.036Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","platform":null,"tags":[],"balance":0,"activitiesCount":0,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":0,"allocationInPercentage":0,"balanceInBaseCurrency":0,"value":0}],"activitiesCount":0,"totalBalanceInBaseCurrency":0,"totalDividendInBaseCurrency":0,"totalInterestInBaseCurrency":0,"totalValueInBaseCurrency":0}
+{"currency":"USD","language":"en","viewMode":"DEFAULT","dateRange":"max","xRayRules":{"BuyingPower":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMin":0},"EmergencyFundSetup":{"locale":"en-US","isActive":true,"baseCurrency":"USD"},"EmergencyFundCoverage":{"locale":"en-US","isActive":true,"baseCurrency":"USD"},"AssetClassClusterRiskEquity":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.82,"thresholdMin":0.78},"FeeRatioTotalInvestmentVolume":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.01},"RegionalMarketClusterRiskJapan":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.06,"thresholdMin":0.04},"AccountClusterRiskSingleAccount":{"locale":"en-US","isActive":true},"RegionalMarketClusterRiskEurope":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.15,"thresholdMin":0.11},"AssetClassClusterRiskFixedIncome":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.22,"thresholdMin":0.18},"AccountClusterRiskCurrentInvestment":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.5},"CurrencyClusterRiskCurrentInvestment":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.5},"RegionalMarketClusterRiskAsiaPacific":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.03,"thresholdMin":0.02},"RegionalMarketClusterRiskNorthAmerica":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.69,"thresholdMin":0.65},"EconomicMarketClusterRiskEmergingMarkets":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.32,"thresholdMin":0.28},"RegionalMarketClusterRiskEmergingMarkets":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.12,"thresholdMin":0.08},"EconomicMarketClusterRiskDevelopedMarkets":{"locale":"en-US","isActive":true,"baseCurrency":"USD","thresholdMax":0.72,"thresholdMin":0.68},"CurrencyClusterRiskBaseCurrencyCurrentInvestment":{"locale":"en-US","isActive":true,"baseCurrency":"USD"}},"savingsRate":0,"baseCurrency":"PLN","annualInterestRate":5,"safeWithdrawalRate":0.04,"projectedTotalAmount":0}

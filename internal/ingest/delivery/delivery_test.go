@@ -184,6 +184,50 @@ func TestFromMappingIBKRStatement(t *testing.T) {
 	}
 }
 
+// TestFromMappingByBrokerAccount writes the synthetic statement mapped by
+// IBKR account (D-72): every transaction and assertion names its broker
+// account and no OpenFief account, and every account the statement
+// reports is listed.
+func TestFromMappingByBrokerAccount(t *testing.T) {
+	t.Parallel()
+	src, err := os.ReadFile(filepath.Join("..", "ibkrflex", "testdata", "activity.xml"))
+	if err != nil {
+		t.Fatalf("read statement: %v", err)
+	}
+	m, err := ibkrflex.Mapper{ByBrokerAccount: true}.Map(bytes.NewReader(src), ingest.ModeTransactions)
+	if err != nil {
+		t.Fatalf("Map: %v", err)
+	}
+	d, err := delivery.FromMapping("b-3", "ibkr", &m)
+	if err != nil {
+		t.Fatalf("FromMapping: %v", err)
+	}
+	want := []*connectorv1.BrokerAccount{{Id: "U0000000"}, {Id: "U0000001"}}
+	if diff := cmp.Diff(want, d.GetBrokerAccounts(), protocmp.Transform()); diff != "" {
+		t.Errorf("broker_accounts (-want +got):\n%s", diff)
+	}
+	checkNamedByBrokerAccount(t, d)
+}
+
+// checkNamedByBrokerAccount fails t unless d has transactions and balance
+// assertions, each naming a broker account and no OpenFief account.
+func checkNamedByBrokerAccount(t *testing.T, d *connectorv1.Delivery) {
+	t.Helper()
+	if len(d.GetTransactions()) == 0 || len(d.GetBalanceAssertions()) == 0 {
+		t.Fatalf("%d transactions and %d assertions, want some of each", len(d.GetTransactions()), len(d.GetBalanceAssertions()))
+	}
+	for _, tx := range d.GetTransactions() {
+		if tx.GetAccountId() != "" || tx.GetBrokerAccount() == "" || tx.GetKey().GetSource() != ibkrflex.BrokerSource {
+			t.Fatalf("transaction %v: account_id %q, broker_account %q", tx.GetKey(), tx.GetAccountId(), tx.GetBrokerAccount())
+		}
+	}
+	for _, a := range d.GetBalanceAssertions() {
+		if a.GetAccountId() != "" || a.GetBrokerAccount() == "" {
+			t.Fatalf("assertion: account_id %q, broker_account %q", a.GetAccountId(), a.GetBrokerAccount())
+		}
+	}
+}
+
 // checkWritten fails t unless d holds every transaction, assertion and
 // problem of m, in order, with each posting's amount as m's decimal string.
 func checkWritten(t *testing.T, m *ingest.Mapping, d *connectorv1.Delivery) {

@@ -358,13 +358,6 @@ relationships:
     id: rel-d46a6f0dd204
   - type: validates
     from: TEST-identity-auth-app
-    to: REQ-identity-install-without-hostname
-    created_at: 2026-10-28T19:26:36.705Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9867704144c2
-  - type: validates
-    from: TEST-identity-auth-app
     to: REQ-identity-passkey-new-hostname
     created_at: 2026-10-28T19:26:36.725Z
     created_by: kibi/upsert
@@ -517,3 +510,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e191d1bcace
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-request-reset
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:35:40.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e19898a4c739
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-request-reset
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:35:40.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f680a9eaee3
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-request
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:37:31.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9564eacc7212
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-request
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:37:31.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3dface3e0d
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-request-get-role-override
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:39:09.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b67a64842510
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-request-get-role-override
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:39:09.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c504f3d44ce9
+  - type: implements
+    from: SYM-pl-grant-of
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:04.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7789b4853171
+  - type: covered_by
+    from: SYM-pl-grant-of
+    to: TEST-plugins-kube-upgrade
+    created_at: 2026-10-29T17:07:04.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-834bcc421c01
+  - type: validates
+    from: TEST-identity-auth-app
+    to: REQ-identity-first-passkey-own-host-or-localhost
+    created_at: 2026-10-29T22:34:30.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bb7a5b7d113

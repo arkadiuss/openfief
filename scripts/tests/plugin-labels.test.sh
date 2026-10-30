@@ -63,7 +63,17 @@ expect "and read back the same" check pass "every plugin label matches"
 
 fresh
 sed -i '/^LABEL io.openfief.plugin.manifest=/d' "$work/repo/plugins/ibkr-flex/Dockerfile"
-expect "a Dockerfile without the label line" write fail "plugins/ibkr-flex/Dockerfile has no LABEL io.openfief.plugin.manifest line"
+expect "a Dockerfile without the label line gets it" write pass "every plugin label matches"
+expect "and then checks clean" check pass "every plugin label matches"
+cases=$((cases + 1))
+if [ "$(tail -n 1 "$work/repo/plugins/ibkr-flex/Dockerfile" | cut -c1-36)" != "LABEL io.openfief.plugin.manifest='{" ]; then
+  echo "FAIL: write did not append the label to the end of the Dockerfile" >&2
+  failures=$((failures + 1))
+fi
+
+fresh
+rm "$work/repo/plugins/ibkr-flex/Dockerfile"
+expect "a plugin without a Dockerfile" write fail "plugins/ibkr-flex/Dockerfile is missing"
 
 expect "an unknown mode" verify fail "usage: plugin-labels.sh check|write"
 

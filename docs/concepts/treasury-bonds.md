@@ -1,11 +1,11 @@
 ---
 title: Treasury bonds
-description: How OpenFief values Polish retail treasury bond lots from their series terms, index readings, early-redemption fee, Belka tax and tax wrapper.
+description: How OpenFief values Polish retail treasury bond lots from their series terms, index readings, early-redemption fee, Belka tax and tax wrapper, and how the Polish jurisdiction pack turns any holding, bond or cash into its gross, net and liquidation values.
 covers:
   - internal/jurisdiction/pl/**
 ---
 
-Polish retail treasury bonds (obligacje skarbowe) are not traded, so no market price exists for them. Their value on any day follows from the rules in each series' [issue letter](../glossary.md), and neither the registry nor the bank that sells them offers an API (R-5). Package `pl` computes that value as pure functions: a lot's gross accrued value and what it would pay if redeemed today. The [valuation](valuation.md) context then picks which of the two counts in totals.
+Polish retail treasury bonds (obligacje skarbowe) are not traded, so no market price exists for them. Their value on any day follows from the rules in each series' [issue letter](../glossary.md), and neither the registry nor the bank that sells them offers an API (R-5). Package `pl` computes that value as pure functions: a lot's gross accrued value, its interest and purchase discount, and the fee redeeming it today would charge. It is also the Polish [jurisdiction pack](../glossary.md) (D-70), which turns those parts, and any holding or cash, into the three values of D-77 in each [tax wrapper](../glossary.md); the [valuation](valuation.md) context stores all three.
 
 ## Concepts
 
@@ -55,7 +55,7 @@ A capitalized type (TOS, EDO, ROS, ROD) adds each period's interest to the base 
 
 ### Early-redemption fee
 
-Redeeming before maturity costs the series' fee per bond. It is capped at the bond's accrued interest, so the fee never cuts into the nominal, except for coupon types after their first period, where the full fee applies even if it does. There is no fee at or after maturity, and none on a withdrawal from IKE or IKZE. OTS has no fee, since early redemption already forfeits its interest.
+Redeeming before maturity costs the series' fee per bond. It is capped at the bond's accrued interest, so the fee never cuts into the nominal, except for coupon types after their first period, where the full fee applies even if it does. There is no fee at or after maturity, and none on a withdrawal from IKE or IKZE; a taxable account and OKI pay it, since the letters waive it for IKE and IKZE only. OTS has no fee, since early redemption already forfeits its interest.
 
 ### Belka tax
 
@@ -63,23 +63,30 @@ Redeeming before maturity costs the series' fee per bond. It is capped at the bo
 
 ### Tax wrappers
 
-The [tax wrapper](../glossary.md) is the tax regime of the account a lot sits in:
+The [tax wrapper](../glossary.md) is the tax regime of an account (D-76). The owner sets it when creating the account, from the pack's four:
 
-| Wrapper | Early-redemption fee | Belka tax |
-|---|---|---|
-| `Taxable` | Charged | Withheld |
-| `IKE` | Not charged, assuming a withdrawal | None: exempt when the withdrawal conditions are met, which valuation assumes |
-| `IKZE` | Not charged, assuming a withdrawal | None withheld; the reduced flat tax on IKZE withdrawals applies to the whole account and is not part of a bond's value |
+| Wrapper | Key | Early-redemption fee | Belka tax inside | At the planned exit | Before it |
+|---|---|---|---|---|---|
+| Standard taxable account | `taxable` | Charged | Withheld | Belka tax on interest and discount, or on a sale's gain | The same, after the fee or sale cost |
+| IKE | `ike` | Not charged on a withdrawal | None | Nothing: exempt once the withdrawal conditions are met (art. 21 ust. 1 pkt 58 of the PIT act) | A return (zwrot) is taxed at 19% on its gain |
+| IKZE | `ikze` | Not charged on a withdrawal | None | 10% of the whole amount withdrawn (art. 30 ust. 1 pkt 13) | The whole amount at the owner's [marginal rate](../glossary.md) (D-78) |
+| OKI (osobiste konto inwestycyjne) | `oki` | Charged | None (D-76) | Nothing; a yearly tax on the balance above the act's limit instead | The fee or sale cost only |
 
-The wrapper belongs to the account: the valuation context records it per account, and an account without one is taxable. The `IKE` doc comment notes that the issue letters offer only ROR, DOR, TOS, COI and EDO for IKE and IKZE, but nothing checks a lot's bond type against its wrapper.
+An account with no recorded wrapper is taxable, the pack's default. The `IKE` doc comment notes that the issue letters offer only ROR, DOR, TOS, COI and EDO for IKE and IKZE, but nothing checks a lot's bond type against its wrapper.
 
-### The tax FX rate date
+### Gross, net and liquidation
 
-Bond amounts are in PLN, but Polish tax converts foreign income, such as income at a foreign broker (R-9), at the NBP table A rate of the last business day before the income (art. 11a). `TaxRateCutoff(event)` returns the day before the event; the latest table on or before that day is the rate ([Valuation](valuation.md#converting-to-pln) shows the lookup). The rule lives here because it is Polish tax law (D-20).
+D-77 gives every holding three values, and the pack computes them per kind of product and wrapper:
 
-### Gross accrued and net-if-redeemed
+- **Gross**, before any tax or fee: a lot's gross accrued value, a listed holding's market value, cash itself.
+- **Net**, what the owner keeps at the planned exit (maturity, or a withdrawal once the wrapper's conditions are met), after the taxes due then and without early-exit fees.
+- **Liquidation**, the cash in hand if it were sold or redeemed and withdrawn today, after every tax and fee due today.
 
-A [lot value](../glossary.md) has two answers. The gross accrued value is the nominal plus interest accrued and not yet paid out. The net-if-redeemed value is what redeeming the lot on that date would pay: gross minus the fee minus Belka tax. Today net-if-redeemed is the default in totals. D-77 replaces that single choice with three values shown side by side: gross, net (taxes due at maturity, no early-redemption fee) and liquidation (everything due if redeemed today), which is what net-if-redeemed computes for a taxable account. The issuer's worked examples count interest to the fifth business day after the redemption order; `ValueLot` counts it to the date it is given.
+The issuer's worked examples count interest to the fifth business day after the redemption order; `ValueLot` counts it to the date it is given. A taxable lot's liquidation value is what an early redemption pays.
+
+### OKI's yearly tax
+
+Inside OKI no Belka tax is due; instead, a yearly tax falls on the part of the average balance above a statutory limit, summed across all of the owner's OKI accounts (D-76). The limit, the rate and the day the act is in force from are the act's: `OKIAct` holds them as data. The code knows no act in force yet, so `CurrentOKIAct` has no date and no tax is ever computed ([Implementation questions](../implementation-questions.md)).
 
 ## How it works
 
@@ -90,9 +97,10 @@ A [lot value](../glossary.md) has two answers. The gross accrued value is the no
 | [calendar.go](../../internal/jurisdiction/pl/calendar.go) | `Maturity`, `PeriodStart`, `CPIMonth` |
 | [businessday.go](../../internal/jurisdiction/pl/businessday.go) | `IsBusinessDay`, `ReferenceRateDay`, `RateChange`, `RateInForce`, `FirstCalendarYear`, `ErrOutsideCalendar` |
 | [value.go](../../internal/jurisdiction/pl/value.go) | `Purchase`, `LotValue`, `ValueLot` |
-| [tax.go](../../internal/jurisdiction/pl/tax.go) | `TaxWrapper`, `BelkaRate`, `BelkaTax`, `TaxRateCutoff` |
+| [tax.go](../../internal/jurisdiction/pl/tax.go) | `TaxWrapper`, `TaxWrappers`, `ParseTaxWrapper`, `BelkaRate`, `BelkaTax`, `TaxRateCutoff` |
+| [pack.go](../../internal/jurisdiction/pl/pack.go) | `Pack` (the `jurisdiction.Pack`), `NewPack`, `RulesVersion`, `IKZEExitRate`, `OKIAct`, `CurrentOKIAct` |
 
-The package imports nothing from OpenFief but `kernel`, does no I/O and reads no clock; lint enforces that for domain packages. [doc.go](../../internal/jurisdiction/pl/doc.go) lists the issue letters, interest tables and statute articles the doc comments cite.
+The package imports nothing from OpenFief but `kernel` and the pack contract in `internal/jurisdiction` ([Valuation](valuation.md#the-jurisdiction-pack)), does no I/O and reads no clock; lint enforces that for domain packages. [doc.go](../../internal/jurisdiction/pl/doc.go) lists the issue letters, interest tables and statute articles the doc comments cite.
 
 `ValueLot(terms, idx, quantity, purchase, wrapper, on)` values a whole lot:
 
@@ -108,14 +116,13 @@ flowchart TD
   after -- yes --> clamp["on = maturity, Matured = true"]
   after -- no --> acc
   clamp --> acc["accrue: value of one bond on 'on',<br/>rounded half up to grosze once"]
-  acc --> feeq{"not matured and wrapper is Taxable?"}
+  acc --> feeq{"not matured and wrapper<br/>is Taxable or OKI?"}
   feeq -- yes --> fee["cappedFee: fee per bond,<br/>at most the accrued interest unless<br/>a coupon type after period 1"]
   feeq -- no --> nofee["fee = 0"]
   fee --> lot
-  nofee --> lot["lotValue: per-bond value, interest and fee<br/>times quantity, discount = 100 - purchase price"]
-  lot --> tax["belkaTax on interest - fee + discount,<br/>half up to grosze, 0 if not positive or in IKE, IKZE"]
-  tax -- "another wrapper" --> e4["ErrUnknownTaxWrapper"]
-  tax --> out["LotValue: Gross, Interest, Fee, Tax,<br/>Net = Gross - Fee - Tax, Matured"]
+  feeq -- "another wrapper" --> e4["ErrUnknownTaxWrapper"]
+  nofee --> lot["per-bond value, interest and fee<br/>times quantity, discount = 100 - purchase price"]
+  lot --> out["LotValue: Gross, Interest, Discount, Fee, Matured"]
 ```
 
 Inside `accrue`, a capitalized bond's value before the fee follows the issue letters' early-redemption formula, N × (1 + r1) × … × (1 + r(k-1)) × (1 + rk × ak / ACT), where ak counts days from the start of period k (included) to the date (excluded) and ACT is the period's actual days. A coupon bond counts only the last factor's interest. The loop walks the periods from the first:
@@ -137,7 +144,7 @@ flowchart TD
   pay -- "Capitalized, or OTS at maturity" --> cap["value = round(growth × (1 + rate × months / 12 × a / ACT))"]
 ```
 
-Here `months` is the period length (1, 3 or 12) and `a` is the days from the period's start to the date. All arithmetic is exact decimal until the single `Quo` that rounds half up to grosze; the lot amounts are the per-bond amounts times the quantity. Belka tax, by contrast, is computed once on the lot's total. On the day a coupon is paid, a coupon type has started a new period, so its accrued interest is zero.
+Here `months` is the period length (1, 3 or 12) and `a` is the days from the period's start to the date. All arithmetic is exact decimal until the single `Quo` that rounds half up to grosze; the lot amounts are the per-bond amounts times the quantity. Taxes, by contrast, are computed once on the lot's total, by the pack. On the day a coupon is paid, a coupon type has started a new period, so its accrued interest is zero.
 
 `ValueLot` needs an index reading for every period up to the one the date falls in, coupon types included: their earlier periods were paid out and don't change the value, but without a reading `PeriodRate` still fails with `MissingIndexError`. `ValueLot` takes readings by period number. In a revaluation, [`valuation.LotIndices`](valuation.md#valuing-one-holding) picks them from the stored monthly readings: the CPI of `CPIMonth(start)` for inflation-indexed types, and for ROR and DOR the reference-rate reading recorded for the month the period starts. Which rate that is, the one in force on the tenth business day before the month, is picked when the reading is recorded, with `ReferenceRateDay` and `RateInForce`: the treasury-bonds connector fetches GUS's CPI and NBP's reference rate changes and delivers one reading per month ([Plugins](plugins.md#first-party-plugins)). A missing reading makes the holding's stored row a gap (`index_reading`), not an error.
 
@@ -152,24 +159,46 @@ flowchart LR
   on(["valued 2024-09-15:<br/>a = 184 of ACT = 365"]) -.-> p1
 ```
 
-Worked example, from the synthetic cases in [value_test.go](../../internal/jurisdiction/pl/value_test.go): 10 bonds of EDO0334, first-period rate 6%, margin 2%, fee 2.00 PLN, in a taxable account, valued on 2024-09-15.
+### The pack's values
+
+`Pack` implements `jurisdiction.Pack` for Poland: `ReportingCurrency` PLN (D-62), `NumberFormat` space-comma, `5 000,00 PLN` (D-113), `Wrappers` the four keys with `taxable` first, `TaxRateDate` is `TaxRateCutoff` (D-20), and `Version` is `pl/` with `RulesVersion`, which valuation records to revalue everything when the rules change. Three functions compute the values, every amount in PLN, every tax rounded half up to whole grosze and zero on a base that is not positive (`taxAt`, D-37's rounding):
+
+```mermaid
+flowchart TD
+  w{"wrapper"} -- taxable --> t["net = gross - 19% of income<br/>liquidation = cash today - 19% of (cash today's gain)"]
+  w -- ike --> i["net = gross<br/>liquidation as taxable"]
+  w -- ikze --> z["net = gross - 10% of gross<br/>liquidation = cash today - marginal rate of it,<br/>or LiquidationUnknown without the rate"]
+  w -- oki --> o["net = gross<br/>liquidation = cash today"]
+```
+
+| Function | Gross | Income taxed | Cash today |
+|---|---|---|---|
+| `ValueAccrued` (bond lots) | `LotValue.Gross` | interest + discount; minus the fee if redeemed today | gross - `LotValue.Fee` |
+| `ValueListed` (priced at market) | market value | value - tax cost basis (the lots' cost at the NBP rate before purchase) | value - sale cost (the fee rule, [Valuation](valuation.md#the-jurisdiction-pack)) |
+| `ValueCash` | the amount | nothing | the amount |
+
+So cash is taxed only in IKZE, where any withdrawal is. A gain is taxed per holding: losses in one holding don't offset gains in another, and IKE's return is taxed on each holding's gain over its cost rather than on the account's withdrawals over its contributions ([Implementation questions](../implementation-questions.md)). `YearlyTax(oki, year, days)` averages the summed daily balances of the year's days on or after the act's in-force date, half up to grosze, and taxes the part above the limit at the rate; without an act in force for the year it returns `InForce` false and computes nothing. Any other wrapper is `jurisdiction.ErrNoYearlyTax`.
+
+Worked example, from the synthetic cases in [value_test.go](../../internal/jurisdiction/pl/value_test.go) and [pack_test.go](../../internal/jurisdiction/pl/pack_test.go): 10 bonds of EDO0334, first-period rate 6%, margin 2%, fee 2.00 PLN, valued on 2024-09-15.
 
 1. One bond: 100 × (1 + 0.06 × 184 / 365) = 103.0246…, rounded half up to 103.02 PLN.
 2. The lot: gross 1030.20 PLN, of which 30.20 PLN is interest.
-3. Fee: 2.00 PLN is less than the bond's 3.02 PLN of interest, so it isn't capped: 20.00 PLN for the lot.
-4. Belka tax: 19% × (30.20 − 20.00) = 1.938, rounded half up to 1.94 PLN.
-5. Net: 1030.20 − 20.00 − 1.94 = 1008.26 PLN.
+3. Fee in a taxable account: 2.00 PLN is less than the bond's 3.02 PLN of interest, so it isn't capped: 20.00 PLN for the lot.
+4. Net in a taxable account: 1030.20 − 19% × 30.20 (5.738, half up 5.74) = 1024.46 PLN.
+5. Liquidation in a taxable account: 1030.20 − 20.00 − 19% × (30.20 − 20.00) (1.938, half up 1.94) = 1008.26 PLN.
 
-The same lot in IKE is worth 1030.20 PLN net. Bought by exchange at 99.90 PLN, its 1.00 PLN discount is taxed too: tax 2.13, net 1008.07 PLN. A year later, with a period-2 CPI reading of `0.049`, one bond is worth 100 × 1.06 × (1 + 0.069 × 184 / 365) = 109.69 PLN gross.
+In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on a return); in IKZE it nets 927.18 PLN (10% of 1030.20 is 103.02), and liquidates at 906.58 PLN at a 12% marginal rate, or not at all until the owner sets one; in OKI it nets 1030.20 and liquidates at 1010.20 PLN, the fee only. Bought by exchange at 99.90 PLN, the 1.00 PLN discount is income too: taxable net 1024.27, liquidation 1008.07 PLN. A year later, with a period-2 CPI reading of `0.049`, one bond is worth 100 × 1.06 × (1 + 0.069 × 184 / 365) = 109.69 PLN gross.
 
 ## Decisions
 
 - **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date. In a revaluation the purchase date is the lot's open date and the price per bond its cost over its quantity; the series terms (per ISIN), the index readings and the account's tax wrapper are recorded separately. The owner enters a lot with its series' terms in the built-in UI, and the treasury-bonds connector delivers both ([Ingest](ingest.md#treasury-bond-lots)); the lot's rules reuse `ValueLot`: a lot is accepted only if it can be valued on its purchase date.
-- **D-20**: Polish tax uses NBP rates, from the day before (`TaxRateCutoff`).
-- **D-77**: **partly built.** Lots have gross accrued and net-if-redeemed values, and one of them counts in totals (net-if-redeemed by default). Not built: net without the early-redemption fee, liquidation's early-withdrawal taxes for IKE and IKZE (the code charges no tax and no fee in either wrapper, because it assumes a withdrawal that meets the wrapper's conditions), and storing all three values.
-- **D-76**: **partly built.** The code has the taxable, IKE and IKZE wrappers; OKI isn't built.
+- **D-20**: Polish tax uses NBP rates, from the day before (`TaxRateCutoff`, the pack's `TaxRateDate`); the cost basis of a listed holding converts at it.
+- **D-70**: `Pack` is the Polish jurisdiction pack, pure functions behind `jurisdiction.Pack`. Bond accrual (`ValueLot`) stays a Polish function that valuation calls directly, since only Polish bonds have series terms; the pack turns its parts into values.
+- **D-76**: the four wrappers, no Belka tax inside OKI, and OKI's yearly tax computed only under an act in force. The act's date, limit and rate are unknown to the code, so nothing is computed yet; how the tax applies to days before an act takes effect mid-year, and averaging over the days given, are this package's narrow readings ([Implementation questions](../implementation-questions.md)).
+- **D-77**: gross, net and liquidation per product kind and wrapper, as tabled above. The tax rules per wrapper are the narrowest reading of Polish tax law: IKE's exit untaxed and its return taxed on the gain, IKZE's 10% exit tax, per-holding gains without loss offsetting, rounding half up.
+- **D-78**: an IKZE's liquidation value is `LiquidationUnknown` until the owner's marginal rate is set; a sale's cost comes from the account's fee rule, which valuation applies.
 - **D-37**: issuer tables and examples over the letter. Implemented as decided: the TOS base isn't rounded between years, and Belka tax rounds half up.
-- **D-62**: the Polish pack may assume PLN for tax; `Nominal()` and all bond amounts are PLN.
+- **D-62**, **D-113**: the pack's defaults are PLN and the space-comma number format. The Polish pack may assume PLN for tax; `Nominal()`, all bond amounts and every value the pack computes are PLN, and it refuses another currency (`ErrNotPLN`).
 
 ## Verification
 
@@ -181,17 +210,19 @@ The same lot in IKE is worth 1030.20 PLN net. Bought by exchange at 99.90 PLN, i
 | CPI month two months before the period | `TestCPIMonth` | REQ-pl-cpi-indexation, SCEN-pl-cpi-indexation, TEST-pl-calendar |
 | Business days skip Saturdays, Sundays and each year's statutory holidays; the reference rate is the one in force on the tenth business day before the month | `TestIsBusinessDay`, `TestReferenceRateDay`, `TestRateInForce` in [businessday_test.go](../../internal/jurisdiction/pl/businessday_test.go) | REQ-pl-reference-rate-day, SCEN-pl-reference-rate-day, TEST-pl-businessday |
 | Index plus margin, negative readings floored, missing readings fail | `TestPeriodRate`, `TestPeriodRateNeedsTheIndexReading` in [terms_test.go](../../internal/jurisdiction/pl/terms_test.go) | REQ-pl-cpi-indexation, SCEN-pl-cpi-indexation, TEST-pl-terms |
-| Lot values: accrual, fee cap, wrappers, discount, maturity | `TestValueLot`, `TestValueLotRejectsBadInput` | REQ-pl-bond-accrual, REQ-pl-early-redemption-fee-cap, REQ-pl-belka-tax, REQ-pl-tax-wrapper-exempt, TEST-pl-value |
+| Lot values: accrual, fee cap per wrapper, discount, maturity; a taxable lot's liquidation value | `TestValueLot`, `TestValueLotRejectsBadInput` | REQ-pl-bond-accrual, REQ-pl-early-redemption-fee-by-wrapper, SCEN-pl-early-redemption-fee-by-wrapper, TEST-pl-value |
+| Gross, net and liquidation of a listed holding, a bond lot and cash in each wrapper; IKZE without the owner's rate; values never above gross (seeded property test); the pack's defaults | `TestPackDefaults`, `TestValueListed`, `TestValueAccrued`, `TestValueCash`, `TestValuesProperties` in [pack_test.go](../../internal/jurisdiction/pl/pack_test.go) | REQ-pl-values-per-wrapper, SCEN-pl-values-per-wrapper, REQ-pl-tax-wrappers, REQ-pl-oki-no-belka-tax, REQ-pl-ikze-early-withdrawal-tax, REQ-pl-ikze-liquidation-missing, REQ-jurisdiction-pl-number-format, TEST-pl-pack |
+| OKI's yearly tax: none without an act in force; under a synthetic act, the average above the limit | `TestYearlyTax` | REQ-pl-oki-act-as-data, SCEN-pl-oki-act-as-data, REQ-pl-oki-yearly-tax, TEST-pl-pack |
 | Matches the issuer's daily interest tables | `TestValueLotMatchesInterestTables` in [official_test.go](../../internal/jurisdiction/pl/official_test.go) | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-2-tos-base-unrounded, TEST-pl-official |
 | Matches the issuer's worked early-redemption examples | `TestValueLotMatchesWorkedExamples` | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-3-belka-half-up, TEST-pl-official |
-| Belka tax 19%, half up, none in IKE or IKZE | `TestBelkaTax`, `TestBelkaRate` in [tax_test.go](../../internal/jurisdiction/pl/tax_test.go) | REQ-pl-belka-tax, REQ-decision-d37-3-belka-half-up, SCEN-pl-belka-tax, TEST-pl-tax |
+| Belka tax 19%, half up, none in IKE, IKZE or OKI; the wrappers' keys | `TestBelkaTax`, `TestBelkaRate`, `TestTaxWrapperNames` in [tax_test.go](../../internal/jurisdiction/pl/tax_test.go) | REQ-pl-values-per-wrapper, REQ-decision-d37-3-belka-half-up, REQ-pl-tax-wrappers, TEST-pl-tax |
 | Tax takes the rate from before the event | `TestTaxRateCutoff`; `TestTaxRateUsesTheTableBeforeTheEvent` in valuation | REQ-pl-tax-fx-rate-date, SCEN-pl-tax-fx-rate-date, TEST-pl-tax |
 
-TEST-pl-value and TEST-pl-official also validate the firm requirements REQ-AUTO-30FD669113CEFE3B (bond lots are valued, from D-9) and REQ-AUTO-E10BE8CE13E67657 (net-if-redeemed by default, from the single bond basis that D-77 replaced). Most cases are synthetic lots worked out by hand in each case's comment. `official_test.go` checks against published sources instead: the issuer's daily interest tables (EDO, TOS, COI and ROR series, held in IKE so that gross equals net) and the worked examples on the offer pages (EDO, TOS, ROS, DOR, ROR and OTS). Three of the table cases (two EDO1133 days and one TOS0128 day) are days where rounding the base after each year, as the TOS letter words it, would be one grosz off. No test compares with the open-source reference valuers listed in R-5. ROD is covered only by parsing and structure tests.
+TEST-pl-value and TEST-pl-official also validate the firm requirement REQ-AUTO-30FD669113CEFE3B (bond lots are valued, from D-9). Most cases are synthetic lots worked out by hand in each case's comment; a taxable case's tax and net columns are its liquidation value, through the pack. `official_test.go` checks against published sources instead: the issuer's daily interest tables (EDO, TOS, COI and ROR series, held in IKE, where no fee is charged) and the worked examples on the offer pages (EDO, TOS, ROS, DOR, ROR and OTS). Three of the table cases (two EDO1133 days and one TOS0128 day) are days where rounding the base after each year, as the TOS letter words it, would be one grosz off. No test compares with the open-source reference valuers listed in R-5. ROD is covered only by parsing and structure tests.
 
 Run them with `task test`, or just this package with `go test ./internal/jurisdiction/pl/...`.
 
 ## Not built yet
 
 - **D-9**: anything that fetches series terms (the owner types each series' terms with its lots); entering a lot bought by exchange at the [exchange price](../glossary.md), since entered lots are cash purchases at the nominal; and an import of the bond service's export, if one exists (OQ-22).
-- **D-62**, **GR-13**: the jurisdiction pack (`jurisdiction.Pack` in the glossary) that would make these rules pluggable and set PLN as the default reporting currency; today `pl` is a plain package.
+- **D-76**: OKI's yearly tax in practice: the act's in-force date, limit and rate.

@@ -132,20 +132,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5cf9e069f582
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
-    to: TEST-valuation-app-revalue
-    created_at: 2026-10-28T07:38:44.769Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-492dfb28f504
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
-    to: TEST-valuation-app-plan
-    created_at: 2026-10-28T07:38:44.797Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cd2acdda628c
   - type: verified_by
     from: SCEN-sdk-go-plugin-environment
     to: TEST-sdk-go-env
@@ -244,13 +230,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f98511f2eaf8
-  - type: implements
-    from: SYM-ui-allocation-view-fragment-link
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:08.639Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ab2b6ee920cb
   - type: implements
     from: SYM-ui-allocation-view-fragment-link
     to: REQ-AUTO-68636F42D98D4CF7
@@ -447,3 +426,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d5a791f3f8d
+  - type: implements
+    from: SYM-pl-plugin-requested
+    to: REQ-plugins-requested-secret-names
+    created_at: 2026-10-29T15:14:11.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43520bd20518
+  - type: covered_by
+    from: SYM-pl-plugin-requested
+    to: TEST-plugins-manifest
+    created_at: 2026-10-29T15:14:11.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0d598054d81
+  - type: executable_for
+    from: SYM-pl-test-resources-with-cluster-service
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:22:04.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ca2caa796eb
+  - type: implements
+    from: SYM-portfoliov1-sleeve-string
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:32:28.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b01ede881c1
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-string
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:32:28.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17ef9e7226b9
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind-proto-message
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:43:18.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54eec9b78e5c
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind-proto-message
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:43:18.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1104cc27c9f8
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:13:04.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-492dfb28f504
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:13:05.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd2acdda628c
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-tax-wrapper
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:13:05.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cffe8228955
+  - type: implements
+    from: SYM-ingestv1-fee-rule-proto-message
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:15.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5290798f653a
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-proto-message
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:15.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b198ad3880f1
+  - type: implements
+    from: SYM-ui-allocation-view-fragment-link
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:40:51.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebc5925c2f22

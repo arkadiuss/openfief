@@ -30,22 +30,33 @@ func RenderProposal(p *app.Proposal) string {
 	fmt.Fprintf(&b, "Trust:        %s\n", trustText(p))
 	b.WriteString("\nIt requests, and the PluginGrant will approve, exactly:\n")
 	fmt.Fprintf(&b, "  Capabilities: %s\n", joinOr(strsOf(m.Capabilities), noneText))
-	hosts := make([]string, 0, len(m.Egress))
+	hosts := make([]string, 0, len(m.Egress)+len(p.ConfigHosts))
 	for _, h := range m.Egress {
 		hosts = append(hosts, h.String())
 	}
+	for _, h := range p.ConfigHosts {
+		hosts = append(hosts, h.Host.String()+" (the host of config field "+h.Field+")")
+	}
 	fmt.Fprintf(&b, "  Egress hosts: %s\n", joinOr(hosts, "none: it cannot reach the internet"))
+	for _, f := range m.EgressFromConfig {
+		if !slices.ContainsFunc(p.ConfigHosts, func(h plugins.ConfigHost) bool { return h.Field == f }) {
+			fmt.Fprintf(&b, "                no host from config field %s: the config doesn't set it\n", f)
+		}
+	}
 	if len(m.Secrets) == 0 {
 		fmt.Fprintf(&b, "  Secrets:      %s\n", noneText)
 	} else {
-		b.WriteString("  Secrets:      mounted read-only; create each in namespace openfief yourself\n")
+		b.WriteString("  Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself\n")
 		for _, s := range m.Secrets {
-			fmt.Fprintf(&b, "                %s at %s\n", s.Name, s.MountPath)
+			fmt.Fprintf(&b, "                %s (role %s) at %s\n", plugins.SecretName(p.Plugin.Name, s.Role), s.Role, s.MountPath)
 		}
 	}
 	fmt.Fprintf(&b, "  Data tiers:   %s\n", joinOr(strsOf(m.DataTiers), noneText))
 	if m.BrowserPath != "" {
 		fmt.Fprintf(&b, "  Browser path: %s, which the core proxies to it for browsers (D-81)\n", m.BrowserPath)
+	}
+	if r := m.ClusterService; r != nil {
+		writeClusterService(&b, r, p.Plugin.ClusterService)
 	}
 	b.WriteString("  Config:       ")
 	b.WriteString(strings.Join(describeSchema(m.ConfigSchema), "\n                "))
@@ -56,6 +67,31 @@ func RenderProposal(p *app.Proposal) string {
 	}
 	fmt.Fprintf(&b, "\nConfig given: %s\n", config)
 	return b.String()
+}
+
+// writeClusterService describes the in-cluster service the manifest asks
+// for and the owner picked, with D-74's warning: that traffic skips the
+// egress proxy and may be plain HTTP.
+func writeClusterService(b *strings.Builder, r *plugins.ClusterServiceRequest, cs *plugins.ClusterService) {
+	what := r.Description
+	if what == "" {
+		what = "one service the owner picks"
+	}
+	if cs == nil {
+		fmt.Fprintf(b, "  In-cluster:   none picked (it asks for %s)\n", what)
+		return
+	}
+	fmt.Fprintf(b, "  In-cluster:   namespace %s, service %s, port %d (%s),\n", cs.Namespace, cs.Service, cs.Port, what)
+	b.WriteString("                reached directly at its ClusterIP, not through the egress proxy\n")
+	b.WriteString("  WARNING:      traffic to that service may be plain HTTP, unencrypted inside the cluster\n")
+}
+
+// RenderIngressRule tells the owner to add rule, a NetworkPolicy in YAML,
+// because the in-cluster service's namespace has NetworkPolicies of its own
+// that would otherwise drop the plugin's traffic (D-74).
+func RenderIngressRule(namespace string, rule []byte) string {
+	return "\nNamespace " + namespace + " has NetworkPolicies of its own. Add this rule there so the plugin's\n" +
+		"traffic reaches the service (kubectl apply -f -):\n" + string(rule)
 }
 
 // trustText says why the image may run (D-44, D-45, D-56).

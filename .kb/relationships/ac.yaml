@@ -100,14 +100,14 @@ relationships:
   - type: constrains
     from: REQ-operator-cluster-peers
     to: FACT-SUBJECT-E4ED656B951F9EFF
-    created_at: 2026-10-28T06:50:42.970Z
+    created_at: 2026-10-29T21:58:55.904Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3883ca052c93
   - type: requires_property
     from: REQ-operator-cluster-peers
     to: FACT-PROP-3D2B6E397B2AD7EF
-    created_at: 2026-10-28T06:50:42.995Z
+    created_at: 2026-10-29T21:58:55.959Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e9b37d858f4
@@ -209,13 +209,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fadf7292422
-  - type: implements
-    from: SYM-core-parse-args
-    to: REQ-core-config
-    created_at: 2026-10-28T14:33:41.755Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ba2213cb88d6
   - type: covered_by
     from: SYM-core-parse-args
     to: TEST-core-unit
@@ -314,6 +307,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d58afcae4643
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-check-broker-account-list
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:10:54.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13b280a3c357
+  - type: implements
+    from: SYM-ingestv1connect-account-service-client
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:34.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-175fd1413f67
+  - type: covered_by
+    from: SYM-ingestv1connect-account-service-client
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:34.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-931d3f933ea0
+  - type: implements
+    from: SYM-viewsv1-sleeve-kind-descriptor
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:43:33.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f9abcbdd3dc
+  - type: covered_by
+    from: SYM-viewsv1-sleeve-kind-descriptor
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:43:33.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac6f96bb5852
   - type: implements
     from: SYM-fd-views-kube-browser-route-of
     to: REQ-core-reverse-proxies-view-plugins
@@ -342,3 +370,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-334fc255d69c
+  - type: implements
+    from: SYM-core-parse-args
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:53:28.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a79ad7c59dbf

@@ -286,3 +286,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-001f16f8315c
+  - type: executable_for
+    from: SYM-pl-test-helper-ghostfolio-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:58.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-945214d8e64f
+  - type: verified_by
+    from: SCEN-ingest-broker-account-resolve
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:35:56.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc2ba677042c
+  - type: verified_by
+    from: SCEN-ingest-broker-account-resolve
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:35:56.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88b6d3a8f2d5
+  - type: verified_by
+    from: SCEN-ingest-broker-account-resolve
+    to: TEST-ingest-ibkrflex-brokers
+    created_at: 2026-10-29T11:35:56.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f59eb522dde2
+  - type: implements
+    from: SYM-portfolio-connectapi-pb-kind
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:07:07.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f95d9269c990
+  - type: covered_by
+    from: SYM-portfolio-connectapi-pb-kind
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:07:07.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6143a2018de4
+  - type: implements
+    from: SYM-ui-accounts-data
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:13.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55f72ee619c1
+  - type: covered_by
+    from: SYM-ui-accounts-data
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:13.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d63247596d50
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-get-role-override
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:27.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32ba32d5381b
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-get-role-override
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:27.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fca6489a3ce1
+  - type: constrains
+    from: REQ-views-totals-with-cash
+    to: FACT-SUBJECT-5FCF5B63A486FB72
+    created_at: 2026-10-30T00:05:13.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-505b1e2c21bd
+  - type: requires_property
+    from: REQ-views-totals-with-cash
+    to: FACT-PROP-64967912886DF320
+    created_at: 2026-10-30T00:05:13.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f274f64e15f5
+  - type: specified_by
+    from: REQ-views-totals-with-cash
+    to: SCEN-views-totals-with-cash
+    created_at: 2026-10-30T00:05:13.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa6ba93878c7
+  - type: supersedes
+    from: REQ-views-totals-with-cash
+    to: REQ-views-valuation-totals
+    created_at: 2026-10-30T00:05:13.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d95df3f1426a
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-number-format
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-30T01:21:29.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c00fd0c0965
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-number-format
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:29.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28c46d8b1849

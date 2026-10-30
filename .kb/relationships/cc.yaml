@@ -335,3 +335,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30b1ee996c74
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-delivery-from-by-broker-account
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:51:01.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ade7bc1d2f09
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-response-proto-message
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:02.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-544a67180dd9
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-response-proto-message
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:02.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98e115a757d3
+  - type: implements
+    from: SYM-viewsv1-value-kind-descriptor
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:26:48.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5359733877b1
+  - type: covered_by
+    from: SYM-viewsv1-value-kind-descriptor
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:26:48.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a48014cbfaf

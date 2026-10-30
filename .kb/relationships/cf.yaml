@@ -321,3 +321,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ceddbe6713d7
+  - type: executable_for
+    from: SYM-pl-test-helper-in-cluster
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:17:04.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe66cc19229
+  - type: implements
+    from: SYM-ingest-book
+    to: REQ-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:49:28.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cb2bf4df4c8
+  - type: implements
+    from: SYM-ingest-book
+    to: REQ-ingest-unmapped-broker-account
+    created_at: 2026-10-29T11:49:28.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a05b94f04b6f
+  - type: covered_by
+    from: SYM-ingest-book
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:49:28.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f152752d777b
+  - type: implements
+    from: SYM-portfoliov1-sleeve-reset
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:32:21.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf9594249dff
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-reset
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:32:21.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0db1527e568
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-response-get-sleeve
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:39:56.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b4a9fa307e4
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-response-get-sleeve
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:39:56.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5069378cb719
+  - type: implements
+    from: SYM-valuationv1connect-settings-service-client-get-owner-settings
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:21:56.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62854dfdb940
+  - type: covered_by
+    from: SYM-valuationv1connect-settings-service-client-get-owner-settings
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:21:56.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbe5342638c6
+  - type: implements
+    from: SYM-viewsv1-fee-rule-get-rate
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:17.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dca4cabf228
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule-get-rate
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:17.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07c802f292be
+  - type: verified_by
+    from: SCEN-ui-overview-values
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:37:21.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5e32a45d0d5
+  - type: verified_by
+    from: SCEN-ui-overview-values
+    to: TEST-ui-pages
+    created_at: 2026-10-30T02:37:22.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2c556cb3ff9
+  - type: verified_by
+    from: SCEN-ui-overview-values
+    to: TEST-ui-format
+    created_at: 2026-10-30T02:45:56.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fcb841d4e0c
+  - type: verified_by
+    from: SCEN-ui-overview-values
+    to: TEST-ui-model
+    created_at: 2026-10-30T02:45:56.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3489c09ddba0

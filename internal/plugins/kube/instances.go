@@ -59,9 +59,14 @@ func (s *Instances) List(ctx context.Context) ([]app.Instance, error) {
 	for i := range ps.Items {
 		p := &ps.Items[i]
 		in := get(p.Name)
-		in.HasPlugin, in.Image = true, p.Spec.Image
+		in.HasPlugin, in.Image, in.BrowserPath = true, p.Spec.Image, p.Spec.Manifest.BrowserPath
 		for _, sm := range p.Spec.Manifest.Secrets {
-			in.Secrets = append(in.Secrets, sm.Name)
+			in.Secrets = append(in.Secrets, plugins.SecretName(p.Name, sm.Role))
+		}
+		if r := p.Spec.ClusterService; r != nil {
+			if cs, err := clusterServiceOf(r); err == nil {
+				in.ClusterService = &cs
+			}
 		}
 		describeStatus(in, &p.Status)
 	}
@@ -95,9 +100,10 @@ func describeStatus(in *app.Instance, st *v1alpha1.PluginStatus) {
 	in.Pending = st.PendingApproval != nil
 }
 
-// Create applies a new instance: its Plugin first, which runs nothing
-// without a grant, then its PluginGrant. It fails with app.ErrInstanceExists
-// when either already exists.
+// Create applies a new instance: with an in-cluster service (D-74), the Role
+// and RoleBinding that let the operator read that Service; then its Plugin,
+// which runs nothing without a grant; then its PluginGrant. It fails with
+// app.ErrInstanceExists when either already exists.
 func (s *Instances) Create(ctx context.Context, p *plugins.Plugin, g *plugins.Grant) error {
 	plugin, grant := Resources(p, g)
 	for _, obj := range []client.Object{&v1alpha1.Plugin{}, &v1alpha1.PluginGrant{}} {
@@ -107,6 +113,11 @@ func (s *Instances) Create(ctx context.Context, p *plugins.Plugin, g *plugins.Gr
 			return fmt.Errorf("%w: %q", app.ErrInstanceExists, p.Name)
 		case !apierrors.IsNotFound(err):
 			return fmt.Errorf("look up %q: %w", p.Name, err)
+		}
+	}
+	if p.ClusterService != nil {
+		if err := s.createServiceAccess(ctx, p.Name, *p.ClusterService); err != nil {
+			return err
 		}
 	}
 	if err := s.Client.Create(ctx, plugin); err != nil {
@@ -121,8 +132,14 @@ func (s *Instances) Create(ctx context.Context, p *plugins.Plugin, g *plugins.Gr
 // Delete removes an instance: its PluginGrant first, so the operator stops
 // it at once, then its Plugin, whose owned workload objects the garbage
 // collector deletes and whose egress allow-list entry the operator drops
-// (D-58), then the named Secrets. Objects already gone are skipped.
+// (D-58), then the named Secrets and, when the Plugin names an in-cluster
+// service, the Role and RoleBinding that let the operator read it (D-74).
+// Objects already gone are skipped.
 func (s *Instances) Delete(ctx context.Context, name string, secrets []string) error {
+	access, hasAccess, err := s.clusterServiceOfPlugin(ctx, name)
+	if err != nil {
+		return err
+	}
 	own := []client.Object{
 		&v1alpha1.PluginGrant{ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: name}},
 		&v1alpha1.Plugin{ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: name}},
@@ -137,6 +154,9 @@ func (s *Instances) Delete(ctx context.Context, name string, secrets []string) e
 		if err := s.Client.Delete(ctx, obj); err != nil && !apierrors.IsNotFound(err) {
 			errs = append(errs, fmt.Errorf("delete %T %q: %w", obj, obj.GetName(), err))
 		}
+	}
+	if hasAccess {
+		errs = append(errs, s.deleteServiceAccess(ctx, name, access)...)
 	}
 	return errors.Join(errs...)
 }
@@ -175,17 +195,25 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 		Spec: v1alpha1.PluginSpec{
 			Image: p.Image,
 			Manifest: v1alpha1.Manifest{
-				Capabilities: strs(m.Capabilities),
-				Egress:       hosts(m.Egress),
-				DataTiers:    strs(m.DataTiers),
-				ConfigSchema: raw(m.ConfigSchema),
-				BrowserPath:  m.BrowserPath,
+				Capabilities:     strs(m.Capabilities),
+				Egress:           hosts(m.Egress),
+				DataTiers:        strs(m.DataTiers),
+				ConfigSchema:     raw(m.ConfigSchema),
+				BrowserPath:      m.BrowserPath,
+				EgressFromConfig: slices.Clone(m.EgressFromConfig),
 			},
 			Config: raw(p.Config),
 		},
 	}
+	if m.ClusterService != nil {
+		plugin.Spec.Manifest.ClusterService = &v1alpha1.ClusterServiceRequest{Description: m.ClusterService.Description}
+	}
+	if p.ClusterService != nil {
+		ref := clusterServiceRef(*p.ClusterService)
+		plugin.Spec.ClusterService = &ref
+	}
 	for _, s := range m.Secrets {
-		plugin.Spec.Manifest.Secrets = append(plugin.Spec.Manifest.Secrets, v1alpha1.SecretMount{Name: s.Name, MountPath: s.MountPath})
+		plugin.Spec.Manifest.Secrets = append(plugin.Spec.Manifest.Secrets, v1alpha1.SecretMount{Role: s.Role, MountPath: s.MountPath})
 	}
 	grant := &v1alpha1.PluginGrant{
 		TypeMeta:   metav1.TypeMeta{APIVersion: v1alpha1.GroupVersion().String(), Kind: "PluginGrant"},
@@ -198,15 +226,25 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 			BrowserPaths: slices.Clone(g.Permissions.BrowserPaths),
 		},
 	}
+	for _, cs := range g.Permissions.ClusterServices {
+		grant.Spec.ClusterServices = append(grant.Spec.ClusterServices, clusterServiceRef(cs))
+	}
 	return plugin, grant
 }
 
 // ResourcesYAML renders an install's Plugin and PluginGrant as one YAML
-// stream, for GitOps (D-46): no status, no server-set fields.
+// stream, for GitOps (D-46): no status, no server-set fields. With an
+// in-cluster service (D-74), the Role and RoleBinding that let the operator
+// read it come first.
 func ResourcesYAML(p *plugins.Plugin, g *plugins.Grant) ([]byte, error) {
 	plugin, grant := Resources(p, g)
+	objs := []any{plugin, grant}
+	if p.ClusterService != nil {
+		role, binding := ServiceAccess(p.Name, *p.ClusterService)
+		objs = append([]any{role, binding}, objs...)
+	}
 	var out []byte
-	for _, obj := range []any{plugin, grant} {
+	for _, obj := range objs {
 		doc, err := cleanYAML(obj)
 		if err != nil {
 			return nil, err

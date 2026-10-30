@@ -363,3 +363,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f9219962ec4
+  - type: implements
+    from: SYM-connectorv1-transaction-get-broker-account
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:54:45.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34d49cce36ef
+  - type: covered_by
+    from: SYM-connectorv1-transaction-get-broker-account
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:54:45.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-758c12a04c50
+  - type: implements
+    from: SYM-ui-server-account-entry-done
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:12:01.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5870f4b17c33
+  - type: covered_by
+    from: SYM-ui-server-account-entry-done
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:12:01.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69ab87fe579e
+  - type: implements
+    from: SYM-valuation-postgres-querier
+    to: REQ-valuation-market-data-all-sources-stored
+    created_at: 2026-10-29T18:15:39.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47252b7bb432
+  - type: implements
+    from: SYM-valuation-postgres-querier
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:15:39.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e875aa9ecf7c
+  - type: covered_by
+    from: SYM-valuation-postgres-querier
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:15:39.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f4793f0caf
+  - type: implements
+    from: SYM-valuation-ranking-names
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:17:33.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cc7d742f273
+  - type: implements
+    from: SYM-valuation-ranking-names
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:17:33.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4291224a327d
+  - type: covered_by
+    from: SYM-valuation-ranking-names
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:17:33.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa7e5091cbda
+  - type: constrains
+    from: REQ-pl-values-per-wrapper
+    to: FACT-SUBJECT-47FA7962F261D741
+    created_at: 2026-10-29T21:48:16.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c9e675e97e8
+  - type: requires_property
+    from: REQ-pl-values-per-wrapper
+    to: FACT-PROP-9FBFA0F46B9ADD5E
+    created_at: 2026-10-29T21:48:16.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4a107d123f3
+  - type: specified_by
+    from: REQ-pl-values-per-wrapper
+    to: SCEN-pl-values-per-wrapper
+    created_at: 2026-10-29T21:48:16.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f8dd7b373e5
+  - type: supersedes
+    from: REQ-pl-values-per-wrapper
+    to: REQ-pl-belka-tax
+    created_at: 2026-10-29T21:48:16.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ee11012dd7d
+  - type: supersedes
+    from: REQ-pl-values-per-wrapper
+    to: REQ-pl-tax-wrapper-exempt
+    created_at: 2026-10-29T21:48:16.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fbdd2256d85
+  - type: implements
+    from: SYM-pl-tax-wrappers
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:08:43.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a412d1210c8d
+  - type: implements
+    from: SYM-pl-tax-wrappers
+    to: REQ-pl-oki-no-belka-tax
+    created_at: 2026-10-29T22:08:43.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df79eef9151c
+  - type: covered_by
+    from: SYM-pl-tax-wrappers
+    to: TEST-pl-tax
+    created_at: 2026-10-29T22:08:43.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68b1f4052fe5
+  - type: executable_for
+    from: SYM-tooling-image-carry-test-check
+    to: TEST-tooling-image-carry
+    created_at: 2026-10-30T03:49:02.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d1c3017a7ef

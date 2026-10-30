@@ -28,6 +28,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
@@ -93,6 +94,10 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		Model:      portfoliov1connect.NewModelPortfolioServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		BondLots:   ingestv1connect.NewBondLotServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Statements: ingestv1connect.NewStatementServiceClient(uploadClient(openfief.TokenFile{}), coreURL),
+		Sleeves:    portfoliov1connect.NewSleeveServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Accounts:   ingestv1connect.NewAccountServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		MarketData: valuationv1connect.NewMarketDataServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Settings:   valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Read:       viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:        log,
 	})

@@ -461,3 +461,150 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7537c1a3871a
+  - type: implements
+    from: SYM-portfolio-key-rune
+    to: REQ-portfolio-key-from-name
+    created_at: 2026-10-29T11:54:04.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81139b8f03a2
+  - type: covered_by
+    from: SYM-portfolio-key-rune
+    to: TEST-portfolio-key
+    created_at: 2026-10-29T11:54:04.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee68b288a080
+  - type: executable_for
+    from: SYM-ingest-app-test-accounts-owner-only
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T13:00:56.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceea748fa0f0
+  - type: executable_for
+    from: SYM-portfolio-app-test-sleeves-rename-kind
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:05:54.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e2ea39738ea
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-broker-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:14:53.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3237ccc70d0a
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-request-reset
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:48:32.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a49c32bdda96
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-request-reset
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:48:32.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30be261af4e2
+  - type: implements
+    from: SYM-valuation-gen-connect-market-data-service-client-interface
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T20:08:31.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69d60281ba84
+  - type: covered_by
+    from: SYM-valuation-gen-connect-market-data-service-client-interface
+    to: TEST-core-market-data
+    created_at: 2026-10-29T20:08:31.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c2dff2728ec
+  - type: implements
+    from: SYM-jurisdiction-wrapper
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:03:21.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74e474169c28
+  - type: covered_by
+    from: SYM-jurisdiction-wrapper
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:03:21.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42e0ceacf100
+  - type: implements
+    from: SYM-valuationv1-x
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:21:28.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c381f8aea3d
+  - type: covered_by
+    from: SYM-valuationv1-x
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:21:28.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5532695d3602
+  - type: implements
+    from: SYM-ui-value-chart-view
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:00:14.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6f684a02fa0
+  - type: implements
+    from: SYM-ui-value-chart-view
+    to: REQ-ui-value-chart-money-with-cash
+    created_at: 2026-10-30T03:00:14.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b0d01346edf
+  - type: covered_by
+    from: SYM-ui-value-chart-view
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:00:14.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c78b0d97b17
+  - type: implements
+    from: SYM-ui-value-chart-view
+    to: REQ-ui-value-performance-separate-charts
+    created_at: 2026-10-30T03:07:21.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfbe54b76177
+  - type: implements
+    from: SYM-affected-script-reads
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:59:47.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fdffa1f4f40
+  - type: covered_by
+    from: SYM-affected-script-reads
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:59:47.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99d66883f553
+  - type: implements
+    from: SYM-affected-env
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:05:03.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8a174f652cd
+  - type: covered_by
+    from: SYM-affected-env
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:05:03.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b4f426cc77c

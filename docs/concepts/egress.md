@@ -24,7 +24,9 @@ A connector that pulls IBKR Flex statements needs to reach IBKR's Flex service a
 
 **Token in the proxy URL.** HTTP clients already know how to authenticate to a proxy: given `http://user:password@proxy:port`, Go's `net/http` and undici's `ProxyAgent` (Node) send the credentials as a Basic `Proxy-Authorization` header on every CONNECT (R-14). A plugin puts its egress token in the password. Projected tokens rotate, so the URL has to be rebuilt from the token file on each request (D-63).
 
-**Per-plugin allow-lists.** Each plugin has its own [egress allow-list](../glossary.md): the [egress hosts](../glossary.md) of its effective permissions. An entry is one exact hostname and port. There are no wildcards, no subdomains and no IP literals, so `x.api.example.com` and `api.example.com.evil.example.net` don't match `api.example.com`.
+**Per-plugin allow-lists.** Each plugin has its own [egress allow-list](../glossary.md): the [egress hosts](../glossary.md) of its effective permissions. An entry is one exact hostname and port. There are no wildcards, no subdomains and no IP literals, so `x.api.example.com` and `api.example.com.evil.example.net` don't match `api.example.com`. A host can also come from the instance's config: a manifest may ask for "the host of config field `url`" instead of a fixed one, and the grant approves the host that config names, which then sits in the allow-list like any other (D-75). It must be the host of an `https` URL, never a wildcard or an IP address.
+
+**The one exception: an in-cluster service.** A plugin may also reach one service in the same cluster that its owner picked at install, such as a Ghostfolio running next to OpenFief (D-74). That traffic doesn't go through the proxy: the proxy refuses private addresses, and a ClusterIP is one. Instead the plugin's NetworkPolicy allows exactly that service's pods on that port, and the plugin gets the service's ClusterIP, so it still needs no DNS. The traffic may be plain HTTP; the install warns about it. See [Operator](operator.md#the-resources-and-what-the-operator-owns).
 
 **Refusing private and internal ranges.** An allowed hostname is still dangerous if it resolves to an address inside the cluster or to cloud metadata, through a mistake, a hijacked DNS record, or DNS rebinding (a name that answers with a public address once and a private one the next time). So the proxy resolves the name itself, checks every address it gets, and dials only an address it checked.
 
@@ -159,7 +161,8 @@ Implemented, fully or in the part named:
 - **D-32** Smokescreen embedded as a library, custom role function.
 - **D-32** Granted hostnames compiled into per-plugin allow-lists.
 - **D-32** Private and internal address ranges refused.
-- **D-32** Plugins reach only core and proxy, no DNS.
+- **D-32** Plugins reach only core and proxy, no DNS; **D-74** adds the one in-cluster service the owner approved, outside the proxy.
+- **D-75** A host from the instance's config (an https URL's host, no wildcard, no IP) is approved by the grant and reached through the proxy like a fixed one.
 - **D-63** `BuildProxy` served from OpenFief's own server, draining on shutdown.
 - **D-63** Never without an allow-list; lists swapped atomically.
 - **D-63** Token as proxy URL password, Basic header.

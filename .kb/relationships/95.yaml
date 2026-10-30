@@ -27,13 +27,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b92d2f1a53ef
-  - type: implements
-    from: SYM-pl-value-lot
-    to: REQ-pl-early-redemption-fee-cap
-    created_at: 2026-10-28T05:24:08.553Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f64db0bfbc22
   - type: covered_by
     from: SYM-pl-value-lot
     to: TEST-pl-value
@@ -41,27 +34,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82771178dad6
-  - type: implements
-    from: SYM-plugins-manifest-requested
-    to: REQ-plugins-manifest-validation
-    created_at: 2026-10-28T05:24:59.937Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5f44fd8f3868
-  - type: implements
-    from: SYM-plugins-manifest-requested
-    to: REQ-AUTO-761F6500ECFC0316
-    created_at: 2026-10-28T05:24:59.954Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4b7e3f898853
-  - type: covered_by
-    from: SYM-plugins-manifest-requested
-    to: TEST-plugins-manifest
-    created_at: 2026-10-28T05:24:59.960Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-77b76b9bcf96
   - type: validates
     from: TEST-plugins-effective
     to: REQ-AUTO-12177128A788CEDC
@@ -419,3 +391,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46eb1a0dc414
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:01:59.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cc4564a5d86
+  - type: implements
+    from: SYM-ingestv1connect-account-service-client-create-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:52.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51c1ec89eafd
+  - type: covered_by
+    from: SYM-ingestv1connect-account-service-client-create-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:52.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feead8c78b66
+  - type: implements
+    from: SYM-pl-value-lot
+    to: REQ-pl-early-redemption-fee-by-wrapper
+    created_at: 2026-10-29T21:55:32.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be8827fd775c
+  - type: implements
+    from: SYM-pl-oki-act
+    to: REQ-pl-oki-act-as-data
+    created_at: 2026-10-29T22:06:58.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f1a85d3ecd9
+  - type: implements
+    from: SYM-pl-oki-act
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:06:59.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-271c6cc9b86c
+  - type: covered_by
+    from: SYM-pl-oki-act
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:59.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-303e477fbf72
+  - type: executable_for
+    from: SYM-valuation-app-test-revalue-fee-rule-and-short-holdings
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:54.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f8789ef6672

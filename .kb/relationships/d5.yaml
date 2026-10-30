@@ -286,3 +286,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46dfcd3efa6a
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-book-accounts
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:14:07.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e78d9db6ec77
+  - type: implements
+    from: SYM-valuation-connectapi-service-fail
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:14:57.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1b15b847b50
+  - type: covered_by
+    from: SYM-valuation-connectapi-service-fail
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:14:57.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f88423023108
+  - type: implements
+    from: SYM-valuation-split-type
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T20:08:24.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36990131ba2a
+  - type: implements
+    from: SYM-valuation-split-type
+    to: REQ-valuation-lower-ranked-cross-checks
+    created_at: 2026-10-29T20:08:24.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f67bb27339b
+  - type: covered_by
+    from: SYM-valuation-split-type
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T20:08:24.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceb655313b51
+  - type: validates
+    from: TEST-valuation-revaluation
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T21:47:23.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f25f04bbc74
+  - type: validates
+    from: TEST-valuation-revaluation
+    to: REQ-valuation-gross-value
+    created_at: 2026-10-29T21:47:23.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2457d3301945
+  - type: validates
+    from: TEST-valuation-revaluation
+    to: REQ-AUTO-C17116F5350E97D6
+    created_at: 2026-10-29T21:47:23.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b148126688f
+  - type: constrains
+    from: REQ-pl-early-redemption-fee-by-wrapper
+    to: FACT-SUBJECT-0DCF0E5888E9E6B0
+    created_at: 2026-10-29T21:48:22.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-611dfad970d2
+  - type: requires_property
+    from: REQ-pl-early-redemption-fee-by-wrapper
+    to: FACT-PROP-E8F16E4D23A4428D
+    created_at: 2026-10-29T21:48:22.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9885e6ab7b6f
+  - type: specified_by
+    from: REQ-pl-early-redemption-fee-by-wrapper
+    to: SCEN-pl-early-redemption-fee-by-wrapper
+    created_at: 2026-10-29T21:48:22.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97cd80e5716e
+  - type: supersedes
+    from: REQ-pl-early-redemption-fee-by-wrapper
+    to: REQ-pl-early-redemption-fee-cap
+    created_at: 2026-10-29T21:48:22.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dc8a736c009

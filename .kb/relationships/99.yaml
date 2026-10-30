@@ -335,20 +335,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5dc00c04bd48
-  - type: implements
-    from: SYM-ui-drawdown-of
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:14:57.676Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-42440c1566e3
-  - type: implements
-    from: SYM-ui-drawdown-of
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:14:57.711Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-72fdab66963c
   - type: covered_by
     from: SYM-ui-drawdown-of
     to: TEST-ui-model
@@ -392,9 +378,128 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-49f9257d54a4
   - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-new-accounts-client
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:03:31.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3021ee19f33
+  - type: implements
+    from: SYM-ui-server-render-accounts
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:11:54.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6e2ba8aee52
+  - type: covered_by
+    from: SYM-ui-server-render-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:11:54.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01fa2b56296d
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-request-get-name
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:36:34.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ee113f07ed6
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-request-get-name
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:36:34.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09fad710896c
+  - type: executable_for
     from: SYM-fd-core-test-helper-browser-get
     to: TEST-core-front-door
     created_at: 2026-10-29T12:08:44.962Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fe7966e3d6d
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-cash-balance
+    created_at: 2026-10-30T01:21:34.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a9c29a5245a
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-bond-asset-symbol
+    created_at: 2026-10-30T01:21:34.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcd3b912c42
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-standalone-fee
+    created_at: 2026-10-30T01:21:34.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-259f2b1d0245
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-dividend-booking
+    created_at: 2026-10-30T01:21:34.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9491932a8763
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-isin-mapping
+    created_at: 2026-10-30T01:21:34.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c61663f90223
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-get-reporting-currency
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:16:55.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35c6f275493f
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-get-reporting-currency
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:16:55.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e843b9b8bbf2
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:20.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4e90e634a89
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:21.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b22bafdd43d1
+  - type: implements
+    from: SYM-ui-drawdown-of
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:42:55.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f53da612ab41
+  - type: implements
+    from: SYM-ui-drawdown-of
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:40:46.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87ab939f9553
+  - type: executable_for
+    from: SYM-tooling-image-carry-test-tagged
+    to: TEST-tooling-image-carry
+    created_at: 2026-10-30T03:49:21.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-870d7d74eee6

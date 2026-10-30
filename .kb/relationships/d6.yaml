@@ -615,6 +615,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64a33b50189b
+  - type: executable_for
+    from: SYM-ui-test-first-run-wizard
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:15:28.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2a9d76d1172
+  - type: implements
+    from: SYM-ingestv1-bind-account-request-proto-reflect
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:25:30.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5eefb01ad11
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request-proto-reflect
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:25:30.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba080db433a9
   - type: constrains
     from: REQ-ui-number-format-separators-only
     to: FACT-SUBJECT-AA3F8D49370A1850
@@ -629,3 +650,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d335be63ba6c
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-response-get-rankings
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:25:34.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc96abb5352a
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-response-get-rankings
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:25:34.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ac438052c4
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:11:14.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9918a56dc0c
+  - type: implements
+    from: SYM-valuationv1-number-format-proto-message
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:14:44.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cdb65bc912c
+  - type: covered_by
+    from: SYM-valuationv1-number-format-proto-message
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:14:44.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0e7b2ae941b
+  - type: implements
+    from: SYM-views-non-zero-cash
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:25:39.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a026c0563e1
+  - type: implements
+    from: SYM-views-non-zero-cash
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:25:39.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12d4e5e16395
+  - type: covered_by
+    from: SYM-views-non-zero-cash
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:39.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d1e8fa077a1
+  - type: implements
+    from: SYM-affected-short
+    to: REQ-tooling-ci-carry-signed-digest
+    created_at: 2026-10-30T03:57:47.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9ecbd45d20b
+  - type: covered_by
+    from: SYM-affected-short
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:57:47.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62eec4f42301

@@ -195,13 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b2e0320fb5e
-  - type: implements
-    from: SYM-views-ghostfolio-price
-    to: REQ-views-ghostfolio-bond-assets
-    created_at: 2026-10-29T00:55:54.289Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-982d4f1ee840
   - type: covered_by
     from: SYM-views-ghostfolio-price
     to: TEST-views-ghostfolio-project
@@ -230,3 +223,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70d3cf2d1e93
+  - type: implements
+    from: SYM-views-connectapi-pb-sleeve-kind
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:10:05.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44af8a073bb8
+  - type: covered_by
+    from: SYM-views-connectapi-pb-sleeve-kind
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:10:05.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-325f71e01e42
+  - type: implements
+    from: SYM-ingestv1-update-account-response-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:24:43.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbe9a41aa9ef
+  - type: covered_by
+    from: SYM-ingestv1-update-account-response-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:24:43.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e32eac4e2a43
+  - type: implements
+    from: SYM-portfoliov1connect-unimplemented-sleeve-service-handler-add-sleeve
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:30:16.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b3241740d62
+  - type: covered_by
+    from: SYM-portfoliov1connect-unimplemented-sleeve-service-handler-add-sleeve
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:30:17.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1f27816384d
+  - type: implements
+    from: SYM-pl-plan-upgrade
+    to: REQ-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:04:45.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1196c9687800
+  - type: implements
+    from: SYM-pl-plan-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:04:45.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78752a6d1595
+  - type: covered_by
+    from: SYM-pl-plan-upgrade
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:04:45.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73158de744bb
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-request-descriptor
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:26:11.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e34f7a1258bd
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-request-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:26:11.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1cc9e4af713
+  - type: implements
+    from: SYM-views-ghostfolio-price
+    to: REQ-views-ghostfolio-asset-keys
+    created_at: 2026-10-30T01:22:14.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e13f2df584f
+  - type: implements
+    from: SYM-jurisdiction-number-format-string
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:43.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42a5c78d252f
+  - type: implements
+    from: SYM-jurisdiction-number-format-string
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:43.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c18a5a3eefe7
+  - type: covered_by
+    from: SYM-jurisdiction-number-format-string
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:43.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43dcaf182e33
+  - type: implements
+    from: SYM-pl-oki-act-in-force-in
+    to: REQ-pl-oki-act-as-data
+    created_at: 2026-10-29T22:07:24.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a2dd3af5afe
+  - type: implements
+    from: SYM-pl-oki-act-in-force-in
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:07:24.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-222254684d4b
+  - type: covered_by
+    from: SYM-pl-oki-act-in-force-in
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:24.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-914f934b6844

@@ -1,0 +1,134 @@
+// OpenFief's account entry contract (docs/DESIGN.md D-72, D-73, D-76,
+// D-78, D-79).
+//
+// The owner creates accounts in the built-in UI, in the first-run wizard
+// (D-73) and later: each account's institution, name and sleeve, the
+// connector instance that feeds it, and, for a broker connector, the broker
+// account it is, picked from those the connector reported, so the owner
+// never types an account number (D-72), with the account's tax wrapper
+// (D-76) and the fee rule its broker charges a sale (D-78). The UI hands
+// them to the core
+// through AccountService, one owner-only service for this kind of entry
+// (D-79). The read API (D-6) stays read-only: it lists accounts, connector
+// bindings and broker accounts.
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto), as in bond_lots.proto:
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - The core makes an account's ID from its name, as lowercase hyphenated
+//   words. A name it can make no ID from, an empty institution, an unknown
+//   sleeve, a tax wrapper the jurisdiction pack doesn't have, a fee rule
+//   whose rates aren't decimal fractions from 0 up to 1 or whose minimum
+//   is negative or has no currency, or a malformed instance name fails
+//   with INVALID_ARGUMENT; a name
+//   whose ID is taken with ALREADY_EXISTS; an unknown account with
+//   NOT_FOUND; a broker account the instance never reported, or one mapped
+//   to another account, with FAILED_PRECONDITION. Nothing is stored then.
+syntax = "proto3";
+
+package openfief.ingest.v1;
+
+// AccountService creates and changes the owner's accounts and connects
+// them to the connector instances that feed them.
+service AccountService {
+  // CreateAccount creates an account and, when a connector instance is
+  // given, binds it to the account, and maps the broker account to it.
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+
+  // UpdateAccount renames an account, moves it to another sleeve, or
+  // changes its tax wrapper or fee rule, which revalues it (D-36); its ID
+  // and institution stay.
+  rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
+
+  // BindAccount binds a connector instance to a stored account, as
+  // `core connector bind` does, and maps the broker account to it when one
+  // is given. Binding again changes nothing.
+  rpc BindAccount(BindAccountRequest) returns (BindAccountResponse);
+}
+
+// Account is one account at an institution, in one sleeve.
+message Account {
+  string id = 1;
+  string institution = 2;
+  string name = 3;
+  // The ID of the account's sleeve.
+  string sleeve = 4;
+  // The account's tax wrapper, a key of the jurisdiction pack, such as
+  // "taxable", "ike", "ikze" or "oki" (D-76).
+  string tax_wrapper = 5;
+  // The fee rule its broker charges a sale (D-78); all zero until set.
+  FeeRule fee_rule = 6;
+}
+
+// FeeRule is how an account's broker charges a sale (D-78): rate of the
+// value sold, at least minimum, plus conversion_rate of the value for an
+// instrument in a foreign currency. Rates are decimal fractions as
+// strings: "0.0029" is 0.29%.
+message FeeRule {
+  string rate = 1;
+  // The minimum as a decimal string; "0" or empty for none.
+  string minimum = 2;
+  // The minimum's ISO 4217 currency; empty when there is no minimum.
+  string minimum_currency = 3;
+  string conversion_rate = 4;
+}
+
+message CreateAccountRequest {
+  string origin = 1;
+  string session_token = 2;
+  string name = 3;
+  // The institution's ID, such as "ibkr" or "treasury-bonds". Empty takes
+  // the broker account's institution, as its connector reported it.
+  string institution = 4;
+  // The ID of a stored sleeve.
+  string sleeve = 5;
+  // The connector instance that feeds the account (D-48); empty for none
+  // yet.
+  string connector_instance = 6;
+  // A broker account connector_instance reported, mapped to the new
+  // account; empty for a connector that names OpenFief accounts itself.
+  string broker_account = 7;
+  // The account's tax wrapper (D-76); empty takes the pack's default,
+  // "taxable" for Poland.
+  string tax_wrapper = 8;
+  // The fee rule (D-78); unset for the zero rule.
+  FeeRule fee_rule = 9;
+}
+
+message CreateAccountResponse {
+  Account account = 1;
+}
+
+message UpdateAccountRequest {
+  string origin = 1;
+  string session_token = 2;
+  string account_id = 3;
+  string name = 4;
+  string sleeve = 5;
+  // The new tax wrapper; empty keeps the account's.
+  string tax_wrapper = 6;
+  // The new fee rule; unset keeps the account's.
+  FeeRule fee_rule = 7;
+}
+
+message UpdateAccountResponse {
+  Account account = 1;
+}
+
+message BindAccountRequest {
+  string origin = 1;
+  string session_token = 2;
+  string account_id = 3;
+  string connector_instance = 4;
+  // A broker account connector_instance reported, or empty.
+  string broker_account = 5;
+}
+
+message BindAccountResponse {}

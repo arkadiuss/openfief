@@ -274,13 +274,6 @@ relationships:
     id: rel-74b6692b1925
   - type: implements
     from: SYM-ui-server-allocation-fragment
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:55:00.616Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-81fbdb778ccb
-  - type: implements
-    from: SYM-ui-server-allocation-fragment
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T19:55:00.637Z
     created_by: kibi/upsert
@@ -384,3 +377,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b29e18c8db80
+  - type: implements
+    from: SYM-ingest-app-accounts
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:58:52.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddb0066b9b3c
+  - type: covered_by
+    from: SYM-ingest-app-accounts
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:58:52.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-913803ae66c9
+  - type: implements
+    from: SYM-valuation-validate-ranking
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:17:54.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2823e918e969
+  - type: implements
+    from: SYM-valuation-validate-ranking
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:17:54.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20da838b746a
+  - type: covered_by
+    from: SYM-valuation-validate-ranking
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:17:54.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-831d286fee1c
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-market-data-list-source-rankings
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:20:44.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14c3fba09007
+  - type: implements
+    from: SYM-views-ghostfolio-cash-balances
+    to: REQ-views-ghostfolio-cash-balances
+    created_at: 2026-10-30T01:26:56.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-133d0b9d6540
+  - type: covered_by
+    from: SYM-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:26:56.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f618c941aef4
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-tax
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:31:31.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4ad2cb1b063
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-tax
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:31:31.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-326d7f5bc39d
+  - type: implements
+    from: SYM-viewsv1-date-total-get-liquidation-reporting
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:44.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69484cdc3f10
+  - type: covered_by
+    from: SYM-viewsv1-date-total-get-liquidation-reporting
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:44.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94e252ebbd3f
+  - type: implements
+    from: SYM-ui-server-allocation-fragment
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:44:42.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e83b6bff8d8
+  - type: implements
+    from: SYM-affected-plan-builder-go-steps
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:07:52.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4031f01b1971
+  - type: covered_by
+    from: SYM-affected-plan-builder-go-steps
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:07:52.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a7fb4c7e97f

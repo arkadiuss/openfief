@@ -1,6 +1,8 @@
 {
   "capabilities": ["view"],
-  "secrets": [{"name": "ghostfolio-credentials", "mountPath": "/etc/openfief/ghostfolio"}],
+  "secrets": [{"role": "security-token", "mountPath": "/etc/openfief/ghostfolio"}],
+  "egressFromConfig": ["url"],
+  "clusterService": {"description": "a Ghostfolio running in this cluster"},
   "configSchema": {
     "type": "object",
     "properties": {
@@ -20,7 +22,6 @@
         }
       }
     },
-    "required": ["url"],
     "additionalProperties": false
   }
 }

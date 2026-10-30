@@ -20,7 +20,8 @@ import (
 // (D-64): the versions its contract tests' recordings come from. The
 // accounts, activities and import endpoints are Ghostfolio's internal API,
 // renamed within /v1 without notice (R-15), so a version outside the range
-// may not work.
+// may not work. The account balance endpoints, which the view uses since
+// D-108, are internal too.
 const SupportedVersions = ">=3.93.0 <3.94.0"
 
 // Client errors.
@@ -76,6 +77,8 @@ func NewClient(hc *http.Client, base string, token TokenSource) *Client {
 
 // User is the part of Ghostfolio's user the view reads.
 type User struct {
+	// ID is the user's ID; the view's MANUAL assets' symbols derive from it.
+	ID string
 	// BaseCurrency is the currency the view's new accounts get.
 	BaseCurrency kernel.Currency
 	// RestrictedView is the setting that blanks comments, fees and
@@ -106,9 +109,10 @@ func (c *Client) Login(ctx context.Context) error {
 	return nil
 }
 
-// User returns the user's base currency and restricted view setting.
+// User returns the user's ID, base currency and restricted view setting.
 func (c *Client) User(ctx context.Context) (User, error) {
 	var out struct {
+		ID       string `json:"id"`
 		Settings struct {
 			BaseCurrency     string `json:"baseCurrency"`
 			IsRestrictedView bool   `json:"isRestrictedView"`
@@ -121,7 +125,55 @@ func (c *Client) User(ctx context.Context) (User, error) {
 	if err != nil {
 		return User{}, fmt.Errorf("%w: base currency: %w", ErrBadResponse, err)
 	}
-	return User{BaseCurrency: cur, RestrictedView: out.Settings.IsRestrictedView}, nil
+	if out.ID == "" {
+		return User{}, fmt.Errorf("%w: read the user: no ID", ErrBadResponse)
+	}
+	return User{ID: out.ID, BaseCurrency: cur, RestrictedView: out.Settings.IsRestrictedView}, nil
+}
+
+// Balances returns the cash balances of the given account, from its
+// balance history (GET /api/v1/account/{id}/balances).
+func (c *Client) Balances(ctx context.Context, account string) ([]Balance, error) {
+	var out struct {
+		Balances []struct {
+			AccountID string      `json:"accountId"`
+			Date      string      `json:"date"`
+			ID        string      `json:"id"`
+			Value     json.Number `json:"value"`
+		} `json:"balances"`
+	}
+	if err := c.do(ctx, "list balances", http.MethodGet, "/api/v1/account/"+url.PathEscape(account)+"/balances", nil, nil, &out); err != nil {
+		return nil, err
+	}
+	bs := make([]Balance, 0, len(out.Balances))
+	for _, w := range out.Balances {
+		d, err := wireDateOf(w.Date)
+		if err != nil {
+			return nil, fmt.Errorf("%w: balance date: %w", ErrBadResponse, err)
+		}
+		v, err := kernel.ParseDecimal(w.Value.String())
+		if err != nil {
+			return nil, fmt.Errorf("%w: balance: %w", ErrBadResponse, err)
+		}
+		bs = append(bs, Balance{ID: w.ID, AccountID: w.AccountID, Date: d, Value: v})
+	}
+	return bs, nil
+}
+
+// SetBalance sets an owned account's cash balance on b's date, replacing
+// the one that date has (POST /api/v1/account-balance).
+func (c *Client) SetBalance(ctx context.Context, b *Balance) error {
+	body := struct {
+		AccountID string      `json:"accountId"`
+		Balance   json.Number `json:"balance"`
+		Date      string      `json:"date"`
+	}{AccountID: b.AccountID, Balance: json.Number(b.Value.String()), Date: wireDate(b.Date)}
+	return c.do(ctx, "set a balance", http.MethodPost, "/api/v1/account-balance", nil, body, nil)
+}
+
+// DeleteBalance deletes one cash balance by its ID.
+func (c *Client) DeleteBalance(ctx context.Context, id string) error {
+	return c.do(ctx, "delete a balance", http.MethodDelete, "/api/v1/account-balance/"+url.PathEscape(id), nil, nil, nil)
 }
 
 // Accounts returns the IDs of every account the user has.
@@ -180,12 +232,8 @@ func (w *wireActivity) activity() (Activity, error) {
 		ID: w.ID, AccountID: deref(w.AccountID), Comment: deref(w.Comment), Type: ActivityType(w.Type),
 		DataSource: w.AssetProfile.DataSource, Symbol: w.AssetProfile.Symbol,
 	}
-	t, err := time.Parse(time.RFC3339, w.Date)
-	if err != nil {
-		return Activity{}, fmt.Errorf("%w: activity date: %w", ErrBadResponse, err)
-	}
-	t = t.UTC()
-	if a.Date, err = kernel.NewDate(t.Year(), t.Month(), t.Day()); err != nil {
+	var err error
+	if a.Date, err = wireDateOf(w.Date); err != nil {
 		return Activity{}, fmt.Errorf("%w: activity date: %w", ErrBadResponse, err)
 	}
 	code := deref(w.Currency)
@@ -347,6 +395,21 @@ func importBody(b *Batch) importRequest {
 
 // wireDate is d at midnight UTC in ISO 8601, as Ghostfolio returns dates.
 func wireDate(d kernel.Date) string { return d.String() + "T00:00:00.000Z" }
+
+// wireDateOf is the UTC date of s, a time in ISO 8601 as Ghostfolio
+// returns it.
+func wireDateOf(s string) (kernel.Date, error) {
+	t, err := time.Parse(time.RFC3339, s)
+	if err != nil {
+		return kernel.Date{}, fmt.Errorf("parsing %q: %w", s, err)
+	}
+	t = t.UTC()
+	d, err := kernel.NewDate(t.Year(), t.Month(), t.Day())
+	if err != nil {
+		return kernel.Date{}, fmt.Errorf("parsing %q: %w", s, err)
+	}
+	return d, nil
+}
 
 // do sends one request and decodes a JSON response into out, unless out is
 // nil. Any status but 2xx is an *HTTPError.

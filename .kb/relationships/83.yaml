@@ -419,3 +419,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-250f83587ad4
+  - type: validates
+    from: TEST-plugins-ghostfolio-main
+    to: REQ-plugins-config-field-host-via-proxy
+    created_at: 2026-10-29T15:11:33.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c597a5b59b9
+  - type: validates
+    from: TEST-plugins-ghostfolio-main
+    to: REQ-plugins-in-cluster-service-no-proxy
+    created_at: 2026-10-29T15:11:33.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-121e850c9a83
+  - type: implements
+    from: SYM-pl-cluster-service-names
+    to: REQ-operator-upgrade-status
+    created_at: 2026-10-29T15:19:00.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f5f910e120c
+  - type: covered_by
+    from: SYM-pl-cluster-service-names
+    to: TEST-operator-reconcile
+    created_at: 2026-10-29T15:19:00.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af2a8d2a30e9
+  - type: implements
+    from: SYM-ingestv1-create-account-request-get-session-token
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:20:41.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec643be2ef30
+  - type: covered_by
+    from: SYM-ingestv1-create-account-request-get-session-token
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:20:41.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-995956875d32
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-response-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:37:09.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa349931eea1
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-response-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:37:09.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73a825dbf048
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-response-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:39:42.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d9b2f6cee25
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-response-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:39:43.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faf0c304aa1d
+  - type: implements
+    from: SYM-portfoliov1-file_openfief_portfolio_v1_sleeves_proto_raw-desc-gzip
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:42:20.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-394f6c23a076
+  - type: covered_by
+    from: SYM-portfoliov1-file_openfief_portfolio_v1_sleeves_proto_raw-desc-gzip
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:42:20.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db4767ad7f01
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-request
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:25:39.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-531cee004346
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-request
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:25:39.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-061313824474

@@ -198,14 +198,14 @@ relationships:
   - type: constrains
     from: REQ-e2e-demo-stack-local-clusters
     to: FACT-SUBJECT-7B6EC379C4C091D6
-    created_at: 2026-10-28T18:01:16.555Z
+    created_at: 2026-10-29T23:11:01.954Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f92a04f24a15
   - type: requires_property
     from: REQ-e2e-demo-stack-local-clusters
     to: FACT-PROP-426E35DA6AEADB48
-    created_at: 2026-10-28T18:01:16.588Z
+    created_at: 2026-10-29T23:11:01.997Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef3b9b6a8949
@@ -447,6 +447,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3a7b9bd3641
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-import-file-by-broker-account
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:48:30.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1c54bfb4080
+  - type: implements
+    from: SYM-ingest-connectapi-account-service-update-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:01:31.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-098f07f14bbb
+  - type: covered_by
+    from: SYM-ingest-connectapi-account-service-update-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:01:32.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2b406993e5f
+  - type: implements
+    from: SYM-ingestv1-account-reset
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:18:31.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e15635bdf90c
+  - type: covered_by
+    from: SYM-ingestv1-account-reset
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:18:31.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b0cdd17dfae
   - type: implements
     from: SYM-fd-identity-kube-core-access-core-pod
     to: REQ-identity-first-passkey-command
@@ -475,3 +510,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-192640ecf6ee
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-jurisdiction-in-process
+    created_at: 2026-10-29T21:47:14.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4776d36c8bfe
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T21:47:14.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b05bc9a9c87a
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-oki-no-belka-tax
+    created_at: 2026-10-29T21:47:14.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-550b445fbbe8
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T21:47:14.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e74e19aba939
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-ikze-early-withdrawal-tax
+    created_at: 2026-10-29T21:47:14.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b87674a575b4
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-ikze-liquidation-missing
+    created_at: 2026-10-29T21:47:14.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-220d51c65a1b
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-valuation-net-value
+    created_at: 2026-10-29T21:47:14.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1291bd675e59
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-valuation-liquidation-value
+    created_at: 2026-10-29T21:47:14.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83b55a5c29fe
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-jurisdiction-pl-number-format
+    created_at: 2026-10-29T21:47:14.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb076e79ba6d
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-29T21:47:14.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b31627ea77b2
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request-get-origin
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:20:01.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa0cb870c213
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request-get-origin
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:20:01.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bb7d231e68c
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms-number-format
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:54.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37a60ff482b3
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-valuation-gross-value
+    created_at: 2026-10-30T03:07:29.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ca2fd10ff7f

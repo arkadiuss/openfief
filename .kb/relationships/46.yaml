@@ -483,9 +483,58 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b21e6ea1a9f3
   - type: executable_for
+    from: SYM-portfolio-app-test-helper-fake-sleeve-store-sleeves
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:05:27.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd0bd5718902
+  - type: executable_for
     from: SYM-fd-identity-cli-test-helper-sync-buffer-write
     to: TEST-identity-cli
     created_at: 2026-10-29T12:09:17.310Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-863e220f2c6a
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-generator-assets
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:28:28.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5829350b6b7e
+  - type: implements
+    from: SYM-valuationv1-set-number-format-request-proto-reflect
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:18:01.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b491b7386b18
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-request-proto-reflect
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:18:01.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a6f4738bc19
+  - type: constrains
+    from: REQ-tooling-kibi-check-compile-defect
+    to: FACT-SUBJECT-AA869FD5FC3816C8
+    created_at: 2026-10-30T04:09:54.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a65aa2d91c46
+  - type: requires_property
+    from: REQ-tooling-kibi-check-compile-defect
+    to: FACT-PROP-8D92F59985BB0D29
+    created_at: 2026-10-30T04:09:54.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bb06713f756
+  - type: specified_by
+    from: REQ-tooling-kibi-check-compile-defect
+    to: SCEN-tooling-kibi-check-recompile
+    created_at: 2026-10-30T04:09:54.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d38f0587dc63

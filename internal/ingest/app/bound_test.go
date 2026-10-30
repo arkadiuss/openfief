@@ -41,7 +41,7 @@ func TestConnectorsRefuseUnboundAccounts(t *testing.T) {
 			l, stores := &fakeLedger{}, &fakeStores{}
 			c := connectors(t, &fakeCaller{delivery: d}, l, stores)
 			c.Bindings = tt.bindings
-			_, err := c.Sync(t.Context(), "xtb-main", "b-1", ingest.ModeTransactions, "")
+			_, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions})
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("Sync error (-want +got):\n%s", diff)
 			}
@@ -74,7 +74,7 @@ func TestConnectorsSeedOnlyInOpeningMode(t *testing.T) {
 			d := delivery(t)
 			d.Mapping = tt.mapping(t)
 			l := &fakeLedger{}
-			_, err := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{}).Sync(t.Context(), "xtb-main", "b-1", tt.mode, "")
+			_, err := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{}).Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: tt.mode})
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("Sync error (-want +got):\n%s", diff)
 			}

@@ -146,13 +146,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af7cadcb8211
-  - type: specified_by
-    from: REQ-portfolio-default-kinds
-    to: SCEN-portfolio-default-kinds
-    created_at: 2026-10-28T09:35:32.976Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-64ae89c2fcc8
   - type: executable_for
     from: SYM-cosign-test-verifier-new-world
     to: TEST-plugins-cosign
@@ -489,6 +482,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-611dec0e643e
+  - type: executable_for
+    from: SYM-pl-test-run-install-owner-picks
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:51.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f142ed95ec7
+  - type: implements
+    from: SYM-ui-config-missing-client
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:15:45.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-024340f2bf6b
+  - type: covered_by
+    from: SYM-ui-config-missing-client
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:15:45.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edd12080c0f1
+  - type: implements
+    from: SYM-portfoliov1-sleeve-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:32:52.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d07a7d7fa47
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:32:52.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-631f85827815
+  - type: implements
+    from: SYM-pl-catalog-names-of
+    to: REQ-plugins-upgrade-version-resolution
+    created_at: 2026-10-29T17:04:33.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-780258576aef
+  - type: covered_by
+    from: SYM-pl-catalog-names-of
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:04:33.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58ad48c25ebf
   - type: constrains
     from: REQ-core-browser-port-scope
     to: FACT-SUBJECT-A141330E0368236C
@@ -503,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7874be84024
+  - type: executable_for
+    from: SYM-valuation-test-ranked-fx-rates-and-readings
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:19:27.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf5f3f32d78e

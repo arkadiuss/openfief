@@ -92,13 +92,6 @@ relationships:
     id: rel-688ed105e55e
   - type: implements
     from: SYM-valuation-value-bond-holding
-    to: REQ-valuation-bond-holding
-    created_at: 2026-10-28T07:32:24.132Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b23ad0882bfd
-  - type: implements
-    from: SYM-valuation-value-bond-holding
     to: REQ-AUTO-E10BE8CE13E67657
     created_at: 2026-10-28T07:32:24.152Z
     created_by: kibi/upsert
@@ -321,3 +314,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8813ddcec9ad
+  - type: validates
+    from: TEST-plugins-cluster-service
+    to: REQ-plugins-in-cluster-service-grant
+    created_at: 2026-10-29T15:09:58.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d690f6a732f6
+  - type: validates
+    from: TEST-plugins-cluster-service
+    to: REQ-plugins-in-cluster-service-no-proxy
+    created_at: 2026-10-29T15:09:58.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35dd225dd8a6
+  - type: validates
+    from: TEST-plugins-cluster-service
+    to: REQ-plugins-egress-through-proxy
+    created_at: 2026-10-29T15:09:58.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcc1ceebc41
+  - type: validates
+    from: TEST-plugins-cluster-service
+    to: REQ-plugins-network-access-core-proxy-service
+    created_at: 2026-10-29T15:09:58.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76fb467fc837
+  - type: implements
+    from: SYM-pl-workload-add-egress-proxy
+    to: REQ-plugins-proxy-env-and-allow-list
+    created_at: 2026-10-29T15:17:49.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e65f9f3c0e2
+  - type: covered_by
+    from: SYM-pl-workload-add-egress-proxy
+    to: TEST-plugins-compile
+    created_at: 2026-10-29T15:17:49.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59f9a96b8af4
+  - type: executable_for
+    from: SYM-ibkr-flex-plugin-test-helper-check-broker-accounts
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-10-29T11:54:37.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f191a01db065
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-sleeves
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:13:00.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b22900c3f32f
+  - type: implements
+    from: SYM-valuation-value-bond-holding
+    to: REQ-valuation-bond-holding-values
+    created_at: 2026-10-29T21:57:32.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35c8470c72de
+  - type: executable_for
+    from: SYM-pl-test-helper-check-liquidation
+    to: TEST-pl-value
+    created_at: 2026-10-29T22:32:34.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d621d13de424
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request-proto-message
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:41.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bf99f8b335b
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request-proto-message
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:41.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0443f3f29175
+  - type: implements
+    from: SYM-viewsv1-list-yearly-taxes-request-descriptor
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:36:18.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f6d8cbc29e4
+  - type: covered_by
+    from: SYM-viewsv1-list-yearly-taxes-request-descriptor
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:36:18.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efdf78856a7a

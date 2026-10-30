@@ -6,27 +6,6 @@ relationships:
     created_at: "2026-10-28T05:25:12.158Z"
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-  - type: implements
-    from: SYM-pl-lot-value-of-accrual
-    to: REQ-pl-belka-tax
-    created_at: 2026-10-28T05:26:36.974Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c4a6b3247745
-  - type: implements
-    from: SYM-pl-lot-value-of-accrual
-    to: REQ-pl-early-redemption-fee-cap
-    created_at: 2026-10-28T05:26:36.979Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-19bc9fb1fa64
-  - type: covered_by
-    from: SYM-pl-lot-value-of-accrual
-    to: TEST-pl-value
-    created_at: 2026-10-28T05:26:36.982Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b43431a7109b
   - id: rel-dbc7d01f652d
     type: constrains
     from: REQ-plugins-workload-identity-secrets
@@ -503,3 +482,157 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09476ea8408b
+  - type: validates
+    from: TEST-operator-cluster-service
+    to: REQ-operator-in-cluster-service-route
+    created_at: 2026-10-29T15:10:01.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-105e49ecbf6e
+  - type: validates
+    from: TEST-operator-cluster-service
+    to: REQ-plugins-in-cluster-service-no-proxy
+    created_at: 2026-10-29T15:10:01.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38cb7d87e812
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry-accounts
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:02:07.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0986f72eb53d
+  - type: implements
+    from: SYM-ingestv1-create-account-response-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:22:17.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72d1665b8a55
+  - type: covered_by
+    from: SYM-ingestv1-create-account-response-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:22:17.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-095a790581b2
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-request-get-session-token
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:38:36.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8b298e5438e
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-request-get-session-token
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:38:36.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ed3b9aba6f3
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:40:31.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729228a36db5
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:40:31.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6d0ca01b2b7
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-client-interface
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T15:09:05.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a624ce4ae059
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-client-interface
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T15:09:05.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1629c9649b4
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-check-ranking-kept
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:16:25.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f1ef9d72a27
+  - type: implements
+    from: SYM-valuation-gen-pb-file_openfief_valuation_v1_market_data_proto_init
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:41.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98d5259c0553
+  - type: covered_by
+    from: SYM-valuation-gen-pb-file_openfief_valuation_v1_market_data_proto_init
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:41.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5c00f849685
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-bond-sym
+    to: TEST-views-ghostfolio-client
+    created_at: 2026-10-30T01:27:09.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18360ae2fb2f
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-bond-sym
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:27:09.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36c50f0260a3
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-bond-sym
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-30T01:27:10.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fab60e44bb2
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-bond-sym
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:27:10.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-505ad6331d2d
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-bond-sym
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-30T01:27:10.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17e880bf0a15
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-bond-sym
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:27:10.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-518e45dc1bfd
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-converged
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:28:34.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-117f43026d3d
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms-fee-rule
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:41.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87e57fce4c72

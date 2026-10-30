@@ -251,13 +251,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36a9c8229f14
-  - type: implements
-    from: SYM-ui-server-save-model
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:13:21.129Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0da2c22bbbe1
   - type: covered_by
     from: SYM-ui-server-save-model
     to: TEST-ui-model
@@ -272,20 +265,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7f8494cb5c5
-  - type: constrains
-    from: REQ-plugins-ghostfolio-plugin
-    to: FACT-SUBJECT-D5E66895C31CDA5F
-    created_at: 2026-10-29T01:37:01.060Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-668426338728
-  - type: requires_property
-    from: REQ-plugins-ghostfolio-plugin
-    to: FACT-PROP-C36484CF5E5B360E
-    created_at: 2026-10-29T01:37:01.098Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-35866c466e9a
   - type: specified_by
     from: REQ-plugins-ghostfolio-plugin
     to: SCEN-plugins-ghostfolio-plugin
@@ -377,3 +356,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9c04641b949
+  - type: constrains
+    from: REQ-plugins-ghostfolio-plugin
+    to: FACT-SUBJECT-D5E66895C31CDA5F
+    created_at: 2026-10-29T15:13:10.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-668426338728
+  - type: requires_property
+    from: REQ-plugins-ghostfolio-plugin
+    to: FACT-PROP-1E88683EBC0B717C
+    created_at: 2026-10-29T15:13:10.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17a1612e8b01
+  - type: implements
+    from: SYM-pl-config-hosts
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:14:41.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-316a499dbc80
+  - type: implements
+    from: SYM-pl-config-hosts
+    to: REQ-plugins-config-field-host-https
+    created_at: 2026-10-29T15:14:41.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c2c87d5930e
+  - type: covered_by
+    from: SYM-pl-config-hosts
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:14:41.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837b2ce098bf
+  - type: implements
+    from: SYM-pl-config-hosts
+    to: REQ-plugins-config-field-host-grant
+    created_at: 2026-10-29T15:23:01.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b491b5d4c4ff
+  - type: covered_by
+    from: SYM-pl-config-hosts
+    to: TEST-plugins-cli-run
+    created_at: 2026-10-29T15:23:01.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea8a58c73769
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-account-service-round-trip
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:03:44.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91e17bfc36ba
+  - type: implements
+    from: SYM-ingestv1-update-account-response-reset
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:24:09.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82ffda5bd7df
+  - type: covered_by
+    from: SYM-ingestv1-update-account-response-reset
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:24:09.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-539c31cb777d
+  - type: implements
+    from: SYM-ingestv1-bind-account-request
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:24:58.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e857fdb5beff
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:24:58.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d99acaed532
+  - type: implements
+    from: SYM-ingestv1-create-account-request-get-fee-rule
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:14:08.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23643e85a162
+  - type: covered_by
+    from: SYM-ingestv1-create-account-request-get-fee-rule
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:14:08.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-317c3c4ab9d4
+  - type: implements
+    from: SYM-ui-server-save-model
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:44:24.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e7bb0fad8c

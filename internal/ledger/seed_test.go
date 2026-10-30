@@ -152,6 +152,45 @@ func TestIsSeeded(t *testing.T) {
 	}
 }
 
+func TestGoLive(t *testing.T) {
+	t.Parallel()
+	f := newSeedFixture(t)
+	movedLot := f.lot
+	movedLot.Account = "acc-2"
+	earlierCash := f.cash
+	earlierCash.Date = date(t, "2026-03-30")
+	tests := []struct {
+		name    string
+		log     []ledger.VersionedTransaction
+		want    string
+		wantErr error
+	}{
+		{name: "empty log"},
+		{name: "transactions only", log: v1(f.deposit, f.buy)},
+		{name: "the opening lot's date", log: v1(f.deposit, f.lot, f.buy), want: "2026-03-31"},
+		{name: "the latest seeding transaction", log: v1(earlierCash, f.lot), want: "2026-03-31"},
+		{name: "opening cash only", log: v1(earlierCash), want: "2026-03-30"},
+		{name: "another account's opening lot", log: v1(f.otherLot)},
+		{name: "opening lot moved to another account by a correction", log: []ledger.VersionedTransaction{{Transaction: f.lot, Version: 1}, {Transaction: movedLot, Version: 2}}},
+		{name: "invalid log", log: []ledger.VersionedTransaction{{Transaction: f.lot, Version: 2}}, wantErr: ledger.ErrInvalidLog},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, seeded, err := ledger.GoLive(tt.log, testAccount)
+			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
+				t.Fatalf("GoLive error (-want +got):\n%s", diff)
+			}
+			if seeded != (tt.want != "") {
+				t.Fatalf("GoLive seeded = %v, want %v", seeded, tt.want != "")
+			}
+			if tt.want != "" && !got.Equal(date(t, tt.want)) {
+				t.Errorf("GoLive = %s, want %s", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestDecideSeed(t *testing.T) {
 	t.Parallel()
 	f := newSeedFixture(t)

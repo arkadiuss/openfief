@@ -1,9 +1,9 @@
-POST http://127.0.0.1:3333/api/v1/account HTTP/1.1
+POST http://127.0.0.1:3333/api/v1/import?dryRun=false HTTP/1.1
 Host: 127.0.0.1:3333
 User-Agent: Go-http-client/1.1
-Content-Length: 105
+Content-Length: 549
 Accept: application/json
 Authorization: SANITIZED
 Content-Type: application/json
 
-{"currency":"USD","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null}
+{"activities":[{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","comment":"openfief:test/bonds/open-1","currency":"PLN","dataSource":"MANUAL","date":"2024-11-04T00:00:00.000Z","fee":0,"quantity":10,"symbol":"4512a0f0-0f02-594a-8add-87da055fe65d","type":"BUY","unitPrice":100}],"assetProfiles":[{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","dataSource":"MANUAL","isin":"PLTEST000010","marketData":[{"date":"2025-01-02T00:00:00.000Z","marketPrice":100.41}],"name":"EDO0136","symbol":"4512a0f0-0f02-594a-8add-87da055fe65d"}]}

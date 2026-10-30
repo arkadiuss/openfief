@@ -45,7 +45,9 @@ func Mode(m connectorv1.Mode) (ingest.Mode, error) {
 // its transactions, balance assertions, ingest problems and cross-check
 // prices, in order. Cross-check prices go in cross_check_prices, never in
 // prices, so the core keeps them apart from the market-data connector's
-// (D-22).
+// (D-22). Entries a broker connector named by broker account follow, with
+// broker_account set instead of account_id, and every broker account the
+// mapping reports is listed in broker_accounts (D-72).
 func FromMapping(batch, institution string, m *ingest.Mapping) (*connectorv1.Delivery, error) {
 	d := &connectorv1.Delivery{BatchId: batch, Institution: institution}
 	for i := range m.Transactions {
@@ -73,7 +75,39 @@ func FromMapping(batch, institution string, m *ingest.Mapping) (*connectorv1.Del
 		c := &m.CrossCheckPrices[i]
 		d.CrossCheckPrices = append(d.CrossCheckPrices, Price(c.Instrument, c.Date, c.Close))
 	}
+	if err := byBrokerAccount(d, m); err != nil {
+		return nil, err
+	}
 	return d, nil
+}
+
+// byBrokerAccount adds to d the entries m names by broker account, each
+// with broker_account set and no account_id, and every broker account m
+// reports (D-72).
+func byBrokerAccount(d *connectorv1.Delivery, m *ingest.Mapping) error {
+	for _, id := range ingest.ReportedBrokerAccounts(m) {
+		d.BrokerAccounts = append(d.BrokerAccounts, &connectorv1.BrokerAccount{Id: string(id)})
+	}
+	for i := range m.ByBrokerAccount {
+		e := &m.ByBrokerAccount[i]
+		for j := range e.Transactions {
+			t, err := transaction(&e.Transactions[j])
+			if err != nil {
+				return fmt.Errorf("broker account %d transactions[%d]: %w", i, j, err)
+			}
+			t.AccountId, t.BrokerAccount = "", string(e.Account)
+			d.Transactions = append(d.Transactions, t)
+		}
+		for j := range e.Assertions {
+			a, err := assertion(&e.Assertions[j])
+			if err != nil {
+				return fmt.Errorf("broker account %d balance_assertions[%d]: %w", i, j, err)
+			}
+			a.AccountId, a.BrokerAccount = "", string(e.Account)
+			d.BalanceAssertions = append(d.BalanceAssertions, a)
+		}
+	}
+	return nil
 }
 
 // FXRates writes FX rates to PLN, in order. Their source is the

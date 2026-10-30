@@ -258,3 +258,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c56b7e612abb
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-sleeves-add-sleeve-kind
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:13:09.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9676e3ab2ceb
+  - type: implements
+    from: SYM-ingestv1-bind-account-request-get-origin
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:25:47.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c49e8ef403e7
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request-get-origin
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:25:47.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d43bff12fd50
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-request-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:36:00.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc84685f1ea1
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-request-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:36:00.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-965f5e526a08
+  - type: implements
+    from: SYM-ingest-new-market-data-scope
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-10-29T17:17:23.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb0db9ce1761
+  - type: implements
+    from: SYM-ingest-new-market-data-scope
+    to: REQ-ingest-market-data-sync-instruments
+    created_at: 2026-10-29T17:17:23.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19f6cc04e7d9
+  - type: covered_by
+    from: SYM-ingest-new-market-data-scope
+    to: TEST-ingest-marketdata
+    created_at: 2026-10-29T17:17:23.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37a336aa93e8
+  - type: constrains
+    from: REQ-ui-market-data-ranking
+    to: FACT-SUBJECT-2A377580A998A994
+    created_at: 2026-10-29T18:01:30.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dba52735af07
+  - type: requires_property
+    from: REQ-ui-market-data-ranking
+    to: FACT-PROP-8AA8E15F08CE1261
+    created_at: 2026-10-29T18:01:30.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01a85bbfb7c2
+  - type: specified_by
+    from: REQ-ui-market-data-ranking
+    to: SCEN-ui-market-data-ranking
+    created_at: 2026-10-29T18:01:30.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e511adfe59b2
+  - type: implements
+    from: SYM-valuation-postgres-store-source-ranking
+    to: REQ-valuation-market-data-all-sources-stored
+    created_at: 2026-10-29T18:15:32.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6a524037999
+  - type: implements
+    from: SYM-valuation-postgres-store-source-ranking
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:15:32.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e913e20dfb12
+  - type: covered_by
+    from: SYM-valuation-postgres-store-source-ranking
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:15:32.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94304c541af7
+  - type: implements
+    from: SYM-valuation-gen-pb-ranked-source-get-name
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:22:52.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fe2087d9a6e
+  - type: covered_by
+    from: SYM-valuation-gen-pb-ranked-source-get-name
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:22:52.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9c967ccd90c
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-terms-record-fee-rule
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:10:14.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a9e4a8a0b59
+  - type: implements
+    from: SYM-valuationv1-set-number-format-request
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:17:34.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e6a1b4d0e16
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-request
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:17:34.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e709469d9642

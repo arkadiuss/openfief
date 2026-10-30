@@ -41,7 +41,7 @@ const (
 // Defaults of the serve flags.
 const (
 	defaultListen          = ":8080"
-	defaultReporting       = "PLN"
+	defaultPluginListen    = ":8081"
 	defaultTimeZone        = "Europe/Warsaw"
 	defaultEndOfDay        = "23:30"
 	defaultWorkers         = 2
@@ -108,14 +108,16 @@ type connectorArgs struct {
 
 // serveConfig is what D-36 and D-62 make configurable, and where to listen.
 type serveConfig struct {
-	Listen string
+	// Listen is the browser port's address; PluginListen the plugin
+	// port's (D-115).
+	Listen       string
+	PluginListen string
 	// Reporting is the reporting currency (D-62).
 	Reporting kernel.Currency
 	// EndOfDay is when the end-of-day revaluation runs; its Location is also
 	// the time zone of "today".
-	EndOfDay  valuationpg.DailyAt
-	Workers   int
-	BondBasis valuation.Basis
+	EndOfDay valuationpg.DailyAt
+	Workers  int
 	// PriceCheckThreshold is the relative difference beyond which a price
 	// check is flagged (D-22).
 	PriceCheckThreshold kernel.Decimal
@@ -202,12 +204,12 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	inCluster := getenv(inClusterEnv) != ""
 	fs := newFlags(cmdServe)
 	c := serveConfig{}
-	fs.StringVar(&c.Listen, "listen", defaultListen, "address of the read API and the health endpoints")
-	reporting := fs.String("reporting-currency", defaultReporting, "the reporting currency (D-62)")
+	fs.StringVar(&c.Listen, "listen", defaultListen, "address of the browser port: the front door, the read API and the health endpoints (D-115)")
+	fs.StringVar(&c.PluginListen, "plugin-listen", defaultPluginListen, "address of the plugin port: the read API, the AuthService and the owner services, for plugins only (D-115)")
+	reporting := fs.String("reporting-currency", jurisdictionPack().ReportingCurrency().String(), "the reporting currency (D-62); the jurisdiction pack's by default")
 	zone := fs.String("time-zone", defaultTimeZone, "time zone of today and of the end of day")
 	eod := fs.String("end-of-day", defaultEndOfDay, "when the end-of-day revaluation runs, HH:MM")
 	fs.IntVar(&c.Workers, "workers", defaultWorkers, "revaluations that run at once (D-36)")
-	basis := fs.String("bond-basis", valuation.DefaultBondBasis.String(), "bond basis for totals: gross_accrued or net_if_redeemed (D-25)")
 	threshold := fs.String("price-check-threshold", valuation.DefaultPriceCheckThreshold().String(),
 		"relative difference beyond which a cross-check price is flagged, as a fraction: 0.01 is 1% (D-22)")
 	fs.BoolVar(&c.EnsureDefaults, "ensure-defaults", true, "store the built-in sleeve kinds and sleeves that are missing")
@@ -236,7 +238,7 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	if c.Reporting, err = kernel.ParseCurrency(*reporting); err != nil {
 		return serveConfig{}, fmt.Errorf("--reporting-currency: %w", err)
 	}
-	if flagErr := parseValuationFlags(&c, *basis, *threshold); flagErr != nil {
+	if flagErr := parseValuationFlags(&c, *threshold); flagErr != nil {
 		return serveConfig{}, flagErr
 	}
 	loc, err := time.LoadLocation(*zone)
@@ -293,25 +295,9 @@ func parseEnrollLink(args []string) (enrollArgs, error) {
 	return e, err
 }
 
-// parseBondBasis parses a basis name and checks that it can value bonds.
-func parseBondBasis(s string) (valuation.Basis, error) {
-	b, err := valuation.ParseBasis(s)
-	if err != nil {
-		return 0, fmt.Errorf("parsing: %w", err)
-	}
-	if _, err := valuation.BondBasis(b); err != nil {
-		return 0, fmt.Errorf("checking: %w", err)
-	}
-	return b, nil
-}
-
-// parseValuationFlags parses the bond basis and the price check threshold
-// into c.
-func parseValuationFlags(c *serveConfig, basis, threshold string) error {
+// parseValuationFlags parses the price check threshold into c.
+func parseValuationFlags(c *serveConfig, threshold string) error {
 	var err error
-	if c.BondBasis, err = parseBondBasis(basis); err != nil {
-		return fmt.Errorf("--bond-basis: %w", err)
-	}
 	if c.PriceCheckThreshold, err = parseThreshold(threshold); err != nil {
 		return fmt.Errorf("--price-check-threshold: %w", err)
 	}

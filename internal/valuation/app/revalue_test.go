@@ -6,6 +6,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -29,13 +30,9 @@ func todayFunc(t *testing.T, s string) func() kernel.Date {
 	return func() kernel.Date { return d }
 }
 
-func revaluer(t *testing.T, l *fakeLedger, s *fakeStore, basis valuation.Basis, today string) *app.Revaluer {
+func revaluer(t *testing.T, l *fakeLedger, s *fakeStore, today string) *app.Revaluer {
 	t.Helper()
-	r, err := app.NewRevaluer(l, s, basis, todayFunc(t, today))
-	if err != nil {
-		t.Fatalf("NewRevaluer: %v", err)
-	}
-	return r
+	return app.NewRevaluer(l, s, pl.NewPack(), todayFunc(t, today))
 }
 
 func usdPrice(t *testing.T, on, closing string) valuation.Price {
@@ -61,7 +58,7 @@ func TestRevalueMissingInputs(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			s := marketStore(t, tt.prices, tt.rates)
-			got, err := revaluer(t, etfLedger(t), s, 0, "2026-03-06").Revalue(t.Context(), acc1, date(t, "2026-03-02"))
+			got, err := revaluer(t, etfLedger(t), s, "2026-03-06").Revalue(t.Context(), acc1, date(t, "2026-03-02"))
 			if err != nil {
 				t.Fatalf("Revalue: %v", err)
 			}
@@ -97,21 +94,24 @@ func TestRevalueStoresMarketValues(t *testing.T) {
 	t.Parallel()
 	s := newFakeStore()
 	s.prices = []valuation.Price{usdPrice(t, "2026-03-02", "100"), usdPrice(t, "2026-03-03", "101.5")}
-	s.rates = []valuation.FXRate{rate(t, "USD", "2026-03-02", "4.0000")}
-	if _, err := revaluer(t, etfLedger(t), s, 0, "2026-03-03").Revalue(t.Context(), acc1, date(t, "2026-03-02")); err != nil {
+	s.rates = []valuation.FXRate{rate(t, "USD", "2026-02-27", "4.0000"), rate(t, "USD", "2026-03-02", "4.0000")}
+	if _, err := revaluer(t, etfLedger(t), s, "2026-03-03").Revalue(t.Context(), acc1, date(t, "2026-03-02")); err != nil {
 		t.Fatalf("Revalue: %v", err)
 	}
 	etf := instrument(t, etfISIN, "SYNTH")
-	row := func(on, value, pln, priceDate string) valuation.HoldingValuation {
+	// The cost, 990 USD, converts at the rate of 2026-02-27 for tax, the last
+	// before the purchase: 3960 PLN. No fee rule: liquidation equals net.
+	row := func(on, value, pln, priceDate, net string) valuation.HoldingValuation {
 		return valuation.HoldingValuation{
 			Account: acc1, Instrument: etf, Date: date(t, on), Basis: valuation.Market, Quantity: kernel.NewQuantity(dec(t, "10")),
 			Value: money(t, value, "USD"), PLN: money(t, pln, "PLN"), Source: "vendor",
 			PriceDate: date(t, priceDate), RateDate: date(t, "2026-03-02"),
+			Net: money(t, net, "PLN"), Liquidation: money(t, net, "PLN"),
 		}
 	}
 	want := []valuation.HoldingValuation{
-		row("2026-03-02", "1000", "4000", "2026-03-02"),
-		row("2026-03-03", "1015", "4060", "2026-03-03"),
+		row("2026-03-02", "1000", "4000", "2026-03-02", "3992.40"),
+		row("2026-03-03", "1015", "4060", "2026-03-03", "4041.00"),
 	}
 	if diff := cmp.Diff(want, s.rows[acc1]); diff != "" {
 		t.Errorf("(-want +got):\n%s", diff)
@@ -123,7 +123,7 @@ func TestRevalueIsIdempotent(t *testing.T) {
 	s := newFakeStore()
 	s.prices = []valuation.Price{usdPrice(t, "2026-03-02", "100"), usdPrice(t, "2026-03-04", "102")}
 	s.rates = []valuation.FXRate{rate(t, "USD", "2026-03-02", "4.0000")}
-	r := revaluer(t, etfLedger(t), s, 0, "2026-03-06")
+	r := revaluer(t, etfLedger(t), s, "2026-03-06")
 	if _, err := r.Revalue(t.Context(), acc1, date(t, "2026-03-02")); err != nil {
 		t.Fatalf("Revalue: %v", err)
 	}
@@ -141,7 +141,7 @@ func TestRevalueIsIdempotent(t *testing.T) {
 func TestRevalueStartsAtTheFirstTransaction(t *testing.T) {
 	t.Parallel()
 	s := newFakeStore()
-	got, err := revaluer(t, etfLedger(t), s, 0, "2026-03-03").Revalue(t.Context(), acc1, date(t, "2020-01-01"))
+	got, err := revaluer(t, etfLedger(t), s, "2026-03-03").Revalue(t.Context(), acc1, date(t, "2020-01-01"))
 	if err != nil {
 		t.Fatalf("Revalue: %v", err)
 	}
@@ -149,7 +149,7 @@ func TestRevalueStartsAtTheFirstTransaction(t *testing.T) {
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("(-want +got):\n%s", diff)
 	}
-	empty, err := revaluer(t, &fakeLedger{}, s, 0, "2026-03-03").Revalue(t.Context(), acc2, date(t, "2026-03-01"))
+	empty, err := revaluer(t, &fakeLedger{}, s, "2026-03-03").Revalue(t.Context(), acc2, date(t, "2026-03-01"))
 	if err != nil {
 		t.Fatalf("Revalue of an empty account: %v", err)
 	}
@@ -163,7 +163,7 @@ func TestRevalueKeepsAnEarlierGap(t *testing.T) {
 	s := newFakeStore()
 	s.prices = []valuation.Price{usdPrice(t, "2026-03-04", "100")}
 	s.rates = []valuation.FXRate{rate(t, "USD", "2026-03-02", "4.0000")}
-	r := revaluer(t, etfLedger(t), s, 0, "2026-03-06")
+	r := revaluer(t, etfLedger(t), s, "2026-03-06")
 	steps := []struct {
 		from        string
 		price       string
@@ -198,66 +198,124 @@ func TestRevalueBonds(t *testing.T) {
 	l := &fakeLedger{logs: map[ledger.AccountID][]ledger.VersionedTransaction{
 		acc1: {buy(t, acc1, "b1", "2024-03-15", bond, "10", "1000")},
 	}}
+	pit := jurisdiction.Settings{MarginalRate: dec(t, "0.32"), HasMarginalRate: true}
 	tests := []struct {
-		name      string
-		basis     valuation.Basis
-		wrapper   pl.TaxWrapper
-		wantBasis valuation.Basis
+		name     string
+		wrapper  jurisdiction.Wrapper // empty: none recorded
+		settings jurisdiction.Settings
 	}{
-		{name: "net if redeemed by default", wantBasis: valuation.NetIfRedeemed, wrapper: pl.Taxable},
-		{name: "inside IKE no fee or tax", wantBasis: valuation.NetIfRedeemed, wrapper: pl.IKE},
-		{name: "gross accrued when configured", basis: valuation.GrossAccrued, wantBasis: valuation.GrossAccrued, wrapper: pl.Taxable},
+		{name: "taxable when no wrapper is recorded"},
+		{name: "inside IKE", wrapper: "ike"},
+		{name: "inside IKZE, without the owner's marginal rate", wrapper: "ikze"},
+		{name: "inside IKZE, with the owner's marginal rate", wrapper: "ikze", settings: pit},
+		{name: "inside OKI", wrapper: "oki"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			s := newFakeStore()
 			s.terms[bond.ISIN] = terms
-			s.wrappers[acc1] = tt.wrapper
-			got, err := revaluer(t, l, s, tt.basis, "2024-09-15").Revalue(t.Context(), acc1, date(t, "2024-09-14"))
+			s.settings = tt.settings
+			wrapper := jurisdiction.Wrapper("taxable")
+			if tt.wrapper != "" {
+				wrapper, s.wrappers[acc1] = tt.wrapper, tt.wrapper
+			}
+			got, err := revaluer(t, l, s, "2024-09-15").Revalue(t.Context(), acc1, date(t, "2024-09-14"))
 			if err != nil {
 				t.Fatalf("Revalue: %v", err)
 			}
 			if got.Missing != 0 || got.Rows != 2 {
 				t.Fatalf("result = %+v, want 2 rows and nothing missing", got)
 			}
-			last := s.rows[acc1][1]
-			value := bondLotValue(t, &terms, tt.wrapper, tt.wantBasis == valuation.GrossAccrued)
-			if last.Basis != tt.wantBasis || last.Source != valuation.StatutorySource || !last.PLN.Equal(value) || !last.Value.Equal(value) {
-				t.Errorf("row on 2024-09-15 = %+v, want %s on %s", last, value, tt.wantBasis)
-			}
+			v := bondLotValues(t, &terms, wrapper, &tt.settings)
+			checkBondRow(t, &s.rows[acc1][1], &v)
 		})
 	}
 }
 
-// bondLotValue is pl.ValueLot's gross or net value on 2024-09-15 of the lot
-// TestRevalueBonds values: the test checks wiring, not the bond formulas.
-func bondLotValue(t *testing.T, terms *pl.Terms, wrapper pl.TaxWrapper, gross bool) kernel.Money {
+// checkBondRow checks a stored bond row against the values the pack gives.
+func checkBondRow(t *testing.T, row *valuation.HoldingValuation, v *jurisdiction.Values) {
 	t.Helper()
-	v, err := pl.ValueLot(terms, nil, kernel.NewQuantity(dec(t, "10")),
-		pl.Purchase{Date: date(t, "2024-03-15"), Price: money(t, "100", "PLN")}, wrapper, date(t, "2024-09-15"))
+	if row.Basis != valuation.GrossAccrued || row.Source != valuation.StatutorySource || !row.PLN.Equal(v.Gross) || !row.Value.Equal(v.Gross) {
+		t.Errorf("row = %+v, want gross %s", row, v.Gross)
+	}
+	if !row.Net.Equal(v.Net) {
+		t.Errorf("net = %s, want %s", row.Net, v.Net)
+	}
+	unknown := row.LiquidationMissing == valuation.MissingMarginalRate
+	if v.LiquidationUnknown != unknown || (!unknown && !row.Liquidation.Equal(v.Liquidation)) {
+		t.Errorf("liquidation = %s (missing %s), want %s (unknown %v)", row.Liquidation, row.LiquidationMissing, v.Liquidation, v.LiquidationUnknown)
+	}
+}
+
+// bondLotValues are pl.ValueLot's and the pack's three values on
+// 2024-09-15 of the lot TestRevalueBonds values: the test checks wiring,
+// not the bond formulas or the taxes.
+func bondLotValues(t *testing.T, terms *pl.Terms, wrapper jurisdiction.Wrapper, s *jurisdiction.Settings) jurisdiction.Values {
+	t.Helper()
+	w, err := pl.ParseTaxWrapper(string(wrapper))
 	if err != nil {
 		t.Fatal(err)
 	}
-	if gross {
-		return v.Gross
+	v, err := pl.ValueLot(terms, nil, kernel.NewQuantity(dec(t, "10")),
+		pl.Purchase{Date: date(t, "2024-03-15"), Price: money(t, "100", "PLN")}, w, date(t, "2024-09-15"))
+	if err != nil {
+		t.Fatal(err)
 	}
-	return v.Net
+	income, err := v.Interest.Add(v.Discount)
+	if err != nil {
+		t.Fatal(err)
+	}
+	values, err := pl.NewPack().ValueAccrued(&jurisdiction.Accrued{Wrapper: wrapper, Gross: v.Gross, Income: income, EarlyFee: v.Fee}, s)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return values
+}
+
+// TestRevalueFeeRuleAndShortHoldings checks that the account's fee rule
+// reaches its liquidation values, and that a holding sold short, which has
+// no lots, is stored with its gross value and its net and liquidation
+// values missing for want of lots.
+func TestRevalueFeeRuleAndShortHoldings(t *testing.T) {
+	t.Parallel()
+	etf := instrument(t, etfISIN, "SYNTH")
+	s := marketStore(t, []string{"2026-03-02"}, []string{"2026-02-27", "2026-03-02"})
+	s.fees[acc1] = jurisdiction.FeeRule{Rate: dec(t, "0.01")}
+	if _, err := revaluer(t, etfLedger(t), s, "2026-03-02").Revalue(t.Context(), acc1, date(t, "2026-03-02")); err != nil {
+		t.Fatalf("Revalue: %v", err)
+	}
+	// 10 x 100 USD x 4 = 4000 PLN on a cost of 990 USD x 4 = 3960. Net: Belka
+	// on 40 is 7.60. Liquidation: 1% commission 40.00, proceeds 3960, no gain.
+	row := s.rows[acc1][0]
+	if !row.Net.Equal(money(t, "3992.40", "PLN")) || !row.Liquidation.Equal(money(t, "3960.00", "PLN")) {
+		t.Errorf("net %s and liquidation %s, want 3992.40 and 3960.00 PLN", row.Net, row.Liquidation)
+	}
+	h := ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "test", ExternalID: "short"}, Account: acc2, Date: date(t, "2026-03-02")}
+	sell, err := ledger.NewSell(h, etf, kernel.NewQuantity(dec(t, "5")), money(t, "500", "USD"), money(t, "0", "USD"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	short := &fakeLedger{logs: map[ledger.AccountID][]ledger.VersionedTransaction{acc2: {{Transaction: sell, Version: 1}}}}
+	if _, err := revaluer(t, short, s, "2026-03-02").Revalue(t.Context(), acc2, date(t, "2026-03-02")); err != nil {
+		t.Fatalf("Revalue of a short holding: %v", err)
+	}
+	got := s.rows[acc2][0]
+	if !got.Valued() || got.NetMissing != valuation.MissingLots || got.LiquidationMissing != valuation.MissingLots {
+		t.Errorf("short holding = %+v, want gross with net and liquidation missing lots", got)
+	}
 }
 
 func TestRevalueErrors(t *testing.T) {
 	t.Parallel()
-	if _, err := app.NewRevaluer(&fakeLedger{}, newFakeStore(), valuation.Market, todayFunc(t, "2026-03-02")); !cmp.Equal(valuation.ErrBasisNotForBonds, err, cmpopts.EquateErrors()) {
-		t.Errorf("NewRevaluer(market): error = %v", err)
-	}
 	broken := etfLedger(t)
 	broken.err = errStoreDown
-	if _, err := revaluer(t, broken, newFakeStore(), 0, "2026-03-02").Revalue(t.Context(), acc1, date(t, "2026-03-02")); !cmp.Equal(errStoreDown, err, cmpopts.EquateErrors()) {
+	if _, err := revaluer(t, broken, newFakeStore(), "2026-03-02").Revalue(t.Context(), acc1, date(t, "2026-03-02")); !cmp.Equal(errStoreDown, err, cmpopts.EquateErrors()) {
 		t.Errorf("failing log: error = %v", err)
 	}
 	s := newFakeStore()
 	s.err = errStoreDown
-	if _, err := revaluer(t, etfLedger(t), s, 0, "2026-03-02").Revalue(t.Context(), acc1, date(t, "2026-03-02")); !cmp.Equal(errStoreDown, err, cmpopts.EquateErrors()) {
+	if _, err := revaluer(t, etfLedger(t), s, "2026-03-02").Revalue(t.Context(), acc1, date(t, "2026-03-02")); !cmp.Equal(errStoreDown, err, cmpopts.EquateErrors()) {
 		t.Errorf("failing store: error = %v", err)
 	}
 }

@@ -475,6 +475,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba9435cc76c9
+  - type: implements
+    from: SYM-ingest-app-connectors-mark-seeded
+    to: REQ-ingest-broker-account-seeding
+    created_at: 2026-10-29T11:47:12.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76611a5c70c5
+  - type: covered_by
+    from: SYM-ingest-app-connectors-mark-seeded
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:47:12.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcd5cb3ef57e
+  - type: implements
+    from: SYM-ingest-connectapi-new-accounts
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:01:11.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a968f211de68
+  - type: covered_by
+    from: SYM-ingest-connectapi-new-accounts
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:01:11.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b06519307c6
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-response
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:36:40.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bb47a96cdae
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-response
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:36:40.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c894c5b28be9
+  - type: implements
+    from: SYM-portfoliov1-file_openfief_portfolio_v1_sleeves_proto_init
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:42:33.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c404bf3812f
+  - type: covered_by
+    from: SYM-portfoliov1-file_openfief_portfolio_v1_sleeves_proto_init
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:42:33.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d454d9d7f79
   - type: executable_for
     from: SYM-fd-identity-cli-test-enroll
     to: TEST-identity-cli
@@ -489,3 +545,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37a6c91fba5b
+  - type: implements
+    from: SYM-valuation-ranked-source
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:17:19.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d011ceb206d
+  - type: implements
+    from: SYM-valuation-ranked-source
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:17:19.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2298a3ed7b58
+  - type: covered_by
+    from: SYM-valuation-ranked-source
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:17:19.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2dc44ad1cd1
+  - type: executable_for
+    from: SYM-valuation-app-test-owner-settings
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:12:16.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73b04309d21f
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-excess
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:31:24.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebf4e42e8bc8
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-excess
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:31:24.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5bf59bfc38c
+  - type: implements
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:38:00.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02d7b6b3b8da
+  - type: implements
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:38:00.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fec7ce478d0
+  - type: covered_by
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:38:00.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f128c1fee1a1
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-settings-locked
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:04:07.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f459f5bc097e

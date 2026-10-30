@@ -1,11 +1,11 @@
 HTTP/1.1 201 Created
-Content-Length: 17
+Content-Length: 722
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:54 GMT
-Etag: W/"11-gtL/pr+hEMbNUsu/dvqFc60lE4A"
+Date: Fri, 30 Oct 2026 00:00:56 GMT
+Etag: W/"2d2-D/zjhgpivsGeDqGJgCatJ8DUBow"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"activities":[]}
+{"activities":[{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"openfief:test/bonds/buy-1","createdAt":"2026-10-30T00:00:56.106Z","currency":"PLN","date":"2025-01-03T00:00:00.000Z","fee":0,"id":"4bb8a0dc-005f-43b5-af04-37dd02d4df96","quantity":5,"symbolProfileId":"444e0dd9-346e-483d-9254-202720cc2f8b","type":"BUY","unitPrice":100,"updatedAt":"2026-10-30T00:00:56.106Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","assetProfile":{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","isin":"PLTEST000010","name":"EDO0136","dataSource":"MANUAL","symbol":"751886d2-3583-55a8-9e96-37ef67241dd8"},"value":500,"valueInBaseCurrency":500}]}

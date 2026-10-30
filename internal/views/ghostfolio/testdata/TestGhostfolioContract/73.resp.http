@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Length: 439
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Date: Fri, 30 Oct 2026 00:00:57 GMT
+Etag: W/"1b7-le9xcTaOeWjWcxKS63Po/Bi1yHU"
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+{"balances":[{"account":{"comment":null,"createdAt":"2026-10-30T00:00:55.204Z","currency":"PLN","id":"e9ba7ed7-cf9d-5b65-ba7e-1a064226aa56","name":"Synthetic cash","platformId":null,"updatedAt":"2026-10-30T00:00:55.204Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-02T00:00:00.000Z","id":"12884b88-771f-44c5-869f-bedd38d5dc5f","value":100,"accountId":"e9ba7ed7-cf9d-5b65-ba7e-1a064226aa56","valueInBaseCurrency":100}]}

@@ -202,20 +202,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11b2c23bcd97
-  - type: constrains
-    from: REQ-plugins-eodhd-config
-    to: FACT-SUBJECT-B5985D839AD69FE2
-    created_at: 2026-10-28T21:37:49.690Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a004504026e5
-  - type: requires_property
-    from: REQ-plugins-eodhd-config
-    to: FACT-PROP-4319D196DA138B4E
-    created_at: 2026-10-28T21:37:49.740Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a53f058b38fd
   - type: specified_by
     from: REQ-plugins-eodhd-config
     to: SCEN-plugins-eodhd-config
@@ -265,13 +251,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a833bddb7c1a
-  - type: implements
-    from: SYM-fd-identity-cli-print-link
-    to: REQ-identity-first-passkey-link
-    created_at: 2026-10-29T12:04:02.892Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f9311513bd55
   - type: covered_by
     from: SYM-fd-identity-cli-print-link
     to: TEST-identity-cli
@@ -279,3 +258,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69e4406777f8
+  - type: constrains
+    from: REQ-plugins-eodhd-config
+    to: FACT-SUBJECT-77D271D5A4EC379E
+    created_at: 2026-10-29T18:02:31.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cb6dd319d63
+  - type: requires_property
+    from: REQ-plugins-eodhd-config
+    to: FACT-PROP-E8F44E8D6DF1AD1C
+    created_at: 2026-10-29T18:02:31.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-466a6d43d27e
+  - type: verified_by
+    from: SCEN-ui-market-data-ranking
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:00:56.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67e1ed093b5d
+  - type: implements
+    from: SYM-valuation-gen-pb-x
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:47.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6e5f2fc88a5
+  - type: covered_by
+    from: SYM-valuation-gen-pb-x
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:47.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e70d0e2a6771
+  - type: implements
+    from: SYM-views-holding-value
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:24:58.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83811ce218d5
+  - type: implements
+    from: SYM-views-holding-value
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:24:58.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e5112830810
+  - type: covered_by
+    from: SYM-views-holding-value
+    to: TEST-views-values
+    created_at: 2026-10-30T01:24:58.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2fd9ced8c77
+  - type: implements
+    from: SYM-fd-identity-cli-print-link
+    to: REQ-identity-enroll-localhost-forward
+    created_at: 2026-10-29T22:35:12.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6556495ff7c
+  - type: implements
+    from: SYM-fd-identity-cli-print-link
+    to: REQ-identity-first-run-wizard-follows
+    created_at: 2026-10-29T22:35:21.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05cf442b8d04

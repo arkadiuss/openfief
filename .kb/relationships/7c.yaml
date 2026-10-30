@@ -211,13 +211,6 @@ relationships:
     id: rel-929042f50631
   - type: implements
     from: SYM-ui-server-overview
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:42.956Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b29fe7ecd609
-  - type: implements
-    from: SYM-ui-server-overview
     to: REQ-valuation-reporting-currency
     created_at: 2026-10-28T19:54:42.976Z
     created_by: kibi/upsert
@@ -272,13 +265,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1283f77de3e0
-  - type: implements
-    from: SYM-views-ghostfolio-bond-symbol
-    to: REQ-views-ghostfolio-bond-assets
-    created_at: 2026-10-29T00:56:09.892Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e281d712a1b7
   - type: covered_by
     from: SYM-views-ghostfolio-bond-symbol
     to: TEST-views-ghostfolio-project
@@ -349,3 +335,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb821f028191
+  - type: implements
+    from: SYM-pl-cluster-service-to-api
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:18:52.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c3ddd51576
+  - type: covered_by
+    from: SYM-pl-cluster-service-to-api
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:18:52.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f66d9a3d05
+  - type: implements
+    from: SYM-ingestv1-bind-account-response-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:00.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-405ac0894eba
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-response-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:00.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-030cb63ebcfa
+  - type: implements
+    from: SYM-pl-subtract
+    to: REQ-plugins-upgrade-plan-keeps-instance
+    created_at: 2026-10-29T17:05:10.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2df24f3b03e1
+  - type: covered_by
+    from: SYM-pl-subtract
+    to: TEST-plugins-upgrade
+    created_at: 2026-10-29T17:05:10.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec4bb7d7a6dc
+  - type: implements
+    from: SYM-views-ghostfolio-bond-symbol
+    to: REQ-views-ghostfolio-asset-keys
+    created_at: 2026-10-30T01:21:54.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4ffcdf65306
+  - type: implements
+    from: SYM-viewsv1-get-settings-response-descriptor
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:35:03.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6903ee73d803
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response-descriptor
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:35:03.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d39b1c03ddd2
+  - type: verified_by
+    from: SCEN-ui-three-values-shown
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:37:12.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ce4b6e19fb9
+  - type: implements
+    from: SYM-ui-server-overview
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:44:53.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1aa3cb844a6
+  - type: implements
+    from: SYM-ui-server-value-chart-fragment
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:01:14.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79c61a906932
+  - type: implements
+    from: SYM-ui-server-value-chart-fragment
+    to: REQ-ui-value-chart-value-switch
+    created_at: 2026-10-30T03:01:14.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-659adf70af6b
+  - type: covered_by
+    from: SYM-ui-server-value-chart-fragment
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:01:14.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f3b70d93e91

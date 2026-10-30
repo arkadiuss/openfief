@@ -209,20 +209,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ee160cdf0bf
-  - type: implements
-    from: SYM-core-server-handler
-    to: REQ-core-health-endpoints
-    created_at: 2026-10-28T14:35:04.230Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d5862b0a3b04
-  - type: covered_by
-    from: SYM-core-server-handler
-    to: TEST-core-unit
-    created_at: 2026-10-28T14:35:04.247Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dbca3f656ea8
   - type: executable_for
     from: SYM-core-test-helper-same-location
     to: TEST-core-unit
@@ -608,3 +594,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1fabba96c364
+  - type: implements
+    from: SYM-ui-broker-choice
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:12:15.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92f96432d109
+  - type: covered_by
+    from: SYM-ui-broker-choice
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:12:15.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9486775d784d
+  - type: implements
+    from: SYM-ingestv1-create-account-request
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:19:44.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d7ff0a7d6d
+  - type: covered_by
+    from: SYM-ingestv1-create-account-request
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:19:44.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c212c0ffecab
+  - type: implements
+    from: SYM-ingestv1-bind-account-request-get-broker-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:26:22.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2502cca9b1e
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request-get-broker-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:26:22.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-058ed5268763
+  - type: implements
+    from: SYM-portfoliov1-sleeve-kind-get-name
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:32:03.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0433d2a445de
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-kind-get-name
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:32:03.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5330230c6d81
+  - type: implements
+    from: SYM-valuation-gen-pb-ranked-source-descriptor
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:22:45.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52f5a37a7d3c
+  - type: covered_by
+    from: SYM-valuation-gen-pb-ranked-source-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:22:45.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65f64515a0e0
+  - type: implements
+    from: SYM-jurisdiction-settings
+    to: REQ-pl-ikze-early-withdrawal-tax
+    created_at: 2026-10-29T22:03:35.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daf891614214
+  - type: covered_by
+    from: SYM-jurisdiction-settings
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:03:36.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bd22fd5c082
+  - type: implements
+    from: SYM-valuation-app-new-settings
+    to: REQ-valuation-owner-settings
+    created_at: 2026-10-29T22:11:19.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf79bde03b98
+  - type: implements
+    from: SYM-valuation-app-new-settings
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T22:11:19.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0402f6677513
+  - type: covered_by
+    from: SYM-valuation-app-new-settings
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:11:19.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3b7b83899da
+  - type: implements
+    from: SYM-valuationv1-number-format-string
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:14:38.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34ef86f8962f
+  - type: covered_by
+    from: SYM-valuationv1-number-format-string
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:14:38.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cdbc99b4ac2

@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5f6ea20d49a
-  - type: executable_for
-    from: SYM-valuation-postgres-test-save-bond-basis-revalues-only-on-achange
-    to: TEST-valuation-postgres-queue
-    created_at: 2026-10-28T08:09:58.733Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fa0bba2a39e8
   - type: implements
     from: SYM-connector-gen-pb-index-reading
     to: REQ-connector-contract-messages
@@ -384,3 +377,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-106baccfc277
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-name
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:23:46.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e30c7c3a5172
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-name
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:23:46.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9e06059bc92
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-handler
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:29:46.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-655f30baae75
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-handler
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:29:46.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6a3292cc55f
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-response-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:35:13.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4edee40a088a
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-response-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:35:13.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c4322617107
+  - type: implements
+    from: SYM-valuation-gen-connect-new-market-data-service-client
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:28:00.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-615c46022b19
+  - type: covered_by
+    from: SYM-valuation-gen-connect-new-market-data-service-client
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:28:00.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c8353b99b05
+  - type: implements
+    from: SYM-valuationv1connect-unimplemented-settings-service-handler-set-marginal-rate
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:22:47.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7240d9f9e89
+  - type: covered_by
+    from: SYM-valuationv1connect-unimplemented-settings-service-handler-set-marginal-rate
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:22:47.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8b5f9d8962f
+  - type: executable_for
+    from: SYM-views-app-test-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:19.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-943698a3d3fe
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-yearly-taxes
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:21:44.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53cdd445ec82
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-yearly-taxes
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:21:44.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72bec181f604
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-yearly-taxes
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:44.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c3d18b754e3
+  - type: executable_for
+    from: SYM-tooling-ci-images-select-test-commit
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-10-30T03:48:28.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-178731c6a173

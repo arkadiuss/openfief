@@ -11,8 +11,8 @@ import (
 
 // topology is a synthetic cluster: core and proxy at documentation-range
 // ClusterIPs.
-func topology() plugins.Topology {
-	return plugins.Topology{
+func topology() *plugins.Topology {
+	return &plugins.Topology{
 		Core:        plugins.Service{Address: "192.0.2.10", Port: 80, TargetPort: 8080},
 		EgressProxy: plugins.Service{Address: "192.0.2.20", Port: 4750, TargetPort: 4750},
 		PluginPort:  9090, CoreServiceAccount: "openfief-core",
@@ -142,7 +142,7 @@ func TestCompile(t *testing.T) {
 			t.Parallel()
 			p, g, topo := samplePlugin(), fullGrant(), topology()
 			tt.grant(&g)
-			tt.topology(&topo)
+			tt.topology(topo)
 			e, effErr := plugins.Effective(&p, &g)
 			if effErr != nil {
 				t.Fatalf("Effective: %v", effErr)

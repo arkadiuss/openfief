@@ -21,8 +21,8 @@ var ErrBatchNotOpen = errors.New("import batch is not open")
 // ErrUnknownMode reports a stored mode that is not an ingest mode.
 var ErrUnknownMode = errors.New("unknown ingest mode")
 
-// Store is app.SyncStore, app.BindingStore, app.AccountBindings and
-// app.BatchRecorder in PostgreSQL, in the ingest schema that Migrate
+// Store is app.SyncStore, app.BindingStore, app.AccountBindings,
+// app.BatchRecorder and app.BrokerAccountStore in PostgreSQL, in the ingest schema that Migrate
 // creates.
 type Store struct {
 	pool *pgxpool.Pool
@@ -47,7 +47,7 @@ func (s *Store) ClaimSync(ctx context.Context, instance string, now, until time.
 		INSERT INTO ingest.connector_instances AS i (instance, lease_until) VALUES ($1, $3)
 		ON CONFLICT (instance) DO UPDATE SET lease_until = EXCLUDED.lease_until
 			WHERE i.lease_until IS NULL OR i.lease_until <= $2
-		RETURNING watermark, seeded, failures, open_batch,
+		RETURNING watermark, failures, open_batch,
 			(SELECT b.mode FROM ingest.import_batches b WHERE b.id = i.open_batch)`,
 		instance, now, until)
 	if err != nil {
@@ -69,7 +69,7 @@ func scanClaim(row pgx.CollectableRow) (app.SyncClaim, error) {
 		c          app.SyncClaim
 		open, mode *string
 	)
-	if err := row.Scan(&c.Watermark, &c.Seeded, &c.Failures, &open, &mode); err != nil {
+	if err := row.Scan(&c.Watermark, &c.Failures, &open, &mode); err != nil {
 		return app.SyncClaim{}, fmt.Errorf("scanning: %w", err)
 	}
 	if open != nil && mode != nil {
@@ -120,7 +120,7 @@ func (s *Store) StartBatch(ctx context.Context, instance string, b app.OpenBatch
 }
 
 // CompleteSync records b as completed and stores the instance's watermark,
-// seeded flag, next sync and released claim, in one database transaction.
+// next sync and released claim, in one database transaction.
 func (s *Store) CompleteSync(ctx context.Context, instance string, b *ingest.Batch, watermark string, next, at time.Time) error {
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		tag, err := tx.Exec(ctx, `
@@ -137,10 +137,10 @@ func (s *Store) CompleteSync(ctx context.Context, instance string, b *ingest.Bat
 			return ErrBatchNotOpen
 		}
 		if _, err := tx.Exec(ctx, `
-			UPDATE ingest.connector_instances SET watermark = $2, seeded = seeded OR $3, failures = 0,
-				next_sync_at = $4, lease_until = NULL, open_batch = NULL
+			UPDATE ingest.connector_instances SET watermark = $2, failures = 0,
+				next_sync_at = $3, lease_until = NULL, open_batch = NULL
 			WHERE instance = $1`,
-			instance, watermark, b.Mode == ingest.ModeOpening, next); err != nil {
+			instance, watermark, next); err != nil {
 			return fmt.Errorf("storing the watermark: %w", err)
 		}
 		return nil
@@ -247,6 +247,29 @@ func (s *Store) BoundAccounts(ctx context.Context, instance string) ([]ledger.Ac
 		return nil, fmt.Errorf("loading the bindings of %s: %w", instance, err)
 	}
 	return ids, nil
+}
+
+// Bindings returns every connector binding, in instance then account
+// order.
+func (s *Store) Bindings(ctx context.Context) ([]ingest.Binding, error) {
+	rows, err := s.pool.Query(ctx, `
+		SELECT instance, account_id FROM ingest.connector_bindings ORDER BY instance COLLATE "C", account_id COLLATE "C"`)
+	if err != nil {
+		return nil, fmt.Errorf("loading the connector bindings: %w", err)
+	}
+	out, err := pgx.CollectRows(rows, func(row pgx.CollectableRow) (ingest.Binding, error) {
+		var b ingest.Binding
+		var account string
+		if scanErr := row.Scan(&b.Instance, &account); scanErr != nil {
+			return ingest.Binding{}, fmt.Errorf("scanning: %w", scanErr)
+		}
+		b.Account = ledger.AccountID(account)
+		return b, nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("loading the connector bindings: %w", err)
+	}
+	return out, nil
 }
 
 // BoundInstances returns the connector instances bound to account, in name

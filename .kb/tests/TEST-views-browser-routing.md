@@ -1,5 +1,5 @@
 ---
-title: The front door routes a browser path to the view plugin with the longest matching browser path
+title: The front door routes a browser path to the one view plugin holding a browser path, and to none while several hold one
 status: active
 sourceFile: internal/views/browser_test.go
 origin:
@@ -8,4 +8,4 @@ origin:
 id: TEST-views-browser-routing
 type: test
 ---
-Table test of views.RouteBrowserPath over synthetic routes: / covers every path, a longer prefix wins, a prefix covers whole segments only, no route is ErrNoBrowserRoute and two instances on the same longest prefix are ErrAmbiguousBrowserRoute rather than one picked at random.
+Table test of views.RouteBrowserPath over synthetic routes: with one view, / covers every path, another prefix covers itself and the paths below it by whole segments only, and a path outside it is ErrNoBrowserRoute; no view at all is ErrNoBrowserRoute; two views, whatever their prefixes and even for a path only one covers, are ErrSeveralBrowserViews, so the core never picks one of two (D-114).

@@ -209,3 +209,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad54f6ef73d7
+  - type: implements
+    from: SYM-ingest-delivery-by-broker-account
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:51:22.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d188fb7948
+  - type: covered_by
+    from: SYM-ingest-delivery-by-broker-account
+    to: TEST-ingest-delivery
+    created_at: 2026-10-29T11:51:22.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cf89207ee41
+  - type: implements
+    from: SYM-portfolio-app-sleeves-add-kind
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:04:20.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34f455d172fc
+  - type: covered_by
+    from: SYM-portfolio-app-sleeves-add-kind
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:04:20.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1d96674db49
+  - type: implements
+    from: SYM-views-day-total-add
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:24:39.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1706b17490c5
+  - type: implements
+    from: SYM-views-day-total-add
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:24:39.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3058eb80b6b
+  - type: covered_by
+    from: SYM-views-day-total-add
+    to: TEST-views-values
+    created_at: 2026-10-30T01:24:39.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-016af3cb1c64
+  - type: implements
+    from: SYM-viewsv1-number-format-proto-message
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:29:01.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f560c5158c45
+  - type: covered_by
+    from: SYM-viewsv1-number-format-proto-message
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:29:01.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6924b3647ce2
+  - type: executable_for
+    from: SYM-exp-plugins-test-may-hold-browser-path
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T22:01:07.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdbc25570cad

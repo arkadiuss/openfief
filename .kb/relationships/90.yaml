@@ -300,3 +300,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c7a31775bc7
+  - type: implements
+    from: SYM-ingest-resolution
+    to: REQ-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:49:14.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ffb1ae2e54
+  - type: implements
+    from: SYM-ingest-resolution
+    to: REQ-ingest-unmapped-broker-account
+    created_at: 2026-10-29T11:49:14.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c4551f3b9b3
+  - type: covered_by
+    from: SYM-ingest-resolution
+    to: TEST-ingest-broker-accounts
+    created_at: 2026-10-29T11:49:15.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d3c4d3ac351
+  - type: implements
+    from: SYM-portfolio-connectapi-sleeve-service-update-sleeve
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:06:49.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e47c708b4b2
+  - type: covered_by
+    from: SYM-portfolio-connectapi-sleeve-service-update-sleeve
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:06:49.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4dd9e0ece1f
+  - type: implements
+    from: SYM-ui-first-run
+    to: REQ-ui-first-run-wizard-steps
+    created_at: 2026-10-29T13:16:29.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bed6427aa22f
+  - type: implements
+    from: SYM-ui-first-run
+    to: REQ-ui-first-run-wizard
+    created_at: 2026-10-29T13:16:29.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95493207452a
+  - type: covered_by
+    from: SYM-ui-first-run
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:16:29.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57f69c4005b4
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-response-proto-reflect
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:59.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ea9b8848bac
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-response-proto-reflect
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:59.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a05df3f49dd5
+  - type: implements
+    from: SYM-viewsv1-broker-account-descriptor
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:45:59.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8847d32bc581
+  - type: covered_by
+    from: SYM-viewsv1-broker-account-descriptor
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:45:59.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c59be0d9b9c3
+  - type: implements
+    from: SYM-pl-cli-upgrade
+    to: REQ-plugins-upgrade-applies-on-confirmation
+    created_at: 2026-10-29T17:07:28.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24117b49e899
+  - type: implements
+    from: SYM-pl-cli-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:28.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c92774723cb8
+  - type: covered_by
+    from: SYM-pl-cli-upgrade
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:28.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c802712a7e1b
+  - type: executable_for
+    from: SYM-affected-test-test-read-builds
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:01:48.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-256745f95889

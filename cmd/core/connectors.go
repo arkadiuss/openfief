@@ -26,6 +26,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/plugins"
+	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
+	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
@@ -92,9 +94,15 @@ type connectorDeps struct {
 	recorder *valuationapp.InputRecorder
 	// crossChecks records cross-check prices (D-22).
 	crossChecks *valuationapp.CrossChecks
-	today       func() kernel.Date
-	now         func() time.Time
-	log         *slog.Logger
+	// bonds tells treasury bonds apart, and model reads the model
+	// portfolio's targets, for what market-data connectors price (D-93).
+	bonds ingestapp.BondSeries
+	model ingestapp.ModelTargets
+	// rankings records the sources of market data (D-94).
+	rankings *valuationapp.Rankings
+	today    func() kernel.Date
+	now      func() time.Time
+	log      *slog.Logger
 	// entries is the client the owner's manual entries go through; the
 	// scheduler sets it once it has found the instances.
 	entries *entryCaller
@@ -116,17 +124,25 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		if err != nil {
 			return fmt.Errorf("cross checks: %w", err)
 		}
+		// The model's targets need no owner: no session is checked.
+		models, err := portfolioapp.New(portfoliopg.New(p.pool), vstore, nil, valuation.PLN())
+		if err != nil {
+			return fmt.Errorf("model portfolio: %w", err)
+		}
 		return fn(&connectorDeps{
 			pool: p.pool, ledger: l, recorder: recorder, crossChecks: checks, now: time.Now, log: log,
-			today: valuationpg.TodayIn(time.UTC, time.Now),
+			today: valuationpg.TodayIn(time.UTC, time.Now), bonds: vstore, model: models,
+			rankings: newRankings(p.pool, l, vstore, nil),
 		})
 	})
 }
 
 // newScheduler wires the connector scheduler (D-49) over d: the instances
 // and their addresses come from discovery, the core's tokens for them from
-// the TokenRequest API (D-59), and the sync state and bindings from the
-// ingest schema.
+// the TokenRequest API (D-59), the sync state, bindings and broker accounts
+// (D-72) from the ingest schema, each account's seeding from the ledger
+// (D-95), and what market-data connectors price from the holdings, the
+// bond terms and the model portfolio (D-93).
 func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery, cfg *syncConfig) *ingestapp.Scheduler {
 	tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
 	store := ingestpg.New(d.pool)
@@ -136,10 +152,12 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 		Connectors: &ingestapp.Connectors{
 			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
 			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
-			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Today: d.today,
+			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
+			Seeding: d.ledger, Sources: sourceInputs{rankings: d.rankings},
 		},
 		Instances:  discovery,
 		Store:      store,
+		Scope:      &ingestapp.PricingScope{Holdings: d.ledger, Bonds: d.bonds, Model: d.model, Today: d.today},
 		Policy:     cfg.Policy,
 		Timeout:    cfg.Timeout,
 		Now:        d.now,

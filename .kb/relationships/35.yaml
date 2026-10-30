@@ -113,13 +113,6 @@ relationships:
     id: rel-f8431897e826
   - type: implements
     from: SYM-valuation-postgres-new-client
-    to: REQ-valuation-settings
-    created_at: 2026-10-28T08:05:34.850Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d8fe5a63f239
-  - type: implements
-    from: SYM-valuation-postgres-new-client
     to: REQ-valuation-river-jobs
     created_at: 2026-10-28T08:05:34.901Z
     created_by: kibi/upsert
@@ -475,3 +468,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78bf690e3287
+  - type: implements
+    from: SYM-core-new-accounts
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T12:55:37.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e963174b9db2
+  - type: implements
+    from: SYM-core-new-accounts
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:55:37.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c44fa3d51632
+  - type: covered_by
+    from: SYM-core-new-accounts
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T12:55:37.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee981479ede8
+  - type: implements
+    from: SYM-ingestv1-account-get-institution
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:19:20.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39abc7f0e42e
+  - type: covered_by
+    from: SYM-ingestv1-account-get-institution
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:19:20.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-071b7081d049
+  - type: implements
+    from: SYM-valuation-postgres-new-client
+    to: REQ-valuation-revaluation-config
+    created_at: 2026-10-29T21:57:11.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30ea372d78f0

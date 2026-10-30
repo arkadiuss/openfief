@@ -1,5 +1,14 @@
 # Builds every image CI knows about: multi-arch (amd64, arm64), with an SBOM and provenance, and when
-# pushing, a keyless cosign signature on the digest (D-17). Called by ci.yml and release.yml.
+# pushing, a keyless cosign signature on the digest (D-17) and the digest as an artifact (digest-<name>), which
+# the release's catalog job reads (D-88). Called by ci.yml and release.yml; `kind` limits it to plugins/* or
+# cmd/*, and `ref` builds another commit, such as the release commit that carries the catalog.
+#
+# With `select` (CI, not releases), only the images a change can affect are built (scripts/ci-images-select.sh,
+# tools/affected): an image is affected by its Dockerfile, the Go packages its binary imports and the files they
+# embed, and the inputs every image shares (go.mod, go.work, this workflow). When pushing, an unchanged image
+# keeps the digest images.yml signed for an earlier commit on main: the carry job tags that digest
+# sha-<commit> and main for this commit, after checking its signature, so the demo deploy finds a signed digest
+# for every image. Without `push`, an unchanged image is simply not built.
 #
 # Adding an image: put a Dockerfile at cmd/<name>/Dockerfile or plugins/<name>/Dockerfile (build context
 # is the repository root). `task ci:images` discovers it and it is published as ghcr.io/<owner>/<repo>/<name>.
@@ -18,6 +27,26 @@ on:
         type: string
         required: false
         default: ''
+      kind:
+        description: Which images to build, all, plugins (plugins/*) or commands (cmd/*)
+        type: string
+        required: false
+        default: all
+      ref:
+        description: Commit to build from; empty builds the commit that started the workflow
+        type: string
+        required: false
+        default: ''
+      select:
+        description: Build only the images the change affects (CI); false builds all (releases)
+        type: boolean
+        required: false
+        default: false
+      base:
+        description: With select and without push, the revision to compare with (a pull request's base)
+        type: string
+        required: false
+        default: ''
 
 permissions: {}
 
@@ -25,23 +54,47 @@ jobs:
   discover:
     name: discover images
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    # On main, finding an image's last signed build runs cosign verify per candidate commit (up to 20 each).
+    timeout-minutes: 30
     permissions:
       contents: read
+      packages: read # cosign reads the signatures of earlier builds (select and push)
     outputs:
-      images: ${{ steps.list.outputs.images }}
+      images: ${{ steps.list.outputs.images || steps.select.outputs.images }}
+      carry: ${{ steps.select.outputs.carry || '[]' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ inputs.ref }}
+          # select diffs against earlier commits.
+          fetch-depth: ${{ inputs.select && '0' || '1' }}
           persist-credentials: false
       - uses: ./.github/actions/setup
         with:
           tools: 'false'
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+        if: inputs.select && inputs.push
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        if: inputs.select && inputs.push
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: task ci:images
         id: list
-        run: echo "images=$(task ci:images PREFIX="$PREFIX")" >>"$GITHUB_OUTPUT"
+        if: ${{ !inputs.select }}
+        run: echo "images=$(task ci:images PREFIX="$PREFIX" KIND="$KIND")" >>"$GITHUB_OUTPUT"
         env:
           PREFIX: ghcr.io/${{ github.repository }}
+          KIND: ${{ inputs.kind }}
+      - name: task ci:images:select
+        id: select
+        if: inputs.select
+        run: task ci:images:select PREFIX="$PREFIX" MODE="$MODE" ARG="$ARG" >>"$GITHUB_OUTPUT"
+        env:
+          PREFIX: ghcr.io/${{ github.repository }}
+          MODE: ${{ inputs.push && 'reuse' || (inputs.base != '' && 'base' || 'all') }}
+          ARG: ${{ inputs.push && github.repository || (inputs.base != '' && inputs.base || '-') }}
 
   build:
     name: image (${{ matrix.name }})
@@ -60,6 +113,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ inputs.ref }}
           persist-credentials: false
       - uses: ./.github/actions/setup
         with:
@@ -102,3 +156,57 @@ jobs:
         run: task image:sign IMAGE="$IMAGE"
         env:
           IMAGE: ${{ matrix.image }}@${{ steps.build.outputs.digest }}
+      # The release's catalog job (D-88) reads the digest each plugin image was signed at.
+      - name: Record the signed digest
+        if: inputs.push
+        run: |
+          mkdir -p dist/digests
+          printf '%s\n' "$DIGEST" >"dist/digests/$NAME"
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          NAME: ${{ matrix.name }}
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: inputs.push
+        with:
+          name: digest-${{ matrix.name }}
+          path: dist/digests/${{ matrix.name }}
+          if-no-files-found: error
+
+  carry:
+    # An unchanged image keeps the digest signed for an earlier commit: task image:carry checks that signature,
+    # tags the digest sha-<commit> and main without changing it, and checks that the new tag verifies to the same
+    # digest, as scripts/demo/pin-images.sh will. Nothing is signed here: the signature already belongs to the
+    # digest, from images.yml on main.
+    name: carry (${{ matrix.name }})
+    needs: discover
+    if: inputs.push && needs.discover.outputs.carry != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: write # tag the carried digest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.discover.outputs.carry) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: task image:carry
+        run: task image:carry IMAGE="$IMAGE" DIGEST="$DIGEST" COMMIT="$COMMIT" REPO="$REPO"
+        env:
+          IMAGE: ${{ matrix.image }}
+          DIGEST: ${{ matrix.digest }}
+          COMMIT: ${{ inputs.ref || github.sha }}
+          REPO: ${{ github.repository }}

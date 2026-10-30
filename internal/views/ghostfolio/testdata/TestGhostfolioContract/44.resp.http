@@ -1,11 +1,11 @@
-HTTP/1.1 201 Created
-Content-Length: 25
+HTTP/1.1 200 OK
+Content-Length: 1290
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:54 GMT
-Etag: W/"cb-n1+LjJwzqXVvRrNBOTeHFGB80pA"
+Date: Fri, 30 Oct 2026 00:00:56 GMT
+Etag: W/"50a-5+dsF2orpCV5+jQLqEz3k6TunsE"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"authToken":"SANITIZED"}
+{"balances":[{"account":{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-03T00:00:00.000Z","id":"d5737127-b5bf-44f4-a100-8d700173cdf9","value":1,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":1},{"account":{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-04T00:00:00.000Z","id":"2523828e-2aaa-4858-9c04-583fefe97499","value":999,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":999},{"account":{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-06T00:00:00.000Z","id":"c93b51ee-3c0a-427a-a9bf-6622fd310146","value":-502,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":-502}]}

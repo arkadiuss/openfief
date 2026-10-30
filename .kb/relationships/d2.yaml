@@ -349,3 +349,171 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a248e482762
+  - type: constrains
+    from: REQ-ingest-ibkrflex-by-broker-account
+    to: FACT-SUBJECT-4417410D7D0B92B1
+    created_at: 2026-10-29T11:37:14.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-500283e1692b
+  - type: requires_property
+    from: REQ-ingest-ibkrflex-by-broker-account
+    to: FACT-PROP-B82DFAE47CFF7418
+    created_at: 2026-10-29T11:37:14.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d79dbfda9bed
+  - type: specified_by
+    from: REQ-ingest-ibkrflex-by-broker-account
+    to: SCEN-ingest-ibkrflex-by-broker-account
+    created_at: 2026-10-29T11:37:15.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f5b4c172759
+  - type: implements
+    from: SYM-ui-sleeve-choice
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:12:43.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cec817b558bb
+  - type: covered_by
+    from: SYM-ui-sleeve-choice
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:12:43.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bad1f15c567
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-request-get-kind
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:38:54.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64ecdbee22f2
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-request-get-kind
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:38:54.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5b74c07bbcd
+  - type: constrains
+    from: REQ-ingest-market-data-scope
+    to: FACT-SUBJECT-B391A633058483FC
+    created_at: 2026-10-29T16:58:01.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e081164d16d5
+  - type: requires_property
+    from: REQ-ingest-market-data-scope
+    to: FACT-PROP-F09792EDC8A6B33A
+    created_at: 2026-10-29T16:58:01.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23639401f668
+  - type: specified_by
+    from: REQ-ingest-market-data-scope
+    to: SCEN-ingest-market-data-scope
+    created_at: 2026-10-29T16:58:01.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8c91548d515
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-new-rankings
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:14:01.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2b7ca393f09
+  - type: executable_for
+    from: SYM-valuation-app-test-rank-sources
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:14:08.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3becc77e2f5
+  - type: implements
+    from: SYM-valuation-app-display-settings
+    to: REQ-valuation-owner-settings
+    created_at: 2026-10-29T22:11:01.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1008e608e8d2
+  - type: implements
+    from: SYM-valuation-app-display-settings
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-29T22:11:01.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b59d900bb8ee
+  - type: covered_by
+    from: SYM-valuation-app-display-settings
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:11:01.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ab7f8e3ca7
+  - type: validates
+    from: TEST-views-connectapi-values
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T00:04:48.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed2418b98364
+  - type: validates
+    from: TEST-views-connectapi-values
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T00:04:48.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3427ca2c568b
+  - type: validates
+    from: TEST-views-connectapi-values
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-30T00:04:48.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfe1adb5f67a
+  - type: validates
+    from: TEST-views-connectapi-values
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:16:55.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83529726b6a5
+  - type: executable_for
+    from: SYM-views-connectapi-test-allocation-of-a-kind-over-rest
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:23:03.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b7aad5c02b9
+  - type: implements
+    from: SYM-viewsv1-get-settings-response-reset
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:34:28.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d07a43273e8
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:34:28.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a6d9c97219e
+  - type: implements
+    from: SYM-exp-plugins-app-check-browser-view
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T22:00:03.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af36c23fba29
+  - type: covered_by
+    from: SYM-exp-plugins-app-check-browser-view
+    to: TEST-plugins-cli-browser-view
+    created_at: 2026-10-29T22:00:03.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e2485d2faee

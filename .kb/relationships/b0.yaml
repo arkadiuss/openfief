@@ -357,6 +357,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-042d9abb5cca
   - type: implements
+    from: SYM-ingest-app-accounts-save
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:59:25.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42bdc0ea2989
+  - type: covered_by
+    from: SYM-ingest-app-accounts-save
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:59:25.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b10c1e22a6f3
+  - type: implements
+    from: SYM-portfoliov1-sleeve-kind-proto-message
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:31:35.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-457d96bc4752
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-kind-proto-message
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:31:35.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1902e52801d0
+  - type: implements
     from: SYM-fd-views-kube-browser-base-url
     to: REQ-core-reverse-proxies-view-plugins
     created_at: 2026-10-29T12:07:33.324Z
@@ -370,3 +398,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e903d3feeb3
+  - type: implements
+    from: SYM-valuation-holding-valuation-liquidation-valued
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:15:38.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-283533759e61
+  - type: implements
+    from: SYM-valuation-holding-valuation-liquidation-valued
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:15:38.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a23905f08ca6
+  - type: covered_by
+    from: SYM-valuation-holding-valuation-liquidation-valued
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:15:38.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d19f15b433e9
+  - type: implements
+    from: SYM-core-account-terms
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:08:20.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e79f050dab66
+  - type: implements
+    from: SYM-core-account-terms
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:08:20.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd5848930d6b
+  - type: covered_by
+    from: SYM-core-account-terms
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T23:08:20.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13faf0b653d9
+  - type: executable_for
+    from: SYM-views-app-test-totals-with-ikze-cash
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:25.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4746424bd06

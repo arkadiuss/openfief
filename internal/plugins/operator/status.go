@@ -1,6 +1,7 @@
 package operator
 
 import (
+	"fmt"
 	"slices"
 	"strings"
 
@@ -28,6 +29,7 @@ const (
 	ReasonPermissionsPending   = "PermissionsPending"
 	ReasonApproved             = "Approved"
 	ReasonInvalidImage         = "InvalidImage"
+	ReasonBrowserPathHeld      = "BrowserPathHeld"
 )
 
 // maxMessageLen keeps condition messages short; the full error is logged by
@@ -39,6 +41,9 @@ type observation struct {
 	generation int64
 	// Problems with the current version, the grant, the plan and the cluster.
 	specErr, configErr, grantErr, planErr, clusterErr error
+	// browserErr says why a version that would run doesn't: another
+	// instance holds a browser path (D-114).
+	browserErr error
 	// signature is the verification of spec.image.
 	signature Verification
 	// previousSignature is the verification of the kept previous version's
@@ -106,6 +111,7 @@ func readyCondition(o *observation) condition {
 	}{
 		{o.grantErr, ReasonInvalidGrant},
 		{o.planErr, ReasonInvalidPrevious},
+		{o.browserErr, ReasonBrowserPathHeld},
 		{o.clusterErr, ReasonClusterUnavailable},
 	} {
 		if p.err != nil {
@@ -187,12 +193,22 @@ func describe(p *plugins.Permissions) string {
 		{"secrets", api.Secrets},
 		{"dataTiers", api.DataTiers},
 		{"browserPaths", api.BrowserPaths},
+		{"clusterServices", clusterServiceNames(api.ClusterServices)},
 	} {
 		if len(f.items) > 0 {
 			parts = append(parts, f.name+": "+strings.Join(f.items, ", "))
 		}
 	}
 	return strings.Join(parts, "; ")
+}
+
+// clusterServiceNames writes in-cluster services as namespace/service:port.
+func clusterServiceNames(refs []v1alpha1.ClusterServiceRef) []string {
+	out := make([]string, 0, len(refs))
+	for _, r := range refs {
+		out = append(out, fmt.Sprintf("%s/%s:%d", r.Namespace, r.Service, r.Port))
+	}
+	return out
 }
 
 func truncate(s string) string {

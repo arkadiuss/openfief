@@ -268,7 +268,7 @@ func TestServeSchedulesConnectors(t *testing.T) {
 	}
 	waitForInstalled(ctx, t, c, "ibkr-main")
 	cancel()
-	if err := shutdown(context.WithoutCancel(ctx), &server{pool: pool}, &http.Server{ReadHeaderTimeout: time.Second}, c, 10*time.Second); err != nil {
+	if err := shutdown(context.WithoutCancel(ctx), &server{pool: pool}, c, 10*time.Second, &http.Server{ReadHeaderTimeout: time.Second}); err != nil {
 		t.Errorf("shutdown: %v", err)
 	}
 	select {

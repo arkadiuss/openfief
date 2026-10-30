@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f797d5c4bef
-  - type: executable_for
-    from: SYM-plugins-test-manifest-requested
-    to: TEST-plugins-manifest
-    created_at: 2026-10-28T05:25:39.735Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-af6b7bad3d34
   - type: implements
     from: SYM-ledger-app-has-sleeve
     to: REQ-ledger-app-registry
@@ -118,13 +111,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09d791b9dc88
-  - type: implements
-    from: SYM-views-validate-range
-    to: REQ-views-valuation-totals
-    created_at: 2026-10-28T07:21:47.782Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f927ec4fb0dc
   - type: covered_by
     from: SYM-views-validate-range
     to: TEST-views-valuation
@@ -349,3 +335,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aca5d1cd35a0
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-accounts-admit
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:14:16.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddcabbaa40b5
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:40:02.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-605cc5586433
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:40:02.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6244bb1de067
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-request-get-origin
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:26:18.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76dc2b06cc7c
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-request-get-origin
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:26:18.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5102807f7875
+  - type: implements
+    from: SYM-views-ghostfolio-cash-changes
+    to: REQ-views-ghostfolio-cash-balances
+    created_at: 2026-10-30T01:26:10.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cde7fa6350c
+  - type: covered_by
+    from: SYM-views-ghostfolio-cash-changes
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-30T01:26:10.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8506d4701ef
+  - type: constrains
+    from: REQ-jurisdiction-fee-rule-sale-cost
+    to: FACT-SUBJECT-005E002D2AEB1A5D
+    created_at: 2026-10-29T21:48:37.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057c88b6bd08
+  - type: requires_property
+    from: REQ-jurisdiction-fee-rule-sale-cost
+    to: FACT-PROP-998F9C8492458919
+    created_at: 2026-10-29T21:48:37.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf1b85fff752
+  - type: specified_by
+    from: REQ-jurisdiction-fee-rule-sale-cost
+    to: SCEN-jurisdiction-fee-rule-sale-cost
+    created_at: 2026-10-29T21:48:37.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-009dfb2f8edd
+  - type: implements
+    from: SYM-valuation-postgres-store-save-marginal-rate
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:14:47.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34b1f1ed1ab1
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-marginal-rate
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:14:47.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c806cd66e49
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-rest-money
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:22:27.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d665e044c27b
+  - type: implements
+    from: SYM-views-day-total-add-cash
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:24:31.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b03c838c51d
+  - type: implements
+    from: SYM-views-day-total-add-cash
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:24:31.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b225a66e7e8
+  - type: covered_by
+    from: SYM-views-day-total-add-cash
+    to: TEST-views-values
+    created_at: 2026-10-30T01:24:31.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3ffc938eefa
+  - type: implements
+    from: SYM-views-validate-range
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T02:13:44.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f85c2a9f3b7

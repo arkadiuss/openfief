@@ -216,13 +216,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06d3c85512db
-  - type: implements
-    from: SYM-ui-server-load-model
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:13:15.594Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1ea3e73c102a
   - type: covered_by
     from: SYM-ui-server-load-model
     to: TEST-ui-model
@@ -286,3 +279,164 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b806b1e8aa76
+  - type: verified_by
+    from: SCEN-portfolio-key-from-name
+    to: TEST-portfolio-key
+    created_at: 2026-10-29T11:35:50.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feaf8d84643a
+  - type: implements
+    from: SYM-ibkrflex-map-sections
+    to: REQ-ingest-ibkrflex-by-broker-account
+    created_at: 2026-10-29T11:52:21.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a815c0e0bbed
+  - type: covered_by
+    from: SYM-ibkrflex-map-sections
+    to: TEST-ingest-ibkrflex-brokers
+    created_at: 2026-10-29T11:52:21.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc2fc23bba4e
+  - type: executable_for
+    from: SYM-ledger-pg-test-migrate-gives-differing-sleeves-a-role-override
+    to: TEST-ledger-pg-kinds
+    created_at: 2026-10-29T11:53:55.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10108af57a80
+  - type: constrains
+    from: REQ-ui-sleeve-and-account-pages
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-29T12:46:18.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-535ad59501b7
+  - type: requires_property
+    from: REQ-ui-sleeve-and-account-pages
+    to: FACT-PROP-772370EE941D69B2
+    created_at: 2026-10-29T12:46:18.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22578ea866ba
+  - type: specified_by
+    from: REQ-ui-sleeve-and-account-pages
+    to: SCEN-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T12:46:18.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04f3cedba58f
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-sleeves-add-sleeve
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:13:23.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96d88f50b80d
+  - type: implements
+    from: SYM-ingestv1-bind-account-request-reset
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:25:06.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9b2c77083f5
+  - type: covered_by
+    from: SYM-ingestv1-bind-account-request-reset
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:25:06.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a53997e50d4
+  - type: implements
+    from: SYM-pl-command-args
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:08:12.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-198589755a44
+  - type: covered_by
+    from: SYM-pl-command-args
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:08:12.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5329cc839944
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-sync-keeps-from-go-live
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T17:13:04.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e267cd7dafd7
+  - type: implements
+    from: SYM-valuation-app-rankings-check-owner
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:13:14.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcecc0b36fc0
+  - type: implements
+    from: SYM-valuation-app-rankings-check-owner
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:13:14.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b85b99a9de79
+  - type: covered_by
+    from: SYM-valuation-app-rankings-check-owner
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:13:14.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9d26cd4b8ad
+  - type: executable_for
+    from: SYM-views-connectapi-test-yearly-taxes-over-rest
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:22:56.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a978f9b160a8
+  - type: implements
+    from: SYM-viewsv1-fee-rule-proto-message
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:27:54.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69bf929ce366
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule-proto-message
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:27:54.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42c337036cb2
+  - type: implements
+    from: SYM-exp-identity-cli-enroll-origin
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:36:13.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09ec5128a42c
+  - type: implements
+    from: SYM-exp-identity-cli-enroll-origin
+    to: REQ-identity-first-run-wizard-follows
+    created_at: 2026-10-29T22:36:13.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c821a966f01
+  - type: covered_by
+    from: SYM-exp-identity-cli-enroll-origin
+    to: TEST-identity-cli
+    created_at: 2026-10-29T22:36:13.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36f3a4e951ba
+  - type: implements
+    from: SYM-ui-server-load-model
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:43:49.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1b4f4c4b51b

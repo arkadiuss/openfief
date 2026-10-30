@@ -24,12 +24,12 @@ type entryCaller struct {
 }
 
 // Sync syncs instance through the client.
-func (e *entryCaller) Sync(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, watermark string) (ingestapp.Delivery, error) {
+func (e *entryCaller) Sync(ctx context.Context, instance string, call *ingestapp.SyncCall) (ingestapp.Delivery, error) {
 	c, err := e.get()
 	if err != nil {
 		return ingestapp.Delivery{}, err
 	}
-	d, err := c.Sync(ctx, instance, id, mode, watermark)
+	d, err := c.Sync(ctx, instance, call)
 	if err != nil {
 		return ingestapp.Delivery{}, fmt.Errorf("sync: %w", err)
 	}
@@ -90,7 +90,8 @@ func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots 
 }
 
 // entryConnectors returns the connector use case the owner's entries and
-// uploads go through: d.entries as the client, store's connector bindings,
+// uploads go through: d.entries as the client, store's connector bindings
+// and broker accounts (D-72),
 // and the delivery imported into the ledger and valuation like a sync's,
 // cross-check prices included (D-22).
 func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connectors {
@@ -98,7 +99,8 @@ func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connect
 	return &ingestapp.Connectors{
 		Caller: d.entries, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
 		Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
-		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Today: d.today,
+		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
+		Sources: sourceInputs{rankings: d.rankings},
 	}
 }
 

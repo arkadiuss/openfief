@@ -1,11 +1,11 @@
 HTTP/1.1 201 Created
-Content-Length: 25
+Content-Length: 268
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:53 GMT
-Etag: W/"cb-g8LfslX3bCvNe0FusWh1E3k8uEc"
+Date: Fri, 30 Oct 2026 00:00:55 GMT
+Etag: W/"10c-s8AkyoBglOukjguKWlj72OVXnsQ"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"authToken":"SANITIZED"}
+{"accountId":"e9ba7ed7-cf9d-5b65-ba7e-1a064226aa56","createdAt":"2026-10-30T00:00:55.558Z","date":"2025-01-02T00:00:00.000Z","id":"12884b88-771f-44c5-869f-bedd38d5dc5f","updatedAt":"2026-10-30T00:00:55.558Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","value":100}

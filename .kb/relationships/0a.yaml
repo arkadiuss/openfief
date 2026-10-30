@@ -377,6 +377,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33b266e26825
+  - type: verified_by
+    from: SCEN-ui-first-run-wizard-steps
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T12:45:45.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e003eae3598
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-links
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:02:27.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d06736d8c0e3
+  - type: implements
+    from: SYM-portfolio-app-sleeves-save
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:04:47.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-531a5c2989c2
+  - type: covered_by
+    from: SYM-portfolio-app-sleeves-save
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:04:47.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d1510b4ed40
   - type: executable_for
     from: SYM-fd-browserproxy-test-helper-fake-tokens-token-for
     to: TEST-views-browser-proxy
@@ -398,3 +426,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a168431553b
+  - type: executable_for
+    from: SYM-core-test-helper-market-data-api
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:11:34.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e833268782e
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-project-balances
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-30T01:27:22.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06dc50fb96e1
+  - type: executable_for
+    from: SYM-views-test-totals-by-date-with-cash
+    to: TEST-views-values
+    created_at: 2026-10-30T01:26:10.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29808003f903
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-accounts-last-update
+    to: TEST-ui-onboarding
+    created_at: 2026-10-30T02:58:44.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e036545fea3
+  - type: executable_for
+    from: SYM-ui-test-number-formats
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:05:19.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ee4d8f08b25
+  - type: implements
+    from: SYM-affected-write-plan
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:51:16.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c5419acca42
+  - type: covered_by
+    from: SYM-affected-write-plan
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:51:17.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fa9fad9eaed
+  - type: implements
+    from: SYM-affected-script-test
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:03.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bee4c4a82f8a
+  - type: covered_by
+    from: SYM-affected-script-test
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:03.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf67f8dad14e

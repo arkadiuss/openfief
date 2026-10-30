@@ -209,20 +209,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d4fc9c6d10e
-  - type: implements
-    from: SYM-ui-chart-data
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:20.763Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d70448ecded
-  - type: implements
-    from: SYM-ui-chart-data
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:54:20.780Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-02964ad6ff0d
   - type: covered_by
     from: SYM-ui-chart-data
     to: TEST-ui-format
@@ -391,3 +377,150 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd69d2986443
+  - type: implements
+    from: SYM-pl-valid-config-field
+    to: REQ-plugins-config-host-https-url
+    created_at: 2026-10-29T15:15:19.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecf5f44a1bc7
+  - type: covered_by
+    from: SYM-pl-valid-config-field
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:19.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56ae93a70ae7
+  - type: executable_for
+    from: SYM-pl-test-helper-reconcile-result
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:20:33.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4277dda13cac
+  - type: constrains
+    from: REQ-ingest-broker-account-resolve
+    to: FACT-SUBJECT-ADDCB97B909F7AE1
+    created_at: 2026-10-29T11:36:53.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a9372a49152
+  - type: requires_property
+    from: REQ-ingest-broker-account-resolve
+    to: FACT-PROP-F8310DB9A517427A
+    created_at: 2026-10-29T11:36:53.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78d2a0e27bf8
+  - type: specified_by
+    from: REQ-ingest-broker-account-resolve
+    to: SCEN-ingest-broker-account-resolve
+    created_at: 2026-10-29T11:36:53.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9d722b9fd04
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-connections-bindings
+    to: TEST-views-app-connections
+    created_at: 2026-10-29T13:09:12.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67935d7aaee8
+  - type: verified_by
+    from: SCEN-views-ghostfolio-reconcile-cash
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-30T01:20:58.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e7b7535da94
+  - type: verified_by
+    from: SCEN-views-ghostfolio-reconcile-cash
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:20:58.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a230a91acd59
+  - type: verified_by
+    from: SCEN-views-ghostfolio-reconcile-cash
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:20:58.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8625f7a3ee65
+  - type: verified_by
+    from: SCEN-views-ghostfolio-reconcile-cash
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:20:58.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0ee1554a88f
+  - type: verified_by
+    from: SCEN-jurisdiction-number-format-choices
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T21:47:53.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e49b79c715
+  - type: constrains
+    from: REQ-ingest-account-terms
+    to: FACT-SUBJECT-519AF1985404F856
+    created_at: 2026-10-29T22:59:09.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-101a9ae37d91
+  - type: requires_property
+    from: REQ-ingest-account-terms
+    to: FACT-PROP-19EBE27430F73B35
+    created_at: 2026-10-29T22:59:10.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02507337b3e7
+  - type: specified_by
+    from: REQ-ingest-account-terms
+    to: SCEN-ingest-account-terms
+    created_at: 2026-10-29T22:59:10.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e4b52ef3ba3
+  - type: implements
+    from: SYM-viewsv1connect-read-service-client-list-yearly-taxes
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:37:53.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a421c240240
+  - type: implements
+    from: SYM-viewsv1connect-read-service-client-list-yearly-taxes
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:37:53.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa5032db7883
+  - type: covered_by
+    from: SYM-viewsv1connect-read-service-client-list-yearly-taxes
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:37:53.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fb53145e945
+  - type: implements
+    from: SYM-ui-chart-data
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:39:17.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b3bc3780f8
+  - type: implements
+    from: SYM-ui-chart-data
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:41:59.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b130038b4609
+  - type: implements
+    from: SYM-ui-chart-data
+    to: REQ-ui-charts-number-format
+    created_at: 2026-10-30T03:06:59.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb4b50e0255d

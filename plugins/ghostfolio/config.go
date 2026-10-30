@@ -42,22 +42,27 @@ type rawListing struct {
 
 // config is the checked configuration.
 type config struct {
-	// url is the owner's Ghostfolio, such as https://ghostfolio.example.com.
+	// url is the owner's Ghostfolio, such as https://ghostfolio.example.com;
+	// empty when it runs in the cluster and the plugin reaches it as its
+	// in-cluster service (D-74).
 	url string
 	// interval is how long the plugin waits between syncs.
 	interval time.Duration
 	listings map[ledger.ISIN]ghostfolio.Listing
 }
 
-// parse checks the raw config: an https URL of the Ghostfolio's origin, an
-// interval of at least five minutes (an hour when empty), and listings with
-// valid ISINs, none twice.
+// parse checks the raw config: an https URL of the Ghostfolio's origin, or
+// none for a Ghostfolio in the cluster (D-74), an interval of at least five
+// minutes (an hour when empty), and listings with valid ISINs, none twice.
 func (r *rawConfig) parse() (config, error) {
-	origin, ok := httpsOrigin(r.URL)
-	if !ok {
-		return config{}, fmt.Errorf("%w: url: %w", errBadConfig, errNotHTTPS)
+	c := config{interval: defaultInterval}
+	if r.URL != "" {
+		origin, ok := httpsOrigin(r.URL)
+		if !ok {
+			return config{}, fmt.Errorf("%w: url: %w", errBadConfig, errNotHTTPS)
+		}
+		c.url = origin
 	}
-	c := config{url: origin, interval: defaultInterval}
 	var err error
 	if r.Interval != "" {
 		if c.interval, err = time.ParseDuration(r.Interval); err != nil {

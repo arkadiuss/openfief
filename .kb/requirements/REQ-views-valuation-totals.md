@@ -1,6 +1,6 @@
 ---
 title: Valuation totals must be one per date, summing the stored valuations dated on it exactly in the reporting currency and separately per original currency, and must refuse a date range that is reversed or longer than 3700 days.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-30
 tags:
   - strict-modeling
@@ -34,14 +34,4 @@ Valuation totals must be one per date, summing the stored valuations dated on it
 
 ## Context
 
-Feeds the value-over-time chart (firm REQ-AUTO-718AA30AAFD0E6E8) and keeps amounts in their original currency next to the PLN value (firm REQ-AUTO-5CB834BAA25E2C4C, D-20). The range limit, about ten years of daily values, bounds one request's work; it is the agent's choice, not the author's. Modeled by Claude Code for the M0 read API task; the author has not reviewed it yet.
-
-## Source
-
-> The built-in UI draws two charts in M0: allocation (by asset class, currency, broker or sleeve) and value over time, which starts at go-live (D-23).
-
-docs/DESIGN.md D-30
-
-> Every amount keeps its original currency. In M0, NBP table A rates convert amounts to PLN, behind a swappable rate-provider interface with NBP as the default FX plugin.
-
-docs/DESIGN.md D-20
+Closed: superseded by REQ-views-totals-with-cash. D-106 makes valuation totals include cash. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

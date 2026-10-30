@@ -140,13 +140,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-f26d56633fcb
   - type: executable_for
-    from: SYM-ibkr-flex-test-test-ledger-accounts
-    to: TEST-plugins-ibkr-flex
-    created_at: 2026-10-28T17:23:27.718Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0bdd3376802d
-  - type: executable_for
     from: SYM-e2e-install-clients
     to: TEST-e2e-demo-stack
     created_at: 2026-10-28T18:06:21.078Z
@@ -321,3 +314,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9594d604fb8b
+  - type: executable_for
+    from: SYM-pl-test-helper-gf-service
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:47.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20022033971c
+  - type: implements
+    from: SYM-pl-api-cluster-service-ref
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-29T15:35:07.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-825bd2685ff2
+  - type: covered_by
+    from: SYM-pl-api-cluster-service-ref
+    to: TEST-operator-api
+    created_at: 2026-10-29T15:35:07.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bd40ee69b13
+  - type: implements
+    from: SYM-pl-render-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:34.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90871553ee22
+  - type: covered_by
+    from: SYM-pl-render-upgrade
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:34.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c92b7a92932
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-bond-isi-ns-bond-terms
+    to: TEST-ingest-app-pricing
+    created_at: 2026-10-29T17:14:26.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bae009a55998
+  - type: executable_for
+    from: SYM-ui-test-helper-new-fake-market-data
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:20:37.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9cbdccb3f96
+  - type: implements
+    from: SYM-valuation-gen-pb-set-source-ranking-request-string
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:25:52.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30e0ad8897d7
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-source-ranking-request-string
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:25:52.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fc81fdb2ed6
+  - type: implements
+    from: SYM-valuation-gen-pb-file_openfief_valuation_v1_market_data_proto_raw-desc-gzip
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:27:27.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96af5e190268
+  - type: covered_by
+    from: SYM-valuation-gen-pb-file_openfief_valuation_v1_market_data_proto_raw-desc-gzip
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:27:27.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e826ce5ca7cc
+  - type: validates
+    from: TEST-jurisdiction-pack
+    to: REQ-jurisdiction-in-process
+    created_at: 2026-10-29T21:47:12.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50013cee8602
+  - type: validates
+    from: TEST-jurisdiction-pack
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T21:47:12.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-966c414e6e4f
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-formats
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:03:30.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d139598ffcd7
+  - type: executable_for
+    from: SYM-affected-test-test-relative-reads
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:02:11.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f18b84c366

@@ -97,13 +97,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56db52ca756b
-  - type: implements
-    from: SYM-valuation-value-bond-lot
-    to: REQ-valuation-bond-holding
-    created_at: 2026-10-28T07:32:28.451Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e67f63c7fc3a
   - type: covered_by
     from: SYM-valuation-value-bond-lot
     to: TEST-valuation-revaluation
@@ -447,3 +440,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-464f79b0c524
+  - type: executable_for
+    from: SYM-ingest-postgres-test-bindings
+    to: TEST-ingest-postgres-brokers
+    created_at: 2026-10-29T13:03:56.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8f7486437a7
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_accounts_proto_init
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:27:20.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81b72626de4d
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_accounts_proto_init
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:27:20.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f8053955b6
+  - type: implements
+    from: SYM-portfoliov1-update-sleeve-request-get-name
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:41:07.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95a7fcf88819
+  - type: covered_by
+    from: SYM-portfoliov1-update-sleeve-request-get-name
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:41:07.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aa082928ed5
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-market-data-locked
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:20:59.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fdb8768d152
+  - type: validates
+    from: TEST-valuation-app-settings
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T21:47:30.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26a9ddf753d7
+  - type: validates
+    from: TEST-valuation-app-settings
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-29T21:47:30.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dc93318964e
+  - type: implements
+    from: SYM-valuation-value-bond-lot
+    to: REQ-valuation-bond-holding-values
+    created_at: 2026-10-29T21:57:39.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ccc007d37d0

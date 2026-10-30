@@ -125,13 +125,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29649ca2fd9b
-  - type: implements
-    from: SYM-valuation-postgres-end-of-day-worker
-    to: REQ-valuation-settings
-    created_at: 2026-10-28T08:07:01.165Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2423510933b5
   - type: covered_by
     from: SYM-valuation-postgres-end-of-day-worker
     to: TEST-valuation-postgres-worker
@@ -216,13 +209,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f39eb661dae
-  - type: implements
-    from: SYM-ui-enum-label
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:53:41.362Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ec3d796d28d3
   - type: covered_by
     from: SYM-ui-enum-label
     to: TEST-ui-format
@@ -342,3 +328,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf703c783ea3
+  - type: implements
+    from: SYM-pl-ingress-rule-yaml
+    to: REQ-plugins-cli-in-cluster-ingress-rule
+    created_at: 2026-10-29T15:21:07.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2cb30a89c7f
+  - type: covered_by
+    from: SYM-pl-ingress-rule-yaml
+    to: TEST-plugins-kube-cluster-service
+    created_at: 2026-10-29T15:21:07.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d1f90d548f
+  - type: implements
+    from: SYM-portfoliov1-sleeve-role-string
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:30:43.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02e3ff78db69
+  - type: covered_by
+    from: SYM-portfoliov1-sleeve-role-string
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:30:43.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b83b1de163
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-add-balance
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:27:48.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1738a1444152
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-ghostfolio-model-add-balance
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:27:48.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44c315747c20
+  - type: implements
+    from: SYM-valuation-postgres-end-of-day-worker
+    to: REQ-valuation-revaluation-config
+    created_at: 2026-10-29T21:56:58.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11092ee76e02
+  - type: implements
+    from: SYM-valuation-app-input-recorder-rules-version
+    to: REQ-valuation-rules-version-revalues
+    created_at: 2026-10-29T22:10:03.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fcebf52af5b
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-rules-version
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:10:03.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef0a4cac41d0
+  - type: executable_for
+    from: SYM-views-test-helper-ikze-row
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:52.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c904196ea2da
+  - type: implements
+    from: SYM-ui-enum-label
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:39:38.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4dd1655912d
+  - type: executable_for
+    from: SYM-affected-test-test-choose-images-builds-when-it-cannot-diff
+    to: TEST-tooling-affected-images
+    created_at: 2026-10-30T03:58:20.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-358decfd874e

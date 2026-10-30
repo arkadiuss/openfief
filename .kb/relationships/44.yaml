@@ -372,15 +372,6 @@ relationships:
     {
         type: implements,
         from: SYM-ui-server-account-rows,
-        to: REQ-ui-overview,
-        created_at: 2026-10-28T19:54:56.379Z,
-        created_by: kibi/upsert,
-        source: mcp://kibi/upsert,
-        id: rel-8636b2d24555
-      },
-    {
-        type: implements,
-        from: SYM-ui-server-account-rows,
         to: REQ-decision-d36-7-ui-valuation-status,
         created_at: 2026-10-28T19:54:56.407Z,
         created_by: kibi/upsert,
@@ -469,15 +460,6 @@ relationships:
         id: rel-14b5da1cf1c8
       },
     {
-        type: implements,
-        from: SYM-ui-model-form-with-blank-rows,
-        to: REQ-ui-model-portfolio,
-        created_at: 2026-10-29T00:12:53.984Z,
-        created_by: kibi/upsert,
-        source: mcp://kibi/upsert,
-        id: rel-2f820b3d638b
-      },
-    {
         type: covered_by,
         from: SYM-ui-model-form-with-blank-rows,
         to: TEST-ui-model,
@@ -550,6 +532,51 @@ relationships:
         id: rel-44f96eb51915
       },
     {
+        type: implements,
+        from: SYM-portfolio-app-sleeve-of,
+        to: REQ-portfolio-sleeve-service,
+        created_at: 2026-10-29T13:05:01.466Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-48672628a680
+      },
+    {
+        type: covered_by,
+        from: SYM-portfolio-app-sleeve-of,
+        to: TEST-portfolio-app-sleeves,
+        created_at: 2026-10-29T13:05:01.510Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-47b34969fab2
+      },
+    {
+        type: executable_for,
+        from: SYM-views-connectapi-test-helper-fake-ledger-kinds,
+        to: TEST-views-connectapi-connections,
+        created_at: 2026-10-29T13:11:08.549Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-701111c14f7a
+      },
+    {
+        type: implements,
+        from: SYM-viewsv1-list-broker-accounts-request-string,
+        to: REQ-views-onboarding-lists,
+        created_at: 2026-10-29T13:50:09.966Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-98b5ff6050a6
+      },
+    {
+        type: covered_by,
+        from: SYM-viewsv1-list-broker-accounts-request-string,
+        to: TEST-views-connectapi-connections,
+        created_at: 2026-10-29T13:50:10.017Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-75806cd221d9
+      },
+    {
         type: executable_for,
         from: SYM-fd-identity-cli-test-helper-fake-core-enroll-link,
         to: TEST-identity-cli,
@@ -557,5 +584,86 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-3fa87ace8cee
+      },
+    {
+        type: executable_for,
+        from: SYM-valuation-app-test-change-settings,
+        to: TEST-valuation-app-settings,
+        created_at: 2026-10-29T22:12:22.588Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-c089010581ae
+      },
+    {
+        type: implements,
+        from: SYM-valuationv1connect-settings-service-client-set-number-format,
+        to: REQ-valuation-settings-service,
+        created_at: 2026-10-29T23:22:02.951Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-33bfa9ca0e6e
+      },
+    {
+        type: covered_by,
+        from: SYM-valuationv1connect-settings-service-client-set-number-format,
+        to: TEST-core-settings,
+        created_at: 2026-10-29T23:22:03.005Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-3901a4469484
+      },
+    {
+        type: executable_for,
+        from: SYM-exp-core-test-helper-check-statuses,
+        to: TEST-core-front-door,
+        created_at: 2026-10-29T21:01:02.691Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-3b9606126115
+      },
+    {
+        type: implements,
+        from: SYM-ui-server-account-rows,
+        to: REQ-ui-overview-values,
+        created_at: 2026-10-30T02:44:15.964Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-8a385413ed9c
+      },
+    {
+        type: implements,
+        from: SYM-ui-server-set-marginal-rate,
+        to: REQ-ui-value-settings-forms,
+        created_at: 2026-10-30T02:59:52.765Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-45e79083cd1d
+      },
+    {
+        type: implements,
+        from: SYM-ui-server-set-marginal-rate,
+        to: REQ-ui-number-format-setting,
+        created_at: 2026-10-30T02:59:52.857Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-465bd5abb464
+      },
+    {
+        type: covered_by,
+        from: SYM-ui-server-set-marginal-rate,
+        to: TEST-ui-values,
+        created_at: 2026-10-30T02:59:52.911Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-ada16f4b486e
+      },
+    {
+        type: implements,
+        from: SYM-ui-model-form-with-blank-rows,
+        to: REQ-ui-model-portfolio-performance-chart,
+        created_at: 2026-10-30T03:42:35.161Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-c27bab61e1e7
       }
   ]

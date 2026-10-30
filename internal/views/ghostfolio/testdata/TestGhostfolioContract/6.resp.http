@@ -1,11 +1,11 @@
 HTTP/1.1 201 Created
-Content-Length: 246
+Content-Length: 726
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:53 GMT
-Etag: W/"f6-xVE+y0kR80eqLiVgwielPi6rX7s"
+Date: Fri, 30 Oct 2026 00:00:54 GMT
+Etag: W/"2d6-yhnPVE56xdQ/XPH3pJoR6disgWk"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"comment":null,"createdAt":"2026-10-29T00:38:53.324Z","currency":"USD","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-29T00:38:53.324Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1"}
+{"activities":[{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"openfief:test/bonds/open-1","createdAt":"2026-10-30T00:00:54.828Z","currency":"PLN","date":"2024-11-04T00:00:00.000Z","fee":0,"id":"4fcbf47e-6108-4004-9cfb-1f5693b50789","quantity":10,"symbolProfileId":"3b598400-7440-48f0-bad7-5793922cecad","type":"BUY","unitPrice":100,"updatedAt":"2026-10-30T00:00:54.828Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","assetProfile":{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","isin":"PLTEST000010","name":"EDO0136","dataSource":"MANUAL","symbol":"4512a0f0-0f02-594a-8add-87da055fe65d"},"value":1000,"valueInBaseCurrency":1000}]}

@@ -343,6 +343,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-62c5c9c4a7e9
   - type: implements
+    from: SYM-ingestv1-create-account-response-proto-message
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:21:57.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55ec83d79f72
+  - type: covered_by
+    from: SYM-ingestv1-create-account-response-proto-message
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:21:57.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8fdc1ef2b45
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-response-proto-message
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:35:06.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43c0894af499
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-response-proto-message
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:35:06.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6efeee98e503
+  - type: implements
     from: SYM-fd-identity-cli-options
     to: REQ-identity-first-passkey-command
     created_at: 2026-10-29T12:03:27.631Z
@@ -356,3 +384,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86b0fd1b0f19
+  - type: implements
+    from: SYM-pl-write-permissions
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:40.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fabc9fa6cd74
+  - type: covered_by
+    from: SYM-pl-write-permissions
+    to: TEST-plugins-cli-upgrade
+    created_at: 2026-10-29T17:07:40.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcc964a9f9ec
+  - type: executable_for
+    from: SYM-valuation-postgres-test-ranked-prices
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-10-29T18:16:13.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddcfe6c121de
+  - type: validates
+    from: TEST-valuation-postgres-terms
+    to: REQ-valuation-sale-fee-rule-zero
+    created_at: 2026-10-29T21:47:34.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9da532373e1
+  - type: validates
+    from: TEST-valuation-postgres-terms
+    to: REQ-decision-d36-9-three-values-stored
+    created_at: 2026-10-29T21:47:34.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91ea8a842929
+  - type: implements
+    from: SYM-valuationv1connect-settings-service-handler
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:22:16.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f57c9f506bf
+  - type: covered_by
+    from: SYM-valuationv1connect-settings-service-handler
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:22:16.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3424b47d68c2
+  - type: implements
+    from: SYM-viewsv1-fee-rule-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:27:46.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e52aeb7c68e4
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:27:46.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74d1aa691426

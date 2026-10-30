@@ -66,7 +66,7 @@ flowchart LR
 | PostgreSQL | The record, one schema per bounded context, run by CloudNativePG (D-14) | | |
 | Connectors | Bring data in: Interactive Brokers' Flex statements and mark prices, your treasury bond lots, end-of-day prices from EODHD, NBP's exchange rates | [`plugins/`](../plugins/) | [Ingest](concepts/ingest.md), [Treasury bonds](concepts/treasury-bonds.md), [Valuation](concepts/valuation.md) |
 | Views | Show the record: the [built-in UI](concepts/ui.md) and the [Ghostfolio view](concepts/ghostfolio.md), which keeps your Ghostfolio in step with OpenFief | [`plugins/ui`](../plugins/ui/), [`plugins/ghostfolio`](../plugins/ghostfolio/) | [Built-in UI](concepts/ui.md), [Ghostfolio view](concepts/ghostfolio.md) |
-| `openfief` CLI | Installs, lists and removes plugins, and prints the link for your first passkey, with your own kubeconfig | [`cmd/openfief`](../cmd/openfief/) | [Plugins](concepts/plugins.md#installing-with-the-cli), [Identity](concepts/identity.md#the-first-passkey) |
+| `openfief` CLI | Installs, upgrades (D-90), lists and removes plugins, with each instance's own Secrets (D-89), hosts from its config (D-75) and an in-cluster service it asks for (D-74), and prints the link for your first passkey, on your own route's origin or on `localhost` through a port-forward (D-80), with your own kubeconfig | [`cmd/openfief`](../cmd/openfief/) | [Plugins](concepts/plugins.md#installing-with-the-cli), [Identity](concepts/identity.md#the-first-passkey) |
 | Go SDK | What plugins are built on: the connector contract, the core's tokens and the proxy | [`sdk/go`](../sdk/go/) | [Build a plugin](guides/build-a-plugin.md) |
 
 The money side lives inside the core, as bounded contexts: [kernel](concepts/kernel.md) types for exact decimals and money, the [ledger](concepts/ledger.md), [valuation](concepts/valuation.md), the Polish [treasury bond](concepts/treasury-bonds.md) rules and the [portfolio](concepts/portfolio.md)'s sleeves and model.
@@ -115,6 +115,10 @@ sequenceDiagram
   V->>V: a worker stores the new valuations
 ```
 
+The core picks the batch's mode from the ledger: an account already seeded from its opening lots syncs in transactions mode on its own, and a newly mapped account is seeded first (D-95). A market-data connector, one that feeds no account, is told in each sync what to price: every instrument you hold and the model portfolio's targets, so a new purchase is priced without configuring anything (D-93).
+
+When two connectors deliver the same kind of market data, every value is kept and the one from the source you rank higher wins; the others cross-check it. You rank them on the settings page, and a new order revalues everything (D-94).
+
 The import is idempotent: each transaction is keyed by its source and the institution's own ID, so the same statement twice changes nothing, and a changed row becomes a new version rather than an overwrite (D-18). The broker's own position snapshots are stored as balance assertions and checked against what the ledger derives. Revaluation runs in a queue inside PostgreSQL, so valuations catch up with every import, price and rate (D-36). [Ingest](concepts/ingest.md) and [Valuation](concepts/valuation.md) follow each step in the code.
 
 Not every source is pulled. Treasury bond lots are typed in on an account's page and statements are uploaded there, and the core hands both to the connector bound to that account ([Ingest](concepts/ingest.md#statement-uploads)).
@@ -133,7 +137,7 @@ flowchart LR
   ui -- "your session" --> api
 ```
 
-Your browser only ever talks to the core. The core serves its own paths, the read API under `/v1` and its Connect services, and passes every other path on to the one view plugin with an approved browser path (D-81, D-114). Only that view ever sees your session cookie. The UI signs you in with a passkey through the core (D-26), then renders each page from the read API, with your session, exactly as your scripts would with a script token. [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
+Your browser only ever talks to the core, on its browser port. The core serves its own paths there, the read API under `/v1` and its Connect service, and passes every other path on to the one view plugin with an approved browser path (D-81, D-114). Only that view ever sees your session cookie. The UI signs you in with a passkey through the core's sign-in service, which sits on the core's plugin port, where no route reaches (D-26, D-115), then renders each page from the read API, with your session, exactly as your scripts would with a script token. [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
 
 ## Security boundaries
 
@@ -177,7 +181,7 @@ flowchart LR
   px -- "granted hosts only" --> internet
 ```
 
-The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/`, `egress-proxy/` and `core/` for the three workloads. The core's Service `openfief-core` has two named ports on the same container port 8080: `http` (8080), the one a route points at, serving browsers, the read API and the health endpoints, and `connect` (8081), the port the operator hands to plugins (D-49). D-115 gives the plugin-only services, sign-in and the owner's entries, a container port of their own behind `connect`, so no route reaches them; today both Service ports still reach the one container port. Its NetworkPolicy admits plugin pods, and a route adds a policy admitting its proxy ([Expose OpenFief](guides/expose.md)). It lets the core reach only DNS, the database, plugin pods on their Connect port (8080) and the Kubernetes API server, as above.
+The install manifests are in `deploy/`: `crds/` for the definitions and the namespace, `operator/`, `egress-proxy/` and `core/` for the three workloads. The core listens on two ports (D-115), and its Service `openfief-core` names one for each: `http` (8080, the core's `--listen`), the browser port a route points at, serving the front door, the read API and the health endpoints; and `connect` (8081, the core's `--plugin-listen`), the plugin port the operator hands to plugins (D-49), serving the read API and the services only plugins call, sign-in and the owner's entries, so no route reaches them. Its NetworkPolicy admits plugin pods to the plugin port alone; a route adds a policy admitting its proxy to the browser port, such as the optional Gateway component in [`deploy/gateway`](../deploy/gateway/kustomization.yaml) (D-28, [Expose OpenFief](guides/expose.md)). It lets the core reach only DNS, the database, plugin pods on their Connect port (8080) and the Kubernetes API server, as above.
 
 The core's pods mount a Kubernetes API token. Its Role ([`deploy/core/rbac.yaml`](../deploy/core/rbac.yaml)) allows only `create` on its own `serviceaccounts/token` (resourceNames `openfief-core`) and `get`, `list` and `watch` on Plugins and Services, all in the `openfief` namespace. A ClusterRole allows it `create` on `tokenreviews` alone, with which it checks the tokens view plugins present (D-82). The database URL comes from CloudNativePG's Secret `openfief-db-app`, key `uri` (D-14, D-29). Every workload's pod sets `runAsNonRoot`, so each image (`cmd/<name>/Dockerfile`) runs as a numeric user, `65532:65532`, distroless's nonroot: the kubelet refuses to start a container whose image names its user, because it can't tell that a name isn't root.
 
@@ -200,7 +204,7 @@ flowchart LR
   kernel["kernel (shared)"]
 ```
 
-The [code map](/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has four arrows the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves; `views` imports `jurisdiction/pl` to tell a treasury bond series from a listed instrument in the allocation; `ingest` imports `jurisdiction/pl` to check that a bond lot can be valued; and `portfolio` imports `ledger` to parse a model target's ISIN.
+The [code map](/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has four arrows the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves; `views` imports `jurisdiction/pl` to tell a treasury bond series from a listed instrument in the allocation; `ingest` imports `jurisdiction/pl` to check that a bond lot can be valued; and `portfolio` imports `ledger` to parse a model target's ISIN. The designed `jurisdiction/pl` node is two packages in the code: `jurisdiction`, the pack contract with the fee rule and number format (D-70), and `jurisdiction/pl`, the Polish pack behind it; `valuation` reaches the pack through the contract, and `ingest` and `views` use the contract's tax wrappers and settings. `cmd/core` picks the pack, `pl.NewPack()`, joins valuation's recorder and store into the account entries' terms, and hands the pack and the store to the read API for cash values, settings and yearly taxes.
 
 ## The demo environment
 

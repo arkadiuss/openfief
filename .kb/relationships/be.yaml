@@ -433,3 +433,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e4d172d07d8
+  - type: implements
+    from: SYM-pl-cluster-service-request-deep-copy-into
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-10-29T15:19:30.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a05572bff9b
+  - type: covered_by
+    from: SYM-pl-cluster-service-request-deep-copy-into
+    to: TEST-operator-api
+    created_at: 2026-10-29T15:19:30.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33e6821d0e04
+  - type: implements
+    from: SYM-ingest-app-new-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:58:46.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-766bdc1570b4
+  - type: covered_by
+    from: SYM-ingest-app-new-account
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:58:46.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d84ead14a5b
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-broker-accounts
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:09:59.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48a58cc59e3b
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-broker-accounts
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:09:59.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82da7ea148f4
+  - type: implements
+    from: SYM-viewsv1-list-sleeve-kinds-request-descriptor
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:47:32.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef0fe75faaee
+  - type: covered_by
+    from: SYM-viewsv1-list-sleeve-kinds-request-descriptor
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:47:32.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edca58b661b2
+  - type: implements
+    from: SYM-valuation-gen-pb-market-data-kind-string
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:21:35.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b62ce754f80c
+  - type: covered_by
+    from: SYM-valuation-gen-pb-market-data-kind-string
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:21:35.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f741e853bdbd
+  - type: implements
+    from: SYM-pl-values
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:06:46.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-878b9c7cff1b
+  - type: implements
+    from: SYM-pl-values
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:06:46.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79af9e3239e9
+  - type: covered_by
+    from: SYM-pl-values
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:46.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7147da9d5ce8
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-fee-rule
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:12:42.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96ad6ffc21a1
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-fee-rule
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:12:42.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bb690665dc2
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-fee-rule
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:12:42.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b482f9c971b3
+  - type: implements
+    from: SYM-pl-values
+    to: REQ-valuation-gross-value
+    created_at: 2026-10-30T03:06:32.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7367bde15862
+  - type: implements
+    from: SYM-pl-values
+    to: REQ-valuation-liquidation-value
+    created_at: 2026-10-30T03:06:46.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0286d725ef9

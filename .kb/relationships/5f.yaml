@@ -349,13 +349,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9b87e56ee48
-  - type: implements
-    from: SYM-ui-book-label
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:53:31.390Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e2ca4b83623d
   - type: covered_by
     from: SYM-ui-book-label
     to: TEST-ui-format
@@ -503,3 +496,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d835bd4a82bf
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-accounts
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:59:52.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c053da54130
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-new-model
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:27:41.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a842f118d4d0
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-new-model
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:27:41.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d76a86ad885f
+  - type: implements
+    from: SYM-ui-book-label
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:39:07.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a65ad627b21
+  - type: implements
+    from: SYM-affected-sources-of
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:59:15.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec2d57dea7c3
+  - type: covered_by
+    from: SYM-affected-sources-of
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:59:15.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0960f4d30d36

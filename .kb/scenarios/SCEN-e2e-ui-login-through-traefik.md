@@ -7,4 +7,4 @@ origin:
 id: SCEN-e2e-ui-login-through-traefik
 type: scenario
 ---
-Given the demo's Ingress on k3s's Traefik, which routes every path to the core (D-81), and the operator-deployed UI with its browser path /, when a client in another namespace asks / through Traefik, then the core proxies it to the UI, which redirects to /login, and /login answers 200 with the login page. No policy admits Traefik to the UI.
+Given the demo's stack on k3d with the demo's Ingress, which points at Service openfief-core port http, the core's browser port, when a client asks Traefik for /login on the route's host, then Traefik reaches the core through the core-from-traefik policy, the core proxies the path to the built-in UI, and the login page comes back; nothing routes to the core's plugin port or to the UI directly.

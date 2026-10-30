@@ -314,3 +314,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf75f8ab0315
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-by-broker
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:47:55.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5138effd2a7
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-connections-api
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:10:35.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d82940e71c71
+  - type: implements
+    from: SYM-pl-app-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:06:09.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aa91df81703
+  - type: covered_by
+    from: SYM-pl-app-upgrade
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-10-29T17:06:10.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5a58bbb3104
+  - type: implements
+    from: SYM-ui-ranking-view-names
+    to: REQ-ui-market-data-ranking
+    created_at: 2026-10-29T18:19:53.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb1b984d9b0d
+  - type: covered_by
+    from: SYM-ui-ranking-view-names
+    to: TEST-ui-market-data
+    created_at: 2026-10-29T18:19:53.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee0338f55b1f
+  - type: constrains
+    from: REQ-views-ghostfolio-cash-balances
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-30T01:21:08.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7e4d9902478
+  - type: requires_property
+    from: REQ-views-ghostfolio-cash-balances
+    to: FACT-PROP-9145E10965EA2489
+    created_at: 2026-10-30T01:21:08.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ea0ec332e73
+  - type: specified_by
+    from: REQ-views-ghostfolio-cash-balances
+    to: SCEN-views-ghostfolio-cash-balances
+    created_at: 2026-10-30T01:21:08.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-511661c9039d
+  - type: implements
+    from: SYM-affected-image-inputs
+    to: REQ-tooling-ci-affected-images
+    created_at: 2026-10-30T03:56:51.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-455d6c7c4bf1
+  - type: covered_by
+    from: SYM-affected-image-inputs
+    to: TEST-tooling-affected-images
+    created_at: 2026-10-30T03:56:51.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8e45115d401

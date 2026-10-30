@@ -22,7 +22,9 @@ const (
 )
 
 // settingsData is what the settings page shows: the owner's passkeys,
-// script tokens and model portfolio, the installed plugins, and once, right
+// script tokens, number format and marginal PIT rate, model portfolio and
+// ranking of market-data sources, the
+// installed plugins, and once, right
 // after it was made, a new token's secret or a new enrollment link.
 type settingsData struct {
 	Origin      string
@@ -38,6 +40,12 @@ type settingsData struct {
 	Model *modelForm
 	// Plugins are the installed plugins, shown read-only (D-46, D-56).
 	Plugins pluginList
+	// MarketData is the owner's ranking of market-data sources, one per
+	// kind (D-94).
+	MarketData []rankingView
+	// Values are the owner's number format and marginal PIT rate (D-78,
+	// D-113).
+	Values *valuesSettings
 }
 
 // settingsPage shows the owner's settings.
@@ -64,6 +72,14 @@ func (s *server) renderSettings(w http.ResponseWriter, r *http.Request, sess ses
 		return
 	}
 	data.Plugins = plugins
+	if data.Values, err = s.loadValuesSettings(r, sess); err != nil {
+		s.coreFailed(w, r, "GetOwnerSettings", err)
+		return
+	}
+	if data.MarketData, err = s.loadRankings(r, sess); err != nil {
+		s.coreFailed(w, r, "ListSourceRankings", err)
+		return
+	}
 	if data.Model == nil {
 		form, err := s.loadModel(r, sess)
 		if err != nil {

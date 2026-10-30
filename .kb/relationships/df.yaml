@@ -71,13 +71,6 @@ relationships:
     id: rel-6902f27ccbff
   - type: implements
     from: SYM-portfolio-check-sleeve
-    to: REQ-portfolio-sleeve-role-override
-    created_at: 2026-10-28T09:38:35.951Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ba92f020859c
-  - type: implements
-    from: SYM-portfolio-check-sleeve
     to: REQ-portfolio-sleeve-kind
     created_at: 2026-10-28T09:38:35.973Z
     created_by: kibi/upsert
@@ -433,3 +426,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d0e82e69bf8
+  - type: executable_for
+    from: SYM-pl-test-config-host-permissions
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:46.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b416a33d0e6
+  - type: implements
+    from: SYM-pl-parse-cluster-service
+    to: REQ-plugins-cluster-service-outside-openfief
+    created_at: 2026-10-29T15:16:23.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5da4b63dd3a6
+  - type: covered_by
+    from: SYM-pl-parse-cluster-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:16:23.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-467856c386de
+  - type: implements
+    from: SYM-portfolio-check-sleeve
+    to: REQ-portfolio-role-override-explicit
+    created_at: 2026-10-29T11:38:36.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12c9b6fe777e
+  - type: implements
+    from: SYM-portfolio-check-sleeve
+    to: REQ-portfolio-role-differs-explicit
+    created_at: 2026-10-29T11:38:36.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4dbb45aa9f9
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry-save-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:02:21.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48c33a1f15e2
+  - type: validates
+    from: TEST-plugins-cli-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:03:54.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3032bcf9f48b
+  - type: validates
+    from: TEST-plugins-cli-upgrade
+    to: REQ-plugins-cli-no-install-over-instance
+    created_at: 2026-10-29T17:03:54.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbd33c9e0479
+  - type: validates
+    from: TEST-plugins-cli-upgrade
+    to: REQ-plugins-manual-upgrades
+    created_at: 2026-10-29T17:03:54.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7063f6bfc3d5
+  - type: implements
+    from: SYM-ingest-app-connectors-keep-from-go-live
+    to: REQ-ingest-sync-keeps-from-go-live
+    created_at: 2026-10-29T17:12:44.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3ce60ecdfb8
+  - type: covered_by
+    from: SYM-ingest-app-connectors-keep-from-go-live
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T17:12:44.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cd610c7ccda
+  - type: implements
+    from: SYM-valuation-gen-pb-list-source-rankings-request-descriptor
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:24:37.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01615b1d1d48
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-source-rankings-request-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:24:37.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8379e6cddd11
+  - type: implements
+    from: SYM-affected-carried
+    to: REQ-tooling-ci-carry-signed-digest
+    created_at: 2026-10-30T03:56:19.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a47f4c44cfd
+  - type: covered_by
+    from: SYM-affected-carried
+    to: TEST-tooling-affected-images
+    created_at: 2026-10-30T03:56:19.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22bee8cac1dc
+  - type: executable_for
+    from: SYM-affected-test-test-run-usage
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:04:36.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cfc5e33f4b0
+  - type: implements
+    from: SYM-affected-run
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:05:15.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4cdd48abe10
+  - type: covered_by
+    from: SYM-affected-run
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:05:15.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-770a5300d6d1

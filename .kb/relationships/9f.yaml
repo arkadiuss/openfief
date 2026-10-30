@@ -132,13 +132,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f801b722977
-  - type: implements
-    from: SYM-core-command
-    to: REQ-core-config
-    created_at: 2026-10-28T14:33:33.952Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9adb726ee628
   - type: covered_by
     from: SYM-core-command
     to: TEST-core-unit
@@ -218,13 +211,6 @@ relationships:
     id: rel-4d5c2a09591d
   - type: implements
     from: SYM-ui-account-row
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:53:50.627Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f9efbff20c42
-  - type: implements
-    from: SYM-ui-account-row
     to: REQ-decision-d36-7-ui-valuation-status
     created_at: 2026-10-28T19:53:50.653Z
     created_by: kibi/upsert
@@ -294,9 +280,163 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-75c5c0ba4d9a
   - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-brokers-mark-seeded
+    to: TEST-ingest-app-brokers
+    created_at: 2026-10-29T11:47:41.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-561597d1e8c1
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:13:49.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-234e7aca96d8
+  - type: executable_for
     from: SYM-fd-e2e-test-first-passkey
     to: TEST-e2e-first-passkey
     created_at: 2026-10-29T12:12:28.469Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d5d401d4b07
+  - type: implements
+    from: SYM-valuation-app-rankings
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-10-29T18:12:38.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56105857c151
+  - type: implements
+    from: SYM-valuation-app-rankings
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-10-29T18:12:38.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-746260021e87
+  - type: covered_by
+    from: SYM-valuation-app-rankings
+    to: TEST-valuation-app-ranking
+    created_at: 2026-10-29T18:12:38.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5bb51bb16f5
+  - type: implements
+    from: SYM-valuation-ranked-fx-rates
+    to: REQ-valuation-ranked-source-order
+    created_at: 2026-10-29T18:18:31.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a4c39cca6b
+  - type: implements
+    from: SYM-valuation-ranked-fx-rates
+    to: REQ-valuation-market-data-highest-rank-wins
+    created_at: 2026-10-29T18:18:31.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbfc76e50e29
+  - type: covered_by
+    from: SYM-valuation-ranked-fx-rates
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:18:31.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5deb44fde4d
+  - type: constrains
+    from: REQ-valuation-account-terms-inputs
+    to: FACT-SUBJECT-CC4B465E3F9D6625
+    created_at: 2026-10-29T21:49:10.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4406e927a711
+  - type: requires_property
+    from: REQ-valuation-account-terms-inputs
+    to: FACT-PROP-A1207CFAC2288C44
+    created_at: 2026-10-29T21:49:10.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dfa2d2dbc5b
+  - type: specified_by
+    from: REQ-valuation-account-terms-inputs
+    to: SCEN-valuation-account-terms-inputs
+    created_at: 2026-10-29T21:49:10.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4a67d0cfbd2
+  - type: implements
+    from: SYM-core-command
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:53:09.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2225ad380d7
+  - type: implements
+    from: SYM-ingestv1-fee-rule-get-minimum
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:41.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bd7e81b1800
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-get-minimum
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:41.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84004941232b
+  - type: implements
+    from: SYM-views-app-views-value-settings
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:18:24.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bf48ede4e18
+  - type: implements
+    from: SYM-views-app-views-value-settings
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:18:24.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b429b78443
+  - type: covered_by
+    from: SYM-views-app-views-value-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:24.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543c0683cd2a
+  - type: implements
+    from: SYM-exp-identity-kube-core-access-allowed-origins
+    to: REQ-identity-enroll-origin
+    created_at: 2026-10-29T22:36:35.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e973b02328b
+  - type: covered_by
+    from: SYM-exp-identity-kube-core-access-allowed-origins
+    to: TEST-identity-kube-core-access
+    created_at: 2026-10-29T22:36:35.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d59e0f1a0c80
+  - type: implements
+    from: SYM-ui-account-row
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:40:19.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f17d016097
+  - type: executable_for
+    from: SYM-affected-test-test-image-without-package-builds
+    to: TEST-tooling-affected-images
+    created_at: 2026-10-30T03:58:30.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0f9fe6f44db
+  - type: executable_for
+    from: SYM-affected-test-test-parse-name-status
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:01:26.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c15677e87f35

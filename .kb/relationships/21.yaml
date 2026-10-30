@@ -188,13 +188,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-809f27ab1835
-  - type: implements
-    from: SYM-ui-scope-label
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:53:46.078Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4f58cae4cf54
   - type: covered_by
     from: SYM-ui-scope-label
     to: TEST-ui-format
@@ -307,13 +300,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d474df1d120a
-  - type: implements
-    from: SYM-views-ghostfolio-report
-    to: REQ-views-ghostfolio-reconcile
-    created_at: 2026-10-29T01:02:49.031Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d2ef4ea1283
   - type: covered_by
     from: SYM-views-ghostfolio-report
     to: TEST-views-ghostfolio-sync
@@ -356,3 +342,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b2462115811
+  - type: executable_for
+    from: SYM-ibkrflex-test-map-by-broker-account
+    to: TEST-ingest-ibkrflex-brokers
+    created_at: 2026-10-29T11:51:45.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-785998b43921
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-sleeve
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:23:54.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-313df9f0d2db
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-sleeve
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:23:54.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98c1f73d080f
+  - type: implements
+    from: SYM-viewsv1-list-sleeve-kinds-response-get-kinds
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:48:20.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fa957830574
+  - type: covered_by
+    from: SYM-viewsv1-list-sleeve-kinds-response-get-kinds
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:48:20.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-322ff66fbea5
+  - type: verified_by
+    from: SCEN-ingest-market-data-sources-recorded
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T18:00:58.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b604a403cc9d
+  - type: implements
+    from: SYM-core-with-market-data-service
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:11:14.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d846a9712dcf
+  - type: covered_by
+    from: SYM-core-with-market-data-service
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:11:14.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b0eb5ddb663
+  - type: implements
+    from: SYM-valuation-gen-pb-market-data-kind-enum
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:21:28.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4636434eae56
+  - type: covered_by
+    from: SYM-valuation-gen-pb-market-data-kind-enum
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:21:28.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98f3143c78fc
+  - type: implements
+    from: SYM-views-ghostfolio-report
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:24:46.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-811a6a60c221
+  - type: implements
+    from: SYM-ui-scope-label
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:39:58.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87b4c9806aa9
+  - type: implements
+    from: SYM-affected-selection-select-code
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:39.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cefb91881155
+  - type: implements
+    from: SYM-affected-selection-select-code
+    to: REQ-tooling-hook-full-fallback
+    created_at: 2026-10-30T04:06:39.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17f7bdb187f9
+  - type: covered_by
+    from: SYM-affected-selection-select-code
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:39.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cc12ddcb9c3

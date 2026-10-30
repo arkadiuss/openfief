@@ -54,7 +54,7 @@ func workload(t *testing.T, egress []plugins.EgressHost) plugins.Workload {
 		Manifest: plugins.Manifest{
 			Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 			Egress:       []plugins.EgressHost{{Host: "api.example.com", Port: 443}},
-			Secrets:      []plugins.SecretMount{{Name: "sample-token", MountPath: "/etc/openfief/token"}},
+			Secrets:      []plugins.SecretMount{{Role: "token", MountPath: "/etc/openfief/token"}},
 		},
 		Config: []byte(`{"interval":"24h"}`),
 	}
@@ -68,7 +68,7 @@ func workload(t *testing.T, egress []plugins.EgressHost) plugins.Workload {
 		t.Fatalf("Effective: %v", err)
 	}
 	c := cluster()
-	w, err := plugins.Compile(e, c.Topology)
+	w, err := plugins.Compile(e, &c.Topology)
 	if err != nil {
 		t.Fatalf("Compile: %v", err)
 	}

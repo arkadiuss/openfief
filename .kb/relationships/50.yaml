@@ -335,3 +335,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fe224a4a276
+  - type: implements
+    from: SYM-valuation-gen-pb-source-ranking-proto-message
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:23:33.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae385bd8266f
+  - type: covered_by
+    from: SYM-valuation-gen-pb-source-ranking-proto-message
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:23:33.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd131ecc3fdb
+  - type: implements
+    from: SYM-pl-charges-early-fee
+    to: REQ-pl-early-redemption-fee-by-wrapper
+    created_at: 2026-10-29T22:09:13.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15c5684e2321
+  - type: covered_by
+    from: SYM-pl-charges-early-fee
+    to: TEST-pl-value
+    created_at: 2026-10-29T22:09:13.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ae85ab8ba49
+  - type: implements
+    from: SYM-valuation-postgres-scan-valuation
+    to: REQ-decision-d36-9-three-values-stored
+    created_at: 2026-10-29T22:14:07.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47a90f5b37c2
+  - type: implements
+    from: SYM-valuation-postgres-scan-valuation
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:14:07.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f9f31311fb8
+  - type: implements
+    from: SYM-valuation-market-holding
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:15:44.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be625cf5dfb5
+  - type: implements
+    from: SYM-valuation-market-holding
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:15:44.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f28b790f3242
+  - type: covered_by
+    from: SYM-valuation-market-holding
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:15:44.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e210a4ca6e7

@@ -239,13 +239,6 @@ relationships:
     id: rel-990b94f96c1e
   - type: implements
     from: SYM-core-parse-revoke
-    to: REQ-core-config
-    created_at: 2026-10-28T14:34:15.325Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7736003080d
-  - type: implements
-    from: SYM-core-parse-revoke
     to: REQ-core-token-commands
     created_at: 2026-10-28T14:34:15.347Z
     created_by: kibi/upsert
@@ -496,3 +489,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7b56870faef
+  - type: executable_for
+    from: SYM-pl-test-helper-test-cluster-service-granted
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:20:16.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e657204ea03e
+  - type: validates
+    from: TEST-ingest-app-brokers
+    to: REQ-ingest-broker-account-choice
+    created_at: 2026-10-29T11:35:28.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc632249fdb8
+  - type: validates
+    from: TEST-ingest-app-brokers
+    to: REQ-ingest-unmapped-broker-account
+    created_at: 2026-10-29T11:35:28.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51c0a1fa038f
+  - type: executable_for
+    from: SYM-ingest-delivery-test-from-mapping-by-broker-account
+    to: TEST-ingest-delivery
+    created_at: 2026-10-29T11:51:29.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4585e18423e
+  - type: implements
+    from: SYM-core-parse-revoke
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:54:08.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22a2fcdef532
+  - type: executable_for
+    from: SYM-pl-test-pack-defaults
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:31.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cc0498ec2b0
+  - type: implements
+    from: SYM-valuationv1-number-format
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:14:26.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a9ef62dfa6
+  - type: covered_by
+    from: SYM-valuationv1-number-format
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:14:26.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c39c56ab38b5
+  - type: executable_for
+    from: SYM-tooling-ci-images-select-test-same
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-10-30T03:48:48.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9897531eb303

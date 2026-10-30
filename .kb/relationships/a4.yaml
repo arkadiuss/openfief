@@ -370,13 +370,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef0fd60c43c0
-  - type: implements
-    from: SYM-ui-form-of
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:12:59.236Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f339ff2b9f96
   - type: covered_by
     from: SYM-ui-form-of
     to: TEST-ui-model
@@ -433,3 +426,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2011417a80d7
+  - type: executable_for
+    from: SYM-pl-test-cluster-with-cluster-service
+    to: TEST-operator-cluster-service
+    created_at: 2026-10-29T15:19:52.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3858c040f94
+  - type: implements
+    from: SYM-connectorv1-balance-assertion-get-broker-account
+    to: REQ-connector-broker-accounts
+    created_at: 2026-10-29T11:54:54.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa7fa28efaf2
+  - type: covered_by
+    from: SYM-connectorv1-balance-assertion-get-broker-account
+    to: TEST-ingest-connectrpc-brokers
+    created_at: 2026-10-29T11:54:54.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7e9aa38ccc1
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-request-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:38:16.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40c1696fcb19
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-request-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:38:16.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e2b407dd865
+  - type: implements
+    from: SYM-valuation-gen-pb-market-data-kind
+    to: REQ-valuation-market-data-service
+    created_at: 2026-10-29T18:21:20.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e77f4266f9b5
+  - type: covered_by
+    from: SYM-valuation-gen-pb-market-data-kind
+    to: TEST-core-market-data
+    created_at: 2026-10-29T18:21:20.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6500a9d22bf8
+  - type: implements
+    from: SYM-views-ghostfolio-balance
+    to: REQ-views-ghostfolio-cash-balances
+    created_at: 2026-10-30T01:25:43.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55496ff1b6d4
+  - type: covered_by
+    from: SYM-views-ghostfolio-balance
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-30T01:25:43.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c7f5f91842f
+  - type: implements
+    from: SYM-valuation-app-input-cache-rates
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:10:37.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eb099f6f44a
+  - type: implements
+    from: SYM-valuation-app-input-cache-rates
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:10:37.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d3e1856417
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-rates
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:37.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-317e9bd5f0b4
+  - type: implements
+    from: SYM-viewsv1-fee-rule-get-minimum
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:24.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-505a279e4719
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule-get-minimum
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:24.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a458e8ec6edf
+  - type: implements
+    from: SYM-ui-form-of
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:41:21.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c0ac419c3bc
+  - type: implements
+    from: SYM-affected-selection-select-readers
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:49.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8b7af8812c2
+  - type: covered_by
+    from: SYM-affected-selection-select-readers
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:49.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09703dd60db4

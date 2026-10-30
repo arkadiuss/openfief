@@ -32,6 +32,13 @@ type fakeCore struct {
 	forwardDone bool
 	// linked is closed once EnrollLink was called.
 	linked chan struct{}
+	// allowed and allowedErr are what AllowedOrigins answers.
+	allowed    []string
+	allowedErr error
+}
+
+func (f *fakeCore) AllowedOrigins(context.Context) ([]string, error) {
+	return f.allowed, f.allowedErr
 }
 
 func (f *fakeCore) Forward(ctx context.Context, localPort int, ready chan struct{}) error {

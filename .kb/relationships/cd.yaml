@@ -419,13 +419,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01dae24c2c41
-  - type: implements
-    from: SYM-views-ghostfolio-ghostfolio
-    to: REQ-views-ghostfolio-reconcile
-    created_at: 2026-10-29T01:02:35.816Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c698708725e7
   - type: covered_by
     from: SYM-views-ghostfolio-ghostfolio
     to: TEST-views-ghostfolio-sync
@@ -489,3 +482,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9238ddabde1a
+  - type: implements
+    from: SYM-ui-sleeves-data-kind-role
+    to: REQ-ui-sleeve-and-account-pages
+    created_at: 2026-10-29T13:16:58.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3e9191d7d30
+  - type: covered_by
+    from: SYM-ui-sleeves-data-kind-role
+    to: TEST-ui-onboarding
+    created_at: 2026-10-29T13:16:58.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3717e887c0d7
+  - type: implements
+    from: SYM-ingestv1-update-account-response
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:24:00.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c59c94d8077
+  - type: covered_by
+    from: SYM-ingestv1-update-account-response
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:24:00.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5121ae85403
+  - type: implements
+    from: SYM-portfoliov1-rename-sleeve-kind-request-get-session-token
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:36:20.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73b60eaf92ce
+  - type: covered_by
+    from: SYM-portfoliov1-rename-sleeve-kind-request-get-session-token
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:36:20.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6fa96474cf4
+  - type: validates
+    from: TEST-plugins-upgrade
+    to: REQ-plugins-cli-ambiguous-catalog-name
+    created_at: 2026-10-29T17:03:47.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0162c59e99be
+  - type: validates
+    from: TEST-plugins-upgrade
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-10-29T17:03:48.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f66a5725b44
+  - type: executable_for
+    from: SYM-valuation-test-market-data-kind-names
+    to: TEST-valuation-ranking
+    created_at: 2026-10-29T18:18:55.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-611ca879a443
+  - type: implements
+    from: SYM-views-ghostfolio-ghostfolio
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:23:37.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d2ddf98aa53
+  - type: implements
+    from: SYM-viewsv1-get-settings-response-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:34:37.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ec8e1d7d6c
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:34:37.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b521fcd9bccb
+  - type: implements
+    from: SYM-ui-server-charts
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T03:10:12.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25311fe8922b
+  - type: implements
+    from: SYM-ui-server-charts
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:10:12.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f564da7a824d
+  - type: covered_by
+    from: SYM-ui-server-charts
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:10:12.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a9547fbf9cb

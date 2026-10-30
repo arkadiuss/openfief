@@ -21,6 +21,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
@@ -322,6 +323,29 @@ type fakeRead struct {
 	// pluginsUnavailable makes ListPlugins answer UNAVAILABLE, as a core
 	// that can't read its cluster does.
 	pluginsUnavailable bool
+	// noAccounts makes ListAccounts list none, as on a fresh install.
+	noAccounts bool
+	// format is the number format GetSettings answers, the owner's choice
+	// through the fake SettingsService; nil is the Polish default.
+	format *viewsv1.NumberFormat
+	// values are the value kinds GetAllocation was asked for.
+	values []viewsv1.ValueKind
+}
+
+func (f *fakeRead) GetSettings(_ context.Context, r *connect.Request[viewsv1.GetSettingsRequest]) (*connect.Response[viewsv1.GetSettingsResponse], error) {
+	if err := f.check(r.Header()); err != nil {
+		return nil, err
+	}
+	resp := &viewsv1.GetSettingsResponse{
+		ReportingCurrency: "PLN", NumberFormatDefault: true, TaxWrappers: []string{"taxable", "ike", "ikze", "oki"},
+		NumberFormat: &viewsv1.NumberFormat{Key: "space-comma", GroupSeparator: " ", DecimalSeparator: ","},
+	}
+	f.locked(func() {
+		if f.format != nil {
+			resp.NumberFormat, resp.NumberFormatDefault = f.format, false
+		}
+	})
+	return connect.NewResponse(resp), nil
 }
 
 func pln(amount string) *viewsv1.Money { return &viewsv1.Money{Amount: amount, Currency: "PLN"} }
@@ -333,6 +357,12 @@ func syntheticInstrument() *viewsv1.Instrument {
 func (f *fakeRead) ListAccounts(_ context.Context, r *connect.Request[viewsv1.ListAccountsRequest]) (*connect.Response[viewsv1.ListAccountsResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
+	}
+	f.mu.Lock()
+	none := f.noAccounts
+	f.mu.Unlock()
+	if none {
+		return connect.NewResponse(&viewsv1.ListAccountsResponse{}), nil
 	}
 	return connect.NewResponse(&viewsv1.ListAccountsResponse{Accounts: []*viewsv1.Account{
 		{Id: accountID, Institution: "synthetic-broker", Name: "Synthetic brokerage", Sleeve: "core"},
@@ -373,10 +403,11 @@ func (f *fakeRead) GetAllocation(_ context.Context, r *connect.Request[viewsv1.G
 	}
 	f.mu.Lock()
 	f.dimensions = append(f.dimensions, r.Msg.GetBy())
+	f.values = append(f.values, r.Msg.GetValue())
 	f.dates = append(f.dates, r.Msg.GetDate())
 	f.mu.Unlock()
 	return connect.NewResponse(&viewsv1.GetAllocationResponse{
-		Date: r.Msg.GetDate(), By: r.Msg.GetBy(), TotalReporting: pln("1500.00"),
+		Date: r.Msg.GetDate(), By: r.Msg.GetBy(), Value: cmp.Or(r.Msg.GetValue(), viewsv1.ValueKind_VALUE_KIND_GROSS), TotalReporting: pln("1500.00"),
 		Groups: []*viewsv1.AllocationGroup{
 			{Key: "listed", ValueReporting: pln("1000.00")},
 			{Key: "cash", ValueReporting: pln("500.00")},
@@ -391,8 +422,8 @@ func (f *fakeRead) ListValuationTotals(_ context.Context, r *connect.Request[vie
 	return connect.NewResponse(&viewsv1.ListValuationTotalsResponse{
 		From: r.Msg.GetFrom(), To: r.Msg.GetTo(), ReportingCurrency: "PLN",
 		Totals: []*viewsv1.DateTotal{
-			{Date: "2026-03-30", ValueReporting: pln("990.00")},
-			{Date: "2026-03-31", ValueReporting: pln("1000.00")},
+			{Date: "2026-03-30", ValueReporting: pln("990.00"), NetReporting: pln("950.00")},
+			{Date: "2026-03-31", ValueReporting: pln("1500.00"), NetReporting: pln("1400.00"), CashReporting: pln("500.00")},
 		},
 	}), nil
 }
@@ -406,8 +437,9 @@ func (f *fakeRead) ListAccountValuations(_ context.Context, r *connect.Request[v
 		Valuations: []*viewsv1.Valuation{{
 			Date: r.Msg.GetTo(), Instrument: syntheticInstrument(), Basis: viewsv1.ValuationBasis_VALUATION_BASIS_MARKET,
 			Value: &viewsv1.Money{Amount: "250.00", Currency: "EUR"}, ValueReporting: pln("1000.00"),
+			NetReporting: pln("950.00"), LiquidationMissing: "marginal_rate",
 		}},
-		Totals: []*viewsv1.DateTotal{{Date: r.Msg.GetTo(), ValueReporting: pln("1000.00")}},
+		Totals: []*viewsv1.DateTotal{{Date: r.Msg.GetTo(), ValueReporting: pln("1000.00"), NetReporting: pln("950.00"), CashReporting: pln("0")}},
 	}), nil
 }
 
@@ -426,7 +458,7 @@ func (f *fakeRead) ListHoldings(_ context.Context, r *connect.Request[viewsv1.Li
 		return nil, err
 	}
 	return connect.NewResponse(&viewsv1.ListHoldingsResponse{AccountId: accountID, Date: r.Msg.GetDate(), Holdings: []*viewsv1.Holding{
-		{Instrument: syntheticInstrument(), Quantity: "10"},
+		{Instrument: syntheticInstrument(), Quantity: "10", NoLongerUpdated: true, RemovedInstances: []string{"ibkr-old"}},
 	}}), nil
 }
 
@@ -539,6 +571,10 @@ type harness struct {
 	model      *fakeModel
 	bondLots   *fakeBondLots
 	statements *fakeStatements
+	sleeves    *fakeSleeves
+	accounts   *fakeAccounts
+	marketData *fakeMarketData
+	settings   *fakeSettings
 	read       *fakeRead
 	handler    http.Handler
 	tokenFile  string
@@ -548,12 +584,20 @@ type harness struct {
 // the SDK's CoreHTTPClient over a token file, as the plugin wires it.
 func newHarness(t *testing.T) *harness {
 	t.Helper()
-	h := &harness{auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{}}
+	h := &harness{
+		auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{},
+		sleeves: &fakeSleeves{}, accounts: &fakeAccounts{}, marketData: newFakeMarketData(),
+	}
+	h.settings = &fakeSettings{read: h.read}
 	mux := http.NewServeMux()
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
 	mux.Handle(portfoliov1connect.NewModelPortfolioServiceHandler(h.model))
 	mux.Handle(ingestv1connect.NewBondLotServiceHandler(h.bondLots))
 	mux.Handle(ingestv1connect.NewStatementServiceHandler(h.statements))
+	mux.Handle(portfoliov1connect.NewSleeveServiceHandler(h.sleeves))
+	mux.Handle(ingestv1connect.NewAccountServiceHandler(h.accounts))
+	mux.Handle(valuationv1connect.NewMarketDataServiceHandler(h.marketData))
+	mux.Handle(valuationv1connect.NewSettingsServiceHandler(h.settings))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
 	core := httptest.NewServer(mux)
 	t.Cleanup(core.Close)
@@ -564,6 +608,10 @@ func newHarness(t *testing.T) *harness {
 		Model:      portfoliov1connect.NewModelPortfolioServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		BondLots:   ingestv1connect.NewBondLotServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Statements: ingestv1connect.NewStatementServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Sleeves:    portfoliov1connect.NewSleeveServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Accounts:   ingestv1connect.NewAccountServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		MarketData: valuationv1connect.NewMarketDataServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Settings:   valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Read:       viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:      func() kernel.Date { return mustDate(t, "2026-04-01") },
 	})

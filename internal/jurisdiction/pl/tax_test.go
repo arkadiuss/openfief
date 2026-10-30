@@ -30,6 +30,7 @@ func TestBelkaTax(t *testing.T) {
 		{name: "COI0423 example: 19% of 9.75 = 1.8525, withheld 1.85", interest: "9.75", wrapper: pl.Taxable, want: "1.85"},
 		{name: "IKE exempt", interest: "10.20", wrapper: pl.IKE, want: "0"},
 		{name: "IKZE withholds nothing", interest: "10.20", wrapper: pl.IKZE, want: "0"},
+		{name: "OKI: no Belka tax inside", interest: "10.20", wrapper: pl.OKI, want: "0"},
 		{name: "unknown wrapper", interest: "10.20", wrapper: pl.TaxWrapper(0), wantErr: pl.ErrUnknownTaxWrapper},
 	}
 	for _, tt := range tests {
@@ -46,6 +47,27 @@ func TestBelkaTax(t *testing.T) {
 				t.Errorf("(-want +got):\n%s", diff)
 			}
 		})
+	}
+}
+
+func TestTaxWrapperNames(t *testing.T) {
+	t.Parallel()
+	names := make([]string, 0, len(pl.TaxWrappers()))
+	for _, w := range pl.TaxWrappers() {
+		back, err := pl.ParseTaxWrapper(w.String())
+		if err != nil || back != w {
+			t.Errorf("ParseTaxWrapper(%q) = %v, %v", w, back, err)
+		}
+		names = append(names, w.String())
+	}
+	if diff := cmp.Diff([]string{"taxable", "ike", "ikze", "oki"}, names); diff != "" {
+		t.Errorf("(-want +got):\n%s", diff)
+	}
+	if _, err := pl.ParseTaxWrapper("ppk"); !cmp.Equal(pl.ErrUnknownTaxWrapper, err, cmpopts.EquateErrors()) {
+		t.Errorf("ParseTaxWrapper(ppk) = %v, want ErrUnknownTaxWrapper", err)
+	}
+	if got := pl.TaxWrapper(9).String(); got != "TaxWrapper(9)" {
+		t.Errorf("String of an unknown wrapper = %q", got)
 	}
 }
 

@@ -111,20 +111,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2f6bf8a6302
-  - type: constrains
-    from: REQ-core-health-endpoints
-    to: FACT-SUBJECT-D6A091F8C6B86AD8
-    created_at: 2026-10-28T14:33:08.929Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-56b9bdb9a390
-  - type: requires_property
-    from: REQ-core-health-endpoints
-    to: FACT-PROP-D54777BA6F452EA6
-    created_at: 2026-10-28T14:33:08.963Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9d07e699b05f
   - type: specified_by
     from: REQ-core-health-endpoints
     to: SCEN-core-health
@@ -246,13 +232,6 @@ relationships:
     id: rel-fb0313274c12
   - type: implements
     from: SYM-views-ghostfolio-make-plan
-    to: REQ-views-ghostfolio-reconcile
-    created_at: 2026-10-29T00:58:51.146Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-696d909f1700
-  - type: implements
-    from: SYM-views-ghostfolio-make-plan
     to: REQ-AUTO-54773934AD125DF8
     created_at: 2026-10-29T00:58:51.167Z
     created_by: kibi/upsert
@@ -307,20 +286,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f61946e3e69
-  - type: constrains
-    from: REQ-views-browser-proxy-headers
-    to: FACT-SUBJECT-058686C92437C05A
-    created_at: 2026-10-29T12:02:12.904Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e3ed2e82abd6
-  - type: requires_property
-    from: REQ-views-browser-proxy-headers
-    to: FACT-PROP-9540BE3755B3AFC2
-    created_at: 2026-10-29T12:02:12.978Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8df3845e91d9
   - type: specified_by
     from: REQ-views-browser-proxy-headers
     to: SCEN-views-browser-proxy-headers
@@ -356,3 +321,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07c97e05abfc
+  - type: executable_for
+    from: SYM-pl-test-compile-cluster-service
+    to: TEST-plugins-cluster-service
+    created_at: 2026-10-29T15:17:35.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f68886952dc
+  - type: implements
+    from: SYM-portfolio-connectapi-sleeve-service-add-sleeve-kind
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:06:30.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e80d5c5b28c3
+  - type: covered_by
+    from: SYM-portfolio-connectapi-sleeve-service-add-sleeve-kind
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:06:30.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82d26f1de88c
+  - type: implements
+    from: SYM-portfoliov1-add-sleeve-kind-request-descriptor
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:34:08.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b22571146b8
+  - type: covered_by
+    from: SYM-portfoliov1-add-sleeve-kind-request-descriptor
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:34:08.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9ae748bad2
+  - type: executable_for
+    from: SYM-pl-test-helper-release-catalog-run
+    to: TEST-tooling-release-catalog
+    created_at: 2026-10-29T18:31:17.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b03eb1b118a0
+  - type: constrains
+    from: REQ-core-health-endpoints
+    to: FACT-SUBJECT-D6A091F8C6B86AD8
+    created_at: 2026-10-29T20:58:56.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56b9bdb9a390
+  - type: requires_property
+    from: REQ-core-health-endpoints
+    to: FACT-PROP-D54777BA6F452EA6
+    created_at: 2026-10-29T20:58:56.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d07e699b05f
+  - type: constrains
+    from: REQ-views-browser-proxy-headers
+    to: FACT-SUBJECT-058686C92437C05A
+    created_at: 2026-10-29T23:11:26.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3ed2e82abd6
+  - type: requires_property
+    from: REQ-views-browser-proxy-headers
+    to: FACT-PROP-9540BE3755B3AFC2
+    created_at: 2026-10-29T23:11:26.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8df3845e91d9
+  - type: implements
+    from: SYM-views-ghostfolio-make-plan
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:23:57.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0f787b91bb9
+  - type: verified_by
+    from: SCEN-pl-oki-act-as-data
+    to: TEST-pl-pack
+    created_at: 2026-10-29T21:47:49.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdb21abf3a5c
+  - type: implements
+    from: SYM-jurisdiction-separator-names
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:22.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00d67bfe20e4
+  - type: implements
+    from: SYM-jurisdiction-separator-names
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:22.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1c18ed44bc8
+  - type: covered_by
+    from: SYM-jurisdiction-separator-names
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:22.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f9afeafa9dd
+  - type: executable_for
+    from: SYM-pl-test-helper-check-values
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:57.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a9295eb68e3
+  - type: implements
+    from: SYM-viewsv1-get-settings-response-get-number-format-default
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:35:26.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7729f03ad770
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response-get-number-format-default
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:35:26.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0feebdbf18da

@@ -239,13 +239,6 @@ relationships:
     id: rel-9f637f01359d
   - type: implements
     from: SYM-core-parse-issue
-    to: REQ-core-config
-    created_at: 2026-10-28T14:34:10.973Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fe34698882f7
-  - type: implements
-    from: SYM-core-parse-issue
     to: REQ-core-token-commands
     created_at: 2026-10-28T14:34:11.006Z
     created_by: kibi/upsert
@@ -349,6 +342,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12c74a260ab9
+  - type: implements
+    from: SYM-ingest-app-accounts-update
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T12:59:05.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43a0a637e3b4
+  - type: covered_by
+    from: SYM-ingest-app-accounts-update
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T12:59:05.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a55cc42d1b7
   - type: executable_for
     from: SYM-fd-browserproxy-test-browser-scheme
     to: TEST-views-browser-proxy
@@ -363,3 +370,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d004fb889736
+  - type: implements
+    from: SYM-core-parse-issue
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:53:55.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21a15801087e
+  - type: executable_for
+    from: SYM-pl-test-helper-min-money
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:08:30.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-481e14bb42c2
+  - type: implements
+    from: SYM-valuation-app-settings-set-number-format
+    to: REQ-valuation-owner-settings
+    created_at: 2026-10-29T22:11:42.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-befc57bb1179
+  - type: implements
+    from: SYM-valuation-app-settings-set-number-format
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T22:11:42.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39859f56a862
+  - type: covered_by
+    from: SYM-valuation-app-settings-set-number-format
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:11:42.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3973419f0bc3
+  - type: executable_for
+    from: SYM-valuation-test-value-market-holding-values
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:16:04.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c476de9e482c
+  - type: implements
+    from: SYM-views-app-views-totals
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:18:53.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-229f7573fe51
+  - type: implements
+    from: SYM-views-app-views-totals
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:18:53.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97c4384744f1
+  - type: covered_by
+    from: SYM-views-app-views-totals
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:53.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed25eb21b7ab
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:27.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-132e2d59f3cc
+  - type: executable_for
+    from: SYM-ui-test-number-format-setting
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:05:00.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f3a70ed1bc

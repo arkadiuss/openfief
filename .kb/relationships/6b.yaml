@@ -224,20 +224,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-9a5875fe9ec2
   - type: implements
-    from: SYM-ui-format-amount
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:52:56.022Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c9c61e5e79c2
-  - type: covered_by
-    from: SYM-ui-format-amount
-    to: TEST-ui-format
-    created_at: 2026-10-28T19:52:56.046Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3a1a7e55ea30
-  - type: implements
     from: SYM-valuation-pg-scan-index-level
     to: REQ-valuation-index-levels
     created_at: 2026-10-28T22:47:19.971Z
@@ -279,20 +265,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b57be1116a51
-  - type: implements
-    from: SYM-ui-chart-series
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:14:42.377Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a9bbf80f74a2
-  - type: implements
-    from: SYM-ui-chart-series
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:14:42.405Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f31a80a68f5a
   - type: covered_by
     from: SYM-ui-chart-series
     to: TEST-ui-model
@@ -384,6 +356,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33f953b88e91
+  - type: implements
+    from: SYM-portfolio-app-sleeves-update-sleeve
+    to: REQ-portfolio-sleeve-service
+    created_at: 2026-10-29T13:04:40.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-801b38e3fbee
+  - type: covered_by
+    from: SYM-portfolio-app-sleeves-update-sleeve
+    to: TEST-portfolio-app-sleeves
+    created_at: 2026-10-29T13:04:40.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9dba648f83d
+  - type: implements
+    from: SYM-ingestv1-create-account-request-descriptor
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:20:26.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aa4987ce6d7
+  - type: covered_by
+    from: SYM-ingestv1-create-account-request-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:20:26.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-597a3a821cbb
+  - type: implements
+    from: SYM-ingestv1-create-account-request-get-broker-account
+    to: REQ-ingest-account-service
+    created_at: 2026-10-29T13:21:23.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7a6fb6b6329
+  - type: covered_by
+    from: SYM-ingestv1-create-account-request-get-broker-account
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T13:21:23.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72f49110b8cd
+  - type: implements
+    from: SYM-viewsv1-list-connector-bindings-request-proto-message
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:48:46.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea20ee73c18d
+  - type: covered_by
+    from: SYM-viewsv1-list-connector-bindings-request-proto-message
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:48:46.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ad9febc366c
   - type: constrains
     from: REQ-ui-number-format-setting
     to: FACT-SUBJECT-90104E84491E6BE9
@@ -412,3 +440,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd30bfe29f9e
+  - type: constrains
+    from: REQ-tooling-release-catalog-entries
+    to: FACT-SUBJECT-4DCACA1193454868
+    created_at: 2026-10-29T18:02:09.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a5877189057
+  - type: requires_property
+    from: REQ-tooling-release-catalog-entries
+    to: FACT-PROP-D66B4507F84EC429
+    created_at: 2026-10-29T18:02:09.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fba3ad59ffc
+  - type: specified_by
+    from: REQ-tooling-release-catalog-entries
+    to: SCEN-tooling-release-catalog-entries
+    created_at: 2026-10-29T18:02:09.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4ec81903902
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-proto-message
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:16:35.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae65693ad056
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-proto-message
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:16:35.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ade70682930c
+  - type: implements
+    from: SYM-viewsv1-number-format-get-key
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:29:23.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f76ebbeb36e4
+  - type: covered_by
+    from: SYM-viewsv1-number-format-get-key
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:29:23.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03562740231a
+  - type: implements
+    from: SYM-viewsv1-get-settings-request-proto-reflect
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:34:03.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5294f5f805a
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-request-proto-reflect
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:34:03.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d39fc4d410f
+  - type: implements
+    from: SYM-ui-chart-series
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:42:20.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e933dc5dbe0
+  - type: implements
+    from: SYM-ui-chart-series
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:40:31.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18bcc0bb30e3

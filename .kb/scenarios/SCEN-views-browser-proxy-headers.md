@@ -7,4 +7,4 @@ origin:
 id: SCEN-views-browser-proxy-headers
 type: scenario
 ---
-Given a browser request through kubectl port-forward or the owner's Ingress that carries its own Authorization, X-Forwarded-* and Forwarded headers, when the core proxies it to the view plugin, then the plugin sees the core's token in Authorization, the browser's Host, X-Forwarded-Proto as the core decided it (TLS, else the Ingress's http or https, else http) and X-Forwarded-Host, and none of the client's forwarding headers.
+Given a browser request on the core's browser port, reached through the owner's route or a port-forward, carrying a stolen Authorization and forged X-Forwarded-* and Forwarded headers, when the core proxies it to the view plugin that holds the browser path, then the plugin sees the core's token for that instance, the browser's Host, the scheme the core saw and no client-set forwarding header.

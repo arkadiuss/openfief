@@ -16,6 +16,7 @@ import (
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
 	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
@@ -68,13 +69,18 @@ func newTokens(pool *pgxpool.Pool, now func() time.Time) *identityapp.Tokens {
 	return identityapp.NewTokens(identitypg.New(pool), now, nil)
 }
 
-// core is the wired core service: the read API's handler, the River
-// client that runs the revaluation workers, and what the connector
-// scheduler is built from.
+// core is the wired core service: what each of its ports serves (D-115),
+// the River client that runs the revaluation workers, and what the
+// connector scheduler is built from.
 type core struct {
-	api   http.Handler
-	river *river.Client[pgx.Tx]
-	deps  *connectorDeps
+	// browserPort serves the read API and, in a cluster, the front door
+	// (D-81); the health endpoints are the server's own.
+	browserPort http.Handler
+	// pluginPort serves the read API, the AuthService and the owner
+	// services, which only plugins call.
+	pluginPort http.Handler
+	river      *river.Client[pgx.Tx]
+	deps       *connectorDeps
 	// connectors is closed when the connector scheduler has stopped; nil
 	// when it doesn't run.
 	connectors chan struct{}
@@ -91,15 +97,19 @@ type core struct {
 func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledger, *valuationapp.InputRecorder) {
 	store := ledgerpg.New(pool)
 	l := ledgerapp.New(store, vstore.ImportHook())
-	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore)
+	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore, jurisdictionPack())
 }
 
-// valuationSettings records the bond basis, which revalues everything when
-// it changed (D-36), and returns the cross-check use cases with the price
-// check threshold (D-22).
+// jurisdictionPack returns the jurisdiction pack (D-70): the Polish one,
+// the only pack there is.
+func jurisdictionPack() *pl.Pack { return pl.NewPack() }
+
+// valuationSettings records the version of the jurisdiction pack's rules,
+// which revalues everything when it changed (D-36), and returns the
+// cross-check use cases with the price check threshold (D-22).
 func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, cfg *serveConfig) (*valuationapp.CrossChecks, error) {
-	if _, err := recorder.ApplyBondBasis(ctx, cfg.BondBasis); err != nil {
-		return nil, fmt.Errorf("bond basis: %w", err)
+	if _, err := recorder.ApplyRules(ctx); err != nil {
+		return nil, fmt.Errorf("rules version: %w", err)
 	}
 	checks, err := valuationapp.NewCrossChecks(vstore, cfg.PriceCheckThreshold)
 	if err != nil {
@@ -112,11 +122,13 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // valuation's import hook (D-36), the River revaluation workers, the views
 // and the read API with sessions, script tokens and the view plugins callers
 // accepts as its verifier (readTokens, D-27). It stores
-// the built-in sleeve kinds and sleeves when cfg asks, and records the bond
-// basis, which revalues everything when it changed. Next to the read API it
-// serves the AuthService, the ModelPortfolioService (D-52), the
-// BondLotService (D-9, D-49) and the StatementService (D-7, D-49) to the
-// view plugins callers accepts (author decision, auth split). The read API
+// the built-in sleeve kinds and sleeves when cfg asks, and records the
+// jurisdiction pack's rules version, which revalues everything when it
+// changed. The browser port serves the read API alone; the plugin port
+// serves it with the AuthService, the ModelPortfolioService (D-52), the
+// BondLotService (D-9, D-49), the StatementService (D-7, D-49), the
+// onboarding services and the SettingsService (D-78, D-113), to the view
+// plugins callers accepts (D-69, D-79, D-115). The read API
 // lists the installed plugins from installed, and without it, outside a
 // cluster, answers that they are unknown. Start the River client to run
 // the workers.
@@ -140,7 +152,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	client, err := valuationpg.NewClient(pool, vstore, ledgerpg.New(pool), &valuationpg.Config{
 		Concurrency: cfg.Workers,
 		EndOfDay:    cfg.EndOfDay,
-		BondBasis:   cfg.BondBasis,
+		Pack:        jurisdictionPack(),
 		Today:       valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		Logger:      log,
 	})
@@ -155,7 +167,9 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, viewOptions(models, checks, installed)...)
+	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
+		viewsapp.WithJurisdiction(jurisdictionPack(), vstore))
+	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
 	}
@@ -166,12 +180,17 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	deps := &connectorDeps{
 		pool: pool, ledger: l, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
-		entries: &entryCaller{},
+		entries: &entryCaller{}, bonds: vstore, model: models,
+		rankings: newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
 	}
-	served := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
-	served = withBondLotService(served, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
-	served = withStatementService(served, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
-	return &core{api: served, river: client, deps: deps, plugins: installed}, nil
+	plugin := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
+	plugin = withBondLotService(plugin, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	plugin = withStatementService(plugin, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
+	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins),
+		newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins), accountTerms{recorder, vstore}), callers, log)
+	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
+	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed}, nil
 }
 
 // viewOptions configures the views with the model portfolio's reports, the

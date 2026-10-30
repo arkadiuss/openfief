@@ -10,10 +10,10 @@ import (
 var (
 	// ErrNoBrowserRoute reports a path no view plugin serves to browsers.
 	ErrNoBrowserRoute = errors.New("no view plugin serves this path")
-	// ErrAmbiguousBrowserRoute reports a path whose longest matching
-	// prefix more than one view plugin serves; the core serves neither
-	// rather than pick one.
-	ErrAmbiguousBrowserRoute = errors.New("more than one view plugin serves this path")
+	// ErrSeveralBrowserViews reports more than one view plugin instance
+	// holding a browser path. At most one may (D-114), so the core serves
+	// none of them rather than pick one.
+	ErrSeveralBrowserViews = errors.New("more than one view plugin holds a browser path")
 )
 
 // BrowserRoute is a view plugin instance and the path prefix it serves to
@@ -31,27 +31,20 @@ func (r BrowserRoute) matches(path string) bool {
 }
 
 // RouteBrowserPath returns the route that serves path to a browser: the one
-// with the longest prefix that covers it. It fails with ErrNoBrowserRoute
-// when no route covers path, and with ErrAmbiguousBrowserRoute when two
-// instances declare that same longest prefix.
+// view plugin instance holding a browser path (D-114), when its prefix
+// covers path by whole segments. It fails with ErrNoBrowserRoute when no
+// instance holds one or its prefix doesn't cover path, and with
+// ErrSeveralBrowserViews when more than one instance holds one.
 func RouteBrowserPath(routes []BrowserRoute, path string) (BrowserRoute, error) {
-	best := make([]BrowserRoute, 0, len(routes))
-	for _, r := range routes {
-		if !r.matches(path) {
-			continue
-		}
-		switch {
-		case len(best) == 0 || len(r.Prefix) > len(best[0].Prefix):
-			best = append(best[:0], r)
-		case len(r.Prefix) == len(best[0].Prefix):
-			best = append(best, r)
-		}
-	}
-	switch len(best) {
+	switch len(routes) {
 	case 0:
 		return BrowserRoute{}, fmt.Errorf("%w: %s", ErrNoBrowserRoute, path)
 	case 1:
-		return best[0], nil
+	default:
+		return BrowserRoute{}, fmt.Errorf("%w: %s and %s", ErrSeveralBrowserViews, routes[0].Instance, routes[1].Instance)
 	}
-	return BrowserRoute{}, fmt.Errorf("%w: %s and %s both serve %s", ErrAmbiguousBrowserRoute, best[0].Instance, best[1].Instance, best[0].Prefix)
+	if !routes[0].matches(path) {
+		return BrowserRoute{}, fmt.Errorf("%w: %s", ErrNoBrowserRoute, path)
+	}
+	return routes[0], nil
 }

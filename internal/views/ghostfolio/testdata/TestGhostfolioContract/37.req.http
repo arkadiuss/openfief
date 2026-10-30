@@ -1,4 +1,4 @@
-DELETE http://127.0.0.1:3333/api/v1/activities/a60b0f0e-5ca5-4921-b0aa-d93c7fdca817 HTTP/1.1
+DELETE http://127.0.0.1:3333/api/v1/activities/b485f3c5-47eb-4272-9c3e-c8f93c9aaf7a HTTP/1.1
 Host: 127.0.0.1:3333
 User-Agent: Go-http-client/1.1
 Accept: application/json

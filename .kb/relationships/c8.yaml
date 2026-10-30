@@ -356,3 +356,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef54a02c46aa
+  - type: executable_for
+    from: SYM-pl-test-helper-view-with-url
+    to: TEST-plugins-config-host
+    created_at: 2026-10-29T15:15:33.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8789ffcdd5a1
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-helper-mem-sleeves-kinds
+    to: TEST-portfolio-connectapi-sleeves
+    created_at: 2026-10-29T13:07:31.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2807b8764b25
+  - type: implements
+    from: SYM-viewsv1-connector-binding
+    to: REQ-views-onboarding-lists
+    created_at: 2026-10-29T13:44:06.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb0d17ef74e4
+  - type: covered_by
+    from: SYM-viewsv1-connector-binding
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-29T13:44:06.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40de33baf718
+  - type: executable_for
+    from: SYM-pl-test-yearly-tax
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:08:37.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36e8e558c374
+  - type: implements
+    from: SYM-ingest-app-account-change
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:09:19.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54faf52cc9a3
+  - type: implements
+    from: SYM-ingest-app-account-change
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:09:19.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05049c8c57bf
+  - type: covered_by
+    from: SYM-ingest-app-account-change
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:09:19.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14008063f167

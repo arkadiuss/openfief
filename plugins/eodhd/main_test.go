@@ -30,7 +30,7 @@ func TestManifest(t *testing.T) {
 	want := plugins.Manifest{
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       []plugins.EgressHost{{Host: "eodhd.com", Port: 443}},
-		Secrets:      []plugins.SecretMount{{Name: "eodhd-credentials", MountPath: keyMount}},
+		Secrets:      []plugins.SecretMount{{Role: "api-token", MountPath: keyMount}},
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)

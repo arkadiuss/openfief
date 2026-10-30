@@ -398,3 +398,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41e3dabdf080
+  - type: implements
+    from: SYM-ibkrflex-map-by-broker-account
+    to: REQ-ingest-ibkrflex-by-broker-account
+    created_at: 2026-10-29T11:52:05.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9801624477a4
+  - type: covered_by
+    from: SYM-ibkrflex-map-by-broker-account
+    to: TEST-ingest-ibkrflex-brokers
+    created_at: 2026-10-29T11:52:05.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-966c80bcbad3
+  - type: implements
+    from: SYM-ingest-app-source-store
+    to: REQ-ingest-market-data-sources-recorded
+    created_at: 2026-10-29T18:11:57.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bb23a4d4c9d
+  - type: covered_by
+    from: SYM-ingest-app-source-store
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-29T18:11:57.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ec38fa1709f
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-response-reset
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:20:27.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2d2fd9f1bb4
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-response-reset
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:20:27.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feedc00e8862
