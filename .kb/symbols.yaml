@@ -98851,3 +98851,113 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-bond-lots
+  - id: SYM-ui-bond-lot-form-exchange
+    title: bondLotForm.Exchange
+    sourceFile: internal/views/ui/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:37:31.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ingest-bond-lot-purchase-kinds
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-posted-once
+    title: postedOnce
+    sourceFile: internal/views/ui/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:37:45.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ingest-bond-lot-purchase-kinds
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-bond-lot-form-purchase
+    title: bondLotForm.purchase
+    sourceFile: internal/views/ui/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:37:56.695Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ingest-bond-lot-purchase-kinds
+      - type: implements
+        target: REQ-ui-bond-lot-entry
+  - id: SYM-ui-server-delete-bond-lot
+    title: server.deleteBondLot
+    sourceFile: internal/views/ui/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:38:07.980Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-supersedes
+      - type: implements
+        target: REQ-ui-bond-lot-delete
+  - id: SYM-ui-test-helper-fake-bond-lots-delete-bond-lot
+    title: fakeBondLots.DeleteBondLot
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:38:21.963Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-helper-purchased-form
+    title: purchasedForm
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:38:37.838Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-add-bond-lot-by-exchange
+    title: TestAddBondLotByExchange
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:38:54.365Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-helper-delete-form
+    title: deleteForm
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:39:04.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+  - id: SYM-ui-test-delete-bond-lot
+    title: TestDeleteBondLot
+    sourceFile: internal/views/ui/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T07:39:13.442Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots

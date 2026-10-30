@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07fa9552053c
+  - type: implements
+    from: SYM-ui-posted-once
+    to: REQ-ui-bond-lot-entry
+    created_at: 2026-10-30T07:37:48.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f591beaa4b14
+  - type: implements
+    from: SYM-ui-posted-once
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T07:37:48.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f231429a697
+  - type: covered_by
+    from: SYM-ui-posted-once
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-30T07:37:48.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5764c6015fe

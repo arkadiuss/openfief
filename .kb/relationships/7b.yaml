@@ -454,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d55d0291b43
+  - type: executable_for
+    from: SYM-ui-test-add-bond-lot-by-exchange
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-30T07:38:57.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e43d77accc3
