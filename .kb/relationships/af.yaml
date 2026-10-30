@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e31db8f8f520
+  - type: implements
+    from: SYM-affected-run-hook
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:50:45.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9080a87e0be7
+  - type: covered_by
+    from: SYM-affected-run-hook
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:50:45.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f577e3f12460

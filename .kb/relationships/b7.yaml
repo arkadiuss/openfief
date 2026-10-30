@@ -440,3 +440,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-841f931e9c4c
+  - type: verified_by
+    from: SCEN-tooling-ci-carry-signed-digest
+    to: TEST-tooling-image-carry
+    created_at: 2026-10-30T03:33:03.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a2581b3779e
+  - type: verified_by
+    from: SCEN-tooling-ci-carry-signed-digest
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-10-30T03:33:03.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32af430572e6

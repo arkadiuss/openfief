@@ -101,3 +101,13 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* D-78's fee rule is "a percentage with a minimum, plus a currency-conversion percentage for instruments in a foreign currency". It doesn't say which currency the minimum is in, whether bonds, whose redemption costs no commission, pay it, or what foreign is relative to.
    - *Today:* the minimum is an amount in any currency, converted at the FX rate of the valuation's day (a missing rate leaves the liquidation value missing); the commission applies to holdings priced at market only, not to bonds or cash; and foreign means priced in another currency than the pack's, PLN for Poland. The minimum applies to the commission alone, before the conversion percentage is added.
    - *Options:* keep; or tie the minimum to the instrument's currency; or charge the conversion percentage on foreign cash too.
+
+## Tooling
+
+17. **The kibi gate recompiles a broken store once.**
+    - *Today:* `kibi sync --rebuild` sometimes leaves a compiled store that misses an authored relationship or holds an entity twice (about 1 run in 10 under load). The same files compile correctly on the next run, so it is a defect in the compile, not in the knowledge base. `task kibi:check` (`scripts/kibi-check.sh`) recompiles once when a check fails with exactly that defect, and the second check is final; any other failure is final at once. A defect still gets through if two compiles in a row hit it.
+    - *Question:* acceptable, given docs/dev/testing.md forbids retry loops for tests? The reading here is that it recompiles a broken build artifact rather than retrying a verdict.
+
+18. **Fixing the kibi compile defect upstream.**
+    - *Today:* the likely cause is that `kibi sync` terminates its compiling Prolog process with no grace period right after saving, then publishes the staging directory. A bug report draft exists in the implementation session's scratchpad, not filed.
+    - *Options:* file the report with kibi's maintainers; carry a local patch that adds a grace period; or keep only the recompile.

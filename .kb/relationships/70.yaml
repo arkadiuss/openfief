@@ -265,3 +265,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ecc61db122c1
+  - type: implements
+    from: SYM-affected-rule
+    to: REQ-tooling-hook-full-fallback
+    created_at: 2026-10-30T03:49:58.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f612cda65a8b
+  - type: covered_by
+    from: SYM-affected-rule
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T03:49:58.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e7060e48411

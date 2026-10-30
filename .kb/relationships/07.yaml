@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74cb76d7ddbe
+  - type: implements
+    from: SYM-affected-any-under
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:08:15.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acc283278759
+  - type: covered_by
+    from: SYM-affected-any-under
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:08:15.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21f1e134256b
+  - type: executable_for
+    from: SYM-affected-test-steps
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:09:06.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b3f1b7f66b5

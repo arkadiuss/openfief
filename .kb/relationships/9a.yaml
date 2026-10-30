@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e30de27a5df0
+  - type: executable_for
+    from: SYM-tooling-kibi-check-test-check
+    to: TEST-tooling-kibi-check
+    created_at: 2026-10-30T04:10:03.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59fbbb68f2ee

@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff1660518715
+  - type: implements
+    from: SYM-affected-plan-staged
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:50:59.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-377519676603
+  - type: covered_by
+    from: SYM-affected-plan-staged
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:51:00.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8eb0910370a7
