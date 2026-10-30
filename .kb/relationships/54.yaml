@@ -482,3 +482,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f0138dfda9d
+  - type: verified_by
+    from: SCEN-ingest-account-terms
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T22:59:00.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd00f5546a21
+  - type: verified_by
+    from: SCEN-ingest-account-terms
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T22:59:00.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc34ea22d2dc
+  - type: verified_by
+    from: SCEN-ingest-account-terms
+    to: TEST-core-onboarding
+    created_at: 2026-10-29T22:59:00.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0287c41d5b1c
+  - type: implements
+    from: SYM-ingest-app-accounts-store-new
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:09:28.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c8f79636bb6
+  - type: implements
+    from: SYM-ingest-app-accounts-store-new
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:09:28.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae95a8514f31
+  - type: covered_by
+    from: SYM-ingest-app-accounts-store-new
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:09:28.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9253909c0154
+  - type: implements
+    from: SYM-ingestv1-account-get-fee-rule
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:12:51.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f1f2223fd2a
+  - type: covered_by
+    from: SYM-ingestv1-account-get-fee-rule
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:12:51.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef3be636ebf6
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-request-descriptor
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:15:56.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa58c949dde9
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-request-descriptor
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:15:56.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46a9df3fbe61

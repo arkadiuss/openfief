@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http/httptest"
+	"slices"
 	"testing"
 	"time"
 
@@ -147,11 +148,11 @@ func checkBondLotRefusals(t *testing.T, lots bondLotAPI, session string) {
 }
 
 // checkBondValued waits until the demo bond account is valued through
-// 2026-10-28 and checks the lot's stored value there: the existing bond
-// rules, net if redeemed in a taxable account. One bond is worth
-// 100 × (1 + 0.068 × 177 / 365) = 103.30 PLN, so 4132.00 for the lot; the
-// 2.00 PLN fee per bond is under its 3.30 PLN of interest, 80.00 in all;
-// Belka tax is 19% × (132.00 − 80.00) = 9.88; net 4042.12 PLN.
+// 2026-10-28 and checks the lot's stored values there in a taxable account
+// (D-77): one bond is worth 100 × (1 + 0.068 × 177 / 365) = 103.30 PLN, so
+// 4132.00 gross for the lot; net of Belka tax on its 132.00 of interest
+// (25.08) at maturity 4106.92; redeemed today the 2.00 PLN fee per bond,
+// 80.00, and Belka tax on 52.00 (9.88) leave 4042.12.
 func checkBondValued(t *testing.T, srv *httptest.Server, session string) {
 	t.Helper()
 	path := "/v1/accounts/" + string(demo.BondsAccount) + "/valuations?from=2026-10-28&to=2026-10-28"
@@ -163,8 +164,10 @@ func checkBondValued(t *testing.T, srv *httptest.Server, session string) {
 			if v.GetInstrument().GetSymbol() != "EDO0536" || v.GetValue() == nil {
 				continue
 			}
-			if v.GetBasis() != viewsv1.ValuationBasis_VALUATION_BASIS_NET_IF_REDEEMED || v.GetValue().GetAmount() != "4042.12" {
-				t.Errorf("the lot's valuation = %v, want net if redeemed 4042.12 PLN", v)
+			got := []string{v.GetBasis().String(), v.GetValue().GetAmount(), v.GetNetReporting().GetAmount(), v.GetLiquidationReporting().GetAmount()}
+			want := []string{"VALUATION_BASIS_GROSS_ACCRUED", "4132", "4106.92", "4042.12"}
+			if !slices.Equal(got, want) {
+				t.Errorf("the lot's valuation = %v, want gross, net and liquidation %v", got, want)
 			}
 			return
 		}

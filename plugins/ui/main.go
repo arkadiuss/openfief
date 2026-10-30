@@ -100,6 +100,7 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		PriceChecks: valuationv1connect.NewPriceCheckServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Read:        viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:         log,
+		Settings:    valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),
 	})
 	if err != nil {
 		return nil, fmt.Errorf("ui: %w", err)

@@ -20,13 +20,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b77ccb3bec4f
-  - type: executable_for
-    from: SYM-valuation-test-bond-basis
-    to: TEST-valuation-valuation
-    created_at: 2026-10-28T05:31:28.824Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5c7e9c0683f0
   - type: implements
     from: SYM-ledger-app-version-conflict-error-error
     to: REQ-ledger-app-version-conflict
@@ -62,20 +55,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58f9828e9d15
-  - type: implements
-    from: SYM-valuation-postgres-wrapper-names
-    to: REQ-valuation-schema
-    created_at: 2026-10-28T07:59:22.798Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c566b02932da
-  - type: covered_by
-    from: SYM-valuation-postgres-wrapper-names
-    to: TEST-valuation-postgres-store
-    created_at: 2026-10-28T07:59:22.858Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4404dd1a0505
   - type: implements
     from: SYM-connector-gen-pb-transaction-key-string
     to: REQ-connector-contract-messages
@@ -412,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3706a61c613
+  - type: implements
+    from: SYM-affected-plan-staged
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:50:59.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-377519676603
+  - type: covered_by
+    from: SYM-affected-plan-staged
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:51:00.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8eb0910370a7

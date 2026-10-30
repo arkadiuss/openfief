@@ -85,24 +85,51 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* both symbols are UUIDs derived from the instance's name, the Ghostfolio user's ID and the series code or currency. Two instances writing to the same Ghostfolio user still meet in Ghostfolio's name-based reuse of `MANUAL` assets, which the dry run catches.
    - *Options:* keep; or the instance's name alone, as D-64 says; or a per-install ID, which a plugin can't read today.
 
+## Values
+
+14. **OKI's act: its in-force date, limit and rate.**
+   - *Problem:* D-76 computes OKI's yearly tax "only once the act is in force, with the limit and rate taken from the act". The code knows no act in force, nor its numbers, and doesn't know how a year the act enters mid-way is counted, or whether the average balance is taken over every calendar day or only the days with a valuation.
+   - *Today:* `pl.OKIAct` holds the in-force date, the limit and the rate as data, and `pl.CurrentOKIAct` is not in force (no date), so no tax is ever computed and the read API says so. Under an act, the tax would be the rate of the part above the limit of the average of the daily balances (gross values with cash, summed over every OKI account) of the days of the year on or after the in-force date that are valued, rounded half up to grosze.
+   - *Needed:* the act's in-force date, limit and rate, and how it defines the average balance; then `CurrentOKIAct` gets them.
+
+15. **How the taxes inside the values are counted.**
+   - *Problem:* D-77 has the pack compute net and liquidation values "after the taxes due then", per holding. Polish tax counts gains per tax year over all disposals (PIT-38), rounds the base and the tax to whole złoty, and taxes a return from IKE on what is withdrawn above what was paid in.
+   - *Today:* each holding is taxed on its own gain over its open lots' cost, at 19%, rounded half up to grosze (as D-37 rounds bond interest), and a loss is untaxed but offsets nothing. An IKE's early return is taxed the same way per holding, so dividends and realized gains kept as cash in the IKE are not taxed in its liquidation value. IKZE's 10% exit tax and the owner's marginal rate before 65 apply to every holding and to cash, each rounded half up to grosze.
+   - *Options:* keep; or compute each account's taxes over its total (losses offsetting gains, IKE on payments in), which needs the account's contributions; or round as PIT-38 does.
+
+16. **What a sale's cost covers.**
+   - *Problem:* D-78's fee rule is "a percentage with a minimum, plus a currency-conversion percentage for instruments in a foreign currency". It doesn't say which currency the minimum is in, whether bonds, whose redemption costs no commission, pay it, or what foreign is relative to.
+   - *Today:* the minimum is an amount in any currency, converted at the FX rate of the valuation's day (a missing rate leaves the liquidation value missing); the commission applies to holdings priced at market only, not to bonds or cash; and foreign means priced in another currency than the pack's, PLN for Poland. The minimum applies to the commission alone, before the conversion percentage is added.
+   - *Options:* keep; or tie the minimum to the instrument's currency; or charge the conversion percentage on foreign cash too.
+
+## Tooling
+
+17. **The kibi gate recompiles a broken store once.**
+    - *Today:* `kibi sync --rebuild` sometimes leaves a compiled store that misses an authored relationship or holds an entity twice (about 1 run in 10 under load). The same files compile correctly on the next run, so it is a defect in the compile, not in the knowledge base. `task kibi:check` (`scripts/kibi-check.sh`) recompiles once when a check fails with exactly that defect, and the second check is final; any other failure is final at once. A defect still gets through if two compiles in a row hit it.
+    - *Question:* acceptable, given docs/dev/testing.md forbids retry loops for tests? The reading here is that it recompiles a broken build artifact rather than retrying a verdict.
+
+18. **Fixing the kibi compile defect upstream.**
+    - *Today:* the likely cause is that `kibi sync` terminates its compiling Prolog process with no grace period right after saving, then publishes the staging directory. A bug report draft exists in the implementation session's scratchpad, not filed.
+    - *Options:* file the report with kibi's maintainers; carry a local patch that adds a grace period; or keep only the recompile.
+
 ## Statement uploads and price checks
 
-14. **How the core learns which connectors take statement files.**
+19. **How the core learns which connectors take statement files.**
    - *Problem:* D-109 has the owner's UI learn through its owner service which accounts have a connector that takes files, but no decision says how the core knows a connector takes files: the connector contract's `ImportFile` only answers `UNIMPLEMENTED` once a file is sent.
    - *Today:* a connector's manifest declares `statementFiles: true`, signed with its image like `crossCheckPrices` (D-112); ibkr-flex declares both. `StatementService.ListStatementAccounts` lists the accounts bound to exactly one running instance that declares it, and the UI shows the upload form only there. Neither declaration is a permission the grant approves.
    - *Options:* keep; or ask each connector through a new contract method; or make the declarations permissions the owner approves in the grant.
 
-15. **The mode of a statement that covers several accounts.**
+20. **The mode of a statement that covers several accounts.**
    - *Problem:* D-109 has the core choose the mode, opening for an account not yet seeded and transactions after, but a statement of linked accounts can cover a seeded account and one that isn't, and an upload is one batch in one mode.
    - *Today:* the mode follows the account the owner uploaded for; the owner may override it. An opening upload leaves out the seeding of linked broker accounts already seeded, as a sync does, so it seeds only the others; a transactions upload books every mapped account's transactions, an unseeded one's too.
    - *Options:* keep; or run an opening batch and then a transactions batch, as a sync does (`PlanSync`), which needs the file twice; or refuse a statement whose accounts disagree.
 
-16. **What a connector's undeclared cross-check prices do.**
+21. **What a connector's undeclared cross-check prices do.**
    - *Problem:* D-112 lets only a connector whose manifest declares it send cross-check prices, without saying what happens to a delivery from one that doesn't.
    - *Today:* the batch imports everything else; none of its cross-check prices is stored, and one skipped ingest problem says so. Refusing the batch would stop a broker's syncs over prices that only cross-check.
    - *Options:* keep; or refuse the whole delivery.
 
-17. **What an acknowledgement covers, and the owner's thresholds.**
+22. **What an acknowledgement covers, and the owner's thresholds.**
    - *Problem:* D-112 lets the owner acknowledge a flagged price check, recorded append-only, and D-110 lets the owner set a threshold per instrument; neither says how long an acknowledgement holds, whether a matched or currency-mismatch check can be acknowledged, or what thresholds are allowed.
    - *Today:* only a flagged check can be acknowledged; the acknowledgement records both prices and covers the check only while the cross-check price and the price it is compared with keep their dates and closes, so a changed mark or a newer price is flagged anew. A threshold is a fraction greater than 0 and less than 1; clearing it puts the instrument back on 1%; thresholds are not versioned. The overview counts instruments whose latest check is flagged and not acknowledged.
    - *Options:* keep; or let an acknowledgement cover every later check of the instrument until its prices diverge further; or let the owner acknowledge a currency mismatch too.

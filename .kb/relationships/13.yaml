@@ -503,3 +503,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd2357fd5818
+  - type: implements
+    from: SYM-ingestv1-fee-rule
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:12:56.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8883243ea34f
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:12:56.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04344e22037a
+  - type: executable_for
+    from: SYM-affected-test-test-new-pkg
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:02:35.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9836c0973ed3

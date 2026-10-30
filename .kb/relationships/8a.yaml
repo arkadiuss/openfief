@@ -225,13 +225,6 @@ relationships:
     id: rel-9c5906b6c0ab
   - type: implements
     from: SYM-ui-server-allocation
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:47.296Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-40d9e6c1ce58
-  - type: implements
-    from: SYM-ui-server-allocation
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T19:54:47.319Z
     created_by: kibi/upsert
@@ -349,13 +342,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13766669b41f
-  - type: implements
-    from: SYM-core-valuation-settings
-    to: REQ-core-config
-    created_at: 2026-10-29T06:26:53.440Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c4ec8ff92bc4
   - type: covered_by
     from: SYM-core-valuation-settings
     to: TEST-core-unit
@@ -412,3 +398,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fed6a38c78d6
+  - type: implements
+    from: SYM-core-valuation-settings
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:54:49.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb2eae1d791a
+  - type: implements
+    from: SYM-ingestv1-fee-rule-get-conversion-rate
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:54.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e93b50e79c1
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-get-conversion-rate
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:54.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b10661890a1b
+  - type: implements
+    from: SYM-ui-server-allocation
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:44:30.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2726f1d50f60

@@ -356,3 +356,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8cdaee0f861a
+  - type: validates
+    from: TEST-jurisdiction-number-format
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T21:47:10.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a02ceba6393c
+  - type: implements
+    from: SYM-jurisdiction-yearly-tax
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:04:16.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cef49a57cfe
+  - type: covered_by
+    from: SYM-jurisdiction-yearly-tax
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:04:16.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9b4ccce90ce
+  - type: implements
+    from: SYM-views-app-views-wrapper-balances
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:18:38.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39dbeeccea8e
+  - type: implements
+    from: SYM-views-app-views-wrapper-balances
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-30T01:18:38.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-764edd6187c9
+  - type: covered_by
+    from: SYM-views-app-views-wrapper-balances
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:38.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a37ee686bb67

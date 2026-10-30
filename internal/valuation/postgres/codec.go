@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
@@ -21,30 +20,6 @@ func parseMoney(amount, currency string) (kernel.Money, error) {
 		return kernel.Money{}, fmt.Errorf("amount: %w", err)
 	}
 	return m, nil
-}
-
-// wrapperNames are the stored names of the tax wrappers.
-func wrapperNames() map[pl.TaxWrapper]string {
-	return map[pl.TaxWrapper]string{pl.Taxable: "taxable", pl.IKE: "ike", pl.IKZE: "ikze"}
-}
-
-// wrapperName returns the stored name of w.
-func wrapperName(w pl.TaxWrapper) (string, error) {
-	name, ok := wrapperNames()[w]
-	if !ok {
-		return "", fmt.Errorf("%w: %d", pl.ErrUnknownTaxWrapper, w)
-	}
-	return name, nil
-}
-
-// parseWrapper returns the tax wrapper stored as name.
-func parseWrapper(name string) (pl.TaxWrapper, error) {
-	for w, n := range wrapperNames() {
-		if n == name {
-			return w, nil
-		}
-	}
-	return 0, fmt.Errorf("%w: tax wrapper %q", ErrCorrupt, name)
 }
 
 // optionalDate returns d's text, or nil (SQL NULL) for the zero date.
@@ -71,6 +46,7 @@ func parseOptionalDate(s string) (kernel.Date, error) {
 // valuationText is one stored valuation's columns as text; NULL is "".
 type valuationText struct {
 	isin, symbol, day, basis, quantity, value, currency, pln, priceDate, rateDate, missing string
+	net, liquidation, netMissing, liquidationMissing                                       string
 }
 
 // decodeValuation decodes the columns of a stored valuation, all but its
@@ -99,9 +75,29 @@ func decodeValuation(t *valuationText) (valuation.HoldingValuation, error) {
 	}
 	value, err1 := parseMoney(t.value, t.currency)
 	pln, err2 := parseMoney(t.pln, "PLN")
-	if err := errors.Join(err1, err2); err != nil {
+	net, netMissing, err3 := optionalValue(t.net, t.netMissing)
+	liquidation, liquidationMissing, err4 := optionalValue(t.liquidation, t.liquidationMissing)
+	if err := errors.Join(err1, err2, err3, err4); err != nil {
 		return valuation.HoldingValuation{}, err
 	}
 	v.Value, v.PLN = value, pln
+	v.Net, v.NetMissing, v.Liquidation, v.LiquidationMissing = net, netMissing, liquidation, liquidationMissing
 	return v, nil
+}
+
+// optionalValue decodes a net or liquidation value in PLN, or, when it is
+// NULL, the reason it is missing.
+func optionalValue(amount, missing string) (kernel.Money, valuation.MissingReason, error) {
+	if missing != "" {
+		reason, err := valuation.ParseMissingReason(missing)
+		if err != nil {
+			return kernel.Money{}, 0, fmt.Errorf("missing value: %w", err)
+		}
+		return kernel.Money{}, reason, nil
+	}
+	m, err := parseMoney(amount, "PLN")
+	if err != nil {
+		return kernel.Money{}, 0, err
+	}
+	return m, 0, nil
 }

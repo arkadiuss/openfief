@@ -531,3 +531,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b89e659d5369
+  - type: implements
+    from: SYM-valuation-app-input-recorder-apply-rules
+    to: REQ-valuation-rules-version-revalues
+    created_at: 2026-10-29T22:10:10.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-516c3fbb74b8
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-apply-rules
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:10:10.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3824966045f8
+  - type: implements
+    from: SYM-views-app-marked-lots
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:19:08.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d25aa5b4e936
+  - type: implements
+    from: SYM-views-app-marked-lots
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:19:08.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e56c1b526543
+  - type: covered_by
+    from: SYM-views-app-marked-lots
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:08.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aa6a5671537
+  - type: implements
+    from: SYM-views-consume-lots
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:23:41.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bd7ee4b4166
+  - type: implements
+    from: SYM-views-consume-lots
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:23:41.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ce4c4eaa627
+  - type: covered_by
+    from: SYM-views-consume-lots
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:41.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f62c942dc593
+  - type: implements
+    from: SYM-ui-parse-value-kind
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:02:20.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b580407be36
+  - type: implements
+    from: SYM-ui-parse-value-kind
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T03:02:20.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b02ecdd57a3
+  - type: covered_by
+    from: SYM-ui-parse-value-kind
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:02:20.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ef54057841d

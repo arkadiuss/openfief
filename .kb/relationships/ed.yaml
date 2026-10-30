@@ -384,3 +384,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5190143b0eba
+  - type: constrains
+    from: REQ-views-totals-with-cash
+    to: FACT-SUBJECT-5FCF5B63A486FB72
+    created_at: 2026-10-30T00:05:13.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-505b1e2c21bd
+  - type: requires_property
+    from: REQ-views-totals-with-cash
+    to: FACT-PROP-64967912886DF320
+    created_at: 2026-10-30T00:05:13.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f274f64e15f5
+  - type: specified_by
+    from: REQ-views-totals-with-cash
+    to: SCEN-views-totals-with-cash
+    created_at: 2026-10-30T00:05:13.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa6ba93878c7
+  - type: supersedes
+    from: REQ-views-totals-with-cash
+    to: REQ-views-valuation-totals
+    created_at: 2026-10-30T00:05:13.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d95df3f1426a
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-number-format
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-30T01:21:29.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c00fd0c0965
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-number-format
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:29.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28c46d8b1849

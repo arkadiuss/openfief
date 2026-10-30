@@ -27,13 +27,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b92d2f1a53ef
-  - type: implements
-    from: SYM-pl-value-lot
-    to: REQ-pl-early-redemption-fee-cap
-    created_at: 2026-10-28T05:24:08.553Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f64db0bfbc22
   - type: covered_by
     from: SYM-pl-value-lot
     to: TEST-pl-value
@@ -433,3 +426,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-857c3ac479f8
+  - type: implements
+    from: SYM-pl-value-lot
+    to: REQ-pl-early-redemption-fee-by-wrapper
+    created_at: 2026-10-29T21:55:32.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be8827fd775c
+  - type: implements
+    from: SYM-pl-oki-act
+    to: REQ-pl-oki-act-as-data
+    created_at: 2026-10-29T22:06:58.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f1a85d3ecd9
+  - type: implements
+    from: SYM-pl-oki-act
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:06:59.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-271c6cc9b86c
+  - type: covered_by
+    from: SYM-pl-oki-act
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:59.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-303e477fbf72
+  - type: executable_for
+    from: SYM-valuation-app-test-revalue-fee-rule-and-short-holdings
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:54.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f8789ef6672

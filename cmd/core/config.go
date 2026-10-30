@@ -14,7 +14,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
-	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
 )
 
@@ -42,7 +41,6 @@ const (
 const (
 	defaultListen          = ":8080"
 	defaultPluginListen    = ":8081"
-	defaultReporting       = "PLN"
 	defaultTimeZone        = "Europe/Warsaw"
 	defaultEndOfDay        = "23:30"
 	defaultWorkers         = 2
@@ -117,9 +115,8 @@ type serveConfig struct {
 	Reporting kernel.Currency
 	// EndOfDay is when the end-of-day revaluation runs; its Location is also
 	// the time zone of "today".
-	EndOfDay  valuationpg.DailyAt
-	Workers   int
-	BondBasis valuation.Basis
+	EndOfDay valuationpg.DailyAt
+	Workers  int
 	// EnsureDefaults stores the built-in sleeve kinds and sleeves at start.
 	EnsureDefaults  bool
 	ShutdownTimeout time.Duration
@@ -205,11 +202,10 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	c := serveConfig{}
 	fs.StringVar(&c.Listen, "listen", defaultListen, "address of the browser port: the front door, the read API and the health endpoints (D-115)")
 	fs.StringVar(&c.PluginListen, "plugin-listen", defaultPluginListen, "address of the plugin port: the read API, the AuthService and the owner services, for plugins only (D-115)")
-	reporting := fs.String("reporting-currency", defaultReporting, "the reporting currency (D-62)")
+	reporting := fs.String("reporting-currency", jurisdictionPack().ReportingCurrency().String(), "the reporting currency (D-62); the jurisdiction pack's by default")
 	zone := fs.String("time-zone", defaultTimeZone, "time zone of today and of the end of day")
 	eod := fs.String("end-of-day", defaultEndOfDay, "when the end-of-day revaluation runs, HH:MM")
 	fs.IntVar(&c.Workers, "workers", defaultWorkers, "revaluations that run at once (D-36)")
-	basis := fs.String("bond-basis", valuation.DefaultBondBasis.String(), "bond basis for totals: gross_accrued or net_if_redeemed (D-25)")
 	fs.BoolVar(&c.EnsureDefaults, "ensure-defaults", true, "store the built-in sleeve kinds and sleeves that are missing")
 	fs.DurationVar(&c.ShutdownTimeout, "shutdown-timeout", defaultShutdownTimeout, "how long requests and revaluations may drain on shutdown")
 	fs.BoolVar(&c.Connectors, "connectors", inCluster, "sync the cluster's connector instances (D-49); on by default in a cluster")
@@ -235,9 +231,6 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	var err error
 	if c.Reporting, err = kernel.ParseCurrency(*reporting); err != nil {
 		return serveConfig{}, fmt.Errorf("--reporting-currency: %w", err)
-	}
-	if flagErr := parseValuationFlags(&c, *basis); flagErr != nil {
-		return serveConfig{}, flagErr
 	}
 	loc, err := time.LoadLocation(*zone)
 	if err != nil {
@@ -291,29 +284,6 @@ func parseEnrollLink(args []string) (enrollArgs, error) {
 	var err error
 	e.Origin, err = originForHost(*host)
 	return e, err
-}
-
-// parseBondBasis parses a basis name and checks that it can value bonds.
-func parseBondBasis(s string) (valuation.Basis, error) {
-	b, err := valuation.ParseBasis(s)
-	if err != nil {
-		return 0, fmt.Errorf("parsing: %w", err)
-	}
-	if _, err := valuation.BondBasis(b); err != nil {
-		return 0, fmt.Errorf("checking: %w", err)
-	}
-	return b, nil
-}
-
-// parseValuationFlags parses the bond basis into c. The price check
-// threshold is no flag: it is 1% unless the owner sets another for an
-// instrument (D-110).
-func parseValuationFlags(c *serveConfig, basis string) error {
-	var err error
-	if c.BondBasis, err = parseBondBasis(basis); err != nil {
-		return fmt.Errorf("--bond-basis: %w", err)
-	}
-	return nil
 }
 
 // parseEndOfDay parses HH:MM in loc.

@@ -66,7 +66,7 @@ func saveInputs(t *testing.T, store *postgres.Store, in *inputs) {
 		err = store.SaveBondTerms(ctx, in.bond, &in.terms, nil)
 	}
 	if err == nil {
-		err = store.SaveTaxWrapper(ctx, acc2, pl.IKE, nil)
+		err = store.SaveTaxWrapper(ctx, acc2, "oki", nil)
 	}
 	if err != nil {
 		t.Fatalf("saving inputs: %v", err)
@@ -94,10 +94,10 @@ func TestInputsRoundTrip(t *testing.T) {
 	if !ok || notBond || err != nil {
 		t.Errorf("BondTerms found: bond %v, ETF %v, %v", ok, notBond, err)
 	}
-	w1, err1 := store.TaxWrapper(ctx, acc1)
-	w2, err2 := store.TaxWrapper(ctx, acc2)
-	if w1 != pl.Taxable || w2 != pl.IKE || err1 != nil || err2 != nil {
-		t.Errorf("TaxWrapper = %v, %v (%v, %v); want taxable and IKE", w1, w2, err1, err2)
+	w1, ok1, err1 := store.TaxWrapper(ctx, acc1)
+	w2, ok2, err2 := store.TaxWrapper(ctx, acc2)
+	if w1 != "" || ok1 || w2 != "oki" || !ok2 || err1 != nil || err2 != nil {
+		t.Errorf("TaxWrapper = %q %v, %q %v (%v, %v); want none and OKI", w1, ok1, w2, ok2, err1, err2)
 	}
 }
 
@@ -121,13 +121,20 @@ func TestReplaceValuations(t *testing.T) {
 			Account: acc1, Instrument: etf, Date: date(t, on), Basis: valuation.Market, Quantity: kernel.NewQuantity(dec(t, "12.5")),
 			Value: money(t, "1267.125", "USD"), PLN: money(t, "5084.09", "PLN"), Source: "vendor",
 			PriceDate: date(t, "2026-03-02"), RateDate: date(t, "2026-03-02"),
+			Net: money(t, "5030.11", "PLN"), Liquidation: money(t, "4997.58", "PLN"),
 		}
 	}
 	gap := valuation.HoldingValuation{
 		Account: acc1, Instrument: etf, Date: date(t, "2026-03-04"), Basis: valuation.Market, Quantity: kernel.NewQuantity(dec(t, "12.5")),
 		Source: "vendor", PriceDate: date(t, "2026-03-02"), Missing: valuation.MissingFXRate, Detail: "no FX rate: USD on or before 2026-03-04",
 	}
-	all := []valuation.HoldingValuation{row("2026-03-02"), row("2026-03-03"), gap}
+	// An IKZE row without the owner's marginal rate, and one with no lots.
+	ikze := row("2026-03-03")
+	ikze.Instrument, ikze.Liquidation, ikze.LiquidationMissing = instrument(t, otherISIN, "OTHER"), kernel.Money{}, valuation.MissingMarginalRate
+	noLots := row("2026-03-03")
+	noLots.Instrument, noLots.Net, noLots.Liquidation = instrument(t, otherISIN, "SHORT"), kernel.Money{}, kernel.Money{}
+	noLots.NetMissing, noLots.LiquidationMissing = valuation.MissingLots, valuation.MissingLots
+	all := []valuation.HoldingValuation{row("2026-03-02"), row("2026-03-03"), ikze, noLots, gap}
 	err := store.ReplaceValuations(ctx, acc1, date(t, "2026-03-02"), all, date(t, "2026-03-03"))
 	if err != nil {
 		t.Fatalf("ReplaceValuations: %v", err)
@@ -141,6 +148,11 @@ func TestReplaceValuations(t *testing.T) {
 	}
 	got, err = store.Valuations(ctx, acc1, date(t, "2026-03-01"), date(t, "2026-03-31"))
 	check(t, "valuations after revaluing from 2026-03-03", all[:2], got, err)
+	unknown := row("2026-03-03")
+	unknown.Basis = valuation.GrossAccrued + 1 // no basis since D-77 removed net_if_redeemed
+	if replaceErr := store.ReplaceValuations(ctx, acc1, date(t, "2026-03-03"), []valuation.HoldingValuation{unknown}, date(t, "2026-03-05")); replaceErr == nil {
+		t.Error("stored a row on an unknown basis")
+	}
 	through, ok, err := store.ValuedThrough(ctx, acc1)
 	check(t, "valued-through date", date(t, "2026-03-05"), through, err)
 	if _, never, err := store.ValuedThrough(ctx, ledger.AccountID("acc-9")); !ok || never || err != nil {

@@ -196,7 +196,7 @@ func TestEnumsMatch(t *testing.T) {
 	for _, s := range []ledgerapp.AssertionStatus{ledgerapp.AssertionMatched, ledgerapp.AssertionFlagged} {
 		checkEnum(t, viewsv1.AssertionStatus(0).Descriptor(), "ASSERTION_STATUS_", int(s), s.String())
 	}
-	for _, b := range []valuation.Basis{valuation.Market, valuation.GrossAccrued, valuation.NetIfRedeemed} {
+	for _, b := range []valuation.Basis{valuation.Market, valuation.GrossAccrued} {
 		checkEnum(t, viewsv1.ValuationBasis(0).Descriptor(), "VALUATION_BASIS_", int(b), b.String())
 	}
 	for _, d := range []views.Dimension{views.ByAssetClass, views.ByCurrency, views.ByInstitution, views.BySleeve} {

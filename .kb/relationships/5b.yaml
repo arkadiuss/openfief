@@ -433,3 +433,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e98cbbe81a37
+  - type: verified_by
+    from: SCEN-pl-oki-act-as-data
+    to: TEST-pl-pack
+    created_at: 2026-10-29T21:47:49.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdb21abf3a5c
+  - type: implements
+    from: SYM-jurisdiction-separator-names
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:22.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00d67bfe20e4
+  - type: implements
+    from: SYM-jurisdiction-separator-names
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:22.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1c18ed44bc8
+  - type: covered_by
+    from: SYM-jurisdiction-separator-names
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:22.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f9afeafa9dd
+  - type: executable_for
+    from: SYM-pl-test-helper-check-values
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:57.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a9295eb68e3
+  - type: implements
+    from: SYM-viewsv1-get-settings-response-get-number-format-default
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:35:26.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7729f03ad770
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response-get-number-format-default
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:35:26.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0feebdbf18da

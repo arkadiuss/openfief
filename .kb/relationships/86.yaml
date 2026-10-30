@@ -183,13 +183,6 @@ relationships:
     id: rel-0f4e91304573
   - type: implements
     from: SYM-ui-dimensions
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:53:16.750Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ca7a11a4e925
-  - type: implements
-    from: SYM-ui-dimensions
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T19:53:16.765Z
     created_by: kibi/upsert
@@ -202,13 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-239bcbb58560
-  - type: implements
-    from: SYM-ui-allocation-row
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:53:55.415Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-749bb8fa6d59
   - type: implements
     from: SYM-ui-allocation-row
     to: REQ-AUTO-68636F42D98D4CF7
@@ -412,3 +398,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b14271b8b67
+  - type: implements
+    from: SYM-views-value-kind
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:24:45.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa227024bccf
+  - type: implements
+    from: SYM-views-value-kind
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:24:45.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99ec297e172c
+  - type: covered_by
+    from: SYM-views-value-kind
+    to: TEST-views-values
+    created_at: 2026-10-30T01:24:45.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26f27c144556
+  - type: implements
+    from: SYM-viewsv1-number-format-get-group-separator
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:29:30.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-310fa0bc7a75
+  - type: covered_by
+    from: SYM-viewsv1-number-format-get-group-separator
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:29:30.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe174e2bbe1a
+  - type: implements
+    from: SYM-viewsv1-lot-get-removed-instances
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:01.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6767eac10f1f
+  - type: covered_by
+    from: SYM-viewsv1-lot-get-removed-instances
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:01.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e690aaade685
+  - type: implements
+    from: SYM-ui-allocation-row
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:40:30.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-271936a1018c
+  - type: implements
+    from: SYM-ui-dimensions
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:42:44.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6076afe174aa
+  - type: executable_for
+    from: SYM-ui-test-account-terms-forms
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:05:11.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40f0dff86694

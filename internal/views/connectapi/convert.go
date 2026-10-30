@@ -5,6 +5,7 @@ import (
 	"math"
 	"strings"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
@@ -70,9 +71,21 @@ func pbSleeve(s *portfolio.Sleeve) *viewsv1.Sleeve {
 	}
 }
 
-// pbAccount converts an account.
-func pbAccount(a *ledger.Account) *viewsv1.Account {
-	return &viewsv1.Account{Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve)}
+// pbAccount converts an account with its tax wrapper and fee rule.
+func pbAccount(a *ledger.Account, terms *app.AccountTerms) *viewsv1.Account {
+	return &viewsv1.Account{
+		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve),
+		TaxWrapper: string(terms.Wrapper), FeeRule: pbFeeRule(&terms.Fee),
+	}
+}
+
+// pbFeeRule converts a fee rule; a zero minimum is unset.
+func pbFeeRule(r *jurisdiction.FeeRule) *viewsv1.FeeRule {
+	out := &viewsv1.FeeRule{Rate: r.Rate.String(), ConversionRate: r.ConversionRate.String()}
+	if !r.Minimum.IsZero() {
+		out.Minimum = pbMoney(r.Minimum)
+	}
+	return out
 }
 
 // pbBook converts a ledger account: a holding names its instrument, any other
@@ -118,11 +131,12 @@ func pbPlugin(p *views.Plugin) *viewsv1.Plugin {
 	}
 }
 
-// pbLot converts an open lot.
-func pbLot(l *ledger.Lot) *viewsv1.Lot {
+// pbLot converts an open lot with the removed instances behind it.
+func pbLot(l *ledger.Lot, removed []string) *viewsv1.Lot {
 	return &viewsv1.Lot{
 		Instrument: pbInstrument(l.Instrument), Opened: pbDate(l.Opened), Quantity: l.Quantity.String(),
 		Cost: pbMoney(l.Cost), Opening: l.Opening, OriginSource: l.Origin.Source, OriginExternalId: l.Origin.ExternalID,
+		NoLongerUpdated: len(removed) > 0, RemovedInstances: removed,
 	}
 }
 
@@ -152,19 +166,43 @@ func pbPriceCheck(c *valuation.PriceCheck) *viewsv1.PriceCheck {
 	return out
 }
 
-// pbValuation converts a stored valuation of a holding.
+// pbValuation converts a stored valuation of a holding with its three
+// values; a missing net or liquidation value is unset, with its reason.
 func pbValuation(v *valuation.HoldingValuation) *viewsv1.Valuation {
-	return &viewsv1.Valuation{
+	out := &viewsv1.Valuation{
 		Date: pbDate(v.Date), Instrument: pbInstrument(v.Instrument), Basis: viewsv1.ValuationBasis(enumNumber(int(v.Basis))),
 		Source: v.Source, Value: pbMoney(v.Value), ValueReporting: pbMoney(v.PLN),
 	}
+	if v.NetValued() {
+		out.NetReporting = pbMoney(v.Net)
+	} else {
+		out.NetMissing = v.NetMissing.String()
+	}
+	if v.LiquidationValued() {
+		out.LiquidationReporting = pbMoney(v.Liquidation)
+	} else {
+		out.LiquidationMissing = v.LiquidationMissing.String()
+	}
+	return out
 }
 
-// pbTotals converts totals per date.
+// pbTotals converts totals per date; a missing net or liquidation total is
+// unset.
 func pbTotals(ts []views.DateTotal) []*viewsv1.DateTotal {
 	out := make([]*viewsv1.DateTotal, 0, len(ts))
 	for i := range ts {
-		out = append(out, &viewsv1.DateTotal{Date: pbDate(ts[i].Date), ValueReporting: pbMoney(ts[i].Reporting), ByCurrency: pbMonies(ts[i].ByCurrency)})
+		t := &ts[i]
+		total := &viewsv1.DateTotal{
+			Date: pbDate(t.Date), ValueReporting: pbMoney(t.Reporting), ByCurrency: pbMonies(t.ByCurrency),
+			CashReporting: pbMoney(t.Cash), CashUnconverted: t.CashUnconverted,
+		}
+		if !t.NetMissing {
+			total.NetReporting = pbMoney(t.Net)
+		}
+		if !t.LiquidationMissing {
+			total.LiquidationReporting = pbMoney(t.Liquidation)
+		}
+		out = append(out, total)
 	}
 	return out
 }
@@ -179,14 +217,21 @@ func pbStatus(s *valuationapp.ValuationStatus) *viewsv1.ValuationStatus {
 func pbAllocation(a *app.AllocationOn) *viewsv1.GetAllocationResponse {
 	out := &viewsv1.GetAllocationResponse{
 		Date: pbDate(a.Date), By: viewsv1.AllocationDimension(enumNumber(int(a.Allocation.By))), TotalReporting: pbMoney(a.Allocation.Total),
+		Value:  viewsv1.ValueKind(enumNumber(int(a.Kind))),
 		Groups: make([]*viewsv1.AllocationGroup, 0, len(a.Allocation.Groups)), Unvalued: make([]*viewsv1.UnvaluedHolding, 0, len(a.Unvalued)),
 	}
 	for _, g := range a.Allocation.Groups {
 		out.Groups = append(out.Groups, &viewsv1.AllocationGroup{Key: g.Key, ValueReporting: pbMoney(g.Reporting)})
 	}
 	for i := range a.Unvalued {
-		h := &a.Unvalued[i]
-		out.Unvalued = append(out.Unvalued, &viewsv1.UnvaluedHolding{AccountId: string(h.Account), Instrument: pbInstrument(h.Instrument), Quantity: h.Quantity.String()})
+		u := &a.Unvalued[i]
+		pb := &viewsv1.UnvaluedHolding{AccountId: string(u.Account), Missing: u.Missing}
+		if u.Cash.Currency().IsZero() {
+			pb.Instrument, pb.Quantity = pbInstrument(u.Holding.Instrument), u.Holding.Quantity.String()
+		} else {
+			pb.Cash = pbMoney(u.Cash)
+		}
+		out.Unvalued = append(out.Unvalued, pb)
 	}
 	return out
 }

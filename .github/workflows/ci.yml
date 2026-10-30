@@ -6,15 +6,49 @@ on:
     branches: [main]
   push:
     branches: [main]
+  # By hand, on main: the same run as a push. all_images rebuilds and signs every image instead of carrying the
+  # unchanged ones forward, the way out if the selector ever keeps an image it should have rebuilt.
+  workflow_dispatch:
+    inputs:
+      all_images:
+        description: Rebuild every image, changed or not
+        type: boolean
+        default: false
 
 permissions: {}
 
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
-  # A newer push supersedes a PR run; runs on main always finish, so every merge is built and deployed.
+  # A newer push supersedes a PR run; runs on main always finish, so every merge is built and deployed. Runs on
+  # main queue one at a time, so an image carried forward never races its own build.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  plan:
+    # What this run can skip (tools/affected; docs/dev/pipeline.md#affected-checks): a pull request that changes
+    # only docs and requirements skips the end-to-end and PostgreSQL jobs. Pushes to main run the whole suite.
+    name: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      code: ${{ steps.plan.outputs.code }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+      - name: task ci:plan
+        id: plan
+        run: task ci:plan EVENT="$EVENT" BASE="$BASE" >>"$GITHUB_OUTPUT"
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+
   check:
     name: task check
     runs-on: ubuntu-24.04
@@ -34,7 +68,7 @@ jobs:
           DOCS_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
       - name: Upload the docs site
         # task check built it (docs:build); the docs job publishes it on pushes to main (docs/dev/docs.md).
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site/public
@@ -43,7 +77,7 @@ jobs:
     # Publishes the docs site to GitHub Pages from the same run that deploys the demo.
     # The owner sets Settings > Pages > Source to "GitHub Actions" and the custom domain openfief.dev once.
     name: publish docs
-    if: github.event_name == 'push'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: check
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -63,6 +97,8 @@ jobs:
     # PostgreSQL's binaries with the server stopped; task test:pg starts a throwaway cluster from them
     # on a Unix socket and removes it afterwards (scripts/test-pg.sh), so no service container is needed.
     name: task test:pg
+    needs: plan
+    if: needs.plan.outputs.code == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
@@ -108,6 +144,8 @@ jobs:
     # task e2e:images also starts a registry container on the cluster's Docker network for the plugin images, which
     # the suite signs with a key made for the run, so the operator deploys them as it would an owner's (D-57).
     name: e2e (${{ matrix.cluster }})
+    needs: plan
+    if: needs.plan.outputs.code == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
@@ -155,8 +193,9 @@ jobs:
         run: task e2e
 
   images:
-    # Multi-arch images with an SBOM, pushed and cosign-signed on main (D-17). Skipped while there is
-    # no cmd/<name>/Dockerfile or plugins/<name>/Dockerfile; see images.yml.
+    # Multi-arch images with an SBOM, pushed and cosign-signed on main (D-17). Only the images a change can
+    # affect are built: on main, an unchanged image keeps the digest signed for an earlier commit, tagged for this
+    # one; on a pull request, it isn't built (images.yml, select). all_images on a manual run builds them all.
     name: images
     needs: check
     permissions:
@@ -165,7 +204,9 @@ jobs:
       id-token: write
     uses: ./.github/workflows/images.yml
     with:
-      push: ${{ github.event_name == 'push' }}
+      push: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+      select: ${{ !(github.event_name == 'workflow_dispatch' && inputs.all_images) }}
+      base: ${{ github.event.pull_request.base.sha || '' }}
 
   deploy-demo:
     # Deploys main to the Hetzner k3s demo environment (synthetic data only, GR-12) by GitOps pull: it publishes
@@ -174,7 +215,7 @@ jobs:
     # publishing the artifact is harmless without a machine (nothing pulls it), so there is no on/off variable.
     # To stop deploys, suspend Flux on the machine or remove the demo (task demo:down). docs/dev/demo.md#deploys
     name: deploy demo
-    if: github.event_name == 'push'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: [check, e2e, images]
     permissions:
       contents: read

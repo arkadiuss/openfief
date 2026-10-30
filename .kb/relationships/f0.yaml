@@ -461,3 +461,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a286a322e356
+  - type: implements
+    from: SYM-valuation-postgres-store-save-number-format
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:15:01.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0850073e459
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-number-format
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:15:01.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34c2e2e48941
+  - type: implements
+    from: SYM-views-app-views-mark-holdings
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:19:15.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfa51321f2c4
+  - type: implements
+    from: SYM-views-app-views-mark-holdings
+    to: REQ-views-removed-instance-mark-at-read
+    created_at: 2026-10-30T01:19:15.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-706353d0ab00
+  - type: covered_by
+    from: SYM-views-app-views-mark-holdings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:15.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23b84d4a27e4
+  - type: executable_for
+    from: SYM-affected-test-fake-repo
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:02:49.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab27db794f3a

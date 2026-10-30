@@ -44,7 +44,6 @@ spec:
             - --time-zone=Europe/Warsaw
             - --end-of-day=23:30
             - --workers=2
-            - --bond-basis=net_if_redeemed
             - --shutdown-timeout=25s
             # Connector syncs (D-49); on by default in a cluster, shown here with their defaults.
             - --connectors=true

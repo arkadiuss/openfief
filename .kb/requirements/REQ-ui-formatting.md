@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must format amounts from the read API's exact decimal strings, never through binary floating point, and compute allocation shares with the kernel's decimals, half-even to one decimal place.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-20
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ The built-in UI must format amounts from the read API's exact decimal strings, n
 
 ## Context
 
-AGENTS.md hard rule (no float64 for money), D-20 (every amount keeps its currency) and D-62.
-
-## Source
-
-> Every amount keeps its original currency.
-
-docs/DESIGN.md#D-20
+Closed: superseded by REQ-ui-formatting-number-format. D-113 writes amounts in the owner's number format. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

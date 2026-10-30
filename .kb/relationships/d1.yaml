@@ -293,13 +293,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7da1d1b949f1
-  - type: implements
-    from: SYM-ui-parse-model-form
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:13:04.485Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a9c94ce65ca4
   - type: covered_by
     from: SYM-ui-parse-model-form
     to: TEST-ui-model
@@ -426,3 +419,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbe7a97974ee
+  - type: verified_by
+    from: SCEN-valuation-holding-three-values
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T21:47:55.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07d9c3907b6c
+  - type: verified_by
+    from: SCEN-valuation-holding-three-values
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T21:47:55.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d829d30c626
+  - type: verified_by
+    from: SCEN-valuation-holding-three-values
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-29T21:47:55.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f613866dd1a
+  - type: implements
+    from: SYM-viewsv1-valuation-get-net-missing
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:22.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1233c5b93286
+  - type: covered_by
+    from: SYM-viewsv1-valuation-get-net-missing
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:22.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b059828ef713
+  - type: implements
+    from: SYM-viewsv1-list-yearly-taxes-request-reset
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:35:48.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5f1a761eb86
+  - type: covered_by
+    from: SYM-viewsv1-list-yearly-taxes-request-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:35:48.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04aec356edf7
+  - type: implements
+    from: SYM-ui-parse-model-form
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:43:12.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7131e81f0b89
+  - type: executable_for
+    from: SYM-affected-test-test-script-reads
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:01:37.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ab923f767ef

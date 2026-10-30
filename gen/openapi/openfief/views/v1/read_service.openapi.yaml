@@ -32,6 +32,17 @@ components:
           type: string
           title: sleeve
           description: The ID of the account's sleeve.
+        taxWrapper:
+          type: string
+          title: tax_wrapper
+          description: |-
+            The account's tax wrapper, a key of the jurisdiction pack, such as
+             "taxable", "ike", "ikze" or "oki" (D-76).
+        feeRule:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.FeeRule'
+          title: fee_rule
+          description: The fee rule its broker charges a sale (D-78); zero until set.
       title: Account
       additionalProperties: false
       description: Account is one account at an institution. It belongs to one sleeve.
@@ -204,16 +215,39 @@ components:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: value_reporting
+          description: The gross total, cash included.
         byCurrency:
           type: array
           items:
             $ref: '#/components/schemas/openfief.views.v1.Money'
           title: by_currency
+        netReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: net_reporting
+          description: |-
+            The net and liquidation totals, cash included; unset when some valued
+             holding or cash lacks that value.
+        liquidationReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: liquidation_reporting
+        cashReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: cash_reporting
+          description: The cash in the totals.
+        cashUnconverted:
+          type: boolean
+          title: cash_unconverted
+          description: |-
+            Some cash had no FX rate on or before the date and is in no total but
+             by_currency.
       title: DateTotal
       additionalProperties: false
       description: |-
-        DateTotal is the sum of the valuations dated on one date, in the
-         reporting currency and per original currency, in currency order.
+        DateTotal is the sum of the valued holdings and the cash on one date, in
+         the reporting currency and per original currency, in currency order.
     openfief.views.v1.Drawdown:
       type: object
       properties:
@@ -240,6 +274,26 @@ components:
       description: |-
         Drawdown is the worst fall of a series from a peak to a later trough. A
          series that never falls has depth "0" with its first day as both.
+    openfief.views.v1.FeeRule:
+      type: object
+      properties:
+        rate:
+          type: string
+          title: rate
+        minimum:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: minimum
+          description: Unset when the rule has no minimum.
+        conversionRate:
+          type: string
+          title: conversion_rate
+      title: FeeRule
+      additionalProperties: false
+      description: |-
+        FeeRule is how an account's broker charges a sale (D-78): rate of the
+         value sold, at least minimum, plus conversion_rate of the value for an
+         instrument in a foreign currency. Rates are decimal fractions as strings.
     openfief.views.v1.GetAccountRequest:
       type: object
       properties:
@@ -268,6 +322,11 @@ components:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.AllocationDimension'
           title: by
+        value:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ValueKind'
+          title: value
+          description: Which value to split; unspecified is gross.
       title: GetAllocationRequest
       additionalProperties: false
     openfief.views.v1.GetAllocationResponse:
@@ -280,6 +339,11 @@ components:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.AllocationDimension'
           title: by
+        value:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ValueKind'
+          title: value
+          description: 'The value split, as resolved: never unspecified.'
         totalReporting:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
@@ -427,6 +491,34 @@ components:
           description: The currency of every *_reporting value.
       title: GetPerformanceResponse
       additionalProperties: false
+    openfief.views.v1.GetSettingsRequest:
+      type: object
+      title: GetSettingsRequest
+      additionalProperties: false
+    openfief.views.v1.GetSettingsResponse:
+      type: object
+      properties:
+        reportingCurrency:
+          type: string
+          title: reporting_currency
+          description: An ISO 4217 code, such as "PLN".
+        numberFormat:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.NumberFormat'
+          title: number_format
+          description: The owner's number format, or the jurisdiction pack's default.
+        numberFormatDefault:
+          type: boolean
+          title: number_format_default
+          description: Whether number_format is the pack's default.
+        taxWrappers:
+          type: array
+          items:
+            type: string
+          title: tax_wrappers
+          description: The tax wrappers an account can have, the default first.
+      title: GetSettingsResponse
+      additionalProperties: false
     openfief.views.v1.GetValuationStatusRequest:
       type: object
       properties:
@@ -455,6 +547,20 @@ components:
           type: string
           title: quantity
           description: A decimal string.
+        noLongerUpdated:
+          type: boolean
+          title: no_longer_updated
+          description: |-
+            True when a transaction behind the holding came from a connector
+             instance that is no longer installed (D-91): the holding is no longer
+             updated. False while the core can't tell which instances are
+             installed.
+        removedInstances:
+          type: array
+          items:
+            type: string
+          title: removed_instances
+          description: Those removed instances, in name order.
       title: Holding
       additionalProperties: false
       description: Holding is the quantity of one instrument held.
@@ -827,6 +933,25 @@ components:
           description: The currency of every value_reporting.
       title: ListValuationTotalsResponse
       additionalProperties: false
+    openfief.views.v1.ListYearlyTaxesRequest:
+      type: object
+      properties:
+        year:
+          type: integer
+          title: year
+          format: int32
+      title: ListYearlyTaxesRequest
+      additionalProperties: false
+    openfief.views.v1.ListYearlyTaxesResponse:
+      type: object
+      properties:
+        taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.YearlyTax'
+          title: taxes
+      title: ListYearlyTaxesResponse
+      additionalProperties: false
     openfief.views.v1.Lot:
       type: object
       properties:
@@ -856,6 +981,19 @@ components:
         originExternalId:
           type: string
           title: origin_external_id
+        noLongerUpdated:
+          type: boolean
+          title: no_longer_updated
+          description: |-
+            True when the transaction that opened the lot, or one that consumed
+             part of it, came from a removed instance (D-91): the lot is no longer
+             updated.
+        removedInstances:
+          type: array
+          items:
+            type: string
+          title: removed_instances
+          description: Those removed instances, in name order.
       title: Lot
       additionalProperties: false
       description: |-
@@ -957,6 +1095,26 @@ components:
       title: Money
       additionalProperties: false
       description: Money is an exact decimal amount in one currency.
+    openfief.views.v1.NumberFormat:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+          description: The format's key, such as "space-comma".
+        groupSeparator:
+          type: string
+          title: group_separator
+          description: |-
+            The separator between groups of three integer digits: " ", ",", ".",
+             "'" or "" for none.
+        decimalSeparator:
+          type: string
+          title: decimal_separator
+          description: 'The decimal separator: "," or ".".'
+      title: NumberFormat
+      additionalProperties: false
+      description: 'NumberFormat is how amounts are written (D-113): only the separators.'
     openfief.views.v1.PerformanceDay:
       type: object
       properties:
@@ -1330,15 +1488,25 @@ components:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Instrument'
           title: instrument
+          description: Unset for cash.
         quantity:
           type: string
           title: quantity
-          description: A decimal string.
+          description: A decimal string; empty for cash.
+        missing:
+          type: string
+          title: missing
+          description: What the value lacks, such as "price", "fx_rate" or "marginal_rate".
+        cash:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: cash
+          description: The cash left out; unset for a holding.
       title: UnvaluedHolding
       additionalProperties: false
       description: |-
-        UnvaluedHolding is a holding with no stored valuation on the date asked
-         for, left out of the allocation.
+        UnvaluedHolding is a holding, or an account's cash, without the value
+         asked for on the date, left out of the allocation.
     openfief.views.v1.Valuation:
       type: object
       properties:
@@ -1361,15 +1529,37 @@ components:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: value
+          description: The gross value.
         valueReporting:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: value_reporting
+        netReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: net_reporting
+          description: Unset when net_missing says why.
+        liquidationReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: liquidation_reporting
+          description: Unset when liquidation_missing says why.
+        netMissing:
+          type: string
+          title: net_missing
+          description: 'Why the net value is missing: "fx_rate" or "lots"; empty when it isn''t.'
+        liquidationMissing:
+          type: string
+          title: liquidation_missing
+          description: |-
+            Why the liquidation value is missing: "fx_rate", "lots" or
+             "marginal_rate"; empty when it isn't.
       title: Valuation
       additionalProperties: false
       description: |-
         Valuation is the stored value of a holding on a date, with its basis and
-         source, in its original currency and in the reporting currency.
+         source: its gross value in its original currency and in the reporting
+         currency, and its net and liquidation values (D-77).
     openfief.views.v1.ValuationBasis:
       type: string
       title: ValuationBasis
@@ -1378,7 +1568,7 @@ components:
         - VALUATION_BASIS_MARKET
         - VALUATION_BASIS_GROSS_ACCRUED
         - VALUATION_BASIS_NET_IF_REDEEMED
-      description: ValuationBasis says which value of a holding a valuation is.
+      description: ValuationBasis says how a holding's gross value was found.
     openfief.views.v1.ValuationStatus:
       type: object
       properties:
@@ -1402,6 +1592,63 @@ components:
       title: ValuationStatus
       additionalProperties: false
       description: ValuationStatus says how current an account's stored valuations are.
+    openfief.views.v1.ValueKind:
+      type: string
+      title: ValueKind
+      enum:
+        - VALUE_KIND_UNSPECIFIED
+        - VALUE_KIND_GROSS
+        - VALUE_KIND_NET
+        - VALUE_KIND_LIQUIDATION
+      description: ValueKind is one of the three values of D-77.
+    openfief.views.v1.YearlyTax:
+      type: object
+      properties:
+        taxWrapper:
+          type: string
+          title: tax_wrapper
+        year:
+          type: integer
+          title: year
+          format: int32
+        inForce:
+          type: boolean
+          title: in_force
+          description: |-
+            Whether the law that levies it is in force in the year; when false,
+             nothing below is set.
+        days:
+          type: integer
+          title: days
+          format: int32
+          description: The days the average was taken over.
+        average:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: average
+        limit:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: limit
+          description: |-
+            The balance up to which nothing is taxed, and the rate of the part
+             above it, as a decimal fraction.
+        rate:
+          type: string
+          title: rate
+        excess:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: excess
+        tax:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: tax
+      title: YearlyTax
+      additionalProperties: false
+      description: |-
+        YearlyTax is a tax wrapper's tax for one year on the average balance of
+         its accounts (D-76).
 paths:
   /v1/accounts:
     get:
@@ -1508,7 +1755,8 @@ paths:
       summary: ListHoldings
       description: |-
         ListHoldings returns an account's non-zero holdings at the end of a date,
-         in ISIN then venue symbol order.
+         in ISIN then venue symbol order, each marked as no longer updated when
+         a transaction behind it came from a removed instance (D-91).
       operationId: openfief.views.v1.ReadService.ListHoldings
       parameters:
         - name: accountId
@@ -1538,7 +1786,8 @@ paths:
       summary: ListLots
       description: |-
         ListLots returns an account's open tax lots at the end of a date, per
-         instrument, oldest first.
+         instrument, oldest first, each marked as no longer updated when a
+         transaction behind it came from a removed instance (D-91).
       operationId: openfief.views.v1.ReadService.ListLots
       parameters:
         - name: accountId
@@ -1630,7 +1879,8 @@ paths:
       summary: ListAccountValuations
       description: |-
         ListAccountValuations returns an account's stored valuations in a date
-         range, with their totals per date.
+         range, each with its three values (D-77), and its totals per date with
+         its cash (D-106).
       operationId: openfief.views.v1.ReadService.ListAccountValuations
       parameters:
         - name: accountId
@@ -1667,10 +1917,12 @@ paths:
         - ReadService
       summary: GetAllocation
       description: |-
-        GetAllocation returns the portfolio's value on a date in the reporting
-         currency, split by asset class, currency, institution or sleeve (D-30).
-         Holdings count at their stored valuation on the date and cash at the FX
-         rate for the date; holdings without a valuation are listed as unvalued.
+        GetAllocation returns the portfolio's gross, net or liquidation value
+         (D-77) on a date in the reporting currency, split by asset class,
+         currency, institution or sleeve (D-30). Holdings count at their stored
+         valuation on the date and cash at the FX rate for the date, in its
+         account's tax wrapper; holdings and cash without that value are listed
+         as unvalued, with the reason.
       operationId: openfief.views.v1.ReadService.GetAllocation
       parameters:
         - name: date
@@ -1686,6 +1938,13 @@ paths:
             allOf:
               - $ref: '#/components/schemas/openfief.views.v1.AllocationDimension'
             title: by
+        - name: value
+          in: query
+          description: Which value to split; unspecified is gross.
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/openfief.views.v1.ValueKind'
+            title: value
       responses:
         "200":
           description: Success
@@ -1854,6 +2113,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListPriceChecksResponse'
+  /v1/settings:
+    get:
+      tags:
+        - ReadService
+      summary: GetSettings
+      description: |-
+        GetSettings returns the settings every reader writes the record with:
+         the reporting currency (D-62), the number format (D-113) and the tax
+         wrappers an account can have (D-76).
+      operationId: openfief.views.v1.ReadService.GetSettings
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetSettingsResponse'
   /v1/sleeve-kinds:
     get:
       tags:
@@ -1905,7 +2181,8 @@ paths:
       summary: ListValuationTotals
       description: |-
         ListValuationTotals returns the whole portfolio's value per date in a
-         date range, summed over every account's stored valuations.
+         date range, its three values (D-77) summed over every account's stored
+         valuations and cash (D-106).
       operationId: openfief.views.v1.ReadService.ListValuationTotals
       parameters:
         - name: from
@@ -1929,6 +2206,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListValuationTotalsResponse'
+  /v1/yearly-taxes:
+    get:
+      tags:
+        - ReadService
+      summary: ListYearlyTaxes
+      description: |-
+        ListYearlyTaxes returns, for one year, the yearly tax of each tax
+         wrapper taxed on its balance, such as OKI's (D-76), summed over every
+         account in it. A tax whose law isn't in force that year says so and
+         carries no amounts.
+      operationId: openfief.views.v1.ReadService.ListYearlyTaxes
+      parameters:
+        - name: year
+          in: query
+          description: The year query parameter.
+          schema:
+            type: integer
+            title: year
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListYearlyTaxesResponse'
 tags:
   - name: ReadService
     description: |-

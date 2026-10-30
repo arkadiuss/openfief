@@ -16,6 +16,7 @@ import (
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
 	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
@@ -96,15 +97,20 @@ type core struct {
 func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledger, *valuationapp.InputRecorder) {
 	store := ledgerpg.New(pool)
 	l := ledgerapp.New(store, vstore.ImportHook())
-	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore)
+	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore, jurisdictionPack())
 }
 
-// valuationSettings records the bond basis, which revalues everything when
-// it changed (D-36), and returns the cross-check use cases (D-22,
-// D-110..D-112), with the owner's sessions checked by owners.
-func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, cfg *serveConfig, owners valuationapp.Owners) (*valuationapp.CrossChecks, error) {
-	if _, err := recorder.ApplyBondBasis(ctx, cfg.BondBasis); err != nil {
-		return nil, fmt.Errorf("bond basis: %w", err)
+// jurisdictionPack returns the jurisdiction pack (D-70): the Polish one,
+// the only pack there is.
+func jurisdictionPack() *pl.Pack { return pl.NewPack() }
+
+// valuationSettings records the version of the jurisdiction pack's rules,
+// which revalues everything when it changed (D-36), and returns the
+// cross-check use cases (D-22, D-110..D-112), with the owner's sessions
+// checked by owners.
+func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, owners valuationapp.Owners) (*valuationapp.CrossChecks, error) {
+	if _, err := recorder.ApplyRules(ctx); err != nil {
+		return nil, fmt.Errorf("rules version: %w", err)
 	}
 	return valuationapp.NewCrossChecks(vstore, owners), nil
 }
@@ -113,12 +119,13 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // valuation's import hook (D-36), the River revaluation workers, the views
 // and the read API with sessions, script tokens and the view plugins callers
 // accepts as its verifier (readTokens, D-27). It stores
-// the built-in sleeve kinds and sleeves when cfg asks, and records the bond
-// basis, which revalues everything when it changed. The browser port serves
-// the read API alone; the plugin port serves it with the AuthService, the
-// ModelPortfolioService (D-52), the BondLotService (D-9, D-49), the
-// StatementService (D-7, D-49), the MarketDataService (D-94), the
-// PriceCheckService (D-110, D-112) and the onboarding services, to the view
+// the built-in sleeve kinds and sleeves when cfg asks, and records the
+// jurisdiction pack's rules version, which revalues everything when it
+// changed. The browser port serves the read API alone; the plugin port
+// serves it with the AuthService, the ModelPortfolioService (D-52), the
+// BondLotService (D-9, D-49), the StatementService (D-7, D-49), the
+// MarketDataService (D-94), the PriceCheckService (D-110, D-112), the
+// onboarding services and the SettingsService (D-78, D-113), to the view
 // plugins callers accepts (D-69, D-79, D-115). The read API
 // lists the installed plugins from installed, and without it, outside a
 // cluster, answers that they are unknown. Start the River client to run
@@ -140,14 +147,14 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	checks, err := valuationSettings(ctx, recorder, vstore, cfg, valuationOwners(auth, cfg.Auth.Origins))
+	checks, err := valuationSettings(ctx, recorder, vstore, valuationOwners(auth, cfg.Auth.Origins))
 	if err != nil {
 		return nil, err
 	}
 	client, err := valuationpg.NewClient(pool, vstore, ledgerpg.New(pool), &valuationpg.Config{
 		Concurrency: cfg.Workers,
 		EndOfDay:    cfg.EndOfDay,
-		BondBasis:   cfg.BondBasis,
+		Pack:        jurisdictionPack(),
 		Today:       valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		Logger:      log,
 	})
@@ -158,7 +165,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)))
+	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
+		viewsapp.WithJurisdiction(jurisdictionPack(), vstore))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
@@ -178,7 +186,9 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withStatementService(plugin, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
 	plugin = withPriceCheckService(plugin, checks, callers, log)
-	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins), newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins),
+		newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins), accountTerms{recorder, vstore}), callers, log)
+	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
 	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed}, nil
 }
 

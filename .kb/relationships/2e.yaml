@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-311c537acf33
+  - type: implements
+    from: SYM-ingestv1-fee-rule-get-minimum-currency
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:47.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d71bf879bd5
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-get-minimum-currency
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:47.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9f67a7affaf

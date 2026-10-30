@@ -27,13 +27,13 @@ func TestFormatAmount(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if got := formatAmount(tt.in); got != tt.want {
-				t.Errorf("formatAmount(%q) = %q, want %q", tt.in, got, tt.want)
+			if got := plainFormat().amount(tt.in); got != tt.want {
+				t.Errorf("amount(%q) = %q, want %q", tt.in, got, tt.want)
 			}
 		})
 	}
-	if got := formatMoney(nil); got != "" {
-		t.Errorf("formatMoney(nil) = %q", got)
+	if got := plainFormat().money(nil); got != "" {
+		t.Errorf("money(nil) = %q", got)
 	}
 }
 
@@ -86,8 +86,8 @@ func TestLabels(t *testing.T) {
 	tests := []struct{ name, got, want string }{
 		{name: "cash book", got: bookLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_WITHHOLDING_TAX, Currency: "USD"}), want: "withholding tax USD"},
 		{name: "holding book", got: bookLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}), want: "SYN (XX0000000001)"},
-		{name: "cash balance", got: balanceLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "USD"}, "1234.50"), want: "1\u202f234.50 USD"},
-		{name: "holding balance is a quantity", got: balanceLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}, "12"), want: "12"},
+		{name: "cash balance", got: plainFormat().balance(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "USD"}, "1234.50"), want: "1\u202f234.50 USD"},
+		{name: "holding balance is a quantity", got: separators(" ", ",").balance(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}, "12"), want: "12"},
 		{name: "enum", got: enumLabel(viewsv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT.String(), "TRANSACTION_KIND_"), want: "opening lot"},
 		{name: "scope", got: scopeLabel(identityv1.SessionScope_SESSION_SCOPE_OWNER), want: "owner"},
 	}
@@ -142,8 +142,8 @@ func TestBuildCharts(t *testing.T) {
 	alloc := buildAllocation(&viewsv1.GetAllocationResponse{
 		Date: "2026-03-31", TotalReporting: pln("300.10"),
 		Groups: []*viewsv1.AllocationGroup{{Key: "PLN", ValueReporting: pln("200.05")}, {Key: "EUR", ValueReporting: pln("100.05")}},
-	}, parseDimension("currency"))
-	wantAlloc := `{"kind":"bar","label":"Value by Currency","currency":"PLN","labels":["PLN","EUR"],"values":["200.05","100.05"]}`
+	}, parseDimension("currency"), parseValueKind("net"), separators(" ", ","))
+	wantAlloc := "{\"kind\":\"bar\",\"group\":\"\u202f\",\"decimal\":\",\"," + `"label":"Net value by Currency","currency":"PLN","labels":["PLN","EUR"],"values":["200.05","100.05"]}`
 	if alloc.Chart != wantAlloc {
 		t.Errorf("allocation chart = %s, want %s", alloc.Chart, wantAlloc)
 	}
@@ -153,21 +153,21 @@ func TestBuildCharts(t *testing.T) {
 	perf := &viewsv1.GetPerformanceResponse{ReportingCurrency: "PLN", Gap: viewsv1.PerformanceGap_PERFORMANCE_GAP_UNVALUED, Days: []*viewsv1.PerformanceDay{
 		{Date: "2026-01-02", Index: "100", ValueReporting: pln("10.00")}, {Date: "2026-01-03", Index: "110", ValueReporting: pln("11.00")},
 	}}
-	hist := buildPerformance(perf, nil)
+	hist := buildPerformance(perf, nil, plainFormat())
 	wantHist := performanceView{
 		From: "2026-01-02", To: "2026-01-03", Currency: "PLN", Points: 2, Value: pln("11.00"), Gap: "the next day is not fully valued yet",
-		Chart: `{"kind":"line","label":"Portfolio (time-weighted return)","currency":"index","labels":["2026-01-02","2026-01-03"],"values":["100","110"]}`,
+		Chart: "{\"kind\":\"line\",\"group\":\"\u202f\",\"decimal\":\".\"," + `"label":"Portfolio (time-weighted return)","currency":"index","labels":["2026-01-02","2026-01-03"],"values":["100","110"]}`,
 	}
 	if diff := cmp.Diff(wantHist, hist, protocmp.Transform()); diff != "" {
 		t.Errorf("performance (-want +got):\n%s", diff)
 	}
 	// The model's line is aligned with the portfolio's days; a day it lacks
 	// is empty.
-	withModel := buildPerformance(perf, &viewsv1.GetModelPortfolioResponse{Days: []*viewsv1.BacktestDay{{Date: "2026-01-03", Index: "100"}}})
+	withModel := buildPerformance(perf, &viewsv1.GetModelPortfolioResponse{Days: []*viewsv1.BacktestDay{{Date: "2026-01-03", Index: "100"}}}, plainFormat())
 	if want := `"series":[{"label":"Model portfolio (backtest)","values":["","100"]}]`; !strings.Contains(withModel.Chart, want) || withModel.Model == nil {
 		t.Errorf("chart with the model = %s, want %s", withModel.Chart, want)
 	}
-	if empty := buildPerformance(&viewsv1.GetPerformanceResponse{}, nil); empty.Points != 0 || empty.From != "" || empty.Model != nil {
+	if empty := buildPerformance(&viewsv1.GetPerformanceResponse{}, nil, plainFormat()); empty.Points != 0 || empty.From != "" || empty.Model != nil {
 		t.Errorf("empty performance = %+v", empty)
 	}
 }

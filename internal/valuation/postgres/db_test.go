@@ -32,6 +32,8 @@ const (
 
 	etfISIN  = "IETEST000026"
 	bondISIN = "PL0000000014"
+	// otherISIN is one more synthetic ISIN with a valid check digit.
+	otherISIN = "PLTEST000010"
 )
 
 // newPool returns a pool on a fresh database with every valuation and River

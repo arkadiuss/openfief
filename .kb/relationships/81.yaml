@@ -314,3 +314,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51fc10290c49
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-entry
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:10:41.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d86b3f3affc
+  - type: implements
+    from: SYM-valuationv1connect-new-settings-service-client
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:21:42.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-616c81134e4c
+  - type: covered_by
+    from: SYM-valuationv1connect-new-settings-service-client
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:21:43.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c343c3547b3b
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-proto-message
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:07.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe0174ea03f
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-proto-message
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:08.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa603c77680
+  - type: implements
+    from: SYM-affected-step
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:05:39.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c1f79eed4b8
+  - type: covered_by
+    from: SYM-affected-step
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:05:39.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccec2acd1e05

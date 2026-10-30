@@ -510,3 +510,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad5522d1ac30
+  - type: implements
+    from: SYM-pl-pack-value-accrued
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:06:19.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a32c1e8ee95
+  - type: implements
+    from: SYM-pl-pack-value-accrued
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:06:19.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c06ab7ab88f9
+  - type: covered_by
+    from: SYM-pl-pack-value-accrued
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:19.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82b2a19dcd4b
+  - type: implements
+    from: SYM-viewsv1-get-settings-request-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:33:45.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73a664683327
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-request-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:33:45.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9477731c2025
+  - type: constrains
+    from: REQ-tooling-ci-carry-signed-digest
+    to: FACT-SUBJECT-45A3FBAEFD0DA57A
+    created_at: 2026-10-30T03:34:10.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-082e9fbe81cb
+  - type: requires_property
+    from: REQ-tooling-ci-carry-signed-digest
+    to: FACT-PROP-DECAF2E34B829511
+    created_at: 2026-10-30T03:34:10.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-951dc6481daa
+  - type: specified_by
+    from: REQ-tooling-ci-carry-signed-digest
+    to: SCEN-tooling-ci-carry-signed-digest
+    created_at: 2026-10-30T03:34:10.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a88aee1672b
+  - type: executable_for
+    from: SYM-affected-test-output
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:03:15.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26c9e3c0f215

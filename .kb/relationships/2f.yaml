@@ -20,20 +20,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4ae2104805f
-  - type: implements
-    from: SYM-valuation-bond-valuation
-    to: REQ-valuation-bond-basis
-    created_at: 2026-10-28T05:31:08.563Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f2cf79229976
-  - type: covered_by
-    from: SYM-valuation-bond-valuation
-    to: TEST-valuation-valuation
-    created_at: 2026-10-28T05:31:08.571Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6e5c82f23b5c
   - type: executable_for
     from: SYM-valuation-test-rate-on-or-before
     to: TEST-valuation-fx
@@ -97,13 +83,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab5165f86313
-  - type: executable_for
-    from: SYM-valuation-app-test-apply-bond-basis
-    to: TEST-valuation-app-plan
-    created_at: 2026-10-28T07:39:43.635Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0dbe4fbd5776
   - type: implements
     from: SYM-portfolio-kind-by-sleeve
     to: REQ-portfolio-allocation-by-kind
@@ -489,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f074d6ad2eb
+  - type: executable_for
+    from: SYM-pl-test-tax-wrapper-names
+    to: TEST-pl-tax
+    created_at: 2026-10-29T22:09:07.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85d93f81249e
+  - type: executable_for
+    from: SYM-affected-test-test-run-hook
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:03:43.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41b6893c70cb

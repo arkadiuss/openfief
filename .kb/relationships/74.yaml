@@ -126,20 +126,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-86bb7723e483
   - type: implements
-    from: SYM-valuation-app-input-cache-bond-inputs
-    to: REQ-valuation-bond-holding
-    created_at: 2026-10-28T07:34:50.452Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6315b2c90516
-  - type: covered_by
-    from: SYM-valuation-app-input-cache-bond-inputs
-    to: TEST-valuation-app-revalue
-    created_at: 2026-10-28T07:34:50.479Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-884f39226332
-  - type: implements
     from: SYM-connector-gen-pb-mode-string
     to: REQ-connector-contract-messages
     created_at: 2026-10-28T08:12:02.806Z
@@ -559,3 +545,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-443c7be5a1b3
+  - type: validates
+    from: TEST-pl-tax
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T21:47:18.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e327d8f047
+  - type: validates
+    from: TEST-pl-tax
+    to: REQ-pl-oki-no-belka-tax
+    created_at: 2026-10-29T21:47:19.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ade4519626b9
+  - type: verified_by
+    from: SCEN-valuation-rules-version-revalues
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T21:48:01.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ab3dad0c4d4
+  - type: verified_by
+    from: SCEN-valuation-rules-version-revalues
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-10-29T21:48:01.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1582ac01dad
+  - type: executable_for
+    from: SYM-jurisdiction-test-fee-rule-validate
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:18.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13db624c29da
+  - type: implements
+    from: SYM-pl-all-pln
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:06:53.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1358230bf3a
+  - type: implements
+    from: SYM-pl-all-pln
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:06:53.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-242968145b86
+  - type: covered_by
+    from: SYM-pl-all-pln
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:53.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b1b586f096e
+  - type: implements
+    from: SYM-valuationv1-set-number-format-request-get-origin
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:18:14.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdbc1b93d7e7
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-request-get-origin
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:18:14.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2183c19db71f
+  - type: implements
+    from: SYM-valuationv1-set-number-format-response-proto-reflect
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:00.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-522a5c8ffcb5
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-response-proto-reflect
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:00.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8db2a671d437
+  - type: executable_for
+    from: SYM-views-app-test-helper-ikze-terms
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:07.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae19eadae21e
+  - type: implements
+    from: SYM-viewsv1-fee-rule
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:27:32.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf9c0b0a4f30
+  - type: covered_by
+    from: SYM-viewsv1-fee-rule
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:27:32.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e58a710a858e

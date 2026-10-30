@@ -517,3 +517,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80fecaa1276e
+  - type: executable_for
+    from: SYM-pl-test-helper-settings
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:43.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-286eab188a73
+  - type: implements
+    from: SYM-ingestv1-fee-rule-descriptor
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:28.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-facf34fe2240
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:28.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5395d6207cf3
+  - type: implements
+    from: SYM-valuationv1-number-format-get-key
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:15:04.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-893b8b08ce66
+  - type: covered_by
+    from: SYM-valuationv1-number-format-get-key
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:15:04.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d54a47a5b1f
+  - type: verified_by
+    from: SCEN-views-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T00:04:56.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e8c140273fb
+  - type: verified_by
+    from: SCEN-views-settings
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T00:04:56.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-badfa5062916
+  - type: executable_for
+    from: SYM-views-app-test-account-terms
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:13.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-679044875c57

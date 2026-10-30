@@ -300,3 +300,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f6e18dd8563
+  - type: executable_for
+    from: SYM-views-test-holding-value
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:59.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07e26ba96ea3
+  - type: implements
+    from: SYM-affected-operator-dirs
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:11.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b2ce49e511a
+  - type: covered_by
+    from: SYM-affected-operator-dirs
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:11.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad81e3b3893

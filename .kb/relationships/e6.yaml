@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-284f31b059a3
+  - type: implements
+    from: SYM-affected-read-changes
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:00:16.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b6e3ab37bf1
+  - type: covered_by
+    from: SYM-affected-read-changes
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:00:16.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e270a6e4b40

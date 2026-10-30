@@ -363,3 +363,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85c45f22716b
+  - type: implements
+    from: SYM-pl-new-pack
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:05:19.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2da377993942
+  - type: implements
+    from: SYM-pl-new-pack
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:05:19.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6484fc2079ea
+  - type: covered_by
+    from: SYM-pl-new-pack
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:05:19.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-439cae6517db
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-new-settings
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:12:03.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b3d187fc6a
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request-proto-reflect
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:48.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-201fda7b332f
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request-proto-reflect
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:48.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-407d650c4078
+  - type: implements
+    from: SYM-views-app-views-cash-items
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:20:50.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e50ce2c9810
+  - type: implements
+    from: SYM-views-app-views-cash-items
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:20:50.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2ef43724d06
+  - type: covered_by
+    from: SYM-views-app-views-cash-items
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:50.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e104195db0
+  - type: implements
+    from: SYM-viewsv1-number-format-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:28:52.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8785ee53c39f
+  - type: covered_by
+    from: SYM-viewsv1-number-format-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:28:52.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a43a9ad5aa79
+  - type: constrains
+    from: REQ-tooling-hook-full-fallback
+    to: FACT-SUBJECT-AD0E41D410701C0F
+    created_at: 2026-10-30T03:33:50.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb441b881d0f
+  - type: requires_property
+    from: REQ-tooling-hook-full-fallback
+    to: FACT-PROP-61739ED7FC74CEBF
+    created_at: 2026-10-30T03:33:50.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-123199653535
+  - type: specified_by
+    from: REQ-tooling-hook-full-fallback
+    to: SCEN-tooling-hook-full-fallback
+    created_at: 2026-10-30T03:33:50.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-449c9b2e9c91

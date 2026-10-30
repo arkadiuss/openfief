@@ -11,6 +11,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/riverqueue/river"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
@@ -58,6 +59,7 @@ func config(t *testing.T, today string) *postgres.Config {
 		EndOfDay:    postgres.DailyAt{Hour: 23, Minute: 30, Location: time.UTC},
 		Today:       func() kernel.Date { return d },
 		Logger:      slog.New(slog.DiscardHandler),
+		Pack:        pl.NewPack(),
 	}
 }
 
@@ -143,7 +145,7 @@ func TestWorkerRevaluesEndToEnd(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewClient: %v", err)
 	}
-	recorder := app.NewInputRecorder(app.NewPlanner(l, l), store)
+	recorder := app.NewInputRecorder(app.NewPlanner(l, l), store, pl.NewPack())
 	usd, err := kernel.ParseCurrency("USD")
 	if err != nil {
 		t.Fatal(err)
@@ -224,7 +226,7 @@ func TestNewClientChecksTheConfig(t *testing.T) {
 		{name: "no time zone", change: func(c *postgres.Config) { c.EndOfDay.Location = nil }, wantErr: postgres.ErrInvalidConfig},
 		{name: "hour 24", change: func(c *postgres.Config) { c.EndOfDay.Hour = 24 }, wantErr: postgres.ErrInvalidConfig},
 		{name: "no date source", change: func(c *postgres.Config) { c.Today = nil }, wantErr: postgres.ErrInvalidConfig},
-		{name: "market is not a bond basis", change: func(c *postgres.Config) { c.BondBasis = valuation.Market }, wantErr: valuation.ErrBasisNotForBonds},
+		{name: "no jurisdiction pack", change: func(c *postgres.Config) { c.Pack = nil }, wantErr: postgres.ErrInvalidConfig},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

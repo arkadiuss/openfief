@@ -96,6 +96,9 @@ type fakeAccounts struct {
 
 	mu    sync.Mutex
 	calls []string
+	// created and updated are the last requests, with their terms.
+	created *ingestv1.CreateAccountRequest
+	updated *ingestv1.UpdateAccountRequest
 }
 
 func (f *fakeAccounts) CreateAccount(_ context.Context, r *connect.Request[ingestv1.CreateAccountRequest]) (*connect.Response[ingestv1.CreateAccountResponse], error) {
@@ -107,6 +110,7 @@ func (f *fakeAccounts) CreateAccount(_ context.Context, r *connect.Request[inges
 	if err := f.admit(r.Header(), m.GetSessionToken(), call); err != nil {
 		return nil, err
 	}
+	f.locked(func() { f.created = m })
 	return connect.NewResponse(&ingestv1.CreateAccountResponse{Account: &ingestv1.Account{Id: "x", Name: m.GetName()}}), nil
 }
 
@@ -115,6 +119,7 @@ func (f *fakeAccounts) UpdateAccount(_ context.Context, r *connect.Request[inges
 	if err := f.admit(r.Header(), m.GetSessionToken(), "update "+m.GetAccountId()+"|"+m.GetName()+"|"+m.GetSleeve()); err != nil {
 		return nil, err
 	}
+	f.locked(func() { f.updated = m })
 	return connect.NewResponse(&ingestv1.UpdateAccountResponse{Account: &ingestv1.Account{Id: m.GetAccountId()}}), nil
 }
 
@@ -124,6 +129,20 @@ func (f *fakeAccounts) BindAccount(_ context.Context, r *connect.Request[ingestv
 		return nil, err
 	}
 	return connect.NewResponse(&ingestv1.BindAccountResponse{}), nil
+}
+
+// lastCreate is the last CreateAccount request.
+func (f *fakeAccounts) lastCreate() *ingestv1.CreateAccountRequest {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return f.created
+}
+
+// lastUpdate is the last UpdateAccount request.
+func (f *fakeAccounts) lastUpdate() *ingestv1.UpdateAccountRequest {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return f.updated
 }
 
 func (f *fakeAccounts) admit(h http.Header, session, call string) error {

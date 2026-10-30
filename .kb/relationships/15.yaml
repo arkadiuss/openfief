@@ -97,20 +97,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7079c3eff62
-  - type: implements
-    from: SYM-valuation-postgres-parse-wrapper
-    to: REQ-valuation-schema
-    created_at: 2026-10-28T07:59:37.704Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0aee246bda3e
-  - type: covered_by
-    from: SYM-valuation-postgres-parse-wrapper
-    to: TEST-valuation-postgres-store
-    created_at: 2026-10-28T07:59:37.742Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-82024ba3284f
   - type: validates
     from: TEST-sdk-go-env
     to: REQ-AUTO-C6544ADAF8F5AE65
@@ -594,3 +580,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b392ea1f4d7
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-number-format
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:13:26.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ce7bedd90ed
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-number-format
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:13:26.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85d0a5b312bc
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-number-format
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:13:26.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-388a497da44a
+  - type: validates
+    from: TEST-ingest-app-accounts
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T22:58:51.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ad2abc0efbb
+  - type: validates
+    from: TEST-ingest-app-accounts
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:58:51.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9ed970284a0
+  - type: executable_for
+    from: SYM-views-app-test-yearly-taxes
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:38.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb5ff97a69a6
+  - type: implements
+    from: SYM-affected-load-script-tests
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:59:30.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-588df96bbcec
+  - type: covered_by
+    from: SYM-affected-load-script-tests
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:59:30.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4616e6316d2
+  - type: implements
+    from: SYM-affected-affected-sets
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:57.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11eb5e320c9f
+  - type: covered_by
+    from: SYM-affected-affected-sets
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:57.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-360a9334483c

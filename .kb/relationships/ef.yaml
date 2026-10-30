@@ -363,20 +363,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc8c4e3ad596
-  - type: implements
-    from: SYM-core-parse-valuation-flags
-    to: REQ-core-config
-    created_at: 2026-10-29T06:26:39.327Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fdb2a067f531
-  - type: covered_by
-    from: SYM-core-parse-valuation-flags
-    to: TEST-core-unit
-    created_at: 2026-10-29T06:26:39.358Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-486125f55377
   - type: validates
     from: TEST-ingest-ibkrflex-brokers
     to: REQ-ingest-unmapped-broker-account
@@ -447,3 +433,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05784b05a2e8
+  - type: implements
+    from: SYM-jurisdiction-fee-rule
+    to: REQ-jurisdiction-fee-rule-sale-cost
+    created_at: 2026-10-29T22:00:53.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0ab6efebbac
+  - type: implements
+    from: SYM-jurisdiction-fee-rule
+    to: REQ-valuation-sale-fee-rule
+    created_at: 2026-10-29T22:00:53.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee970ae8a2ee
+  - type: covered_by
+    from: SYM-jurisdiction-fee-rule
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:00:53.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6846373e902c
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-dec
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:42.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-342020ded117
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-dec
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:01:42.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b78100d9826
+  - type: executable_for
+    from: SYM-jurisdiction-test-helper-dec
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:01:42.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6b398846011
+  - type: implements
+    from: SYM-ui-parse-chart-kind
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:00:08.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b37ad332e45
+  - type: implements
+    from: SYM-ui-parse-chart-kind
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T03:00:08.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f56a188abcb3
+  - type: covered_by
+    from: SYM-ui-parse-chart-kind
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:00:08.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c7e41ee5993
+  - type: implements
+    from: SYM-ui-number-format-fee-rule
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T03:03:11.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f201046662ca
+  - type: covered_by
+    from: SYM-ui-number-format-fee-rule
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:03:11.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cf2bf0997e4
+  - type: executable_for
+    from: SYM-tooling-check-commit-test-hook
+    to: TEST-tooling-check-commit
+    created_at: 2026-10-30T03:48:06.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4bacb5cc24b
+  - type: implements
+    from: SYM-affected-plan
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:05:47.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-866467ad515d
+  - type: covered_by
+    from: SYM-affected-plan
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:05:47.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e38eef84294

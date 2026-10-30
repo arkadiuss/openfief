@@ -7,6 +7,7 @@ import (
 	"slices"
 	"testing"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -90,11 +91,12 @@ func (f *fakeLedger) Accounts(context.Context) ([]ledger.Account, error) {
 
 // fakeStore keeps inputs and valuations in memory.
 type fakeStore struct {
+	fakeTerms
+
 	prices   []valuation.Price
 	rates    []valuation.FXRate
 	readings []valuation.IndexReading
 	terms    map[ledger.ISIN]pl.Terms
-	wrappers map[ledger.AccountID]pl.TaxWrapper
 	rows     map[ledger.AccountID][]valuation.HoldingValuation
 	through  map[ledger.AccountID]kernel.Date
 	err      error
@@ -102,7 +104,7 @@ type fakeStore struct {
 
 func newFakeStore() *fakeStore {
 	return &fakeStore{
-		terms: map[ledger.ISIN]pl.Terms{}, wrappers: map[ledger.AccountID]pl.TaxWrapper{},
+		terms: map[ledger.ISIN]pl.Terms{}, fakeTerms: fakeTerms{wrappers: map[ledger.AccountID]jurisdiction.Wrapper{}, fees: map[ledger.AccountID]jurisdiction.FeeRule{}},
 		rows: map[ledger.AccountID][]valuation.HoldingValuation{}, through: map[ledger.AccountID]kernel.Date{},
 	}
 }
@@ -134,13 +136,6 @@ func (f *fakeStore) IndexReadings(context.Context) ([]valuation.IndexReading, er
 func (f *fakeStore) BondTerms(_ context.Context, isin ledger.ISIN) (pl.Terms, bool, error) {
 	t, ok := f.terms[isin]
 	return t, ok, f.err
-}
-
-func (f *fakeStore) TaxWrapper(_ context.Context, account ledger.AccountID) (pl.TaxWrapper, error) {
-	if w, ok := f.wrappers[account]; ok {
-		return w, f.err
-	}
-	return pl.Taxable, f.err
 }
 
 func (f *fakeStore) ValuedThrough(_ context.Context, account ledger.AccountID) (kernel.Date, bool, error) {
@@ -189,14 +184,6 @@ func (f *fakeRecorder) SaveIndexLevels(context.Context, []valuation.IndexLevel) 
 
 func (f *fakeRecorder) SaveBondTerms(_ context.Context, _ ledger.ISIN, _ *pl.Terms, revals []valuation.Revaluation) error {
 	return f.record("terms", revals)
-}
-
-func (f *fakeRecorder) SaveTaxWrapper(_ context.Context, _ ledger.AccountID, _ pl.TaxWrapper, revals []valuation.Revaluation) error {
-	return f.record("wrapper", revals)
-}
-
-func (f *fakeRecorder) SaveBondBasis(_ context.Context, basis valuation.Basis, revals []valuation.Revaluation) (bool, error) {
-	return f.changed, f.record("basis "+basis.String(), revals)
 }
 
 func (f *fakeRecorder) Enqueue(_ context.Context, revals []valuation.Revaluation) error {

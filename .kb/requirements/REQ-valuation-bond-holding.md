@@ -1,6 +1,6 @@
 ---
 title: A holding of an instrument whose ISIN has stored bond series terms must be valued as the sum of its open lots' statutory values on the configured bond basis, each lot bought on its open date at its cost per bond, in the account's tax wrapper, which is taxable unless recorded otherwise.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-25
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ A holding of an instrument whose ISIN has stored bond series terms must be value
 
 ## Context
 
-Treasury bonds enter as manual lots (D-9) and are valued by the issue letters' rules in internal/jurisdiction/pl; which value counts in totals is the configured basis, net if redeemed by default (D-25). Polish retail bonds have an ISIN per series, so terms are keyed by ISIN. Refines REQ-AUTO-0C90AD924924F4F6 and REQ-AUTO-E10BE8CE13E67657. Modeled by Claude Code for the M0 revaluation task (D-36); the author has not reviewed it yet.
-
-## Source
-
-> Which bond value counts in totals is configurable; the default is net-if-redeemed-today
-
-docs/DESIGN.md D-25
+Closed: superseded by REQ-valuation-bond-holding-values. D-77 removed the configured bond basis. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

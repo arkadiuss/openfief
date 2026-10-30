@@ -13,13 +13,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e79868a2d877
-  - type: executable_for
-    from: SYM-valuation-test-bond-valuation
-    to: TEST-valuation-valuation
-    created_at: 2026-10-28T05:31:30.823Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8e17590ae528
   - type: verified_by
     from: SCEN-plugins-egress-host-canonical
     to: TEST-plugins-egress-host
@@ -608,3 +601,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-410cf81bdae2
+  - type: implements
+    from: SYM-pl-ikze-exit-rate
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:06:06.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a12f4c9b809b
+  - type: implements
+    from: SYM-pl-ikze-exit-rate
+    to: REQ-valuation-net-value
+    created_at: 2026-10-29T22:06:06.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6d38f398b54
+  - type: covered_by
+    from: SYM-pl-ikze-exit-rate
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:06.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61e85c5ffab6
+  - type: implements
+    from: SYM-views-app-views-mark-lots
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:19:21.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-611b78b8a5bf
+  - type: implements
+    from: SYM-views-app-views-mark-lots
+    to: REQ-views-removed-instance-mark-at-read
+    created_at: 2026-10-30T01:19:21.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e81e230960d
+  - type: covered_by
+    from: SYM-views-app-views-mark-lots
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:21.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f76533171ac2
+  - type: implements
+    from: SYM-viewsv1-value-kind-enum
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:26:34.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51c322049a33
+  - type: covered_by
+    from: SYM-viewsv1-value-kind-enum
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:26:34.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8e72cc2f4cf
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-year
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:38.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-080c09dea27b
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-year
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:38.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-431eecf4d256
+  - type: constrains
+    from: REQ-ui-three-values-shown
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-30T02:37:28.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb081c862c31
+  - type: requires_property
+    from: REQ-ui-three-values-shown
+    to: FACT-PROP-39982716BF41DC5C
+    created_at: 2026-10-30T02:37:28.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0a307d044cb
+  - type: specified_by
+    from: REQ-ui-three-values-shown
+    to: SCEN-ui-three-values-shown
+    created_at: 2026-10-30T02:37:28.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a4f34958f0c

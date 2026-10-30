@@ -1,10 +1,13 @@
-// OpenFief's account entry contract (docs/DESIGN.md D-72, D-73, D-79).
+// OpenFief's account entry contract (docs/DESIGN.md D-72, D-73, D-76,
+// D-78, D-79).
 //
 // The owner creates accounts in the built-in UI, in the first-run wizard
 // (D-73) and later: each account's institution, name and sleeve, the
 // connector instance that feeds it, and, for a broker connector, the broker
 // account it is, picked from those the connector reported, so the owner
-// never types an account number (D-72). The UI hands them to the core
+// never types an account number (D-72), with the account's tax wrapper
+// (D-76) and the fee rule its broker charges a sale (D-78). The UI hands
+// them to the core
 // through AccountService, one owner-only service for this kind of entry
 // (D-79). The read API (D-6) stays read-only: it lists accounts, connector
 // bindings and broker accounts.
@@ -21,7 +24,10 @@
 //   PERMISSION_DENIED.
 // - The core makes an account's ID from its name, as lowercase hyphenated
 //   words. A name it can make no ID from, an empty institution, an unknown
-//   sleeve or a malformed instance name fails with INVALID_ARGUMENT; a name
+//   sleeve, a tax wrapper the jurisdiction pack doesn't have, a fee rule
+//   whose rates aren't decimal fractions from 0 up to 1 or whose minimum
+//   is negative or has no currency, or a malformed instance name fails
+//   with INVALID_ARGUMENT; a name
 //   whose ID is taken with ALREADY_EXISTS; an unknown account with
 //   NOT_FOUND; a broker account the instance never reported, or one mapped
 //   to another account, with FAILED_PRECONDITION. Nothing is stored then.
@@ -77,7 +83,8 @@ type AccountServiceClient interface {
 	// CreateAccount creates an account and, when a connector instance is
 	// given, binds it to the account, and maps the broker account to it.
 	CreateAccount(context.Context, *connect.Request[v1.CreateAccountRequest]) (*connect.Response[v1.CreateAccountResponse], error)
-	// UpdateAccount renames an account or moves it to another sleeve; its ID
+	// UpdateAccount renames an account, moves it to another sleeve, or
+	// changes its tax wrapper or fee rule, which revalues it (D-36); its ID
 	// and institution stay.
 	UpdateAccount(context.Context, *connect.Request[v1.UpdateAccountRequest]) (*connect.Response[v1.UpdateAccountResponse], error)
 	// BindAccount binds a connector instance to a stored account, as
@@ -145,7 +152,8 @@ type AccountServiceHandler interface {
 	// CreateAccount creates an account and, when a connector instance is
 	// given, binds it to the account, and maps the broker account to it.
 	CreateAccount(context.Context, *connect.Request[v1.CreateAccountRequest]) (*connect.Response[v1.CreateAccountResponse], error)
-	// UpdateAccount renames an account or moves it to another sleeve; its ID
+	// UpdateAccount renames an account, moves it to another sleeve, or
+	// changes its tax wrapper or fee rule, which revalues it (D-36); its ID
 	// and institution stay.
 	UpdateAccount(context.Context, *connect.Request[v1.UpdateAccountRequest]) (*connect.Response[v1.UpdateAccountResponse], error)
 	// BindAccount binds a connector instance to a stored account, as

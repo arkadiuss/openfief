@@ -272,3 +272,143 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3308e93506d7
+  - type: verified_by
+    from: SCEN-pl-early-redemption-fee-by-wrapper
+    to: TEST-pl-value
+    created_at: 2026-10-29T21:47:47.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7554eba07e1
+  - type: verified_by
+    from: SCEN-pl-early-redemption-fee-by-wrapper
+    to: TEST-pl-official
+    created_at: 2026-10-29T21:47:47.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1000d43e5c37
+  - type: implements
+    from: SYM-valuation-app-account-terms-reader
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:09:32.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-822f55ac685d
+  - type: covered_by
+    from: SYM-valuation-app-account-terms-reader
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:09:32.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0593b1bdd139
+  - type: implements
+    from: SYM-valuation-account-terms-listed
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:16:16.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2114fd33b2be
+  - type: implements
+    from: SYM-valuation-account-terms-listed
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:16:16.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29f8cd56c7fe
+  - type: covered_by
+    from: SYM-valuation-account-terms-listed
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:16:16.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80507215c33d
+  - type: implements
+    from: SYM-views-add-name
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:23:53.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28971f159377
+  - type: implements
+    from: SYM-views-add-name
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:23:53.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e58c319b40b5
+  - type: covered_by
+    from: SYM-views-add-name
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:23:53.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb0b2a2b7407
+  - type: implements
+    from: SYM-views-value-kind-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:24:52.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-040368461300
+  - type: implements
+    from: SYM-views-value-kind-string
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:24:52.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5f7ddf5bb92
+  - type: covered_by
+    from: SYM-views-value-kind-string
+    to: TEST-views-values
+    created_at: 2026-10-30T01:24:52.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e233f2091332
+  - type: implements
+    from: SYM-views-add-cash
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:25:33.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fc139365f57
+  - type: implements
+    from: SYM-views-add-cash
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:25:33.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd8a6457d4cc
+  - type: covered_by
+    from: SYM-views-add-cash
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:33.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2bbc85abd7c
+  - type: implements
+    from: SYM-viewsv1-get-settings-request-reset
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:33:36.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85fd010c89a5
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-request-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:33:36.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f1a27156b91
+  - type: implements
+    from: SYM-tooling-image-carry-carry
+    to: REQ-tooling-ci-carry-signed-digest
+    created_at: 2026-10-30T03:47:59.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36ff755e529a
+  - type: covered_by
+    from: SYM-tooling-image-carry-carry
+    to: TEST-tooling-image-carry
+    created_at: 2026-10-30T03:47:59.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67df7b3f6db8

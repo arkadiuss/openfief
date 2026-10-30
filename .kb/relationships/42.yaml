@@ -195,20 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1e7f78669ca
-  - type: implements
-    from: SYM-ui-format-money
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:53:01.385Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-76c9c6c7b9ab
-  - type: covered_by
-    from: SYM-ui-format-money
-    to: TEST-ui-format
-    created_at: 2026-10-28T19:53:01.408Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-58bdf358305e
   - type: verified_by
     from: SCEN-e2e-ui-ready
     to: TEST-e2e-ui
@@ -230,20 +216,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a471e166f327
-  - type: implements
-    from: SYM-ui-model-view
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:14:32.230Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-60293c45f801
-  - type: implements
-    from: SYM-ui-model-view
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:14:32.249Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ba9086ecaeef
   - type: covered_by
     from: SYM-ui-model-view
     to: TEST-ui-model
@@ -496,3 +468,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-585db2846644
+  - type: verified_by
+    from: SCEN-valuation-revaluation-config
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-10-29T21:48:05.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53addc866916
+  - type: implements
+    from: SYM-valuation-postgres-store-tax-wrapper
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:14:14.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46d60190bc0b
+  - type: implements
+    from: SYM-valuation-postgres-store-tax-wrapper
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T22:14:14.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18f64cbe6479
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-value-settings
+    to: TEST-views-connectapi-rest
+    created_at: 2026-10-30T01:21:22.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4adfd13c2150
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-value-settings
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:22.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1a9e794d481
+  - type: implements
+    from: SYM-ui-model-view
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:43:30.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-972ea162be66
+  - type: implements
+    from: SYM-ui-model-view
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:42:53.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4408b0bd4942

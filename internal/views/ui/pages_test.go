@@ -60,8 +60,8 @@ func TestOverview(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec,
-		"Total on 2026-03-31", "1 500.00 PLN",
-		"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`, "Revaluation pending", "1 000.00 PLN",
+		"Total on 2026-03-31", "1 500,00 PLN",
+		"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`, "Revaluation pending", "1 000,00 PLN",
 		`id="allocation"`, "66.7%", "33.3%",
 		`data-chart="{&#34;kind&#34;:&#34;bar&#34;`, `&#34;values&#34;:[&#34;1000.00&#34;,&#34;500.00&#34;]`,
 		`data-chart="{&#34;kind&#34;:&#34;line&#34;`, "From go-live (2026-03-30) to 2026-03-31",
@@ -105,7 +105,7 @@ func TestAllocationSwitch(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	for _, d := range dimensions() {
-		wantBody(t, rec, `hx-get="/allocation?by=`+d.Key+`&amp;date=2026-03-31"`)
+		wantBody(t, rec, `hx-get="/allocation?by=`+d.Key+`&amp;date=2026-03-31&amp;value=gross"`)
 	}
 	rec = h.serve(t, htmx(withSession(request(http.MethodGet, "/allocation?by=currency&date=2026-03-31", ""), ownerSession)))
 	wantStatus(t, rec, http.StatusOK)
@@ -133,9 +133,9 @@ func TestAccountPage(t *testing.T) {
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec,
 		"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`,
-		"SYN (XX0000000001)", "250.00 EUR", "1 000.00 PLN", "market",
-		"12 345.67 EUR",
-		"2026-01-02", "2 000.00 EUR", "opening lot",
+		"SYN (XX0000000001)", "250,00 EUR", "1 000,00 PLN", "market",
+		"12 345,67 EUR",
+		"2026-01-02", "2 000,00 EUR", "opening lot",
 		"cash EUR", "flagged",
 		"Synthetic deposit", "deposit",
 		`hx-get="/accounts/acc-synthetic-1/transactions?page_token=page-2"`,
@@ -164,7 +164,7 @@ func TestAssertionsPage(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/assertions", ""), demoSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Synthetic brokerage", "2026-03-15", "cash EUR", "100.00", "90.00", "flagged")
+	wantBody(t, rec, "Synthetic brokerage", "2026-03-15", "cash EUR", "100,00", "90,00", "flagged")
 }
 
 // TestReadScopeHidesOwnerActions checks that a read-scoped session, such as

@@ -153,13 +153,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de6d7c5c60ba
-  - type: implements
-    from: SYM-views-add-in
-    to: REQ-views-valuation-totals
-    created_at: 2026-10-28T08:09:37.980Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2d3266492815
   - type: covered_by
     from: SYM-views-add-in
     to: TEST-views-valuation
@@ -251,20 +244,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2aba42613eda
-  - type: implements
-    from: SYM-ui-build-performance
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:15:07.965Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ca3637bbe223
-  - type: implements
-    from: SYM-ui-build-performance
-    to: REQ-ui-model-portfolio
-    created_at: 2026-10-29T00:15:07.991Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-056fc2994526
   - type: covered_by
     from: SYM-ui-build-performance
     to: TEST-ui-format
@@ -398,3 +377,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-970c5934bf7d
+  - type: implements
+    from: SYM-pl-average-balance
+    to: REQ-pl-oki-act-as-data
+    created_at: 2026-10-29T22:32:41.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27fe57bf539f
+  - type: implements
+    from: SYM-pl-average-balance
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T22:32:41.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa32245d8746
+  - type: covered_by
+    from: SYM-pl-average-balance
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:32:41.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0638b1ea250
+  - type: implements
+    from: SYM-viewsv1-value-kind-enum-descriptor
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:27:11.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d7b5beadb71
+  - type: covered_by
+    from: SYM-viewsv1-value-kind-enum-descriptor
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:27:11.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cce24c4b3ae8
+  - type: implements
+    from: SYM-viewsv1-date-total-get-cash-unconverted
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:33:01.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6e2044eac23
+  - type: covered_by
+    from: SYM-viewsv1-date-total-get-cash-unconverted
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:33:01.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d97c665ed16a
+  - type: implements
+    from: SYM-views-add-in
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T02:13:08.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faffada9fcee
+  - type: implements
+    from: SYM-ui-build-performance
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:41:49.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2515cab180e
+  - type: implements
+    from: SYM-ui-build-performance
+    to: REQ-ui-model-portfolio-performance-chart
+    created_at: 2026-10-30T03:40:15.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d334d30a1d4
+  - type: implements
+    from: SYM-affected-plan-line
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:01:08.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f118df72c69
+  - type: covered_by
+    from: SYM-affected-plan-line
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:01:09.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca8913165a4b

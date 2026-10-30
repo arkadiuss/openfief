@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98e115a757d3
+  - type: implements
+    from: SYM-viewsv1-value-kind-descriptor
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:26:48.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5359733877b1
+  - type: covered_by
+    from: SYM-viewsv1-value-kind-descriptor
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:26:48.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a48014cbfaf

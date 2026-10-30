@@ -384,3 +384,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-270b376d0fb4
+  - type: implements
+    from: SYM-valuation-app-settings
+    to: REQ-valuation-owner-settings
+    created_at: 2026-10-29T22:11:12.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9b4a1c4f3b8
+  - type: implements
+    from: SYM-valuation-app-settings
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T22:11:12.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c550e070aa39
+  - type: covered_by
+    from: SYM-valuation-app-settings
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:11:12.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0979a2fbce74
+  - type: implements
+    from: SYM-valuationv1-set-number-format-response-get-number-format
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:15.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b57dee186a06
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-response-get-number-format
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:15.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51cca3a6fcec
+  - type: implements
+    from: SYM-viewsv1-yearly-tax
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:29:44.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0e966f67206
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:29:44.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02e6592c70ca
+  - type: implements
+    from: SYM-ui-allocation-view-value-fragment-link
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T02:59:10.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e511f139095c
+  - type: implements
+    from: SYM-ui-allocation-view-value-fragment-link
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T02:59:10.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9f97346b3b5
+  - type: covered_by
+    from: SYM-ui-allocation-view-value-fragment-link
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:59:10.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8701bd96a17
+  - type: executable_for
+    from: SYM-tooling-check-commit-test-same
+    to: TEST-tooling-check-commit
+    created_at: 2026-10-30T03:48:21.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e0a7da77481
+  - type: implements
+    from: SYM-affected-read-builds
+    to: REQ-tooling-ci-carry-signed-digest
+    created_at: 2026-10-30T04:00:33.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bc040830bc6
+  - type: covered_by
+    from: SYM-affected-read-builds
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:00:33.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d72731ce77f6
+  - type: executable_for
+    from: SYM-affected-test-test-graph-helpers
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:02:22.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e759f3270db

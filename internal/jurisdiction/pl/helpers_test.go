@@ -52,3 +52,21 @@ func indices(t *testing.T, readings map[int]string) pl.Indices {
 	}
 	return idx
 }
+
+// rng is splitmix64: a tiny deterministic generator for property tests, so
+// every run checks the same cases with no math/rand and no wall clock.
+type rng struct{ state uint64 }
+
+func (r *rng) next() uint64 {
+	r.state += 0x9e3779b97f4a7c15
+	z := r.state
+	z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9
+	z = (z ^ (z >> 27)) * 0x94d049bb133111eb
+	return z ^ (z >> 31)
+}
+
+// intn returns a number in [0, n), for n > 0.
+func (r *rng) intn(n int) int {
+	v := int(r.next() >> 1) // fits a 64-bit int
+	return v % n
+}

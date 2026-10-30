@@ -36,8 +36,12 @@ The core must sync every running connector instance when its sync policy says it
 
 D-49 has the core own the schedules; D-95 picks the mode from the ledger's seeding, and D-109 makes an opening upload seed the account for scheduled syncs too.
 
+## Why this changed
+
+It supersedes REQ-ingest-scheduler-due because D-95 makes each sync's mode follow which bound accounts the ledger says are seeded, not whether an opening batch once completed; D-109 then adds that an account seeded by an opening statement upload counts as seeded for its syncs.
+
 ## Source
 
-> A statement upload goes to the connector instance bound to the account. A statement that covers several accounts, such as an IBKR Flex statement of linked accounts, books every mapped account bound to that instance and reports the broker accounts that aren't mapped (D-72). The core chooses the mode, opening for an account not yet seeded and transactions after that (D-95), and the owner may override it; an opening upload seeds the account for scheduled syncs too. The owner's UI learns through its owner service (D-79) which accounts have a connector that takes files, and shows the upload form only there. The core accepts files up to 64 MiB.
+> An opening upload seeds the account for scheduled syncs too.
 
 docs/DESIGN.md#D-109

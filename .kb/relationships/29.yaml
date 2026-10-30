@@ -538,3 +538,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-109afdbea6d3
+  - type: implements
+    from: SYM-jurisdiction-has-wrapper
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:04:29.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7e9699d3b0d
+  - type: covered_by
+    from: SYM-jurisdiction-has-wrapper
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:04:29.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6198c64844f
+  - type: implements
+    from: SYM-ui-terms-form
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T02:57:28.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37f4558f4f43
+  - type: covered_by
+    from: SYM-ui-terms-form
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:57:28.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4ff1302a1f8

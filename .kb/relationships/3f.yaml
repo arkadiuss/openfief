@@ -517,3 +517,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-476196de596c
+  - type: implements
+    from: SYM-jurisdiction-number-format
+    to: REQ-jurisdiction-number-format-choices
+    created_at: 2026-10-29T22:02:28.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e151a6e4b177
+  - type: implements
+    from: SYM-jurisdiction-number-format
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-29T22:02:28.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-873ffc132198
+  - type: covered_by
+    from: SYM-jurisdiction-number-format
+    to: TEST-jurisdiction-number-format
+    created_at: 2026-10-29T22:02:28.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ef0522ce5c6
+  - type: implements
+    from: SYM-ingest-connectapi-pb-fee-rule
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:10:54.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e038f5d5e5fb
+  - type: implements
+    from: SYM-ingest-connectapi-pb-fee-rule
+    to: REQ-valuation-sale-fee-rule
+    created_at: 2026-10-29T23:10:54.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-903be5bea707
+  - type: covered_by
+    from: SYM-ingest-connectapi-pb-fee-rule
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:10:54.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-443c411fd44f
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service-set-number-format
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:12:10.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb71d6346efb
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service-set-number-format
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T23:12:10.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9d881fcabf6
+  - type: covered_by
+    from: SYM-valuation-connectapi-settings-service-set-number-format
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:12:10.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d0a5c782801
+  - type: implements
+    from: SYM-viewsv1-account-get-tax-wrapper
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:27:18.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92b901e1098c
+  - type: covered_by
+    from: SYM-viewsv1-account-get-tax-wrapper
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:27:18.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e2655b21473

@@ -25,8 +25,9 @@ func TestPluginsPage(t *testing.T) {
 				t.Errorf("%d forms on the plugins page, want only sign-out", forms)
 			}
 			wantNoBody(t, rec, "<button type=\"submit\">", `action="/plugins`)
-			if got := seen(h.read, func() []string { return h.read.bearers }); len(got) != 1 || got[0] != "Bearer "+token {
-				t.Errorf("read API bearers = %q, want the session's token once", got)
+			// The session reads the settings, then the plugins.
+			if got := seen(h.read, func() []string { return h.read.bearers }); len(got) != 2 || got[0] != "Bearer "+token || got[1] != got[0] {
+				t.Errorf("read API bearers = %q, want the session's token twice", got)
 			}
 		})
 	}

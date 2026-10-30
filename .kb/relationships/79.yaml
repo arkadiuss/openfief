@@ -559,6 +559,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-820dd0f07077
+  - type: implements
+    from: SYM-ingest-app-account-terms
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:09:05.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0202caf034d0
+  - type: implements
+    from: SYM-ingest-app-account-terms
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:09:05.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-106b790df818
+  - type: covered_by
+    from: SYM-ingest-app-account-terms
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:09:05.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3b9a4a9a123
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms-fee-rule
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:11:41.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8fc46793de4
   - type: validates
     from: TEST-deploy-gateway-component
     to: REQ-platform-httproute-component
@@ -580,3 +608,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-54c7d24f8f98
+  - type: constrains
+    from: REQ-ui-value-settings-forms
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-30T02:37:48.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-730e88303256
+  - type: requires_property
+    from: REQ-ui-value-settings-forms
+    to: FACT-PROP-0096F28B35E134FF
+    created_at: 2026-10-30T02:37:48.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea3b3719e24b
+  - type: specified_by
+    from: REQ-ui-value-settings-forms
+    to: SCEN-ui-value-settings-forms
+    created_at: 2026-10-30T02:37:48.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ced66df2dee
+  - type: implements
+    from: SYM-ui-from-percent
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T02:57:04.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acf11d8738ea
+  - type: covered_by
+    from: SYM-ui-from-percent
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:57:04.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b8c1c3bc6b4

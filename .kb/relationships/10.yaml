@@ -531,3 +531,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-965af50a45ff
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-jurisdiction-in-process
+    created_at: 2026-10-29T21:47:14.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4776d36c8bfe
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T21:47:14.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b05bc9a9c87a
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-oki-no-belka-tax
+    created_at: 2026-10-29T21:47:14.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-550b445fbbe8
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-29T21:47:14.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e74e19aba939
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-ikze-early-withdrawal-tax
+    created_at: 2026-10-29T21:47:14.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b87674a575b4
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-ikze-liquidation-missing
+    created_at: 2026-10-29T21:47:14.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-220d51c65a1b
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-valuation-net-value
+    created_at: 2026-10-29T21:47:14.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1291bd675e59
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-valuation-liquidation-value
+    created_at: 2026-10-29T21:47:14.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83b55a5c29fe
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-jurisdiction-pl-number-format
+    created_at: 2026-10-29T21:47:14.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb076e79ba6d
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-29T21:47:14.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b31627ea77b2
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request-get-origin
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:20:01.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa0cb870c213
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request-get-origin
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:20:01.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bb7d231e68c
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms-number-format
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:54.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37a60ff482b3
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-valuation-gross-value
+    created_at: 2026-10-30T03:07:29.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ca2fd10ff7f

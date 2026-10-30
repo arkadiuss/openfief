@@ -8,8 +8,17 @@
 {{if .FlaggedPrices}}<p class="alert alert-warn"><a href="/price-checks">{{.FlaggedPrices}} flagged price check(s)</a>: an institution's own price differs from the valuation price.</p>{{end}}
 <section class="card total" aria-labelledby="total-title">
   <h2 id="total-title" class="eyebrow">Total on {{.Date}}</h2>
+  {{with .Total}}
+  <p class="figure">{{money .ValueReporting}}</p>
+  <dl class="values">
+    <div><dt>Net</dt><dd>{{with .NetReporting}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</dd></div>
+    <div><dt>Liquidation</dt><dd>{{with .LiquidationReporting}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</dd></div>
+  </dl>
+  <p class="muted">Gross: holdings at their stored valuations plus cash, in the reporting currency. Net is what you keep at the planned exit, after the taxes due then; liquidation is the cash in hand if everything were sold today, after every tax and fee. A value is missing when some holding or cash lacks it, such as an IKZE before your marginal PIT rate is set.</p>
+  {{else}}
   <p class="figure">{{money .Allocation.Total}}</p>
   <p class="muted">Holdings at their stored valuations plus cash, in the reporting currency.</p>
+  {{end}}
 </section>
 
 <section class="card" aria-labelledby="accounts-title">
@@ -18,7 +27,7 @@
   <div class="table"><table>
     <thead><tr>
       <th scope="col">Account</th><th scope="col">Institution</th><th scope="col">Sleeve</th>
-      <th scope="col" class="num">Holdings value</th><th scope="col">Valuation</th><th scope="col" class="num">Flagged</th>
+      <th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col">Valuation</th><th scope="col" class="num">Flagged</th>
     </tr></thead>
     <tbody>
     {{range .Accounts}}
@@ -26,14 +35,14 @@
       <td><a href="/accounts/{{.Account.Id}}">{{.Account.Name}}</a></td>
       <td>{{.Account.Institution}}</td>
       <td>{{.Account.Sleeve}}</td>
-      {{with .Holdings}}<td class="num">{{money .}}</td>{{else}}<td class="num empty">not valued</td>{{end}}
+      {{with .Total}}{{template "three-values" .}}{{else}}<td colspan="3" class="num empty">not valued</td>{{end}}
       <td>{{template "valuation-status" .Status}}</td>
       <td class="num">{{if .Flagged}}<a href="/assertions">{{.Flagged}}</a>{{else}}0{{end}}</td>
     </tr>
     {{end}}
     </tbody>
   </table></div>
-  <p class="muted">Cash is listed per account on its page, in its own currencies.</p>
+  <p class="muted">Each account's holdings with its cash, in the reporting currency.</p>
   {{else}}
   <div class="state">{{template "kasztan" "asleep"}}<div>
     <p class="state-title">No accounts yet.</p>
@@ -44,8 +53,10 @@
 
 {{template "allocation" .Allocation}}
 
+{{template "value-chart" .Value}}
+
 <section class="card" aria-labelledby="history-title">
-  <h2 id="history-title">Value over time</h2>
+  <h2 id="history-title">Performance</h2>
   {{with .History}}
   {{if .Points}}
   <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}"></canvas></div>
@@ -80,4 +91,22 @@
   {{end}}
 </section>
 {{end}}
+{{end}}
+{{define "value-chart"}}
+<section id="value-chart" class="card" aria-labelledby="value-title">
+  <h2 id="value-title">Value over time</h2>
+  <nav class="switch" aria-label="Value">
+    {{$v := .}}
+    {{range .Kinds}}
+    <a href="{{$v.Link .}}" hx-get="{{$v.FragmentLink .}}" hx-target="#value-chart" hx-swap="outerHTML"
+       {{if eq .Key $v.Kind.Key}}aria-current="true"{{end}}>{{.Label}}</a>
+    {{end}}
+  </nav>
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="{{if eq .Kind.Key "all"}}Gross, net and liquidation values{{else}}{{.Kind.Label}} value{{end}} with cash from {{.From}} to {{.To}}, in {{.Currency}}"></canvas></div>
+  <p class="muted">{{if eq .Kind.Key "all"}}The portfolio's gross, net and liquidation values{{else}}The portfolio's {{.Kind.Label}} value{{end}}, cash included, from {{.From}} to {{.To}} in {{.Currency}}.{{if .Gaps}} {{if eq .Kind.Key "all"}}The liquidation line{{else}}The line{{end}} skips {{.Gaps}} day(s) without {{if eq .Kind.Key "all"}}a Liquidation{{else}}a {{.Kind.Label}}{{end}} value.{{end}}</p>
+  {{else}}
+  <p class="muted">No valued days yet.</p>
+  {{end}}
+</section>
 {{end}}

@@ -172,31 +172,56 @@ func groupKey(item *AllocationItem, d Dimension) (string, error) {
 	return "", fmt.Errorf("%w: %s", ErrUnknownDimension, d)
 }
 
+// Unvalued is a holding, or an account's cash, left out of an allocation
+// for want of the value asked for, with what that value lacks: a missing
+// input, or the reason a net or liquidation value is missing.
+type Unvalued struct {
+	Account ledger.AccountID
+	// Holding is the holding left out; zero for cash.
+	Holding ledger.Holding
+	// Cash is the cash left out; zero for a holding.
+	Cash    kernel.Money
+	Missing string
+}
+
+// missingNoValuation is what a holding without a stored valuation on the
+// date lacks.
+const missingNoValuation = "valuation"
+
 // ValueHoldings pairs account's holdings with their holding valuations dated
-// on: a holding with a valued holding valuation of its instrument in the
-// account on that date becomes an allocation item, at the valuation's
-// converted value; one without, or whose valuation lacks an input, is
-// returned as unvalued.
-func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []valuation.HoldingValuation, on kernel.Date) ([]AllocationItem, []ledger.Holding) {
+// on: a holding with a valuation of its instrument in the account on that
+// date that has the value of kind k becomes an allocation item at that
+// value in the reporting currency (its original-currency value stays the
+// gross one, for grouping by currency); one without, or whose valuation
+// lacks that value, is returned as unvalued with the reason.
+func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []valuation.HoldingValuation, on kernel.Date, k ValueKind) ([]AllocationItem, []Unvalued, error) {
 	var items []AllocationItem
-	var unvalued []ledger.Holding
+	var unvalued []Unvalued
 	for i := range holdings {
 		h := &holdings[i]
 		v, ok := valuationOf(vals, account.ID, h.Instrument, on)
 		if !ok {
-			unvalued = append(unvalued, *h)
+			unvalued = append(unvalued, Unvalued{Account: account.ID, Holding: *h, Missing: missingNoValuation})
 			continue
 		}
-		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, Reporting: v.PLN})
+		value, missing, err := HoldingValue(&v, k)
+		if err != nil {
+			return nil, nil, err
+		}
+		if missing != 0 {
+			unvalued = append(unvalued, Unvalued{Account: account.ID, Holding: *h, Missing: missing.String()})
+			continue
+		}
+		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, Reporting: value})
 	}
-	return items, unvalued
+	return items, unvalued, nil
 }
 
-// valuationOf returns the valued holding valuation in vals of in, held in
+// valuationOf returns the holding valuation in vals of in, held in
 // account, dated on.
 func valuationOf(vals []valuation.HoldingValuation, account ledger.AccountID, in ledger.Instrument, on kernel.Date) (valuation.HoldingValuation, bool) {
 	for i := range vals {
-		if v := &vals[i]; v.Valued() && v.Account == account && v.Instrument == in && v.Date.Equal(on) {
+		if v := &vals[i]; v.Account == account && v.Instrument == in && v.Date.Equal(on) {
 			return *v, true
 		}
 	}

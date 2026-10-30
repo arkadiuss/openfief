@@ -685,3 +685,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df359d51ba82
+  - type: executable_for
+    from: SYM-pl-test-helper-rng-next
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:05:00.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41ee05ef44c9
+  - type: executable_for
+    from: SYM-pl-test-helper-rng-next
+    to: TEST-pl-value
+    created_at: 2026-10-29T22:05:00.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78d6c26399cc
+  - type: executable_for
+    from: SYM-valuation-test-helper-market-lot
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:15:57.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb8122c28b53
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-response-proto-reflect
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:20:51.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ead5591fff3
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-response-proto-reflect
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:20:51.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a0a7f96689
+  - type: implements
+    from: SYM-views-app-settings
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:17:49.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee29b44b611
+  - type: implements
+    from: SYM-views-app-settings
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T01:17:49.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc047948e7a
+  - type: covered_by
+    from: SYM-views-app-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:17:49.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e75ecefc36f2

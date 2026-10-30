@@ -433,3 +433,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa7e5091cbda
+  - type: constrains
+    from: REQ-pl-values-per-wrapper
+    to: FACT-SUBJECT-47FA7962F261D741
+    created_at: 2026-10-29T21:48:16.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c9e675e97e8
+  - type: requires_property
+    from: REQ-pl-values-per-wrapper
+    to: FACT-PROP-9FBFA0F46B9ADD5E
+    created_at: 2026-10-29T21:48:16.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4a107d123f3
+  - type: specified_by
+    from: REQ-pl-values-per-wrapper
+    to: SCEN-pl-values-per-wrapper
+    created_at: 2026-10-29T21:48:16.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f8dd7b373e5
+  - type: supersedes
+    from: REQ-pl-values-per-wrapper
+    to: REQ-pl-belka-tax
+    created_at: 2026-10-29T21:48:16.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ee11012dd7d
+  - type: supersedes
+    from: REQ-pl-values-per-wrapper
+    to: REQ-pl-tax-wrapper-exempt
+    created_at: 2026-10-29T21:48:16.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fbdd2256d85
+  - type: implements
+    from: SYM-pl-tax-wrappers
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:08:43.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a412d1210c8d
+  - type: implements
+    from: SYM-pl-tax-wrappers
+    to: REQ-pl-oki-no-belka-tax
+    created_at: 2026-10-29T22:08:43.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df79eef9151c
+  - type: covered_by
+    from: SYM-pl-tax-wrappers
+    to: TEST-pl-tax
+    created_at: 2026-10-29T22:08:43.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68b1f4052fe5
+  - type: executable_for
+    from: SYM-tooling-image-carry-test-check
+    to: TEST-tooling-image-carry
+    created_at: 2026-10-30T03:49:02.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d1c3017a7ef

@@ -12,9 +12,9 @@ import (
 	"github.com/riverqueue/river"
 	"github.com/riverqueue/river/riverdriver/riverpgxv5"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
-	"github.com/arkadiuss/openfief/internal/valuation"
 	"github.com/arkadiuss/openfief/internal/valuation/app"
 )
 
@@ -40,10 +40,11 @@ type Config struct {
 	Concurrency int
 	// EndOfDay is when the end-of-day revaluation of every account runs.
 	EndOfDay DailyAt
-	// BondBasis is the bond basis for totals (D-25); zero is the default,
-	// net if redeemed. Apply it with app.InputRecorder.ApplyBondBasis at
-	// start-up, which revalues everything when it changed.
-	BondBasis valuation.Basis
+	// Pack is the jurisdiction pack that computes each holding's three
+	// values (D-70, D-77). Record its rules version with
+	// app.InputRecorder.ApplyRules at start-up, which revalues everything
+	// when it changed.
+	Pack jurisdiction.Pack
 	// Today returns the date revaluations value through.
 	Today func() kernel.Date
 	// Logger receives River's logs; nil is slog's default.
@@ -78,6 +79,8 @@ func (c *Config) validate() error {
 		return fmt.Errorf("%w: end of day at %d:%02d", ErrInvalidConfig, c.EndOfDay.Hour, c.EndOfDay.Minute)
 	case c.Today == nil:
 		return fmt.Errorf("%w: no date source", ErrInvalidConfig)
+	case c.Pack == nil:
+		return fmt.Errorf("%w: no jurisdiction pack", ErrInvalidConfig)
 	}
 	return nil
 }
@@ -108,13 +111,10 @@ func NewClient(pool *pgxpool.Pool, store *Store, l Ledger, cfg *Config) (*river.
 	if err := cfg.validate(); err != nil {
 		return nil, err
 	}
-	revaluer, err := app.NewRevaluer(l, store, cfg.BondBasis, cfg.Today)
-	if err != nil {
-		return nil, fmt.Errorf("revaluation client: %w", err)
-	}
+	revaluer := app.NewRevaluer(l, store, cfg.Pack, cfg.Today)
 	workers := river.NewWorkers()
-	eod := &EndOfDayWorker{store: store, recorder: app.NewInputRecorder(app.NewPlanner(l, l), store)}
-	if err = errors.Join(
+	eod := &EndOfDayWorker{store: store, recorder: app.NewInputRecorder(app.NewPlanner(l, l), store, cfg.Pack)}
+	if err := errors.Join(
 		river.AddWorkerSafely(workers, &RevalueWorker{store: store, revaluer: revaluer}),
 		river.AddWorkerSafely(workers, eod),
 	); err != nil {

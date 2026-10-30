@@ -293,3 +293,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a98d0b2f7fbf
+  - type: implements
+    from: SYM-views-app-views-settings
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:18:03.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33ba90523906
+  - type: implements
+    from: SYM-views-app-views-settings
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T01:18:03.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7af2e31467e0
+  - type: covered_by
+    from: SYM-views-app-views-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:03.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-742d7e339106
+  - type: implements
+    from: SYM-ui-wrapper-label
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T03:02:49.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcf22b6571b1
+  - type: covered_by
+    from: SYM-ui-wrapper-label
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:02:49.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e23f1045d97d

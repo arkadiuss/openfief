@@ -293,13 +293,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9619a67328f1
-  - type: implements
-    from: SYM-ui-instrument-label
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:53:36.258Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4201925827af
   - type: covered_by
     from: SYM-ui-instrument-label
     to: TEST-ui-format
@@ -489,3 +482,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c861df31e804
+  - type: implements
+    from: SYM-viewsv1-list-yearly-taxes-response-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:36:48.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5f42e06e59e
+  - type: covered_by
+    from: SYM-viewsv1-list-yearly-taxes-response-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:36:48.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-145ab5f6be23
+  - type: implements
+    from: SYM-ui-instrument-label
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:39:48.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e9c11c0e0e4

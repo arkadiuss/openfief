@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
@@ -46,6 +47,8 @@ type Views struct {
 	plugins     Plugins
 	priceChecks PriceChecks
 	connections Connections
+	pack        jurisdiction.Pack
+	terms       Terms
 }
 
 // New returns the queries over the given ports, with totals, valuations and
@@ -111,22 +114,24 @@ func (v *Views) Transactions(ctx context.Context, account ledger.AccountID, afte
 	return page, nil
 }
 
-// Holdings returns account's non-zero holdings at the end of on.
-func (v *Views) Holdings(ctx context.Context, account ledger.AccountID, on kernel.Date) ([]ledger.Holding, error) {
+// Holdings returns account's non-zero holdings at the end of on, each with
+// the removed connector instances behind it (D-91).
+func (v *Views) Holdings(ctx context.Context, account ledger.AccountID, on kernel.Date) (MarkedHoldings, error) {
 	h, err := v.ledger.HoldingsOn(ctx, account, on)
 	if err != nil {
-		return nil, accountErr("loading holdings", err)
+		return MarkedHoldings{}, accountErr("loading holdings", err)
 	}
-	return h, nil
+	return v.markHoldings(ctx, account, on, h)
 }
 
-// Lots returns account's open lots at the end of on.
-func (v *Views) Lots(ctx context.Context, account ledger.AccountID, on kernel.Date) ([]ledger.Lot, error) {
+// Lots returns account's open lots at the end of on, each with the removed
+// connector instances behind it (D-91).
+func (v *Views) Lots(ctx context.Context, account ledger.AccountID, on kernel.Date) (MarkedLots, error) {
 	l, err := v.ledger.LotsOn(ctx, account, on)
 	if err != nil {
-		return nil, accountErr("loading lots", err)
+		return MarkedLots{}, accountErr("loading lots", err)
 	}
-	return l, nil
+	return v.markLots(ctx, account, on, l)
 }
 
 // Cash returns account's non-zero cash at the end of on, one balance per
@@ -168,35 +173,37 @@ func accountErr(what string, err error) error {
 }
 
 // AccountValuations is an account's valued holding valuations in a date
-// range with their totals per date.
+// range with their totals per date, cash included.
 type AccountValuations struct {
 	Valuations []valuation.HoldingValuation
 	Totals     []views.DateTotal
 }
 
 // AccountValuations returns account's stored valuations dated from to to,
-// both inclusive, and their totals per date.
+// both inclusive, each with its three values (D-77), and its totals per
+// date with its cash (D-106).
 func (v *Views) AccountValuations(ctx context.Context, account ledger.AccountID, from, to kernel.Date) (AccountValuations, error) {
 	if err := views.ValidateRange(from, to); err != nil {
 		return AccountValuations{}, fmt.Errorf("account valuations: %w", err)
 	}
-	if _, err := v.Account(ctx, account); err != nil {
+	acc, err := v.Account(ctx, account)
+	if err != nil {
 		return AccountValuations{}, err
 	}
 	stored, err := v.valuations.Valuations(ctx, account, from, to)
 	if err != nil {
 		return AccountValuations{}, fmt.Errorf("loading valuations: %w", err)
 	}
-	vals := valued(stored)
-	totals, err := views.TotalsByDate(vals, v.reporting)
+	totals, err := v.totals(ctx, []ledger.Account{acc}, from, to)
 	if err != nil {
-		return AccountValuations{}, fmt.Errorf("totalling valuations: %w", err)
+		return AccountValuations{}, err
 	}
-	return AccountValuations{Valuations: vals, Totals: totals}, nil
+	return AccountValuations{Valuations: valued(stored), Totals: totals}, nil
 }
 
 // ValuationTotals returns the whole portfolio's totals per date from to to,
-// summed over every account's stored valuations.
+// its three values (D-77) summed over every account's stored valuations
+// and cash (D-106).
 func (v *Views) ValuationTotals(ctx context.Context, from, to kernel.Date) ([]views.DateTotal, error) {
 	if err := views.ValidateRange(from, to); err != nil {
 		return nil, fmt.Errorf("valuation totals: %w", err)
@@ -205,19 +212,7 @@ func (v *Views) ValuationTotals(ctx context.Context, from, to kernel.Date) ([]vi
 	if err != nil {
 		return nil, err
 	}
-	var all []valuation.HoldingValuation
-	for i := range accounts {
-		vals, loadErr := v.valuations.Valuations(ctx, accounts[i].ID, from, to)
-		if loadErr != nil {
-			return nil, fmt.Errorf("loading valuations: %w", loadErr)
-		}
-		all = append(all, vals...)
-	}
-	totals, err := views.TotalsByDate(all, v.reporting)
-	if err != nil {
-		return nil, fmt.Errorf("totalling valuations: %w", err)
-	}
-	return totals, nil
+	return v.totals(ctx, accounts, from, to)
 }
 
 // ValuationStatus returns the date account is valued through and whether a
@@ -266,27 +261,32 @@ func valued(vals []valuation.HoldingValuation) []valuation.HoldingValuation {
 	return out
 }
 
-// AllocationOn is the portfolio's allocation on a date, with the holdings
-// left out of it because they have no valuation on that date.
+// AllocationOn is the portfolio's allocation of one value kind on a date,
+// with the holdings and cash left out of it because they lack that value.
 type AllocationOn struct {
 	Date       kernel.Date
+	Kind       views.ValueKind
 	Allocation views.Allocation
-	Unvalued   []ledger.Holding
+	Unvalued   []views.Unvalued
 }
 
-// Allocation returns the portfolio's value at the end of on in the reporting
-// currency, grouped by d (D-30):
-// every account's holdings at their stored valuation on that date, and its
-// cash converted at the FX rate for that date.
-func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimension) (AllocationOn, error) {
+// Allocation returns the portfolio's value of kind k (D-77) at the end of on
+// in the reporting currency, grouped by d (D-30): every account's holdings
+// at their stored valuation on that date, and its cash converted at the FX
+// rate for that date and valued in the account's tax wrapper.
+func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimension, k views.ValueKind) (AllocationOn, error) {
 	accounts, err := v.Accounts(ctx)
 	if err != nil {
 		return AllocationOn{}, err
 	}
+	settings, err := v.valueSettings(ctx)
+	if err != nil {
+		return AllocationOn{}, err
+	}
 	var items []views.AllocationItem
-	out := AllocationOn{Date: on}
+	out := AllocationOn{Date: on, Kind: k}
 	for i := range accounts {
-		got, unvalued, itemErr := v.allocationItems(ctx, &accounts[i], on)
+		got, unvalued, itemErr := v.allocationItems(ctx, &accounts[i], on, k, &settings)
 		if itemErr != nil {
 			return AllocationOn{}, itemErr
 		}
@@ -299,9 +299,9 @@ func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimensio
 	return out, nil
 }
 
-// allocationItems returns a's valued holdings and cash on on, and its
-// holdings that have no valuation on on.
-func (v *Views) allocationItems(ctx context.Context, a *ledger.Account, on kernel.Date) ([]views.AllocationItem, []ledger.Holding, error) {
+// allocationItems returns a's holdings and cash at the end of on that have
+// the value of kind k, and those that don't.
+func (v *Views) allocationItems(ctx context.Context, a *ledger.Account, on kernel.Date, k views.ValueKind, settings *jurisdiction.Settings) ([]views.AllocationItem, []views.Unvalued, error) {
 	holdings, err := v.ledger.HoldingsOn(ctx, a.ID, on)
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading holdings: %w", err)
@@ -310,17 +310,48 @@ func (v *Views) allocationItems(ctx context.Context, a *ledger.Account, on kerne
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading valuations: %w", err)
 	}
-	items, unvalued := views.ValueHoldings(*a, holdings, vals, on)
+	items, unvalued, err := views.ValueHoldings(*a, holdings, vals, on, k)
+	if err != nil {
+		return nil, nil, fmt.Errorf("valuing holdings: %w", err)
+	}
+	cashItems, cashUnvalued, err := v.cashItems(ctx, a, on, k, settings)
+	if err != nil {
+		return nil, nil, err
+	}
+	return append(items, cashItems...), append(unvalued, cashUnvalued...), nil
+}
+
+// cashItems returns a's cash at the end of on at its value of kind k in
+// a's tax wrapper, and the cash without that value.
+func (v *Views) cashItems(ctx context.Context, a *ledger.Account, on kernel.Date, k views.ValueKind, settings *jurisdiction.Settings) ([]views.AllocationItem, []views.Unvalued, error) {
 	cash, err := v.ledger.CashOn(ctx, a.ID, on)
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading cash: %w", err)
 	}
+	terms, err := v.AccountTerms(ctx, a.ID)
+	if err != nil {
+		return nil, nil, err
+	}
+	var items []views.AllocationItem
+	var unvalued []views.Unvalued
 	for _, c := range cash {
 		converted, err := v.cashInReporting(ctx, c, on)
 		if err != nil {
 			return nil, nil, fmt.Errorf("converting cash to %s: %w", v.reporting, err)
 		}
-		items = append(items, views.AllocationItem{Account: *a, AssetClass: views.AssetCash, Value: c, Reporting: converted})
+		values, err := v.cashValues(converted, terms.Wrapper, settings)
+		if err != nil {
+			return nil, nil, err
+		}
+		value, ok, err := views.CashValue(&values, k)
+		if err != nil {
+			return nil, nil, fmt.Errorf("valuing cash: %w", err)
+		}
+		if !ok {
+			unvalued = append(unvalued, views.Unvalued{Account: a.ID, Cash: c, Missing: valuation.MissingMarginalRate.String()})
+			continue
+		}
+		items = append(items, views.AllocationItem{Account: *a, AssetClass: views.AssetCash, Value: c, Reporting: value})
 	}
 	return items, unvalued, nil
 }

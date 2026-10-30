@@ -14,6 +14,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest"
 	ingestapp "github.com/arkadiuss/openfief/internal/ingest/app"
 	"github.com/arkadiuss/openfief/internal/ingest/ibkrflex"
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
@@ -98,7 +100,7 @@ func newLoader(pool *pgxpool.Pool, ds *demo.Dataset, log *slog.Logger) (*loader,
 	}
 	store := ledgerpg.New(pool)
 	l := ledgerapp.New(store, vstore.ImportHook())
-	recorder := valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore)
+	recorder := valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore, pl.NewPack())
 	return &loader{ds: ds, log: log, ledger: l, store: store, vstore: vstore, recorder: recorder}, nil
 }
 
@@ -182,10 +184,10 @@ func (l *loader) direct(ctx context.Context) error {
 }
 
 // inputs records the valuation inputs (D-36): the bond account's tax
-// wrapper, the bond terms, CPI, prices, FX rates and the bond basis. Each
-// enqueues the revaluations it causes.
+// wrapper, the bond terms, CPI, prices, FX rates and the version of the
+// jurisdiction pack's rules. Each enqueues the revaluations it causes.
 func (l *loader) inputs(ctx context.Context, rates []valuation.FXRate) error {
-	if err := l.recorder.RecordTaxWrapper(ctx, demo.BondsAccount, l.ds.TaxWrapper); err != nil {
+	if err := l.recorder.RecordTaxWrapper(ctx, demo.BondsAccount, jurisdiction.Wrapper(l.ds.TaxWrapper.String())); err != nil {
 		return fmt.Errorf("demo inputs: %w", err)
 	}
 	for i := range l.ds.Bonds {
@@ -203,7 +205,7 @@ func (l *loader) inputs(ctx context.Context, rates []valuation.FXRate) error {
 	if err != nil {
 		return fmt.Errorf("demo inputs: %w", err)
 	}
-	if _, err := l.recorder.ApplyBondBasis(ctx, 0); err != nil {
+	if _, err := l.recorder.ApplyRules(ctx); err != nil {
 		return fmt.Errorf("demo inputs: %w", err)
 	}
 	l.log.Info("valuation inputs recorded", "prices", len(l.ds.Prices), "fx_rates", len(rates),
