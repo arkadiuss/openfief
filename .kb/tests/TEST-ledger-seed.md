@@ -1,5 +1,5 @@
 ---
-title: Seeding is recognized from the log and a re-seed is decided purely
+title: Seeding is decided per account; opening lots one at a time stay on go-live
 status: active
 sourceFile: internal/ledger/seed_test.go
 origin:

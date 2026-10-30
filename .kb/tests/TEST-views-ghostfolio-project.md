@@ -1,5 +1,5 @@
 ---
-title: Each transaction kind becomes the right Ghostfolio activities, with derived UUIDs and bond prices
+title: The record projects into Ghostfolio activities per transaction kind
 status: active
 sourceFile: internal/views/ghostfolio/project_test.go
 origin:

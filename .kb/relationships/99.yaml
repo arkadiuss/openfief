@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87ab939f9553
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-ledger-coupons-as-interest
+    created_at: 2026-10-30T05:01:35.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e220ef131c4

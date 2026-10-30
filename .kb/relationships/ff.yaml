@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e355420f833
+  - type: executable_for
+    from: SYM-ledger-test-check-opening-lots
+    to: TEST-ledger-seed
+    created_at: 2026-10-30T05:04:14.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc1f973d2f61

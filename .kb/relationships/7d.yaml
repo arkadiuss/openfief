@@ -608,3 +608,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-abac5943b69e
+  - type: verified_by
+    from: SCEN-ledger-opening-lots-one-at-a-time
+    to: TEST-ledger-seed
+    created_at: 2026-10-30T05:01:40.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bca7b850fc8
+  - type: verified_by
+    from: SCEN-ledger-opening-lots-one-at-a-time
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-30T05:01:40.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c69b567310b
+  - type: verified_by
+    from: SCEN-ledger-opening-lots-one-at-a-time
+    to: TEST-ledger-pg-seed
+    created_at: 2026-10-30T05:01:40.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cc97431b423

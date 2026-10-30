@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58a87051f831
+  - type: implements
+    from: SYM-ledger-opening-lots-date
+    to: REQ-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:14:58.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-575cc06b1c99
+  - type: covered_by
+    from: SYM-ledger-opening-lots-date
+    to: TEST-ledger-seed
+    created_at: 2026-10-30T05:14:58.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74cb76d7ddbe

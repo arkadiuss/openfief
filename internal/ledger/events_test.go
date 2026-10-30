@@ -92,6 +92,32 @@ func TestTransactionConstructors(t *testing.T) {
 			},
 		},
 		{
+			name: "bond coupon as interest with Belka tax withheld",
+			build: func() (ledger.Transaction, error) {
+				return ledger.NewInterest(h, in, m("62.40", "PLN"), m("11.86", "PLN"))
+			},
+			wantKind: ledger.KindInterest,
+			want: []posting{
+				{Book: ledger.HoldingBook(in), Amount: m("-62.40", "PLN")},
+				{Book: ledger.WithholdingTaxBook(pln), Amount: m("11.86", "PLN")},
+				{Book: ledger.CashBook(pln), Amount: m("50.54", "PLN")},
+			},
+		},
+		{
+			name:     "bond coupon as interest inside IKE, nothing withheld",
+			build:    func() (ledger.Transaction, error) { return ledger.NewInterest(h, in, m("62.40", "PLN"), none) },
+			wantKind: ledger.KindInterest,
+			want: []posting{
+				{Book: ledger.HoldingBook(in), Amount: m("-62.40", "PLN")},
+				{Book: ledger.CashBook(pln), Amount: m("62.40", "PLN")},
+			},
+		},
+		{
+			name:     "deletion has no postings",
+			build:    func() (ledger.Transaction, error) { return ledger.NewDeletion(h) },
+			wantKind: ledger.KindDeletion,
+		},
+		{
 			name:     "account fee",
 			build:    func() (ledger.Transaction, error) { return ledger.NewFee(h, m("10", "PLN")) },
 			wantKind: ledger.KindFee,
@@ -154,6 +180,9 @@ func TestTransactionConstructors(t *testing.T) {
 		{name: "dividend with tax in another currency", build: func() (ledger.Transaction, error) { return ledger.NewDividend(h, in, m("10", "USD"), m("1", "PLN")) }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "dividend with negative tax", build: func() (ledger.Transaction, error) { return ledger.NewDividend(h, in, m("10", "USD"), m("-1", "USD")) }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "zero dividend", build: func() (ledger.Transaction, error) { return ledger.NewDividend(h, in, m("0", "USD"), none) }, wantErr: ledger.ErrInvalidTransaction},
+		{name: "interest with more tax than gross", build: func() (ledger.Transaction, error) { return ledger.NewInterest(h, in, m("10", "PLN"), m("11", "PLN")) }, wantErr: ledger.ErrInvalidTransaction},
+		{name: "zero interest", build: func() (ledger.Transaction, error) { return ledger.NewInterest(h, in, m("0", "PLN"), none) }, wantErr: ledger.ErrInvalidTransaction},
+		{name: "deletion without a key", build: func() (ledger.Transaction, error) { return ledger.NewDeletion(ledger.TransactionHeader{}) }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "zero fee", build: func() (ledger.Transaction, error) { return ledger.NewFee(h, m("0", "PLN")) }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "FX conversion to the same currency", build: func() (ledger.Transaction, error) {
 			return ledger.NewFXConversion(h, m("1", "USD"), m("1", "USD"), none)
@@ -212,12 +241,12 @@ func checkBuilt(t *testing.T, got *ledger.Transaction, wantKind ledger.Transacti
 func TestKindNames(t *testing.T) {
 	t.Parallel()
 	got := []string{}
-	for k := ledger.TransactionKind(0); k <= ledger.KindOpeningLot+1; k++ {
+	for k := ledger.TransactionKind(0); k <= ledger.KindDeletion+1; k++ {
 		got = append(got, k.String())
 	}
 	want := []string{
 		"TransactionKind(0)", "buy", "sell", "dividend", "fee", "fx-conversion",
-		"deposit", "withdrawal", "opening-lot", "TransactionKind(9)",
+		"deposit", "withdrawal", "opening-lot", "interest", "deletion", "TransactionKind(11)",
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("TransactionKind.String (-want +got):\n%s", diff)

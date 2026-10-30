@@ -109,17 +109,30 @@ func (e *VersionConflictError) Unwrap() error { return ErrVersionConflict }
 // not fail the import. Last, the Ledger's import hooks run in the same
 // transaction.
 func (l *Ledger) Import(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ImportSummary, error) {
-	return l.importAll(ctx, txs, assertions, false)
+	return l.importAll(ctx, txs, assertions, importPlain)
 }
 
-// importAll is Import, and with seed set, Seed.
-func (l *Ledger) importAll(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion, seed bool) (ImportSummary, error) {
+// importMode says how importAll guards the accounts it imports into.
+type importMode int
+
+// The import modes.
+const (
+	// importPlain is Import: no guard.
+	importPlain importMode = iota
+	// importSeed is Seed: refuse to seed an account already seeded.
+	importSeed
+	// importOpeningLots is AddOpeningLots: opening lots one at a time.
+	importOpeningLots
+)
+
+// importAll is Import, Seed or AddOpeningLots, as mode says.
+func (l *Ledger) importAll(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion, mode importMode) (ImportSummary, error) {
 	ordered := slices.Clone(txs)
 	slices.SortStableFunc(ordered, func(a, b ledger.Transaction) int { return compareKeys(a.Key, b.Key) })
 	var sum ImportSummary
 	err := l.store.InTx(ctx, func(tx Store) error {
 		var err error
-		sum, err = importTx(ctx, tx, ordered, assertions, seed)
+		sum, err = importTx(ctx, tx, ordered, assertions, mode)
 		if err != nil {
 			return err
 		}
@@ -131,7 +144,7 @@ func (l *Ledger) importAll(ctx context.Context, txs []ledger.Transaction, assert
 		return nil
 	})
 	if err != nil {
-		if seed {
+		if mode != importPlain {
 			return ImportSummary{}, fmt.Errorf("seeding: %w", err)
 		}
 		return ImportSummary{}, fmt.Errorf("importing: %w", err)
@@ -149,19 +162,18 @@ func compareKeys(a, b ledger.TransactionKey) int {
 	return cmp.Compare(a.ExternalID, b.ExternalID)
 }
 
-// importTx is Import's work inside its database transaction tx, and with
-// seed set, Seed's: it first refuses to seed an account that is already
-// seeded.
-func importTx(ctx context.Context, tx Store, txs []ledger.Transaction, assertions []ledger.BalanceAssertion, seed bool) (ImportSummary, error) {
+// importTx is Import's work inside its database transaction tx, and Seed's
+// or AddOpeningLots's as mode says: Seed first refuses to seed an account
+// that is already seeded, and AddOpeningLots checks the opening lots
+// against each account's go-live.
+func importTx(ctx context.Context, tx Store, txs []ledger.Transaction, assertions []ledger.BalanceAssertion, mode importMode) (ImportSummary, error) {
 	accounts, err := validateImport(ctx, tx, txs, assertions)
 	if err != nil {
 		return ImportSummary{}, err
 	}
 	var sum ImportSummary
-	if seed {
-		if sum.AlreadySeeded, err = guardSeed(ctx, tx, txs); err != nil {
-			return ImportSummary{}, err
-		}
+	if sum.AlreadySeeded, err = guard(ctx, tx, txs, mode); err != nil {
+		return ImportSummary{}, err
 	}
 	for i := range txs {
 		t := &txs[i]
@@ -309,4 +321,17 @@ func sortChecks(checks []AssertionCheck) {
 		}
 		return a.Book.String() < b.Book.String()
 	})
+}
+
+// guard runs mode's guard over txs in tx: Seed's, which returns the accounts
+// already seeded with the same content, or AddOpeningLots's.
+func guard(ctx context.Context, tx Store, txs []ledger.Transaction, mode importMode) ([]ledger.AccountID, error) {
+	switch mode {
+	case importSeed:
+		return guardSeed(ctx, tx, txs)
+	case importOpeningLots:
+		return nil, guardOpeningLots(ctx, tx, txs)
+	case importPlain:
+	}
+	return nil, nil
 }

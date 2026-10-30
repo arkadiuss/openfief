@@ -454,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d769929041f
+  - type: implements
+    from: SYM-connectorv1-bond-lot-key-string
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:04:54.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79bf17bb4b2f
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-key-string
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:04:54.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bd19cac6cd2

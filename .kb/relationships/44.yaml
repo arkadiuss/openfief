@@ -665,5 +665,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-c27bab61e1e7
+      },
+    {
+        type: implements,
+        from: SYM-ingest-conn-rpc-transaction-kinds,
+        to: REQ-ingest-connector-contract-translation,
+        created_at: 2026-10-30T05:15:06.688Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-b25f5965f52a
+      },
+    {
+        type: covered_by,
+        from: SYM-ingest-conn-rpc-transaction-kinds,
+        to: TEST-ingest-connectrpc-mapping,
+        created_at: 2026-10-30T05:15:06.755Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-2721b827c266
       }
   ]

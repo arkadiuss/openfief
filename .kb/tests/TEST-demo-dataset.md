@@ -1,5 +1,5 @@
 ---
-title: The demo dataset is deterministic, synthetic only and consistent
+title: The demo dataset is deterministic, synthetic and consistent; bond coupons are interest
 status: active
 sourceFile: internal/demo/demo_test.go
 origin:

@@ -40,7 +40,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `

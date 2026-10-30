@@ -1,5 +1,5 @@
 ---
-title: Imports are idempotent and changed rows supersede without deleting
+title: Imports are idempotent, changes supersede, and deletions supersede without erasing
 status: active
 sourceFile: internal/ledger/version_test.go
 origin:

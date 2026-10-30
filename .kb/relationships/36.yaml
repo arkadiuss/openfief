@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1dcac926b54
+  - type: validates
+    from: TEST-ledger-events
+    to: REQ-ledger-interest-kind
+    created_at: 2026-10-30T05:01:21.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03cfaa8264a5

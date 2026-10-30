@@ -98,6 +98,11 @@ enum TransactionKind {
   TRANSACTION_KIND_WITHDRAWAL = 7;
   // A lot seeded from the institution's current positions at go-live (D-23).
   TRANSACTION_KIND_OPENING_LOT = 8;
+  // Interest paid on a holding, such as a treasury bond's coupon (D-101).
+  TRANSACTION_KIND_INTEREST = 9;
+  // Deletes the transaction its key names, as a correction (D-100): a new
+  // version with no postings that supersedes the current one and keeps it.
+  TRANSACTION_KIND_DELETION = 10;
 }
 
 // TransactionKey identifies a transaction across re-imports (D-18). The core
@@ -336,10 +341,21 @@ message ImportFileResponse {
   Delivery delivery = 1;
 }
 
+// BondPurchase is how the bonds of a lot were bought (D-100).
+enum BondPurchase {
+  // Not given: a cash purchase, as every lot was before D-100.
+  BOND_PURCHASE_UNSPECIFIED = 0;
+  // For cash at the nominal, 100 PLN per bond.
+  BOND_PURCHASE_CASH = 1;
+  // By exchange (zamiana) of maturing bonds at the series' exchange price,
+  // 99.90 PLN per bond.
+  BOND_PURCHASE_EXCHANGE = 2;
+}
+
 // BondLot is one lot of Polish retail treasury bonds as the owner entered
 // it: what D-9 names (series, quantity, purchase date), plus the series'
-// terms from its issue letter, which valuing the lot needs. The bonds were
-// bought for cash at the nominal, 100 PLN each.
+// terms from its issue letter, which valuing the lot needs, and how the
+// bonds were bought (D-100).
 message BondLot {
   // The series code, such as "EDO0536".
   string series = 1;
@@ -353,12 +369,32 @@ message BondLot {
   string margin = 5;
   // The series' early-redemption fee per bond, in PLN.
   Money early_redemption_fee = 6;
+  // How the bonds were bought; unspecified is a cash purchase.
+  BondPurchase purchase = 7;
+}
+
+// BondLotKey names one entered lot: its series and purchase date, which
+// make it unique in its account (D-98).
+message BondLotKey {
+  // The series code, such as "EDO0536".
+  string series = 1;
+  // The day the bonds were bought, "YYYY-MM-DD".
+  string purchase_date = 2;
 }
 
 message ImportBondLotsRequest {
   // The core's ID for this import batch; a retry reuses it.
   string batch_id = 1;
   repeated BondLot lots = 2;
+  // The account's go-live date, "YYYY-MM-DD" (D-98): a lot bought on or
+  // before it is an opening lot on it, keeping its purchase date and cost,
+  // and a later one is a deposit of its cost and a buy on its purchase
+  // date. The core sends the date the account was seeded on, or today for
+  // an account not seeded yet.
+  string go_live = 3;
+  // Lots the owner deletes as a correction (D-100): the connector delivers
+  // a deletion of each of their transactions.
+  repeated BondLotKey deleted = 4;
 }
 
 message ImportBondLotsResponse {

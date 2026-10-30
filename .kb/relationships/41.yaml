@@ -475,3 +475,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8d8cc385b84
+  - type: constrains
+    from: REQ-ledger-opening-lots-one-at-a-time
+    to: FACT-SUBJECT-F11DA9F8F5B57A36
+    created_at: 2026-10-30T05:02:04.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e49e6d18114
+  - type: requires_property
+    from: REQ-ledger-opening-lots-one-at-a-time
+    to: FACT-PROP-0F0742369E6DBB14
+    created_at: 2026-10-30T05:02:04.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-688507c0526f
+  - type: specified_by
+    from: REQ-ledger-opening-lots-one-at-a-time
+    to: SCEN-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:02:04.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38584db09050

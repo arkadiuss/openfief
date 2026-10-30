@@ -365,13 +365,14 @@ func TestBondCouponsFollowThePublishedRates(t *testing.T) {
 		tx := &ds.BondsActivity.Transactions[i]
 		for _, p := range tx.Postings {
 			if p.Book.Kind == ledger.BookCash {
-				got = append(got, tx.Date.String()+" "+p.Amount.String())
+				got = append(got, tx.Kind.String()+" "+tx.Date.String()+" "+p.Amount.String())
 			}
 		}
 	}
 	// COI0128 bought 2024-01-10: year 2 at November 2024 CPI 4.7% + margin 1.25% = 5.95 PLN
 	// a bond, paid 2026-01-10 on 30 bonds. Year 1's coupon came before go-live.
-	want := []string{"2026-01-10 178.5 PLN"}
+	// It is interest, not a dividend (D-101).
+	want := []string{"interest 2026-01-10 178.5 PLN"}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("coupons (-want +got):\n%s", diff)
 	}

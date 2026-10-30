@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07e26ba96ea3
+  - type: implements
+    from: SYM-connectorv1-bond-purchase-descriptor
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:06:29.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2611a0eaa021
+  - type: covered_by
+    from: SYM-connectorv1-bond-purchase-descriptor
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:06:29.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d54aa1b5164d

@@ -15,6 +15,10 @@ import (
 // that is missing, repeated or below 1.
 var ErrInvalidLog = errors.New("invalid transaction log")
 
+// ErrNothingToDelete reports a deletion of a transaction that was never
+// recorded.
+var ErrNothingToDelete = errors.New("no transaction to delete")
+
 // VersionedTransaction is one stored version of a transaction. Versions of
 // one key are numbered from 1; the highest is current and supersedes all
 // earlier ones, which stay in the log (D-18).
@@ -66,6 +70,7 @@ type ImportResult struct {
 // of its key (in any order; none for a new key). Re-imports are idempotent:
 // content equal to the current version, by Fingerprint, is ImportUnchanged.
 // Changed content becomes the next version, superseding the current one.
+// A deletion of a key that has no versions fails with ErrNothingToDelete.
 // incoming must be valid.
 func DecideImport(versions []VersionedTransaction, incoming *Transaction) (ImportResult, error) {
 	if err := incoming.Validate(); err != nil {
@@ -76,6 +81,8 @@ func DecideImport(versions []VersionedTransaction, incoming *Transaction) (Impor
 		return ImportResult{}, err
 	}
 	switch {
+	case current == nil && incoming.Kind == KindDeletion:
+		return ImportResult{}, fmt.Errorf("%w: %s", ErrNothingToDelete, incoming.Key)
 	case current == nil:
 		return ImportResult{Decision: ImportNew, Version: 1}, nil
 	case Fingerprint(&current.Transaction) == Fingerprint(incoming):
@@ -107,7 +114,8 @@ func currentOf(key TransactionKey, versions []VersionedTransaction) (*VersionedT
 
 // CurrentTransactions returns the current version of every key in log, in
 // date order, then by key. Superseded versions are left out; they stay in
-// the log but never count toward holdings, lots or balances.
+// the log but never count toward holdings, lots or balances. A key whose
+// current version is a deletion has no current transaction.
 func CurrentTransactions(log []VersionedTransaction) ([]Transaction, error) {
 	byKey := map[TransactionKey][]VersionedTransaction{}
 	for i := range log {
@@ -119,7 +127,9 @@ func CurrentTransactions(log []VersionedTransaction) ([]Transaction, error) {
 		if err != nil {
 			return nil, err
 		}
-		out = append(out, current.Transaction)
+		if current.Transaction.Kind != KindDeletion {
+			out = append(out, current.Transaction)
+		}
 	}
 	sort.Slice(out, func(i, j int) bool {
 		a, b := &out[i], &out[j]

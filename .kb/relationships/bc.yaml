@@ -566,3 +566,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43685a025eec
+  - type: implements
+    from: SYM-connectorv1-bond-purchase-enum-descriptor
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:06:56.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bec16e182140
+  - type: covered_by
+    from: SYM-connectorv1-bond-purchase-enum-descriptor
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:06:56.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47057997ab92

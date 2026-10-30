@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf5f3f32d78e
+  - type: implements
+    from: SYM-delivery-transaction-kinds
+    to: REQ-ingest-delivery-contract-messages
+    created_at: 2026-10-30T05:15:15.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2af92ae03641
+  - type: covered_by
+    from: SYM-delivery-transaction-kinds
+    to: TEST-ingest-delivery
+    created_at: 2026-10-30T05:15:15.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-680010a1c6bb

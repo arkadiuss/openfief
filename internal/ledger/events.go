@@ -80,28 +80,51 @@ func NewSell(h TransactionHeader, in Instrument, qty kernel.Quantity, proceeds, 
 // part, and the holding is the income's source with no change in units. A
 // zero Money withholding means none was withheld.
 func NewDividend(h TransactionHeader, in Instrument, gross, withholding kernel.Money) (Transaction, error) {
-	if err := needPositive(h, "gross dividend", gross.Amount()); err != nil {
+	postings, err := incomePostings(h, "gross dividend", in, gross, withholding)
+	if err != nil {
 		return Transaction{}, err
+	}
+	return h.build(KindDividend, postings...)
+}
+
+// NewInterest books interest of gross paid on in, such as a treasury bond's
+// coupon (D-101), of which withholding was withheld at source, such as
+// Belka tax: posted like a dividend (D-19), cash receives the net,
+// withholding tax the withheld part, and the holding is the income's source
+// with no change in units. A zero Money withholding means none was withheld.
+func NewInterest(h TransactionHeader, in Instrument, gross, withholding kernel.Money) (Transaction, error) {
+	postings, err := incomePostings(h, "gross interest", in, gross, withholding)
+	if err != nil {
+		return Transaction{}, err
+	}
+	return h.build(KindInterest, postings...)
+}
+
+// incomePostings returns the postings of income gross on in, named what, of
+// which withholding was withheld at source.
+func incomePostings(h TransactionHeader, what string, in Instrument, gross, withholding kernel.Money) ([]Posting, error) {
+	if err := needPositive(h, what, gross.Amount()); err != nil {
+		return nil, err
 	}
 	postings := []Posting{{Book: HoldingBook(in), Amount: gross.Neg()}}
 	net := gross
 	if !withholding.IsZero() {
 		if err := needNotNegative(h, "withholding tax", withholding); err != nil {
-			return Transaction{}, err
+			return nil, err
 		}
 		var err error
 		if net, err = gross.Sub(withholding); err != nil {
-			return Transaction{}, fmt.Errorf("%w %s: %w", ErrInvalidTransaction, h.Key, err)
+			return nil, fmt.Errorf("%w %s: %w", ErrInvalidTransaction, h.Key, err)
 		}
 		if net.Sign() < 0 {
-			return Transaction{}, fmt.Errorf("%w %s: withholding tax exceeds the gross dividend", ErrInvalidTransaction, h.Key)
+			return nil, fmt.Errorf("%w %s: withholding tax exceeds the %s", ErrInvalidTransaction, h.Key, what)
 		}
 		postings = append(postings, Posting{Book: WithholdingTaxBook(withholding.Currency()), Amount: withholding})
 	}
 	if !net.IsZero() {
 		postings = append(postings, Posting{Book: CashBook(net.Currency()), Amount: net})
 	}
-	return h.build(KindDividend, postings...)
+	return postings, nil
 }
 
 // NewFee books a fee charged on its own, such as an account fee: the fee
@@ -182,6 +205,15 @@ func NewOpeningLot(h TransactionHeader, in Instrument, qty kernel.Quantity, cost
 	)
 	t.LotOpened = opened
 	return validated(&t)
+}
+
+// NewDeletion books the deletion of the transaction the header's key names,
+// as a correction (D-100): a new version of that key with no postings, which
+// supersedes the current version and keeps it in the log (D-18). Holdings,
+// lots and balances then leave the transaction out. Date it on the deleted
+// transaction's date.
+func NewDeletion(h TransactionHeader) (Transaction, error) {
+	return h.build(KindDeletion)
 }
 
 // feePostings returns the postings that pay fee from cash, or none for a zero

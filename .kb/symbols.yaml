@@ -96010,3 +96010,480 @@ symbols:
         target: REQ-ui-overview-values
       - type: implements
         target: REQ-ui-value-switches
+  - id: SYM-ledger-app-import-mode
+    title: importMode
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:02:40.764Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-opening-lots-one-at-a-time
+  - id: SYM-ledger-app-ledger-add-opening-lots
+    title: Ledger.AddOpeningLots
+    sourceFile: internal/ledger/app/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:02:47.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-manual-opening-lots-one-at-a-time
+      - type: implements
+        target: REQ-ledger-opening-lots-one-at-a-time
+  - id: SYM-ledger-app-guard-opening-lots
+    title: guardOpeningLots
+    sourceFile: internal/ledger/app/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:02:54.121Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-opening-lots-one-at-a-time
+  - id: SYM-ledger-app-accounts-of
+    title: accountsOf
+    sourceFile: internal/ledger/app/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:03:01.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-opening-lots-one-at-a-time
+  - id: SYM-ledger-app-locked-log
+    title: lockedLog
+    sourceFile: internal/ledger/app/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:03:08.302Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-opening-lots-one-at-a-time
+  - id: SYM-ledger-app-test-helper-bond-lot
+    title: bondLot
+    sourceFile: internal/ledger/app/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:03:16.968Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-app-test-add-opening-lots
+    title: TestAddOpeningLots
+    sourceFile: internal/ledger/app/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:03:23.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-seed
+  - id: SYM-ledger-income-postings
+    title: incomePostings
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:03:32.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-ledger-event-postings
+  - id: SYM-ledger-new-deletion
+    title: NewDeletion
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:03:41.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-version
+      - type: implements
+        target: REQ-ledger-deletion-supersedes
+  - id: SYM-ledger-new-interest
+    title: NewInterest
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:03:49.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-ledger-event-postings
+      - type: implements
+        target: REQ-ledger-interest-kind
+  - id: SYM-ledger-pg-test-bond-lots-over-postgres
+    title: TestBondLotsOverPostgres
+    sourceFile: internal/ledger/postgres/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:03:57.451Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-seed
+  - id: SYM-ledger-check-opening-lots
+    title: CheckOpeningLots
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:04:05.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-manual-opening-lots-one-at-a-time
+      - type: implements
+        target: REQ-ledger-opening-lots-one-at-a-time
+  - id: SYM-ledger-test-check-opening-lots
+    title: TestCheckOpeningLots
+    sourceFile: internal/ledger/seed_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:04:12.741Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-seed
+  - id: SYM-ghostfolio-projector-income
+    title: projector.income
+    sourceFile: internal/views/ghostfolio/project.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:04:20.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-ledger-coupons-as-interest
+  - id: SYM-connectorv1-bond-lot-get-purchase
+    title: BondLot.GetPurchase
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:04:28.041Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-key
+    title: BondLotKey
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:04:35.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-key-reset
+    title: BondLotKey.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:04:44.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-key-string
+    title: BondLotKey.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:04:52.215Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-key-proto-message
+    title: BondLotKey.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:05:00.235Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-key-proto-reflect
+    title: BondLotKey.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:05:07.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-key-descriptor
+    title: BondLotKey.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:05:15.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-key-get-series
+    title: BondLotKey.GetSeries
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:05:24.386Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-lot-key-get-purchase-date
+    title: BondLotKey.GetPurchaseDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:05:33.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-get-go-live
+    title: ImportBondLotsRequest.GetGoLive
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:05:43.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-import-bond-lots-request-get-deleted
+    title: ImportBondLotsRequest.GetDeleted
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:05:52.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-purchase
+    title: BondPurchase
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:05:59.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-purchase-enum
+    title: BondPurchase.Enum
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:06:08.266Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-purchase-string
+    title: BondPurchase.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:06:17.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-purchase-descriptor
+    title: BondPurchase.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:06:26.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-purchase-type
+    title: BondPurchase.Type
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:06:35.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-purchase-number
+    title: BondPurchase.Number
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:06:44.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-connectorv1-bond-purchase-enum-descriptor
+    title: BondPurchase.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:06:53.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-messages
+  - id: SYM-ledger-app-guard
+    title: guard
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:14:45.703Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-opening-lots-one-at-a-time
+  - id: SYM-ledger-opening-lots-date
+    title: openingLotsDate
+    sourceFile: internal/ledger/seed.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:14:55.715Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-seed
+      - type: implements
+        target: REQ-ledger-opening-lots-one-at-a-time
+  - id: SYM-ingest-conn-rpc-transaction-kinds
+    title: transactionKinds
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:15:04.055Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-delivery-transaction-kinds
+    title: transactionKinds
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:15:12.008Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery
+      - type: implements
+        target: REQ-ingest-delivery-contract-messages
+  - id: SYM-views-ghostfolio-transaction-kinds
+    title: transactionKinds
+    sourceFile: internal/views/ghostfolio/record.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T05:15:21.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-sync
+      - type: implements
+        target: REQ-views-ghostfolio-read-record
